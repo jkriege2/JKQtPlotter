@@ -48,6 +48,77 @@
  */
 JKQTMATHTEXT_LIB_EXPORT void initJKQTMathTextResources();
 
+
+/*! \brief represents a font specifier for JKQTMathText. The font consists of two parts: the actual font and the font used for math output (which may be empty)
+    \ingroup jkqtmathtext
+
+    \section JKQTMathTextFontSpecifier_specialNames Special FOnt Names
+    This object also implements replacing special font names with actual fonts. Supported special font names are:
+      - \c default / \c app / \c application - the applications default font
+      - \c times / \c serif - a general serif font
+      - \c sans-serif - a general sans-serif font
+      - \c typewriter - a general typewrter/monospaced font
+      - \c cursive
+      - \c decorative
+      - \c fantasy
+      - \c monospace
+      - \c system
+    .
+
+    If copiled with Qt>5.3 you can also use these:
+      - \c fixed
+      - \c smallest_readable
+      - \c title
+      - \c general
+    .
+*/
+struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextFontSpecifier {
+    JKQTMathTextFontSpecifier();
+    JKQTMathTextFontSpecifier(const QString& fontName, const QString& mathFontName);
+    /** \brief construct a JKQTMathTextFontSpecifier, by parsing a \a fontSpec string with the form \c "FONT_NAME[+MATH_FONT_NAME]". */
+    static JKQTMathTextFontSpecifier fromFontSpec(const QString& fontSpec);
+
+    /** \brief initialises the object with values from parsing a \a fontSpec string with the form \c "FONT_NAME[+MATH_FONT_NAME]". */
+    void setFontSpec(const QString& fontSpec);
+
+    /** \brief returns the object's constents as a fontSpec string with the form \c "FONT_NAME[+MATH_FONT_NAME]". */
+    QString getFontSpec() const;
+    /** \copydoc m_fontName */
+    QString fontName() const;
+    /** \copydoc m_mathFontName */
+    QString mathFontName() const;
+
+    /** \copydoc m_fontName */
+    void setFontName(const QString& name);
+    /** \copydoc m_mathFontName */
+    void setmathFontName(const QString& name);
+    /** \brief finds actual fonts for some predefined special font names, as listed in \ref JKQTMathTextFontSpecifier_specialNames */
+    static QString transformFontName(const QString& fontName);
+    /** \brief same as transformFontName(), but also finds the actual name for XITS, STIX, ASANA,... */
+    static QString transformFontNameAndDecodeSpecialFonts(const QString& fontName);
+    /** \brief leiefert \c true, wenn ein fontName() verfügbar ist */
+    bool hasFontName() const;
+    /** \brief leiefert \c true, wenn ein mathFontName() verfügbar ist */
+    bool hasMathFontName() const;
+
+    /** \brief initialize with the font-families from the XITS package for text and math */
+    static JKQTMathTextFontSpecifier getXITSFamilies();
+
+    /** \brief initialize with the font-families from the XITS package for text and math */
+    static JKQTMathTextFontSpecifier getASANAFamilies();
+
+    /** \brief initialize with the font-families from the STIX package for text and math */
+    static JKQTMathTextFontSpecifier getSTIXFamilies();
+private:
+    /** \brief specifies the main font name */
+    QString m_fontName;
+    /** \brief specifies the math font to use in addition to fontName */
+    QString m_mathFontName;
+
+
+};
+
+
 /*! \brief this class parses a LaTeX string and can then draw the contained text/equation onto a <a href="http://doc.qt.io/qt-5/qpainter.html">QPainter</a>
     \ingroup jkqtmathtext
 
@@ -223,6 +294,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         /** \brief minimum linewidth allowed in a JKQTMathText (given in pt) */
         static const double ABS_MIN_LINEWIDTH;
 
+
         /** \brief class constructor */
         JKQTMathText(QObject * parent = nullptr);
         /** \brief class destructor */
@@ -327,7 +399,11 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         /*! \brief calls setFontRoman(), or calls useXITS() if \a __value \c =="XITS".  calls useSTIX() if \a __value \c =="STIX", ...
 
             \see setFontRoman(), useXITS(), useSTIX() for more information */
-        void setFontRomanOrSpecial(const QString & fontName);
+        void setFontRomanOrSpecial(const QString & fontName, MTfontEncoding encoding=MTfontEncoding::MTFEStandard);
+        /*! \brief calls setFontRoman(), or calls useXITS() if \a __value \c =="XITS".  calls useSTIX() if \a __value \c =="STIX", ...
+
+            \see setFontRoman(), useXITS(), useSTIX() for more information */
+        void setFontRomanOrSpecial(const JKQTMathTextFontSpecifier & fontName, MTfontEncoding encoding=MTfontEncoding::MTFEStandard);
 
         /** \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEroman   */
         void setFontRoman(const QString & fontName, MTfontEncoding encoding=MTfontEncoding::MTFEStandard);

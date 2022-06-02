@@ -55,6 +55,7 @@
 #include "jkqtplotter/graphs/jkqtpgeometric.h"
 #include "jkqtplotter/graphs/jkqtpimage.h"
 #include "jkqtplotter/graphs/jkqtpimagergb.h"
+#include "jkqtmathtext/jkqtmathtext.h"
 
 static QString globalUserSettigsFilename="";
 static QString globalUserSettigsPrefix="";
@@ -770,7 +771,7 @@ void JKQTBasePlotter::calcPlotScaling(JKQTPEnhancedPainter& painter){
 
     double keyWidth, keyHeight;
     QFont f=painter.font();
-    f.setFamily(plotterStyle.defaultFontName);
+    f.setFamily(JKQTMathTextFontSpecifier::fromFontSpec(plotterStyle.defaultFontName).fontName());
     f.setPointSizeF(plotterStyle.keyStyle.fontSize*fontSizeMultiplier);
     QFontMetricsF kfm(f);
     getKeyExtent(painter, &keyWidth, &keyHeight);
@@ -1050,7 +1051,7 @@ void JKQTBasePlotter::drawKey(JKQTPEnhancedPainter& painter) {
 #endif
     //qDebug()<<"start JKQTBasePlotter::plotKey";
 
-    QFont kf(plotterStyle.defaultFontName, 10);
+    QFont kf(JKQTMathTextFontSpecifier::fromFontSpec(plotterStyle.defaultFontName).fontName(), 10);
     kf.setPointSizeF(plotterStyle.keyStyle.fontSize*fontSizeMultiplier);
     QFontMetricsF kfm(kf);
     const qreal Xwid=kfm.boundingRect('X').width();
@@ -4133,7 +4134,7 @@ void JKQTBasePlotter::drawKeyContents(JKQTPEnhancedPainter& painter, double x, d
     qDebug()<<"key_item_height="<<key_item_height;
     qDebug()<<"plotKey(): dw="<<dw<<"  dh="<<dh<<"  key_text_width="<<key_text_width<<"   key_text_height="<<key_text_height<<"  columns="<<columns<<"   lines="<<lines<<"   plotterStyle.keyStyle.layout="<<plotterStyle.keyStyle.layout;
 #endif
-    QFont kf(plotterStyle.defaultFontName, 10);
+    QFont kf(JKQTMathTextFontSpecifier::fromFontSpec(plotterStyle.defaultFontName).fontName(), 10);
     kf.setPointSizeF(plotterStyle.keyStyle.fontSize*fontSizeMultiplier);
     QFontMetricsF kfm(kf);
 
@@ -4296,7 +4297,7 @@ void JKQTBasePlotter::getKeyExtent(JKQTPEnhancedPainter& painter, double* width,
     JKQTPAutoOutputTimer jkaaot("JKQTBasePlotter::getKeyExtent");
 #endif
     QFont f=painter.font();
-    f.setFamily(plotterStyle.defaultFontName);
+    f.setFamily(JKQTMathTextFontSpecifier::fromFontSpec(plotterStyle.defaultFontName).fontName());
     f.setPointSizeF(plotterStyle.keyStyle.fontSize*fontSizeMultiplier);
     QFontMetricsF kfm(f);
     const qreal Xwid=kfm.boundingRect('X').width();
@@ -4371,7 +4372,7 @@ void JKQTBasePlotter::getKeyExtent(JKQTPEnhancedPainter& painter, double* width,
         double w=0;
         double txtH=0;
         QFont floc=painter.font();
-        floc.setFamily(plotterStyle.defaultFontName);
+        floc.setFamily(JKQTMathTextFontSpecifier::fromFontSpec(plotterStyle.defaultFontName).fontName());
         floc.setPointSizeF(plotterStyle.keyStyle.fontSize*fontSizeMultiplier);
         painter.setFont(floc);
 
@@ -4990,7 +4991,7 @@ JKQTBasePlotter::textSizeKey::textSizeKey(const QString &fontName, double fontSi
     text(), f(), ldpiX(0), ldpiY(0), pdpiX(0), pdpiY(0)
 {
     QFont f;
-    f.setFamily(fontName);
+    f.setFamily(JKQTMathTextFontSpecifier::fromFontSpec(fontName).fontName());
     f.setPointSizeF(fontSize);
     this->text=text;
     this->f=f;

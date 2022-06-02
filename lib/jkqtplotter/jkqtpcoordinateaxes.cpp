@@ -1030,7 +1030,7 @@ QSizeF JKQTPCoordinateAxis::getMaxTickLabelSize(JKQTPEnhancedPainter& painter, d
     QString label="";
     getNextLabel(x, label, true);
     QFont f;
-    f.setFamily(getParent()->getCurrentPlotterStyle().defaultFontName);
+    f.setFamily(JKQTMathTextFontSpecifier::fromFontSpec(getParent()->getCurrentPlotterStyle().defaultFontName).fontName());
     f.setPointSizeF(this->axisStyle.tickLabelFontSize*parent->getFontSizeMultiplier());
     QFontMetricsF fm(f);
     bool first=true;
