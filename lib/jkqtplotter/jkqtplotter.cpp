@@ -710,14 +710,14 @@ void JKQTPlotter::paintUserAction() {
 
 void JKQTPlotter::mouseMoveEvent ( QMouseEvent * event ) {
     if (plotterStyle.displayMousePosition) {
-        mousePosX=plotter->p2x(event->x()/magnification);
-        mousePosY=plotter->p2y((event->y()-getPlotYOffset())/magnification);
+        mousePosX=plotter->p2x(event->pos().x()/magnification);
+        mousePosY=plotter->p2y((event->pos().y()-getPlotYOffset())/magnification);
         update();
     }
 
     if (plotterStyle.toolbarEnabled && (!plotterStyle.toolbarAlwaysOn) && (!toolbar->isVisible())) { // decide whether to display toolbar
         int y1=10;
-        if (event->y()/magnification>=0 && event->y()/magnification<=y1) {
+        if (event->pos().y()/magnification>=0 && event->pos().y()/magnification<=y1) {
             toolbar->show();
             toolbar->move(1,1);
         }
@@ -746,10 +746,10 @@ void JKQTPlotter::mouseMoveEvent ( QMouseEvent * event ) {
                 mouseDragRectXStartPixel=mouseDragRectXEndPixel;
                 mouseDragRectYStartPixel=mouseDragRectYEndPixel;
              }
-            mouseDragRectXEnd=plotter->p2x(event->x()/magnification);
-            mouseDragRectYEnd=plotter->p2y((event->y()-getPlotYOffset())/magnification);
-            mouseDragRectXEndPixel=event->x();
-            mouseDragRectYEndPixel=event->y();
+            mouseDragRectXEnd=plotter->p2x(event->pos().x()/magnification);
+            mouseDragRectYEnd=plotter->p2y((event->pos().y()-getPlotYOffset())/magnification);
+            mouseDragRectXEndPixel=event->pos().x();
+            mouseDragRectYEndPixel=event->pos().y();
 
 
             if (currentMouseDragAction.mode==jkqtpmdaToolTipForClosestDataPoint) {
@@ -799,20 +799,20 @@ void JKQTPlotter::mouseMoveEvent ( QMouseEvent * event ) {
             // we found a matching action
             currentMouseMoveAction.insert(actionIT.value());
             if(actionIT.value()==jkqtpmmaToolTipForClosestDataPoint){
-                mouseDragRectXStart=plotter->p2x(event->x()/magnification);
-                mouseDragRectYStart=plotter->p2y((event->y()-getPlotYOffset())/magnification);
-                mouseDragRectXStartPixel=event->x();
-                mouseDragRectYStartPixel=event->y();
-                fillInternalStructForToolTipOfClosestDataPoint(plotter->p2x(event->x()/magnification), plotter->p2y((event->y()-getPlotYOffset())/magnification));
+                mouseDragRectXStart=plotter->p2x(event->pos().x()/magnification);
+                mouseDragRectYStart=plotter->p2y((event->pos().y()-getPlotYOffset())/magnification);
+                mouseDragRectXStartPixel=event->pos().x();
+                mouseDragRectYStartPixel=event->pos().y();
+                fillInternalStructForToolTipOfClosestDataPoint(plotter->p2x(event->pos().x()/magnification), plotter->p2y((event->pos().y()-getPlotYOffset())/magnification));
             }
             paintUserAction();
         }
     }
 
     // emit move signal, if event occured inside plot only
-    if  ( (event->x()/magnification>=plotter->getInternalPlotBorderLeft()) && (event->x()/magnification<=plotter->getPlotWidth()+plotter->getInternalPlotBorderLeft())  &&
-          ((event->y()-getPlotYOffset())/magnification>=plotter->getInternalPlotBorderTop()) && ((event->y()-getPlotYOffset())/magnification<=plotter->getPlotHeight()+plotter->getInternalPlotBorderTop()) ) {
-        emit plotMouseMove(plotter->p2x(event->x()/magnification), plotter->p2y((event->y()-getPlotYOffset())/magnification));
+    if  ( (event->pos().x()/magnification>=plotter->getInternalPlotBorderLeft()) && (event->pos().x()/magnification<=plotter->getPlotWidth()+plotter->getInternalPlotBorderLeft())  &&
+          ((event->pos().y()-getPlotYOffset())/magnification>=plotter->getInternalPlotBorderTop()) && ((event->pos().y()-getPlotYOffset())/magnification<=plotter->getPlotHeight()+plotter->getInternalPlotBorderTop()) ) {
+        emit plotMouseMove(plotter->p2x(event->pos().x()/magnification), plotter->p2y((event->pos().y()-getPlotYOffset())/magnification));
     }
     updateCursor();
 }
@@ -827,28 +827,28 @@ void JKQTPlotter::mousePressEvent ( QMouseEvent * event ){
     auto actionIT=findMatchingMouseDragAction(event->button(), event->modifiers(), &foundIT);
     if (foundIT) {
         // we found a matching action
-        mouseLastClickX=event->x();
-        mouseLastClickY=event->y();
-        mouseDragRectXStart=plotter->p2x(event->x()/magnification);
-        mouseDragRectYStart=plotter->p2y((event->y()-getPlotYOffset())/magnification);
-        mouseDragRectXEndPixel=mouseDragRectXStartPixel=event->x();
-        mouseDragRectYEndPixel=mouseDragRectYStartPixel=event->y();
+        mouseLastClickX=event->pos().x();
+        mouseLastClickY=event->pos().y();
+        mouseDragRectXStart=plotter->p2x(event->pos().x()/magnification);
+        mouseDragRectYStart=plotter->p2y((event->pos().y()-getPlotYOffset())/magnification);
+        mouseDragRectXEndPixel=mouseDragRectXStartPixel=event->pos().x();
+        mouseDragRectYEndPixel=mouseDragRectYStartPixel=event->pos().y();
         currentMouseDragAction=MouseDragAction(actionIT.key().first, actionIT.key().second, actionIT.value());
         mouseDragingRectangle=true;
         oldImage=image;
         if (currentMouseDragAction.mode==jkqtpmdaScribbleForEvents) emit userScribbleClick(mouseDragRectXStart, mouseDragRectYStart, event->modifiers(), true, false);
         event->accept();
     } else if (event->button()==Qt::RightButton && event->modifiers()==Qt::NoModifier && contextMenuMode!=jkqtpcmmNoContextMenu) {
-        mouseLastClickX=event->x();
-        mouseLastClickY=event->y();
-        openContextMenu(event->x(), event->y());
+        mouseLastClickX=event->pos().x();
+        mouseLastClickY=event->pos().y();
+        openContextMenu(event->pos().x(), event->pos().y());
         event->accept();
     }
 
     // emit clicked signal, if event occured inside plot only
-    if  ( (event->x()/magnification>=plotter->getInternalPlotBorderLeft()) && (event->x()/magnification<=plotter->getPlotWidth()+plotter->getInternalPlotBorderLeft())  &&
-          ((event->y()-getPlotYOffset())/magnification>=plotter->getInternalPlotBorderTop()) && ((event->y()-getPlotYOffset())/magnification<=plotter->getPlotHeight()+plotter->getInternalPlotBorderTop()) ) {
-        emit plotMouseClicked(plotter->p2x(event->x()/magnification), plotter->p2y((event->y()-getPlotYOffset())/magnification), event->modifiers(), event->button());
+    if  ( (event->pos().x()/magnification>=plotter->getInternalPlotBorderLeft()) && (event->pos().x()/magnification<=plotter->getPlotWidth()+plotter->getInternalPlotBorderLeft())  &&
+          ((event->pos().y()-getPlotYOffset())/magnification>=plotter->getInternalPlotBorderTop()) && ((event->pos().y()-getPlotYOffset())/magnification<=plotter->getPlotHeight()+plotter->getInternalPlotBorderTop()) ) {
+        emit plotMouseClicked(plotter->p2x(event->pos().x()/magnification), plotter->p2y((event->pos().y()-getPlotYOffset())/magnification), event->modifiers(), event->button());
         event->accept();
     }
     updateCursor();
@@ -863,10 +863,10 @@ void JKQTPlotter::mouseReleaseEvent ( QMouseEvent * event ){
         return;
     }
     if (currentMouseDragAction.isValid()) {
-        mouseDragRectXEnd=plotter->p2x(event->x()/magnification);
-        mouseDragRectYEnd=plotter->p2y((event->y()-getPlotYOffset())/magnification);
-        mouseDragRectXEndPixel=event->x();
-        mouseDragRectYEndPixel=event->y();
+        mouseDragRectXEnd=plotter->p2x(event->pos().x()/magnification);
+        mouseDragRectYEnd=plotter->p2y((event->pos().y()-getPlotYOffset())/magnification);
+        mouseDragRectXEndPixel=event->pos().x();
+        mouseDragRectYEndPixel=event->pos().y();
         image=oldImage;
         //update();
         mouseDragingRectangle=false;
@@ -933,21 +933,21 @@ void JKQTPlotter::mouseDoubleClickEvent ( QMouseEvent * event ){
     if (foundIT)  {
         // we found an action to perform on this double-click
         if (itAction.value()==JKQTPMouseDoubleClickActions::jkqtpdcaClickOpensContextMenu) {
-            openStandardContextMenu(event->x(), event->y());
+            openStandardContextMenu(event->pos().x(), event->pos().y());
         } else if (itAction.value()==JKQTPMouseDoubleClickActions::jkqtpdcaClickOpensSpecialContextMenu) {
-            openSpecialContextMenu(event->x(), event->y());
+            openSpecialContextMenu(event->pos().x(), event->pos().y());
         } else if (itAction.value()==JKQTPMouseDoubleClickActions::jkqtpdcaClickZoomsIn || itAction.value()==JKQTPMouseDoubleClickActions::jkqtpdcaClickZoomsOut) {
             double factor=4.0;
             if (itAction.value()==JKQTPMouseDoubleClickActions::jkqtpdcaClickZoomsOut) factor=1;
 
-            double xmin=plotter->p2x(static_cast<double>(event->x())/magnification-static_cast<double>(plotter->getPlotWidth())/factor);
-            double xmax=plotter->p2x(static_cast<double>(event->x())/magnification+static_cast<double>(plotter->getPlotWidth())/factor);
-            double ymin=plotter->p2y(static_cast<double>(event->y())/magnification-static_cast<double>(getPlotYOffset())+static_cast<double>(plotter->getPlotHeight())/factor);
-            double ymax=plotter->p2y(static_cast<double>(event->y())/magnification-static_cast<double>(getPlotYOffset())-static_cast<double>(plotter->getPlotHeight())/factor);
-            if  ( (event->x()/magnification<plotter->getInternalPlotBorderLeft()) || (event->x()/magnification>plotter->getPlotWidth()+plotter->getInternalPlotBorderLeft()) ) {
+            double xmin=plotter->p2x(static_cast<double>(event->pos().x())/magnification-static_cast<double>(plotter->getPlotWidth())/factor);
+            double xmax=plotter->p2x(static_cast<double>(event->pos().x())/magnification+static_cast<double>(plotter->getPlotWidth())/factor);
+            double ymin=plotter->p2y(static_cast<double>(event->pos().y())/magnification-static_cast<double>(getPlotYOffset())+static_cast<double>(plotter->getPlotHeight())/factor);
+            double ymax=plotter->p2y(static_cast<double>(event->pos().y())/magnification-static_cast<double>(getPlotYOffset())-static_cast<double>(plotter->getPlotHeight())/factor);
+            if  ( (event->pos().x()/magnification<plotter->getInternalPlotBorderLeft()) || (event->pos().x()/magnification>plotter->getPlotWidth()+plotter->getInternalPlotBorderLeft()) ) {
                 xmin=getXMin();
                 xmax=getXMax();
-            } else if (((event->y()-getPlotYOffset())/magnification<plotter->getInternalPlotBorderTop()) || ((event->y()-getPlotYOffset())/magnification>plotter->getPlotHeight()+plotter->getInternalPlotBorderTop()) ) {
+            } else if (((event->pos().y()-getPlotYOffset())/magnification<plotter->getInternalPlotBorderTop()) || ((event->pos().y()-getPlotYOffset())/magnification>plotter->getPlotHeight()+plotter->getInternalPlotBorderTop()) ) {
                 ymin=getYMin();
                 ymax=getYMax();
             }
@@ -955,25 +955,25 @@ void JKQTPlotter::mouseDoubleClickEvent ( QMouseEvent * event ){
             update();
         } else if (itAction.value()==JKQTPMouseDoubleClickActions::jkqtpdcaClickMovesViewport) {
             QRectF zoomRect= QRectF(QPointF(plotter->x2p(getXAxis()->getMin()),plotter->y2p(getYAxis()->getMax())), QPointF(plotter->x2p(getXAxis()->getMax()),plotter->y2p(getYAxis()->getMin())));
-            if  ( (event->x()/magnification<plotter->getInternalPlotBorderLeft()) || (event->x()/magnification>plotter->getPlotWidth()+plotter->getInternalPlotBorderLeft()) ) {
-                zoomRect.moveCenter(QPointF(zoomRect.center().x(), event->y()));
-            } else if (((event->y()-getPlotYOffset())/magnification<plotter->getInternalPlotBorderTop()) || ((event->y()-getPlotYOffset())/magnification>plotter->getPlotHeight()+plotter->getInternalPlotBorderTop()) ) {
-                zoomRect.moveCenter(QPointF(event->x(), zoomRect.center().y()));
+            if  ( (event->pos().x()/magnification<plotter->getInternalPlotBorderLeft()) || (event->pos().x()/magnification>plotter->getPlotWidth()+plotter->getInternalPlotBorderLeft()) ) {
+                zoomRect.moveCenter(QPointF(zoomRect.center().x(), event->pos().y()));
+            } else if (((event->pos().y()-getPlotYOffset())/magnification<plotter->getInternalPlotBorderTop()) || ((event->pos().y()-getPlotYOffset())/magnification>plotter->getPlotHeight()+plotter->getInternalPlotBorderTop()) ) {
+                zoomRect.moveCenter(QPointF(event->pos().x(), zoomRect.center().y()));
             } else {
-                zoomRect.moveCenter(QPointF(event->x(), event->y()));
+                zoomRect.moveCenter(QPointF(event->pos().x(), event->pos().y()));
             }
             setXY(plotter->p2x(zoomRect.left()), plotter->p2x(zoomRect.right()), plotter->p2y(zoomRect.bottom()), plotter->p2y(zoomRect.top()));
         }
     }
 
     // only react on double clicks inside the widget
-    if  ( (event->x()/magnification>=plotter->getInternalPlotBorderLeft()) && (event->x()/magnification<=plotter->getPlotWidth()+plotter->getInternalPlotBorderLeft())  &&
-          ((event->y()-getPlotYOffset())/magnification>=plotter->getInternalPlotBorderTop()) && ((event->y()-getPlotYOffset())/magnification<=plotter->getPlotHeight()+plotter->getInternalPlotBorderTop()) ) {
+    if  ( (event->pos().x()/magnification>=plotter->getInternalPlotBorderLeft()) && (event->pos().x()/magnification<=plotter->getPlotWidth()+plotter->getInternalPlotBorderLeft())  &&
+          ((event->pos().y()-getPlotYOffset())/magnification>=plotter->getInternalPlotBorderTop()) && ((event->pos().y()-getPlotYOffset())/magnification<=plotter->getPlotHeight()+plotter->getInternalPlotBorderTop()) ) {
 
-        mouseLastClickX=event->x();
-        mouseLastClickY=event->y();
+        mouseLastClickX=event->pos().x();
+        mouseLastClickY=event->pos().y();
 
-        emit plotMouseDoubleClicked(plotter->p2x(event->x()/magnification), plotter->p2y((event->y()-getPlotYOffset())/magnification), event->modifiers(), event->button());
+        emit plotMouseDoubleClicked(plotter->p2x(event->pos().x()/magnification), plotter->p2y((event->pos().y()-getPlotYOffset())/magnification), event->modifiers(), event->button());
 
     }
     event->accept();
@@ -1000,8 +1000,8 @@ void JKQTPlotter::wheelEvent ( QWheelEvent * event ) {
     const double wheel_x=event->position().x();
     const double wheel_y=event->position().y();
 #else
-    const int wheel_x=event->x();
-    const int wheel_y=event->y();
+    const int wheel_x=event->pos().x();
+    const int wheel_y=event->pos().y();
 #endif
 
     //qDebug()<<"wheelEvent("<<event->modifiers()<<"): plotterStyle.registeredMouseWheelActions="<<plotterStyle.registeredMouseWheelActions;

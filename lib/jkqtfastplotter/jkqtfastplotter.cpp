@@ -215,8 +215,8 @@ void JKQTFastPlotter::copyImage()
 
 void JKQTFastPlotter::mouseDoubleClickEvent ( QMouseEvent * event ) {
    if (event->button()==Qt::LeftButton) {
-        double x=p2x(event->x());
-        double y=p2y(event->y());
+        double x=p2x(event->pos().x());
+        double y=p2y(event->pos().y());
         emit doubleClicked(x, y);
         emit doubleClicked(x, y, event->modifiers());
         event->accept();
@@ -224,8 +224,8 @@ void JKQTFastPlotter::mouseDoubleClickEvent ( QMouseEvent * event ) {
 }
 
 void JKQTFastPlotter::mouseMoveEvent ( QMouseEvent * event ) {
-    double x=p2x(event->x());
-    double y=p2y(event->y());
+    double x=p2x(event->pos().x());
+    double y=p2y(event->pos().y());
     emit mouseMoved(x, y);
     //qDebug()<<"JKQTFastPlotter::mouseMoveEvent  "<<x<<y;
     if (event->buttons()&Qt::LeftButton) {
@@ -242,8 +242,8 @@ void JKQTFastPlotter::mouseMoveEvent ( QMouseEvent * event ) {
 
 void JKQTFastPlotter::mousePressEvent ( QMouseEvent * event ) {
    if (event->button()==Qt::LeftButton) {
-        double x=p2x(event->x());
-        double y=p2y(event->y());
+        double x=p2x(event->pos().x());
+        double y=p2y(event->pos().y());
         emit clicked(x, y);
         emit clicked(x, y, event->modifiers());
         mouseDragStart=event->pos();
@@ -256,8 +256,8 @@ void JKQTFastPlotter::mouseReleaseEvent(QMouseEvent *event)
     if (event->button()==Qt::LeftButton) {
         double xd=p2x(mouseDragStart.x());
         double yd=p2y(mouseDragStart.y());
-        double x=p2x(event->x());
-        double y=p2y(event->y());
+        double x=p2x(event->pos().x());
+        double y=p2y(event->pos().y());
         emit mouseDragged(xd, yd, x, y, event->modifiers());
         emit mouseDragFinished(xd, yd, x, y, event->modifiers());
         dragging=false;
