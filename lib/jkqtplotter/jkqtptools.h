@@ -251,40 +251,92 @@ typedef JKQTPMouseMoveActionsHashMap::const_iterator JKQTPMouseMoveActionsHashMa
  * \ingroup jkqtpplotter_styling
 
  */
-enum JKQTPColorDerivationMode {
-    JKQTPFFCMFullyTransparentColor, /*!< \brief fully transparent color */
-    JKQTPFFCMNoColor=JKQTPFFCMFullyTransparentColor, /*!< \brief fully transparent color */
-    JKQTPFFCMBlack, /*!< \brief fill with black */
-    JKQTPFFCMGrey75, /*!< \brief fill with 75% grey */
-    JKQTPFFCMGrey50, /*!< \brief fill with 50% grey */
-    JKQTPFFCMGrey25, /*!< \brief fill with 25% grey */
-    JKQTPFFCMWhite, /*!< \brief fill with white */
-    JKQTPFFCMBlackTransparent, /*!< \brief fill with black, slightly transparent */
-    JKQTPFFCMGrey75Transparent, /*!< \brief fill with 75% grey, slightly transparent */
-    JKQTPFFCMGrey50Transparent, /*!< \brief fill with 50% grey, slightly transparent */
-    JKQTPFFCMGrey25Transparent, /*!< \brief fill with 25% grey, slightly transparent */
-    JKQTPFFCMWhiteTransparent, /*!< \brief fill with white, slightly transparent */
-    JKQTPFFCMSameColor, /*!< \brief fill with the same color */
-    JKQTPFFCMSameNonTransparentColor, /*!< \brief fill with the same color, but remove any transparency (if any) */
-    JKQTPFFCMSameMoreTransparentColor, /*!< \brief fill with the a partly transparent color */
-    JKQTPFFCMSameEvenMoreTransparentColor, /*!< \brief fill with the a more transparent color than JKQTPFFCMMoreTransparentColor */
-    JKQTPFFCMSameLessTransparentColor, /*!< \brief fill with the a partly transparent color */
-    JKQTPFFCMSameEvenLessTransparentColor, /*!< \brief fill with the a more transparent color than JKQTPFFCMLessTransparentColor*/
-    JKQTPFFCMInvertedColor, /*!< \brief fill with the inverted color */
-    JKQTPFFCMInvertedTransparentColor, /*!< \brief fill with the inverted color, slightly transparent */
-    JKQTPFFCMInvertedNonTransparentColor, /*!< \brief fill with the inverted color, non-transparent (even if the basecolor had some transparency) */
-    JKQTPFFCMLighterColor, /*!< \brief fill with the a lighter color */
-    JKQTPFFCMEvenLighterColor, /*!< \brief fill with the an even lighter color  than JKQTPFFCMLighterColor */
-    JKQTPFFCMDarkerColor, /*!< \brief fill with the a darker color */
-    JKQTPFFCMEvenDarkerColor, /*!< \brief fill with the an even darker color than JKQTPFFCMDarkerColor */
-    JKQTPFFCMLighterAndTransparentColor, /*!< \brief fill with the a lighter color, that is in addition a bit transparent */
-    JKQTPFFCMEvenLighterAndTransparentColor, /*!< \brief fill with the an even lighter color  than JKQTPFFCMLighterColor, that is in addition a bit transparent */
-    JKQTPFFCMDarkerAndTransparentColor, /*!< \brief fill with the a darker color, that is in addition a bit transparent */
-    JKQTPFFCMEvenDarkerAndTransparentColor, /*!< \brief fill with the an even darker color than JKQTPFFCMDarkerColor, that is in addition a bit transparent */
-    JKQTPFFCMLighterAndNonTransparentColor, /*!< \brief fill with the a lighter color, that is non-transparent (even if the basecolor had some transparency)  */
-    JKQTPFFCMEvenLighterAndNonTransparentColor, /*!< \brief fill with the an even lighter color  than JKQTPFFCMLighterColor, that is non-transparent (even if the basecolor had some transparency)  */
-    JKQTPFFCMDarkerAndNonTransparentColor, /*!< \brief fill with the a darker color, that is non-transparent (even if the basecolor had some transparency)  */
-    JKQTPFFCMEvenDarkerAndNonTransparentColor, /*!< \brief fill with the an even darker color than JKQTPFFCMDarkerColor, that is non-transparent (even if the basecolor had some transparency)  */
+struct JKQTPLOTTER_LIB_EXPORT JKQTPColorDerivationMode {
+public:
+    enum PredefinedModes {
+        JKQTPFFCMFullyTransparentColor, /*!< \brief fully transparent color */
+        JKQTPFFCMNoColor=JKQTPFFCMFullyTransparentColor, /*!< \brief fully transparent color */
+        JKQTPFFCMBlack, /*!< \brief fill with black */
+        JKQTPFFCMGrey75, /*!< \brief fill with 75% grey */
+        JKQTPFFCMGrey50, /*!< \brief fill with 50% grey */
+        JKQTPFFCMGrey25, /*!< \brief fill with 25% grey */
+        JKQTPFFCMWhite, /*!< \brief fill with white */
+        JKQTPFFCMBlackTransparent, /*!< \brief fill with black, slightly transparent */
+        JKQTPFFCMGrey75Transparent, /*!< \brief fill with 75% grey, slightly transparent */
+        JKQTPFFCMGrey50Transparent, /*!< \brief fill with 50% grey, slightly transparent */
+        JKQTPFFCMGrey25Transparent, /*!< \brief fill with 25% grey, slightly transparent */
+        JKQTPFFCMWhiteTransparent, /*!< \brief fill with white, slightly transparent */
+        JKQTPFFCMSameColor, /*!< \brief fill with the same color */
+        JKQTPFFCMSameNonTransparentColor, /*!< \brief fill with the same color, but remove any transparency (if any) */
+        JKQTPFFCMSameMoreTransparentColor, /*!< \brief fill with the a partly transparent color */
+        JKQTPFFCMSameEvenMoreTransparentColor, /*!< \brief fill with the a more transparent color than JKQTPFFCMMoreTransparentColor */
+        JKQTPFFCMSameLessTransparentColor, /*!< \brief fill with the a partly transparent color */
+        JKQTPFFCMSameEvenLessTransparentColor, /*!< \brief fill with the a more transparent color than JKQTPFFCMLessTransparentColor*/
+        JKQTPFFCMInvertedColor, /*!< \brief fill with the inverted color */
+        JKQTPFFCMInvertedTransparentColor, /*!< \brief fill with the inverted color, slightly transparent */
+        JKQTPFFCMInvertedNonTransparentColor, /*!< \brief fill with the inverted color, non-transparent (even if the basecolor had some transparency) */
+        JKQTPFFCMLighterColor, /*!< \brief fill with the a lighter color */
+        JKQTPFFCMEvenLighterColor, /*!< \brief fill with the an even lighter color  than JKQTPFFCMLighterColor */
+        JKQTPFFCMDarkerColor, /*!< \brief fill with the a darker color */
+        JKQTPFFCMEvenDarkerColor, /*!< \brief fill with the an even darker color than JKQTPFFCMDarkerColor */
+        JKQTPFFCMLighterAndTransparentColor, /*!< \brief fill with the a lighter color, that is in addition a bit transparent */
+        JKQTPFFCMEvenLighterAndTransparentColor, /*!< \brief fill with the an even lighter color  than JKQTPFFCMLighterColor, that is in addition a bit transparent */
+        JKQTPFFCMDarkerAndTransparentColor, /*!< \brief fill with the a darker color, that is in addition a bit transparent */
+        JKQTPFFCMEvenDarkerAndTransparentColor, /*!< \brief fill with the an even darker color than JKQTPFFCMDarkerColor, that is in addition a bit transparent */
+        JKQTPFFCMLighterAndNonTransparentColor, /*!< \brief fill with the a lighter color, that is non-transparent (even if the basecolor had some transparency)  */
+        JKQTPFFCMEvenLighterAndNonTransparentColor, /*!< \brief fill with the an even lighter color  than JKQTPFFCMLighterColor, that is non-transparent (even if the basecolor had some transparency)  */
+        JKQTPFFCMDarkerAndNonTransparentColor, /*!< \brief fill with the a darker color, that is non-transparent (even if the basecolor had some transparency)  */
+        JKQTPFFCMEvenDarkerAndNonTransparentColor, /*!< \brief fill with the an even darker color than JKQTPFFCMDarkerColor, that is non-transparent (even if the basecolor had some transparency)  */
+
+        JKQTPFFCMmax=JKQTPFFCMEvenDarkerAndNonTransparentColor
+    };
+    /** \brief for compatibility: use one of several predefined settings to iitialize object */
+    JKQTPColorDerivationMode(PredefinedModes mode=JKQTPFFCMSameColor);
+    /** \brief initialize object from a string (calls fromString() ) */
+    JKQTPColorDerivationMode(const QString& mode);
+
+    enum ColorChangeMode {
+        SameColor,
+        ReplaceColorAndTransparency,
+        ReplaceColorNotTransparency,
+        DarkerColor,
+        LighterColor,
+        InvertColor
+    };
+    /** \brif specifies how the color should change */
+    ColorChangeMode colorModification;
+    /** \brief replacement color when colorModification==ColorChangeMode::ReplaceColor */
+    QColor targetColor;
+    /** \brief strength of colorModification-settings, such as ColorChangeMode::DarkerColor or ColorChangeMode::LighterColor */
+    float colorModificationStrength;
+
+    enum TransparencyChangeMode {
+        SameTransparency,
+        ReplaceTransparency,
+        MoreTransparent,
+        LessTransparent
+    };
+
+    /** \brief specifies how the transparency of the color chould change */
+    TransparencyChangeMode transparencyModification;
+    /** \brief target transparency (0:non-transparennt .. 1:fully-transparent, i.e. 1-alphaF!!!) for TransparencyChangeMode::ReplaceTransparency */
+    float targetTransparency;
+    /** \brief strength of transparencyModification-settings, such as TransparencyChangeMode::MoreTransparent or TransparencyChangeMode::LessTransparent */
+    float transparencyModficationStrength;
+
+    /** \brief convert object contents into a string */
+    QString toString() const;
+    /** \brief read values from a string */
+    static JKQTPColorDerivationMode fromString(const QString& mode);
+    /** \brief apply the modifications encoded in this object to a given color */
+    QColor apply(const QColor& basecolor) const;
+
+    /** \brief compares two objects for equality */
+    bool operator==(const JKQTPColorDerivationMode& other) const;
+
+    /** \brief determines whether the current object equals a default-initialized object with the given parameter, i.e. this is equivalent to calling \code operato==(JKQTPColorDerivationMode(other)) \endcode */
+    bool operator==(const PredefinedModes& other) const;
+
 };
 
 /** \brief use a JKQTPColorDerivationMode to derive a color from \a col as specified
@@ -343,7 +395,9 @@ enum JKQTPCADrawMode {
     JKQTPCADMTickLabelsAxisLabel, /*!< \brief draw axis tick labels and axisLabel */
     JKQTPCADMTickLabels, /*!< \brief draw axis tick labels */
     JKQTPCADMTicks, /*!< \brief draw axis with ticks */
-    JKQTPCADMnone /*!< \brief draw no axis */
+    JKQTPCADMnone, /*!< \brief draw no axis */
+
+    JKQTPCADMmax=JKQTPCADMnone
 };
 
 /** \brief determines whether JKQTPCADrawMode has the line
@@ -388,6 +442,8 @@ enum JKQTPCALabelType {
     JKQTPCALTdate, /*!< \brief show numbers as dates \image html JKQTPCALTdate.png */
     JKQTPCALTtime, /*!< \brief show numbers as times \image html JKQTPCALTtime.png*/
     JKQTPCALTdatetime, /*!< \brief show numbers as times */
+
+    JKQTPCALTmax=JKQTPCALTdatetime
 };
 
 
@@ -398,6 +454,8 @@ enum JKQTPLabelTickMode {
     JKQTPLTMLinOrPower=0, /*!< \brief linear, or log, depending on whether the axis is log */
     JKQTPLTMLin, /*!< \brief always linear (even for log-axes) */
     JKQTPLTMPower, /*!< \brief powers (of the log-base) */
+
+    JKQTPLTMmax=JKQTPLTMPower
 };
 
 /** \brief converts a JKQTPLabelTickMode variable into a human-readable string
@@ -427,7 +485,8 @@ JKQTPLOTTER_LIB_EXPORT JKQTPCALabelType String2JKQTPCALabelType(const QString& p
 enum JKQTPLabelPosition {
     JKQTPLabelMin=0,            /*!< \brief the axis label is near the min value of the axis (left/bottom) */
     JKQTPLabelMax,            /*!< \brief the axis label is near the max value of the axis (right/top) */
-    JKQTPLabelCenter          /*!< \brief the label is at the center of the axis */
+    JKQTPLabelCenter,          /*!< \brief the label is at the center of the axis */
+    JKQTPLabelPositionMax=JKQTPLabelCenter
 };
 
 
@@ -456,7 +515,9 @@ enum JKQTPKeyPosition {
     JKQTPKeyInsideTopRight,             /*!< \brief the key is positioned inside on the right side of the graph, but inside the graph*/
     JKQTPKeyInsideTopLeft,              /*!< \brief the key is positioned inside on the left side of the graph */
     JKQTPKeyInsideBottomLeft,               /*!< \brief the key is positioned inside on the upper bound of the graph */
-    JKQTPKeyInsideBottomRight             /*!< \brief the key is positioned inside on the lower bound of the graph */
+    JKQTPKeyInsideBottomRight,             /*!< \brief the key is positioned inside on the lower bound of the graph */
+
+    JKQTPKeyPositionMax=JKQTPKeyInsideBottomRight
 };
 
 
@@ -474,9 +535,11 @@ JKQTPLOTTER_LIB_EXPORT JKQTPKeyPosition String2JKQTPKeyPosition(const QString& p
  * \ingroup jkqtpplottersupprt
  */
 enum JKQTPKeyLayout {
-    JKQTPKeyLayoutOneColumn,            /*!< \brief the key consists of one column */
+    JKQTPKeyLayoutOneColumn=0,            /*!< \brief the key consists of one column */
     JKQTPKeyLayoutOneRow,            /*!< \brief the key consists of one row */
     JKQTPKeyLayoutMultiColumn,           /*!< \brief the key consists of multiple columns */
+
+    JKQTPKeyLayoutMax=JKQTPKeyLayoutMultiColumn
 };
 
 

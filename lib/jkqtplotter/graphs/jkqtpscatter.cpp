@@ -308,7 +308,7 @@ JKQTPXYParametrizedScatterGraph::JKQTPXYParametrizedScatterGraph(JKQTBasePlotter
     gridDeltaX=1;
     gridDeltaY=1;
     gridSymbolFractionSize=0.9;
-    symbolFillDerivationMode=JKQTPFFCMLighterColor;
+    symbolFillDerivationMode=JKQTPColorDerivationMode::JKQTPFFCMLighterColor;
     if (parent) {
         symbolFillDerivationMode=parent->getCurrentPlotterStyle().graphsStyle.defaultGraphStyle.fillColorDerivationMode;
     }

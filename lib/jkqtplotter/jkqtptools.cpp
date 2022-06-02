@@ -376,153 +376,352 @@ bool JKQTPCADrawModeHasAxisLabel(JKQTPCADrawMode pos)
     return (pos==JKQTPCADMcomplete) || (pos==JKQTPCADMTicksTickLabelsAxisLabel) || (pos==JKQTPCADMTickLabelsAxisLabel);
 }
 
-QString JKQTPColorDerivationMode2String(JKQTPColorDerivationMode mode)
+
+JKQTPColorDerivationMode::JKQTPColorDerivationMode(PredefinedModes mode):
+    colorModification(ColorChangeMode::SameColor),
+    targetColor("black"),
+    colorModificationStrength(200),
+    transparencyModification(TransparencyChangeMode::SameTransparency),
+    targetTransparency(0.5),
+    transparencyModficationStrength(0.66)
 {
     switch(mode) {
-        case JKQTPFFCMFullyTransparentColor: return "transparent";
-        case JKQTPFFCMBlack: return "black";
-        case JKQTPFFCMWhite: return "white";
-        case JKQTPFFCMGrey25: return "grey25";
-        case JKQTPFFCMGrey50: return "grey50";
-        case JKQTPFFCMGrey75: return "grey75";
-        case JKQTPFFCMBlackTransparent: return "black_transparent";
-        case JKQTPFFCMWhiteTransparent: return "white_transparent";
-        case JKQTPFFCMGrey25Transparent: return "grey25_transparent";
-        case JKQTPFFCMGrey50Transparent: return "grey50_transparent";
-        case JKQTPFFCMGrey75Transparent: return "grey75_transparent";
-        case JKQTPFFCMSameColor: return "same";
-        case JKQTPFFCMInvertedColor: return "inverted";
-        case JKQTPFFCMInvertedTransparentColor: return "inverted_transparent";
-        case JKQTPFFCMInvertedNonTransparentColor: return "inverted_non_transparent";
-        case JKQTPFFCMLighterColor: return "lighter";
-        case JKQTPFFCMEvenLighterColor: return "even_lighter";
-        case JKQTPFFCMDarkerColor: return "darker";
-        case JKQTPFFCMEvenDarkerColor: return "even_darker";
-        case JKQTPFFCMLighterAndTransparentColor: return "lighter_transparent";
-        case JKQTPFFCMEvenLighterAndTransparentColor: return "even_lighter_transparent";
-        case JKQTPFFCMDarkerAndTransparentColor: return "darker_transparent";
-        case JKQTPFFCMEvenDarkerAndTransparentColor: return "even_darker_transparent";
-        case JKQTPFFCMLighterAndNonTransparentColor: return "lighter_non_transparent";
-        case JKQTPFFCMEvenLighterAndNonTransparentColor: return "even_lighter_non_transparent";
-        case JKQTPFFCMDarkerAndNonTransparentColor: return "darker_non_transparent";
-        case JKQTPFFCMEvenDarkerAndNonTransparentColor: return "even_darker_non_transparent";
-        case JKQTPFFCMSameMoreTransparentColor: return "same_more_transparent";
-        case JKQTPFFCMSameEvenMoreTransparentColor: return "same_even_more_transparent";
-        case JKQTPFFCMSameLessTransparentColor: return "same_less_transparent";
-        case JKQTPFFCMSameEvenLessTransparentColor: return "same_even_less_transparent";
-        case JKQTPFFCMSameNonTransparentColor: return "same_non_transparent";
+    case JKQTPFFCMFullyTransparentColor:
+        targetColor=QColor(Qt::transparent);
+        colorModification=ColorChangeMode::ReplaceColorAndTransparency;
+        break;
+    case JKQTPFFCMBlack:
+        targetColor=QColor(Qt::black);
+        colorModification=ColorChangeMode::ReplaceColorAndTransparency;
+        break;
+    case JKQTPFFCMWhite:
+        targetColor=QColor(Qt::white);
+        colorModification=ColorChangeMode::ReplaceColorAndTransparency;
+        break;
+    case JKQTPFFCMGrey25:
+        targetColor=QColor(64,64,64);
+        colorModification=ColorChangeMode::ReplaceColorAndTransparency;
+        break;
+    case JKQTPFFCMGrey50:
+        targetColor=QColor(127,127,127);
+        colorModification=ColorChangeMode::ReplaceColorAndTransparency;
+        break;
+    case JKQTPFFCMGrey75:
+        targetColor=QColor(191,191,191);
+        colorModification=ColorChangeMode::ReplaceColorAndTransparency;
+        break;
+    case JKQTPFFCMBlackTransparent:
+        targetColor=QColor(0,0,0,175);
+        colorModification=ColorChangeMode::ReplaceColorAndTransparency;
+        break;
+    case JKQTPFFCMWhiteTransparent:
+        targetColor=QColor(255,255,255,175);
+        colorModification=ColorChangeMode::ReplaceColorAndTransparency;
+        break;
+    case JKQTPFFCMGrey25Transparent:
+        targetColor=QColor(64,64,64,175);
+        colorModification=ColorChangeMode::ReplaceColorAndTransparency;
+        break;
+    case JKQTPFFCMGrey50Transparent:
+        targetColor=QColor(127,127,127,175);
+        colorModification=ColorChangeMode::ReplaceColorAndTransparency;
+        break;
+    case JKQTPFFCMGrey75Transparent:
+        targetColor=QColor(191,191,191,175);
+        colorModification=ColorChangeMode::ReplaceColorAndTransparency;
+        break;
+    case JKQTPFFCMSameColor:
+        break;
+    case JKQTPFFCMSameNonTransparentColor:
+        transparencyModification=TransparencyChangeMode::ReplaceTransparency;
+        targetTransparency=0.0;
+        break;
+    case JKQTPFFCMSameMoreTransparentColor:
+        transparencyModification=TransparencyChangeMode::MoreTransparent;
+        transparencyModficationStrength=0.33;
+        break;
+    case JKQTPFFCMSameEvenMoreTransparentColor:
+        transparencyModification=TransparencyChangeMode::MoreTransparent;
+        transparencyModficationStrength=0.66;
+        break;
+    case JKQTPFFCMSameLessTransparentColor:
+        transparencyModification=TransparencyChangeMode::LessTransparent;
+        transparencyModficationStrength=0.33;
+        break;
+    case JKQTPFFCMSameEvenLessTransparentColor:
+        transparencyModification=TransparencyChangeMode::LessTransparent;
+        transparencyModficationStrength=0.66;
+
+    case JKQTPFFCMInvertedColor:
+        colorModification=ColorChangeMode::InvertColor;
+        break;
+    case JKQTPFFCMInvertedTransparentColor:
+        colorModification=ColorChangeMode::InvertColor;
+        transparencyModification=TransparencyChangeMode::MoreTransparent;
+        transparencyModficationStrength=0.33;
+        break;
+    case JKQTPFFCMInvertedNonTransparentColor:
+        colorModification=ColorChangeMode::InvertColor;
+        transparencyModification=TransparencyChangeMode::ReplaceTransparency;
+        targetTransparency=0.0;
+        break;
+
+    case JKQTPFFCMLighterColor:
+        colorModification=ColorChangeMode::LighterColor;
+        colorModificationStrength=150;
+        break;
+    case JKQTPFFCMLighterAndTransparentColor:
+        colorModification=ColorChangeMode::LighterColor;
+        colorModificationStrength=150;
+        transparencyModification=TransparencyChangeMode::MoreTransparent;
+        transparencyModficationStrength=0.33;
+        break;
+    case JKQTPFFCMLighterAndNonTransparentColor:
+        colorModification=ColorChangeMode::LighterColor;
+        colorModificationStrength=150;
+        transparencyModification=TransparencyChangeMode::ReplaceTransparency;
+        targetTransparency=0.0;
+        break;
+
+    case JKQTPFFCMEvenLighterColor:
+        colorModification=ColorChangeMode::LighterColor;
+        colorModificationStrength=200;
+        break;
+    case JKQTPFFCMEvenLighterAndTransparentColor:
+        colorModification=ColorChangeMode::LighterColor;
+        colorModificationStrength=200;
+        transparencyModification=TransparencyChangeMode::MoreTransparent;
+        transparencyModficationStrength=0.33;
+        break;
+    case JKQTPFFCMEvenLighterAndNonTransparentColor:
+        colorModification=ColorChangeMode::LighterColor;
+        colorModificationStrength=200;
+        transparencyModification=TransparencyChangeMode::ReplaceTransparency;
+        targetTransparency=0.0;
+        break;
+
+
+    case JKQTPFFCMDarkerColor:
+        colorModification=ColorChangeMode::DarkerColor;
+        colorModificationStrength=200;
+        break;
+    case JKQTPFFCMDarkerAndTransparentColor:
+        colorModification=ColorChangeMode::DarkerColor;
+        colorModificationStrength=200;
+        transparencyModification=TransparencyChangeMode::MoreTransparent;
+        transparencyModficationStrength=0.33;
+        break;
+    case JKQTPFFCMDarkerAndNonTransparentColor:
+        colorModification=ColorChangeMode::DarkerColor;
+        colorModificationStrength=200;
+        transparencyModification=TransparencyChangeMode::ReplaceTransparency;
+        targetTransparency=0.0;
+        break;
+
+    case JKQTPFFCMEvenDarkerColor:
+        colorModification=ColorChangeMode::DarkerColor;
+        colorModificationStrength=300;
+        break;
+    case JKQTPFFCMEvenDarkerAndTransparentColor:
+        colorModification=ColorChangeMode::DarkerColor;
+        colorModificationStrength=300;
+        transparencyModification=TransparencyChangeMode::MoreTransparent;
+        transparencyModficationStrength=0.33;
+        break;
+    case JKQTPFFCMEvenDarkerAndNonTransparentColor:
+        colorModification=ColorChangeMode::DarkerColor;
+        colorModificationStrength=300;
+        transparencyModification=TransparencyChangeMode::ReplaceTransparency;
+        targetTransparency=0.0;
+        break;
     }
-    return "same";
+}
+
+JKQTPColorDerivationMode::JKQTPColorDerivationMode(const QString &mode):
+    JKQTPColorDerivationMode()
+{
+    *this=fromString(mode);
+}
+
+QString JKQTPColorDerivationMode::toString() const
+{
+    // some shortcut strings
+    if (*this == JKQTPFFCMFullyTransparentColor) return "transparent";
+    if (*this == JKQTPFFCMSameColor) return "same";
+    if (*this == JKQTPFFCMInvertedColor) return "inverted";
+    if (*this == JKQTPFFCMWhite) return "white";
+    if (*this == JKQTPFFCMSameNonTransparentColor) return "same_non_transparent";
+    if (*this == JKQTPFFCMLighterColor) return "lighter";
+    if (*this == JKQTPFFCMDarkerColor) return "darker";
+    if (*this == JKQTPFFCMLighterAndTransparentColor) return "lighter_transparent";
+    if (*this == JKQTPFFCMDarkerAndTransparentColor) return "darker_transparent";
+
+    QString name;
+    switch (colorModification) {
+    case ColorChangeMode::SameColor:
+        name="same_color";
+        break;
+    case ColorChangeMode::ReplaceColorNotTransparency:
+        name="replace_color_not_transparency("+jkqtp_QColor2String(targetColor)+")";
+        break;
+    case ColorChangeMode::ReplaceColorAndTransparency:
+        name="replace_color_and_transparency("+jkqtp_QColor2String(targetColor)+")";
+        break;
+    case ColorChangeMode::DarkerColor:
+        name="darker_color("+QString::number(colorModificationStrength)+")";
+        break;
+    case ColorChangeMode::LighterColor:
+        name="lighter_color("+QString::number(colorModificationStrength)+")";
+        break;
+    case ColorChangeMode::InvertColor:
+        name="inverted_color";
+        break;
+    }
+
+    // alpha=0: transparent, alpha=1: ppaque
+    switch (transparencyModification) {
+    case TransparencyChangeMode::SameTransparency:
+        break;
+    case TransparencyChangeMode::ReplaceTransparency:
+        name+=",transparency("+QString::number(targetTransparency*100,'f',1)+")";
+        break;
+    case TransparencyChangeMode::MoreTransparent:
+        name+=",more_transparent("+QString::number(transparencyModficationStrength,'f',3)+")";
+        break;
+    case TransparencyChangeMode::LessTransparent:
+        name+=",less_transparent("+QString::number(transparencyModficationStrength,'f',3)+")";
+        break;
+    }
+    return name;
+}
+
+JKQTPColorDerivationMode JKQTPColorDerivationMode::fromString(const QString &mode)
+{
+    const QString m=mode.trimmed().toLower();
+
+    // legacy strings
+    if (m=="transparent" || m=="no_color" || m=="none") return JKQTPColorDerivationMode(JKQTPFFCMFullyTransparentColor);
+    if (m=="same"||m=="same_color") return JKQTPColorDerivationMode(JKQTPFFCMSameColor);
+    if (m=="black") return JKQTPColorDerivationMode(JKQTPFFCMBlack);
+    if (m=="white") return JKQTPColorDerivationMode(JKQTPFFCMWhite);
+    if (m=="grey25") return JKQTPColorDerivationMode(JKQTPFFCMGrey25);
+    if (m=="grey50") return JKQTPColorDerivationMode(JKQTPFFCMGrey50);
+    if (m=="grey75") return JKQTPColorDerivationMode(JKQTPFFCMGrey75);
+    if (m=="transparent_black" || m=="black_transparent") return JKQTPColorDerivationMode(JKQTPFFCMBlackTransparent);
+    if (m=="transparent_white" || m=="white_transparent") return JKQTPColorDerivationMode(JKQTPFFCMWhiteTransparent);
+    if (m=="transparent_grey25" || m=="grey25_transparent") return JKQTPColorDerivationMode(JKQTPFFCMGrey25Transparent);
+    if (m=="transparent_grey50" || m=="grey50_transparent") return JKQTPColorDerivationMode(JKQTPFFCMGrey50Transparent);
+    if (m=="transparent_grey75" || m=="grey75_transparent") return JKQTPColorDerivationMode(JKQTPFFCMGrey75Transparent);
+    if (m=="inverted") return JKQTPColorDerivationMode(JKQTPFFCMInvertedColor);
+    if (m=="transparent_inverted" || m=="inverted_transparent") return JKQTPColorDerivationMode(JKQTPFFCMInvertedTransparentColor);
+    if (m=="non_transparent_inverted" || m=="inverted_non_transparent") return JKQTPColorDerivationMode(JKQTPFFCMInvertedNonTransparentColor);
+    if (m=="lighter") return JKQTPColorDerivationMode(JKQTPFFCMLighterColor);
+    if (m=="even_lighter") return JKQTPColorDerivationMode(JKQTPFFCMEvenLighterColor);
+    if (m=="darker") return JKQTPColorDerivationMode(JKQTPFFCMDarkerColor);
+    if (m=="even_darker") return JKQTPColorDerivationMode(JKQTPFFCMEvenDarkerColor);
+    if (m=="lighter_transparent"||m=="lighter_and_transparent") return JKQTPColorDerivationMode(JKQTPFFCMLighterAndTransparentColor);
+    if (m=="even_lighter_transparent"||m=="even_lighter_and_transparent") return JKQTPColorDerivationMode(JKQTPFFCMEvenLighterAndTransparentColor);
+    if (m=="darker_transparent"||m=="darker_and_transparent") return JKQTPColorDerivationMode(JKQTPFFCMDarkerAndTransparentColor);
+    if (m=="even_darker_transparent"||m=="even_darker_and_transparent") return JKQTPColorDerivationMode(JKQTPFFCMEvenDarkerAndTransparentColor);
+    if (m=="lighter_non_transparent"||m=="lighter_and_non_transparent") return JKQTPColorDerivationMode(JKQTPFFCMLighterAndNonTransparentColor);
+    if (m=="even_lighter_non_transparent"||m=="even_lighter_and_non_transparent") return JKQTPColorDerivationMode(JKQTPFFCMEvenLighterAndNonTransparentColor);
+    if (m=="darker_non_transparent"||m=="darker_and_non_transparent") return JKQTPColorDerivationMode(JKQTPFFCMDarkerAndNonTransparentColor);
+    if (m=="even_darker_non_transparent"||m=="even_darker_and_non_transparent") return JKQTPColorDerivationMode(JKQTPFFCMEvenDarkerAndNonTransparentColor);
+    if (m=="same_more_transparent"||m=="more_transparent") return JKQTPColorDerivationMode(JKQTPFFCMSameMoreTransparentColor);
+    if (m=="same_even_more_transparent"||m=="even_more_transparent") return JKQTPColorDerivationMode(JKQTPFFCMSameEvenMoreTransparentColor);
+    if (m=="same_less_transparent"||m=="less_transparent") return JKQTPColorDerivationMode(JKQTPFFCMSameLessTransparentColor);
+    if (m=="same_even_less_transparent"||m=="even_less_transparent") return JKQTPColorDerivationMode(JKQTPFFCMSameEvenLessTransparentColor);
+    if (m=="same_non_transparent" || m=="non_transparent") return JKQTPColorDerivationMode(JKQTPFFCMSameNonTransparentColor);
+
+    // cleanly analyze string
+
+
+    return JKQTPColorDerivationMode();
+}
+
+QColor JKQTPColorDerivationMode::apply(const QColor& basecolor) const
+{
+    QColor c=basecolor;
+    switch (colorModification) {
+    case ColorChangeMode::SameColor:
+        c=basecolor;
+        break;
+    case ColorChangeMode::ReplaceColorNotTransparency:
+        c=targetColor;
+        c.setAlphaF(basecolor.alphaF());
+        break;
+    case ColorChangeMode::ReplaceColorAndTransparency:
+        c=targetColor;
+        break;
+    case ColorChangeMode::DarkerColor:
+        c=c.darker(static_cast<int>(colorModificationStrength));
+        break;
+    case ColorChangeMode::LighterColor:
+        c=c.lighter(static_cast<int>(colorModificationStrength));
+        break;
+    case ColorChangeMode::InvertColor:
+        c=QColor(255-c.red(), 255-c.green(), 255-c.blue(), c.alpha());
+        break;
+    }
+
+    // alpha=0: transparent, alpha=1: ppaque
+    switch (transparencyModification) {
+    case TransparencyChangeMode::SameTransparency:
+        c.setAlphaF(c.alphaF());
+        break;
+    case TransparencyChangeMode::ReplaceTransparency:
+        c.setAlphaF(1.0-targetTransparency);
+        break;
+    case TransparencyChangeMode::MoreTransparent:
+        c.setAlphaF(c.alphaF()-transparencyModficationStrength*c.alphaF());
+        break;
+    case TransparencyChangeMode::LessTransparent:
+        c.setAlphaF(c.alphaF()+(1.0-c.alphaF())*transparencyModficationStrength);
+        break;
+    }
+    return c;
+}
+
+bool JKQTPColorDerivationMode::operator==(const JKQTPColorDerivationMode &other) const
+{
+    if (colorModification!=other.colorModification) return false;
+    else {
+        if (colorModification==ColorChangeMode::ReplaceColorNotTransparency || colorModification==ColorChangeMode::ReplaceColorAndTransparency) {
+            if (targetColor!=other.targetColor) return false;
+        } else if (colorModification==ColorChangeMode::DarkerColor || colorModification==ColorChangeMode::LighterColor) {
+            if (colorModificationStrength!=other.colorModificationStrength) return false;
+        }
+    }
+    if (transparencyModification!=other.transparencyModification) return false;
+    else {
+        if (transparencyModification==TransparencyChangeMode::ReplaceTransparency) {
+            if (targetTransparency!=other.targetTransparency) return false;
+        } else if (transparencyModification==TransparencyChangeMode::MoreTransparent || transparencyModification==TransparencyChangeMode::LessTransparent) {
+            if (transparencyModficationStrength!=other.transparencyModficationStrength) return false;
+        }
+    }
+    return true;
+}
+
+bool JKQTPColorDerivationMode::operator==(const JKQTPColorDerivationMode::PredefinedModes &other) const
+{
+    return operator==(JKQTPColorDerivationMode(other));
+}
+
+
+QString JKQTPColorDerivationMode2String(JKQTPColorDerivationMode mode)
+{
+    return mode.toString();
 }
 
 JKQTPColorDerivationMode String2JKQTPColorDerivationMode(const QString &mode)
 {
-    const QString m=mode.trimmed().toLower();
-    if (m=="transparent" || m=="no_color" || m=="none") return JKQTPFFCMFullyTransparentColor;
-    if (m=="same"||m=="same_color") return JKQTPFFCMSameColor;
-    if (m=="black") return JKQTPFFCMBlack;
-    if (m=="white") return JKQTPFFCMWhite;
-    if (m=="grey25") return JKQTPFFCMGrey25;
-    if (m=="grey50") return JKQTPFFCMGrey50;
-    if (m=="grey75") return JKQTPFFCMGrey75;
-    if (m=="transparent_black" || m=="black_transparent") return JKQTPFFCMBlackTransparent;
-    if (m=="transparent_white" || m=="white_transparent") return JKQTPFFCMWhiteTransparent;
-    if (m=="transparent_grey25" || m=="grey25_transparent") return JKQTPFFCMGrey25Transparent;
-    if (m=="transparent_grey50" || m=="grey50_transparent") return JKQTPFFCMGrey50Transparent;
-    if (m=="transparent_grey75" || m=="grey75_transparent") return JKQTPFFCMGrey75Transparent;
-    if (m=="inverted") return JKQTPFFCMInvertedColor;
-    if (m=="transparent_inverted" || m=="inverted_transparent") return JKQTPFFCMInvertedTransparentColor;
-    if (m=="non_transparent_inverted" || m=="inverted_non_transparent") return JKQTPFFCMInvertedNonTransparentColor;
-    if (m=="lighter") return JKQTPFFCMLighterColor;
-    if (m=="even_lighter") return JKQTPFFCMEvenLighterColor;
-    if (m=="darker") return JKQTPFFCMDarkerColor;
-    if (m=="even_darker") return JKQTPFFCMEvenDarkerColor;
-    if (m=="lighter_transparent"||m=="lighter_and_transparent") return JKQTPFFCMLighterAndTransparentColor;
-    if (m=="even_lighter_transparent"||m=="even_lighter_and_transparent") return JKQTPFFCMEvenLighterAndTransparentColor;
-    if (m=="darker_transparent"||m=="darker_and_transparent") return JKQTPFFCMDarkerAndTransparentColor;
-    if (m=="even_darker_transparent"||m=="even_darker_and_transparent") return JKQTPFFCMEvenDarkerAndTransparentColor;
-    if (m=="lighter_non_transparent"||m=="lighter_and_non_transparent") return JKQTPFFCMLighterAndNonTransparentColor;
-    if (m=="even_lighter_non_transparent"||m=="even_lighter_and_non_transparent") return JKQTPFFCMEvenLighterAndNonTransparentColor;
-    if (m=="darker_non_transparent"||m=="darker_and_non_transparent") return JKQTPFFCMDarkerAndNonTransparentColor;
-    if (m=="even_darker_non_transparent"||m=="even_darker_and_non_transparent") return JKQTPFFCMEvenDarkerAndNonTransparentColor;
-    if (m=="same_more_transparent"||m=="more_transparent") return JKQTPFFCMSameMoreTransparentColor;
-    if (m=="same_even_more_transparent"||m=="even_more_transparent") return JKQTPFFCMSameEvenMoreTransparentColor;
-    if (m=="same_less_transparent"||m=="less_transparent") return JKQTPFFCMSameLessTransparentColor;
-    if (m=="same_even_less_transparent"||m=="even_less_transparent") return JKQTPFFCMSameEvenLessTransparentColor;
-    if (m=="same_non_transparent" || m=="non_transparent") return JKQTPFFCMSameNonTransparentColor;
-    return JKQTPFFCMSameColor;
+    return JKQTPColorDerivationMode::fromString(mode);
 }
 
 QColor JKQTPGetDerivedColor(JKQTPColorDerivationMode mode, const QColor &basecolor)
 {
-    switch(mode) {
-        case JKQTPFFCMFullyTransparentColor: return QColor(Qt::transparent);
-        case JKQTPFFCMBlack: return QColor(Qt::black);
-        case JKQTPFFCMWhite: return QColor(Qt::white);
-        case JKQTPFFCMGrey25: return QColor(64,64,64);
-        case JKQTPFFCMGrey50: return QColor(127,127,127);
-        case JKQTPFFCMGrey75: return QColor(191,191,191);
-        case JKQTPFFCMBlackTransparent: return QColor(0,0,0,175);
-        case JKQTPFFCMWhiteTransparent: return QColor(255,255,255,175);
-        case JKQTPFFCMGrey25Transparent: return QColor(64,64,64,175);
-        case JKQTPFFCMGrey50Transparent: return QColor(127,127,127,175);
-        case JKQTPFFCMGrey75Transparent: return QColor(191,191,191,175);
-        case JKQTPFFCMSameColor:
-        case JKQTPFFCMSameNonTransparentColor: {
-            QColor c=basecolor;
-            if (mode==JKQTPFFCMSameNonTransparentColor) c.setAlphaF(1.0);
-            return c;
-        }
-        case JKQTPFFCMSameMoreTransparentColor: { QColor c=basecolor; c.setAlphaF(0.66*c.alphaF()); return c; }
-        case JKQTPFFCMSameEvenMoreTransparentColor: { QColor c=basecolor; c.setAlphaF(0.33*c.alphaF()); return c; }
-        case JKQTPFFCMSameLessTransparentColor: { QColor c=basecolor; c.setAlphaF(c.alphaF()+(1.0-c.alphaF())*0.33); return c; }
-        case JKQTPFFCMSameEvenLessTransparentColor: { QColor c=basecolor; c.setAlphaF(c.alphaF()+(1.0-c.alphaF())*0.66); return c; }
-        case JKQTPFFCMInvertedColor:
-        case JKQTPFFCMInvertedTransparentColor:
-        case JKQTPFFCMInvertedNonTransparentColor: {
-            QColor c(255-basecolor.red(), 255-basecolor.green(), 255-basecolor.blue(), basecolor.alpha());
-            if (mode==JKQTPFFCMInvertedTransparentColor) c.setAlphaF(0.66*c.alphaF());
-            if (mode==JKQTPFFCMInvertedNonTransparentColor) c.setAlphaF(1.0);
-            return c;
-        }
-        case JKQTPFFCMLighterColor:
-        case JKQTPFFCMLighterAndTransparentColor:
-        case JKQTPFFCMLighterAndNonTransparentColor: {
-            QColor c=basecolor.lighter();
-            if (basecolor==QColor("black")) c=QColor(64,64,64);
-            if (mode==JKQTPFFCMLighterAndTransparentColor) c.setAlphaF(0.66*c.alphaF());
-            if (mode==JKQTPFFCMLighterAndNonTransparentColor) c.setAlphaF(1.0);
-            return c;
-        }
-        case JKQTPFFCMEvenLighterColor:
-        case JKQTPFFCMEvenLighterAndTransparentColor:
-        case JKQTPFFCMEvenLighterAndNonTransparentColor: {
-            QColor c=basecolor.lighter().lighter();
-            if (basecolor==QColor("black")) c=QColor(127,127,127);
-            if (mode==JKQTPFFCMEvenLighterAndTransparentColor) c.setAlphaF(0.66*c.alphaF());
-            if (mode==JKQTPFFCMEvenLighterAndNonTransparentColor) c.setAlphaF(1.0);
-            return c;
-        }
-        case JKQTPFFCMDarkerColor:
-        case JKQTPFFCMDarkerAndTransparentColor:
-        case JKQTPFFCMDarkerAndNonTransparentColor: {
-            QColor c=basecolor.darker();
-            if (basecolor==QColor("white")) c= QColor(191,191,191);
-            if (mode==JKQTPFFCMDarkerAndTransparentColor) c.setAlphaF(0.66*c.alphaF());
-            if (mode==JKQTPFFCMDarkerAndNonTransparentColor) c.setAlphaF(1.0);
-            return c;
-        }
-        case JKQTPFFCMEvenDarkerColor:
-        case JKQTPFFCMEvenDarkerAndTransparentColor:
-        case JKQTPFFCMEvenDarkerAndNonTransparentColor: {
-            QColor c=basecolor.darker().darker();
-            if (basecolor==QColor("white")) c= QColor(127,127,127);
-            if (mode==JKQTPFFCMEvenDarkerAndTransparentColor) c.setAlphaF(0.66*c.alphaF());
-            if (mode==JKQTPFFCMEvenDarkerAndNonTransparentColor) c.setAlphaF(1.0);
-            return c;
-        }
-    }
-    return basecolor;
+    return mode.apply(basecolor);
 }
 
 QString JKQTPUserActionMarkerType2String(JKQTPUserActionMarkerType act)

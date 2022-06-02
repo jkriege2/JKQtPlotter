@@ -36,7 +36,8 @@ JKQTCOMMON_LIB_EXPORT QString jkqtp_QPenStyle2String(Qt::PenStyle style);
  * \ingroup jkqtptools_string
  */
 JKQTCOMMON_LIB_EXPORT Qt::PenStyle jkqtp_String2QPenStyle(const QString& style);
-/** \brief converts a QT::BrushStyle into a string
+
+/** \brief converts a Qt::BrushStyle into a string
  * \ingroup jkqtptools_string
  */
 JKQTCOMMON_LIB_EXPORT QString jkqtp_QBrushStyle2String(Qt::BrushStyle style);
@@ -172,6 +173,11 @@ JKQTCOMMON_LIB_EXPORT std::string jkqtp_booltostr(bool data);
  */
 JKQTCOMMON_LIB_EXPORT QString jkqtp_rgbtostring(unsigned char r, unsigned char g, unsigned char b, unsigned char a=255, bool useSpecialTransparencySyntax=true);
 
+/** \brief list the (machine-readable) names of all predefined colors
+ * \ingroup jkqtptools_string
+ *
+ */
+JKQTCOMMON_LIB_EXPORT const QStringList& jkqtp_listNamedColors();
 /** \brief converts a QColor into a string using the jkqtp_rgbtostring() method.
  * \ingroup jkqtptools_string
  *
@@ -179,10 +185,20 @@ JKQTCOMMON_LIB_EXPORT QString jkqtp_rgbtostring(unsigned char r, unsigned char g
  */
 JKQTCOMMON_LIB_EXPORT QString jkqtp_QColor2String(QColor color, bool useSpecialTransparencySyntax=true);
 
+/** \brief converts a QString into a QColor, does not support the ,alpha%-notation, use jkqtp_String2QColor() for a full conversion!
+ * \ingroup jkqtptools_string
+ *
+ * This returns a QString which contains the name of named colors and the RGBA values in a QT readable form othertwise.
+ */
+JKQTCOMMON_LIB_EXPORT QColor jkqtp_lookupQColorName(const QString& color);
+
 /** \brief converts a QString into a QColor, compatible with jkqtp_QColor2String(QColor color);
  * \ingroup jkqtptools_string
  *
  * This returns a QString which contains the name of named colors and the RGBA values in a QT readable form othertwise.
+ * This function allows to add the alpha-value as \c "<color_name>,<alpha>" as integer betwee 0 and 255
+ * or as \c "<color_name>,<transparency_percent>%" in the range of 0..100 % (i.e. (1-transparency_percent/100)*255).
+ * Also \c "<color_name>,a<alpha_percent>%" in the range of 0..100 % (i.e. alpha_percent/100*255).
  */
 JKQTCOMMON_LIB_EXPORT QColor jkqtp_String2QColor(const QString& color);
 

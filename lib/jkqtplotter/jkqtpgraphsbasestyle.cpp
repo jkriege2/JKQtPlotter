@@ -14,11 +14,11 @@ JKQTGraphsSpecificStyleProperties::JKQTGraphsSpecificStyleProperties(JKQTPPlotSt
     defaultHeadDecoratorStyle(JKQTPLineDecoratorStyle::JKQTPDefaultLineDecorator),
     defaultHeadDecoratorSizeFactor(8.0),
     errorFillStyle(Qt::SolidPattern),
-    graphColorDerivationMode(JKQTPFFCMSameColor),
-    fillColorDerivationMode(JKQTPFFCMLighterColor),
-    errorColorDerivationMode(JKQTPFFCMDarkerColor),
-    errorFillColorDerivationMode(JKQTPFFCMLighterAndTransparentColor),
-    symbolFillColorDerivationMode(JKQTPFFCMLighterColor)
+    graphColorDerivationMode(JKQTPColorDerivationMode::JKQTPFFCMSameColor),
+    fillColorDerivationMode(JKQTPColorDerivationMode::JKQTPFFCMLighterColor),
+    errorColorDerivationMode(JKQTPColorDerivationMode::JKQTPFFCMDarkerColor),
+    errorFillColorDerivationMode(JKQTPColorDerivationMode::JKQTPFFCMLighterAndTransparentColor),
+    symbolFillColorDerivationMode(JKQTPColorDerivationMode::JKQTPFFCMLighterColor)
 {
     modifyForDefaultStyle(type);
 }
@@ -36,28 +36,28 @@ void JKQTGraphsSpecificStyleProperties::modifyForDefaultStyle(JKQTPPlotStyleType
     case JKQTPPlotStyleType::Default:
         break;
     case JKQTPPlotStyleType::Filled:
-        fillColorDerivationMode=JKQTPFFCMLighterAndTransparentColor;
+        fillColorDerivationMode=JKQTPColorDerivationMode::JKQTPFFCMLighterAndTransparentColor;
         break;
     case JKQTPPlotStyleType::Impulses:
         defaultLineWidth=3;
         break;
     case JKQTPPlotStyleType::Barchart:
         defaultLineWidth=0;
-        graphColorDerivationMode=JKQTPFFCMLighterColor;
-        fillColorDerivationMode=JKQTPFFCMLighterColor;
+        graphColorDerivationMode=JKQTPColorDerivationMode::JKQTPFFCMLighterColor;
+        fillColorDerivationMode=JKQTPColorDerivationMode::JKQTPFFCMLighterColor;
         break;
     case JKQTPPlotStyleType::Boxplot:
         defaultLineWidth=1;
-        fillColorDerivationMode=JKQTPFFCMWhite;
-        graphColorDerivationMode=JKQTPFFCMSameNonTransparentColor;
+        fillColorDerivationMode=JKQTPColorDerivationMode::JKQTPFFCMWhite;
+        graphColorDerivationMode=JKQTPColorDerivationMode::JKQTPFFCMSameNonTransparentColor;
         break;
     case JKQTPPlotStyleType::Annotation:
-        graphColorDerivationMode=JKQTPFFCMSameNonTransparentColor;
+        graphColorDerivationMode=JKQTPColorDerivationMode::JKQTPFFCMSameNonTransparentColor;
         defaultSymbolSize=16;
         break;
     case JKQTPPlotStyleType::Geometric:
-        graphColorDerivationMode=JKQTPFFCMSameNonTransparentColor;
-        fillColorDerivationMode=JKQTPFFCMFullyTransparentColor;
+        graphColorDerivationMode=JKQTPColorDerivationMode::JKQTPFFCMSameNonTransparentColor;
+        fillColorDerivationMode=JKQTPColorDerivationMode::JKQTPFFCMFullyTransparentColor;
         break;
     }
 }

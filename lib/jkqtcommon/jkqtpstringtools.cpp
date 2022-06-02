@@ -28,6 +28,7 @@ Copyright (c) 2008-2020 Jan W. Krieger (<jan@jkrieger.de>)
 #include <QSet>
 #include <QApplication>
 #include <QClipboard>
+#include <QGuiApplication>
 #include <QKeyEvent>
 #include <QAction>
 #include <QLocale>
@@ -502,6 +503,18 @@ static const struct RGBData {
 
 static const int rgbTblSize = sizeof(rgbTbl) / sizeof(RGBData);
 
+const QStringList& jkqtp_listNamedColors() {
+    static QStringList sl;
+    if (sl.size()==0) {
+        sl.reserve(rgbTblSize);
+        for (int i=0; i<rgbTblSize; i++) {
+            sl.push_back(rgbTbl[i].name);
+
+        }
+    }
+    return sl;
+}
+
 QString jkqtp_rgbtostring(unsigned char r, unsigned char g, unsigned char b, unsigned char a, bool useSpecialTransparencySyntax) {
     if (a==255) {// only for non-transparent colors
         for (int i=0; i<rgbTblSize; i++) {
@@ -530,42 +543,89 @@ QString jkqtp_QColor2String(QColor color, bool useSpecialTransparencySyntax) {
                                      useSpecialTransparencySyntax);
 }
 
+
+QColor jkqtp_lookupQColorName(const QString &color) {
+   const QString col=color.toLower().trimmed();
+   if (col=="window") return QGuiApplication::palette().color(QPalette::Window);
+   if (col=="windowtext") return QGuiApplication::palette().color(QPalette::WindowText);
+   if (col=="button") return QGuiApplication::palette().color(QPalette::Button);
+   if (col=="light") return QGuiApplication::palette().color(QPalette::Light);
+   if (col=="midlight") return QGuiApplication::palette().color(QPalette::Midlight);
+   if (col=="dark") return QGuiApplication::palette().color(QPalette::Dark);
+   if (col=="mid") return QGuiApplication::palette().color(QPalette::Mid);
+   if (col=="text") return QGuiApplication::palette().color(QPalette::Text);
+   if (col=="brightttext") return QGuiApplication::palette().color(QPalette::BrightText);
+   if (col=="base") return QGuiApplication::palette().color(QPalette::Base);
+   if (col=="window") return QGuiApplication::palette().color(QPalette::Window);
+   if (col=="shadow") return QGuiApplication::palette().color(QPalette::Shadow);
+   if (col=="highlight") return QGuiApplication::palette().color(QPalette::Highlight);
+   if (col=="highlightedtext") return QGuiApplication::palette().color(QPalette::HighlightedText);
+   if (col=="link") return QGuiApplication::palette().color(QPalette::Link);
+   if (col=="linkvisited") return QGuiApplication::palette().color(QPalette::LinkVisited);
+   if (col=="alternatebase") return QGuiApplication::palette().color(QPalette::AlternateBase);
+   if (col=="norole") return QGuiApplication::palette().color(QPalette::NoRole);
+   if (col=="tooltipbase") return QGuiApplication::palette().color(QPalette::ToolTipBase);
+   if (col=="tooltiptext") return QGuiApplication::palette().color(QPalette::ToolTipText);
+   if (col=="placeholdertext") return QGuiApplication::palette().color(QPalette::PlaceholderText);
+
+
+   for (int i=0; i<rgbTblSize; i++) {
+       if (col==rgbTbl[i].name) return QColor(rgbTbl[i].value);
+   }
+   return QColor(color);
+}
+
 QColor jkqtp_String2QColor(const QString &color)
 {
 #if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
-    QRegularExpression rxP("(.+)\\s*,\\s*(\\d+\\.?\\d+)\\%");
-    QRegularExpression rxNP("(.+)\\s*,\\s*([\\d]+)");
+    QRegularExpression rxP("(.+)\\s*,\\s*t?\\s*(\\d+\\.?\\d+)\\%");
+    QRegularExpression rxAP("(.+)\\s*,\\s*a\\s*(\\d+\\.?\\d+)\\%");
+    QRegularExpression rxNP("(.+)\\s*,\\s*a?\\s*([\\d]+)");
     const auto mP=rxP.match(color);
     if (mP.hasMatch()) {
-        QColor col(mP.captured(1));
+        QColor col=jkqtp_lookupQColorName(mP.captured(1));
         double a=QLocale::c().toDouble(mP.captured(2));
+        col.setAlphaF(1.0-a/100.0);
+        return col;
+    }
+    const auto mAP=rxAP.match(color);
+    if (mAP.hasMatch()) {
+        QColor col=jkqtp_lookupQColorName(mAP.captured(1));
+        double a=QLocale::c().toDouble(mAP.captured(2));
         col.setAlphaF(a/100.0);
         return col;
     }
     const auto mNP=rxNP.match(color);
     if (mNP.hasMatch()) {
-        QColor col(mNP.captured(1));
+        QColor col=jkqtp_lookupQColorName(mNP.captured(1));
         double a=QLocale::c().toInt(mNP.captured(2));
         col.setAlphaF(a/255.0);
         return col;
     }
 #else
-    QRegExp rxP("(.+)\\s*,\\s*(\\d+\\.?\\d+)\\%");
-    QRegExp rxNP("(.+)\\s*,\\s*([\\d]+)");
+    QRegExp rxP("(.+)\\s*,\\s*t?\\s*(\\d+\\.?\\d+)\\%");
+    QRegExp rxAP("(.+)\\s*,\\s*a\\s*(\\d+\\.?\\d+)\\%");
+    QRegExp rxNP("(.+)\\s*,\\s*a?\\s*([\\d]+)");
     if (rxP.exactMatch(color)) {
-        QColor col(rxP.cap(1));
+        QColor col=jkqtp_lookupQColorName(rxP.cap(1));
         double a=QLocale::c().toDouble(rxP.cap(2));
+        col.setAlphaF(1.0-a/100.0);
+        return col;
+    }
+    if (rxAP.exactMatch(color)) {
+        QColor col=jkqtp_lookupQColorName(rxAP.cap(1));
+        double a=QLocale::c().toDouble(rxAP.cap(2));
         col.setAlphaF(a/100.0);
         return col;
     }
     if (rxNP.exactMatch(color)) {
-        QColor col(rxNP.cap(1));
+        QColor col=jkqtp_lookupQColorName(rxNP.cap(1));
         double a=QLocale::c().toInt(rxNP.cap(2));
         col.setAlphaF(a/255.0);
         return col;
     }
 #endif
-    return QColor(color);
+    return jkqtp_lookupQColorName(color);
 }
 
 std::string jkqtp_to_valid_variable_name(const std::string& input) {
