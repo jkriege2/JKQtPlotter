@@ -312,18 +312,18 @@ void JKQTPStylePlainTextEdit::contextMenuEvent(QContextMenuEvent *event)
            connect(act, &QAction::triggered, std::bind(std::mem_fn(&JKQTPStylePlainTextEdit::addTransparencyToCurrentLineValue), this, act->text()));
            menuTrans->addAction(act);
         } else  if (currentLinePartsLower[0].endsWith("font_name")) {
-            const QStringList splitValue=currentLinePartsLower[1].split('+');
+            const QStringList splitValue=currentLineParts[1].split('+');
             submenu->setEnabled(true);
             QMenu* menuDefaultFonts=submenu->addMenu(tr("default fonts ..."));
             QMenu* menuSystemFonts=submenu->addMenu(tr("system fonts ..."));
             QMenu* menuAllFOnts=submenu->addMenu(tr("all fonts ..."));
             QMenu* menuMathFont=submenu->addMenu(tr("add math-fonts specifier ..."));
             currentValue->setVisible(true);
-            currentValue->setText(tr("text font: ")+currentLineParts[0]);
+            currentValue->setText(tr("text font: ")+splitValue[0]);
             currentValue->setFont(QFont(JKQTMathTextFontSpecifier::transformFontNameAndDecodeSpecialFonts(JKQTMathTextFontSpecifier::fromFontSpec(currentLineParts[1]).fontName())));
             if (!JKQTMathTextFontSpecifier::fromFontSpec(currentLineParts[1]).mathFontName().isEmpty()) {
                 currentValue2->setVisible(true);
-                currentValue2->setText(tr("math font: ")+currentLineParts[1]);
+                currentValue2->setText(tr("math font: ")+splitValue[1]);
                 currentValue2->setFont(QFont(JKQTMathTextFontSpecifier::transformFontNameAndDecodeSpecialFonts(JKQTMathTextFontSpecifier::fromFontSpec(currentLineParts[1]).mathFontName())));
             }
            QAction* act;
