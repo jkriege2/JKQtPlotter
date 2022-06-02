@@ -41,6 +41,7 @@ set(SOURCES
   ${CMAKE_CURRENT_LIST_DIR}/jkqtpstatregression.cpp
   ${CMAKE_CURRENT_LIST_DIR}/jkqtpstatpoly.cpp
   ${CMAKE_CURRENT_LIST_DIR}/jkqtpstatgrouped.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/jkqtpicons.cpp
 )
 
 set(HEADERS
@@ -88,6 +89,8 @@ set(HEADERS
   $<INSTALL_INTERFACE:jkqtpstatpoly.h>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpstatgrouped.h>
   $<INSTALL_INTERFACE:jkqtpstatgrouped.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpicons.h>
+  $<INSTALL_INTERFACE:jkqtpicons.h>
 )
 
 include(CMakePackageConfigHelpers)
