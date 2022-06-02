@@ -40,7 +40,14 @@
           <item>
            <widget class="QCheckBox" name="chkDebugBoxes">
             <property name="text">
-             <string>enabled</string>
+             <string>regions</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="chkDebugTextBoxes">
+            <property name="text">
+             <string>text</string>
             </property>
            </widget>
           </item>

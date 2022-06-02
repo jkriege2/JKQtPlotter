@@ -156,7 +156,7 @@ void JKQTPColorPaletteStyleAndToolsMixin::cbDrawOutside(JKQTPEnhancedPainter& pa
          cbParent->getMathText()->setFontSize(imageNameFontSize*cbParent->getFontSizeMultiplier());
          cbParent->getMathText()->setFontRomanOrSpecial(imageNameFontName);
          cbParent->getMathText()->parse(imageName);
-         cbParent->getMathText()->draw(painter, Qt::AlignHCenter|Qt::AlignVCenter, QRectF(rightSpace.x(), rightSpace.y(), rightSpace.width(), (rightSpace.height()-barHeight)/2));
+         cbParent->getMathText()->draw(painter, Qt::AlignHCenter|Qt::AlignVCenter, QRectF(rightSpace.x(), rightSpace.y(), rightSpace.width(), (rightSpace.height()-barHeight)/2),  cbParent->getCurrentPlotterStyle().debugShowTextBoxes);
 
 
      }
@@ -215,7 +215,7 @@ void JKQTPColorPaletteStyleAndToolsMixin::cbDrawOutside(JKQTPEnhancedPainter& pa
          cbParent->getMathText()->setFontSize(imageNameFontSize*cbParent->getFontSizeMultiplier());
          cbParent->getMathText()->setFontRomanOrSpecial(imageNameFontName);
          cbParent->getMathText()->parse(imageName);
-         cbParent->getMathText()->draw(painter, Qt::AlignHCenter|Qt::AlignVCenter, QRectF(topSpace.right()-(topSpace.width()-barWidth)/2, topSpace.y(), (topSpace.width()-barWidth)/2, topSpace.height()));
+         cbParent->getMathText()->draw(painter, Qt::AlignHCenter|Qt::AlignVCenter, QRectF(topSpace.right()-(topSpace.width()-barWidth)/2, topSpace.y(), (topSpace.width()-barWidth)/2, topSpace.height()),  cbParent->getCurrentPlotterStyle().debugShowTextBoxes);
 
 
      }
@@ -664,7 +664,7 @@ void JKQTPColorPaletteWithModifierStyleAndToolsMixin::cbDrawOutside(JKQTPEnhance
             cbParent->getMathText()->setFontSize(imageNameFontSize*cbParent->getFontSizeMultiplier());
             cbParent->getMathText()->setFontRomanOrSpecial(cbParent->getCurrentPlotterStyle().defaultFontName);
             cbParent->getMathText()->parse(imageName);
-            cbParent->getMathText()->draw(painter, Qt::AlignHCenter|Qt::AlignVCenter, QRectF(rightSpace.x(), rightSpace.y(), rightSpace.width(), (rightSpace.height()-barHeight)/2));
+            cbParent->getMathText()->draw(painter, Qt::AlignHCenter|Qt::AlignVCenter, QRectF(rightSpace.x(), rightSpace.y(), rightSpace.width(), (rightSpace.height()-barHeight)/2),  cbParent->getCurrentPlotterStyle().debugShowTextBoxes);
 
 
         }
@@ -717,7 +717,7 @@ void JKQTPColorPaletteWithModifierStyleAndToolsMixin::cbDrawOutside(JKQTPEnhance
             cbParent->getMathText()->setFontSize(imageNameFontSize*cbParent->getFontSizeMultiplier());
             cbParent->getMathText()->setFontRomanOrSpecial(cbParent->getCurrentPlotterStyle().defaultFontName);
             cbParent->getMathText()->parse(imageName);
-            cbParent->getMathText()->draw(painter, Qt::AlignHCenter|Qt::AlignVCenter, QRectF(topSpace.right()-(topSpace.width()-barWidth)/2, topSpace.y(), (topSpace.width()-barWidth)/2, topSpace.height()));
+            cbParent->getMathText()->draw(painter, Qt::AlignHCenter|Qt::AlignVCenter, QRectF(topSpace.right()-(topSpace.width()-barWidth)/2, topSpace.y(), (topSpace.width()-barWidth)/2, topSpace.height()),  cbParent->getCurrentPlotterStyle().debugShowTextBoxes);
 
 
         }

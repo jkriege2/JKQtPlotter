@@ -31,6 +31,7 @@ TestStyling::TestStyling(QWidget *parent) :
     connect(ui->chkLogX, SIGNAL(toggled(bool)), ui->plot->getXAxis(), SLOT(setLogAxis(bool)));
     connect(ui->chkLogY, SIGNAL(toggled(bool)), ui->plot->getYAxis(), SLOT(setLogAxis(bool)));
     connect(ui->chkDebugBoxes, SIGNAL(toggled(bool)), ui->plot->getPlotter(), SLOT(enableDebugShowRegionBoxes(bool)));
+    connect(ui->chkDebugTextBoxes, SIGNAL(toggled(bool)), ui->plot->getPlotter(), SLOT(enableDebugShowTextBoxes(bool)));
 
     // store JKQTPlotter plotterStyle to a temporary INI-file
     // and then load that temporary file into the plainTextEdit,

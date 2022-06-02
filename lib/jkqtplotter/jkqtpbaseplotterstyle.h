@@ -66,10 +66,22 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotterStyle {
          */
         void saveSettings(QSettings& settings, const QString& group=QString("plots/")) const;
 
-        /** \brief if set \c true (default: \c false ) the JKQTBasePlotter draws colored rectangles to indicate the different regions in the plot (border, axes, ...) */
+        /** \brief if set \c true (default: \c false ) the JKQTBasePlotter draws colored rectangles to indicate the different regions in the plot (border, axes, ...)
+         *
+         * \image html debugShowRegionBoxes.png
+         *
+         */
         bool debugShowRegionBoxes;
         /** \brief width of the lines that are drawn, when debugShowRegionBoxes \c ==true [in pixels] */
         double debugRegionLineWidth;
+        /** \brief if set \c true (default: \c false ) the JKQTBasePlotter draws colored rectangles to indicate the outline etc. of text inside the plot
+         *
+         * \image html debugShowTextBoxes.png
+         *
+         */
+        bool debugShowTextBoxes;
+        /** \brief width of the lines that are drawn, when debugShowTextBoxes \c ==true [in pixels] */
+        double debugTextBoxLineWidth;
 
 
         /** \brief the decimal separator used when exporting data to text files */

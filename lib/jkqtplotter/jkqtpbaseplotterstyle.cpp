@@ -6,6 +6,8 @@
 JKQTBasePlotterStyle::JKQTBasePlotterStyle():
     debugShowRegionBoxes(false),
     debugRegionLineWidth(3),
+    debugShowTextBoxes(false),
+    debugTextBoxLineWidth(1),
     CSVdecimalSeparator("."),
     CSVcommentInitializer("# "),
     plotBorderTop(5),
@@ -45,6 +47,8 @@ void JKQTBasePlotterStyle::loadSettings(const QSettings &settings, const QString
     plotBorderBottom=settings.value(group+"plot_border_bottom", defaultStyle.plotBorderBottom).toInt();
     debugShowRegionBoxes=settings.value(group+"debug_show_region_boxes", defaultStyle.debugShowRegionBoxes).toBool();
     debugRegionLineWidth=settings.value(group+"debug_region_linewidth", defaultStyle.debugRegionLineWidth).toDouble();
+    debugShowTextBoxes=settings.value(group+"debug_show_text_boxes", defaultStyle.debugShowTextBoxes).toBool();
+    debugTextBoxLineWidth=settings.value(group+"debug_textbox_linewidth", defaultStyle.debugTextBoxLineWidth).toDouble();
     plotLabelFontName=settings.value(group+"plot_label_font_name", defaultStyle.plotLabelFontName).toString();
     plotLabelFontSize=settings.value(group+"plot_label_font_size", defaultStyle.plotLabelFontSize).toDouble();
     widgetBackgroundBrush=QBrush(jkqtp_String2QColor(settings.value(group+"widget_background_color", jkqtp_QColor2String(defaultStyle.widgetBackgroundBrush.color())).toString()));
@@ -77,6 +81,8 @@ void JKQTBasePlotterStyle::saveSettings(QSettings &settings, const QString &grou
     settings.setValue(group+"csv_comment_initializer", CSVcommentInitializer);
     settings.setValue(group+"debug_show_region_boxes", debugShowRegionBoxes);
     settings.setValue(group+"debug_region_linewidth", debugRegionLineWidth);
+    settings.setValue(group+"debug_textbox_linewidth", debugShowTextBoxes);
+    settings.setValue(group+"debug_region_linewidth", debugTextBoxLineWidth);
     settings.setValue(group+"antialiase_system", useAntiAliasingForSystem);
     settings.setValue(group+"antialiase_text", useAntiAliasingForText);
     settings.setValue(group+"widget_background_color", jkqtp_QColor2String(widgetBackgroundBrush.color()));

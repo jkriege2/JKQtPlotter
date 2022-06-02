@@ -737,9 +737,19 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         QString getDefaultTextFontName() const;
         /** \brief if set \c true (default: \c false ) the JKQTBasePlotter draws colored rectangles to indicate the different regions in the plot (border, axes, ...)
          *
+         *
+         * \image html debugShowRegionBoxes.png
+         *
          * \see JKQTBasePlotterStyle::debugShowRegionBoxes, enableDebugShowRegionBoxes()
          */
         bool isDebugShowRegionBoxesEnabled() const;
+        /** \brief if set \c true (default: \c false ) the JKQTBasePlotter draws colored rectangles to indicate the extent of text
+         *
+         * \image html debugShowTextBoxes.png
+         *
+         * \see JKQTBasePlotterStyle::debugShowTextBoxes, enableDebugShowTextBoxes()
+         */
+        bool isDebugShowTextBoxesEnabled() const;
         /** \copydoc JKQTBasePlotterStyle::plotFrameVisible */
         bool isPlotFrameVisible() const;
         /** \copydoc JKQTBasePlotterStyle::plotFrameColor */
@@ -1571,9 +1581,19 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
 
         /** \brief if set \c true (default: \c false ) the JKQTBasePlotter draws colored rectangles to indicate the different regions in the plot (border, axes, ...)
          *
+         * \image html debugShowRegionBoxes.png
+         *
          * \see JKQTBasePlotterStyle::debugShowRegionBoxes, isDebugShowRegionBoxesEnabled()
          */
         void enableDebugShowRegionBoxes(bool enabled=true);
+
+        /** \brief if set \c true (default: \c false ) the JKQTBasePlotter draws colored rectangles to indicate the extent of text in the plot
+         *
+         * \image html debugShowTextBoxes.png
+         *
+         * \see JKQTBasePlotterStyle::debugShowTextBoxes, isDebugShowRegionTextEnabled()
+         */
+        void enableDebugShowTextBoxes(bool enabled=true);
     protected:
         /** \brief this is a cache for JKQTBasePlotter::textSizeData calculated with JKQTBasePlotter::getTextSizeDetail() */
         static QHash<JKQTBasePlotter::textSizeKey, JKQTBasePlotter::textSizeData> s_TextSizeDataCache;

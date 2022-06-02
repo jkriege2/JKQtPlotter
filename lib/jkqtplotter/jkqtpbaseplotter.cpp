@@ -1271,7 +1271,7 @@ void JKQTBasePlotter::drawPlot(JKQTPEnhancedPainter& painter) {
         double a=0,d=0,so=0,w=0;
         getTextSizeDetail(plotterStyle.plotLabelFontName,plotterStyle.plotLabelFontSize*fontSizeMultiplier,plotLabel, painter, w, a, d, so);
         QSizeF s=QSizeF(w, a+d);
-        mathText.draw(painter, internalPlotBorderLeft+(internalPlotWidth-s.width())/2.0,plotterStyle.plotBorderTop+a*1.2);
+        mathText.draw(painter, internalPlotBorderLeft+(internalPlotWidth-s.width())/2.0,plotterStyle.plotBorderTop+a*1.2, plotterStyle.debugShowTextBoxes);
         if (plotterStyle.debugShowRegionBoxes) {
             painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
             QPen p("blue");
@@ -3134,9 +3134,22 @@ void JKQTBasePlotter::enableDebugShowRegionBoxes(bool enabled)
     }
 }
 
+void JKQTBasePlotter::enableDebugShowTextBoxes(bool enabled)
+{
+    if (plotterStyle.debugShowTextBoxes != enabled) {
+        plotterStyle.debugShowTextBoxes = enabled;
+        redrawPlot();
+    }
+}
+
 bool JKQTBasePlotter::isDebugShowRegionBoxesEnabled() const
 {
     return plotterStyle.debugShowRegionBoxes;
+}
+
+bool JKQTBasePlotter::isDebugShowTextBoxesEnabled() const
+{
+    return plotterStyle.debugShowTextBoxes;
 }
 
 QString JKQTBasePlotter::getCSVcommentInitializer() const
@@ -4157,7 +4170,7 @@ void JKQTBasePlotter::drawKeyContents(JKQTPEnhancedPainter& painter, double x, d
 
                 mathText.parse(g->getTitle());
                 QRectF txtRect(x+(plotterStyle.keyStyle.sampleLineLength+plotterStyle.keyStyle.xSeparation)*Xwid,y, key_text_width, itheight);
-                mathText.draw(painter, Qt::AlignLeft|Qt::AlignVCenter, txtRect);
+                mathText.draw(painter, Qt::AlignLeft|Qt::AlignVCenter, txtRect, plotterStyle.debugShowTextBoxes);
                 //if (itheight<key_item_height*kfm.height()) itheight=key_item_height*kfm.height();
                 //y=y+itheight+(plotterStyle.keyStyle.ySeparation)*kfm.height();
                 y=y+key_text_height+(plotterStyle.keyStyle.ySeparation)*Xwid;
@@ -4195,7 +4208,7 @@ void JKQTBasePlotter::drawKeyContents(JKQTPEnhancedPainter& painter, double x, d
 
                 mathText.parse(g->getTitle());
                 QRectF txtRect(x+(plotterStyle.keyStyle.sampleLineLength+plotterStyle.keyStyle.xSeparation)*Xwid,y, fs.width(), itheight);
-                mathText.draw(painter, Qt::AlignLeft|Qt::AlignVCenter, txtRect);
+                mathText.draw(painter, Qt::AlignLeft|Qt::AlignVCenter, txtRect, plotterStyle.debugShowTextBoxes);
                 if (plotterStyle.debugShowRegionBoxes) {
                     painter.save(); auto __finalpaintinner=JKQTPFinally([&painter]() {painter.restore();});
                     QPen p("orange");
@@ -4243,7 +4256,7 @@ void JKQTBasePlotter::drawKeyContents(JKQTPEnhancedPainter& painter, double x, d
                 mathText.parse(g->getTitle());
                 //QSizeF fs=mt.getSize(painter);
                 QRectF txtRect(xx+(plotterStyle.keyStyle.sampleLineLength+plotterStyle.keyStyle.xSeparation)*Xwid,yy, key_text_width, key_text_height);
-                mathText.draw(painter, Qt::AlignLeft|Qt::AlignVCenter, txtRect);
+                mathText.draw(painter, Qt::AlignLeft|Qt::AlignVCenter, txtRect, plotterStyle.debugShowTextBoxes);
 
                 if (plotterStyle.debugShowRegionBoxes) {
                     painter.save(); auto __finalpaintinner=JKQTPFinally([&painter]() {painter.restore();});

@@ -130,7 +130,7 @@ void JKQTPGeoText::draw(JKQTPEnhancedPainter& painter) {
     parent->getMathText()->setFontSize(getTextFontSize()*parent->getFontSizeMultiplier());
     parent->getMathText()->setFontColor(getTextColor());
     parent->getMathText()->parse(text);
-    parent->getMathText()->draw(painter, transformX(x), transformY(y));
+    parent->getMathText()->draw(painter, transformX(x), transformY(y), parent->getCurrentPlotterStyle().debugShowTextBoxes);
 
 }
 

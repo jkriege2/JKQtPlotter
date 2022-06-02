@@ -574,11 +574,11 @@ void JKQTPlotter::paintUserAction() {
                         if (y1>y2) {
                             QRectF rec((x1+x2)/2.0-w/2.0, y1+2, w, a+d);
                             painter.fillRect(rec, plotterStyle.userActionOpaqueBrush);
-                            getPlotter()->getMathText()->draw(painter, Qt::AlignTop, rec);
+                            getPlotter()->getMathText()->draw(painter, Qt::AlignTop, rec,  getPlotter()->getCurrentPlotterStyle().debugShowTextBoxes);
                         } else {
                             QRectF rec((x1+x2)/2.0-w/2.0, y1-2-a-d, w, a+d);
                             painter.fillRect(rec, plotterStyle.userActionOpaqueBrush);
-                            getPlotter()->getMathText()->draw(painter, Qt::AlignBottom, rec);
+                            getPlotter()->getMathText()->draw(painter, Qt::AlignBottom, rec,  getPlotter()->getCurrentPlotterStyle().debugShowTextBoxes);
                         }
 
                         txt=jkqtp_floattolatexqstr(dy, 3);
@@ -588,11 +588,11 @@ void JKQTPlotter::paintUserAction() {
                         if (x2>x1) {
                             QRectF rec(x2+2, (y1+y2)/2.0-(a+d)/2.0, w, a+d);
                             painter.fillRect(rec, plotterStyle.userActionOpaqueBrush);
-                            getPlotter()->getMathText()->draw(painter, Qt::AlignVCenter|Qt::AlignLeft, rec);
+                            getPlotter()->getMathText()->draw(painter, Qt::AlignVCenter|Qt::AlignLeft, rec,  getPlotter()->getCurrentPlotterStyle().debugShowTextBoxes);
                         } else {
                             QRectF rec(x2-2-w, (y1+y2)/2.0-(a+d)/2.0, w, a+d);
                             painter.fillRect(rec, plotterStyle.userActionOpaqueBrush);
-                            getPlotter()->getMathText()->draw(painter, Qt::AlignVCenter|Qt::AlignRight, rec);
+                            getPlotter()->getMathText()->draw(painter, Qt::AlignVCenter|Qt::AlignRight, rec,  getPlotter()->getCurrentPlotterStyle().debugShowTextBoxes);
                         }
 
 
@@ -602,11 +602,11 @@ void JKQTPlotter::paintUserAction() {
                         if (x2<x1) {
                             QRectF rec((x1+x2)/2.0, (y1+y2)/2.0-(a+d)/2.0, w, a+d);
                             painter.fillRect(rec, plotterStyle.userActionOpaqueBrush);
-                            getPlotter()->getMathText()->draw(painter,Qt::AlignTop|Qt::AlignLeft, rec);
+                            getPlotter()->getMathText()->draw(painter,Qt::AlignTop|Qt::AlignLeft, rec,  getPlotter()->getCurrentPlotterStyle().debugShowTextBoxes);
                         } else {
                             QRectF rec((x1+x2)/2.0-w, (y1+y2)/2.0-(a+d)/2.0, w, a+d);
                             painter.fillRect(rec, plotterStyle.userActionOpaqueBrush);
-                            getPlotter()->getMathText()->draw(painter,Qt::AlignTop|Qt::AlignRight, rec);
+                            getPlotter()->getMathText()->draw(painter,Qt::AlignTop|Qt::AlignRight, rec,  getPlotter()->getCurrentPlotterStyle().debugShowTextBoxes);
                         }
 
 
@@ -691,7 +691,7 @@ void JKQTPlotter::paintUserAction() {
                         JKQTPDrawTooltip(painter, mouseDragMarkers[0].pos.x(), mouseDragMarkers[0].pos.y(), rall);
                         for (int i=0; i<txts.size(); i++) {
                             getPlotter()->getMathText()->parse(txts[i]);
-                            getPlotter()->getMathText()->draw(painter, Qt::AlignTop|Qt::AlignLeft, rects[i]);
+                            getPlotter()->getMathText()->draw(painter, Qt::AlignTop|Qt::AlignLeft, rects[i],  getPlotter()->getCurrentPlotterStyle().debugShowTextBoxes);
                             QStringList el=getPlotter()->getMathText()->getErrorList();
                             if (el.size()>0) {
                                 qDebug()<<"error parsing LaTeX string fo tooltip ("<<txts[i]<<"):\n     - "<<el.join("\n     - ");

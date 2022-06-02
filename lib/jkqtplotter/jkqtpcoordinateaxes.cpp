@@ -1225,13 +1225,13 @@ void JKQTPVerticalAxis::drawTickLabel1(JKQTPEnhancedPainter &painter, double xx,
             painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
             painter.translate(lx+width-1.25*strikeoutPos, yy-width/2.0);
             painter.rotate(axisStyle.tickLabelAngle);
-            getParentMathText()->draw(painter, 0,0);
+            getParentMathText()->draw(painter, 0,0, parent->getCurrentPlotterStyle().debugShowTextBoxes);
 
         } else if (axisStyle.tickLabelAngle==-90) {
             painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
             painter.translate(lx+width-0.25*strikeoutPos, yy+width/2.0);
             painter.rotate(axisStyle.tickLabelAngle);
-            getParentMathText()->draw(painter, 0,0);
+            getParentMathText()->draw(painter, 0,0, parent->getCurrentPlotterStyle().debugShowTextBoxes);
 
         } else if (axisStyle.tickLabelAngle!=0) {
             painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
@@ -1242,10 +1242,10 @@ void JKQTPVerticalAxis::drawTickLabel1(JKQTPEnhancedPainter &painter, double xx,
                 painter.translate(lx+strikeoutPos+(width-strikeoutPos)*(1.0-cos(fabs(axisStyle.tickLabelAngle)/180.0*JKQTPSTATISTICS_PI)), yy+strikeoutPos+width*sin(fabs(axisStyle.tickLabelAngle)/180.0*JKQTPSTATISTICS_PI));
                 painter.rotate(axisStyle.tickLabelAngle);
             }
-            getParentMathText()->draw(painter, 0,0);
+            getParentMathText()->draw(painter, 0,0, parent->getCurrentPlotterStyle().debugShowTextBoxes);
 
         } else {
-            getParentMathText()->draw(painter, lx, yy+strikeoutPos);
+            getParentMathText()->draw(painter, lx, yy+strikeoutPos, parent->getCurrentPlotterStyle().debugShowTextBoxes);
         }
     }
 }
@@ -1266,13 +1266,13 @@ void JKQTPVerticalAxis::drawTickLabel2(JKQTPEnhancedPainter &painter, double xx,
             painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
             painter.translate(lx+descent, yy-width/2.0);
             painter.rotate(axisStyle.tickLabelAngle);
-            getParentMathText()->draw(painter, 0,0);
+            getParentMathText()->draw(painter, 0,0, parent->getCurrentPlotterStyle().debugShowTextBoxes);
 
         } else if (axisStyle.tickLabelAngle==-90) {
             painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
             painter.translate(lx+ascent, yy+width/2.0);
             painter.rotate(axisStyle.tickLabelAngle);
-            getParentMathText()->draw(painter, 0,0);
+            getParentMathText()->draw(painter, 0,0, parent->getCurrentPlotterStyle().debugShowTextBoxes);
 
         } else if (axisStyle.tickLabelAngle!=0) {
             painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
@@ -1284,10 +1284,10 @@ void JKQTPVerticalAxis::drawTickLabel2(JKQTPEnhancedPainter &painter, double xx,
             }
             painter.translate(lx+shiftx, yy+strikeoutPos);
             painter.rotate(-axisStyle.tickLabelAngle);
-            getParentMathText()->draw(painter, 0,0);
+            getParentMathText()->draw(painter, 0,0, parent->getCurrentPlotterStyle().debugShowTextBoxes);
 
         } else {
-            getParentMathText()->draw(painter, lx, yy+strikeoutPos);
+            getParentMathText()->draw(painter, lx, yy+strikeoutPos, parent->getCurrentPlotterStyle().debugShowTextBoxes);
         }
     }
 }
@@ -1539,13 +1539,13 @@ void JKQTPVerticalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
         //painter.drawEllipse(-4, -4, 8, 8);
         switch(axisStyle.labelPosition) {
             case JKQTPLabelMax:
-                getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignRight, rect);
+                getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignRight, rect, parent->getCurrentPlotterStyle().debugShowTextBoxes);
                 break;
             case JKQTPLabelMin:
-                getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignLeft, rect);
+                getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignLeft, rect, parent->getCurrentPlotterStyle().debugShowTextBoxes);
                 break;
             case JKQTPLabelCenter:
-                getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignHCenter, rect);
+                getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignHCenter, rect, parent->getCurrentPlotterStyle().debugShowTextBoxes);
                 break;
         }
         if (getParent()->getCurrentPlotterStyle().debugShowRegionBoxes) {
@@ -1579,13 +1579,13 @@ void JKQTPVerticalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
         //painter.drawEllipse(-4, -4, 8, 8);
         switch(axisStyle.labelPosition) {
             case JKQTPLabelMax:
-                getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignRight, rect);
+                getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignRight, rect, parent->getCurrentPlotterStyle().debugShowTextBoxes);
                 break;
             case JKQTPLabelMin:
-                getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignLeft, rect);
+                getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignLeft, rect, parent->getCurrentPlotterStyle().debugShowTextBoxes);
                 break;
             case JKQTPLabelCenter:
-                getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignHCenter, rect);
+                getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignHCenter, rect, parent->getCurrentPlotterStyle().debugShowTextBoxes);
                 break;
         }
         if (getParent()->getCurrentPlotterStyle().debugShowRegionBoxes) {
@@ -1864,10 +1864,10 @@ void JKQTPHorizontalAxis::drawTickLabel1(JKQTPEnhancedPainter &painter, double x
                 painter.translate(xx+fabs(ascent*sin(fabs(axisStyle.tickLabelAngle)/180.0*JKQTPSTATISTICS_PI)/2.0)-width*fabs(cos(fabs(axisStyle.tickLabelAngle)/180.0*JKQTPSTATISTICS_PI)), lx0+ascent*fabs(cos(fabs(axisStyle.tickLabelAngle)/180.0*JKQTPSTATISTICS_PI))+fabs(width*sin(fabs(axisStyle.tickLabelAngle)/180.0*JKQTPSTATISTICS_PI)));
                 painter.rotate(axisStyle.tickLabelAngle);
             }
-            getParentMathText()->draw(painter, 0,0);
+            getParentMathText()->draw(painter, 0,0, parent->getCurrentPlotterStyle().debugShowTextBoxes);
 
         } else {
-            getParentMathText()->draw(painter, xx-width/2.0, lx);
+            getParentMathText()->draw(painter, xx-width/2.0, lx, parent->getCurrentPlotterStyle().debugShowTextBoxes);
         }
     }
 }
@@ -1894,10 +1894,10 @@ void JKQTPHorizontalAxis::drawTickLabel2(JKQTPEnhancedPainter &painter, double x
                 painter.translate(xx-fabs(descent*sin(fabs(axisStyle.tickLabelAngle)/180.0*JKQTPSTATISTICS_PI)/2.0)-width*fabs(cos(fabs(axisStyle.tickLabelAngle)/180.0*JKQTPSTATISTICS_PI)), lx0-descent*fabs(cos(fabs(axisStyle.tickLabelAngle)/180.0*JKQTPSTATISTICS_PI))-fabs(width*sin(fabs(axisStyle.tickLabelAngle)/180.0*JKQTPSTATISTICS_PI)));
                 painter.rotate(-axisStyle.tickLabelAngle);
             }
-            getParentMathText()->draw(painter, 0,0);
+            getParentMathText()->draw(painter, 0,0, parent->getCurrentPlotterStyle().debugShowTextBoxes);
 
         } else {
-            getParentMathText()->draw(painter, xx-width/2.0, lx);
+            getParentMathText()->draw(painter, xx-width/2.0, lx, parent->getCurrentPlotterStyle().debugShowTextBoxes);
         }
 
 
@@ -2135,13 +2135,13 @@ void JKQTPHorizontalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
         //painter.drawEllipse(-4, -4, 8, 8);
         switch(axisStyle.labelPosition) {
             case JKQTPLabelMax:
-                getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignRight, rect);
+                getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignRight, rect, parent->getCurrentPlotterStyle().debugShowTextBoxes);
                 break;
             case JKQTPLabelMin:
-                getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignLeft, rect);
+                getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignLeft, rect, parent->getCurrentPlotterStyle().debugShowTextBoxes);
                 break;
             case JKQTPLabelCenter:
-                getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignHCenter, rect);
+                getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignHCenter, rect, parent->getCurrentPlotterStyle().debugShowTextBoxes);
                 break;
         }
         if (getParent()->getCurrentPlotterStyle().debugShowRegionBoxes) {
@@ -2174,13 +2174,13 @@ void JKQTPHorizontalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
         //painter.drawEllipse(-4, -4, 8, 8);
         switch(axisStyle.labelPosition) {
             case JKQTPLabelMax:
-                getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignRight, rect);
+                getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignRight, rect, parent->getCurrentPlotterStyle().debugShowTextBoxes);
                 break;
             case JKQTPLabelMin:
-                getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignLeft, rect);
+                getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignLeft, rect, parent->getCurrentPlotterStyle().debugShowTextBoxes);
                 break;
             case JKQTPLabelCenter:
-                getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignHCenter, rect);
+                getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignHCenter, rect, parent->getCurrentPlotterStyle().debugShowTextBoxes);
                 break;
         }
         if (getParent()->getCurrentPlotterStyle().debugShowRegionBoxes) {
