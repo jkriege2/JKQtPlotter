@@ -7,8 +7,8 @@ message( STATUS "..   Building Example ${EXAMPLE_NAME}" )
 
 
 # Set up source files
-set(SOURCES test_styling.cpp test_styling_main.cpp)
-set(HEADERS test_styling.h )
+set(SOURCES test_styling.cpp test_styling_main.cpp jkqtpstyleplaintextedit.cpp)
+set(HEADERS test_styling.h jkqtpstyleplaintextedit.h )
 set(RESOURCES  )
 set(UIS test_styling.ui )
 

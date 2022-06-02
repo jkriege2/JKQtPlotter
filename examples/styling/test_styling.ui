@@ -29,7 +29,6 @@
            <widget class="QLabel" name="label_4">
             <property name="font">
              <font>
-              <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
@@ -66,7 +65,6 @@
            <widget class="QLabel" name="label">
             <property name="font">
              <font>
-              <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
@@ -106,7 +104,6 @@
            <widget class="QLabel" name="label_2">
             <property name="font">
              <font>
-              <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
@@ -160,7 +157,6 @@
            <widget class="QPushButton" name="btnUpdate">
             <property name="font">
              <font>
-              <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
@@ -177,10 +173,9 @@
            </widget>
           </item>
           <item row="1" column="0" colspan="4">
-           <widget class="QPlainTextEdit" name="plainTextEdit">
+           <widget class="JKQTPStylePlainTextEdit" name="plainTextEdit">
             <property name="font">
              <font>
-              <family>Courier New</family>
               <pointsize>10</pointsize>
              </font>
             </property>
@@ -196,7 +191,6 @@
            <widget class="QLabel" name="label_3">
             <property name="font">
              <font>
-              <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
@@ -219,7 +213,7 @@
      <x>0</x>
      <y>0</y>
      <width>1068</width>
-     <height>21</height>
+     <height>17</height>
     </rect>
    </property>
   </widget>
@@ -231,6 +225,11 @@
    <extends>QWidget</extends>
    <header>jkqtplotter/jkqtplotter.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>JKQTPStylePlainTextEdit</class>
+   <extends>QPlainTextEdit</extends>
+   <header>jkqtpstyleplaintextedit.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

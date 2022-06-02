@@ -9,10 +9,12 @@ TARGET = test_styling
 
 # source code for this simple demo
 SOURCES = test_styling_main.cpp \
-    test_styling.cpp
+    test_styling.cpp \
+    jkqtpstyleplaintextedit.cpp
 
 HEADERS += \
-    test_styling.h
+    test_styling.h \
+    jkqtpstyleplaintextedit.h
 
 FORMS += \
     test_styling.ui
