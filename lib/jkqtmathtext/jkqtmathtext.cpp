@@ -4538,8 +4538,10 @@ QRectF JKQTMathText::getTightBoundingRect(const QFont &fm, const QString &text, 
 
 
 
-bool JKQTMathText::parse(QString text){
-    QString ntext=QString("\\;")+text+QString("\\;");
+bool JKQTMathText::parse(const QString& text, bool addSpaceBeforeAndAfter){
+    QString ntext;
+    if (addSpaceBeforeAndAfter) ntext=QString("\\;")+text+QString("\\;");
+    else ntext=text;
     ntext=ntext.remove("\\limits");
     if (parsedNode && parseString==ntext) return true;
 

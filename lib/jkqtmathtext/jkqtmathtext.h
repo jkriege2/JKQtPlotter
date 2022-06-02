@@ -303,8 +303,8 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         void loadSettings(const QSettings& settings, const QString& group=QString("mathtext/"));
         /** \brief store the object settings to the given QSettings object with the given name prefix */
         void saveSettings(QSettings& settings, const QString& group=QString("mathtext/")) const;
-        /** \brief parse the given enhanced string. Returns \c true on success. */
-        bool parse(QString text);
+        /** \brief parse the given enhanced string. If \c addSpaceBeforeAndAfter==true a little bit of space is added before and after the text. Returns \c true on success. */
+        bool parse(const QString &text, bool addSpaceBeforeAndAfter=false);
         /** \brief get the size of the drawn representation. returns an invalid size if no text has been parsed. */
         QSizeF getSize(QPainter& painter);
         /** \brief return the descent, i.e. the distance from the baseline to the lowest part of the representation */
