@@ -23,7 +23,9 @@ int main(int argc, char* argv[])
     QLabel lab;
 
     // 1. we will paint into a QPixmap
-    QPixmap pix(600,400);
+    const qreal dpr = lab.devicePixelRatioF();
+    QPixmap pix(600*dpr,400*dpr);
+    pix.setDevicePixelRatio(dpr);
     pix.fill(QColor("white"));
     QPainter painter;
 
@@ -40,7 +42,7 @@ int main(int argc, char* argv[])
 
     // 3. here we do the painting
     painter.begin(&pix);
-    mathText.draw(painter, Qt::AlignCenter, QRectF(0,0,pix.width(), pix.height()), false);
+    mathText.draw(painter, Qt::TopLeftCorner, QRectF(0,0,pix.width(), pix.height()), false);
     painter.end();
 
     // now we display and resize the label as a window

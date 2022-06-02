@@ -4780,8 +4780,11 @@ void JKQTMathTextLabel::internalPaint()
             if (!m_mathText->parse(lastText)) {
                 //qDebug()<<"JKQTMathTextLabel::internalPaint(): parse '"<<lastText<<"': "<<m_mathText->parse(lastText)<<"\n  "<<m_mathText->getErrorList().join("\n")<<"\n\n";
             }
-
-            if (buffer.width()<=0 || buffer.height()<=0) buffer=QPixmap(1000,100);
+            if (buffer.width()<=0 || buffer.height()<=0) {
+                const qreal dpr = devicePixelRatioF();
+                buffer=QPixmap(1000*dpr,100*dpr);
+                buffer.setDevicePixelRatio(dpr);
+            }
             //qDebug()<<"internalPaint(): buffer "<<buffer.size();
             QPainter p;
             //qDebug()<<"internalPaint(): "<<p.begin(&buffer);
@@ -4794,10 +4797,12 @@ void JKQTMathTextLabel::internalPaint()
             size=m_mathText->getSize(p);
             p.end();
         }
-        buffer=QPixmap(static_cast<int>(qMax(32.0,size.width()*1.2)), static_cast<int>(qMax(10.0,size.height()*1.1)));
+        const qreal dpr = devicePixelRatioF();
+        buffer=QPixmap(static_cast<int>(qMax(32.0,size.width()*1.2))*dpr, static_cast<int>(qMax(10.0,size.height()*1.1))*dpr);
+        buffer.setDevicePixelRatio(dpr);
         buffer.fill(Qt::transparent);
         {
-            //qDebug()<<"internalPaint(): "<<buffer.size()<<size;
+            qDebug()<<"internalPaint(): buffer.size()="<<buffer.size()<<" size="<<size<<" dpr="<<dpr;
             QPainter p;
             //qDebug()<<"internalPaint(): "<<p.begin(&buffer);
             p.begin(&buffer);
@@ -4818,14 +4823,7 @@ void JKQTMathTextLabel::internalPaint()
 
 void JKQTMathTextLabel::paintEvent(QPaintEvent *event)
 {
-    //QLabel::paintEvent(event);
-    //return;
-
-    //qDebug()<<"paintEvent: "<<buffer.size();
-
-    //QApplication::processEvents();
     QLabel::paintEvent(event);
-    //qDebug()<<"paintEvent DONE: "<<size();
 }
 
 

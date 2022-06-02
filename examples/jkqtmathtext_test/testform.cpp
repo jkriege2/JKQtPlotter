@@ -226,7 +226,7 @@ TestForm::~TestForm()
     delete ui;
 }
 
-#define W 2000
+#define W 3000
 #define H 2000
 #define X1 15
 #define Y1 50
@@ -390,8 +390,10 @@ void TestForm::updateMath()
 
     ui->scrollArea->setBackgroundRole(QPalette::Dark);
 
-    QPixmap pix(W, H);
+    const qreal dpr = devicePixelRatioF();
+    QPixmap pix(W*dpr, H*dpr);
     pix.fill();
+    pix.setDevicePixelRatio(dpr);
     QPainter painter;
     JKQTMathText mt(this);
 
