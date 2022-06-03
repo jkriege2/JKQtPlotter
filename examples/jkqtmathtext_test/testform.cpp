@@ -17,7 +17,7 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbTestset->addItem("named symbols 3", "leftharpoonup: $\\leftharpoonup$\\ rightharpoonup: $\\rightharpoonup$\\ upharpoonleft: $\\upharpoonleft$\\ downharpoonleft: $\\downharpoonleft$\\ leftrightharpoon: $\\leftrightharpoon$\\ rightleftharpoon: $\\rightleftharpoon$");
     ui->cmbTestset->addItem("named symbols 4", "coprod: $\\coprod$\\ leftharpoondown: $\\leftharpoondown$\\ rightharpoondown: $\\rightharpoondown$\\ upharpoonright: $\\upharpoonright$\\ downharpoonright: $\\downharpoonright$\\ nwarrow: $\\nwarrow$\\ nearrow: $\\nearrow$\\ ");
     ui->cmbTestset->addItem("named symbols 5", "searrow: $\\searrow$\\ swarrow: $\\swarrow$\\ mapsto: $\\mapsto$\\ div: $\\div$\\ multimap: $\\multimap$\\ maporiginal: $\\maporiginal$\\ mapimage: $\\mapimage$\\ ");
-    ui->cmbTestset->addItem("named symbols 6", "times: $\\times$\\ propto: $\\propto$\\ bullet: $\\bullet$\\ neq: $\\neq$\\ ne: $\\ne$\\ equiv: $\\equiv$\\ approx: $\\approx$\\ otimes: $\\otimes$\\ oplus: $\\oplus$");
+    ui->cmbTestset->addItem("named symbols 6", "times: $\\times$\\ ast: $\\ast$\\ star: $\\star$\\ propto: $\\propto$\\ bullet: $\\bullet$\\ neq: $\\neq$\\ ne: $\\ne$\\ equiv: $\\equiv$\\ approx: $\\approx$\\ otimes: $\\otimes$\\ oplus: $\\oplus$");
     ui->cmbTestset->addItem("named symbols 7", "oslash: $\\oslash$\\ cap: $\\cap$\\ land: $\\land$\\ cup: $\\cup$\\ lor: $\\lor$\\ supset: $\\supset$\\ supseteq: $\\supseteq$\\ supsetnot: $\\supsetnot$\\ subset: $\\subset$");
     ui->cmbTestset->addItem("named symbols 8", "subseteq: $\\subseteq$\\ in: $\\in$\\ notin: $\\notin$\\ cdot: $\\cdot$\\ wedge: $\\wedge$\\ vee: $\\vee$\\ cong: $\\cong$\\ bot: $\\bot$");
     ui->cmbTestset->addItem("symbols", "$\\ll\\gg\\leq\\geq\\leftrightarrow\\leftarrow\\rightarrow\\to\\uparrow\\downarrow\\updownarrow\\Leftrightarrow\\iff\\Leftarrow\\Rightarrow\\Uparrow\\Downarrow\\Updownarrow\\pm\\mp\\nexists\\ni\\notni\\circ\\sim\\emptyset\\odot\\ominus\\subsetnot\\bot\\leftharpoonup\\rightharpoonup\\upharpoonleft\\downharpoonleft\\leftrightharpoon\\rightleftharpoon\\coprod\\leftharpoondown\\rightharpoondown\\upharpoonright\\downharpoonright\\nwarrow\\nearrow\\searrow\\swarrow\\mapsto\\div\\multimap\\maporiginal\\mapimage\\times\\propto\\bullet\\neq\\ne\\equiv\\approx\\otimes\\oplus\\oslash\\cap\\land\\cup\\lor\\supset\\supseteq\\supsetnot\\subset\\subseteq\\in\\notin\\cdot\\wedge\\vee\\cong\\bot$");
@@ -94,6 +94,11 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbTestset->addItem("brace10 test", "\\left\\{\\left[\\left( r^{123}\\right)\\right]\\right\\} -- $\\left\\{\\left[\\left( r^{123}\\right)\\right]\\right\\}$");
     ui->cmbTestset->addItem("brace11 test:  floor", "\\left\\lfloor\\left\\lfloor\\left\\lfloor r^{123}\\right\\rfloor\\right\\rfloor\\right\\rfloor -- $\\left\\lfloor\\left\\lfloor\\left\\lfloor r^{123}\\right\\rfloor\\right\\rfloor\\right\\rfloor$");
     ui->cmbTestset->addItem("brace12 test:  ceil", "\\left\\lceil\\left\\lceil\\left\\lceil r^{123}\\right\\rceil\\right\\rceil\\right\\rceil -- $\\left\\lceil\\left\\lceil\\left\\lceil r^{123}\\right\\rceil\\right\\rceil\\right\\rceil$");
+    ui->cmbTestset->addItem("brace13 test: non-left/right ( )", "(((r^{123}))) -- $(((r^{123})))$");
+    ui->cmbTestset->addItem("brace14 test: non-left/right [ ]", "[[[r^{123}]]] -- $[[[r^{123}]]]$");
+    ui->cmbTestset->addItem("brace15 test: non-left/right { }", "\\{\\{\\{r^{123}\\}\\}\\} -- $\\{\\{\\{ r^{123}\\}\\}\\}$");
+    ui->cmbTestset->addItem("brace16 test: non-left/right | |", "|||r^{123}||| -- $|||r^{123}|||$");
+    ui->cmbTestset->addItem("brace17 test: non-left/right { | }", "\\{r^{123}|r\\equiv 5\\} -- $\\{r^{123}|r\\equiv 5\\}$");
     ui->cmbTestset->addItem("sub-, superscript test", "r^{1234}_{321} r_{321}^{1234} -- $r^{1234}_{321} r_{321}^{1234} -- \\kappa^2 -- \\kappa_2 -- \\kappa_2^2$");
     ui->cmbTestset->addItem("super-, subscript test", "r^{123}_{4321} r_{4321}^{123} -- $r^{123}_{4321} r_{4321}^{123} -- \\kappa^2 -- \\kappa_2 -- \\kappa_2^2$");
     //ui->cmbTestset->addItem("", "");
@@ -111,7 +116,7 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbTestset->addItem("math 12 (under/overbrace)", "$\\underbrace{\\overbrace{x+x+...+x}{k\\ \\mathrm{times}} \\overbrace{x+x+...+x}{k\\ \\mathrm{times}}}{2k\\ \\mathrm{times}}$");
     ui->cmbTestset->addItem("math 13", "$y_1''\\ \\ \\ y_2'''$");
     ui->cmbTestset->addItem("math 14", "$f(x)=\\begin{cases} 1/3 & \\mathrm{if}\\ 0\\leq x\\leq1 \\\\ 2/3 & \\mathrm{if}\\ 3\\leq x\\leq4 \\\\0 & \\mathrm{elsewhere} \\end{cases}$");
-    ui->cmbTestset->addItem("math 15", "$\\Re{z} =\\frac{n\\pi \\dfrac{\\theta +\\psi}{2}}{\\left(\\dfrac{\\theta +\\psi}{2}\\right)^2 + \\left( \\dfrac{1}{2}\\log \\left\\lvert\\dfrac{B}{A}\\right\\rvert\\right)^2}.$");
+    ui->cmbTestset->addItem("math 15", "$\\Re(z) =\\frac{n\\pi \\dfrac{\\theta +\\psi}{2}}{\\left(\\dfrac{\\theta +\\psi}{2}\\right)^2 + \\left( \\dfrac{1}{2}\\log \\left\\lvert\\dfrac{B}{A}\\right\\rvert\\right)^2}.$");
     ui->cmbTestset->addItem("math 16", "$\\sum_{m=1}^\\infty\\sum_{n=1}^\\infty\\frac{m^2\\,n}{3^m\\left(m\\,3^n+n\\,3^m\\right)}$");
     ui->cmbTestset->addItem("math 17", "$\\phi_n(\\kappa) =\\frac{1}{4\\pi^2\\kappa^2} \\int_0^\\infty\\frac{\\sin(\\kappa R)}{\\kappa R}\\frac{\\partial}{\\partial R}\\left[R^2\\frac{\\partial D_n(R)}{\\partial R}\\right]\\,dR$");
     ui->cmbTestset->addItem("math 18", "${}_pF_q(a_1,\\dots,a_p;c_1,\\dots,c_q;z)= \\sum_{n=0}^\\infty\\frac{(a_1)_n\\cdots(a_p)_n}{(c_1)_n\\cdots(c_q)_n}\\frac{z^n}{n!}$");
