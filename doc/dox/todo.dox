@@ -1,0 +1,25 @@
+/*!
+
+\page page_todo Todo List für Future Releases/Versions
+
+This page lists several todos and wishes for future version of JKQTPlotter
+
+<ul>
+  <li>JKQTPlotter:<ul>
+    <li>matrix plots with boxes, labels, ...</li>
+    <li>text labels at positions/for graphs</li>
+    <li>secondary axes: independent and dependent (i.e. with transformation function from primary axis)</li>
+    <li>rounded rectangles for barcharts (also controllable by styles)</li>
+    <li>matrix plots with symbols: symbol-type, color, size should be parametric, cf. scatter plots</li>
+    <li>color gradients as fill-styles in style-INIs</li>
+    <li>style.ini with glowing colors in dark background ("techno" or "cyberpunk")</li>
+    <li>axis labels above/below/centered around tick</li>
+    <li>elongated grid to left of tick labels</li>
+    <li>different styles above/below zeroline for barcharts ...</li>
+  </ul></li>
+  <li>JKQTMathText:<ul>
+    <li>new instructions: \cancel, \xcancel, ...</li>
+  </ul></li>
+</ul>
+
+*/
