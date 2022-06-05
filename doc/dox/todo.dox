@@ -15,8 +15,17 @@ This page lists several todos and wishes for future version of JKQTPlotter
     <li>style.ini with glowing colors in dark background ("techno" or "cyberpunk")</li>
     <li>axis labels above/below/centered around tick</li>
     <li>elongated grid to left of tick labels</li>
-    <li>different styles above/below zeroline for barcharts ...</li>
-  </ul></li>
+    <li>different styles above/below baseline for barcharts ...</li>
+    <li>vector field graph (arrows), variant (x,y,dx,dy), (x,y,alpha,length), (x1,y1,x2,y2) ... different head/tail styles</li>
+    <li>gant-chart as simplufier vector field with (x,y1,y2) or (x1,x2,y), or (x,y,dx), (x,y,dy) ... different head/tail style</li>
+    <li>barchart/ranges chart with (x,y1,y2) or (x1,x2,y)</li>
+    <li>user-interaction: dialog(s) to edit x/y-range</li>
+    <li>better styling/more styling options for data-tooltips</li>
+    <li>annotation graphic element with text positionable like legend, or with (0..1),(0..1)-coordinates within plot</li>
+    <li>cubic/bezier curves for graphic elements</li>
+    <li></li>
+    <li></li>
+  </ul></li
   <li>JKQTMathText:<ul>
     <li>new instructions: \cancel, \xcancel, ...</li>
   </ul></li>
