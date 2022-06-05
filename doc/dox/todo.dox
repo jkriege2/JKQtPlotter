@@ -23,7 +23,7 @@ This page lists several todos and wishes for future version of JKQTPlotter
     <li>better styling/more styling options for data-tooltips</li>
     <li>annotation graphic element with text positionable like legend, or with (0..1),(0..1)-coordinates within plot</li>
     <li>cubic/bezier curves for graphic elements</li>
-    <li></li>
+    <li>datamanagement: allow for other datatypes than double, would be good to have, double, float, ints, bool, string ... as for images</li>
     <li></li>
   </ul></li
   <li>JKQTMathText:<ul>
