@@ -584,11 +584,16 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         void setBraceYShiftFactor(double __value);
         /** \copydoc brace_y_shift_factor */ 
         double getBraceYShiftFactor() const;
-        /** \copydoc decoration_height_factor */ 
+
+        /** \copydoc decoration_height_factor */
         void setDecorationHeightFactor(double __value);
-        /** \copydoc decoration_height_factor */ 
+        /** \copydoc decoration_height_factor */
         double getDecorationHeightFactor() const;
-        /** \copydoc expensiveRendering */ 
+        /** \copydoc decoration_width_reduction_Xfactor */
+        void setDecorationWidthReductionXFactor(double __value);
+        /** \copydoc decoration_width_reduction_Xfactor */
+        double getDecorationWidthReductionXFactor() const;
+        /** \copydoc expensiveRendering */
         void setExpensiveRendering(bool __value);
         /** \copydoc expensiveRendering */ 
         bool getExpensiveRendering() const;
@@ -676,6 +681,8 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
                  *
                  */
                 void getSize(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* prevNodeSize=nullptr);
+                /** \brief calculates the x-size-difference between the given (probably) italic (width externally calculated: \A width_potentiallyitalic, \a ev_potentiallyitalic) and the non-italic version of \a child */
+                double getNonItalicXCorretion(QPainter &painter, double width_potentiallyitalic, const MTenvironment &ev_potentiallyitalic, JKQTMathText::MTnode* child) const;
                 /** \brief draw the contents at the designated position
                  *
                  * \param painter QPainter to use
@@ -741,10 +748,12 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
                 virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv) override;
                 /** \copydoc text */ 
                 QString getText() const;
+                /** \copydoc MTnode::getTypeName() */
                 virtual QString getTypeName() const override ;
             protected:
                 /** \copydoc MTnode::getSizeInternal() */
                 virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* prevNodeSize=nullptr) override;
+                /** \brief text-contents of the node */
                 QString text;
                 /** \brief transforms the text before sizing/drawing (may e.g. exchange special letters for other unicode symbols etc.) */
                 virtual QString textTransform(const QString& text, JKQTMathText::MTenvironment currentEv, bool forSize=false);
@@ -771,7 +780,6 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
                 virtual ~MTwhitespaceNode() override;
                 /** \copydoc MTnode::getTypeName() */
                 virtual QString getTypeName() const override;
-                /** \brief convert node to HTML and returns \c true on success */
                 /** \copydoc MTnode::toHtml() */
                 virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv) override;
         };
@@ -791,7 +799,9 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
                 virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv) override;
                 /** \copydoc symbolName */ 
                 QString getSymbolName() const;
+                /** \brief get font name of the symbol */
                 QString getSymbolfontName() const;
+                /** \copydoc addWhitespace */
                 bool getAddWhitespace() const;
             protected:
                 /** \copydoc MTnode::getSizeInternal() */
@@ -847,6 +857,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
                 virtual QString getTypeName() const override;
                 /** \copydoc MTnode::draw() */
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv, const MTnodeSize* prevNodeSize=nullptr) override;
+                /** \brief add a child node */
                 void addNode(MTnode* n) { nodes.append(n); }
                 /** \copydoc MTnode::toHtml() */
                 virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv) override;
@@ -908,7 +919,8 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv, const MTnodeSize* prevNodeSize=nullptr) override;
                 /** \copydoc MTnode::getTypeName() */
                 virtual QString getTypeName() const override;                /** \brief returns the child node  */
-                 MTnode *getChild() const;
+                /** \brief returns the child node */
+                MTnode *getChild() const;
                 /** \copydoc MTnode::toHtml() */
                 virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv) override;
                 /** \copydoc MTnode::setDrawBoxes() */
@@ -1002,6 +1014,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
                 virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv) override;
                 /** \copydoc MTnode::setDrawBoxes() */
                 virtual void setDrawBoxes(bool draw) override;
+                /** \copydoc MTnode::getTypeName() */
                 virtual QString getTypeName() const override ;
                 /** \brief returns the child node  */
                 MTnode *getChild() const;
@@ -1036,6 +1049,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
             public:
                 MTfracNode(JKQTMathText* parent, MTnode* child_top, MTnode* child_bottom, MTfracMode mode);
                 virtual ~MTfracNode() override;
+                /** \copydoc MTnode::getTypeName() */
                 virtual QString getTypeName() const override;
                 /** \copydoc MTnode::draw() */
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv, const MTnodeSize* prevNodeSize=nullptr) override;
@@ -1084,10 +1098,15 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
                 int lines;
         };
 
-
+        /** \brief types of decoration available in a MTdecoratedNode */
         enum MTdecoration {
             MTDvec,  /*!< \brief vector arrow over block \image html mathparser/MTDvec.png */
-            MTDhat,  /*!< \brief hat over block \image html mathparser/MTDhat.png */
+            MTDhat,  /*!< \brief small hat over block \image html mathparser/MTDhat.png */
+            MTDwidehat,  /*!< \brief full-width hat over block \image html mathparser/MTDwidehat.png */
+            MTDcheck,  /*!< \brief small v over block \image html mathparser/MTDcheck.png */
+            MTDwidecheck,  /*!< \brief full-width v over block \image html mathparser/MTDwidecheck.png */
+            MTDbreve,  /*!< \brief small tilde over block \image html mathparser/MTDbreve.png */
+            MTDocirc,  /*!< \brief single circle over block \image html mathparser/MTDocirc.png */
             MTDdot,  /*!< \brief single dot over block \image html mathparser/MTDvec.png */
             MTDddot,  /*!< \brief double dot over block \image html mathparser/MTDddot.png */
             MTDbar,  /*!< \brief bar over block \image html mathparser/MTDbar.png */
@@ -1096,7 +1115,8 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
             MTDdoubleoverline,  /*!< \brief double overline over block \image html mathparser/MTDdoubleoverline.png */
             MTDunderline,  /*!< \brief underline under block \image html mathparser/MTDunderline.png */
             MTDdoubleunderline,  /*!< \brief double underline under block \image html mathparser/MTDdoubleunderline.png */
-            MTDtilde,  /*!< \brief tilde over block \image html mathparser/MTDtilde.png */
+            MTDtilde,  /*!< \brief small tilde over block \image html mathparser/MTDtilde.png */
+            MTDwidetilde,  /*!< \brief full width tilde over block \image html mathparser/MTDwidetilde.png */
             MTDcancel,  /*!< \brief cancel text with sloped line \image html mathparser/MTDcancel.png */
             MTDbcancel,  /*!< \brief cancel text with backward sloped line \image html mathparser/MTDbcancel.png */
             MTDxcancel,  /*!< \brief cancel text with X \image html mathparser/MTDxcancel.png */
@@ -1107,6 +1127,9 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
 
         /** \brief subclass representing a decorated text m (e.g. \c \\vec \c \\hat ...) node
          *  \ingroup jkqtmathtext_items
+         *
+         *  \image html mathparser/decoration_sizing.png
+         *
          */
         class JKQTMATHTEXT_LIB_EXPORT MTdecoratedNode: public MTnode {
             public:
@@ -1118,6 +1141,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
                 virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv) override;
                 /** \copydoc MTnode::setDrawBoxes() */
                 virtual void setDrawBoxes(bool draw) override;
+                /** \copydoc MTnode::getTypeName() */
                 virtual QString getTypeName() const override ;
                 /** \brief returns the child node  */
                 MTnode* getChild() const;
@@ -1126,7 +1150,9 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
             protected:
                 /** \copydoc MTnode::getSizeInternal() */
                 virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* prevNodeSize=nullptr) override;
+                /** \brief child node that is decorated by this node */
                 MTnode* child;
+                /** \brief type of decoration that is added to the child node */
                 MTdecoration decoration;
         };
 
@@ -1198,8 +1224,16 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         double undersetFactor;
         /** \brief fraction of the brace ascent that the brace is shifted downwards, when scaled */
         double brace_y_shift_factor;
-        /** \brief size of the decorations (dot, tilde, ...), as fractio of the baselineheight */
+        /** \brief size of the decorations (dot, tilde, ...), as fraction of the baselineheight
+         *
+         *  \image html mathparser/decoration_sizing.png
+         */
         double decoration_height_factor;
+        /** \brief a decoration has a size, which is slightly smaller than the text- width. the width is reduced by \c decoration_width_reduction_Xfactor*width("X") and the position is centered around the child-box. Also an italic correction is applied:
+         *
+         *  \image html mathparser/decoration_sizing.png
+         */
+        double decoration_width_reduction_Xfactor;
         /** \brief switches on some options that will grant better rendering at the expense of higher time consumption */
         bool expensiveRendering;
         /** \brief a list that will be filled with error messages while parsing, if any error occur */
@@ -1275,7 +1309,8 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         static QList<JKQTMathText::tbrData> tbrs;
         static QHash<JKQTMathText::tbrDataH, QRectF> tbrh;
         static QRectF getTightBoundingRect(const QFont &fm, const QString& text,  QPaintDevice *pd);
-
+        /** \brief returns a copy of \a f, but with the italic-property set to \c false */
+        static QFont getNonItalic(const QFont& f);
 };
 
 
