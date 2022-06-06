@@ -6,24 +6,35 @@ This page lists several todos and wishes for future version of JKQTPlotter
 
 <ul>
   <li>JKQTPlotter:<ul>
-    <li>matrix plots with boxes, labels, ...</li>
-    <li>text labels at positions/for graphs</li>
-    <li>secondary axes: independent and dependent (i.e. with transformation function from primary axis)</li>
-    <li>rounded rectangles for barcharts (also controllable by styles)</li>
-    <li>matrix plots with symbols: symbol-type, color, size should be parametric, cf. scatter plots</li>
-    <li>color gradients as fill-styles in style-INIs</li>
-    <li>style.ini with glowing colors in dark background ("techno" or "cyberpunk")</li>
-    <li>axis labels above/below/centered around tick</li>
-    <li>elongated grid to left of tick labels</li>
-    <li>different styles above/below baseline for barcharts ...</li>
-    <li>vector field graph (arrows), variant (x,y,dx,dy), (x,y,alpha,length), (x1,y1,x2,y2) ... different head/tail styles</li>
-    <li>gant-chart as simplufier vector field with (x,y1,y2) or (x1,x2,y), or (x,y,dx), (x,y,dy) ... different head/tail style</li>
-    <li>barchart/ranges chart with (x,y1,y2) or (x1,x2,y)</li>
-    <li>user-interaction: dialog(s) to edit x/y-range</li>
+    <li>graph: matrix plots with boxes, labels, ...</li>
+    <li>graph: text labels at positions/for graphs</li>
+    <li>plot: secondary axes: independent and dependent (i.e. with transformation function from primary axis)</li>
+    <li>graphs: rounded rectangles for barcharts (also controllable by styles)</li>
+    <li>graphs: matrix plots with symbols: symbol-type, color, size should be parametric, cf. scatter plots</li>
+    <li>styling: color gradients as fill-styles in style-INIs</li>
+    <li>styling: style.ini with glowing colors in dark background ("techno" or "cyberpunk")</li>
+    <li>plot: axis labels above/below/centered around tick</li>
+    <li>plot: elongated grid to left of tick labels</li>
+    <li>graphs: different styles above/below baseline for barcharts ...</li>
+    <li>graphs: vector field graph (arrows), variant (x,y,dx,dy), (x,y,alpha,length), (x1,y1,x2,y2) ... different head/tail styles</li>
+    <li>graphs: gant-chart as simplufier vector field with (x,y1,y2) or (x1,x2,y), or (x,y,dx), (x,y,dy) ... different head/tail style</li>
+    <li>graphs: barchart/ranges chart with (x,y1,y2) or (x1,x2,y)</li>
+    <li>user interactions: dialog(s) to edit x/y-range</li>
     <li>better styling/more styling options for data-tooltips</li>
-    <li>annotation graphic element with text positionable like legend, or with (0..1),(0..1)-coordinates within plot</li>
-    <li>cubic/bezier curves for graphic elements</li>
-    <li>datamanagement: allow for other datatypes than double, would be good to have, double, float, ints, bool, string ... as for images</li>
+    <li>graphic elements: annotation graphic element with text positionable like legend, or with (0..1),(0..1)-coordinates within plot</li>
+    <li>graphic elements: cubic/bezier curves for graphic elements</li>
+    <li>data management: allow for other datatypes than double, would be good to have, double, float, ints, bool, string ... as for images</li>
+    <li>user interactions: support for touch/pad gestures</li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
     <li></li>
   </ul></li
   <li>JKQTMathText:<ul>
