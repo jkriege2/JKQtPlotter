@@ -193,6 +193,10 @@ private:
       - \c \\script{...} \c \\textscript{...} \c \\mathscript{...} :  draw the contained text in a script font face \image html jkqtmathtext_fonts.png
       - \c \\sc{...} : draw the text in small caps \image html jkqtmathtext_sc.png
       - \c \\ul{...} \c \\underline{...} \c \\underlined{...} : draw the text with underlining \image html jkqtmathtext_ul.png
+      - \c \\sout{...} : strike out the text \image html mathparser/MTDstrike.png
+      - \c \\cancel{...} : slanted strike out the text \image html mathparser/MTDcancel.png
+      - \c \\bcancel{...} : back-strike out the text \image html mathparser/MTDbcancel.png
+      - \c \\xcancel{...} : x-strike out the text \image html mathparser/MTDxcancel.png
       - \c \\ol{...} \c \\overline{...} \c \\overlined{...} : draw the text with overlining \image html jkqtmathtext_ol.png
       - \c \\tt{...} \c \\texttt{...} \c \\mathtt{...} : draw text in typewriter font \image html jkqtmathtext_fonts.png
       - \c \\textcolor{color}{...} \c \\color{color} \c \\mathcolor{color}{...} : draw colored text \image html jkqtmathtext_colored.png
@@ -1092,8 +1096,13 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
             MTDdoubleoverline,  /*!< \brief double overline over block \image html mathparser/MTDdoubleoverline.png */
             MTDunderline,  /*!< \brief underline under block \image html mathparser/MTDunderline.png */
             MTDdoubleunderline,  /*!< \brief double underline under block \image html mathparser/MTDdoubleunderline.png */
-            MTDtilde  /*!< \brief tilde over block \image html mathparser/MTDtilde.png */
+            MTDtilde,  /*!< \brief tilde over block \image html mathparser/MTDtilde.png */
+            MTDcancel,  /*!< \brief cancel text with sloped line \image html mathparser/MTDcancel.png */
+            MTDbcancel,  /*!< \brief cancel text with backward sloped line \image html mathparser/MTDbcancel.png */
+            MTDxcancel,  /*!< \brief cancel text with X \image html mathparser/MTDxcancel.png */
+            MTDstrike  /*!< \brief strikethrough text \image html mathparser/MTDstrike.png */
         };
+        /** \brief convert a MTdecoration into a string */
         static QString decorationToString(MTdecoration mode);
 
         /** \brief subclass representing a decorated text m (e.g. \c \\vec \c \\hat ...) node

@@ -26,6 +26,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
   <li>NEW: new "seaborn" style for plots</li>
   <li>NEW/BREAKING CHANGE: changed JKQTPColorDerivationMode into a struct, which extends its capabilities above the previously available few enum-items</li>
   <li>NEW: added debug-feature to show boxes around text in the plot</li>
+  <li>NEW: JKQTMathText supports new instructions: \cancel, \xcancel, \bcancel, \sout</li>
 </ul>
 
 \subsection page_whatsnew_TRUNK_DOWNLOAD trunk: Download

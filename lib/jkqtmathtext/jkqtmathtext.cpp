@@ -1171,6 +1171,7 @@ double JKQTMathText::MTdecoratedNode::draw(QPainter& painter, double x, double y
     //double d=overallHeight-baselineHeight;
     double dheightfactor=parent->getDecorationHeightFactor();
     double dpos=y-a*(1.0+dheightfactor);
+    double spos=y-a/2.0;
     double dposb=y+qMax((overallHeight-baselineHeight)*(1.0+dheightfactor), fm.xHeight()*dheightfactor);
     double deltax=0;//(wc-ll)/2.0;
     double dheight=dheightfactor*a;
@@ -1266,7 +1267,30 @@ double JKQTMathText::MTdecoratedNode::draw(QPainter& painter, double x, double y
         painter.setBrush(bold);
         painter.setPen(pold);
         painter.setBrush(bold);
+    } else if (decoration==MTDstrike) {
+        painter.setPen(p);
+        QLineF l(x+deltax, spos, xnew+deltax-0.2*wc, spos);
+        if (l.length()>0) painter.drawLine(l);
+        painter.setPen(pold);
+    } else if (decoration==MTDcancel) {
+        painter.setPen(p);
+        QLineF l(x+deltax, dposb, xnew+deltax-0.2*wc, dpos);
+        if (l.length()>0) painter.drawLine(l);
+        painter.setPen(pold);
+    } else if (decoration==MTDbcancel) {
+        painter.setPen(p);
+        QLineF l(x+deltax, dpos, xnew+deltax-0.2*wc, dposb);
+        if (l.length()>0) painter.drawLine(l);
+        painter.setPen(pold);
+    } else if (decoration==MTDxcancel) {
+        painter.setPen(p);
+        QLineF l(x+deltax, dpos, xnew+deltax-0.2*wc, dposb);
+        if (l.length()>0) painter.drawLine(l);
+        QLineF l1(x+deltax, dposb, xnew+deltax-0.2*wc, dpos);
+        if (l1.length()>0) painter.drawLine(l1);
+        painter.setPen(pold);
     }
+    //
     return xnew+0.3*wc;
 }
 
@@ -4343,6 +4367,14 @@ JKQTMathText::MTnode* JKQTMathText::parseLatexString(bool get, const QString& qu
                     nl->addNode(new MTdecoratedNode(this, MTDtilde, parseLatexString(true)));
                 } else if (name=="ddot") {
                     nl->addNode(new MTdecoratedNode(this, MTDddot, parseLatexString(true)));
+                } else if (name=="cancel") {
+                    nl->addNode(new MTdecoratedNode(this, MTDcancel, parseLatexString(true)));
+                } else if (name=="xcancel") {
+                    nl->addNode(new MTdecoratedNode(this, MTDxcancel, parseLatexString(true)));
+                } else if (name=="bcancel") {
+                    nl->addNode(new MTdecoratedNode(this, MTDbcancel, parseLatexString(true)));
+                } else if (name=="strike" || name=="st" || name=="sout") {
+                    nl->addNode(new MTdecoratedNode(this, MTDstrike, parseLatexString(true)));
                 } else {
                     if (name=="textcolor" || name=="mathcolor" || name=="color" || name=="colorbox") {
                         bool foundError=true;
@@ -4803,6 +4835,14 @@ QString JKQTMathText::decorationToString(JKQTMathText::MTdecoration mode)
             return "underline";
         case MTDdoubleunderline:
             return "double underline";
+        case MTDcancel:
+            return "cancel";
+        case MTDbcancel:
+            return "bcancel";
+        case MTDxcancel:
+            return "xcancel";
+        case MTDstrike:
+            return "strike";
     }
     return "unknown";
 }
