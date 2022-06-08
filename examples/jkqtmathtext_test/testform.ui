@@ -828,7 +828,7 @@
   <customwidget>
    <class>JKQTMathTextLabel</class>
    <extends>QLabel</extends>
-   <header>jkqtmathtext/jkqtmathtext.h</header>
+   <header>jkqtmathtext/jkqtmathtextlabel.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

@@ -7,7 +7,7 @@
 #include <QApplication>
 #include <QLabel>
 #include <QPixmap>
-#include "jkqtmathtext/jkqtmathtext.h"
+#include "jkqtmathtext/jkqtmathtextlabel.h"
 
 int main(int argc, char* argv[])
 {

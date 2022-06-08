@@ -22,11 +22,50 @@ set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 # Set up source files
 set(SOURCES
   ${CMAKE_CURRENT_LIST_DIR}/jkqtmathtext.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/jkqtmathtexttools.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/jkqtmathtextlabel.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextnode.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtexttextnode.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextbracenode.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextdecoratednode.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextfracnode.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextinstructionnode.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextlistnode.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextmatrixnode.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextsqrtnode.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextsubsupernode.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextsymbolnode.cpp
 )
 
 set(HEADERS
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtmathtext.h>
   $<INSTALL_INTERFACE:jkqtmathtext.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtmathtexttools.h>
+  $<INSTALL_INTERFACE:jkqtmathtexttools.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtmathtextlabel.h>
+  $<INSTALL_INTERFACE:jkqtmathtextlabel.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextnode.h>
+  $<INSTALL_INTERFACE:nodes/jkqtmathtextnode.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtexttextnode.h>
+  $<INSTALL_INTERFACE:nodes/jkqtmathtexttextnode.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextbracenode.h>
+  $<INSTALL_INTERFACE:nodes/jkqtmathtextbracenode.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextdecoratednode.h>
+  $<INSTALL_INTERFACE:nodes/jkqtmathtextdecoratednode.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextfracnode.h>
+  $<INSTALL_INTERFACE:nodes/jkqtmathtextfracnode.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextinstructionnode.h>
+  $<INSTALL_INTERFACE:nodes/jkqtmathtextinstructionnode.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextlistnode.h>
+  $<INSTALL_INTERFACE:nodes/jkqtmathtextlistnode.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextmatrixnode.h>
+  $<INSTALL_INTERFACE:nodes/jkqtmathtextmatrixnode.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextsqrtnode.h>
+  $<INSTALL_INTERFACE:nodes/jkqtmathtextsqrtnode.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextsubsupernode.h>
+  $<INSTALL_INTERFACE:nodes/jkqtmathtextsubsupernode.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextsymbolnode.h>
+  $<INSTALL_INTERFACE:nodes/jkqtmathtextsymbolnode.h>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtmathtext_imexport.h>
   $<INSTALL_INTERFACE:jkqtmathtext_imexport.h>
 )

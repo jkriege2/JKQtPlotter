@@ -23,7 +23,7 @@ And the source code of the main application is (see [`jkqtmathtext_simpletest.cp
 #include <QApplication>
 #include <QLabel>
 #include <QPixmap>
-#include "jkqtmathtext/jkqtmathtext.h"
+#include "jkqtmathtext/jkqtmathtextlabel.h"
 
 int main(int argc, char* argv[])
 {

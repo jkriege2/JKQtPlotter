@@ -1,6 +1,16 @@
 #include "testform.h"
 #include "ui_testform.h"
 #include <QDebug>
+#include "jkqtmathtext/nodes/jkqtmathtexttextnode.h"
+#include "jkqtmathtext/nodes/jkqtmathtextbracenode.h"
+#include "jkqtmathtext/nodes/jkqtmathtextdecoratednode.h"
+#include "jkqtmathtext/nodes/jkqtmathtextfracnode.h"
+#include "jkqtmathtext/nodes/jkqtmathtextinstructionnode.h"
+#include "jkqtmathtext/nodes/jkqtmathtextlistnode.h"
+#include "jkqtmathtext/nodes/jkqtmathtextmatrixnode.h"
+#include "jkqtmathtext/nodes/jkqtmathtextsqrtnode.h"
+#include "jkqtmathtext/nodes/jkqtmathtextsubsupernode.h"
+#include "jkqtmathtext/nodes/jkqtmathtextsymbolnode.h"
 
 
 TestForm::TestForm(QWidget *parent) :
@@ -8,24 +18,24 @@ TestForm::TestForm(QWidget *parent) :
     ui(new Ui::TestForm)
 {
     ui->setupUi(this);
-    ui->cmbTestset->addItem("fonts", "rm: \\textrm{ABCabc123}, sf: \\textsf{ABCabc123}, tt: \\texttt{ABCabc123}, cal: \\textcal{ABCabc123}, scr: \\textscr{ABCabc123}, bb: \\textbb{ABCabc123}, frak: \\textfrak{ABCabc123}, ");
+    ui->cmbTestset->addItem("text: fonts", "rm: \\textrm{ABCabc123}, sf: \\textsf{ABCabc123}, tt: \\texttt{ABCabc123}, cal: \\textcal{ABCabc123}, scr: \\textscr{ABCabc123}, bb: \\textbb{ABCabc123}, frak: \\textfrak{ABCabc123}, ");
     ui->cmbTestset->addItem("math-fonts", "rm: $\\mathrm{ABCabc123}$, sf: $\\mathsf{ABCabc123}$, tt: $\\mathtt{ABCabc123}$, cal: $\\mathcal{ABCabc123}$, scr: $\\mathscr{ABCabc123}$, bb: $\\mathbb{ABCabc123}$, frak: $\\mathfrak{ABCabc123}$, ");
-    ui->cmbTestset->addItem("simple relations", "$a{\\leq}b$, $a{\\geq}b$, $a{\\equiv}b$, $a=b$, $a{\\neq}b$, $a<b$, $a>b$");
-    ui->cmbTestset->addItem("simple relations in different modes", "math: $a{\\leq}b$, math/no braces: $a\\leq b$, no math: a{\\leq}b, no math/no braces: a\\leq b");
-    ui->cmbTestset->addItem("named symbols 1", "ll: $\\ll$\\ gg: $\\gg$\\ leq: $\\leq$\\ geq: $\\geq$\\ pm: $\\pm$\\ mp: $\\mp$\\ ");
-    ui->cmbTestset->addItem("named symbols 2", "nexists: $\\nexists$\\ ni: $\\ni$\\ notni: $\\notni$\\ circ: $\\circ$\\ sim: $\\sim$\\ emptyset: $\\emptyset$\\ odot: $\\odot$\\ ominus: $\\ominus$\\ subsetnot: $\\subsetnot$\\ bot: $\\bot$");
-    ui->cmbTestset->addItem("named symbols 3", "leftharpoonup: $\\leftharpoonup$\\ rightharpoonup: $\\rightharpoonup$\\ upharpoonleft: $\\upharpoonleft$\\ downharpoonleft: $\\downharpoonleft$\\ leftrightharpoon: $\\leftrightharpoon$\\ rightleftharpoon: $\\rightleftharpoon$");
-    ui->cmbTestset->addItem("named symbols 4", "coprod: $\\coprod$\\ leftharpoondown: $\\leftharpoondown$\\ rightharpoondown: $\\rightharpoondown$\\ upharpoonright: $\\upharpoonright$\\ downharpoonright: $\\downharpoonright$\\ nwarrow: $\\nwarrow$\\ nearrow: $\\nearrow$\\ ");
-    ui->cmbTestset->addItem("named symbols 5", "searrow: $\\searrow$\\ swarrow: $\\swarrow$\\ mapsto: $\\mapsto$\\ div: $\\div$\\ multimap: $\\multimap$\\ maporiginal: $\\maporiginal$\\ mapimage: $\\mapimage$\\ ");
-    ui->cmbTestset->addItem("named symbols 6", "times: $\\times$\\ ast: $\\ast$\\ star: $\\star$\\ propto: $\\propto$\\ bullet: $\\bullet$\\ neq: $\\neq$\\ ne: $\\ne$\\ equiv: $\\equiv$\\ approx: $\\approx$\\ otimes: $\\otimes$\\ oplus: $\\oplus$");
-    ui->cmbTestset->addItem("named symbols 7", "oslash: $\\oslash$\\ cap: $\\cap$\\ land: $\\land$\\ cup: $\\cup$\\ lor: $\\lor$\\ supset: $\\supset$\\ supseteq: $\\supseteq$\\ supsetnot: $\\supsetnot$\\ subset: $\\subset$");
-    ui->cmbTestset->addItem("named symbols 8", "subseteq: $\\subseteq$\\ in: $\\in$\\ notin: $\\notin$\\ cdot: $\\cdot$\\ wedge: $\\wedge$\\ vee: $\\vee$\\ cong: $\\cong$\\ bot: $\\bot$");
-    ui->cmbTestset->addItem("symbols", "$\\ll\\gg\\leq\\geq\\leftrightarrow\\leftarrow\\rightarrow\\to\\uparrow\\downarrow\\updownarrow\\Leftrightarrow\\iff\\Leftarrow\\Rightarrow\\Uparrow\\Downarrow\\Updownarrow\\pm\\mp\\nexists\\ni\\notni\\circ\\sim\\emptyset\\odot\\ominus\\subsetnot\\bot\\leftharpoonup\\rightharpoonup\\upharpoonleft\\downharpoonleft\\leftrightharpoon\\rightleftharpoon\\coprod\\leftharpoondown\\rightharpoondown\\upharpoonright\\downharpoonright\\nwarrow\\nearrow\\searrow\\swarrow\\mapsto\\div\\multimap\\maporiginal\\mapimage\\times\\propto\\bullet\\neq\\ne\\equiv\\approx\\otimes\\oplus\\oslash\\cap\\land\\cup\\lor\\supset\\supseteq\\supsetnot\\subset\\subseteq\\in\\notin\\cdot\\wedge\\vee\\cong\\bot$");
-    ui->cmbTestset->addItem("std dev", "$\\sigma_x=\\sqrt{\\langle (x-\\langle x\\rangle)^2\\rangle}=\\sqrt{\\frac{1}{N-1}\\cdot\\left( \\sum_{i=1}^N{x_i}^2-\\frac{1}{N}\\cdot\\left(\\sum_{i=1}^Nx_i\\right)^2\\right)}$");
-    ui->cmbTestset->addItem("std dev 2", "$\\sigma_x=\\sqrt{\\langle (x-\\langle x\\rangle)^2\\rangle}=\\sqrt{\\frac{1}{N-1}\\cdot\\left( \\sum_{i=1}^Nx_i^2-\\frac{1}{N}\\cdot\\left(\\sum_{i=1}^Nx_i\\right)^2\\right)}$");
-    ui->cmbTestset->addItem("rotation matrix", "$\\mathrm{\\mathbf{M}}(\\alpha) = \\left(\\begin{matrix}\\cos(\\alpha)+n_x^2\\cdot (1-\\cos(\\alpha))  &  n_x\\cdot n_y\\cdot (1-\\cos(\\alpha))-n_z\\cdot \\sin(\\alpha) &  n_x\\cdot n_z\\cdot (1-\\cos(\\alpha))+n_y\\cdot \\sin(\\alpha)\\\\n_x\\cdot n_y\\cdot (1-\\cos(\\alpha))+n_z\\cdot \\sin(\\alpha) & \\cos(\\alpha)+n_y^2\\cdot (1-\\cos(\\alpha))  &   n_y\\cdot n_z\\cdot (1-\\cos(\\alpha))-n_x\\cdot \\sin(\\alpha)\\\\n_z\\cdot n_x\\cdot (1-\\cos(\\alpha))-n_y\\cdot \\sin(\\alpha) & n_z\\cdot n_y\\cdot (1-\\cos(\\alpha))+n_x\\cdot \\sin(\\alpha)  & \\cos(\\alpha)+n_z^2\\cdot (1-\\cos(\\alpha))\\end{matrix}\\right)$");
-    ui->cmbTestset->addItem("like in label at bottom (no MM)", "\\left(\\left[\\sqrt{2\\pi\\cdot\\int_{-\\infty}^\\infty f(x)\\;\\mathrm{d}x}\\right]\\right)");
-    ui->cmbTestset->addItem("like in label at bottom (MM)", "$\\left(\\left[\\sqrt{2\\pi\\cdot\\int_{-\\infty}^\\infty f(x)\\;\\mathrm{d}x}\\right]\\right)$");
+    ui->cmbTestset->addItem("math: simple relations", "$a{\\leq}b$, $a{\\geq}b$, $a{\\equiv}b$, $a=b$, $a{\\neq}b$, $a<b$, $a>b$");
+    ui->cmbTestset->addItem("text/math: simple relations in different modes", "math: $a{\\leq}b$, math/no braces: $a\\leq b$, no math: a{\\leq}b, no math/no braces: a\\leq b");
+    ui->cmbTestset->addItem("math: named symbols 1", "ll: $\\ll$\\ gg: $\\gg$\\ leq: $\\leq$\\ geq: $\\geq$\\ pm: $\\pm$\\ mp: $\\mp$\\ ");
+    ui->cmbTestset->addItem("math: named symbols 2", "nexists: $\\nexists$\\ ni: $\\ni$\\ notni: $\\notni$\\ circ: $\\circ$\\ sim: $\\sim$\\ emptyset: $\\emptyset$\\ odot: $\\odot$\\ ominus: $\\ominus$\\ subsetnot: $\\subsetnot$\\ bot: $\\bot$");
+    ui->cmbTestset->addItem("math: named symbols 3", "leftharpoonup: $\\leftharpoonup$\\ rightharpoonup: $\\rightharpoonup$\\ upharpoonleft: $\\upharpoonleft$\\ downharpoonleft: $\\downharpoonleft$\\ leftrightharpoon: $\\leftrightharpoon$\\ rightleftharpoon: $\\rightleftharpoon$");
+    ui->cmbTestset->addItem("math: named symbols 4", "coprod: $\\coprod$\\ leftharpoondown: $\\leftharpoondown$\\ rightharpoondown: $\\rightharpoondown$\\ upharpoonright: $\\upharpoonright$\\ downharpoonright: $\\downharpoonright$\\ nwarrow: $\\nwarrow$\\ nearrow: $\\nearrow$\\ ");
+    ui->cmbTestset->addItem("math: named symbols 5", "searrow: $\\searrow$\\ swarrow: $\\swarrow$\\ mapsto: $\\mapsto$\\ div: $\\div$\\ multimap: $\\multimap$\\ maporiginal: $\\maporiginal$\\ mapimage: $\\mapimage$\\ ");
+    ui->cmbTestset->addItem("math: named symbols 6", "times: $\\times$\\ ast: $\\ast$\\ star: $\\star$\\ propto: $\\propto$\\ bullet: $\\bullet$\\ neq: $\\neq$\\ ne: $\\ne$\\ equiv: $\\equiv$\\ approx: $\\approx$\\ otimes: $\\otimes$\\ oplus: $\\oplus$");
+    ui->cmbTestset->addItem("math: named symbols 7", "oslash: $\\oslash$\\ cap: $\\cap$\\ land: $\\land$\\ cup: $\\cup$\\ lor: $\\lor$\\ supset: $\\supset$\\ supseteq: $\\supseteq$\\ supsetnot: $\\supsetnot$\\ subset: $\\subset$");
+    ui->cmbTestset->addItem("math: named symbols 8", "subseteq: $\\subseteq$\\ in: $\\in$\\ notin: $\\notin$\\ cdot: $\\cdot$\\ wedge: $\\wedge$\\ vee: $\\vee$\\ cong: $\\cong$\\ bot: $\\bot$");
+    ui->cmbTestset->addItem("math: symbols", "$\\ll\\gg\\leq\\geq\\leftrightarrow\\leftarrow\\rightarrow\\to\\uparrow\\downarrow\\updownarrow\\Leftrightarrow\\iff\\Leftarrow\\Rightarrow\\Uparrow\\Downarrow\\Updownarrow\\pm\\mp\\nexists\\ni\\notni\\circ\\sim\\emptyset\\odot\\ominus\\subsetnot\\bot\\leftharpoonup\\rightharpoonup\\upharpoonleft\\downharpoonleft\\leftrightharpoon\\rightleftharpoon\\coprod\\leftharpoondown\\rightharpoondown\\upharpoonright\\downharpoonright\\nwarrow\\nearrow\\searrow\\swarrow\\mapsto\\div\\multimap\\maporiginal\\mapimage\\times\\propto\\bullet\\neq\\ne\\equiv\\approx\\otimes\\oplus\\oslash\\cap\\land\\cup\\lor\\supset\\supseteq\\supsetnot\\subset\\subseteq\\in\\notin\\cdot\\wedge\\vee\\cong\\bot$");
+    ui->cmbTestset->addItem("math: std dev", "$\\sigma_x=\\sqrt{\\langle (x-\\langle x\\rangle)^2\\rangle}=\\sqrt{\\frac{1}{N-1}\\cdot\\left( \\sum_{i=1}^N{x_i}^2-\\frac{1}{N}\\cdot\\left(\\sum_{i=1}^Nx_i\\right)^2\\right)}$");
+    ui->cmbTestset->addItem("math: std dev 2", "$\\sigma_x=\\sqrt{\\langle (x-\\langle x\\rangle)^2\\rangle}=\\sqrt{\\frac{1}{N-1}\\cdot\\left( \\sum_{i=1}^Nx_i^2-\\frac{1}{N}\\cdot\\left(\\sum_{i=1}^Nx_i\\right)^2\\right)}$");
+    ui->cmbTestset->addItem("math: rotation matrix", "$\\mathrm{\\mathbf{M}}(\\alpha) = \\left(\\begin{matrix}\\cos(\\alpha)+n_x^2\\cdot (1-\\cos(\\alpha))  &  n_x\\cdot n_y\\cdot (1-\\cos(\\alpha))-n_z\\cdot \\sin(\\alpha) &  n_x\\cdot n_z\\cdot (1-\\cos(\\alpha))+n_y\\cdot \\sin(\\alpha)\\\\n_x\\cdot n_y\\cdot (1-\\cos(\\alpha))+n_z\\cdot \\sin(\\alpha) & \\cos(\\alpha)+n_y^2\\cdot (1-\\cos(\\alpha))  &   n_y\\cdot n_z\\cdot (1-\\cos(\\alpha))-n_x\\cdot \\sin(\\alpha)\\\\n_z\\cdot n_x\\cdot (1-\\cos(\\alpha))-n_y\\cdot \\sin(\\alpha) & n_z\\cdot n_y\\cdot (1-\\cos(\\alpha))+n_x\\cdot \\sin(\\alpha)  & \\cos(\\alpha)+n_z^2\\cdot (1-\\cos(\\alpha))\\end{matrix}\\right)$");
+    ui->cmbTestset->addItem("text: like in label at bottom)", "\\left(\\left[\\sqrt{2\\pi\\cdot\\int_{-\\infty}^\\infty f(x)\\;\\mathrm{d}x}\\right]\\right)");
+    ui->cmbTestset->addItem("math: like in label at bottom", "$\\left(\\left[\\sqrt{2\\pi\\cdot\\int_{-\\infty}^\\infty f(x)\\;\\mathrm{d}x}\\right]\\right)$");
     ui->cmbTestset->addItem("text 0", "text");
     ui->cmbTestset->addItem("text 1", "text \\mathbf{bold}");
     ui->cmbTestset->addItem("text 2", "text \\mathbf{bold}\\textcolor{red}{RED}");
@@ -33,76 +43,88 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbTestset->addItem("decoration: math", "$"+mathDecoExample("vec")+" -- "+mathDecoExample("dot")+" -- "+mathDecoExample("ddot")+" -- "+mathDecoExample("ocirc")+" -- "+mathDecoExample("overline")+" -- "+mathDecoExample("underline")+" -- "+mathDecoExample("hat")+" -- "+mathDecoExample("widehat")+" -- "+mathDecoExample("check")+" -- "+mathDecoExample("widecheck")+" -- "+mathDecoExample("breve")+" -- "+mathDecoExample("tilde")+" -- "+mathDecoExample("widetilde")+" -- "+mathDecoExample("uul")+" -- "+mathDecoExample("ool")+" -- "+mathDecoExample("bar")+" -- "+mathDecoExample("arrow")+" -- "+mathDecoExample("cancel")+" -- "+mathDecoExample("bcancel")+" -- "+mathDecoExample("xcancel")+" -- "+mathDecoExample("sout")+"$");
     ui->cmbTestset->addItem("decoration: text", "Text \\ul{underlined Text Equator} -- \\ol{overlined Text Equator} -- \\sout{striked out Text Equator} -- \\cancel{canceled out Text Equator} -- \\bcancel{b-canceled out Text Equator} -- \\xcancel{x-canceled out Text Equator}");
     ui->cmbTestset->addItem("mathtest", "This is normal text: $this is math:\\langle r^2(\\tau)\\rangle=\\left\\langle (\\vec{r}(t)-\\vec{r}(t+\\tau) )^2\\right\\rangle\\ \\ \\ g(\\tau)=\\frac{1}{N}\\cdot\\left(1+\\frac{2}{3}\\frac{\\langle r^2(\\tau)\\rangle}{w_{xy}^2}\\right)^{-1}  \\lfloor\\rfloor\\lceil\\rceil\\langle\\rangle\\left\\{\\va\\left|\\|\\va\\|_2\\geq2\\right.\\right\\} \\vr\\vR\\frac{\\sqrt{\\sqrt{\\sqrt{\\sum_{i=0}^\\infty \\hat{i}^2}+y^\\alpha}+1}}{\\dot{v}\\equiv\\ddot{r}}\\argmin_{\\vec{k}}\\sum_{\\sqrt{i}=0}^{N}\\int_{x_0}^{x_1}\\left(\\left(\\left(x\\right)\\right)\\right)\\underbrace{\\left[\\left\\{\\frac{\\partial f}{\\partial x}\\right\\}\\cdot\\frac{1}{2}\\right]}{\\text{underbraced text \\hbar}}\\cdots\\frac{\\sqrt{\\sum_{i=0}^2 \\hat{i}^2}+y^\\alpha}{\\dot{v}\\equiv\\ddot{r}}, \\hat{t}\\hat{T} \\overbrace{\\left|\\sqrt{x\\cdot Y}\\right|}{\\propto\\bbN\\circ\\bbZ}   \\left<\\arrow{x(\\tau)}\\cdot\\vec{R}(t+\\bar{\\tau})\\right>   \\alpha\\beta\\gamma\\delta\\epsilon\\Gamma\\Delta\\Theta\\Omega  \\left\\_\\left~\\cbrt{\\hbar\\omega}\\right~\\right\\_$");
-    ui->cmbTestset->addItem("upper/lower parantheses test:", "$\\text{bblabla} \\frac{1}{2}\\cdot\\left(\\frac{1}{\\mathrm{e}^x+\\mathrm{e}^{-x}}\\right)\\cdot\\left(\\frac{1}{\\frac{1+2}{5+x}}\\right)\\cdot\\left(\\frac{1}{\\exp\\left[-\\frac{y^2}{\\sqrt{x}}\\right]\\cdot\\exp\\left[-\\frac{1}{\\frac{1}{2}}\\right]}\\right) $");
-    ui->cmbTestset->addItem("ACF test", "$g_{rg}^{ab}(\\tau)=\\frac{1}{N}\\cdot\\left(1+\\frac{2}{3}\\frac{\\langle r^2(\\tau)\\rangle}{w_{xy}^2}\\right)^{-1}\\cdot\\left(1+\\frac{2}{3}\\frac{\\langle r^2(\\tau)\\rangle}{w_{xy}^2}\\right)^{-\\frac{1}{2}}$");
-    ui->cmbTestset->addItem("MSD test", "$\\mathrm{MSD}(\\tau)\\equiv\\langle r^2(\\tau)\\rangle=\\left\\langle (\\vec{r}(t)-\\vec{r}(t+\\tau) )^2\\right\\rangle=2n\\cdot\\frac{K_\\alpha}{\\Gamma(1+\\alpha)}\\cdot\\tau^\\alpha$");
-    ui->cmbTestset->addItem("f() test", "$f(\\vec{x})=\\frac{1}{\\sqrt{2\\pi\\cdot\\sigma^2}}\\exp\\left(-\\frac{(\\vec{x}-\\vec{x}_0)^2}{\\sigma^2}\\right)$");
-    ui->cmbTestset->addItem("chi^2 test", "$\\vec{p}^\\ast=\\argmax\\limits_{\\vec{p}}\\chi^2=\\argmax\\limits_{\\vec{p}}\\sum\\limits_{i=1}^N\\left|\\frac{\\hat{f}_i-f(x_i;\\vec{p})}{\\sigma_i}\\right|^2$");
-    ui->cmbTestset->addItem("symbol test", "\\vdots\\cdots\\ddots\\iddots\\lfloor\\rfloor\\lceil\\rceil\\langle\\rangle\\sum\\int \\iint \\oint \\prod \\leftrightarrow \\leftarrow\\Leftarrow\\rightarrow\\Rightarrow\\pm\\mp\\leq\\geq\\ll\\gg\\hbar\\euro\\bbC\\bbH\\bbN\\bbP\\bbQ\\bbZ\\bbR\\Angstrom\\Alef\\Bet\\Gimel\\Dalet\\nexists\\ni\\notni\\circ\\tilde\\oiint\\oiiint\\emptyset\\odot\\ominus\\subsetnot\\DC\\bot\\cdots\\perthousand\\leftharpoonup\\rightharpoonup \\upharpoonleft \\downharpoonleft \\leftrightharpoon \\rightleftharpoon \\coprod \\leftharpoondown \\rightharpoondown \\nwarrow \\nearrow \\mapsto \\cent \\pound \\yen \\div \\multimap \\maporiginal \\mapimage \\bigcap \\bigcup \\benzene \\times \\cdot \\propto \\equiv \\Im \\Re \\ ");
-    ui->cmbTestset->addItem("arrowtest 1", "$\\leftarrow \\longleftarrow \\Leftarrow \\Longleftarrow \\rightarrow \\longrightarrow \\Rightarrow \\Longrightarrow \\uparrow \\Uparrow \\downarrow \\Downarrow \\leftrightarrow \\Leftrightarrow \\longleftrightarrow \\Longleftrightarrow$");
-    ui->cmbTestset->addItem("arrowtest 2", "$\\nwarrow \\nearrow \\searrow \\swarrow \\mapsto \\leftharpoonup \\rightharpoonup \\upharpoonleft \\downharpoonleft \\leftrightharpoon \\rightleftharpoon \\leftharpoondown \\rightharpoondown \\upharpoonright \\downharpoonright $");
-    ui->cmbTestset->addItem("math: greek letters", "$\\alpha\\beta\\gamma\\delta\\epsilon\\varepsilon\\zeta\\eta\\theta\\vartheta\\iota\\kappa\\lambda\\mu\\nu\\xi\\pi\\varpi\\rho\\varrho\\sigma\\varsigma\\tau\\upsilon\\phi\\varphi\\chi\\psi\\omega\\Omega\\Gamma\\Delta\\Theta\\Lambda\\Xi\\Pi\\Sigma\\Upsilon\\Phi\\Psi$");
-    ui->cmbTestset->addItem("text: greek letters", "\\alpha\\beta\\gamma\\delta\\epsilon\\varepsilon\\zeta\\eta\\theta\\vartheta\\iota\\kappa\\lambda\\mu\\nu\\xi\\pi\\varpi\\rho\\varrho\\sigma\\varsigma\\tau\\upsilon\\phi\\varphi\\chi\\psi\\omega\\Omega\\Gamma\\Delta\\Theta\\Lambda\\Xi\\Pi\\Sigma\\Upsilon\\Phi\\Psi");
-    ui->cmbTestset->addItem("math: blackboard", "$\\mathbb{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}$");
-    ui->cmbTestset->addItem("math: bf", "$\\mathbf{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}$");
-    ui->cmbTestset->addItem("math: it", "$\\mathit{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}$");
-    ui->cmbTestset->addItem("math: frak", "$\\mathfrak{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}$");
-    ui->cmbTestset->addItem("math: sf", "$\\mathsf{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}$");
-    ui->cmbTestset->addItem("math: rm", "$\\mathrm{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}$");
-    ui->cmbTestset->addItem("math: cal", "$\\mathcal{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}$");
-    ui->cmbTestset->addItem("math: script", "$\\mathscr{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}$");
-    ui->cmbTestset->addItem("math: tt", "$\\mathtt{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}$");
-    ui->cmbTestset->addItem("bf", "\\textbf{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}");
-    ui->cmbTestset->addItem("it", "\\textit{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}");
-    ui->cmbTestset->addItem("frak", "\\textfrak{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}");
-    ui->cmbTestset->addItem("sf", "\\textsf{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}");
-    ui->cmbTestset->addItem("rm", "\\textrm{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}");
-    ui->cmbTestset->addItem("cal", "\\textcal{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}");
-    ui->cmbTestset->addItem("script", "\\textscr{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}");
-    ui->cmbTestset->addItem("tt", "\\texttt{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}");
-    ui->cmbTestset->addItem("subscript test", "$r_{123}\\ \\ r_{\\frac{1}{2}}$");
-    ui->cmbTestset->addItem("subscript0 test", "$r_{123}$");
-    ui->cmbTestset->addItem("subscript1 test", "$r_{123}\\ $");
-    ui->cmbTestset->addItem("subscript2 test", "$r_{123}\\ \\ $");
-    ui->cmbTestset->addItem("subscript3 test", "$r_{123}r_{\\frac{1}{2}}$");
-    ui->cmbTestset->addItem("superscript test", "$r^{123}\\ \\ r^{\\frac{1}{2}}$");
-    ui->cmbTestset->addItem("superscript0 test", "$r^{123}$");
-    ui->cmbTestset->addItem("superscript1 test", "$r^{123}\\ $");
-    ui->cmbTestset->addItem("superscript2 test", "$r^{123}\\ \\ $");
-    ui->cmbTestset->addItem("superscript3 test", "$r^{123}r^{\\frac{1}{2}}$");
-    ui->cmbTestset->addItem("asuperscript test", "$a^{123}\\ \\ a^{\\frac{1}{2}}$");
-    ui->cmbTestset->addItem("asuperscript0 test", "$a^{123}$");
-    ui->cmbTestset->addItem("gsuperscript1 test", "$g^{123}\\ $");
-    ui->cmbTestset->addItem("gsuperscript2 test", "$g^{123}\\ \\ $");
-    ui->cmbTestset->addItem("gsuperscript3 test", "$g^{123}g^{\\frac{1}{2}}$");
-    ui->cmbTestset->addItem("subsuperscript test", "$r_{123}^2$\\ \\ $r^2_{123}$\\ \\ $\\left(\\stackrel{a}{b}\\right)_{123}^2$\\ \\ $\\left(\\stackrel{a}{b}\\right)^2_{123}$\\ \\ $r_{\\frac{1}{2}}^2$\\ \\ $r^2_{\\frac{1}{2}}$\\ \\ $r^{\\frac{1}{2}}_2$\\ \\ $r_2^{\\frac{1}{2}}$\\ \\ $\\left(\\stackrel{a}{b}\\right)_2^{\\frac{1}{2}}$\\ \\ $\\left(\\stackrel{a}{b}\\right)^{\\frac{1}{2}}_2$");
-    ui->cmbTestset->addItem("frac test", "$\\frac{a}{b}+\\frac{g}{a}-\\frac{a^2}{b^2}\\cdot\\frac{a^2}{b^{\\frac{1}{2}}}$");
-    ui->cmbTestset->addItem("tfrac test", "$\\tfrac{a}{b}+\\tfrac{g}{a}-\\tfrac{a^2}{b^2}\\cdot\\tfrac{a^2}{b^{\\tfrac{1}{2}}}$");
-    ui->cmbTestset->addItem("dfrac test", "$\\dfrac{a}{b}+\\dfrac{g}{a}-\\dfrac{a^2}{b^2}\\cdot\\dfrac{a^2}{b^{\\dfrac{1}{2}}}$");
-    ui->cmbTestset->addItem("sfrac test", "$\\sfrac{a}{b}+\\sfrac{g}{a}-\\sfrac{a^2}{b^2}\\cdot\\sfrac{a^2}{b^{\\sfrac{1}{2}}}$");
-    ui->cmbTestset->addItem("stfrac test", "$\\stfrac{a}{b}+\\stfrac{g}{a}-\\stfrac{a^2}{b^2}\\cdot\\stfrac{a^2}{b^{\\stfrac{1}{2}}}$");
-    ui->cmbTestset->addItem("number fractions test", "frac: \\frac{1}{2}, \\frac{3}{4},\\ \\ \\ tfrac: \\tfrac{1}{2}, \\tfrac{3}{4},\\ \\ \\ sfrac: \\sfrac{1}{2}, \\sfrac{3}{4},\\ \\ \\ stfrac: \\stfrac{1}{2}, \\stfrac{3}{4},\\ \\ \\ ");
-    ui->cmbTestset->addItem("stackrel test", "$\\stackrel{a}{b}+\\stackrel{g}{a}-\\stackrel{a^2}{b^2}\\cdot\\stackrel{a^2}{b^{\\stackrel{1}{2}}}$");
-    ui->cmbTestset->addItem("brace0 test", "\\langle\\langle -- $\\langle\\langle$");
-    ui->cmbTestset->addItem("brace1 test", "\\langle\\langle r^{123} -- $\\langle\\langle r^{123}$");
-    ui->cmbTestset->addItem("brace2 test", "\\langle\\langle r^{123}\\rangle\\rangle -- $\\langle\\langle r^{123}\\rangle\\rangle$");
-    ui->cmbTestset->addItem("brace3 test", "\\left\\langle r^{123}\\right\\rangle -- $\\left\\langle r^{123}\\right\\rangle$");
-    ui->cmbTestset->addItem("brace4 test", "\\left\\langle\\left\\langle\\left\\langle r^{123}\\right\\rangle\\right\\rangle\\right\\rangle -- $\\left\\langle\\left\\langle\\left\\langle r^{123}\\right\\rangle\\right\\rangle\\right\\rangle$");
-    ui->cmbTestset->addItem("brace5 test:  ( )", "\\left(\\left(\\left( r^{123}\\right)\\right)\\right) -- $\\left(\\left(\\left( r^{123}\\right)\\right)\\right)$");
-    ui->cmbTestset->addItem("brace6 test:  [ ]", "\\left[\\left[\\left[ r^{123}\\right]\\right]\\right] -- $\\left[\\left[\\left[ r^{123}\\right]\\right]\\right]$");
-    ui->cmbTestset->addItem("brace7 test:  { }", "\\left\\{\\left\\{\\left\\{ r^{123}\\right\\}\\right\\}\\right\\} -- $\\left\\{\\left\\{\\left\\{ r^{123}\\right\\}\\right\\}\\right\\}$");
-    ui->cmbTestset->addItem("brace8 test: || ||", "\\left\\|\\left\\|\\left\\| r^{123}\\right\\|\\right\\|\\right\\| -- $\\left\\|\\left\\|\\left\\| r^{123}\\right\\|\\right\\|\\right\\|$");
-    ui->cmbTestset->addItem("brace9 test:  | |", "\\left|\\left|\\left| r^{123}\\right|\\right|\\right| -- $\\left|\\left|\\left| r^{123}\\right|\\right|\\right|$");
-    ui->cmbTestset->addItem("brace10 test", "\\left\\{\\left[\\left( r^{123}\\right)\\right]\\right\\} -- $\\left\\{\\left[\\left( r^{123}\\right)\\right]\\right\\}$");
-    ui->cmbTestset->addItem("brace11 test:  floor", "\\left\\lfloor\\left\\lfloor\\left\\lfloor r^{123}\\right\\rfloor\\right\\rfloor\\right\\rfloor -- $\\left\\lfloor\\left\\lfloor\\left\\lfloor r^{123}\\right\\rfloor\\right\\rfloor\\right\\rfloor$");
-    ui->cmbTestset->addItem("brace12 test:  ceil", "\\left\\lceil\\left\\lceil\\left\\lceil r^{123}\\right\\rceil\\right\\rceil\\right\\rceil -- $\\left\\lceil\\left\\lceil\\left\\lceil r^{123}\\right\\rceil\\right\\rceil\\right\\rceil$");
-    ui->cmbTestset->addItem("brace13 test: non-left/right ( )", "(((r^{123}))) -- $(((r^{123})))$");
-    ui->cmbTestset->addItem("brace14 test: non-left/right [ ]", "[[[r^{123}]]] -- $[[[r^{123}]]]$");
-    ui->cmbTestset->addItem("brace15 test: non-left/right { }", "\\{\\{\\{r^{123}\\}\\}\\} -- $\\{\\{\\{ r^{123}\\}\\}\\}$");
-    ui->cmbTestset->addItem("brace16 test: non-left/right | |", "|||r^{123}||| -- $|||r^{123}|||$");
-    ui->cmbTestset->addItem("brace17 test: non-left/right { | }", "\\{r^{123}|r\\equiv 5\\} -- $\\{r^{123}|r\\equiv 5\\}$");
-    ui->cmbTestset->addItem("sub-, superscript test", "r^{1234}_{321} r_{321}^{1234} -- $r^{1234}_{321} r_{321}^{1234} -- \\kappa^2 -- \\kappa_2 -- \\kappa_2^2$");
-    ui->cmbTestset->addItem("super-, subscript test", "r^{123}_{4321} r_{4321}^{123} -- $r^{123}_{4321} r_{4321}^{123} -- \\kappa^2 -- \\kappa_2 -- \\kappa_2^2$");
+    ui->cmbTestset->addItem("math: upper/lower parantheses test:", "$\\text{bblabla} \\frac{1}{2}\\cdot\\left(\\frac{1}{\\mathrm{e}^x+\\mathrm{e}^{-x}}\\right)\\cdot\\left(\\frac{1}{\\frac{1+2}{5+x}}\\right)\\cdot\\left(\\frac{1}{\\exp\\left[-\\frac{y^2}{\\sqrt{x}}\\right]\\cdot\\exp\\left[-\\frac{1}{\\frac{1}{2}}\\right]}\\right) $");
+    ui->cmbTestset->addItem("math: ACF test", "$g_{rg}^{ab}(\\tau)=\\frac{1}{N}\\cdot\\left(1+\\frac{2}{3}\\frac{\\langle r^2(\\tau)\\rangle}{w_{xy}^2}\\right)^{-1}\\cdot\\left(1+\\frac{2}{3}\\frac{\\langle r^2(\\tau)\\rangle}{w_{xy}^2}\\right)^{-\\frac{1}{2}}$");
+    ui->cmbTestset->addItem("math: MSD test", "$\\mathrm{MSD}(\\tau)\\equiv\\langle r^2(\\tau)\\rangle=\\left\\langle (\\vec{r}(t)-\\vec{r}(t+\\tau) )^2\\right\\rangle=2n\\cdot\\frac{K_\\alpha}{\\Gamma(1+\\alpha)}\\cdot\\tau^\\alpha$");
+    ui->cmbTestset->addItem("math: f() test", "$f(\\vec{x})=\\frac{1}{\\sqrt{2\\pi\\cdot\\sigma^2}}\\exp\\left(-\\frac{(\\vec{x}-\\vec{x}_0)^2}{\\sigma^2}\\right)$");
+    ui->cmbTestset->addItem("math: chi^2 test", "$\\vec{p}^\\ast=\\argmax\\limits_{\\vec{p}}\\chi^2=\\argmax\\limits_{\\vec{p}}\\sum\\limits_{i=1}^N\\left|\\frac{\\hat{f}_i-f(x_i;\\vec{p})}{\\sigma_i}\\right|^2$");
+    ui->cmbTestset->addItem("text: symbol test", "\\vdots\\cdots\\ddots\\iddots\\lfloor\\rfloor\\lceil\\rceil\\langle\\rangle\\sum\\int \\iint \\oint \\prod \\leftrightarrow \\leftarrow\\Leftarrow\\rightarrow\\Rightarrow\\pm\\mp\\leq\\geq\\ll\\gg\\hbar\\euro\\bbC\\bbH\\bbN\\bbP\\bbQ\\bbZ\\bbR\\Angstrom\\Alef\\Bet\\Gimel\\Dalet\\nexists\\ni\\notni\\circ\\tilde\\oiint\\oiiint\\emptyset\\odot\\ominus\\subsetnot\\DC\\bot\\cdots\\perthousand\\leftharpoonup\\rightharpoonup \\upharpoonleft \\downharpoonleft \\leftrightharpoon \\rightleftharpoon \\coprod \\leftharpoondown \\rightharpoondown \\nwarrow \\nearrow \\mapsto \\cent \\pound \\yen \\div \\multimap \\maporiginal \\mapimage \\bigcap \\bigcup \\benzene \\times \\cdot \\propto \\equiv \\Im \\Re \\ ");
+    ui->cmbTestset->addItem("math: arrowtest 1", "$\\leftarrow \\longleftarrow \\Leftarrow \\Longleftarrow \\rightarrow \\longrightarrow \\Rightarrow \\Longrightarrow \\uparrow \\Uparrow \\downarrow \\Downarrow \\leftrightarrow \\Leftrightarrow \\longleftrightarrow \\Longleftrightarrow$");
+    ui->cmbTestset->addItem("math: arrowtest 2", "$\\nwarrow \\nearrow \\searrow \\swarrow \\mapsto \\leftharpoonup \\rightharpoonup \\upharpoonleft \\downharpoonleft \\leftrightharpoon \\rightleftharpoon \\leftharpoondown \\rightharpoondown \\upharpoonright \\downharpoonright $");
+    ui->cmbTestset->addItem("math-font: greek letters", "$\\alpha\\beta\\gamma\\delta\\epsilon\\varepsilon\\zeta\\eta\\theta\\vartheta\\iota\\kappa\\lambda\\mu\\nu\\xi\\pi\\varpi\\rho\\varrho\\sigma\\varsigma\\tau\\upsilon\\phi\\varphi\\chi\\psi\\omega\\Omega\\Gamma\\Delta\\Theta\\Lambda\\Xi\\Pi\\Sigma\\Upsilon\\Phi\\Psi$");
+    ui->cmbTestset->addItem("text-font: greek letters", "\\alpha\\beta\\gamma\\delta\\epsilon\\varepsilon\\zeta\\eta\\theta\\vartheta\\iota\\kappa\\lambda\\mu\\nu\\xi\\pi\\varpi\\rho\\varrho\\sigma\\varsigma\\tau\\upsilon\\phi\\varphi\\chi\\psi\\omega\\Omega\\Gamma\\Delta\\Theta\\Lambda\\Xi\\Pi\\Sigma\\Upsilon\\Phi\\Psi");
+    ui->cmbTestset->addItem("math-font: blackboard", "$\\mathbb{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}$");
+    ui->cmbTestset->addItem("math-font: bf", "$\\mathbf{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}$");
+    ui->cmbTestset->addItem("math-font: it", "$\\mathit{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}$");
+    ui->cmbTestset->addItem("math-font: frak", "$\\mathfrak{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}$");
+    ui->cmbTestset->addItem("math-font: sf", "$\\mathsf{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}$");
+    ui->cmbTestset->addItem("math-font: rm", "$\\mathrm{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}$");
+    ui->cmbTestset->addItem("math-font: cal", "$\\mathcal{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}$");
+    ui->cmbTestset->addItem("math-font: script", "$\\mathscr{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}$");
+    ui->cmbTestset->addItem("math-font: tt", "$\\mathtt{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}$");
+    ui->cmbTestset->addItem("text: bf", "\\textbf{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}");
+    ui->cmbTestset->addItem("text: it", "\\textit{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}");
+    ui->cmbTestset->addItem("text: frak", "\\textfrak{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}");
+    ui->cmbTestset->addItem("text: sf", "\\textsf{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}");
+    ui->cmbTestset->addItem("text: rm", "\\textrm{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}");
+    ui->cmbTestset->addItem("text: cal", "\\textcal{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}");
+    ui->cmbTestset->addItem("text: script", "\\textscr{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}");
+    ui->cmbTestset->addItem("text: tt", "\\texttt{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}");
+    ui->cmbTestset->addItem("math: subscript test", "$r_{123}\\ \\ r_{\\frac{1}{2}}$");
+    ui->cmbTestset->addItem("math: subscript0 test", "$r_{123}$");
+    ui->cmbTestset->addItem("math: subscript1 test", "$r_{123}\\ $");
+    ui->cmbTestset->addItem("math: subscript2 test", "$r_{123}\\ \\ $");
+    ui->cmbTestset->addItem("math: subscript3 test", "$r_{123}r_{\\frac{1}{2}}$");
+    ui->cmbTestset->addItem("math: superscript test", "$r^{123}\\ \\ r^{\\frac{1}{2}}$");
+    ui->cmbTestset->addItem("math: superscript0 test", "$r^{123}$");
+    ui->cmbTestset->addItem("math: superscript1 test", "$r^{123}\\ $");
+    ui->cmbTestset->addItem("math: superscript2 test", "$r^{123}\\ \\ $");
+    ui->cmbTestset->addItem("math: superscript3 test", "$r^{123}r^{\\frac{1}{2}}$");
+    ui->cmbTestset->addItem("math: asuperscript test", "$a^{123}\\ \\ a^{\\frac{1}{2}}$");
+    ui->cmbTestset->addItem("math: asuperscript0 test", "$a^{123}$");
+    ui->cmbTestset->addItem("math: gsuperscript1 test", "$g^{123}\\ $");
+    ui->cmbTestset->addItem("math: gsuperscript2 test", "$g^{123}\\ \\ $");
+    ui->cmbTestset->addItem("math: gsuperscript3 test", "$g^{123}g^{\\frac{1}{2}}$");
+    ui->cmbTestset->addItem("math: subsuperscript test", "$r_{123}^2$\\ \\ $r^2_{123}$\\ \\ $\\left(\\stackrel{a}{b}\\right)_{123}^2$\\ \\ $\\left(\\stackrel{a}{b}\\right)^2_{123}$\\ \\ $r_{\\frac{1}{2}}^2$\\ \\ $r^2_{\\frac{1}{2}}$\\ \\ $r^{\\frac{1}{2}}_2$\\ \\ $r_2^{\\frac{1}{2}}$\\ \\ $\\left(\\stackrel{a}{b}\\right)_2^{\\frac{1}{2}}$\\ \\ $\\left(\\stackrel{a}{b}\\right)^{\\frac{1}{2}}_2$");
+    ui->cmbTestset->addItem("math: radicals", "$\\sqrt{a}\\sqrt{5}\\sqrt{-1}\\sqrt{h}\\sqrt{jA}\\sqrt{\\vec{A}}\\sqrt{\\frac{1}{a}}\\frac{\\sqrt{a}}{\\sqrt{a}}\\sqrt{\\frac{1}{1+\\frac{1}{a}}}\\frac{1}{\\sqrt{1+\\frac{1}{a}}}\\sqrt{a+\\sqrt{a+b}}$");
+    ui->cmbTestset->addItem("text: radicals", "\\sqrt{a}\\sqrt{5}\\sqrt{-1}\\sqrt{h}\\sqrt{jA}\\sqrt{\\vec{A}}\\sqrt{\\frac{1}{a}}\\frac{\\sqrt{a}}{\\sqrt{a}}\\sqrt{\\frac{1}{1+\\frac{1}{a}}}\\frac{1}{\\sqrt{1+\\frac{1}{a}}}\\sqrt{a+\\sqrt{a+b}}");
+    ui->cmbTestset->addItem("math: non-2 radicals", "$\\sqrt[3]{a}\\sqrt[3]{5}\\sqrt[3]{-1}\\sqrt[3]{h}\\sqrt[3]{\\vec{A}}\\sqrt[3]{\\frac{1}{a}}\\frac{\\sqrt[3]{a}}{\\sqrt[3]{a}}\\sqrt[3]{\\frac{1}{1+\\frac{1}{a}}}\\frac{1}{\\sqrt[3]{1+\\frac{1}{a}}}\\sqrt[3]{a+\\sqrt[3]{a+b}}$");
+    ui->cmbTestset->addItem("text: non-2 radicals", "\\sqrt[3]{a}\\sqrt[3]{5}\\sqrt[3]{-1}\\sqrt[3]{h}\\sqrt[3]{\\vec{A}}\\sqrt[3]{\\frac{1}{a}}\\frac{\\sqrt[3]{a}}{\\sqrt[3]{a}}\\sqrt[3]{\\frac{1}{1+\\frac{1}{a}}}\\frac{1}{\\sqrt[3]{1+\\frac{1}{a}}}\\sqrt[3]{a+\\sqrt[3]{a+b}}");
+    ui->cmbTestset->addItem("math: long non-2 radicals", "$\\sqrt[3.14156]{a}\\sqrt[3.14156]{5}$");
+    ui->cmbTestset->addItem("text: long non-2 radicals", "\\sqrt[3.14156]{a}\\sqrt[3.14156]{5}");
+    ui->cmbTestset->addItem("math: sum, prod, ...", "no-limits: $\\prod_{i=1}^n \\sum_{j=1}^c (i + j)\\cdot\\frac{1}{2}$\\ \\ \\ --\\ \\ \\ limits: $\\prod\\limits_{i=1}^n \\sum\\limits_{j=1}^c (i + j)\\cdot\\frac{1}{2}$\\ \\ \\ --\\ \\ \\ long-below: $\\sum_{n=\\{a,b,c,d,e,f,g\\}} f(x)$\\ \\ \\ --\\ \\ \\ long-above: $\\sum^{n=\\{a,b,c,d,e,f,g\\}} f(x)$");
+    ui->cmbTestset->addItem("text: sum, prod, ...", "no-limits: \\prod_{i=1}^n \\sum_{j=1}^c (i + j)\\cdot\\frac{1}{2}\\ \\ \\ --\\ \\ \\ limits: \\prod\\limits_{i=1}^n \\sum\\limits_{j=1}^c (i + j)\\cdot\\frac{1}{2}\\ \\ \\ --\\ \\ \\ long-below: \\sum_{n=\\{a,b,c,d,e,f,g\\}} f(x)\\ \\ \\ --\\ \\ \\ long-above: \\sum^{n=\\{a,b,c,d,e,f,g\\}} f(x)");
+    ui->cmbTestset->addItem("math: more sum-symbols ", "$\\sum_{i=0}^N\\prod_{i=0}^N\\coprod_{i=0}^N\\bigcup_{i=0}^N\\bigcap_{i=0}^N\\bigsqcup_{i=0}^N\\bigvee_{i=0}^N\\bigwedge_{i=0}^N\\bigoplus_{i=0}^N\\bigotimes_{i=0}^N\\bigodot_{i=0}^N\\biguplus_{i=0}^N$");
+    ui->cmbTestset->addItem("math: integrals", "no-limits: $\\int_{0}^1 f(x)\\;\\mathrm{d}x\\ \\iint_{0}^1 f(x)\\;\\mathrm{d}x\\ \\iiint_{0}^1 f(x)\\;\\mathrm{d}x\\ \\oint_{0}^1 f(x)\\;\\mathrm{d}x\\ \\int_{x} f(x)\\;\\mathrm{d}x$\\ \\ \\ --\\ \\ \\ limits: $\\int\\limits_{0}^1 f(x)\\;\\mathrm{d}x\\ \\iint\\limits_{0}^1 f(x)\\;\\mathrm{d}x\\ \\iiint\\limits_{0}^1 f(x)\\;\\mathrm{d}x\\ \\oint\\limits_{0}^1 f(x)\\;\\mathrm{d}x\\ \\int\\limits_{x} f(x)\\;\\mathrm{d}x$");
+    ui->cmbTestset->addItem("text: integrals", "no-limits: \\int_{0}^1 f(x)\\;\\mathrm{d}x\\ \\iint_{0}^1 f(x)\\;\\mathrm{d}x\\ \\iiint_{0}^1 f(x)\\;\\mathrm{d}x\\ \\oint_{0}^1 f(x)\\;\\mathrm{d}x\\ \\int_{x} f(x)\\;\\mathrm{d}x$\\ \\ \\ --\\ \\ \\ limits: $\\int\\limits_{0}^1 f(x)\\;\\mathrm{d}x\\ \\iint\\limits_{0}^1 f(x)\\;\\mathrm{d}x\\ \\iiint\\limits_{0}^1 f(x)\\;\\mathrm{d}x\\ \\oint\\limits_{0}^1 f(x)\\;\\mathrm{d}x\\ \\int\\limits_{x} f(x)\\;\\mathrm{d}x");
+    ui->cmbTestset->addItem("math: frac test", "$\\frac{a}{b}+\\frac{g}{a}-\\frac{a^2}{b^2}\\cdot\\frac{a^2}{b^{\\frac{1}{2}}}$");
+    ui->cmbTestset->addItem("math/text: stacked frac", "math: $\\frac{1+\\frac{a}{b}}{1+\\frac{1}{1+\\frac{1}{a}}}$\\ \\ text: \\frac{1+\\frac{a}{b}}{1+\\frac{1}{1+\\frac{1}{a}}}\\ \\ \\ \\ \\ --\\ \\ \\ \\ \\ math: $a_0+\\cfrac{1}{a_1+\\cfrac{1}{a_2+\\cfrac{1}{a_3+\\cdots}}}$\\ \\ text: a_0+\\cfrac{1}{a_1+\\cfrac{1}{a_2+\\cfrac{1}{a_3+\\cdots}}}");
+    ui->cmbTestset->addItem("math: tfrac test", "$\\tfrac{a}{b}+\\tfrac{g}{a}-\\tfrac{a^2}{b^2}\\cdot\\tfrac{a^2}{b^{\\tfrac{1}{2}}}$");
+    ui->cmbTestset->addItem("math: dfrac test", "$\\dfrac{a}{b}+\\dfrac{g}{a}-\\dfrac{a^2}{b^2}\\cdot\\dfrac{a^2}{b^{\\dfrac{1}{2}}}$");
+    ui->cmbTestset->addItem("math: sfrac test", "$\\sfrac{a}{b}+\\sfrac{g}{a}-\\sfrac{a^2}{b^2}\\cdot\\sfrac{a^2}{b^{\\sfrac{1}{2}}}$");
+    ui->cmbTestset->addItem("math: stfrac test", "$\\stfrac{a}{b}+\\stfrac{g}{a}-\\stfrac{a^2}{b^2}\\cdot\\stfrac{a^2}{b^{\\stfrac{1}{2}}}$");
+    ui->cmbTestset->addItem("text: number fractions test", "frac: \\frac{1}{2}, \\frac{3}{4},\\ \\ \\ tfrac: \\tfrac{1}{2}, \\tfrac{3}{4},\\ \\ \\ sfrac: \\sfrac{1}{2}, \\sfrac{3}{4},\\ \\ \\ stfrac: \\stfrac{1}{2}, \\stfrac{3}{4},\\ \\ \\ ");
+    ui->cmbTestset->addItem("math: stackrel test", "$\\stackrel{a}{b}+\\stackrel{g}{a}-\\stackrel{a^2}{b^2}\\cdot\\stackrel{a^2}{b^{\\stackrel{1}{2}}}$");
+    ui->cmbTestset->addItem("text/math: brace0 test", "text: \\langle\\langle -- math: $\\langle\\langle$");
+    ui->cmbTestset->addItem("text/math: brace1 test", "text: \\langle\\langle r^{123} -- math: $\\langle\\langle r^{123}$");
+    ui->cmbTestset->addItem("text/math: brace2 test", "text: \\langle\\langle r^{123}\\rangle\\rangle -- math: $\\langle\\langle r^{123}\\rangle\\rangle$");
+    ui->cmbTestset->addItem("text/math: brace3 test", "text: \\left\\langle r^{123}\\right\\rangle -- math: $\\left\\langle r^{123}\\right\\rangle$");
+    ui->cmbTestset->addItem("text/math: brace4 test", "text: \\left\\langle\\left\\langle\\left\\langle r^{123}\\right\\rangle\\right\\rangle\\right\\rangle -- math: $\\left\\langle\\left\\langle\\left\\langle r^{123}\\right\\rangle\\right\\rangle\\right\\rangle$");
+    ui->cmbTestset->addItem("text/math: brace5 test:  ( )", "text: \\left(\\left(\\left( r^{123}\\right)\\right)\\right) -- math: $\\left(\\left(\\left( r^{123}\\right)\\right)\\right)$");
+    ui->cmbTestset->addItem("text/math: brace6 test:  [ ]", "text: \\left[\\left[\\left[ r^{123}\\right]\\right]\\right] -- math: $\\left[\\left[\\left[ r^{123}\\right]\\right]\\right]$");
+    ui->cmbTestset->addItem("text/math: brace7 test:  { }", "text: \\left\\{\\left\\{\\left\\{ r^{123}\\right\\}\\right\\}\\right\\} -- math: $\\left\\{\\left\\{\\left\\{ r^{123}\\right\\}\\right\\}\\right\\}$");
+    ui->cmbTestset->addItem("text/math: brace8 test: || ||", "text: \\left\\|\\left\\|\\left\\| r^{123}\\right\\|\\right\\|\\right\\| -- math: $\\left\\|\\left\\|\\left\\| r^{123}\\right\\|\\right\\|\\right\\|$");
+    ui->cmbTestset->addItem("text/math: brace9 test:  | |", "text: \\left|\\left|\\left| r^{123}\\right|\\right|\\right| -- math: $\\left|\\left|\\left| r^{123}\\right|\\right|\\right|$");
+    ui->cmbTestset->addItem("text/math: brace10 test", "text: \\left\\{\\left[\\left( r^{123}\\right)\\right]\\right\\} -- math: $\\left\\{\\left[\\left( r^{123}\\right)\\right]\\right\\}$");
+    ui->cmbTestset->addItem("text/math: brace11 test:  floor", "text: \\left\\lfloor\\left\\lfloor\\left\\lfloor r^{123}\\right\\rfloor\\right\\rfloor\\right\\rfloor -- math: $\\left\\lfloor\\left\\lfloor\\left\\lfloor r^{123}\\right\\rfloor\\right\\rfloor\\right\\rfloor$");
+    ui->cmbTestset->addItem("text/math: brace12 test:  ceil", "text: \\left\\lceil\\left\\lceil\\left\\lceil r^{123}\\right\\rceil\\right\\rceil\\right\\rceil -- math: $\\left\\lceil\\left\\lceil\\left\\lceil r^{123}\\right\\rceil\\right\\rceil\\right\\rceil$");
+    ui->cmbTestset->addItem("text/math: brace13 test: non-left/right ( )", "text: (((r^{123}))) -- math: $(((r^{123})))$");
+    ui->cmbTestset->addItem("text/math: brace14 test: non-left/right [ ]", "text: [[[r^{123}]]] -- math: $[[[r^{123}]]]$");
+    ui->cmbTestset->addItem("text/math: brace15 test: non-left/right { }", "text: \\{\\{\\{r^{123}\\}\\}\\} -- math: $\\{\\{\\{ r^{123}\\}\\}\\}$");
+    ui->cmbTestset->addItem("text/math: brace16 test: non-left/right | |", "text: |||r^{123}||| -- math: $|||r^{123}|||$");
+    ui->cmbTestset->addItem("text/math: brace17 test: non-left/right { | }", "text: \\{r^{123}|r\\equiv 5\\} -- math: $\\{r^{123}|r\\equiv 5\\}$");
+    ui->cmbTestset->addItem("text/math: sub-, superscript test", "text: r^{1234}_{321} r_{321}^{1234} -- math: $r^{1234}_{321} r_{321}^{1234} -- \\kappa^2 -- \\kappa_2 -- \\kappa_2^2$");
+    ui->cmbTestset->addItem("text/math: super-, subscript test", "text: r^{123}_{4321} r_{4321}^{123} -- math: $r^{123}_{4321} r_{4321}^{123} -- \\kappa^2 -- \\kappa_2 -- \\kappa_2^2$");
     //ui->cmbTestset->addItem("", "");
     ui->cmbTestset->addItem("math 1", "$f(x)=\\int_{-\\infty}^xe^{-t^2}\\;\\mathrm{d}t$");
     ui->cmbTestset->addItem("math 2", "$\\sum_{i=1}^\\infty\\frac{-e^{i\\pi}}{2^n}$");
@@ -124,35 +146,35 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbTestset->addItem("math 18", "${}_pF_q(a_1,\\dots,a_p;c_1,\\dots,c_q;z)= \\sum_{n=0}^\\infty\\frac{(a_1)_n\\cdots(a_p)_n}{(c_1)_n\\cdots(c_q)_n}\\frac{z^n}{n!}$");
     ui->cmbTestset->addItem("math 19 (overset)", "$X \\overset{=}{def} Y$\\ \\ \\ \\ \\ $X \\overset{=}{!} Y$\\ \\ \\ \\ \\ $X \\overset{\\rightarrow}{f} Y$\\ \\ \\ \\ \\ $\\frac{f(x+\\Delta x)-f(x)}{\\Delta x}\\overset{\\longrightarrow}{\\Delta x\\to 0}f'(x)$");
     ui->cmbTestset->addItem("math 20 (underset)", "$X \\underset{=}{\\text{def (5)}} Y$\\ \\ \\ \\ \\ $X \\underset{\\rightarrow}{f} Y$\\ \\ \\ \\ \\ $\\frac{f(x+\\Delta x)-f(x)}{\\Delta x}\\underset{\\longrightarrow}{\\Delta x\\to 0}f'(x)$");
-    ui->cmbTestset->addItem("Jacobi Matrix and VarCov matrix", "$J_{ij}= \\left.\\frac{\\partial f(x,\\vec{p})}{\\partial p_i}\\right|_{\\vec{p},x=x_j}\\ \\ \\ \\ \\ \\mat{C}=\\left(\\mat{J}^\\mathrm{T}\\ J\\right)^{-1}\\ \\ \\ \\ \\ test: \\left|\\frac{\\partial f(x,\\vec{p})}{\\partial p_i}\\right|_{\\vec{p},x=x_j}^2$");
-    ui->cmbTestset->addItem("operator test (textmode)", "x=0\\ \\ y>0\\ \\ x+y\\ \\ -1\\ \\ x-2\\ \\ x\\cdot y\\ \\ x\\geq 4\\ \\ x~4");
-    ui->cmbTestset->addItem("operator test (mathmode)", "$x=0\\ \\ y>0\\ \\ x+y\\ \\ -1\\ \\ x-2\\ \\ x\\cdot y\\ \\ x\\geq 4\\ \\ x~4$");
-    ui->cmbTestset->addItem("color test", "\\textcolor{red}{RED}\\textcolor{blue}{BLUE}");
-    ui->cmbTestset->addItem("boxed test", "test: \\boxed{boxed text} in the middle");
-    ui->cmbTestset->addItem("mathboxed test", "\\fbox{2^{2^{\\colorbox{red}{2^{x}}}}}");
+    ui->cmbTestset->addItem("math: Jacobi Matrix and VarCov matrix", "$J_{ij}= \\left.\\frac{\\partial f(x,\\vec{p})}{\\partial p_i}\\right|_{\\vec{p},x=x_j}\\ \\ \\ \\ \\ \\mat{C}=\\left(\\mat{J}^\\mathrm{T}\\ J\\right)^{-1}\\ \\ \\ \\ \\ test: \\left|\\frac{\\partial f(x,\\vec{p})}{\\partial p_i}\\right|_{\\vec{p},x=x_j}^2$");
+    ui->cmbTestset->addItem("math: operator test (textmode)", "x=0\\ \\ y>0\\ \\ x+y\\ \\ -1\\ \\ x-2\\ \\ x\\cdot y\\ \\ x\\geq 4\\ \\ x~4");
+    ui->cmbTestset->addItem("math: operator test (mathmode)", "$x=0\\ \\ y>0\\ \\ x+y\\ \\ -1\\ \\ x-2\\ \\ x\\cdot y\\ \\ x\\geq 4\\ \\ x~4$");
+    ui->cmbTestset->addItem("text: color test", "\\textcolor{red}{RED}\\textcolor{blue}{BLUE}");
+    ui->cmbTestset->addItem("text: boxed test", "test: \\boxed{boxed text} in the middle");
+    ui->cmbTestset->addItem("mathboxed test", "$\\fbox{2^{2^{\\colorbox{red}{2^{x}}}}}$");
     ui->cmbTestset->addItem("axiom of power test", "$\\forall A \\, \\exists P \\, \\forall B \\, [B \\in P \\iff \\forall C \\, (C \\in B \\Rightarrow C \\in A)]$");
-    ui->cmbTestset->addItem("De Morgan's law", "$\\neg(P\\land Q)\\iff(\\neg P)\\lor(\\neg Q)$ or $\\overline{\\bigcap_{i \\in I} A_{i}}\\equiv\\bigcup_{i \\in I} \\overline{A_{i}}$ or $\\overline{A \\cup B}\\equiv\\overline{A} \\cap \\overline{B}$");
-    ui->cmbTestset->addItem("quadratic formula", "$x=\\frac{-b \\pm \\sqrt{b^2-4ac}}{2a}$");
-    ui->cmbTestset->addItem("combination", "$\\binom{n}{k} = \\frac{n(n-1)...(n-k+1)}{k(k-1)\\dots1}=\\frac{n!}{k!(n-k)!}$");
-    ui->cmbTestset->addItem("Sophomore's dream 1", "$\\int_0^1 x^{-x}\\,dx = \\sum_{n=1}^\\infty n^{-n}(\\scriptstyle{= 1.29128599706266354040728259059560054149861936827\\dots)}$");
-    ui->cmbTestset->addItem("Sophomore's dream 2", "$\\int_0^1 x^x   \\,dx = \\sum_{n=1}^\\infty (-1)^{n+1}n^{-n} = - \\sum_{n=1}^\\infty (-n)^{-n} (\\scriptstyle{= 0.78343051071213440705926438652697546940768199014\\dots})$");
-    ui->cmbTestset->addItem("divergence 1", "$\\operatorname{div}\\vec{F} = \\nabla\\cdot\\vec{F}=\\frac{\\partial U}{\\partial x}+\\frac{\\partial V}{\\partial y}+\\frac{\\partial W}{\\partial z}$");
-    ui->cmbTestset->addItem("divergence 2", "$\\overrightarrow{\\operatorname{div}}\\,(\\mathbf{\\underline{\\underline{\\epsilon}}}) = "
+    ui->cmbTestset->addItem("math: De Morgan's law", "$\\neg(P\\land Q)\\iff(\\neg P)\\lor(\\neg Q)$ or $\\overline{\\bigcap_{i \\in I} A_{i}}\\equiv\\bigcup_{i \\in I} \\overline{A_{i}}$ or $\\overline{A \\cup B}\\equiv\\overline{A} \\cap \\overline{B}$");
+    ui->cmbTestset->addItem("math: quadratic formula", "$x=\\frac{-b \\pm \\sqrt{b^2-4ac}}{2a}$");
+    ui->cmbTestset->addItem("math: combination", "$\\binom{n}{k} = \\frac{n(n-1)...(n-k+1)}{k(k-1)\\dots1}=\\frac{n!}{k!(n-k)!}$");
+    ui->cmbTestset->addItem("math: Sophomore's dream 1", "$\\int_0^1 x^{-x}\\,dx = \\sum_{n=1}^\\infty n^{-n}(\\scriptstyle{= 1.29128599706266354040728259059560054149861936827\\dots)}$");
+    ui->cmbTestset->addItem("math: Sophomore's dream 2", "$\\int_0^1 x^x   \\,dx = \\sum_{n=1}^\\infty (-1)^{n+1}n^{-n} = - \\sum_{n=1}^\\infty (-n)^{-n} (\\scriptstyle{= 0.78343051071213440705926438652697546940768199014\\dots})$");
+    ui->cmbTestset->addItem("math: divergence 1", "$\\operatorname{div}\\vec{F} = \\nabla\\cdot\\vec{F}=\\frac{\\partial U}{\\partial x}+\\frac{\\partial V}{\\partial y}+\\frac{\\partial W}{\\partial z}$");
+    ui->cmbTestset->addItem("math: divergence 2", "$\\overrightarrow{\\operatorname{div}}\\,(\\mathbf{\\underline{\\underline{\\epsilon}}}) = "
                             "\\begin{bmatrix}"
                             "\\frac{\\partial \\epsilon_{xx}}{\\partial x} +\\frac{\\partial \\epsilon_{yx}}{\\partial y} +\\frac{\\partial \\epsilon_{zx}}{\\partial z} \\\\"
                             "\\frac{\\partial \\epsilon_{xy}}{\\partial x} +\\frac{\\partial \\epsilon_{yy}}{\\partial y} +\\frac{\\partial \\epsilon_{zy}}{\\partial z} \\\\"
                             "\\frac{\\partial \\epsilon_{xz}}{\\partial x} +\\frac{\\partial \\epsilon_{yz}}{\\partial y} +\\frac{\\partial \\epsilon_{zz}}{\\partial z}"
                             "\\end{bmatrix}$");
-    ui->cmbTestset->addItem("lim, sum ...", "$\\lim_{x\\to\\infty} f(x) = \\binom{k}{r} + \\frac{a}{b} \\sum_{n=1}^\\infty a_n + \\displaystyle{ \\left\\{ \\frac{1}{13} \\sum_{n=1}^\\infty b_n \\right\\} }.$");
-    ui->cmbTestset->addItem("array test", "$f(x) := \\left\\{\\begin{array} x^2 \\sin \\frac{1}{x} & \\textrm{if } x \\ne 0, \\\\ 0 & \\textrm{if } x = 0 . \\end{array}\\right.$");
-    ui->cmbTestset->addItem("Schwinger-Dyson", "$\\left\\langle\\psi\\left|\\mathcal{T}\\{F \\phi^j\\}\\right|\\psi\\right\\rangle=\\left\\langle\\psi\\left|\\mathcal{T}\\{iF_{,i}D^{ij}-FS_{int,i}D^{ij}\\}\\right|\\psi\\right\\rangle.$");
-    ui->cmbTestset->addItem(QLatin1String("Schrödinger's equation"), "$\\left[-\\frac{\\hbar^2}{2m}\\frac{\\partial^2}{\\partial x^2}+V\\right]\\Psi(x)=\\mathrm{i}\\hbar\\frac{\\partial}{\\partial t}\\Psi(x)$");
-    ui->cmbTestset->addItem("Cauchy-Schwarz inequality", "$\\left( \\sum_{k=1}^n a_k b_k \\right)^2 \\leq \\left( \\sum_{k=1}^n a_k^2 \\right) \\left( \\sum_{k=1}^n b_k^2 \\right)$");
-    ui->cmbTestset->addItem("Maxwell's equations", "$\\begin{aligned}\\nabla \\times \\vec{\\mathbf{B}} -\\, \\frac{1}{c}\\, \\frac{\\partial\\vec{\\mathbf{E}}}{\\partial t} & = \\frac{4\\pi}{c}\\vec{\\mathbf{j}} \\\\   \\nabla \\cdot \\vec{\\mathbf{E}} & = 4 \\pi \\rho \\\\\\nabla \\times \\vec{\\mathbf{E}}\\, +\\, \\frac{1}{c}\\, \\frac{\\partial\\vec{\\mathbf{B}}}{\\partial t} & = \\vec{\\mathbf{0}} \\\\\\nabla \\cdot \\vec{\\mathbf{B}} & = 0 \\end{aligned}$");
-    ui->cmbTestset->addItem("Langevin Equation", "$m \\dot{v}(t) = -\\gamma v(t) + F(x,t)+ f(t)$");
-    ui->cmbTestset->addItem("Fokker-Planck Equation", "$\\frac{\\partial}{\\partial t}P(y,t)=-\\frac{\\partial}{\\partial y}\\left[ A(y,t)P(y,t)\\right] +\\frac{\\Gamma}{2}\\frac{\\partial^2}{\\partial y^2}\\left[ P(y,t)\\right]$");
-    ui->cmbTestset->addItem("Hamilton Equations of motion", "$\\mathcal{H}(\\mathbf{q},\\mathbf{p})=\\frac{\\mathbf{p}^2}{2\\,m}+V(\\mathbf{q})\\ \\ \\ \\text{and}\\ \\ \\ \\dot{q}_k =\\frac{p_k}{m}\\ ,\\ \\dot{p}_k = - \\frac{\\partial V}{\\partial q_k}$");
-    ui->cmbTestset->addItem("Gaussian Distrubution", "$f(x | \\mu,\\sigma^2)=\\frac{1}{\\sqrt{2\\pi\\sigma^2}}\\operatorname{exp}\\left(-\\frac{(x-\\mu)^2}{2\\sigma^2}\\right)=\\frac{1}{\\sqrt{2\\pi\\sigma^2}} e^{-\\frac{(x-\\mu)^2}{2\\sigma^2}}\\quad -\\infty<x<\\infty$");
+    ui->cmbTestset->addItem("math: lim, sum ...", "$\\lim_{x\\to\\infty} f(x) = \\binom{k}{r} + \\frac{a}{b} \\sum_{n=1}^\\infty a_n + \\displaystyle{ \\left\\{ \\frac{1}{13} \\sum_{n=1}^\\infty b_n \\right\\} }.$");
+    ui->cmbTestset->addItem("math: array test", "$f(x) := \\left\\{\\begin{array} x^2 \\sin \\frac{1}{x} & \\textrm{if } x \\ne 0, \\\\ 0 & \\textrm{if } x = 0 . \\end{array}\\right.$");
+    ui->cmbTestset->addItem("math: Schwinger-Dyson", "$\\left\\langle\\psi\\left|\\mathcal{T}\\{F \\phi^j\\}\\right|\\psi\\right\\rangle=\\left\\langle\\psi\\left|\\mathcal{T}\\{iF_{,i}D^{ij}-FS_{int,i}D^{ij}\\}\\right|\\psi\\right\\rangle.$");
+    ui->cmbTestset->addItem(QLatin1String("math: Schrödinger's equation"), "$\\left[-\\frac{\\hbar^2}{2m}\\frac{\\partial^2}{\\partial x^2}+V\\right]\\Psi(x)=\\mathrm{i}\\hbar\\frac{\\partial}{\\partial t}\\Psi(x)$");
+    ui->cmbTestset->addItem("math: Cauchy-Schwarz inequality", "$\\left( \\sum_{k=1}^n a_k b_k \\right)^2 \\leq \\left( \\sum_{k=1}^n a_k^2 \\right) \\left( \\sum_{k=1}^n b_k^2 \\right)$");
+    ui->cmbTestset->addItem("math: Maxwell's equations", "$\\begin{aligned}\\nabla \\times \\vec{\\mathbf{B}} -\\, \\frac{1}{c}\\, \\frac{\\partial\\vec{\\mathbf{E}}}{\\partial t} & = \\frac{4\\pi}{c}\\vec{\\mathbf{j}} \\\\   \\nabla \\cdot \\vec{\\mathbf{E}} & = 4 \\pi \\rho \\\\\\nabla \\times \\vec{\\mathbf{E}}\\, +\\, \\frac{1}{c}\\, \\frac{\\partial\\vec{\\mathbf{B}}}{\\partial t} & = \\vec{\\mathbf{0}} \\\\\\nabla \\cdot \\vec{\\mathbf{B}} & = 0 \\end{aligned}$");
+    ui->cmbTestset->addItem("math: Langevin Equation", "$m \\dot{v}(t) = -\\gamma v(t) + F(x,t)+ f(t)$");
+    ui->cmbTestset->addItem("math: Fokker-Planck Equation", "$\\frac{\\partial}{\\partial t}P(y,t)=-\\frac{\\partial}{\\partial y}\\left[ A(y,t)P(y,t)\\right] +\\frac{\\Gamma}{2}\\frac{\\partial^2}{\\partial y^2}\\left[ P(y,t)\\right]$");
+    ui->cmbTestset->addItem("math: Hamilton Equations of motion", "$\\mathcal{H}(\\mathbf{q},\\mathbf{p})=\\frac{\\mathbf{p}^2}{2\\,m}+V(\\mathbf{q})\\ \\ \\ \\text{and}\\ \\ \\ \\dot{q}_k =\\frac{p_k}{m}\\ ,\\ \\dot{p}_k = - \\frac{\\partial V}{\\partial q_k}$");
+    ui->cmbTestset->addItem("math: Gaussian Distrubution", "$f(x | \\mu,\\sigma^2)=\\frac{1}{\\sqrt{2\\pi\\sigma^2}}\\operatorname{exp}\\left(-\\frac{(x-\\mu)^2}{2\\sigma^2}\\right)=\\frac{1}{\\sqrt{2\\pi\\sigma^2}} e^{-\\frac{(x-\\mu)^2}{2\\sigma^2}}\\quad -\\infty<x<\\infty$");
     ui->cmbTestset->addItem("User-Editable Text");
     //
     //ui->cmbTestset->addItem("", "$$");
@@ -178,10 +200,10 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbEncodingFraktur->setCurrentIndex(static_cast<int>(mt.getFontEncodingFraktur()));
     ui->cmbUnicodeBlackboard->setCurrentFont(QFont(mt.getFontBlackboard()));
     ui->cmbEncodingBlackboard->setCurrentIndex(static_cast<int>(mt.getFontEncodingBlackboard()));
-    ui->cmbUnicodeSymbol->setCurrentFont(QFont(mt.getSymbolfontSymbol(JKQTMathText::MTenvironmentFont::MTEroman)));
-    ui->cmbEncodingSymbol->setCurrentIndex(static_cast<int>(mt.getSymbolfontEncodingSymbol(JKQTMathText::MTenvironmentFont::MTEroman)));
-    ui->cmbUnicodeGreek->setCurrentFont(QFont(mt.getSymbolfontGreek(JKQTMathText::MTenvironmentFont::MTEroman)));
-    ui->cmbEncodingGreek->setCurrentIndex(static_cast<int>(mt.getSymbolfontEncodingGreek(JKQTMathText::MTenvironmentFont::MTEroman)));
+    ui->cmbUnicodeSymbol->setCurrentFont(QFont(mt.getSymbolfontSymbol(JKQTMathTextEnvironmentFont::MTEroman)));
+    ui->cmbEncodingSymbol->setCurrentIndex(static_cast<int>(mt.getSymbolfontEncodingSymbol(JKQTMathTextEnvironmentFont::MTEroman)));
+    ui->cmbUnicodeGreek->setCurrentFont(QFont(mt.getSymbolfontGreek(JKQTMathTextEnvironmentFont::MTEroman)));
+    ui->cmbEncodingGreek->setCurrentIndex(static_cast<int>(mt.getSymbolfontEncodingGreek(JKQTMathTextEnvironmentFont::MTEroman)));
     ui->chkSimulateBlackboard->setChecked(mt.isFontBlackboardSimulated());
 
 
@@ -282,34 +304,34 @@ double TestForm::draw(QPainter& painter, double X, double YY, JKQTMathText& mt, 
     return mt.getDescent(painter)+mt.getAscent(painter)+40;
 }
 
-QTreeWidgetItem *TestForm::createTree(JKQTMathText::MTnode *node, QTreeWidgetItem* parent)
+QTreeWidgetItem *TestForm::createTree(JKQTMathTextNode *node, QTreeWidgetItem* parent)
 {
     QString name;
-    JKQTMathText::MTtextNode* txtN=dynamic_cast<JKQTMathText::MTtextNode*>(node);
-    JKQTMathText::MTwhitespaceNode* spN=dynamic_cast<JKQTMathText::MTwhitespaceNode*>(node);
-    JKQTMathText::MTsymbolNode* symN=dynamic_cast<JKQTMathText::MTsymbolNode*>(node);
-    JKQTMathText::MTlistNode* lstN=dynamic_cast<JKQTMathText::MTlistNode*>(node);
-    JKQTMathText::MTinstruction1Node* inst1N=dynamic_cast<JKQTMathText::MTinstruction1Node*>(node);
-    JKQTMathText::MTsubscriptNode* subN=dynamic_cast<JKQTMathText::MTsubscriptNode*>(node);
-    JKQTMathText::MTsuperscriptNode* superN=dynamic_cast<JKQTMathText::MTsuperscriptNode*>(node);
-    JKQTMathText::MTbraceNode* braceN=dynamic_cast<JKQTMathText::MTbraceNode*>(node);
-    JKQTMathText::MTsqrtNode* sqrtN=dynamic_cast<JKQTMathText::MTsqrtNode*>(node);
-    JKQTMathText::MTfracNode* fracN=dynamic_cast<JKQTMathText::MTfracNode*>(node);
-    JKQTMathText::MTmatrixNode* matrixN=dynamic_cast<JKQTMathText::MTmatrixNode*>(node);
-    JKQTMathText::MTdecoratedNode* decoN=dynamic_cast<JKQTMathText::MTdecoratedNode*>(node);
+    JKQTMathTextTextNode* txtN=dynamic_cast<JKQTMathTextTextNode*>(node);
+    JKQTMathTextWhitespaceNode* spN=dynamic_cast<JKQTMathTextWhitespaceNode*>(node);
+    JKQTMathTextSymbolNode* symN=dynamic_cast<JKQTMathTextSymbolNode*>(node);
+    JKQTMathTextListNode* lstN=dynamic_cast<JKQTMathTextListNode*>(node);
+    JKQTMathTextInstruction1Node* inst1N=dynamic_cast<JKQTMathTextInstruction1Node*>(node);
+    JKQTMathTextSubscriptNode* subN=dynamic_cast<JKQTMathTextSubscriptNode*>(node);
+    JKQTMathTextSuperscriptNode* superN=dynamic_cast<JKQTMathTextSuperscriptNode*>(node);
+    JKQTMathTextBraceNode* braceN=dynamic_cast<JKQTMathTextBraceNode*>(node);
+    JKQTMathTextSqrtNode* sqrtN=dynamic_cast<JKQTMathTextSqrtNode*>(node);
+    JKQTMathTextFracNode* fracN=dynamic_cast<JKQTMathTextFracNode*>(node);
+    JKQTMathTextMatrixNode* matrixN=dynamic_cast<JKQTMathTextMatrixNode*>(node);
+    JKQTMathTextDecoratedNode* decoN=dynamic_cast<JKQTMathTextDecoratedNode*>(node);
 
     QTreeWidgetItem* ti=nullptr;
     if (parent) ti=new QTreeWidgetItem(parent);
     else ti=new QTreeWidgetItem(ui->tree);
 
     if (decoN) {
-        name=QString("MTdecoratedNode: mode='%1'").arg(JKQTMathText::decorationToString(decoN->getDecoration()));
+        name=QString("MTdecoratedNode: mode='%1'").arg(JKQTMathTextDecorationToString(decoN->getDecoration()));
         if (decoN->getChild()) ti->addChild(createTree(decoN->getChild(), ti));
     } else if (matrixN)  {
         int l=matrixN->getLines();
         int c=matrixN->getColumns();
         name=QString("MTmatrixNode: l*c=%1*%2").arg(l).arg(c);
-        QVector<QVector<JKQTMathText::MTnode*> > children=matrixN->getChildren();
+        QVector<QVector<JKQTMathTextNode*> > children=matrixN->getChildren();
         for (int y=0; y<l; y++) {
             for (int x=0; x<c; x++) {
                 if (children[y].at(x)!=nullptr) {
@@ -320,7 +342,7 @@ QTreeWidgetItem *TestForm::createTree(JKQTMathText::MTnode *node, QTreeWidgetIte
             }
         }
     } else if (fracN)  {
-        name=QString("MTfracNode: mode='%1'").arg(JKQTMathText::fracModeToString(fracN->getMode()));
+        name=QString("MTfracNode: mode='%1'").arg(JKQTMathTextFracModeToString(fracN->getMode()));
         if (fracN->getChild1()) ti->addChild(createTree(fracN->getChild1(), ti));
         if (fracN->getChild2()) ti->addChild(createTree(fracN->getChild2(), ti));
     } else if (sqrtN)  {
@@ -340,16 +362,16 @@ QTreeWidgetItem *TestForm::createTree(JKQTMathText::MTnode *node, QTreeWidgetIte
         if (inst1N->getChild()) ti->addChild(createTree(inst1N->getChild(), ti));
     } else if (lstN)  {
         name=QString("MTlistNode");
-        QList<JKQTMathText::MTnode*> list=lstN->getNodes();
+        QList<JKQTMathTextNode*> list=lstN->getNodes();
         for (int i=0; i<list.size(); i++) {
             ti->addChild(createTree(list[i], ti));
         }
     } else if (symN)  {
-        name=QString("MTsymbolNode: \'%1\' (addWhite: %2)").arg(symN->getSymbolName()).arg(symN->getAddWhitespace());
+        name=QString("JKQTMathTextSymbolNode: \'%1\' (addWhite: %2)").arg(symN->getSymbolName()).arg(symN->getAddWhitespace());
     } else if (spN)  {
-        name=QString("MTwhitespaceNode :\'%1\'").arg(txtN->getText());
+        name=QString("JKQTMathTextWhitespaceNode :\'%1\'").arg(txtN->getText());
     } else if (txtN)  {
-        name=QString("MTtextNode: \'%1\'").arg(txtN->getText());
+        name=QString("JKQTMathTextTextNode: \'%1\'").arg(txtN->getText());
 
     } else {
         name=QString("unknown");
@@ -418,17 +440,17 @@ void TestForm::updateMath()
 
 
 
-    mt.setFontRoman(ui->cmbUnicodeSerif->currentFont().family(), static_cast<JKQTMathText::MTfontEncoding>(ui->cmbEncodingSerif->currentIndex()));
-    mt.setFontSans(ui->cmbUnicodeSans->currentFont().family(), static_cast<JKQTMathText::MTfontEncoding>(ui->cmbEncodingSans->currentIndex()));
-    mt.setFontMathRoman(ui->cmbUnicodeSerifMath->currentFont().family(), static_cast<JKQTMathText::MTfontEncoding>(ui->cmbEncodingSerifMath->currentIndex()));
-    mt.setFontMathSans(ui->cmbUnicodeSansMath->currentFont().family(), static_cast<JKQTMathText::MTfontEncoding>(ui->cmbEncodingSansMath->currentIndex()));
-    mt.setFontTypewriter(ui->cmbUnicodeFixed->currentFont().family(), static_cast<JKQTMathText::MTfontEncoding>(ui->cmbEncodingTypewriter->currentIndex()));
-    mt.setFontCaligraphic(ui->cmbCaligraphic->currentFont().family(), static_cast<JKQTMathText::MTfontEncoding>(ui->cmbEncodingCaligraphic->currentIndex()));
-    mt.setFontScript(ui->cmbScript->currentFont().family(), static_cast<JKQTMathText::MTfontEncoding>(ui->cmbEncodingScript->currentIndex()));
-    mt.setFontFraktur(ui->cmbUnicodeFraktur->currentFont().family(), static_cast<JKQTMathText::MTfontEncoding>(ui->cmbEncodingFraktur->currentIndex()));
-    mt.setFontBlackboard(ui->cmbUnicodeBlackboard->currentFont().family(), static_cast<JKQTMathText::MTfontEncoding>(ui->cmbEncodingBlackboard->currentIndex()));
-    mt.setSymbolfontSymbol(ui->cmbUnicodeSymbol->currentFont().family(), static_cast<JKQTMathText::MTfontEncoding>(ui->cmbEncodingSymbol->currentIndex()));
-    mt.setSymbolfontGreek(ui->cmbUnicodeGreek->currentFont().family(), static_cast<JKQTMathText::MTfontEncoding>(ui->cmbEncodingGreek->currentIndex()));
+    mt.setFontRoman(ui->cmbUnicodeSerif->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingSerif->currentIndex()));
+    mt.setFontSans(ui->cmbUnicodeSans->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingSans->currentIndex()));
+    mt.setFontMathRoman(ui->cmbUnicodeSerifMath->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingSerifMath->currentIndex()));
+    mt.setFontMathSans(ui->cmbUnicodeSansMath->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingSansMath->currentIndex()));
+    mt.setFontTypewriter(ui->cmbUnicodeFixed->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingTypewriter->currentIndex()));
+    mt.setFontCaligraphic(ui->cmbCaligraphic->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingCaligraphic->currentIndex()));
+    mt.setFontScript(ui->cmbScript->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingScript->currentIndex()));
+    mt.setFontFraktur(ui->cmbUnicodeFraktur->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingFraktur->currentIndex()));
+    mt.setFontBlackboard(ui->cmbUnicodeBlackboard->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingBlackboard->currentIndex()));
+    mt.setSymbolfontSymbol(ui->cmbUnicodeSymbol->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingSymbol->currentIndex()));
+    mt.setSymbolfontGreek(ui->cmbUnicodeGreek->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingGreek->currentIndex()));
     mt.setFontBlackboardSimulated(ui->chkSimulateBlackboard->isChecked());
 
     if (ui->cmbFont->currentIndex()==1) qDebug()<<"useXITS: "<<mt.useXITS();
