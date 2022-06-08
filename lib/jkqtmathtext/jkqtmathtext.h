@@ -466,11 +466,17 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         void setUndersetFactor(double __value);
         /** \copydoc undersetFactor */ 
         double getUndersetFactor() const;
-        /** \copydoc frac_factor */ 
+        /** \copydoc frac_factor */
         void setFracFactor(double __value);
-        /** \copydoc frac_factor */ 
+        /** \copydoc frac_factor */
         double getFracFactor() const;
-        /** \copydoc frac_shift_factor */ 
+        /** \copydoc frac_nested_factor */
+        void setFracNestedFactor(double __value);
+        /** \copydoc frac_nested_factor */
+        double getFracNestedFactor() const;
+
+
+        /** \copydoc frac_shift_factor */
         void setFracShiftFactor(double __value);
         /** \copydoc frac_shift_factor */ 
         double getFracShiftFactor() const;
@@ -541,8 +547,10 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         double sub_shift_factor;
 
 
-        /** \brief scaling factor for font of nominator and denominator of a fraction */
+        /** \brief scaling factor for font size of nominator and denominator of a fraction */
         double frac_factor;
+        /** \brief scaling factor for font size of nominator and denominator of a nested fraction */
+        double frac_nested_factor;
         /** \brief shift of denominator/nummerator away from central line of a frac */
         double frac_shift_factor;
         /** \brief scaling factor for font of underbrace/overbrace text */

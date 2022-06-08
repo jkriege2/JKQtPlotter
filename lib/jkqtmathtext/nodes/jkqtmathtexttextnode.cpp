@@ -58,7 +58,7 @@ JKQTMathTextTextNode::JKQTMathTextTextNode(JKQTMathText* _parent, const QString&
 JKQTMathTextTextNode::~JKQTMathTextTextNode() = default;
 
 void JKQTMathTextTextNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* /*prevNodeSize*/) {
-    QFont f=currentEv.getFont(parent);
+    QFont f=currentEv.getFont(parentMathText);
     if (currentEv.insideMath && (text=="(" || text=="[" || text=="|" || text=="]" || text==")" || text=="<" || text==">" ||
                                  text==QString(QChar(0x2329)) || text==QString(QChar(0x232A)) || text==QString(QChar(0x2308)) ||
                                  text==QString(QChar(0x2309)) || text==QString(QChar(0x230A)) || text==QString(QChar(0x230B)))) {
@@ -111,7 +111,7 @@ double JKQTMathTextTextNode::draw(QPainter& painter, double x, double y, JKQTMat
 
     QPen pold=painter.pen();
     QFont fold=painter.font();
-    QFont f=currentEv.getFont(parent);
+    QFont f=currentEv.getFont(parentMathText);
     if (currentEv.insideMath && (text=="(" || text=="[" || text=="|" || text=="]" || text==")" || text=="<" || text==">" ||
                                  text==QString(QChar(0x2329)) || text==QString(QChar(0x232A)) || text==QString(QChar(0x2308)) ||
                                  text==QString(QChar(0x2309)) || text==QString(QChar(0x230A)) || text==QString(QChar(0x230B)))) {
@@ -138,7 +138,7 @@ double JKQTMathTextTextNode::draw(QPainter& painter, double x, double y, JKQTMat
     }*/
 
     if (!hasDigits || !f.italic()) {
-        if (currentEv.font==MTEblackboard && parent->isFontBlackboardSimulated()) {
+        if (currentEv.font==MTEblackboard && parentMathText->isFontBlackboardSimulated()) {
             QPainterPath path;
             path.addText(QPointF(x+dx, y), f, txt);
             painter.drawPath(path);
@@ -153,7 +153,7 @@ double JKQTMathTextTextNode::draw(QPainter& painter, double x, double y, JKQTMat
         ff.setItalic(false);
         while (i<txt.size()) {
             if (txt[i].isDigit()) {
-                if (currentEv.font==MTEblackboard && parent->isFontBlackboardSimulated()) {
+                if (currentEv.font==MTEblackboard && parentMathText->isFontBlackboardSimulated()) {
                     QPainterPath path;
                     path.addText(QPointF(xx, y), ff, QString(txt[i]));
                     painter.drawPath(path);
@@ -163,7 +163,7 @@ double JKQTMathTextTextNode::draw(QPainter& painter, double x, double y, JKQTMat
                 }
                 xx=xx+fmff.boundingRect(txt[i]).width();
             } else {
-                if (currentEv.font==MTEblackboard && parent->isFontBlackboardSimulated()) {
+                if (currentEv.font==MTEblackboard && parentMathText->isFontBlackboardSimulated()) {
                     QPainterPath path;
                     path.addText(QPointF(xx, y), f, QString(txt[i]));
                     painter.drawPath(path);
@@ -199,7 +199,7 @@ QString JKQTMathTextTextNode::getTypeName() const
 QString JKQTMathTextTextNode::textTransform(const QString &text, JKQTMathTextEnvironment currentEv, bool /*forSize*/)
 {
     QString txt=text;
-    auto fnt=parent->getFontData(currentEv.font, currentEv.insideMath);
+    auto fnt=parentMathText->getFontData(currentEv.font, currentEv.insideMath);
     if (fnt.second==MTFEunicode || fnt.second==MTFEunicodeLimited) {
         if (currentEv.insideMath) {
             txt="";

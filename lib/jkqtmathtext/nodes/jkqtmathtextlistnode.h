@@ -44,7 +44,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextListNode: public JKQTMathTextNode {
         /** \copydoc JKQTMathTextNode::draw() */
         virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
         /** \brief add a child node */
-        void addNode(JKQTMathTextNode* n) { nodes.append(n); }
+        void addNode(JKQTMathTextNode* n);
         /** \copydoc JKQTMathTextNode::toHtml() */
         virtual bool toHtml(QString& html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) override;
         /** \copydoc JKQTMathTextNode::setDrawBoxes() */
@@ -55,7 +55,8 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextListNode: public JKQTMathTextNode {
         /** \copydoc JKQTMathTextNode::getSizeInternal() */
         virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
         QList<JKQTMathTextNode*> nodes;
-        QSet<QString> subsupOperations;
+        /** \brief the instructions in this can have the sub-script/superscript set below/above, not besides the node */
+        static QSet<QString> subsupOperations;
 };
 
 #endif // JKQTMATHTEXTLISTNODE_H

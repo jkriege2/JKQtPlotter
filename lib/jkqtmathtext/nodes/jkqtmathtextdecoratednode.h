@@ -38,7 +38,7 @@ class JKQTMathText; // forward
  *  \image html mathparser/decoration_sizing.png
  *
  */
-class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextDecoratedNode: public JKQTMathTextNode {
+class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextDecoratedNode: public JKQTMathTextSingleChildNode {
     public:
         JKQTMathTextDecoratedNode(JKQTMathText* parent, JKQTMathTextDecoration decoration, JKQTMathTextNode* child);
         virtual ~JKQTMathTextDecoratedNode() override;
@@ -46,19 +46,13 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextDecoratedNode: public JKQTMathTextNode
         virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
         /** \copydoc JKQTMathTextNode::toHtml() */
         virtual bool toHtml(QString& html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) override;
-        /** \copydoc JKQTMathTextNode::setDrawBoxes() */
-        virtual void setDrawBoxes(bool draw) override;
         /** \copydoc JKQTMathTextNode::getTypeName() */
         virtual QString getTypeName() const override ;
-        /** \brief returns the child node  */
-        JKQTMathTextNode* getChild() const;
         /** \copydoc decoration */ 
         JKQTMathTextDecoration getDecoration() const;
     protected:
         /** \copydoc JKQTMathTextNode::getSizeInternal() */
         virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
-        /** \brief child node that is decorated by this node */
-        JKQTMathTextNode* child;
         /** \brief type of decoration that is added to the child node */
         JKQTMathTextDecoration decoration;
 };

@@ -37,20 +37,18 @@
 
 
 JKQTMathTextInstruction1Node::JKQTMathTextInstruction1Node(JKQTMathText* _parent, const QString& name, JKQTMathTextNode* child, const QStringList& parameters):
-    JKQTMathTextNode(_parent)
+    JKQTMathTextSingleChildNode(child, _parent)
 {
     this->name=name;
-    this->child=child;
     this->parameters=parameters;
 
     JKQTMathTextEnvironment ev;
     if (!setupMTenvironment(ev)) {
-        parent->addToErrorList(QObject::tr("unknown instruction '%1' found!").arg(name));
+        parentMathText->addToErrorList(QObject::tr("unknown instruction '%1' found!").arg(name));
     }
 }
 
 JKQTMathTextInstruction1Node::~JKQTMathTextInstruction1Node() {
-    if (child!=nullptr) delete child;
 }
 
 QString JKQTMathTextInstruction1Node::getTypeName() const
@@ -65,7 +63,7 @@ void JKQTMathTextInstruction1Node::getSizeInternal(QPainter& painter, JKQTMathTe
 
     child->getSize(painter, ev, width, baselineHeight, overallHeight, strikeoutPos);
     if (name=="colorbox" || name=="fbox" || name=="boxed") {
-        QFontMetricsF fm(ev.getFont(parent));
+        QFontMetricsF fm(ev.getFont(parentMathText));
         double xw=fm.boundingRect("x").width();
         width+=xw;
         overallHeight+=xw;
@@ -88,7 +86,7 @@ double JKQTMathTextInstruction1Node::draw(QPainter& painter, double x, double y,
         double width, baselineHeight, overallHeight, strikeoutPos;
         child->getSize(painter, currentEv, width, baselineHeight, overallHeight, strikeoutPos);
         QPen p=painter.pen();
-        QFontMetricsF fm(currentEv.getFont(parent));
+        QFontMetricsF fm(currentEv.getFont(parentMathText));
         double xw=fm.boundingRect("x").width();
         p.setColor(fcol);
         painter.setPen(p);
@@ -109,16 +107,6 @@ bool JKQTMathTextInstruction1Node::toHtml(QString &html, JKQTMathTextEnvironment
     return child->toHtml(html, ev, defaultEv);
 }
 
-void JKQTMathTextInstruction1Node::setDrawBoxes(bool draw)
-{
-    drawBoxes=draw;
-    child->setDrawBoxes(draw);
-}
-
-JKQTMathTextNode *JKQTMathTextInstruction1Node::getChild() const {
-    return this->child;
-}
-
 QString JKQTMathTextInstruction1Node::getName() const {
     return this->name;
 }
@@ -127,7 +115,7 @@ QStringList JKQTMathTextInstruction1Node::getParameters() const {
     return this->parameters;
 }
 
-bool JKQTMathTextInstruction1Node::setupMTenvironment(JKQTMathTextEnvironment &ev)
+bool JKQTMathTextInstruction1Node::setupMTenvironment(JKQTMathTextEnvironment &ev) const
 {
     if (name=="bf" || name=="textbf" || name=="mathbf") ev.bold=true;
     else if (name=="em") ev.italic=!ev.italic;

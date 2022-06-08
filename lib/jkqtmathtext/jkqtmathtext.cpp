@@ -67,7 +67,8 @@ JKQTMathText::JKQTMathText(QObject* parent):
     brace_shrink_factor=0.6;
     fontColor=QColor("black");
 
-    frac_factor=0.9;
+    frac_factor=1.0;
+    frac_nested_factor=0.7;
     frac_shift_factor=0.4;
     underbrace_factor=0.75;
     undersetFactor=0.7;
@@ -733,6 +734,16 @@ double JKQTMathText::getFracFactor() const
     return this->frac_factor;
 }
 
+void JKQTMathText::setFracNestedFactor(double __value)
+{
+    frac_nested_factor=__value;
+}
+
+double JKQTMathText::getFracNestedFactor() const
+{
+    return frac_nested_factor;
+}
+
 void JKQTMathText::setFracShiftFactor(double __value)
 {
     this->frac_shift_factor = __value;
@@ -962,7 +973,7 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, const QString& quitOn
                     if (getToken()==MTTopenbrace) n2=parseLatexString(true);
                     if (n1 && n2) nl->addNode(new JKQTMathTextFracNode(this, n1, n2, MTFMfrac));
                     else error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(name));
-                } else if (name=="dfrac") {
+                } else if (name=="dfrac" || name=="cfrac") {
                     JKQTMathTextNode* n1=parseLatexString(true);
                     JKQTMathTextNode* n2=nullptr;
                     if (getToken()==MTTopenbrace) n2=parseLatexString(true);

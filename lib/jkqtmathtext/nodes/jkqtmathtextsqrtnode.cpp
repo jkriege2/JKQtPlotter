@@ -36,18 +36,16 @@
 
 
 JKQTMathTextSqrtNode::JKQTMathTextSqrtNode(JKQTMathText* _parent, JKQTMathTextNode* child, int degree):
-    JKQTMathTextNode(_parent)
+    JKQTMathTextSingleChildNode(child, _parent)
 {
-    this->child=child;
     this->degree=degree;
 }
 
 JKQTMathTextSqrtNode::~JKQTMathTextSqrtNode() {
-    if (child!=nullptr) delete child;
 }
 
 void JKQTMathTextSqrtNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* /*prevNodeSize*/) {
-    QFontMetricsF fm(currentEv.getFont(parent), painter.device());
+    QFontMetricsF fm(currentEv.getFont(parentMathText), painter.device());
 
     child->getSize(painter, currentEv, width, baselineHeight, overallHeight, strikeoutPos);
 
@@ -60,7 +58,7 @@ double JKQTMathTextSqrtNode::draw(QPainter& painter, double x, double y, JKQTMat
     doDrawBoxes(painter, x, y, currentEv);
     double width=0, baselineHeight=0, overallHeight=0, sp=0;
     child->getSize(painter, currentEv, width, baselineHeight, overallHeight, sp);
-    QFont f=currentEv.getFont(parent);
+    QFont f=currentEv.getFont(parentMathText);
     QFont fsmall=f;
     QFontMetricsF fm(f, painter.device());
     double w=fm.boundingRect("A").width();
@@ -104,20 +102,9 @@ bool JKQTMathTextSqrtNode::toHtml(QString &html, JKQTMathTextEnvironment current
     return ok;
 }
 
-void JKQTMathTextSqrtNode::setDrawBoxes(bool draw)
-{
-    this->drawBoxes=draw;
-    child->setDrawBoxes(draw);
-
-}
-
 QString JKQTMathTextSqrtNode::getTypeName() const
 {
     return "MTsqrtNode";
-}
-
-JKQTMathTextNode *JKQTMathTextSqrtNode::getChild() const {
-    return this->child;
 }
 
 int JKQTMathTextSqrtNode::getDegree() const {

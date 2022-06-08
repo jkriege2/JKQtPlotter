@@ -36,18 +36,17 @@
 #include <QFont>
 
 
-
+QSet<QString> JKQTMathTextListNode::subsupOperations= (QSet<QString>()<<"sum"<<"prod"<<"coprod"
+                                                                        <<"bigcap"<<"bigcup"<<"bigvee"<<"bighat"
+                                                                        <<"int"<<"iint"<<"iiint"<<"oint"<<"oiint"<<"oiiint"
+                                                                        <<"mod"<<"median"<<"max"<<"min"<<"argmax"<<"argmin"<<"sup"<<"inf"
+                                                                        <<"liminf"<<"limsup"<<"lim"<<"max"<<"min");
 
 JKQTMathTextListNode::JKQTMathTextListNode(JKQTMathText* _parent):
     JKQTMathTextNode(_parent)
 {
     nodes.clear();
     // these operations cause sub/sup script to be typeset over/under the operator, not right besides!
-    subsupOperations<<"sum"<<"prod"<<"coprod"
-               <<"bigcap"<<"bigcup"<<"bigvee"<<"bighat"
-               <<"int"<<"iint"<<"iiint"<<"oint"<<"oiint"<<"oiiint"
-               <<"mod"<<"median"<<"max"<<"min"<<"argmax"<<"argmin"<<"sup"<<"inf"
-               <<"liminf"<<"limsup"<<"lim"<<"max"<<"min";
 }
 
 JKQTMathTextListNode::~JKQTMathTextListNode() {
@@ -67,7 +66,7 @@ void JKQTMathTextListNode::getSizeInternal(QPainter& painter, JKQTMathTextEnviro
     overallHeight=0;
     baselineHeight=0;
     strikeoutPos=0;
-    QFontMetricsF fm(currentEv.getFont(parent));
+    QFontMetricsF fm(currentEv.getFont(parentMathText));
     //QRectF tbr=parent->getTightBoundingRect(currentEv.getFont(parent), "M", painter.device());
 
 
@@ -166,7 +165,7 @@ void JKQTMathTextListNode::getSizeInternal(QPainter& painter, JKQTMathTextEnviro
                 //std::cout<<"symbol ='"<<s.toStdString()<<"'   subn="<<subn<<"   supn="<<supn<<"\n";
                 if (subn && supn) { // is this subscript and superscript?
                     JKQTMathTextEnvironment ev=currentEv;
-                    ev.fontSize=ev.fontSize*parent->getOperatorsubsuperSizeFactor();
+                    ev.fontSize=ev.fontSize*parentMathText->getOperatorsubsuperSizeFactor();
                     double w1=0, w2=0, w3=0;
                     double oh1=0, oh2=0, oh3=0;
                     double bh1=0, bh2=0, bh3=0;
@@ -224,7 +223,7 @@ void JKQTMathTextListNode::getSizeInternal(QPainter& painter, JKQTMathTextEnviro
                     //qDebug()<<"### subsupop: sub+super";*/
                 } else if (subn) { // is this subscript?
                     JKQTMathTextEnvironment ev=currentEv;
-                    ev.fontSize=ev.fontSize*parent->getOperatorsubsuperSizeFactor();
+                    ev.fontSize=ev.fontSize*parentMathText->getOperatorsubsuperSizeFactor();
                     double w1=0, w2=0;
                     double oh1=0, oh2=0;
                     double bh1=0, bh2=0;
@@ -280,7 +279,7 @@ double JKQTMathTextListNode::draw(QPainter& painter, double x, double y, JKQTMat
     double ynew=y;
     double xnew=x;
     //qDebug()<<"listNode: "<<currentEv.fontSize;
-    QFontMetricsF fm(currentEv.getFont(parent));
+    QFontMetricsF fm(currentEv.getFont(parentMathText));
     bool wasBrace=false;
     for (int i=0; i<nodes.size(); i++) {
         bool doDraw=true;
@@ -340,7 +339,7 @@ double JKQTMathTextListNode::draw(QPainter& painter, double x, double y, JKQTMat
                     //std::cout<<"symbol ='"<<s.toStdString()<<"'   subn="<<subn<<"   supn="<<supn<<"\n";
                     if (subn && supn) { // is this subscript and superscript?
                         JKQTMathTextEnvironment ev=currentEv;
-                        ev.fontSize=ev.fontSize*parent->getOperatorsubsuperSizeFactor();
+                        ev.fontSize=ev.fontSize*parentMathText->getOperatorsubsuperSizeFactor();
                         double w1=0, w2=0, w3=0;
                         double oh1=0, oh2=0, oh3=0;
                         double bh1=0, bh2=0, bh3=0, sp;
@@ -364,7 +363,7 @@ double JKQTMathTextListNode::draw(QPainter& painter, double x, double y, JKQTMat
                         xnew=qMax(qMax(xn1, xn2), xn3)+fm.boundingRect(' ').width();
                     } else if (subn) { // is this subscript and not superscript?
                         JKQTMathTextEnvironment ev=currentEv;
-                        ev.fontSize=ev.fontSize*parent->getOperatorsubsuperSizeFactor();
+                        ev.fontSize=ev.fontSize*parentMathText->getOperatorsubsuperSizeFactor();
                         double w1=0, w2=0;
                         double oh1=0, oh2=0;
                         double bh1=0, bh2=0, sp=0;
@@ -384,7 +383,7 @@ double JKQTMathTextListNode::draw(QPainter& painter, double x, double y, JKQTMat
                         xnew=qMax(xn1, xn2);
                     } else if (supn) { // is this subscript and superscript?
                         JKQTMathTextEnvironment ev=currentEv;
-                        ev.fontSize=ev.fontSize*parent->getOperatorsubsuperSizeFactor();
+                        ev.fontSize=ev.fontSize*parentMathText->getOperatorsubsuperSizeFactor();
                         double w1=0,  w3=0;
                         double oh1=0,  oh3=0;
                         double bh1=0,  bh3=0, sp;
@@ -413,6 +412,11 @@ double JKQTMathTextListNode::draw(QPainter& painter, double x, double y, JKQTMat
         wasBrace=dynamic_cast<JKQTMathTextBraceNode*>(nodes[i]);
     }
     return xnew;
+}
+
+void JKQTMathTextListNode::addNode(JKQTMathTextNode *n) {
+    n->setParentNode(this);
+    nodes.append(n);
 }
 
 bool JKQTMathTextListNode::toHtml(QString &html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) {

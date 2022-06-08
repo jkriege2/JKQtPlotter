@@ -36,7 +36,7 @@ class JKQTMathText; // forward
  */
 class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextNode {
     public:
-        explicit JKQTMathTextNode(JKQTMathText* parent);
+        explicit JKQTMathTextNode(JKQTMathText* parentMathText);
         JKQTMathTextNode(const JKQTMathTextNode&)=delete;
         JKQTMathTextNode& operator=(const JKQTMathTextNode&)=delete;
         virtual ~JKQTMathTextNode();
@@ -78,6 +78,12 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextNode {
         virtual void setDrawBoxes(bool draw);
         /** \brief return the name of this class as a string */
         virtual QString getTypeName() const;
+        /** \copydoc parentNode */
+        void setParentNode(JKQTMathTextNode* node);
+        /** \copydoc parentNode */
+        JKQTMathTextNode* getParentNode();
+        /** \copydoc parentNode */
+        const JKQTMathTextNode* getParentNode() const;
     protected:
         /** \brief determine the size of the node, overwrite this function in derived classes
          *
@@ -93,7 +99,9 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextNode {
         virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr)=0;
 
         /** \brief parent JKQTMathText object (required for several drawing operations */
-        JKQTMathText* parent;
+        JKQTMathText* parentMathText;
+        /** \brief parent node of this node (i.e. one level up, ode \c nullptr ) */
+        JKQTMathTextNode* parentNode;
         /** \brief enables the drawing of colored boxes (for DEBUGGING) around the actual output of the node */
         bool drawBoxes;
         /** \brief draws colored boxes (for DEBUGGING) around the actual output of the node
@@ -104,15 +112,80 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextNode {
          * \param currentEv JKQTMathTextEnvironment object describing the current drawing environment/settings
          */
         void doDrawBoxes(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv);
+
+
+        /** \brief returns the list of parent, parent-of-parent, ... that can be cast to type \a T */
+        template<class T>
+        inline QList<T*> getParents() {
+            QList<T*> lst;
+            JKQTMathTextNode* p=getParentNode();
+            T* pT=dynamic_cast<T*>(p);
+            while (p!=nullptr) {
+                if (pT!=nullptr) lst.append(pT);
+                p=p->getParentNode();
+                pT=dynamic_cast<T*>(p);
+            }
+            return lst;
+        }
+
+        /** \brief returns the list of parent, parent-of-parent, ... that can be cast to type \a T */
+        template<class T>
+        inline QList<const T*> getParents() const {
+            QList<const T*> lst;
+            const JKQTMathTextNode* p=getParentNode();
+            const T* pT=dynamic_cast<const T*>(p);
+            while (p!=nullptr) {
+                if (pT!=nullptr) lst.append(pT);
+                p=p->getParentNode();
+                pT=dynamic_cast<const T*>(p);
+            }
+            return lst;
+        }
+};
+
+
+/** \brief subclass representing a node in the syntax tree, that has one child
+ *  \ingroup jkqtmathtext_items
+ */
+class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSingleChildNode: public JKQTMathTextNode {
+    public:
+        explicit JKQTMathTextSingleChildNode(JKQTMathTextNode* _child, JKQTMathText* parentMathText);
+        virtual ~JKQTMathTextSingleChildNode() override;
+
+        /** \copydoc child */
+        JKQTMathTextNode* getChild();
+        /** \copydoc child */
+        const JKQTMathTextNode* getChild() const;
+        /** \copydoc JKQTMathTextNode::setDrawBoxes() */
+        virtual void setDrawBoxes(bool draw) override;
+    protected:
+        /** \brief child node of this node */
+        JKQTMathTextNode* child;
+};
+
+/** \brief subclass representing a node in the syntax tree, that has two children
+ *  \ingroup jkqtmathtext_items
+ */
+class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextDualChildNode: public JKQTMathTextNode {
+    public:
+        explicit JKQTMathTextDualChildNode(JKQTMathTextNode* _child1, JKQTMathTextNode* _child2, JKQTMathText* parentMathText);
+        virtual ~JKQTMathTextDualChildNode() override;
+
+        /** \copydoc child1 */
+        JKQTMathTextNode* getChild1();
+        /** \copydoc child1 */
+        const JKQTMathTextNode* getChild1() const;
+        /** \copydoc child2 */
+        JKQTMathTextNode* getChild2();
+        /** \copydoc child2 */
+        const JKQTMathTextNode* getChild2() const;
+        /** \copydoc JKQTMathTextNode::setDrawBoxes() */
+        virtual void setDrawBoxes(bool draw) override;
+    protected:
+        /** \brief first child node of this node */
+        JKQTMathTextNode* child1;
+        /** \brief second child node of this node */
+        JKQTMathTextNode* child2;
 };
 
 #endif // JKQTMATHTEXTNODE_H
-
-
-
-
-
-
-
-
-

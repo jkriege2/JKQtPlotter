@@ -14,21 +14,29 @@ This page lists release notes for the different version of JKQTPlotter
 \subsection page_whatsnew_TRUNK_OVERVIEW trunk: Overview
 Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
 <ul>
-  <li>fixed issue described in <a href="https://github.com/jkriege2/JKQtPlotter/pull/62">#62: Fix custom labels draw, because giving exactly two label-strings did not display all of them</a>, thanks to <a href="https://github.com/FalsinSoft">user:FalsinSoft</a></li>
-  <li>fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/70">#70: Typo in jkqtplotter/CMakeLists.txt</a>, thanks to <a href="https://github.com/tedlinlab">user:tedlinlab</a></li>
-  <li>fixed: styling was not properly applied to coordinate axes of colorbars outside the plot</li>
-  <li>fixed: JKQTMathText added a little whitespace before and after the LaTeX-string. This was removed as it disturbed the layout of text in plots</li>
-  <li>fixes/improvements: JKQTMathText renders several LaTeX strings better (simple braces in math mode, +-*... as symbols with proper sizes in math mode, added some missing instruction aliases, improved size of \vec and \hat, corrrected fonts usage for mathrm</li>
-  <li>improved: high-dpr-support in JKQTMathText</li>
-  <li>improved: QT6-compatibility by removing deprecated warnings</li>
-  <li>NEW: JKQTPFilledCurveXGraph and JKQTPFilledCurveYGraph can now plot wiggle plots with different fill styles above and below the baseline (feature request <a href="https://github.com/jkriege2/JKQtPlotter/issues/68">#68 Wiggle Plots</a> from <a href="https://github.com/xichaoqiang">user:xichaoqiang</a>   </li>
-  <li>NEW/BREAKING CHANGE: data tooltip can now also be shown when "just" moving the mouse (so far this was only possible when dragging the mouse with a button pressed). This also removes JKQtPlotter::getActMouseLeftAsToolTip() and adds JKQtPlotter::getActMouseMoveToolTip() instead! Also the default toolbars and context menus changed!</li>
-  <li>NEW: new "seaborn" style for plots</li>
-  <li>NEW/BREAKING CHANGE: changed JKQTPColorDerivationMode into a struct, which extends its capabilities above the previously available few enum-items</li>
-  <li>NEW: added debug-feature to show boxes around text in the plot</li>
-  <li>NEW: JKQTMathText: now supports new decoration instructions: \cancel, \xcancel, \bcancel, \sout, \ocirc, \widetilde, \widehat, \breve</li>
-  <li>NEW: JKQTMathText: reworked drawing of decorations: improved appearance and positioning!</li>
-  <li>NEW: JKQTMathText: reworked code structure: broke up large, single CPP-files into several smaller files!</li>
+  <li>JKQtPlotter:<ul>
+    <li>fixed issue described in <a href="https://github.com/jkriege2/JKQtPlotter/pull/62">#62: Fix custom labels draw, because giving exactly two label-strings did not display all of them</a>, thanks to <a href="https://github.com/FalsinSoft">user:FalsinSoft</a></li>
+    <li>fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/70">#70: Typo in jkqtplotter/CMakeLists.txt</a>, thanks to <a href="https://github.com/tedlinlab">user:tedlinlab</a></li>
+    <li>fixed: styling was not properly applied to coordinate axes of colorbars outside the plot</li>
+    <li>improved: QT6-compatibility by removing deprecated warnings</li>
+    <li>NEW: JKQTPFilledCurveXGraph and JKQTPFilledCurveYGraph can now plot wiggle plots with different fill styles above and below the baseline (feature request <a href="https://github.com/jkriege2/JKQtPlotter/issues/68">#68 Wiggle Plots</a> from <a href="https://github.com/xichaoqiang">user:xichaoqiang</a>   </li>
+    <li>NEW/BREAKING CHANGE: data tooltip can now also be shown when "just" moving the mouse (so far this was only possible when dragging the mouse with a button pressed). This also removes JKQtPlotter::getActMouseLeftAsToolTip() and adds JKQtPlotter::getActMouseMoveToolTip() instead! Also the default toolbars and context menus changed!</li>
+    <li>NEW: new "seaborn" style for plots</li>
+    <li>NEW/BREAKING CHANGE: changed JKQTPColorDerivationMode into a struct, which extends its capabilities above the previously available few enum-items</li>
+    <li>NEW: added debug-feature to show boxes around text in the plot</li>
+  </ul>
+  
+  <li>JKQTMathText:<ul>
+    <li>fixed: JKQTMathText added a little whitespace before and after the LaTeX-string. This was removed as it disturbed the layout of text in plots</li>
+    <li>fixed: height-calculation of frac-like instructions: before the ascent and descent were equal, even if the numerator and denominator have different hieghts</li>
+    <li>fixes/improvements: JKQTMathText renders several LaTeX strings better (simple braces in math mode, +-*... as symbols with proper sizes in math mode, added some missing instruction aliases, improved size of \vec and \hat, corrrected fonts usage for mathrm</li>
+    <li>improved: high-dpr-support in JKQTMathText</li>
+    <li>NEW: now supports new decoration instructions: \cancel, \xcancel, \bcancel, \sout, \ocirc, \widetilde, \widehat, \breve</li>
+    <li>NEW: reworked drawing of decorations: improved appearance and positioning!</li>
+    <li>NEW: reworked code structure: broke up large, single CPP-files into several smaller files!</li>
+    <li>NEW: reworked node class tree: inserted base-class nodes for single-child, dual-child!</li>
+    <li>NEW: improved frac-rendering: font-scaling takes nesting-level into account, overall-rendering, sizes, if a brace surrounds a frac, the heights are equal above and below to center the brace , ...</li>
+  </ul>
 </ul>
 
 \subsection page_whatsnew_TRUNK_DOWNLOAD trunk: Download

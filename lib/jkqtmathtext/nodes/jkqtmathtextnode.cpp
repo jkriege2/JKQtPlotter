@@ -36,9 +36,14 @@
 // --------------------------------------------------------------------------------------------------
 // -- implementation of the JKQTMathTextNode's methods
 // --------------------------------------------------------------------------------------------------
-JKQTMathTextNode::JKQTMathTextNode(JKQTMathText* parent) {
-    this->parent=parent;
-    drawBoxes=false;
+
+
+JKQTMathTextNode::JKQTMathTextNode(JKQTMathText *_parent):
+    parentMathText(_parent),
+    parentNode(nullptr),
+    drawBoxes(false)
+{
+
 }
 
 JKQTMathTextNode::~JKQTMathTextNode()
@@ -112,4 +117,91 @@ void JKQTMathTextNode::setDrawBoxes(bool draw)
 QString JKQTMathTextNode::getTypeName() const
 {
     return "JKQTMathTextNode";
+}
+
+void JKQTMathTextNode::setParentNode(JKQTMathTextNode *node)
+{
+    parentNode=node;
+    if (node) parentMathText=node->parentMathText;
+}
+
+JKQTMathTextNode *JKQTMathTextNode::getParentNode()
+{
+    return parentNode;
+}
+
+const JKQTMathTextNode *JKQTMathTextNode::getParentNode() const
+{
+    return parentNode;
+}
+
+JKQTMathTextSingleChildNode::JKQTMathTextSingleChildNode(JKQTMathTextNode *_child, JKQTMathText *parentMathText):
+    JKQTMathTextNode(parentMathText),
+    child(_child)
+{
+    if (child) child->setParentNode(this);
+}
+
+JKQTMathTextSingleChildNode::~JKQTMathTextSingleChildNode()
+{
+    if (child) delete child;
+}
+
+JKQTMathTextNode *JKQTMathTextSingleChildNode::getChild()
+{
+    return child;
+}
+
+const JKQTMathTextNode *JKQTMathTextSingleChildNode::getChild() const
+{
+    return child;
+}
+
+void JKQTMathTextSingleChildNode::setDrawBoxes(bool draw)
+{
+    JKQTMathTextNode::setDrawBoxes(draw);
+    if (child) child->setDrawBoxes(draw);
+}
+
+
+JKQTMathTextDualChildNode::JKQTMathTextDualChildNode(JKQTMathTextNode *_child1, JKQTMathTextNode *_child2, JKQTMathText *parentMathText):
+    JKQTMathTextNode(parentMathText),
+    child1(_child1),
+    child2(_child2)
+{
+    if (child1) child1->setParentNode(this);
+    if (child2) child2->setParentNode(this);
+}
+
+JKQTMathTextDualChildNode::~JKQTMathTextDualChildNode()
+{
+    if (child1) delete child1;
+    if (child2) delete child2;
+}
+
+JKQTMathTextNode *JKQTMathTextDualChildNode::getChild1()
+{
+    return child1;
+}
+
+const JKQTMathTextNode *JKQTMathTextDualChildNode::getChild1() const
+{
+    return child1;
+}
+
+JKQTMathTextNode *JKQTMathTextDualChildNode::getChild2()
+{
+    return child2;
+}
+
+const JKQTMathTextNode *JKQTMathTextDualChildNode::getChild2() const
+{
+    return child2;
+}
+
+void JKQTMathTextDualChildNode::setDrawBoxes(bool draw)
+{
+    JKQTMathTextNode::setDrawBoxes(draw);
+    if (child1) child1->setDrawBoxes(draw);
+    if (child2) child2->setDrawBoxes(draw);
 }

@@ -53,8 +53,8 @@ QString JKQTMathTextSymbolNode::getTypeName() const
 
 bool JKQTMathTextSymbolNode::getWinSymbolProp(JKQTMathTextSymbolNode::SymbolProps& props, const QString &n, const JKQTMathTextEnvironment& currentEv, double mathFontFactor) const
 {
-    auto fnt=parent->getFontData(currentEv.font, currentEv.insideMath, JKQTMathText::FontSubclass::Text);
-    auto fntSym=parent->getFontData(currentEv.font, currentEv.insideMath, JKQTMathText::FontSubclass::Symbols);
+    auto fnt=parentMathText->getFontData(currentEv.font, currentEv.insideMath, JKQTMathText::FontSubclass::Text);
+    auto fntSym=parentMathText->getFontData(currentEv.font, currentEv.insideMath, JKQTMathText::FontSubclass::Symbols);
 
     //qDebug()<<"  +--- getWinSymbolProp("<<n<<"): fnt: "<<fnt.first<<", "<<fnt.second<<" / sym: "<<fntSym.first<<", "<<fntSym.second;
 
@@ -209,8 +209,8 @@ bool JKQTMathTextSymbolNode::getWinSymbolProp(JKQTMathTextSymbolNode::SymbolProp
 
 bool JKQTMathTextSymbolNode::getGreekSymbolProp(JKQTMathTextSymbolNode::SymbolProps& props, const QString &n, const JKQTMathTextEnvironment& currentEv, double mathFontFactor) const
 {
-    auto fnt=parent->getFontData(currentEv.font, currentEv.insideMath, JKQTMathText::FontSubclass::Text);
-    auto fntGreek=parent->getFontData(currentEv.font, currentEv.insideMath, JKQTMathText::FontSubclass::Greek);
+    auto fnt=parentMathText->getFontData(currentEv.font, currentEv.insideMath, JKQTMathText::FontSubclass::Text);
+    auto fntGreek=parentMathText->getFontData(currentEv.font, currentEv.insideMath, JKQTMathText::FontSubclass::Greek);
 
     //qDebug()<<"  +--- getGreekSymbolProp("<<n<<"): fnt: "<<fnt.first<<", "<<fnt.second<<" / greek: "<<fntGreek.first<<", "<<fntGreek.second;
 
@@ -638,9 +638,9 @@ bool JKQTMathTextSymbolNode::getUnicodeFullSymbolProp(JKQTMathTextSymbolNode::Sy
 
 bool JKQTMathTextSymbolNode::getSymbolProp(JKQTMathTextSymbolNode::SymbolProps& props, const QString &n, const JKQTMathTextEnvironment& currentEv, double mathFontFactor) const
 {
-    auto fnt=parent->getFontData(currentEv.font, currentEv.insideMath, JKQTMathText::FontSubclass::Text);
-    auto fntGreek=parent->getFontData(currentEv.font, currentEv.insideMath, JKQTMathText::FontSubclass::Greek);
-    auto fntSym=parent->getFontData(currentEv.font, currentEv.insideMath, JKQTMathText::FontSubclass::Symbols);
+    auto fnt=parentMathText->getFontData(currentEv.font, currentEv.insideMath, JKQTMathText::FontSubclass::Text);
+    auto fntGreek=parentMathText->getFontData(currentEv.font, currentEv.insideMath, JKQTMathText::FontSubclass::Greek);
+    auto fntSym=parentMathText->getFontData(currentEv.font, currentEv.insideMath, JKQTMathText::FontSubclass::Symbols);
 
     //qDebug()<<"--- getSymbolProp("<<n<<"): "<<fnt.first<<", "<<fnt.second;
 
@@ -729,9 +729,9 @@ bool JKQTMathTextSymbolNode::getSymbolProp(JKQTMathTextSymbolNode::SymbolProps& 
 JKQTMathTextSymbolNode::SymbolProps JKQTMathTextSymbolNode::getSymbolProp(const QString &symName, const JKQTMathTextEnvironment& currentEv) const
 {
 
-    auto fnt=parent->getFontData(currentEv.font, currentEv.insideMath, JKQTMathText::FontSubclass::Text);
-    auto fntSym=parent->getFontData(currentEv.font, currentEv.insideMath, JKQTMathText::FontSubclass::Symbols);
-    auto fntGreek=parent->getFontData(currentEv.font, currentEv.insideMath, JKQTMathText::FontSubclass::Greek);
+    auto fnt=parentMathText->getFontData(currentEv.font, currentEv.insideMath, JKQTMathText::FontSubclass::Text);
+    auto fntSym=parentMathText->getFontData(currentEv.font, currentEv.insideMath, JKQTMathText::FontSubclass::Symbols);
+    auto fntGreek=parentMathText->getFontData(currentEv.font, currentEv.insideMath, JKQTMathText::FontSubclass::Greek);
 
     JKQTMathTextSymbolNode::SymbolProps props;
     double mathFontFactor=1.8;
@@ -869,7 +869,7 @@ JKQTMathTextSymbolNode::SymbolProps JKQTMathTextSymbolNode::getSymbolProp(const 
     }
 
     if (props.symbol.simplified().isEmpty() && !extraSymbolName.contains(n)) {
-        parent->addToErrorList(QObject::tr("unknown symbol '%1' found (%2)!").arg(n).arg(errorExplanation));
+        parentMathText->addToErrorList(QObject::tr("unknown symbol '%1' found (%2)!").arg(n).arg(errorExplanation));
     }
 
     //qDebug()<<n<<": '"<<props.symbol<<"' / "<<props.font<<"    {{{ def:"+fnt.first+"["+encoding2String(fnt.second)+"] / sym:"+fntSym.first+"["+encoding2String(fntSym.second)+"] / grk:"+fntGreek.first+"["+encoding2String(fntGreek.second)+"] }}}";
@@ -878,7 +878,7 @@ JKQTMathTextSymbolNode::SymbolProps JKQTMathTextSymbolNode::getSymbolProp(const 
 }
 
 void JKQTMathTextSymbolNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* /*prevNodeSize*/) {
-    QFont f=currentEv.getFont(parent);
+    QFont f=currentEv.getFont(parentMathText);
     auto props=getSymbolProp(symbolName, currentEv);
     f.setFamily(props.font);
     f.setPointSizeF(f.pointSizeF()*props.fontFactor);
@@ -926,7 +926,7 @@ void JKQTMathTextSymbolNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvi
     }
     strikeoutPos=fm.strikeOutPos();
 
-    if (props.extendWidthInMathmode && currentEv.insideMath) width=width*parent->getMathoperatorWidthFactor();
+    if (props.extendWidthInMathmode && currentEv.insideMath) width=width*parentMathText->getMathoperatorWidthFactor();
 
 }
 
@@ -938,7 +938,7 @@ double JKQTMathTextSymbolNode::draw(QPainter& painter, double x, double y, JKQTM
     getSize(painter, currentEv, width, baselineHeight, overallHeight, strikeoutPos);
     QPen pold=painter.pen();
     QFont fold=painter.font();
-    QFont f=currentEv.getFont(parent);
+    QFont f=currentEv.getFont(parentMathText);
     QFont f1=f;
     auto props=getSymbolProp(symbolName, currentEv);
     f.setFamily(props.font);
@@ -953,7 +953,7 @@ double JKQTMathTextSymbolNode::draw(QPainter& painter, double x, double y, JKQTM
 
     double shift=0;
     if (props.extendWidthInMathmode && currentEv.insideMath) {
-        double origwidth=width/parent->getMathoperatorWidthFactor();
+        double origwidth=width/parentMathText->getMathoperatorWidthFactor();
         shift=0.5*(width-origwidth);
         //width=width*parent->getMathoperatorWidthFactor();
     }

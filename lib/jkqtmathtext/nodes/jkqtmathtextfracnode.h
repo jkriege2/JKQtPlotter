@@ -34,8 +34,14 @@ class JKQTMathText; // forward
 
 /** \brief subclass representing a \\frac node
  *  \ingroup jkqtmathtext_items
-  */
-class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextFracNode: public JKQTMathTextNode {
+ *
+ *  all fractions re drawn like this:
+ *  \image html jkqtmathtext_fracnode_geo.png
+ *
+ *  slanted fractions are drawn like this:
+ *  \image html jkqtmathtext_sfracnode_geo.png
+ */
+class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextFracNode: public JKQTMathTextDualChildNode {
     public:
         JKQTMathTextFracNode(JKQTMathText* parent, JKQTMathTextNode* child_top, JKQTMathTextNode* child_bottom, JKQTMathTextFracMode mode);
         virtual ~JKQTMathTextFracNode() override;
@@ -45,20 +51,19 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextFracNode: public JKQTMathTextNode {
         virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
         /** \copydoc JKQTMathTextNode::toHtml() */
         virtual bool toHtml(QString& html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) override;
-        /** \copydoc JKQTMathTextNode::setDrawBoxes() */
-        virtual void setDrawBoxes(bool draw) override;
-        /** \brief returns the 1st child node  */
-        JKQTMathTextNode* getChild1() const;
-        /** \brief returns the 2nd child node  */
-        JKQTMathTextNode* getChild2() const;
         /** \copydoc mode */ 
         JKQTMathTextFracMode getMode() const;
     protected:
         /** \copydoc JKQTMathTextNode::getSizeInternal() */
         virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
-        JKQTMathTextNode* child1;
-        JKQTMathTextNode* child2;
+        /** \brief actual display type of fraction object */
         JKQTMathTextFracMode mode;
+        /** \brief returns the nesting level of the node (of same type of \a sameType \c ==true) */
+        int getNestingLevel(bool sameType=false) const;
+        /** \brief determines the scaling factor of the fraction (takes into account the nesting level) */
+        double getFracScalingFactor() const;
+        /** \brief determines whether in the list of parents a brace-node or another frac-node appears first */
+        bool isBraceParentNearerThanFrac() const;
 };
 
 

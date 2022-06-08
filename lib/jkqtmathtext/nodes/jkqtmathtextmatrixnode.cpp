@@ -43,10 +43,15 @@ JKQTMathTextMatrixNode::JKQTMathTextMatrixNode(JKQTMathText* _parent, QVector<QV
 {
     this->lines=children.size();
     this->columns=0;
-    for (int i=0; i<children.size(); i++) {
+    for (int i=0; i<children.size(); i++) {        
         if (children[i].size()>this->columns) this->columns=children[i].size();
     }
     this->children=children;
+    for (int i=0; i<children.size(); i++) {
+        for (int j=0; j<children[i].size(); j++) {
+            children[i].operator[](j)->setParentNode(this);
+        }
+    }
 }
 
 JKQTMathTextMatrixNode::~JKQTMathTextMatrixNode() {
@@ -64,7 +69,7 @@ QString JKQTMathTextMatrixNode::getTypeName() const
 }
 
 void JKQTMathTextMatrixNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* /*prevNodeSize*/) {
-    QFontMetricsF fm(currentEv.getFont(parent), painter.device());
+    QFontMetricsF fm(currentEv.getFont(parentMathText), painter.device());
     JKQTMathTextEnvironment ev1=currentEv;
 
     double xh=fm.strikeOutPos();//fm.xHeight();
@@ -108,7 +113,7 @@ void JKQTMathTextMatrixNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvi
 double JKQTMathTextMatrixNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* /*prevNodeSize*/) {
     doDrawBoxes(painter, x, y, currentEv);
 
-    QFontMetricsF fm(currentEv.getFont(parent), painter.device());
+    QFontMetricsF fm(currentEv.getFont(parentMathText), painter.device());
     JKQTMathTextEnvironment ev1=currentEv;
 
     double xh=fm.strikeOutPos();//fm.xHeight();

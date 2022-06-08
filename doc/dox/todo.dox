@@ -41,7 +41,7 @@ This page lists several todos and wishes for future version of JKQTPlotter
     <li>add instruction for unicode-characters \char"XXXX, \unicode{XXXX}, \utf8{XXXX}, \utf16{XXXX}, \utf32{XXXX} ...</li>
     <li>check sub/superscript with italic text in math mode, possibly a correction is necessary</li>
     <li>explore where QFontMetricsF::horizontalAdvance() can be used (for Qt >=5.15)</li>
-    <li></li>
+    <li>correction of frac-height (2*maxHeight or height1+height2) should be done by brace-node, not frac-node</li>
     <li></li>
     <li></li>
   </ul></li>

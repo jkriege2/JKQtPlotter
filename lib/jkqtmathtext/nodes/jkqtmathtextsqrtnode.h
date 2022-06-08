@@ -36,7 +36,7 @@ class JKQTMathText; // forward
 /** \brief subclass representing a sqrt node
  *  \ingroup jkqtmathtext_items
   */
-class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSqrtNode: public JKQTMathTextNode {
+class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSqrtNode: public JKQTMathTextSingleChildNode {
     public:
         JKQTMathTextSqrtNode(JKQTMathText* parent, JKQTMathTextNode* child, int degree=2);
         virtual ~JKQTMathTextSqrtNode() override;
@@ -44,18 +44,14 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSqrtNode: public JKQTMathTextNode {
         virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
         /** \copydoc JKQTMathTextNode::toHtml() */
         virtual bool toHtml(QString& html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) override;
-        /** \copydoc JKQTMathTextNode::setDrawBoxes() */
-        virtual void setDrawBoxes(bool draw) override;
         /** \copydoc JKQTMathTextNode::getTypeName() */
         virtual QString getTypeName() const override ;
-        /** \brief returns the child node  */
-        JKQTMathTextNode *getChild() const;
-        /** \copydoc degree */ 
+        /** \copydoc degree */
         int getDegree() const;
     protected:
         /** \copydoc JKQTMathTextNode::getSizeInternal() */
         virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
-        JKQTMathTextNode* child;
+        /** \brief degree of the radical (shown of !=2) */
         int degree;
 };
 

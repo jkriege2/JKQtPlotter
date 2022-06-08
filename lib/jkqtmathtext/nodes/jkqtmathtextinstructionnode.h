@@ -34,7 +34,7 @@ class JKQTMathText; // forward
 /** \brief subclass representing an instruction node with exactly one argument in the syntax tree
  *  \ingroup jkqtmathtext_items
  */
-class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextInstruction1Node: public JKQTMathTextNode {
+class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextInstruction1Node: public JKQTMathTextSingleChildNode {
     public:
         explicit JKQTMathTextInstruction1Node(JKQTMathText* parent, const QString& name, JKQTMathTextNode* child, const QStringList& parameters=QStringList());
         virtual ~JKQTMathTextInstruction1Node() override;
@@ -45,10 +45,6 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextInstruction1Node: public JKQTMathTextN
         /** \brief convert node to HTML and returns \c true on success */
         /** \copydoc JKQTMathTextNode::toHtml() */
         virtual bool toHtml(QString& html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) override;
-        /** \copydoc JKQTMathTextNode::setDrawBoxes() */
-        virtual void setDrawBoxes(bool draw) override;
-        /** \brief returns the child node  */
-        JKQTMathTextNode* getChild() const;
         /** \copydoc name */ 
         QString getName() const;
         /** \copydoc parameters */ 
@@ -56,10 +52,11 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextInstruction1Node: public JKQTMathTextN
     protected:
         /** \copydoc JKQTMathTextNode::getSizeInternal() */
         virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
-        bool setupMTenvironment(JKQTMathTextEnvironment &ev);
-
-        JKQTMathTextNode* child;
+        /** \brief set all properties in \a ev, as appropriate for the represented instruction */
+        bool setupMTenvironment(JKQTMathTextEnvironment &ev) const;
+        /** \brief instruction name */
         QString name;
+        /** \brief additional string-parameters */
         QStringList parameters;
 };
 

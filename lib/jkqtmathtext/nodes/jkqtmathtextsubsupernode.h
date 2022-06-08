@@ -37,7 +37,7 @@ class JKQTMathText; // forward
 *
 * \image html jkqtmathtext_subscriptnode_getSizeInternal.png
 */
-class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSubscriptNode: public JKQTMathTextNode {
+class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSubscriptNode: public JKQTMathTextSingleChildNode {
 public:
     explicit JKQTMathTextSubscriptNode(JKQTMathText* parent, JKQTMathTextNode* child);
     virtual ~JKQTMathTextSubscriptNode() override;
@@ -45,16 +45,11 @@ public:
     virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
     /** \copydoc JKQTMathTextNode::getTypeName() */
     virtual QString getTypeName() const override;                /** \brief returns the child node  */
-    /** \brief returns the child node */
-    JKQTMathTextNode *getChild() const;
     /** \copydoc JKQTMathTextNode::toHtml() */
     virtual bool toHtml(QString& html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) override;
-    /** \copydoc JKQTMathTextNode::setDrawBoxes() */
-    virtual void setDrawBoxes(bool draw) override;
 protected:
     /** \copydoc JKQTMathTextNode::getSizeInternal() */
     virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
-    JKQTMathTextNode* child;
 };
 
 /** \brief subclass representing an superscript node with exactly one argument in the syntax tree
@@ -64,24 +59,19 @@ protected:
 *
 * \note a MTlistNode might modify the positioning slightly for special cases (e.g. \c \\int , \c \\sum ... or after braces)
 */
-class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSuperscriptNode: public JKQTMathTextNode {
+class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSuperscriptNode: public JKQTMathTextSingleChildNode {
 public:
     explicit JKQTMathTextSuperscriptNode(JKQTMathText* parent, JKQTMathTextNode* child);
     virtual ~JKQTMathTextSuperscriptNode() override;
     /** \copydoc JKQTMathTextNode::draw() */
     virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
-    /** \brief returns the child node  */
-    JKQTMathTextNode* getChild() const;
     /** \copydoc JKQTMathTextNode::getTypeName() */
     virtual QString getTypeName() const override;
     /** \copydoc JKQTMathTextNode::toHtml() */
     virtual bool toHtml(QString& html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) override;
-    /** \copydoc JKQTMathTextNode::setDrawBoxes() */
-    virtual void setDrawBoxes(bool draw) override;
 protected:
     /** \copydoc JKQTMathTextNode::getSizeInternal() */
     virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
-    JKQTMathTextNode* child;
 };
 
 #endif // JKQTMATHTEXTSUBSUPERSCRIPTNODE_H
