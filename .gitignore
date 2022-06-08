@@ -99,3 +99,4 @@ Sicherungskopie_*
 /.vs
 /CMakeSettings.json
 /out
+*.synctex.gz
