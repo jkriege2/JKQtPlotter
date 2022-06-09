@@ -575,6 +575,8 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         QStringList error_list;
         /** \brief used by the parser. This is used to implement brace pairs with \\right. */
         bool showRightBrace;
+        /** \brief used by the parser. This is used to implement brace pairs with \\left. */
+        bool showLeftBrace;
 
         /** \brief the result of parsing the last string supplied to the object via parse() */
         JKQTMathTextNode* parsedNode;

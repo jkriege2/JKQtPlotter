@@ -48,18 +48,19 @@ JKQTMathTextSuperscriptNode::~JKQTMathTextSuperscriptNode() {
 void JKQTMathTextSuperscriptNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize) {
     JKQTMathTextEnvironment ev=currentEv;
     ev.fontSize=ev.fontSize*parentMathText->getSubsuperSizeFactor();
-    QFontMetricsF fm(currentEv.getFont(parentMathText), painter.device());
-    QRectF tbr=JKQTMathTextGetTightBoundingRect(currentEv.getFont(parentMathText), "M", painter.device());
-    child->getSize(painter, ev, width, baselineHeight, overallHeight, strikeoutPos);
+    const QFontMetricsF fm(currentEv.getFont(parentMathText), painter.device());
+    const QRectF tbr=JKQTMathTextGetTightBoundingRect(currentEv.getFont(parentMathText), "M", painter.device());
+    double cstrikeoutPos=0;
+    child->getSize(painter, ev, width, baselineHeight, overallHeight, cstrikeoutPos);
     double shift=parentMathText->getSuperShiftFactor()*tbr.height();
 
     if (prevNodeSize!=nullptr && prevNodeSize->baselineHeight>tbr.height()) {
         shift=prevNodeSize->baselineHeight-(overallHeight-baselineHeight)-shift;
     }
 
-    double yshift=shift+overallHeight-baselineHeight;
     baselineHeight=overallHeight=overallHeight+shift;
-    strikeoutPos=strikeoutPos-yshift;
+    if (prevNodeSize!=nullptr) strikeoutPos=prevNodeSize->strikeoutPos;
+    else strikeoutPos=fm.strikeOutPos();
     if (currentEv.italic && prevNodeSize==nullptr) width=width+double(fm.boundingRect(' ').width())*parentMathText->getItalicCorrectionFactor();
 }
 
@@ -130,9 +131,9 @@ void JKQTMathTextSubscriptNode::getSizeInternal(QPainter& painter, JKQTMathTextE
         shift=-1.0*(prevNodeSize->overallHeight-prevNodeSize->baselineHeight-shift);
     }
 
-    double yshift=baselineHeight-shift;
     baselineHeight=shift;
-    strikeoutPos=fm.strikeOutPos()+yshift;
+    if (prevNodeSize!=nullptr) strikeoutPos=prevNodeSize->strikeoutPos;
+    else strikeoutPos=fm.strikeOutPos();
     if (currentEv.italic && prevNodeSize==nullptr) width=width-double(fm.boundingRect(' ').width())*parentMathText->getItalicCorrectionFactor();
 }
 

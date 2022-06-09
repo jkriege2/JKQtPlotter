@@ -1007,43 +1007,41 @@ double JKQTMathTextSymbolNode::draw(QPainter& painter, double x, double y, JKQTM
     } else if (symbolName==",") { // 25% space
     } else if (symbolName=="!") { // -25% space
     } else if (symbolName=="longleftarrow") {
-        double width=JKQTMathTextGetTightBoundingRect(f, "X", painter.device()).width()*3.0;
-        double dx=JKQTMathTextGetTightBoundingRect(f, "X", painter.device()).width()*0.25;
-        double ypos=y-JKQTMathTextGetTightBoundingRect(f, "x", painter.device()).height()/2.0;
-        QPainterPath path=JKQTMathTextMakeArrow(x+shift+dx, ypos, width, JKQTMathTextGetTightBoundingRect(f, "M", painter.device()).height()*0.5, true, false);
-        painter.drawPath(path);
+        const double width=JKQTMathTextGetTightBoundingRect(f, "X", painter.device()).width()*3.0;
+        const double dx=JKQTMathTextGetTightBoundingRect(f, "X", painter.device()).width()*0.25;
+        const double ypos=y-JKQTMathTextGetTightBoundingRect(f, "x", painter.device()).height()/2.0;
+        const QPainterPath path=JKQTMathTextMakeArrow(x+shift+dx, ypos, width, JKQTMathTextGetTightBoundingRect(f, "M", painter.device()).height()*0.5, true, false);
     } else if (symbolName=="longrightarrow"){
-        double width=JKQTMathTextGetTightBoundingRect(f, "X", painter.device()).width()*3.0;
-        double dx=JKQTMathTextGetTightBoundingRect(f, "X", painter.device()).width()*0.25;
-        double ypos=y-JKQTMathTextGetTightBoundingRect(f, "x", painter.device()).height()/2.0;
-        QPainterPath path=JKQTMathTextMakeArrow(x+shift+dx, ypos, width, JKQTMathTextGetTightBoundingRect(f, "M", painter.device()).height()*0.5, false, true);
+        const double width=JKQTMathTextGetTightBoundingRect(f, "X", painter.device()).width()*3.0;
+        const double dx=JKQTMathTextGetTightBoundingRect(f, "X", painter.device()).width()*0.25;
+        const double ypos=y-JKQTMathTextGetTightBoundingRect(f, "x", painter.device()).height()/2.0;
+        const QPainterPath path=JKQTMathTextMakeArrow(x+shift+dx, ypos, width, JKQTMathTextGetTightBoundingRect(f, "M", painter.device()).height()*0.5, false, true);
         painter.drawPath(path);
     } else if (symbolName=="Longleftarrow") {
-        double width=JKQTMathTextGetTightBoundingRect(f, "X", painter.device()).width()*3.0;
-        double dx=JKQTMathTextGetTightBoundingRect(f, "X", painter.device()).width()*0.25;
-        double ypos=y-JKQTMathTextGetTightBoundingRect(f, "x", painter.device()).height()/2.0;
-        QPainterPath path=JKQTMathTextMakeDArrow(x+shift+dx, ypos, width, JKQTMathTextGetTightBoundingRect(f, "M", painter.device()).height()*0.5, true, false);
-        painter.drawPath(path);
+        const double width=JKQTMathTextGetTightBoundingRect(f, "X", painter.device()).width()*3.0;
+        const double dx=JKQTMathTextGetTightBoundingRect(f, "X", painter.device()).width()*0.25;
+        const double ypos=y-JKQTMathTextGetTightBoundingRect(f, "x", painter.device()).height()/2.0;
+        const QPainterPath path=JKQTMathTextMakeDArrow(x+shift+dx, ypos, width, JKQTMathTextGetTightBoundingRect(f, "M", painter.device()).height()*0.5, true, false);
     } else if (symbolName=="Longrightarrow") {
-        double width=JKQTMathTextGetTightBoundingRect(f, "X", painter.device()).width()*3.0;
-        double dx=JKQTMathTextGetTightBoundingRect(f, "X", painter.device()).width()*0.25;
-        double ypos=y-JKQTMathTextGetTightBoundingRect(f, "x", painter.device()).height()/2.0;
-        QPainterPath path=JKQTMathTextMakeDArrow(x+shift+dx, ypos, width, JKQTMathTextGetTightBoundingRect(f, "M", painter.device()).height()*0.5, false, true);
+        const double width=JKQTMathTextGetTightBoundingRect(f, "X", painter.device()).width()*3.0;
+        const double dx=JKQTMathTextGetTightBoundingRect(f, "X", painter.device()).width()*0.25;
+        const double ypos=y-JKQTMathTextGetTightBoundingRect(f, "x", painter.device()).height()/2.0;
+        const QPainterPath path=JKQTMathTextMakeDArrow(x+shift+dx, ypos, width, JKQTMathTextGetTightBoundingRect(f, "M", painter.device()).height()*0.5, false, true);
         painter.drawPath(path);
     } else if (symbolName=="longleftrightarrow") {
-        double width=JKQTMathTextGetTightBoundingRect(f, "X", painter.device()).width()*3.0;
-        double dx=JKQTMathTextGetTightBoundingRect(f, "X", painter.device()).width()*0.25;
-        double ypos=y-JKQTMathTextGetTightBoundingRect(f, "x", painter.device()).height()/2.0;
-        QPainterPath path=JKQTMathTextMakeArrow(x+shift+dx, ypos, width, JKQTMathTextGetTightBoundingRect(f, "M", painter.device()).height()*0.5, true, true);
+        const double width=JKQTMathTextGetTightBoundingRect(f, "X", painter.device()).width()*3.0;
+        const double dx=JKQTMathTextGetTightBoundingRect(f, "X", painter.device()).width()*0.25;
+        const double ypos=y-JKQTMathTextGetTightBoundingRect(f, "x", painter.device()).height()/2.0;
+        const QPainterPath path=JKQTMathTextMakeArrow(x+shift+dx, ypos, width, JKQTMathTextGetTightBoundingRect(f, "M", painter.device()).height()*0.5, true, true);
         painter.drawPath(path);
     } else if (symbolName=="Longleftrightarrow") {
-        double width=JKQTMathTextGetTightBoundingRect(f, "X", painter.device()).width()*3.0;
-        double dx=JKQTMathTextGetTightBoundingRect(f, "X", painter.device()).width()*0.25;
-        double ypos=y-JKQTMathTextGetTightBoundingRect(f, "x", painter.device()).height()/2.0;
-        QPainterPath path=JKQTMathTextMakeDArrow(x+shift+dx, ypos, width, JKQTMathTextGetTightBoundingRect(f, "M", painter.device()).height()*0.5, true, true);
+        const double width=JKQTMathTextGetTightBoundingRect(f, "X", painter.device()).width()*3.0;
+        const double dx=JKQTMathTextGetTightBoundingRect(f, "X", painter.device()).width()*0.25;
+        const double ypos=y-JKQTMathTextGetTightBoundingRect(f, "x", painter.device()).height()/2.0;
+        const QPainterPath path=JKQTMathTextMakeDArrow(x+shift+dx, ypos, width, JKQTMathTextGetTightBoundingRect(f, "M", painter.device()).height()*0.5, true, true);
         painter.drawPath(path);
     } else { // draw a box to indicate an unavailable symbol
-        QRectF tbr=JKQTMathTextGetTightBoundingRect(f, "M", painter.device());
+        const QRectF tbr=JKQTMathTextGetTightBoundingRect(f, "M", painter.device());
         painter.drawRect(QRectF(x+shift,y-tbr.height(), xwi, tbr.height()*0.8));
     }
     painter.setPen(pold);

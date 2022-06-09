@@ -34,10 +34,12 @@ class JKQTMathText; // forward
 
 /** \brief subclass representing a brace node
  *  \ingroup jkqtmathtext_items
+ *
+ *  \image html jkqtmathtext_bracenode_geo.png
   */
 class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextBraceNode: public JKQTMathTextSingleChildNode {
     public:
-        JKQTMathTextBraceNode(JKQTMathText* parent, const QString& openbrace, const QString& closebrace, JKQTMathTextNode* child, bool showRightBrace=true);
+        JKQTMathTextBraceNode(JKQTMathText* parent, const QString& openbrace, const QString& closebrace, JKQTMathTextNode* child, bool showOpeningBrace=true, bool showClosingBrace=true);
         virtual ~JKQTMathTextBraceNode() override;
         /** \copydoc JKQTMathTextNode::draw() */
         virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
@@ -49,19 +51,28 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextBraceNode: public JKQTMathTextSingleCh
         QString getOpenbrace() const;
         /** \copydoc closebrace */ 
         QString getClosebrace() const;
-        /** \copydoc showRightBrace */ 
-        bool getShowRightBrace() const;
+        /** \copydoc showRightBrace */
+        bool getShowClosingBrace() const;
+        /** \copydoc showOpeningBrace */
+        bool getShowOpeningBrace() const;
     protected:
-        /** \copydoc JKQTMathTextNode::getSizeInternal() */
+        /** \copydoc JKQTMathTextNode::getSizeInternal()
+         *
+         * \note This function internally calls getSizeInternalAndBrace() and returns part of its results.
+         */
         virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
+        /** calculates the size of this node (also returned by getSizeInternal() ) and of the brace */
+        void getSizeInternalAndBrace(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, double& bracewidth, double&braceheight, const JKQTMathTextNodeSize* prevNodeSize=nullptr);
         /**\brief opening brace */
         QString openbrace;
         /**\brief closing brace */
         QString closebrace;
-        /**\brief if \c true, the right-hand-side brace is drawn */
-        bool showRightBrace;
+        /**\brief if \c true, the closing (right hand side) brace is drawn */
+        bool showClosingBrace;
+        /**\brief if \c true, the opening (left hand side) brace is drawn */
+        bool showOpeningBrace;
         /** \brief calculate the width of the brace */
-        void getBraceWidth(QPainter& painter, JKQTMathTextEnvironment currentEv, double baselineHeight, double overallHeight, double& bracewidth, double& braceheight) const;
+        void getBraceSize(QPainter& painter, JKQTMathTextEnvironment currentEv, double baselineHeight, double overallHeight, double& bracewidth, double& braceheight) const;
 };
 
 #endif // JKQTMATHTEXTBRACENODE_H

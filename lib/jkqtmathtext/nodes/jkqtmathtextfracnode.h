@@ -62,8 +62,6 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextFracNode: public JKQTMathTextDualChild
         int getNestingLevel(bool sameType=false) const;
         /** \brief determines the scaling factor of the fraction (takes into account the nesting level) */
         double getFracScalingFactor() const;
-        /** \brief determines whether in the list of parents a brace-node or another frac-node appears first */
-        bool isBraceParentNearerThanFrac() const;
 };
 
 

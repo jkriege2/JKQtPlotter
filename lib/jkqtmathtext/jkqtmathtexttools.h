@@ -290,18 +290,24 @@ JKQTMATHTEXT_LIB_EXPORT QString JKQTMathTextDecorationToString(JKQTMathTextDecor
 
 /** \brief create a QPainterPath for drawing horizontal braces
  *  \ingroup jkqtmathtext
+ *
+ *  \image html mathparser/JKQTMathTextMakeHBracePath.png
  */
 JKQTMATHTEXT_LIB_EXPORT QPainterPath JKQTMathTextMakeHBracePath(double x, double ybrace, double width, double bw, double cubicshrink=0.5, double cubiccontrolfac=0.3);
 
 
 /** \brief create a QPainterPath for drawing horizontal arrows
  *  \ingroup jkqtmathtext
+ *
+ *  \image html mathparser/JKQTMathTextMakeArrow.png
  */
 JKQTMATHTEXT_LIB_EXPORT QPainterPath JKQTMathTextMakeArrow(double x, double y, double width, double arrowW, bool left=false, bool right=true);
 
 
 /** \brief create a QPainterPath for drawing horizontal double arrows
  *  \ingroup jkqtmathtext
+ *
+ *  \image html mathparser/JKQTMathTextMakeDArrow.png
  */
 JKQTMATHTEXT_LIB_EXPORT QPainterPath JKQTMathTextMakeDArrow(double x, double y, double width, double arrowW, bool left=false, bool right=true);
 
@@ -317,6 +323,7 @@ struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextTBRData {
 
     bool operator==(const JKQTMathTextTBRData& other) const;
 };
+
 struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextTBRDataH {
     explicit JKQTMathTextTBRDataH(const QFont& f, const QString& text, QPaintDevice *pd);
     QString text;

@@ -110,11 +110,17 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbTestset->addItem("text/math: brace2 test", "text: \\langle\\langle r^{123}\\rangle\\rangle -- math: $\\langle\\langle r^{123}\\rangle\\rangle$");
     ui->cmbTestset->addItem("text/math: brace3 test", "text: \\left\\langle r^{123}\\right\\rangle -- math: $\\left\\langle r^{123}\\right\\rangle$");
     ui->cmbTestset->addItem("text/math: brace4 test", "text: \\left\\langle\\left\\langle\\left\\langle r^{123}\\right\\rangle\\right\\rangle\\right\\rangle -- math: $\\left\\langle\\left\\langle\\left\\langle r^{123}\\right\\rangle\\right\\rangle\\right\\rangle$");
-    ui->cmbTestset->addItem("text/math: brace5 test:  ( )", "text: \\left(\\left(\\left( r^{123}\\right)\\right)\\right) -- math: $\\left(\\left(\\left( r^{123}\\right)\\right)\\right)$");
-    ui->cmbTestset->addItem("text/math: brace6 test:  [ ]", "text: \\left[\\left[\\left[ r^{123}\\right]\\right]\\right] -- math: $\\left[\\left[\\left[ r^{123}\\right]\\right]\\right]$");
-    ui->cmbTestset->addItem("text/math: brace7 test:  { }", "text: \\left\\{\\left\\{\\left\\{ r^{123}\\right\\}\\right\\}\\right\\} -- math: $\\left\\{\\left\\{\\left\\{ r^{123}\\right\\}\\right\\}\\right\\}$");
-    ui->cmbTestset->addItem("text/math: brace8 test: || ||", "text: \\left\\|\\left\\|\\left\\| r^{123}\\right\\|\\right\\|\\right\\| -- math: $\\left\\|\\left\\|\\left\\| r^{123}\\right\\|\\right\\|\\right\\|$");
-    ui->cmbTestset->addItem("text/math: brace9 test:  | |", "text: \\left|\\left|\\left| r^{123}\\right|\\right|\\right| -- math: $\\left|\\left|\\left| r^{123}\\right|\\right|\\right|$");
+    auto fAddBraceTest=[](const QString& open, const QString& close) {
+        QString res= "\\left"+open+"\\left"+open+"\\left"+open+" r^{123}\\right"+close+"\\right"+close+"\\right"+close;
+        res += "\\left"+open+"\\left"+open+"\\left"+open+" r_{123}\\right"+close+"\\right"+close+"\\right"+close;
+        res += "\\left"+open+"\\left"+open+"\\left"+open+" r_{123}^{123}\\right"+close+"\\right"+close+"\\right"+close;
+        return res;
+    };
+    ui->cmbTestset->addItem("text/math: brace5 test:  ( )", "text: "+fAddBraceTest("(",")")+" -- math: $"+fAddBraceTest("(",")")+"$");
+    ui->cmbTestset->addItem("text/math: brace6 test:  [ ]", "text: "+fAddBraceTest("[","]")+" -- math: $"+fAddBraceTest("[","]")+"$");
+    ui->cmbTestset->addItem("text/math: brace7 test:  { }", "text: "+fAddBraceTest("\\{","\\}")+" -- math: $"+fAddBraceTest("\\{","\\}")+"$");
+    ui->cmbTestset->addItem("text/math: brace8 test: || ||", "text: "+fAddBraceTest("\\|","\\|")+" -- math: $"+fAddBraceTest("\\|","\\|")+"$");
+    ui->cmbTestset->addItem("text/math: brace9 test:  | |", "text: "+fAddBraceTest("|","|")+" -- math: $"+fAddBraceTest("|","|")+"$");
     ui->cmbTestset->addItem("text/math: brace10 test", "text: \\left\\{\\left[\\left( r^{123}\\right)\\right]\\right\\} -- math: $\\left\\{\\left[\\left( r^{123}\\right)\\right]\\right\\}$");
     ui->cmbTestset->addItem("text/math: brace11 test:  floor", "text: \\left\\lfloor\\left\\lfloor\\left\\lfloor r^{123}\\right\\rfloor\\right\\rfloor\\right\\rfloor -- math: $\\left\\lfloor\\left\\lfloor\\left\\lfloor r^{123}\\right\\rfloor\\right\\rfloor\\right\\rfloor$");
     ui->cmbTestset->addItem("text/math: brace12 test:  ceil", "text: \\left\\lceil\\left\\lceil\\left\\lceil r^{123}\\right\\rceil\\right\\rceil\\right\\rceil -- math: $\\left\\lceil\\left\\lceil\\left\\lceil r^{123}\\right\\rceil\\right\\rceil\\right\\rceil$");
@@ -349,7 +355,7 @@ QTreeWidgetItem *TestForm::createTree(JKQTMathTextNode *node, QTreeWidgetItem* p
         name=QString("MTsqrtNode: deg=%1").arg(sqrtN->getDegree());
         if (sqrtN->getChild()) ti->addChild(createTree(sqrtN->getChild(), ti));
     } else if (braceN)  {
-        name=QString("MTbraceNode: l='%1', r='%2', showR=%3").arg(braceN->getOpenbrace()).arg(braceN->getClosebrace()).arg(braceN->getShowRightBrace());
+        name=QString("MTbraceNode: l[showL=%3]='%1', r[showR=%4]='%2'").arg(braceN->getOpenbrace()).arg(braceN->getClosebrace()).arg(braceN->getShowOpeningBrace()).arg(braceN->getShowClosingBrace());
         if (braceN->getChild()) ti->addChild(createTree(braceN->getChild(), ti));
     } else if (superN)  {
         name=QString("MTsuperscriptNode");

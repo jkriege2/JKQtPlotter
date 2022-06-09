@@ -84,20 +84,14 @@ void JKQTMathTextFracNode::getSizeInternal(QPainter& painter, JKQTMathTextEnviro
     child2->getSize(painter, ev2, width2, baselineHeight2, overallHeight2, strikeoutPos2);
 
 
-    const double maxHeight=qMax(overallHeight1,overallHeight2);
-    const bool _isBraceParentNearerThanFrac=isBraceParentNearerThanFrac();
-    const double height1OrMaxHeight=(_isBraceParentNearerThanFrac)?maxHeight:overallHeight1;
-    const double height2OrMaxHeight=(_isBraceParentNearerThanFrac)?maxHeight:overallHeight2;
     overallHeight=0;
     baselineHeight=0;
     width=0;
     if (mode==MTFMfrac || mode==MTFMdfrac || mode==MTFMtfrac || mode==MTFMstackrel) {
         const double top_ascent=line_ascent+xheight*parentMathText->getFracShiftFactor();
         const double bot_ascent=line_ascent-xheight*parentMathText->getFracShiftFactor();
-        // here we use maxHeight (as LaTeX does) so braces are centered around the xHieght!!!
-        // if there are no braces, we can use the actual height
-        const double newascent=height1OrMaxHeight+top_ascent;
-        const double newdescent=height2OrMaxHeight-bot_ascent;
+        const double newascent=overallHeight1+top_ascent;
+        const double newdescent=overallHeight2-bot_ascent;
         width=qMax(width1, width2);
         if (mode!=MTFMstackrel) width+=xwidth/2.0;
         strikeoutPos=line_ascent;
@@ -107,10 +101,8 @@ void JKQTMathTextFracNode::getSizeInternal(QPainter& painter, JKQTMathTextEnviro
 
     } else if (mode==MTFMstfrac || mode==MTFMsfrac) {
         const double top_ascent=line_ascent;
-        // here we use maxHeight (as LaTeX does) so braces are centered around the xHieght!!!
-        // if there are no braces, we can use the actual height
-        const double newascent=height1OrMaxHeight+top_ascent;
-        const double newdescent=qMax(height2OrMaxHeight-baselineHeight2, qheight-xheight);
+        const double newascent=overallHeight1+top_ascent;
+        const double newdescent=qMax(overallHeight2-baselineHeight2, qheight-xheight);
         width=width1+width2+xwidth/2.0;
         strikeoutPos=line_ascent;
 
@@ -156,19 +148,6 @@ double JKQTMathTextFracNode::getFracScalingFactor() const
         if (level>=1) return parentMathText->getFracNestedFactor();
     }
     return parentMathText->getFracFactor();
-}
-
-bool JKQTMathTextFracNode::isBraceParentNearerThanFrac() const
-{
-    auto parents=getParents<JKQTMathTextNode>();
-    for (const auto& p: parents) {
-        if (p!=nullptr) {
-            if (dynamic_cast<const JKQTMathTextBraceNode*>(p)!=nullptr) return true;
-            if (dynamic_cast<const JKQTMathTextFracNode*>(p)!=nullptr) return false;
-        }
-    }
-    return false;
-
 }
 
 double JKQTMathTextFracNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* /*prevNodeSize*/) {

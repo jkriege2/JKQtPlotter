@@ -35,6 +35,9 @@
 \newcommand{\uul}[1]{\uuline{#1}}
 \newcommand{\ool}[1]{\overline{\overline{#1}}}
 \newcommand{\arrow}[1]{\overrightarrow{#1}}
+
+\newcommand{\stkout}[1]{\ifmmode\text{\sout{\ensuremath{#1}}}\else\sout{#1}\fi}
+
 \begin{document}
 	 \begin{itemize}
 	
@@ -130,6 +133,7 @@
 		    \item\textbf{math: integrals:} no-limits: \[Hxq \int_{0}^1 f(x)\;\mathrm{d}x\ \iint_{0}^1 f(x)\;\mathrm{d}x\ \iiint_{0}^1 f(x)\;\mathrm{d}x\ \oint_{0}^1 f(x)\;\mathrm{d}x\ \int_{x} f(x)\;\mathrm{d}x\]\ \ \ --\ \ \ limits: \[\int\limits_{0}^1 f(x)\;\mathrm{d}x\ \iint\limits_{0}^1 f(x)\;\mathrm{d}x\ \iiint\limits_{0}^1 f(x)\;\mathrm{d}x\ \oint\limits_{0}^1 f(x)\;\mathrm{d}x\ \int\limits_{x} f(x)\;\mathrm{d}x\]
 		    \item\textbf{math: frac test:} \[\frac{a}{b}+\frac{g}{a}-\frac{a^2}{b^2}\cdot\frac{a^2}{b^{\frac{1}{2}}}\]
 		\item\textbf{sfrac:} Hxq \sfrac{1}{2} \ \ -- \ \  $Hxq \frac{1}{2}\ \ \sfrac{1}{2}\ \ \frac{1}{2+\frac{1}{2}}\ \ \sfrac{1}{2+\sfrac{1}{2}}\ \ \sfrac{1}{2+\frac{1}{2}}\ \ \sfrac{\frac{1}{2+\frac{1}{2}}}{2}\ \ e^{\sfrac{1}{2}}$
+		\item\textbf{brace+sub/superscript:} $\stkout{\left\langle \stkout{r_{123}}\right\rangle\left\langle r^{123}\right\rangle\left\langle r_{123}^{123}\right\rangle}$
 	 \end{itemize}
  
 

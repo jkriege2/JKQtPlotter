@@ -81,6 +81,9 @@ JKQTMathText::JKQTMathText(QObject* parent):
     expensiveRendering=true;
     blackboardSimulated=true;
 
+    showLeftBrace=true;
+    showRightBrace=true;
+
 
     static QString serifFont="serif";
     static QString sansFont="sans";
@@ -1157,6 +1160,7 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, const QString& quitOn
                         if (currentTokenName.size()>0) {
                             if (QString(currentTokenName[0])==quitOnClosingBrace || quitOnClosingBrace=="any" || QString(currentTokenName[0])==".") {
                                 //std::cout<<"found \\right '"<<currentTokenName.toStdString()<<"'\n";
+                                showLeftBrace=true;
                                 showRightBrace=(QString(currentTokenName[0])!=".");
                                 //if (!showRightBrace) std::cout<<"don't show right brace '"<<quitOnClosingBrace.toStdString()<<"' !!!\n";
                                 if (quitOnClosingBrace!="any") currentTokenName=currentTokenName.right(currentTokenName.size()-1);
@@ -1167,26 +1171,32 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, const QString& quitOn
                         }
                     } else if (currentToken==MTTinstruction) {
                         if (quitOnClosingBrace=="~" && (currentTokenName=="rceil" || QString(currentTokenName[0])==".")) {
+                                showLeftBrace=true;
                                 showRightBrace=(QString(currentTokenName[0])!=".");
                                 currentTokenName=currentTokenName.right(currentTokenName.size()-1);
                                 break;
                         } else if (quitOnClosingBrace=="}" && (currentTokenName=="}" || QString(currentTokenName[0])==".")) {
+                                showLeftBrace=true;
                                 showRightBrace=(QString(currentTokenName[0])!=".");
                                 currentTokenName=currentTokenName.right(currentTokenName.size()-1);
                                 break;
                         } else if (quitOnClosingBrace=="_" && (currentTokenName=="rfloor" || QString(currentTokenName[0])==".")) {
+                                showLeftBrace=true;
                                 showRightBrace=(QString(currentTokenName[0])!=".");
                                 currentTokenName=currentTokenName.right(currentTokenName.size()-1);
                                 break;
                         } else if (quitOnClosingBrace=="#" && (currentTokenName=="|" || QString(currentTokenName[0])==".")) {
+                                showLeftBrace=true;
                                 showRightBrace=(QString(currentTokenName[0])!=".");
                                 currentTokenName=currentTokenName.right(currentTokenName.size()-1);
                                 break;
                         } else if (quitOnClosingBrace==">" && (currentTokenName=="rangle" || QString(currentTokenName[0])==".")) {
+                                showLeftBrace=true;
                                 showRightBrace=(QString(currentTokenName[0])!=".");
                                 currentTokenName=currentTokenName.right(currentTokenName.size()-1);
                                 break;
                         } else if (quitOnClosingBrace=="any") {
+                                showLeftBrace=true;
                                 showRightBrace=(QString(currentTokenName[0])!=".");
                                 //currentTokenName=currentTokenName.right(currentTokenName.size()-1);
                                 break;
@@ -1199,51 +1209,52 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, const QString& quitOn
                         if (currentTokenName.size()>0) {
                             if (currentTokenName[0]=='(') {
                                 currentTokenName=currentTokenName.right(currentTokenName.size()-1); // we already used the first character from the text token!
-                                nl->addNode(new JKQTMathTextBraceNode(this, "(", ")", parseLatexString(currentTokenName.size()<=0, ")"), showRightBrace));
+                                nl->addNode(new JKQTMathTextBraceNode(this, "(", ")", parseLatexString(currentTokenName.size()<=0, ")"), showLeftBrace, showRightBrace));
                             } else if (currentTokenName[0]=='[') {
                                 currentTokenName=currentTokenName.right(currentTokenName.size()-1);
-                                nl->addNode(new JKQTMathTextBraceNode(this, "[", "]", parseLatexString(currentTokenName.size()<=0, "]"), showRightBrace));
+                                nl->addNode(new JKQTMathTextBraceNode(this, "[", "]", parseLatexString(currentTokenName.size()<=0, "]"), showLeftBrace, showRightBrace));
                             } else if (currentTokenName[0]=='{') {
                                 currentTokenName=currentTokenName.right(currentTokenName.size()-1);
-                                nl->addNode(new JKQTMathTextBraceNode(this, "{", "}", parseLatexString(currentTokenName.size()<=0, "}"), showRightBrace));
+                                nl->addNode(new JKQTMathTextBraceNode(this, "{", "}", parseLatexString(currentTokenName.size()<=0, "}"), showLeftBrace, showRightBrace));
                             } else if (currentTokenName[0]=='<') {
                                 currentTokenName=currentTokenName.right(currentTokenName.size()-1);
-                                nl->addNode(new JKQTMathTextBraceNode(this, "<", ">", parseLatexString(currentTokenName.size()<=0, ">"), showRightBrace));
+                                nl->addNode(new JKQTMathTextBraceNode(this, "<", ">", parseLatexString(currentTokenName.size()<=0, ">"), showLeftBrace, showRightBrace));
                             } else if (currentTokenName[0]=='|') {
                                 currentTokenName=currentTokenName.right(currentTokenName.size()-1);
-                                nl->addNode(new JKQTMathTextBraceNode(this, "|", "|", parseLatexString(currentTokenName.size()<=0, "|"), showRightBrace));
+                                nl->addNode(new JKQTMathTextBraceNode(this, "|", "|", parseLatexString(currentTokenName.size()<=0, "|"), showLeftBrace, showRightBrace));
                             } else if (currentTokenName[0]=='~') {
                                 currentTokenName=currentTokenName.right(currentTokenName.size()-1);
-                                nl->addNode(new JKQTMathTextBraceNode(this, "~", "~", parseLatexString(currentTokenName.size()<=0, "~"), showRightBrace));
+                                nl->addNode(new JKQTMathTextBraceNode(this, "~", "~", parseLatexString(currentTokenName.size()<=0, "~"), showLeftBrace, showRightBrace));
                             } else if (currentTokenName[0]=='_') {
                                 currentTokenName=currentTokenName.right(currentTokenName.size()-1);
-                                nl->addNode(new JKQTMathTextBraceNode(this, "_", "_", parseLatexString(currentTokenName.size()<=0, "_"), showRightBrace));
+                                nl->addNode(new JKQTMathTextBraceNode(this, "_", "_", parseLatexString(currentTokenName.size()<=0, "_"), showLeftBrace, showRightBrace));
                             } else if (currentTokenName[0]=='#') {
                                 currentTokenName=currentTokenName.right(currentTokenName.size()-1);
-                                nl->addNode(new JKQTMathTextBraceNode(this, "#", "#", parseLatexString(currentTokenName.size()<=0, "#"), showRightBrace));
+                                nl->addNode(new JKQTMathTextBraceNode(this, "#", "#", parseLatexString(currentTokenName.size()<=0, "#"), showLeftBrace, showRightBrace));
                             } else if (currentTokenName[0]=='.') {
+                                showLeftBrace=false;
                                 currentTokenName=currentTokenName.right(currentTokenName.size()-1);
                                 JKQTMathTextNode* cn=parseLatexString(currentTokenName.size()<=0, "any");
-                                nl->addNode(new JKQTMathTextBraceNode(this, ".", currentTokenName, cn, showRightBrace));
+                                nl->addNode(new JKQTMathTextBraceNode(this, ".", currentTokenName, cn, showLeftBrace, showRightBrace));
                             } else {
                                 getNew=false;
                             }
                         }
                     } else if (currentToken==MTTinstruction && currentTokenName=="langle") {
                         currentTokenName=currentTokenName.right(currentTokenName.size()-1);
-                        nl->addNode(new JKQTMathTextBraceNode(this, "<", ">", parseLatexString(true, ">"), showRightBrace));
+                        nl->addNode(new JKQTMathTextBraceNode(this, "<", ">", parseLatexString(true, ">"), showLeftBrace, showRightBrace));
                     } else if (currentToken==MTTinstruction && currentTokenName=="{") {
                         currentTokenName=currentTokenName.right(currentTokenName.size()-1);
-                        nl->addNode(new JKQTMathTextBraceNode(this, "{", "}", parseLatexString(currentTokenName.size()<=0, "}"), showRightBrace));
+                        nl->addNode(new JKQTMathTextBraceNode(this, "{", "}", parseLatexString(currentTokenName.size()<=0, "}"), showLeftBrace, showRightBrace));
                     } else if (currentToken==MTTinstruction && currentTokenName=="lfloor") {
                         currentTokenName=currentTokenName.right(currentTokenName.size()-1);
-                        nl->addNode(new JKQTMathTextBraceNode(this, "_", "_", parseLatexString(true, "_"), showRightBrace));
+                        nl->addNode(new JKQTMathTextBraceNode(this, "_", "_", parseLatexString(true, "_"), showLeftBrace, showRightBrace));
                     } else if (currentToken==MTTinstruction && currentTokenName=="lceil") {
                         currentTokenName=currentTokenName.right(currentTokenName.size()-1);
-                        nl->addNode(new JKQTMathTextBraceNode(this, "~", "~", parseLatexString(true, "~"), showRightBrace));
+                        nl->addNode(new JKQTMathTextBraceNode(this, "~", "~", parseLatexString(true, "~"), showLeftBrace, showRightBrace));
                     } else if (currentToken==MTTinstruction && currentTokenName=="|") {
                         currentTokenName=currentTokenName.right(currentTokenName.size()-1);
-                        nl->addNode(new JKQTMathTextBraceNode(this, "#", "#", parseLatexString(currentTokenName.size()<=0, "#"), showRightBrace));
+                        nl->addNode(new JKQTMathTextBraceNode(this, "#", "#", parseLatexString(currentTokenName.size()<=0, "#"), showLeftBrace, showRightBrace));
                     } else if (currentToken==MTTinstruction && currentTokenName==quitOnClosingBrace) {
                         break;
                     }

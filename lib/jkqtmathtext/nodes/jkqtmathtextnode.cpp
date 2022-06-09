@@ -98,7 +98,12 @@ void JKQTMathTextNode::doDrawBoxes(QPainter& painter, double x, double y, JKQTMa
         p.setColor("lightblue");
         painter.setPen(p);
         if (w>0) painter.drawLine(QLineF(x, y, x+w, y));
+        p.setColor("pink");
+        p.setStyle(Qt::DashLine);
+        painter.setPen(p);
+        if (w>0) painter.drawLine(QLineF(x, y-sp, x+w, y-sp));
         p.setColor("green");
+        p.setStyle(Qt::SolidLine);
         painter.setPen(p);
         painter.drawEllipse(QRectF(x-3.0,y-3.0,6.0,6.0));
         p.setColor("lightgreen");
