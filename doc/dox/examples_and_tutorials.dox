@@ -226,10 +226,10 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 
 <table>
 <tr><th> Screenshot    <th> Description   <th> Notes  
-<tr><td> \image html jkqtmathtext_simpletest_small.png
+<tr><td> \image html jkqtmathtext/jkqtmathtext_simpletest_small.png
     <td> \subpage JKQTMathTextSimpleExample 
 	<td> JKQTMathText<br>render LaTeX markup (Schrödinger's equation)
-<tr><td> \image html jkqtmathtext_testapp_small.png
+<tr><td> \image html jkqtmathtext/jkqtmathtext_testapp_small.png
     <td> \subpage JKQTMathTextTestApp 
 	<td> JKQTMathText<br>render LaTeX markup
 <tr><td> \image html jkqtfastplotter_test_small.png
@@ -242,7 +242,7 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 
 <table>
 <tr><th> Screenshot    <th> Description   <th> Notes  
-<tr><td> \image html jkqtmathtext_simpletest_small.png
+<tr><td> \image html jkqtmathtext/jkqtmathtext_simpletest_small.png
     <td> \subpage JKQTCMakeLinkExample
 	<td> explains how to link against JKQTPlotter with CMake
 </table>

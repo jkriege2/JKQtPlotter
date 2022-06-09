@@ -35,7 +35,7 @@ class JKQTMathText; // forward
 /** \brief subclass representing a brace node
  *  \ingroup jkqtmathtext_items
  *
- *  \image html jkqtmathtext_bracenode_geo.png
+ *  \image html jkqtmathtext/jkqtmathtext_bracenode_geo.png
   */
 class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextBraceNode: public JKQTMathTextSingleChildNode {
     public:

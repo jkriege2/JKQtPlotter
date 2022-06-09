@@ -35,7 +35,7 @@ class JKQTMathText; // forward
 /** \brief subclass representing a decorated text m (e.g. \c \\vec \c \\hat ...) node
  *  \ingroup jkqtmathtext_items
  *
- *  \image html mathparser/decoration_sizing.png
+ *  \image html jkqtmathtext/decoration_sizing.png
  *
  */
 class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextDecoratedNode: public JKQTMathTextSingleChildNode {

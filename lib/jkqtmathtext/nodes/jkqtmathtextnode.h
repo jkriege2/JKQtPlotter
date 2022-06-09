@@ -32,7 +32,7 @@ class JKQTMathText; // forward
 /** \brief subclass representing one node in the syntax tree
  *  \ingroup jkqtmathtext_items
  *
- * \image html jkqtmathtext_node_geo.png
+ * \image html jkqtmathtext/jkqtmathtext_node_geo.png
  */
 class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextNode {
     public:

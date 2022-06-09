@@ -35,7 +35,7 @@ class JKQTMathText; // forward
 /** \brief subclass representing an subscript node with exactly one argument in the syntax tree
 *  \ingroup jkqtmathtext_items
 *
-* \image html jkqtmathtext_subscriptnode_getSizeInternal.png
+* \image html jkqtmathtext/jkqtmathtext_subscriptnode_getSizeInternal.png
 */
 class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSubscriptNode: public JKQTMathTextSingleChildNode {
 public:
@@ -55,7 +55,7 @@ protected:
 /** \brief subclass representing an superscript node with exactly one argument in the syntax tree
 *  \ingroup jkqtmathtext_items
 *
-* \image html jkqtmathtext_subscriptnode_getSizeInternal.png
+* \image html jkqtmathtext/jkqtmathtext_subscriptnode_getSizeInternal.png
 *
 * \note a MTlistNode might modify the positioning slightly for special cases (e.g. \c \\int , \c \\sum ... or after braces)
 */

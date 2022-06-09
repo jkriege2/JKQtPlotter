@@ -36,10 +36,10 @@ class JKQTMathText; // forward
  *  \ingroup jkqtmathtext_items
  *
  *  all fractions re drawn like this:
- *  \image html jkqtmathtext_fracnode_geo.png
+ *  \image html jkqtmathtext/jkqtmathtext_fracnode_geo.png
  *
  *  slanted fractions are drawn like this:
- *  \image html jkqtmathtext_sfracnode_geo.png
+ *  \image html jkqtmathtext/jkqtmathtext_sfracnode_geo.png
  */
 class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextFracNode: public JKQTMathTextDualChildNode {
     public:
