@@ -331,7 +331,7 @@ QTreeWidgetItem *TestForm::createTree(JKQTMathTextNode *node, QTreeWidgetItem* p
     else ti=new QTreeWidgetItem(ui->tree);
 
     if (decoN) {
-        name=QString("MTdecoratedNode: mode='%1'").arg(JKQTMathTextDecorationToString(decoN->getDecoration()));
+        name=QString("MTdecoratedNode: mode='%1'").arg(JKQTMathTextDecoratedNode::DecorationType2String(decoN->getDecoration()));
         if (decoN->getChild()) ti->addChild(createTree(decoN->getChild(), ti));
     } else if (matrixN)  {
         int l=matrixN->getLines();
@@ -348,7 +348,7 @@ QTreeWidgetItem *TestForm::createTree(JKQTMathTextNode *node, QTreeWidgetItem* p
             }
         }
     } else if (fracN)  {
-        name=QString("MTfracNode: mode='%1'").arg(JKQTMathTextFracModeToString(fracN->getMode()));
+        name=QString("MTfracNode: mode='%1'").arg(JKQTMathTextFracNode::FracType2String(fracN->getMode()));
         if (fracN->getChild1()) ti->addChild(createTree(fracN->getChild1(), ti));
         if (fracN->getChild2()) ti->addChild(createTree(fracN->getChild2(), ti));
     } else if (sqrtN)  {

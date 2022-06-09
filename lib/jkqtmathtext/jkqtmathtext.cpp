@@ -974,67 +974,67 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, const QString& quitOn
                     JKQTMathTextNode* n1=parseLatexString(true);
                     JKQTMathTextNode* n2=nullptr;
                     if (getToken()==MTTopenbrace) n2=parseLatexString(true);
-                    if (n1 && n2) nl->addNode(new JKQTMathTextFracNode(this, n1, n2, MTFMfrac));
+                    if (n1 && n2) nl->addNode(new JKQTMathTextFracNode(this, n1, n2, JKQTMathTextFracNode::MTFMfrac));
                     else error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(name));
                 } else if (name=="dfrac" || name=="cfrac") {
                     JKQTMathTextNode* n1=parseLatexString(true);
                     JKQTMathTextNode* n2=nullptr;
                     if (getToken()==MTTopenbrace) n2=parseLatexString(true);
-                    if (n1 && n2) nl->addNode(new JKQTMathTextFracNode(this, n1, n2, MTFMdfrac));
+                    if (n1 && n2) nl->addNode(new JKQTMathTextFracNode(this, n1, n2, JKQTMathTextFracNode::MTFMdfrac));
                     else error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(name));
                 } else if (name=="sfrac" || name=="slantfrac" || name=="xfrac") {
                     JKQTMathTextNode* n1=parseLatexString(true);
                     JKQTMathTextNode* n2=nullptr;
                     if (getToken()==MTTopenbrace) n2=parseLatexString(true);
-                    if (n1 && n2) nl->addNode(new JKQTMathTextFracNode(this, n1, n2, MTFMsfrac));
+                    if (n1 && n2) nl->addNode(new JKQTMathTextFracNode(this, n1, n2, JKQTMathTextFracNode::MTFMsfrac));
                     else error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(name));
                 } else if (name=="stfrac" || name=="nicefrac" || name=="slanttextfrac" || name=="xtfrac") {
                     JKQTMathTextNode* n1=parseLatexString(true);
                     JKQTMathTextNode* n2=nullptr;
                     if (getToken()==MTTopenbrace) n2=parseLatexString(true);
-                    if (n1 && n2) nl->addNode(new JKQTMathTextFracNode(this, n1, n2, MTFMstfrac));
+                    if (n1 && n2) nl->addNode(new JKQTMathTextFracNode(this, n1, n2, JKQTMathTextFracNode::MTFMstfrac));
                     else error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(name));
                 } else if (name=="tfrac") {
                     JKQTMathTextNode* n1=parseLatexString(true);
                     JKQTMathTextNode* n2=nullptr;
                     if (getToken()==MTTopenbrace) n2=parseLatexString(true);
-                    if (n1 && n2) nl->addNode(new JKQTMathTextFracNode(this, n1, n2, MTFMtfrac));
+                    if (n1 && n2) nl->addNode(new JKQTMathTextFracNode(this, n1, n2, JKQTMathTextFracNode::MTFMtfrac));
                     else error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(name));
                 } else if (name=="stackrel") {
                     JKQTMathTextNode* n1=parseLatexString(true);
                     JKQTMathTextNode* n2=nullptr;
                     if (getToken()==MTTopenbrace) n2=parseLatexString(true);
-                    if (n1 && n2) nl->addNode(new JKQTMathTextFracNode(this, n1, n2, MTFMstackrel));
+                    if (n1 && n2) nl->addNode(new JKQTMathTextFracNode(this, n1, n2, JKQTMathTextFracNode::MTFMstackrel));
                     else error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(name));
                 } else if (name=="binom") {
                     JKQTMathTextNode* n1=parseLatexString(true);
                     JKQTMathTextNode* n2=nullptr;
                     if (getToken()==MTTopenbrace) n2=parseLatexString(true);
-                    if (n1 && n2) nl->addNode(new JKQTMathTextBraceNode(this, "(", ")", new JKQTMathTextFracNode(this, n1, n2, MTFMstackrel)));
+                    if (n1 && n2) nl->addNode(new JKQTMathTextBraceNode(this, "(", ")", new JKQTMathTextFracNode(this, n1, n2, JKQTMathTextFracNode::MTFMstackrel)));
                     else error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(name));
                 } else if (name=="underbrace") {
                     JKQTMathTextNode* n1=parseLatexString(true);
                     JKQTMathTextNode* n2=nullptr;
                     if (getToken()==MTTopenbrace) n2=parseLatexString(true);
-                    if (n1 && n2) nl->addNode(new JKQTMathTextFracNode(this, n1, n2, MTFMunderbrace));
+                    if (n1 && n2) nl->addNode(new JKQTMathTextFracNode(this, n1, n2, JKQTMathTextFracNode::MTFMunderbrace));
                     else error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(name));
                 } else if (name=="underset") {
                     JKQTMathTextNode* n1=parseLatexString(true);
                     JKQTMathTextNode* n2=nullptr;
                     if (getToken()==MTTopenbrace) n2=parseLatexString(true);
-                    if (n1 && n2) nl->addNode(new JKQTMathTextFracNode(this, n1, n2, MTFMunderset));
+                    if (n1 && n2) nl->addNode(new JKQTMathTextFracNode(this, n1, n2, JKQTMathTextFracNode::MTFMunderset));
                     else error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(name));
                 } else if (name=="overbrace") {
                     JKQTMathTextNode* n1=parseLatexString(true);
                     JKQTMathTextNode* n2=nullptr;
                     if (getToken()==MTTopenbrace) n2=parseLatexString(true);
-                    if (n1 && n2) nl->addNode(new JKQTMathTextFracNode(this, n1, n2, MTFMoverbrace));
+                    if (n1 && n2) nl->addNode(new JKQTMathTextFracNode(this, n1, n2, JKQTMathTextFracNode::MTFMoverbrace));
                     else error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(name));
                 } else if (name=="overset") {
                     JKQTMathTextNode* n1=parseLatexString(true);
                     JKQTMathTextNode* n2=nullptr;
                     if (getToken()==MTTopenbrace) n2=parseLatexString(true);
-                    if (n1 && n2) nl->addNode(new JKQTMathTextFracNode(this, n1, n2, MTFMoverset));
+                    if (n1 && n2) nl->addNode(new JKQTMathTextFracNode(this, n1, n2, JKQTMathTextFracNode::MTFMoverset));
                     else error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(name));
                 } else if (name=="begin") {
                     if (getToken()==MTTtext) {
@@ -1092,47 +1092,47 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, const QString& quitOn
                         getNew=true;
                     }
                 } else if (name=="vec") {
-                    nl->addNode(new JKQTMathTextDecoratedNode(this, MTDvec, parseLatexString(true)));
+                    nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDvec, parseLatexString(true)));
                 } else if (name=="overline"||name=="oline"||name=="ol") {
-                    nl->addNode(new JKQTMathTextDecoratedNode(this, MTDoverline, parseLatexString(true)));
+                    nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDoverline, parseLatexString(true)));
                 } else if (name=="underline"||name=="uline"||name=="ul") {
-                    nl->addNode(new JKQTMathTextDecoratedNode(this, MTDunderline, parseLatexString(true)));
+                    nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDunderline, parseLatexString(true)));
                 } else if (name=="uuline"||name=="uul") {
-                    nl->addNode(new JKQTMathTextDecoratedNode(this, MTDdoubleunderline, parseLatexString(true)));
+                    nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDdoubleunderline, parseLatexString(true)));
                 } else if (name=="ooline"||name=="ool") {
-                    nl->addNode(new JKQTMathTextDecoratedNode(this, MTDdoubleoverline, parseLatexString(true)));
+                    nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDdoubleoverline, parseLatexString(true)));
                 } else if (name=="arrow"||name=="overrightarrow"||name=="overarrow") {
-                    nl->addNode(new JKQTMathTextDecoratedNode(this, MTDarrow, parseLatexString(true)));
+                    nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDarrow, parseLatexString(true)));
                 } else if (name=="hat" || name=="^") {
-                    nl->addNode(new JKQTMathTextDecoratedNode(this, MTDhat, parseLatexString(true)));
+                    nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDhat, parseLatexString(true)));
                 } else if (name=="widehat") {
-                    nl->addNode(new JKQTMathTextDecoratedNode(this, MTDwidehat, parseLatexString(true)));
+                    nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDwidehat, parseLatexString(true)));
                 } else if (name=="check" || name=="v") {
-                    nl->addNode(new JKQTMathTextDecoratedNode(this, MTDcheck, parseLatexString(true)));
+                    nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDcheck, parseLatexString(true)));
                 } else if (name=="widecheck") {
-                    nl->addNode(new JKQTMathTextDecoratedNode(this, MTDwidecheck, parseLatexString(true)));
+                    nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDwidecheck, parseLatexString(true)));
                 } else if (name=="bar") {
-                    nl->addNode(new JKQTMathTextDecoratedNode(this, MTDbar, parseLatexString(true)));
+                    nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDbar, parseLatexString(true)));
                 } else if (name=="dot" || name==".") {
-                    nl->addNode(new JKQTMathTextDecoratedNode(this, MTDdot, parseLatexString(true)));
+                    nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDdot, parseLatexString(true)));
                 } else if (name=="ocirc") {
-                    nl->addNode(new JKQTMathTextDecoratedNode(this, MTDocirc, parseLatexString(true)));
+                    nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDocirc, parseLatexString(true)));
                 } else if (name=="tilde" || name=="~") {
-                    nl->addNode(new JKQTMathTextDecoratedNode(this, MTDtilde, parseLatexString(true)));
+                    nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDtilde, parseLatexString(true)));
                 } else if (name=="breve" || name=="u") {
-                    nl->addNode(new JKQTMathTextDecoratedNode(this, MTDbreve, parseLatexString(true)));
+                    nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDbreve, parseLatexString(true)));
                 } else if (name=="widetilde") {
-                    nl->addNode(new JKQTMathTextDecoratedNode(this, MTDwidetilde, parseLatexString(true)));
+                    nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDwidetilde, parseLatexString(true)));
                 } else if (name=="ddot") {
-                    nl->addNode(new JKQTMathTextDecoratedNode(this, MTDddot, parseLatexString(true)));
+                    nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDddot, parseLatexString(true)));
                 } else if (name=="cancel") {
-                    nl->addNode(new JKQTMathTextDecoratedNode(this, MTDcancel, parseLatexString(true)));
+                    nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDcancel, parseLatexString(true)));
                 } else if (name=="xcancel") {
-                    nl->addNode(new JKQTMathTextDecoratedNode(this, MTDxcancel, parseLatexString(true)));
+                    nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDxcancel, parseLatexString(true)));
                 } else if (name=="bcancel") {
-                    nl->addNode(new JKQTMathTextDecoratedNode(this, MTDbcancel, parseLatexString(true)));
+                    nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDbcancel, parseLatexString(true)));
                 } else if (name=="strike" || name=="st" || name=="sout") {
-                    nl->addNode(new JKQTMathTextDecoratedNode(this, MTDstrike, parseLatexString(true)));
+                    nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDstrike, parseLatexString(true)));
                 } else {
                     if (name=="textcolor" || name=="mathcolor" || name=="color" || name=="colorbox") {
                         bool foundError=true;
@@ -1269,7 +1269,7 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, const QString& quitOn
                         if (n0=='v' && n1.isLetter()) {
                             done=true;
                             //std::cout<<"found \\v... command\n";
-                            nl->addNode(new JKQTMathTextDecoratedNode(this, MTDvec, new JKQTMathTextTextNode(this, QString(n1), false, parsingMathEnvironment)));
+                            nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDvec, new JKQTMathTextTextNode(this, QString(n1), false, parsingMathEnvironment)));
                         } else if (n0=='c' && n1.isLetter()) {
                             done=true;
                             //std::cout<<"found \\v... command\n";

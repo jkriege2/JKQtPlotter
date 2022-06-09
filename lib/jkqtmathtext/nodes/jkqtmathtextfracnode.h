@@ -43,7 +43,32 @@ class JKQTMathText; // forward
  */
 class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextFracNode: public JKQTMathTextDualChildNode {
     public:
-        JKQTMathTextFracNode(JKQTMathText* parent, JKQTMathTextNode* child_top, JKQTMathTextNode* child_bottom, JKQTMathTextFracMode mode);
+
+        /** \brief type of ffractions represented by JKQTMathTextFracNode
+         *  \ingroup jkqtmathtext
+         *  \see JKQTMathTextFracNode, JKQTMathTextFracNode::FracType2String()
+         */
+        enum FracType {
+            MTFMfrac,  /*!< \brief normal fraction \image html jkqtmathtext/MTFMfrac.png */
+            MTFMdfrac,  /*!< \brief normal fraction, without scaling of under/over text \image html jkqtmathtext/MTFMdfrac.png */
+            MTFMtfrac,  /*!< \brief text fraction (smaller than MTFMfrac) \image html jkqtmathtext/MTFMtfrac.png */
+            MTFMsfrac,  /*!< \brief slanted fraction \image html jkqtmathtext/MTFMsfrac.png */
+            MTFMstfrac,  /*!< \brief slanted text fraction \image html jkqtmathtext/MTFMstfrac.png */
+            MTFMunderbrace,  /*!< \brief curly underbrace \image html jkqtmathtext/MTFMunderbrace.png */
+            MTFMoverbrace,  /*!< \brief curly overbrace \image html jkqtmathtext/MTFMoverbrace.png */
+            MTFMstackrel,  /*!< \brief binom/fraction without line \image html jkqtmathtext/MTFMstackrel.png */
+            MTFMunderset,  /*!< \brief underset text \image html jkqtmathtext/MTFMunderset.png */
+            MTFMoverset  /*!< \brief overset text \image html jkqtmathtext/MTFMoverset.png */
+        };
+
+        /** \brief convert a JKQTMathTextFracNode::FracType into a QString
+         *  \ingroup jkqtmathtext
+         *  \see JKQTMathTextFracNode::FracType
+         */
+        static QString FracType2String(FracType mode);
+
+
+        JKQTMathTextFracNode(JKQTMathText* parent, JKQTMathTextNode* child_top, JKQTMathTextNode* child_bottom, JKQTMathTextFracNode::FracType mode);
         virtual ~JKQTMathTextFracNode() override;
         /** \copydoc JKQTMathTextNode::getTypeName() */
         virtual QString getTypeName() const override;
@@ -52,12 +77,12 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextFracNode: public JKQTMathTextDualChild
         /** \copydoc JKQTMathTextNode::toHtml() */
         virtual bool toHtml(QString& html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) override;
         /** \copydoc mode */ 
-        JKQTMathTextFracMode getMode() const;
+        JKQTMathTextFracNode::FracType getMode() const;
     protected:
         /** \copydoc JKQTMathTextNode::getSizeInternal() */
         virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
         /** \brief actual display type of fraction object */
-        JKQTMathTextFracMode mode;
+        JKQTMathTextFracNode::FracType mode;
         /** \brief returns the nesting level of the node (of same type of \a sameType \c ==true) */
         int getNestingLevel(bool sameType=false) const;
         /** \brief determines the scaling factor of the fraction (takes into account the nesting level) */

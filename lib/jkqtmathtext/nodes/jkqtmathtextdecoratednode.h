@@ -40,7 +40,36 @@ class JKQTMathText; // forward
  */
 class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextDecoratedNode: public JKQTMathTextSingleChildNode {
     public:
-        JKQTMathTextDecoratedNode(JKQTMathText* parent, JKQTMathTextDecoration decoration, JKQTMathTextNode* child);
+        /** \brief types of decoration available in a JKQTMathTextDecoratedNode
+         */
+        enum DecorationType {
+            MTDvec,  /*!< \brief vector arrow over block \image html jkqtmathtext/MTDvec.png */
+            MTDhat,  /*!< \brief small hat over block \image html jkqtmathtext/MTDhat.png */
+            MTDwidehat,  /*!< \brief full-width hat over block \image html jkqtmathtext/MTDwidehat.png */
+            MTDcheck,  /*!< \brief small v over block \image html jkqtmathtext/MTDcheck.png */
+            MTDwidecheck,  /*!< \brief full-width v over block \image html jkqtmathtext/MTDwidecheck.png */
+            MTDbreve,  /*!< \brief small tilde over block \image html jkqtmathtext/MTDbreve.png */
+            MTDocirc,  /*!< \brief single circle over block \image html jkqtmathtext/MTDocirc.png */
+            MTDdot,  /*!< \brief single dot over block \image html jkqtmathtext/MTDvec.png */
+            MTDddot,  /*!< \brief double dot over block \image html jkqtmathtext/MTDddot.png */
+            MTDbar,  /*!< \brief bar over block \image html jkqtmathtext/MTDbar.png */
+            MTDarrow,  /*!< \brief arrow over block \image html jkqtmathtext/MTDarrow.png */
+            MTDoverline,  /*!< \brief overline over block \image html jkqtmathtext/MTDoverline.png */
+            MTDdoubleoverline,  /*!< \brief double overline over block \image html jkqtmathtext/MTDdoubleoverline.png */
+            MTDunderline,  /*!< \brief underline under block \image html jkqtmathtext/MTDunderline.png */
+            MTDdoubleunderline,  /*!< \brief double underline under block \image html jkqtmathtext/MTDdoubleunderline.png */
+            MTDtilde,  /*!< \brief small tilde over block \image html jkqtmathtext/MTDtilde.png */
+            MTDwidetilde,  /*!< \brief full width tilde over block \image html jkqtmathtext/MTDwidetilde.png */
+            MTDcancel,  /*!< \brief cancel text with sloped line \image html jkqtmathtext/MTDcancel.png */
+            MTDbcancel,  /*!< \brief cancel text with backward sloped line \image html jkqtmathtext/MTDbcancel.png */
+            MTDxcancel,  /*!< \brief cancel text with X \image html jkqtmathtext/MTDxcancel.png */
+            MTDstrike  /*!< \brief strikethrough text \image html jkqtmathtext/MTDstrike.png */
+        };
+        /** \brief convert a DecorationType into a string
+         */
+        static QString DecorationType2String(DecorationType mode);
+
+        JKQTMathTextDecoratedNode(JKQTMathText* parent, DecorationType decoration, JKQTMathTextNode* child);
         virtual ~JKQTMathTextDecoratedNode() override;
         /** \copydoc JKQTMathTextNode::draw() */
         virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
@@ -49,12 +78,12 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextDecoratedNode: public JKQTMathTextSing
         /** \copydoc JKQTMathTextNode::getTypeName() */
         virtual QString getTypeName() const override ;
         /** \copydoc decoration */ 
-        JKQTMathTextDecoration getDecoration() const;
+        DecorationType getDecoration() const;
     protected:
         /** \copydoc JKQTMathTextNode::getSizeInternal() */
         virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
         /** \brief type of decoration that is added to the child node */
-        JKQTMathTextDecoration decoration;
+        DecorationType decoration;
 };
 #endif // JKQTMATHTEXTDECORATEDNODE_H
 

@@ -37,8 +37,58 @@
 
 
 
+QString JKQTMathTextDecoratedNode::DecorationType2String(JKQTMathTextDecoratedNode::DecorationType mode)
+{
+    switch(mode) {
+        case MTDvec:
+            return "vec";
+        case MTDtilde:
+            return "tilde";
+        case MTDbreve:
+            return "breve";
+        case MTDwidetilde:
+            return "widetilde";
+        case MTDhat:
+            return "hat";
+        case MTDwidehat:
+            return "widehat";
+        case MTDcheck:
+            return "check";
+        case MTDwidecheck:
+            return "widecheck";
+        case MTDocirc:
+            return "ocirc";
+        case MTDdot:
+            return "dot";
+        case MTDddot:
+            return "ddot";
+        case MTDbar:
+            return "bar";
+        case MTDarrow:
+            return "arrow";
+        case MTDoverline:
+            return "overline";
+        case MTDdoubleoverline:
+            return "double overline";
+        case MTDunderline:
+            return "underline";
+        case MTDdoubleunderline:
+            return "double underline";
+        case MTDcancel:
+            return "cancel";
+        case MTDbcancel:
+            return "bcancel";
+        case MTDxcancel:
+            return "xcancel";
+        case MTDstrike:
+            return "strike";
+    }
+    return "unknown";
+}
 
-JKQTMathTextDecoratedNode::JKQTMathTextDecoratedNode(JKQTMathText* _parent, JKQTMathTextDecoration decoration, JKQTMathTextNode* child):
+
+
+JKQTMathTextDecoratedNode::JKQTMathTextDecoratedNode(JKQTMathText* _parent, DecorationType decoration, JKQTMathTextNode* child):
     JKQTMathTextSingleChildNode(child, _parent)
 {
     this->decoration=decoration;
@@ -282,7 +332,7 @@ QString JKQTMathTextDecoratedNode::getTypeName() const
     return "MTdecoratedNode";
 }
 
-JKQTMathTextDecoration JKQTMathTextDecoratedNode::getDecoration() const {
+JKQTMathTextDecoratedNode::DecorationType JKQTMathTextDecoratedNode::getDecoration() const {
     return this->decoration;
 }
 

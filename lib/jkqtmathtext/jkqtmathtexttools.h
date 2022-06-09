@@ -232,61 +232,6 @@ struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextFontDefinition {
     JKQTMathTextFontEncoding symbolfontSymbolEncoding;
 };
 
-/** \brief type of ffractions represented by JKQTMathTextFracNode
- *  \ingroup jkqtmathtext
- *  \see JKQTMathTextFracNode, JKQTMathTextFracModeToString()
- */
-enum JKQTMathTextFracMode {
-    MTFMfrac,  /*!< \brief normal fraction \image html jkqtmathtext/MTFMfrac.png */
-    MTFMdfrac,  /*!< \brief normal fraction, without scaling of under/over text \image html jkqtmathtext/MTFMdfrac.png */
-    MTFMtfrac,  /*!< \brief text fraction (smaller than MTFMfrac) \image html jkqtmathtext/MTFMtfrac.png */
-    MTFMsfrac,  /*!< \brief slanted fraction \image html jkqtmathtext/MTFMsfrac.png */
-    MTFMstfrac,  /*!< \brief slanted text fraction \image html jkqtmathtext/MTFMstfrac.png */
-    MTFMunderbrace,  /*!< \brief curly underbrace \image html jkqtmathtext/MTFMunderbrace.png */
-    MTFMoverbrace,  /*!< \brief curly overbrace \image html jkqtmathtext/MTFMoverbrace.png */
-    MTFMstackrel,  /*!< \brief binom/fraction without line \image html jkqtmathtext/MTFMstackrel.png */
-    MTFMunderset,  /*!< \brief underset text \image html jkqtmathtext/MTFMunderset.png */
-    MTFMoverset  /*!< \brief overset text \image html jkqtmathtext/MTFMoverset.png */
-};
-
-/** \brief convert a JKQTMathTextFracMode into a QString
- *  \ingroup jkqtmathtext
- *  \see JKQTMathTextFracMode
- */
-JKQTMATHTEXT_LIB_EXPORT QString JKQTMathTextFracModeToString(JKQTMathTextFracMode mode);
-
-
-/** \brief types of decoration available in a JKQTMathTextDecoratedNode
- *  \ingroup jkqtmathtext
- */
-enum JKQTMathTextDecoration {
-    MTDvec,  /*!< \brief vector arrow over block \image html jkqtmathtext/MTDvec.png */
-    MTDhat,  /*!< \brief small hat over block \image html jkqtmathtext/MTDhat.png */
-    MTDwidehat,  /*!< \brief full-width hat over block \image html jkqtmathtext/MTDwidehat.png */
-    MTDcheck,  /*!< \brief small v over block \image html jkqtmathtext/MTDcheck.png */
-    MTDwidecheck,  /*!< \brief full-width v over block \image html jkqtmathtext/MTDwidecheck.png */
-    MTDbreve,  /*!< \brief small tilde over block \image html jkqtmathtext/MTDbreve.png */
-    MTDocirc,  /*!< \brief single circle over block \image html jkqtmathtext/MTDocirc.png */
-    MTDdot,  /*!< \brief single dot over block \image html jkqtmathtext/MTDvec.png */
-    MTDddot,  /*!< \brief double dot over block \image html jkqtmathtext/MTDddot.png */
-    MTDbar,  /*!< \brief bar over block \image html jkqtmathtext/MTDbar.png */
-    MTDarrow,  /*!< \brief arrow over block \image html jkqtmathtext/MTDarrow.png */
-    MTDoverline,  /*!< \brief overline over block \image html jkqtmathtext/MTDoverline.png */
-    MTDdoubleoverline,  /*!< \brief double overline over block \image html jkqtmathtext/MTDdoubleoverline.png */
-    MTDunderline,  /*!< \brief underline under block \image html jkqtmathtext/MTDunderline.png */
-    MTDdoubleunderline,  /*!< \brief double underline under block \image html jkqtmathtext/MTDdoubleunderline.png */
-    MTDtilde,  /*!< \brief small tilde over block \image html jkqtmathtext/MTDtilde.png */
-    MTDwidetilde,  /*!< \brief full width tilde over block \image html jkqtmathtext/MTDwidetilde.png */
-    MTDcancel,  /*!< \brief cancel text with sloped line \image html jkqtmathtext/MTDcancel.png */
-    MTDbcancel,  /*!< \brief cancel text with backward sloped line \image html jkqtmathtext/MTDbcancel.png */
-    MTDxcancel,  /*!< \brief cancel text with X \image html jkqtmathtext/MTDxcancel.png */
-    MTDstrike  /*!< \brief strikethrough text \image html jkqtmathtext/MTDstrike.png */
-};
-/** \brief convert a JKQTMathTextDecoration into a string
- *  \ingroup jkqtmathtext
- */
-JKQTMATHTEXT_LIB_EXPORT QString JKQTMathTextDecorationToString(JKQTMathTextDecoration mode);
-
 
 /** \brief create a QPainterPath for drawing horizontal braces
  *  \ingroup jkqtmathtext
