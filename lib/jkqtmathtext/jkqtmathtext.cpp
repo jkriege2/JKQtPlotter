@@ -1010,7 +1010,7 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, const QString& quitOn
                     JKQTMathTextNode* n1=parseLatexString(true);
                     JKQTMathTextNode* n2=nullptr;
                     if (getToken()==MTTopenbrace) n2=parseLatexString(true);
-                    if (n1 && n2) nl->addNode(new JKQTMathTextBraceNode(this, "(", ")", new JKQTMathTextFracNode(this, n1, n2, JKQTMathTextFracNode::MTFMstackrel)));
+                    if (n1 && n2) nl->addNode(new JKQTMathTextBraceNode(this, JKQTMathTextBraceNode::MTBTParenthesis, JKQTMathTextBraceNode::MTBTParenthesis, new JKQTMathTextFracNode(this, n1, n2, JKQTMathTextFracNode::MTFMstackrel)));
                     else error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(name));
                 } else if (name=="underbrace") {
                     JKQTMathTextNode* n1=parseLatexString(true);
@@ -1061,12 +1061,12 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, const QString& quitOn
                                 first=false;
                             }
                             //std::cout<<"  creating matrix-node with "<<items.size()<<" items.\n";
-                            if (envname=="pmatrix") nl->addNode(new JKQTMathTextBraceNode(this, "(", ")", new JKQTMathTextMatrixNode(this, items)));
-                            else if (envname=="cases") nl->addNode(new JKQTMathTextBraceNode(this, "{", "", new JKQTMathTextMatrixNode(this, items)));
-                            else if (envname=="bmatrix") nl->addNode(new JKQTMathTextBraceNode(this, "[", "]", new JKQTMathTextMatrixNode(this, items)));
-                            else if (envname=="Bmatrix") nl->addNode(new JKQTMathTextBraceNode(this, "{", "}", new JKQTMathTextMatrixNode(this, items)));
-                            else if (envname=="vmatrix") nl->addNode(new JKQTMathTextBraceNode(this, "|", "|", new JKQTMathTextMatrixNode(this, items)));
-                            else if (envname=="Vmatrix") nl->addNode(new JKQTMathTextBraceNode(this, "||", "||", new JKQTMathTextMatrixNode(this, items)));
+                            if (envname=="pmatrix") nl->addNode(new JKQTMathTextBraceNode(this, JKQTMathTextBraceNode::MTBTParenthesis, JKQTMathTextBraceNode::MTBTParenthesis, new JKQTMathTextMatrixNode(this, items)));
+                            else if (envname=="cases") nl->addNode(new JKQTMathTextBraceNode(this, JKQTMathTextBraceNode::MTBTCurlyBracket, JKQTMathTextBraceNode::MTBTNone, new JKQTMathTextMatrixNode(this, items)));
+                            else if (envname=="bmatrix") nl->addNode(new JKQTMathTextBraceNode(this, JKQTMathTextBraceNode::MTBTSquareBracket, JKQTMathTextBraceNode::MTBTSquareBracket, new JKQTMathTextMatrixNode(this, items)));
+                            else if (envname=="Bmatrix") nl->addNode(new JKQTMathTextBraceNode(this, JKQTMathTextBraceNode::MTBTCurlyBracket, JKQTMathTextBraceNode::MTBTCurlyBracket, new JKQTMathTextMatrixNode(this, items)));
+                            else if (envname=="vmatrix") nl->addNode(new JKQTMathTextBraceNode(this, JKQTMathTextBraceNode::MTBTSingleLine, JKQTMathTextBraceNode::MTBTSingleLine, new JKQTMathTextMatrixNode(this, items)));
+                            else if (envname=="Vmatrix") nl->addNode(new JKQTMathTextBraceNode(this, JKQTMathTextBraceNode::MTBTDoubleLine, JKQTMathTextBraceNode::MTBTDoubleLine, new JKQTMathTextMatrixNode(this, items)));
                             else nl->addNode(new JKQTMathTextMatrixNode(this, items));
                             //std::cout<<"  creating matrix-node ... done!\n";
                         } else {
@@ -1209,52 +1209,52 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, const QString& quitOn
                         if (currentTokenName.size()>0) {
                             if (currentTokenName[0]=='(') {
                                 currentTokenName=currentTokenName.right(currentTokenName.size()-1); // we already used the first character from the text token!
-                                nl->addNode(new JKQTMathTextBraceNode(this, "(", ")", parseLatexString(currentTokenName.size()<=0, ")"), showLeftBrace, showRightBrace));
+                                nl->addNode(new JKQTMathTextBraceNode(this, JKQTMathTextBraceNode::MTBTParenthesis, JKQTMathTextBraceNode::MTBTParenthesis, parseLatexString(currentTokenName.size()<=0, ")"), showLeftBrace, showRightBrace));
                             } else if (currentTokenName[0]=='[') {
                                 currentTokenName=currentTokenName.right(currentTokenName.size()-1);
-                                nl->addNode(new JKQTMathTextBraceNode(this, "[", "]", parseLatexString(currentTokenName.size()<=0, "]"), showLeftBrace, showRightBrace));
+                                nl->addNode(new JKQTMathTextBraceNode(this, JKQTMathTextBraceNode::MTBTSquareBracket, JKQTMathTextBraceNode::MTBTSquareBracket, parseLatexString(currentTokenName.size()<=0, "]"), showLeftBrace, showRightBrace));
                             } else if (currentTokenName[0]=='{') {
                                 currentTokenName=currentTokenName.right(currentTokenName.size()-1);
-                                nl->addNode(new JKQTMathTextBraceNode(this, "{", "}", parseLatexString(currentTokenName.size()<=0, "}"), showLeftBrace, showRightBrace));
+                                nl->addNode(new JKQTMathTextBraceNode(this, JKQTMathTextBraceNode::MTBTCurlyBracket, JKQTMathTextBraceNode::MTBTCurlyBracket, parseLatexString(currentTokenName.size()<=0, "}"), showLeftBrace, showRightBrace));
                             } else if (currentTokenName[0]=='<') {
                                 currentTokenName=currentTokenName.right(currentTokenName.size()-1);
-                                nl->addNode(new JKQTMathTextBraceNode(this, "<", ">", parseLatexString(currentTokenName.size()<=0, ">"), showLeftBrace, showRightBrace));
+                                nl->addNode(new JKQTMathTextBraceNode(this, JKQTMathTextBraceNode::MTBTAngleBracket, JKQTMathTextBraceNode::MTBTAngleBracket, parseLatexString(currentTokenName.size()<=0, ">"), showLeftBrace, showRightBrace));
                             } else if (currentTokenName[0]=='|') {
                                 currentTokenName=currentTokenName.right(currentTokenName.size()-1);
-                                nl->addNode(new JKQTMathTextBraceNode(this, "|", "|", parseLatexString(currentTokenName.size()<=0, "|"), showLeftBrace, showRightBrace));
+                                nl->addNode(new JKQTMathTextBraceNode(this, JKQTMathTextBraceNode::MTBTSingleLine, JKQTMathTextBraceNode::MTBTSingleLine, parseLatexString(currentTokenName.size()<=0, "|"), showLeftBrace, showRightBrace));
                             } else if (currentTokenName[0]=='~') {
                                 currentTokenName=currentTokenName.right(currentTokenName.size()-1);
-                                nl->addNode(new JKQTMathTextBraceNode(this, "~", "~", parseLatexString(currentTokenName.size()<=0, "~"), showLeftBrace, showRightBrace));
+                                nl->addNode(new JKQTMathTextBraceNode(this, JKQTMathTextBraceNode::MTBTCeilBracket, JKQTMathTextBraceNode::MTBTCeilBracket, parseLatexString(currentTokenName.size()<=0, "~"), showLeftBrace, showRightBrace));
                             } else if (currentTokenName[0]=='_') {
                                 currentTokenName=currentTokenName.right(currentTokenName.size()-1);
-                                nl->addNode(new JKQTMathTextBraceNode(this, "_", "_", parseLatexString(currentTokenName.size()<=0, "_"), showLeftBrace, showRightBrace));
+                                nl->addNode(new JKQTMathTextBraceNode(this, JKQTMathTextBraceNode::MTBTFloorBracket, JKQTMathTextBraceNode::MTBTFloorBracket, parseLatexString(currentTokenName.size()<=0, "_"), showLeftBrace, showRightBrace));
                             } else if (currentTokenName[0]=='#') {
                                 currentTokenName=currentTokenName.right(currentTokenName.size()-1);
-                                nl->addNode(new JKQTMathTextBraceNode(this, "#", "#", parseLatexString(currentTokenName.size()<=0, "#"), showLeftBrace, showRightBrace));
+                                nl->addNode(new JKQTMathTextBraceNode(this, JKQTMathTextBraceNode::MTBTDoubleLine, JKQTMathTextBraceNode::MTBTDoubleLine, parseLatexString(currentTokenName.size()<=0, "#"), showLeftBrace, showRightBrace));
                             } else if (currentTokenName[0]=='.') {
                                 showLeftBrace=false;
                                 currentTokenName=currentTokenName.right(currentTokenName.size()-1);
                                 JKQTMathTextNode* cn=parseLatexString(currentTokenName.size()<=0, "any");
-                                nl->addNode(new JKQTMathTextBraceNode(this, ".", currentTokenName, cn, showLeftBrace, showRightBrace));
+                                nl->addNode(new JKQTMathTextBraceNode(this, JKQTMathTextBraceNode::MTBTNone, JKQTMathTextBraceNode::TokenNameString2TokenType(currentTokenName), cn, showLeftBrace, showRightBrace));
                             } else {
                                 getNew=false;
                             }
                         }
                     } else if (currentToken==MTTinstruction && currentTokenName=="langle") {
                         currentTokenName=currentTokenName.right(currentTokenName.size()-1);
-                        nl->addNode(new JKQTMathTextBraceNode(this, "<", ">", parseLatexString(true, ">"), showLeftBrace, showRightBrace));
+                        nl->addNode(new JKQTMathTextBraceNode(this, JKQTMathTextBraceNode::MTBTAngleBracket, JKQTMathTextBraceNode::MTBTAngleBracket, parseLatexString(true, ">"), showLeftBrace, showRightBrace));
                     } else if (currentToken==MTTinstruction && currentTokenName=="{") {
                         currentTokenName=currentTokenName.right(currentTokenName.size()-1);
-                        nl->addNode(new JKQTMathTextBraceNode(this, "{", "}", parseLatexString(currentTokenName.size()<=0, "}"), showLeftBrace, showRightBrace));
+                        nl->addNode(new JKQTMathTextBraceNode(this, JKQTMathTextBraceNode::MTBTCurlyBracket, JKQTMathTextBraceNode::MTBTCurlyBracket, parseLatexString(currentTokenName.size()<=0, "}"), showLeftBrace, showRightBrace));
                     } else if (currentToken==MTTinstruction && currentTokenName=="lfloor") {
                         currentTokenName=currentTokenName.right(currentTokenName.size()-1);
-                        nl->addNode(new JKQTMathTextBraceNode(this, "_", "_", parseLatexString(true, "_"), showLeftBrace, showRightBrace));
+                        nl->addNode(new JKQTMathTextBraceNode(this, JKQTMathTextBraceNode::MTBTFloorBracket, JKQTMathTextBraceNode::MTBTFloorBracket, parseLatexString(true, "_"), showLeftBrace, showRightBrace));
                     } else if (currentToken==MTTinstruction && currentTokenName=="lceil") {
                         currentTokenName=currentTokenName.right(currentTokenName.size()-1);
-                        nl->addNode(new JKQTMathTextBraceNode(this, "~", "~", parseLatexString(true, "~"), showLeftBrace, showRightBrace));
+                        nl->addNode(new JKQTMathTextBraceNode(this, JKQTMathTextBraceNode::MTBTCeilBracket, JKQTMathTextBraceNode::MTBTCeilBracket, parseLatexString(true, "~"), showLeftBrace, showRightBrace));
                     } else if (currentToken==MTTinstruction && currentTokenName=="|") {
                         currentTokenName=currentTokenName.right(currentTokenName.size()-1);
-                        nl->addNode(new JKQTMathTextBraceNode(this, "#", "#", parseLatexString(currentTokenName.size()<=0, "#"), showLeftBrace, showRightBrace));
+                        nl->addNode(new JKQTMathTextBraceNode(this, JKQTMathTextBraceNode::MTBTDoubleLine, JKQTMathTextBraceNode::MTBTDoubleLine, parseLatexString(currentTokenName.size()<=0, "#"), showLeftBrace, showRightBrace));
                     } else if (currentToken==MTTinstruction && currentTokenName==quitOnClosingBrace) {
                         break;
                     }

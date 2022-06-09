@@ -39,7 +39,23 @@ class JKQTMathText; // forward
   */
 class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextBraceNode: public JKQTMathTextSingleChildNode {
     public:
-        JKQTMathTextBraceNode(JKQTMathText* parent, const QString& openbrace, const QString& closebrace, JKQTMathTextNode* child, bool showOpeningBrace=true, bool showClosingBrace=true);
+        /** \brief types of available braces */
+        enum BraceType {
+            MTBTParenthesis,  /*!< \brief parantheses () \image html jkqtmathtext/jkqtmathtext_brace_round.png */
+            MTBTSquareBracket,  /*!< \brief brackets [] \image html jkqtmathtext/jkqtmathtext_brace_rect.png */
+            MTBTCurlyBracket,  /*!< \brief curly braces {} \image html jkqtmathtext/jkqtmathtext_brace_curly.png */
+            MTBTAngleBracket,  /*!< \brief angle backets <> \image html jkqtmathtext/jkqtmathtext_brace_tri.png */
+            MTBTCeilBracket,  /*!< \brief ceil brackets \image html jkqtmathtext/jkqtmathtext_brace_ceil.png */
+            MTBTFloorBracket,  /*!< \brief floor brackets \image html jkqtmathtext/jkqtmathtext_brace_floor.png */
+            MTBTDoubleLine,  /*!< \brief double-line brackets (norm ||...||) \image html jkqtmathtext/jkqtmathtext_brace_dblline.png */
+            MTBTSingleLine,  /*!< \brief single-line brackets (abs |...|) \image html jkqtmathtext/jkqtmathtext_brace_oneline.png */
+            MTBTNone  /*!< \brief no bracket */
+        };
+        /** \brief convert a BraceType into a string */
+        static QString BraceType2String(BraceType type);
+        /** \brief convert a string describing a LaTeX Token into a BraceType */
+        static BraceType TokenNameString2TokenType(const QString& type);
+        JKQTMathTextBraceNode(JKQTMathText* parent, BraceType openbrace, BraceType closebrace, JKQTMathTextNode* child, bool showOpeningBrace=true, bool showClosingBrace=true);
         virtual ~JKQTMathTextBraceNode() override;
         /** \copydoc JKQTMathTextNode::draw() */
         virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
@@ -48,9 +64,9 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextBraceNode: public JKQTMathTextSingleCh
         /** \copydoc JKQTMathTextNode::getTypeName() */
         virtual QString getTypeName() const override;
         /** \copydoc openbrace */
-        QString getOpenbrace() const;
+        BraceType getOpenbrace() const;
         /** \copydoc closebrace */ 
-        QString getClosebrace() const;
+        BraceType getClosebrace() const;
         /** \copydoc showRightBrace */
         bool getShowClosingBrace() const;
         /** \copydoc showOpeningBrace */
@@ -64,9 +80,9 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextBraceNode: public JKQTMathTextSingleCh
         /** calculates the size of this node (also returned by getSizeInternal() ) and of the brace */
         void getSizeInternalAndBrace(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, double& bracewidth, double&braceheight, const JKQTMathTextNodeSize* prevNodeSize=nullptr);
         /**\brief opening brace */
-        QString openbrace;
+        BraceType openbrace;
         /**\brief closing brace */
-        QString closebrace;
+        BraceType closebrace;
         /**\brief if \c true, the closing (right hand side) brace is drawn */
         bool showClosingBrace;
         /**\brief if \c true, the opening (left hand side) brace is drawn */
