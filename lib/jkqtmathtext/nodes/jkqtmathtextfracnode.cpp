@@ -54,14 +54,16 @@ QString JKQTMathTextFracNode::getTypeName() const
 }
 
 void JKQTMathTextFracNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* /*prevNodeSize*/) {
-    QFontMetricsF fm(currentEv.getFont(parentMathText), painter.device());
+    const QFont f=currentEv.getFont(parentMathText);
+    const QFontMetricsF fm(f, painter.device());
     JKQTMathTextEnvironment ev1=currentEv;
     JKQTMathTextEnvironment ev2=currentEv;
 
     const double xheight=fm.xHeight(); //tightBoundingRect("x").height();
     const double line_ascent=xheight/2.0;
-    const double Mheight=JKQTMathTextGetTightBoundingRect(currentEv.getFont(parentMathText), "M", painter.device()).height();//fm.ascent();
-    const double xwidth=fm.boundingRect("x").width();
+    const double Mheight=JKQTMathTextGetTightBoundingRect(f, "M", painter.device()).height();//fm.ascent();
+    const double xwidth=JKQTMathTextGetTightBoundingRect(f, "x", painter.device()).width();
+    const double qheight=JKQTMathTextGetTightBoundingRect(f, "q", painter.device()).height();//fm.ascent();
 
     if (mode==MTFMunderbrace || mode==MTFMoverbrace) {
         ev2.fontSize=ev2.fontSize*parentMathText->getUnderbraceFactor();
@@ -105,12 +107,11 @@ void JKQTMathTextFracNode::getSizeInternal(QPainter& painter, JKQTMathTextEnviro
 
     } else if (mode==MTFMstfrac || mode==MTFMsfrac) {
         const double top_ascent=line_ascent;
-        const double bot_ascent=line_ascent;
         // here we use maxHeight (as LaTeX does) so braces are centered around the xHieght!!!
         // if there are no braces, we can use the actual height
         const double newascent=height1OrMaxHeight+top_ascent;
-        const double newdescent=height2OrMaxHeight-bot_ascent;
-        width=width1+width2+xwidth/4.0;
+        const double newdescent=qMax(height2OrMaxHeight-baselineHeight2, qheight-xheight);
+        width=width1+width2+xwidth/2.0;
         strikeoutPos=line_ascent;
 
         overallHeight=newascent+newdescent;
@@ -172,17 +173,18 @@ bool JKQTMathTextFracNode::isBraceParentNearerThanFrac() const
 
 double JKQTMathTextFracNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* /*prevNodeSize*/) {
     doDrawBoxes(painter, x, y, currentEv);
-    QFont f=currentEv.getFont(parentMathText);
+    const QFont f=currentEv.getFont(parentMathText);
     const QFontMetricsF fm(f, painter.device());
     JKQTMathTextEnvironment ev1=currentEv;
     JKQTMathTextEnvironment ev2=currentEv;
 
 
-    double xh=JKQTMathTextGetTightBoundingRect(f, "x", painter.device()).height(); //fm.xHeight();
-    double xw=fm.boundingRect("x").width();
-    double lw=qMax(0.0,ceil(currentEv.fontSize/16.0));//fm.lineWidth();
-    double Ah=JKQTMathTextGetTightBoundingRect(f, "M", painter.device()).height();//fm.ascent();
-    double bw=Ah/2.0;
+    const double xheight=fm.xHeight();
+    const double xwidth=JKQTMathTextGetTightBoundingRect(f, "x", painter.device()).width();
+    const double linewideth=qMax(0.0,ceil(currentEv.fontSize/16.0));//fm.lineWidth();
+    const double Mheight=JKQTMathTextGetTightBoundingRect(f, "M", painter.device()).height();//fm.ascent();
+    const double qheight=JKQTMathTextGetTightBoundingRect(f, "q", painter.device()).height();//fm.ascent();
+    const double bw=Mheight/2.0;
 
     if (mode==MTFMunderbrace || mode==MTFMoverbrace) {
         ev2.fontSize=ev2.fontSize*parentMathText->getUnderbraceFactor();
@@ -206,65 +208,65 @@ double JKQTMathTextFracNode::draw(QPainter& painter, double x, double y, JKQTMat
     double ascent2=baselineHeight2;
     double descent2=overallHeight2-baselineHeight2;
 
-    double yline=y-xh*0.5;
+    double yline=y-xheight*0.5;
 
 
     //double overallHeight=overallHeight1+overallHeight2+xh;
     //double baselineHeight=3.0*xh/2.0+overallHeight1;
-    double maxWidth=qMax(width1, width2);
+    const double maxWidth=qMax(width1, width2);
     double deltaWidth=0;
 
     QPen p=painter.pen();
     p.setColor(ev1.color);
     p.setStyle(Qt::SolidLine);
-    p.setWidthF(qMax(parentMathText->ABS_MIN_LINEWIDTH, lw));
+    p.setWidthF(qMax(parentMathText->ABS_MIN_LINEWIDTH, linewideth));
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     painter.setPen(p);
     if (mode==MTFMfrac || mode==MTFMdfrac || mode==MTFMtfrac) {
-        deltaWidth=xw/2.0;
+        deltaWidth=xwidth/2.0;
         const QLineF l(x+p.widthF(), yline, x+maxWidth+deltaWidth-p.widthF(), yline);
         if (l.length()>0) painter.drawLine(l);
-        child1->draw(painter, x+deltaWidth/2.0+(maxWidth-width1)/2.0, yline-xh*(parentMathText->getFracShiftFactor())-descent1, ev1);
-        child2->draw(painter, x+deltaWidth/2.0+(maxWidth-width2)/2.0, yline+xh*(parentMathText->getFracShiftFactor())+ascent2, ev2);
+        child1->draw(painter, x+deltaWidth/2.0+(maxWidth-width1)/2.0, yline-xheight*(parentMathText->getFracShiftFactor())-descent1, ev1);
+        child2->draw(painter, x+deltaWidth/2.0+(maxWidth-width2)/2.0, yline+xheight*(parentMathText->getFracShiftFactor())+ascent2, ev2);
     } else if (mode==MTFMstackrel) {
-        child1->draw(painter, x+(maxWidth-width1)/2.0, yline-xh*(parentMathText->getFracShiftFactor())-descent1, ev1);
-        child2->draw(painter, x+(maxWidth-width2)/2.0, yline+xh*(parentMathText->getFracShiftFactor())+ascent2, ev2);
+        child1->draw(painter, x+(maxWidth-width1)/2.0, yline-xheight*(parentMathText->getFracShiftFactor())-descent1, ev1);
+        child2->draw(painter, x+(maxWidth-width2)/2.0, yline+xheight*(parentMathText->getFracShiftFactor())+ascent2, ev2);
     } else if (mode==MTFMstfrac || mode==MTFMsfrac) {
-        deltaWidth=xw/4.0;
-        child1->draw(painter, x, yline-descent1, ev1);
-        child2->draw(painter, x+width1+deltaWidth, yline+ascent2, ev2);
-        const QLineF l(x+width1+deltaWidth/2.0+0.6*xw, yline-descent1-ascent1, x+width1+deltaWidth/2.0-0.6*xw, yline+ascent1+descent1);
+        deltaWidth=xwidth/2.0;
+        child1->draw(painter, x, yline, ev1);
+        child2->draw(painter, x+width1+deltaWidth, y, ev2);
+        const QLineF l(x+width1+deltaWidth, y-Mheight, x+width1, y+(qheight-xheight));
         if (l.length()>0) painter.drawLine(l);
     } else if (mode==MTFMunderset) {
-        child1->draw(painter, x+xw/2.0+(maxWidth-width1)/2.0, y, ev1);
-        child2->draw(painter, x+xw/2.0+(maxWidth-width2)/2.0, y+descent1+xh/6.0+ascent2, ev2);
-        deltaWidth=xw;
+        child1->draw(painter, x+xwidth/2.0+(maxWidth-width1)/2.0, y, ev1);
+        child2->draw(painter, x+xwidth/2.0+(maxWidth-width2)/2.0, y+descent1+xheight/6.0+ascent2, ev2);
+        deltaWidth=xwidth;
     } else if (mode==MTFMunderbrace) {
         double ybrace=y+descent1+bw/2.0;
-        const QPainterPath path=JKQTMathTextMakeHBracePath(x+xw/2.0+(width1)/2.0, ybrace, maxWidth, bw);
+        const QPainterPath path=JKQTMathTextMakeHBracePath(x+xwidth/2.0+(width1)/2.0, ybrace, maxWidth, bw);
         painter.drawPath(path);
 
-        child1->draw(painter, x+xw/2.0+(maxWidth-width1)/2.0, y, ev1);
-        child2->draw(painter, x+xw/2.0+(maxWidth-width2)/2.0, y+descent1+bw+ascent2, ev2);
-        deltaWidth=xw;
+        child1->draw(painter, x+xwidth/2.0+(maxWidth-width1)/2.0, y, ev1);
+        child2->draw(painter, x+xwidth/2.0+(maxWidth-width2)/2.0, y+descent1+bw+ascent2, ev2);
+        deltaWidth=xwidth;
     } else if (mode==MTFMoverset) {
-        child1->draw(painter, x+xw/2.0+(maxWidth-width1)/2.0, y, ev1);
-        child2->draw(painter, x+xw/2.0+(maxWidth-width2)/2.0, y-ascent1-xh/6.0-descent2, ev2);
-        deltaWidth=xw;
+        child1->draw(painter, x+xwidth/2.0+(maxWidth-width1)/2.0, y, ev1);
+        child2->draw(painter, x+xwidth/2.0+(maxWidth-width2)/2.0, y-ascent1-xheight/6.0-descent2, ev2);
+        deltaWidth=xwidth;
     } else if (mode==MTFMoverbrace) {
         const double ybrace=y-ascent1-bw/2.0;
 
         {
             painter.save(); auto __finalpaintinner=JKQTPFinally([&painter]() {painter.restore();});
-            painter.translate(x+xw/2.0+(width1)/2.0, ybrace);
+            painter.translate(x+xwidth/2.0+(width1)/2.0, ybrace);
             painter.rotate(180);
             const QPainterPath path=JKQTMathTextMakeHBracePath(0,0, maxWidth, bw);
             painter.drawPath(path);
         }
 
-        child1->draw(painter, x+xw/2.0+(maxWidth-width1)/2.0, y, ev1);
-        child2->draw(painter, x+xw/2.0+(maxWidth-width2)/2.0, y-ascent1-bw-descent2, ev2);
-        deltaWidth=xw;
+        child1->draw(painter, x+xwidth/2.0+(maxWidth-width1)/2.0, y, ev1);
+        child2->draw(painter, x+xwidth/2.0+(maxWidth-width2)/2.0, y-ascent1-bw-descent2, ev2);
+        deltaWidth=xwidth;
     }
 
 
