@@ -61,7 +61,7 @@ void JKQTMathTextInstruction1Node::getSizeInternal(QPainter& painter, JKQTMathTe
 
     setupMTenvironment(ev);
 
-    child->getSize(painter, ev, width, baselineHeight, overallHeight, strikeoutPos);
+    getChild()->getSize(painter, ev, width, baselineHeight, overallHeight, strikeoutPos);
     if (name=="colorbox" || name=="fbox" || name=="boxed") {
         QFontMetricsF fm(ev.getFont(parentMathText));
         double xw=fm.boundingRect("x").width();
@@ -84,7 +84,7 @@ double JKQTMathTextInstruction1Node::draw(QPainter& painter, double x, double y,
         if (name=="colorbox") fcol=QColor(parameters.value(0, ev.color.name()));
         //qDebug()<<"COLOR="<<fcol;
         double width, baselineHeight, overallHeight, strikeoutPos;
-        child->getSize(painter, currentEv, width, baselineHeight, overallHeight, strikeoutPos);
+        getChild()->getSize(painter, currentEv, width, baselineHeight, overallHeight, strikeoutPos);
         QPen p=painter.pen();
         QFontMetricsF fm(currentEv.getFont(parentMathText));
         double xw=fm.boundingRect("x").width();
@@ -94,7 +94,7 @@ double JKQTMathTextInstruction1Node::draw(QPainter& painter, double x, double y,
         shiftX=xw/2.0;
     }
 
-    double xnew= child->draw(painter, x+shiftX, y, ev);
+    double xnew= getChild()->draw(painter, x+shiftX, y, ev);
     painter.setPen(oldPen);
     return xnew;
 }
@@ -104,7 +104,7 @@ bool JKQTMathTextInstruction1Node::toHtml(QString &html, JKQTMathTextEnvironment
 
     setupMTenvironment(ev);
 
-    return child->toHtml(html, ev, defaultEv);
+    return getChild()->toHtml(html, ev, defaultEv);
 }
 
 QString JKQTMathTextInstruction1Node::getName() const {

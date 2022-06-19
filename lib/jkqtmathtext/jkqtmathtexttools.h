@@ -47,13 +47,13 @@ class JKQTMathText; // forward
 
 
 /** \brief initialized Qt-ressources necessary for JKQTMathText
- *  \ingroup jkqtmathtext
+ *  \ingroup jkqtmathtext_tools
  */
 JKQTMATHTEXT_LIB_EXPORT void initJKQTMathTextResources();
 
 
 /*! \brief represents a font specifier for JKQTMathText. The font consists of two parts: the actual font and the font used for math output (which may be empty)
-    \ingroup jkqtmathtext
+    \ingroup jkqtmathtext_tools
 
     \section JKQTMathTextFontSpecifier_specialNames Special FOnt Names
     This object also implements replacing special font names with actual fonts. Supported special font names are:
@@ -123,7 +123,7 @@ private:
 
 
 /** \brief used to specify the font encoding used for drawing
- *  \ingroup jkqtmathtext
+ *  \ingroup jkqtmathtext_tools
 */
 enum JKQTMathTextFontEncoding {
     MTFEwinSymbol,      /*!< \brief This assumes that symbols shall be taken from a MS Windows style Symbol font */
@@ -133,12 +133,12 @@ enum JKQTMathTextFontEncoding {
 };
 
 /** \brief convert MTfontEncoding to a string
- *  \ingroup jkqtmathtext
+ *  \ingroup jkqtmathtext_tools
  */
 JKQTMATHTEXT_LIB_EXPORT QString JKQTMathTextFontEncoding2String(JKQTMathTextFontEncoding e);
 
 /** \brief types of available braces
- *  \ingroup jkqtmathtext
+ *  \ingroup jkqtmathtext_tools
  */
 enum JKQTMathTextBraceType {
     MTBTParenthesis=0,  /*!< \brief parantheses () \image html jkqtmathtext/jkqtmathtext_brace_round.png */
@@ -154,22 +154,22 @@ enum JKQTMathTextBraceType {
     MTBTUnknown  /*!< \brief an unknown tokenName presented to TokenName2JKQTMathTextBraceType() */
 };
 /** \brief convert a JKQTMathTextBraceType into a string
- *  \ingroup jkqtmathtext
+ *  \ingroup jkqtmathtext_tools
  */
 JKQTMATHTEXT_LIB_EXPORT QString JKQTMathTextBraceType2String(JKQTMathTextBraceType type);
 /** \brief convert a string \a tokenName describing a LaTeX Token or Instruction into an opening or closing JKQTMathTextBraceType
- *  \ingroup jkqtmathtext
+ *  \ingroup jkqtmathtext_tools
  */
 JKQTMATHTEXT_LIB_EXPORT JKQTMathTextBraceType TokenName2JKQTMathTextBraceType(const QString& tokenName);
 /** \brief convert a string \a tokenName describing a LaTeX Instruction into an opening JKQTMathTextBraceType
- *  \ingroup jkqtmathtext
+ *  \ingroup jkqtmathtext_tools
  *
  *  This returns a JKQTMathTextBraceType for which  isPrintableJKQTMathTextBraceType() is \c true, or MTBTUnknown,
  *  never MTBTNone or MTBTAny.
  */
 JKQTMATHTEXT_LIB_EXPORT JKQTMathTextBraceType InstructionName2OpeningJKQTMathTextBraceType(const QString& tokenName);
 /** \brief convert a string \a tokenName describing a LaTeX Instruction into an opening or closing JKQTMathTextBraceType
- *  \ingroup jkqtmathtext
+ *  \ingroup jkqtmathtext_tools
  *
  *  This returns a JKQTMathTextBraceType for which  isPrintableJKQTMathTextBraceType() is \c true, or MTBTUnknown,
  *  never MTBTNone or MTBTAny.
@@ -177,11 +177,11 @@ JKQTMATHTEXT_LIB_EXPORT JKQTMathTextBraceType InstructionName2OpeningJKQTMathTex
 JKQTMATHTEXT_LIB_EXPORT JKQTMathTextBraceType InstructionName2JKQTMathTextBraceType(const QString& tokenName);
 /** \brief return \c true if \a type represents a printable type of brace (including MTBTNone), basically \c true
  *         for any JKQTMathTextBraceType that can be used as parameter to JKQTMathTextBraceNode
- *  \ingroup jkqtmathtext
+ *  \ingroup jkqtmathtext_tools
  */
 JKQTMATHTEXT_LIB_EXPORT bool isPrintableJKQTMathTextBraceType(JKQTMathTextBraceType type);
 /** \brief returns true, if the given token/instruction-Name \a token ("{", "(", ..., "lceil", ".", ...) matches the given \a type (returns true, when \a type == MTBTAny )
- *  \ingroup jkqtmathtext
+ *  \ingroup jkqtmathtext_tools
  *
  *  This accepts TokenName2JKQTMathTextBraceType(toke)==MTBTNone for any \a type, iff \a acceptMTBTNone \a ==true.
  *
@@ -189,7 +189,7 @@ JKQTMATHTEXT_LIB_EXPORT bool isPrintableJKQTMathTextBraceType(JKQTMathTextBraceT
  */
 JKQTMATHTEXT_LIB_EXPORT bool TokenNameMatchesJKQTMathTextBraceType(const QString &token, JKQTMathTextBraceType type, bool acceptMTBTNone, bool *tokenEqualsNone=nullptr);
 /** \brief returns true, if the given instruction-Name \a token ("|", "{", ..., "lceil", ".", ...) matches the given \a type (returns true, when \a type == MTBTAny )
- *  \ingroup jkqtmathtext
+ *  \ingroup jkqtmathtext_tools
  *
  *  This accepts TokenName2JKQTMathTextBraceType(toke)==MTBTNone for any \a type, iff \a acceptMTBTNone \a ==true.
  *
@@ -198,7 +198,7 @@ JKQTMATHTEXT_LIB_EXPORT bool TokenNameMatchesJKQTMathTextBraceType(const QString
 JKQTMATHTEXT_LIB_EXPORT bool InstructionNameMatchesJKQTMathTextBraceType(const QString &token, JKQTMathTextBraceType type, bool acceptMTBTNone, bool *tokenEqualsNone=nullptr);
 
 /** \brief the available logical fonts (default is MTEroman)
- *  \ingroup jkqtmathtext
+ *  \ingroup jkqtmathtext_tools
  */
 enum JKQTMathTextEnvironmentFont {
     MTEroman,       /*!< \brief roman font, e.g. <code>\\rm{}</code> */
@@ -215,9 +215,8 @@ enum JKQTMathTextEnvironmentFont {
 };
 
 
-
 /** \brief describes the current drawing environment (base fontname ...)
- *  \ingroup jkqtmathtext
+ *  \ingroup jkqtmathtext_tools
  */
 struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextEnvironment {
     JKQTMathTextEnvironment();
@@ -260,7 +259,7 @@ struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextEnvironment {
 };
 
 /** \brief beschreibt die Größe eines Knotens
- *  \ingroup jkqtmathtext
+ *  \ingroup jkqtmathtext_tools
  */
 struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextNodeSize {
     JKQTMathTextNodeSize();
@@ -271,7 +270,7 @@ struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextNodeSize {
 };
 
 /** \brief summarizes all information available on a font for a specific MTenvironmentFont
- *  \ingroup jkqtmathtext
+ *  \ingroup jkqtmathtext_tools
  *  \see fontDefinitions
  */
 struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextFontDefinition {
@@ -293,7 +292,7 @@ struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextFontDefinition {
 
 
 /** \brief create a QPainterPath for drawing horizontal braces
- *  \ingroup jkqtmathtext
+ *  \ingroup jkqtmathtext_tools
  *
  *  \image html jkqtmathtext/JKQTMathTextMakeHBracePath.png
  */
@@ -301,7 +300,7 @@ JKQTMATHTEXT_LIB_EXPORT QPainterPath JKQTMathTextMakeHBracePath(double x, double
 
 
 /** \brief create a QPainterPath for drawing horizontal arrows
- *  \ingroup jkqtmathtext
+ *  \ingroup jkqtmathtext_tools
  *
  *  \image html jkqtmathtext/JKQTMathTextMakeArrow.png
  */
@@ -309,7 +308,7 @@ JKQTMATHTEXT_LIB_EXPORT QPainterPath JKQTMathTextMakeArrow(double x, double y, d
 
 
 /** \brief create a QPainterPath for drawing horizontal double arrows
- *  \ingroup jkqtmathtext
+ *  \ingroup jkqtmathtext_tools
  *
  *  \image html jkqtmathtext/JKQTMathTextMakeDArrow.png
  */
@@ -348,11 +347,11 @@ inline uint qHash(const JKQTMathTextTBRDataH& data) {
 
 
 /** \brief calculates the tight bounding rectangle around \a text, uses internal hashing to not redo a calculation that has already been performed
- *  \ingroup jkqtmathtext
+ *  \ingroup jkqtmathtext_tools
  */
 JKQTMATHTEXT_LIB_EXPORT QRectF JKQTMathTextGetTightBoundingRect(const QFont &fm, const QString& text,  QPaintDevice *pd);
 /** \brief returns a copy of \a f, but with the italic-property set to \c false
- *  \ingroup jkqtmathtext
+ *  \ingroup jkqtmathtext_tools
  */
 JKQTMATHTEXT_LIB_EXPORT QFont JKQTMathTextGetNonItalic(const QFont& f);
 

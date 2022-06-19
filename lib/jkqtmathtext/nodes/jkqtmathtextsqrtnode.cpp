@@ -47,7 +47,7 @@ JKQTMathTextSqrtNode::~JKQTMathTextSqrtNode() {
 void JKQTMathTextSqrtNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* /*prevNodeSize*/) {
     QFontMetricsF fm(currentEv.getFont(parentMathText), painter.device());
 
-    child->getSize(painter, currentEv, width, baselineHeight, overallHeight, strikeoutPos);
+    getChild()->getSize(painter, currentEv, width, baselineHeight, overallHeight, strikeoutPos);
 
     overallHeight=overallHeight*1.2;//+fm.ascent()*0.1;
     baselineHeight=baselineHeight*1.2;//+fm.ascent()*0.1;
@@ -57,7 +57,7 @@ void JKQTMathTextSqrtNode::getSizeInternal(QPainter& painter, JKQTMathTextEnviro
 double JKQTMathTextSqrtNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* /*prevNodeSize*/) {
     doDrawBoxes(painter, x, y, currentEv);
     double width=0, baselineHeight=0, overallHeight=0, sp=0;
-    child->getSize(painter, currentEv, width, baselineHeight, overallHeight, sp);
+    getChild()->getSize(painter, currentEv, width, baselineHeight, overallHeight, sp);
     QFont f=currentEv.getFont(parentMathText);
     QFont fsmall=f;
     QFontMetricsF fm(f, painter.device());
@@ -83,7 +83,7 @@ double JKQTMathTextSqrtNode::draw(QPainter& painter, double x, double y, JKQTMat
         painter.drawText(QPointF(x+0.33*w, y-0.55*a), QLocale::c().toString(degree));
     }
     //painter.restore();
-    double xnew=child->draw(painter, x+1.2*w, y, currentEv);
+    double xnew=getChild()->draw(painter, x+1.2*w, y, currentEv);
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     painter.setPen(p);
     if (w>0) {
@@ -97,7 +97,7 @@ double JKQTMathTextSqrtNode::draw(QPainter& painter, double x, double y, JKQTMat
 
 bool JKQTMathTextSqrtNode::toHtml(QString &html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) {
     html=html+"&radic;<span style=\"text-decoration:overline\">";
-    bool ok=child->toHtml(html, currentEv, defaultEv);
+    bool ok=getChild()->toHtml(html, currentEv, defaultEv);
     html=html+"&nbsp;</span>";
     return ok;
 }

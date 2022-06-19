@@ -31,7 +31,7 @@
 
 
 /*! \brief A QLabel-derived class that draws an equation with LaTeX markup using JKQTMathText
-    \ingroup jkqtmathtext
+    \ingroup jkqtmathtext_widgets
 
     \see JKQTMathText
 */

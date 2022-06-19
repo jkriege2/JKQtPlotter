@@ -35,7 +35,7 @@ class JKQTMathText; // forward
 /** \brief subclass representing a list of nodes in the syntax tree
  *  \ingroup jkqtmathtext_items
  */
-class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextListNode: public JKQTMathTextNode {
+class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextListNode: public JKQTMathTextMultiChildNode {
     public:
         explicit JKQTMathTextListNode(JKQTMathText* parent);
         virtual ~JKQTMathTextListNode() override;
@@ -43,26 +43,22 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextListNode: public JKQTMathTextNode {
         virtual QString getTypeName() const override;
         /** \copydoc JKQTMathTextNode::draw() */
         virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
-        /** \brief add a child node */
-        void addNode(JKQTMathTextNode* n);
         /** \copydoc JKQTMathTextNode::toHtml() */
         virtual bool toHtml(QString& html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) override;
-        /** \copydoc JKQTMathTextNode::setDrawBoxes() */
-        virtual void setDrawBoxes(bool draw) override;
-        /** \copydoc nodes */ 
-        QList<JKQTMathTextNode*> getNodes() const;
-        /** \brief return number of children */
-        int count() const;
-        /** \brief return number of children */
-        int size() const;
-        /** \brief clear all children, deleting them if \a deleteChildren==true */
-        void clearChildren(bool deleteChildren=true);
-        /** \brief return i-th child node */
-        JKQTMathTextNode* child(int i);
-        /** \brief return i-th child node */
-        const JKQTMathTextNode* child(int i) const;
-        /** \brief simplifies the given list-node, i.e. if it contains one child only, the child is returned and the list node destroyed, otherwise the list node \a nl is returned */
-        static JKQTMathTextNode* simplyfyListNode(JKQTMathTextListNode* nl);
+        /** \brief add a child node */
+        void addChild(JKQTMathTextNode* n);
+        /** \copydoc JKQTMathTextMultiChildNode::getChildren() */
+        virtual QList<JKQTMathTextNode*> getChildren() override;
+        /** \copydoc JKQTMathTextMultiChildNode::childCount() */
+        virtual int childCount() const override;
+        /** \copydoc JKQTMathTextMultiChildNode::clearChildren() */
+        virtual void clearChildren(bool deleteChildren=true) override;
+        /** \copydoc JKQTMathTextMultiChildNode::getChild() */
+        virtual JKQTMathTextNode* getChild(int i) override;
+        /** \copydoc JKQTMathTextMultiChildNode::getChild() */
+        virtual const JKQTMathTextNode* getChild(int i) const override;
+        /** \copydoc JKQTMathTextMultiChildNode::getChild() */
+        virtual JKQTMathTextNode* replaceChild(int i, JKQTMathTextNode* newChild) override;
     protected:
         /** \copydoc JKQTMathTextNode::getSizeInternal() */
         virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;

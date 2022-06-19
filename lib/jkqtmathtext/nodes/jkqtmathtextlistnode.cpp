@@ -43,7 +43,7 @@ QSet<QString> JKQTMathTextListNode::subsupOperations= (QSet<QString>()<<"sum"<<"
                                                                         <<"liminf"<<"limsup"<<"lim"<<"max"<<"min");
 
 JKQTMathTextListNode::JKQTMathTextListNode(JKQTMathText* _parent):
-    JKQTMathTextNode(_parent)
+    JKQTMathTextMultiChildNode(_parent)
 {
     nodes.clear();
     // these operations cause sub/sup script to be typeset over/under the operator, not right besides!
@@ -411,7 +411,7 @@ double JKQTMathTextListNode::draw(QPainter& painter, double x, double y, JKQTMat
     return xnew;
 }
 
-void JKQTMathTextListNode::addNode(JKQTMathTextNode *n) {
+void JKQTMathTextListNode::addChild(JKQTMathTextNode *n) {
     n->setParentNode(this);
     nodes.append(n);
 }
@@ -426,27 +426,16 @@ bool JKQTMathTextListNode::toHtml(QString &html, JKQTMathTextEnvironment current
     return ok;
 }
 
-void JKQTMathTextListNode::setDrawBoxes(bool draw)
-{
-    this->drawBoxes=draw;
-    for (int i=0; i<nodes.size(); i++) {
-        nodes[i]->setDrawBoxes(draw);
-    }
-}
-
-QList<JKQTMathTextNode *> JKQTMathTextListNode::getNodes() const {
+QList<JKQTMathTextNode *> JKQTMathTextListNode::getChildren()  {
     return this->nodes;
 }
 
-int JKQTMathTextListNode::count() const
+
+int JKQTMathTextListNode::childCount() const
 {
     return nodes.size();
 }
 
-int JKQTMathTextListNode::size() const
-{
-    return nodes.size();
-}
 
 void JKQTMathTextListNode::clearChildren(bool deleteChildren)
 {
@@ -458,27 +447,21 @@ void JKQTMathTextListNode::clearChildren(bool deleteChildren)
     nodes.clear();
 }
 
-JKQTMathTextNode *JKQTMathTextListNode::child(int i)
+JKQTMathTextNode *JKQTMathTextListNode::getChild(int i)
 {
     return nodes[i];
 }
 
-const JKQTMathTextNode *JKQTMathTextListNode::child(int i) const
+const JKQTMathTextNode *JKQTMathTextListNode::getChild(int i) const
 {
     return nodes[i];
 }
 
-JKQTMathTextNode *JKQTMathTextListNode::simplyfyListNode(JKQTMathTextListNode *nl) {
-    return nl;
-    if (nl==nullptr) return nl;
-    if (nl->count()==1) {
-        // if there was only a single node: simplify the syntax tree, by removing the outer list node
-        JKQTMathTextNode* ret= nl->child(0);
-        nl->clearChildren(false);
-        delete nl;
-        return ret;
-    }
-    return nl;
+JKQTMathTextNode *JKQTMathTextListNode::replaceChild(int i, JKQTMathTextNode *newChild)
+{
+    JKQTMathTextNode* c=nodes[i];
+    nodes[i]=newChild;
+    newChild->setParentNode(this);
+    return c;
 }
-
 

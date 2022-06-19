@@ -56,7 +56,7 @@ void JKQTMathTextBraceNode::getSizeInternalAndBrace(QPainter &painter, JKQTMathT
 {
 
     const JKQTMathTextEnvironment ev=currentEv;
-    child->getSize(painter, currentEv, width, baselineHeight, overallHeight, strikeoutPos);
+    getChild()->getSize(painter, currentEv, width, baselineHeight, overallHeight, strikeoutPos);
 
     const double cAscentAboveStrike=baselineHeight-strikeoutPos;
     const double cDescentBelowStrike=overallHeight-baselineHeight+strikeoutPos;
@@ -180,7 +180,7 @@ double JKQTMathTextBraceNode::draw(QPainter& painter, double x, double y, JKQTMa
 
     painter.setPen(pold);
 
-    xnew= child->draw(painter, xnew, y, currentEv);
+    xnew= getChild()->draw(painter, xnew, y, currentEv);
 
     {
         bool showClosingBrace=true;
@@ -283,7 +283,7 @@ bool JKQTMathTextBraceNode::toHtml(QString &html, JKQTMathTextEnvironment curren
 
     html=html+ob;
 
-    bool ok=child->toHtml(html, currentEv, defaultEv);
+    bool ok=getChild()->toHtml(html, currentEv, defaultEv);
 
     html=html+cb;
 

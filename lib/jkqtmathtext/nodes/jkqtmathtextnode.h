@@ -156,6 +156,15 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSingleChildNode: public JKQTMathTextNo
         JKQTMathTextNode* getChild();
         /** \copydoc child */
         const JKQTMathTextNode* getChild() const;
+        /** \brief replaces the child node with the node \a newChild , returns the replaced old node */
+        JKQTMathTextNode* replaceChild(JKQTMathTextNode* newChild);
+
+        /** \brief replaces the child node with the node \a newChild , deletes the replaced old node */
+        void replaceAndDeleteChild(JKQTMathTextNode* newChild);
+
+        /** \brief returns \c true if the child is valie (\c !=nullptr ) */
+        bool hasChild() const;
+
         /** \copydoc JKQTMathTextNode::setDrawBoxes() */
         virtual void setDrawBoxes(bool draw) override;
     protected:
@@ -166,7 +175,41 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSingleChildNode: public JKQTMathTextNo
 /** \brief subclass representing a node in the syntax tree, that has two children
  *  \ingroup jkqtmathtext_items
  */
-class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextDualChildNode: public JKQTMathTextNode {
+class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextMultiChildNode: public JKQTMathTextNode {
+    public:
+        explicit JKQTMathTextMultiChildNode(JKQTMathText* parentMathText);
+        virtual ~JKQTMathTextMultiChildNode() override;
+
+        /** \brief returns a list of all child node */
+        virtual QList<JKQTMathTextNode*> getChildren();
+        /** \brief returns a list of all child node */
+        virtual QList<const JKQTMathTextNode*> getChildren() const;
+        /** \brief returns the i-th child node */
+        virtual JKQTMathTextNode* getChild(int i)=0;
+        /** \brief returns the i-th child node */
+        virtual const JKQTMathTextNode* getChild(int i) const=0;
+
+        /** \brief replaces the i-th child node with the node \a newChild , returns the replaced old node */
+        virtual JKQTMathTextNode* replaceChild(int i, JKQTMathTextNode* newChild) =0;
+
+        /** \brief replaces the i-th child node with the node \a newChild , deletes the replaced old node */
+        virtual void replaceAndDeleteChild(int i, JKQTMathTextNode* newChild);
+
+        /** \brief returns the number of child nodes */
+        virtual int childCount() const =0;
+
+        /** \brief clear all children, deleting them if \a deleteChildren==true */
+        virtual void clearChildren(bool deleteChildren=true) =0;
+
+        /** \copydoc JKQTMathTextNode::setDrawBoxes() */
+        virtual void setDrawBoxes(bool draw) override;
+    protected:
+};
+
+/** \brief subclass representing a node in the syntax tree, that has two children
+ *  \ingroup jkqtmathtext_items
+ */
+class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextDualChildNode: public JKQTMathTextMultiChildNode {
     public:
         explicit JKQTMathTextDualChildNode(JKQTMathTextNode* _child1, JKQTMathTextNode* _child2, JKQTMathText* parentMathText);
         virtual ~JKQTMathTextDualChildNode() override;
@@ -179,8 +222,19 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextDualChildNode: public JKQTMathTextNode
         JKQTMathTextNode* getChild2();
         /** \copydoc child2 */
         const JKQTMathTextNode* getChild2() const;
-        /** \copydoc JKQTMathTextNode::setDrawBoxes() */
-        virtual void setDrawBoxes(bool draw) override;
+
+
+        /** \copydoc JKQTMathTextMultiChildNode::getChild() */
+        virtual JKQTMathTextNode* getChild(int i) override;
+        /** \copydoc JKQTMathTextMultiChildNode::getChild() */
+        virtual const JKQTMathTextNode* getChild(int i) const override;
+        /** \copydoc JKQTMathTextMultiChildNode::getChild() */
+        virtual JKQTMathTextNode* replaceChild(int i, JKQTMathTextNode* newChild) override;
+        /** \copydoc JKQTMathTextMultiChildNode::getChild() */
+        virtual int childCount() const override;
+        /** \copydoc JKQTMathTextMultiChildNode::getChild() */
+        virtual void clearChildren(bool deleteChildren=true) override;
+
     protected:
         /** \brief first child node of this node */
         JKQTMathTextNode* child1;

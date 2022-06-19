@@ -40,6 +40,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: improved frac-rendering: font-scaling takes nesting-level into account, overall-rendering, sizes, if a brace surrounds a frac, the heights are equal above and below to center the brace , ...</li>
     <li>NEW: shows strikeoutPos when drawing Debug-Boxes</li>
     <li>NEW: LaTeX-Parser understands optional instruction parameters in [...] now</li>
+    <li>NEW: LaTeX-Parser simplifies parrse-tree to increase speed of execution</li>
   </ul>
 </ul>
 

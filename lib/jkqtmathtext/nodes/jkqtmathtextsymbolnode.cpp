@@ -947,13 +947,13 @@ double JKQTMathTextSymbolNode::draw(QPainter& painter, double x, double y, JKQTM
     if (props.italic>0) f.setItalic(true);
     if (props.bold<0) f.setBold(false);
     if (props.bold>0) f.setBold(true);
-    QFontMetricsF fm(f, painter.device());
-    QFontMetricsF fm1(f1, painter.device());
+    const QFontMetricsF fm(f, painter.device());
+    const QFontMetricsF fm1(f1, painter.device());
     painter.setFont(f);
 
     double shift=0;
     if (props.extendWidthInMathmode && currentEv.insideMath) {
-        double origwidth=width/parentMathText->getMathoperatorWidthFactor();
+        const double origwidth=width/parentMathText->getMathoperatorWidthFactor();
         shift=0.5*(width-origwidth);
         //width=width*parent->getMathoperatorWidthFactor();
     }
@@ -965,15 +965,17 @@ double JKQTMathTextSymbolNode::draw(QPainter& painter, double x, double y, JKQTM
     p.setWidthF(fm.lineWidth());
     p.setStyle(Qt::SolidLine);
     painter.setPen(p);
-    double xwi=fm.boundingRect("x").width();
+    const double xwi=fm.boundingRect("x").width();
     if (!props.symbol.isEmpty()) {
         // if the symbol has been recognized in the constructor: draw the symbol
         painter.drawText(QPointF(x+shift, y+props.yfactor*overallHeight), props.symbol);
-        double xx=x+shift;
-        double yy=y-fm.xHeight()-(JKQTMathTextGetTightBoundingRect(f, "M", painter.device()).height()-fm.xHeight())/3.0;
-        QLineF l(xx, yy, xx+xwi/3.0+((currentEv.italic)?(xwi/3.0):0), yy);
-        if (props.drawBar&&l.length()>0) painter.drawLine(l);
+        if (props.drawBar) {
+            const double xx=x+shift;
+            const double yy=y-fm.xHeight()-(JKQTMathTextGetTightBoundingRect(f, "M", painter.device()).height()-fm.xHeight())/3.0;
+            const QLineF l(xx, yy, xx+xwi/3.0+((currentEv.italic)?(xwi/3.0):0), yy);
 
+            if (l.length()>0) painter.drawLine(l);
+        }
     // try to draw some often used special symbols, by synthesizing them from
     // standard characters in the current drawing font
     } else if (symbolName=="infty") {

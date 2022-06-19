@@ -368,16 +368,16 @@ QTreeWidgetItem *TestForm::createTree(JKQTMathTextNode *node, QTreeWidgetItem* p
         if (inst1N->getChild()) ti->addChild(createTree(inst1N->getChild(), ti));
     } else if (lstN)  {
         name=QString("MTlistNode");
-        QList<JKQTMathTextNode*> list=lstN->getNodes();
+        QList<JKQTMathTextNode*> list=lstN->getChildren();
         for (int i=0; i<list.size(); i++) {
             ti->addChild(createTree(list[i], ti));
         }
     } else if (symN)  {
-        name=QString("JKQTMathTextSymbolNode: \'%1\' (addWhite: %2)").arg(symN->getSymbolName()).arg(symN->getAddWhitespace());
+        name=QString("MTSymbolNode: \'%1\' (addWhite: %2)").arg(symN->getSymbolName()).arg(symN->getAddWhitespace());
     } else if (spN)  {
-        name=QString("JKQTMathTextWhitespaceNode :\'%1\'").arg(txtN->getText());
+        name=QString("MTWhitespaceNode :\'%1\'").arg(txtN->getText());
     } else if (txtN)  {
-        name=QString("JKQTMathTextTextNode: \'%1\'").arg(txtN->getText());
+        name=QString("MTTextNode: \'%1\'").arg(txtN->getText());
 
     } else {
         name=QString("unknown");

@@ -149,7 +149,8 @@ JKQTMathTextSingleChildNode::JKQTMathTextSingleChildNode(JKQTMathTextNode *_chil
 
 JKQTMathTextSingleChildNode::~JKQTMathTextSingleChildNode()
 {
-    if (child) delete child;
+    JKQTMathTextNode* c=child; child=nullptr;
+    if (c) delete c;
 }
 
 JKQTMathTextNode *JKQTMathTextSingleChildNode::getChild()
@@ -162,6 +163,28 @@ const JKQTMathTextNode *JKQTMathTextSingleChildNode::getChild() const
     return child;
 }
 
+JKQTMathTextNode *JKQTMathTextSingleChildNode::replaceChild(JKQTMathTextNode *newChild)
+{
+    JKQTMathTextNode* c=child;
+    child=newChild;
+    child->setParentNode(this);
+    return c;
+}
+
+void JKQTMathTextSingleChildNode::replaceAndDeleteChild(JKQTMathTextNode *newChild)
+{
+    JKQTMathTextNode* oldC=replaceChild(newChild);
+    if (newChild!=oldC) {
+        oldC->setParentNode(nullptr);
+        delete oldC;
+    }
+}
+
+bool JKQTMathTextSingleChildNode::hasChild() const
+{
+    return child!=nullptr;
+}
+
 void JKQTMathTextSingleChildNode::setDrawBoxes(bool draw)
 {
     JKQTMathTextNode::setDrawBoxes(draw);
@@ -170,7 +193,7 @@ void JKQTMathTextSingleChildNode::setDrawBoxes(bool draw)
 
 
 JKQTMathTextDualChildNode::JKQTMathTextDualChildNode(JKQTMathTextNode *_child1, JKQTMathTextNode *_child2, JKQTMathText *parentMathText):
-    JKQTMathTextNode(parentMathText),
+    JKQTMathTextMultiChildNode(parentMathText),
     child1(_child1),
     child2(_child2)
 {
@@ -180,8 +203,10 @@ JKQTMathTextDualChildNode::JKQTMathTextDualChildNode(JKQTMathTextNode *_child1, 
 
 JKQTMathTextDualChildNode::~JKQTMathTextDualChildNode()
 {
-    if (child1) delete child1;
-    if (child2) delete child2;
+    JKQTMathTextNode* c1=child1; child1=nullptr;
+    JKQTMathTextNode* c2=child2; child2=nullptr;
+    if (c1) delete c1;
+    if (c2) delete c2;
 }
 
 JKQTMathTextNode *JKQTMathTextDualChildNode::getChild1()
@@ -204,9 +229,94 @@ const JKQTMathTextNode *JKQTMathTextDualChildNode::getChild2() const
     return child2;
 }
 
-void JKQTMathTextDualChildNode::setDrawBoxes(bool draw)
+JKQTMathTextNode *JKQTMathTextDualChildNode::getChild(int i)
+{
+    if (i==0) return child1;
+    if (i==1) return child2;
+    return nullptr;
+}
+
+
+const JKQTMathTextNode *JKQTMathTextDualChildNode::getChild(int i) const
+{
+    if (i==0) return child1;
+    if (i==1) return child2;
+    return nullptr;
+}
+
+JKQTMathTextNode *JKQTMathTextDualChildNode::replaceChild(int i, JKQTMathTextNode *newChild)
+{
+    if (i==0) {
+        JKQTMathTextNode* c=child1;
+        child1=newChild;
+        child1->setParentNode(this);
+        return c;
+    }
+    if (i==1) {
+        JKQTMathTextNode* c=child2;
+        child2=newChild;
+        child2->setParentNode(this);
+        return c;
+    }
+    return nullptr;
+}
+
+int JKQTMathTextDualChildNode::childCount() const
+{
+    return 2;
+}
+
+void JKQTMathTextDualChildNode::clearChildren(bool deleteChildren)
+{
+    JKQTMathTextNode* c1=child1; child1=nullptr;
+    if (c1) delete c1;
+    JKQTMathTextNode* c2=child2; child2=nullptr;
+    if (c2) delete c2;
+}
+
+JKQTMathTextMultiChildNode::JKQTMathTextMultiChildNode(JKQTMathText *parentMathText):
+    JKQTMathTextNode(parentMathText)
+{
+
+}
+
+JKQTMathTextMultiChildNode::~JKQTMathTextMultiChildNode()
+{
+}
+
+QList<JKQTMathTextNode *> JKQTMathTextMultiChildNode::getChildren()
+{
+    QList<JKQTMathTextNode *> l;
+    for (int i=0; i<childCount(); i++) {
+        l.append(getChild(i));
+    }
+    return l;
+}
+
+QList<const JKQTMathTextNode *> JKQTMathTextMultiChildNode::getChildren() const
+{
+    QList<const JKQTMathTextNode *> l;
+    for (int i=0; i<childCount(); i++) {
+        l.append(getChild(i));
+    }
+    return l;
+}
+
+void JKQTMathTextMultiChildNode::replaceAndDeleteChild(int i, JKQTMathTextNode *newChild)
+{
+    JKQTMathTextNode* oldC=replaceChild(i, newChild);
+    if (newChild!=oldC) {
+        oldC->setParentNode(nullptr);
+        delete oldC;
+    }
+}
+
+void JKQTMathTextMultiChildNode::setDrawBoxes(bool draw)
 {
     JKQTMathTextNode::setDrawBoxes(draw);
-    if (child1) child1->setDrawBoxes(draw);
-    if (child2) child2->setDrawBoxes(draw);
+    for (int i=0; i<childCount(); i++) {
+        JKQTMathTextNode* c=getChild(i);
+        if (c) c->setDrawBoxes(draw);
+    }
+
 }

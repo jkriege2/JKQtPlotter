@@ -33,6 +33,7 @@
 #include "jkqtmathtext/nodes/jkqtmathtextsqrtnode.h"
 #include "jkqtmathtext/nodes/jkqtmathtextsubsupernode.h"
 #include "jkqtmathtext/nodes/jkqtmathtextsymbolnode.h"
+#include "jkqtmathtext/nodes/jkqtmathtextnodetools.h"
 #include <cmath>
 #include <QFontMetricsF>
 #include <QDebug>
@@ -979,12 +980,12 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
             getNew=addWhite;
             if (parsingMathEnvironment) {
                 if (mathEnvironmentSpecialText.contains(text.trimmed())) {
-                    nl->addNode(new JKQTMathTextSymbolNode(this, text, addWhite));
+                    nl->addChild(new JKQTMathTextSymbolNode(this, text, addWhite));
                 } else {
-                    nl->addNode(new JKQTMathTextTextNode(this, text, addWhite, parsingMathEnvironment));
+                    nl->addChild(new JKQTMathTextTextNode(this, text, addWhite, parsingMathEnvironment));
                 }
             } else {
-                nl->addNode(new JKQTMathTextTextNode(this, text, addWhite, parsingMathEnvironment));
+                nl->addChild(new JKQTMathTextTextNode(this, text, addWhite, parsingMathEnvironment));
             }
         } else if (currentToken==MTTinstruction) {
             const QString currentInstructionName=currentTokenName;
@@ -993,9 +994,9 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
             if (currentToken==MTTopenbrace) {
                 //std::cout<<"found '{' after '"<<name.toStdString()<<"'\n";
                 if (currentInstructionName=="sqrt") {
-                    nl->addNode(new JKQTMathTextSqrtNode(this, parseLatexString(true)));
+                    nl->addChild(new JKQTMathTextSqrtNode(this, parseLatexString(true)));
                 } else if (currentInstructionName=="cbrt") {
-                    nl->addNode(new JKQTMathTextSqrtNode(this, parseLatexString(true), 3));
+                    nl->addChild(new JKQTMathTextSqrtNode(this, parseLatexString(true), 3));
                 } else if (currentInstructionName=="verb") {
                     QString text="";
                     currentTokenID++;
@@ -1007,73 +1008,73 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
                             if (currentTokenID<parseString.size()) c=parseString[currentTokenID];
                         }
                         if (c!='}')  error_list.append(tr("error @ ch. %1: \verb{...} not closed by '}'").arg(currentTokenID).arg(currentInstructionName));
-                        nl->addNode(new JKQTMathTextTextNode(this, text, false));
+                        nl->addChild(new JKQTMathTextTextNode(this, text, false));
                     }
                 } else if (currentInstructionName=="frac") {
                     JKQTMathTextNode* n1=parseLatexString(true);
                     JKQTMathTextNode* n2=nullptr;
                     if (getToken()==MTTopenbrace) n2=parseLatexString(true);
-                    if (n1 && n2) nl->addNode(new JKQTMathTextFracNode(this, n1, n2, JKQTMathTextFracNode::MTFMfrac));
+                    if (n1 && n2) nl->addChild(new JKQTMathTextFracNode(this, n1, n2, JKQTMathTextFracNode::MTFMfrac));
                     else error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(currentInstructionName));
                 } else if (currentInstructionName=="dfrac" || currentInstructionName=="cfrac") {
                     JKQTMathTextNode* n1=parseLatexString(true);
                     JKQTMathTextNode* n2=nullptr;
                     if (getToken()==MTTopenbrace) n2=parseLatexString(true);
-                    if (n1 && n2) nl->addNode(new JKQTMathTextFracNode(this, n1, n2, JKQTMathTextFracNode::MTFMdfrac));
+                    if (n1 && n2) nl->addChild(new JKQTMathTextFracNode(this, n1, n2, JKQTMathTextFracNode::MTFMdfrac));
                     else error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(currentInstructionName));
                 } else if (currentInstructionName=="sfrac" || currentInstructionName=="slantfrac" || currentInstructionName=="xfrac") {
                     JKQTMathTextNode* n1=parseLatexString(true);
                     JKQTMathTextNode* n2=nullptr;
                     if (getToken()==MTTopenbrace) n2=parseLatexString(true);
-                    if (n1 && n2) nl->addNode(new JKQTMathTextFracNode(this, n1, n2, JKQTMathTextFracNode::MTFMsfrac));
+                    if (n1 && n2) nl->addChild(new JKQTMathTextFracNode(this, n1, n2, JKQTMathTextFracNode::MTFMsfrac));
                     else error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(currentInstructionName));
                 } else if (currentInstructionName=="stfrac" || currentInstructionName=="nicefrac" || currentInstructionName=="slanttextfrac" || currentInstructionName=="xtfrac") {
                     JKQTMathTextNode* n1=parseLatexString(true);
                     JKQTMathTextNode* n2=nullptr;
                     if (getToken()==MTTopenbrace) n2=parseLatexString(true);
-                    if (n1 && n2) nl->addNode(new JKQTMathTextFracNode(this, n1, n2, JKQTMathTextFracNode::MTFMstfrac));
+                    if (n1 && n2) nl->addChild(new JKQTMathTextFracNode(this, n1, n2, JKQTMathTextFracNode::MTFMstfrac));
                     else error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(currentInstructionName));
                 } else if (currentInstructionName=="tfrac") {
                     JKQTMathTextNode* n1=parseLatexString(true);
                     JKQTMathTextNode* n2=nullptr;
                     if (getToken()==MTTopenbrace) n2=parseLatexString(true);
-                    if (n1 && n2) nl->addNode(new JKQTMathTextFracNode(this, n1, n2, JKQTMathTextFracNode::MTFMtfrac));
+                    if (n1 && n2) nl->addChild(new JKQTMathTextFracNode(this, n1, n2, JKQTMathTextFracNode::MTFMtfrac));
                     else error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(currentInstructionName));
                 } else if (currentInstructionName=="stackrel") {
                     JKQTMathTextNode* n1=parseLatexString(true);
                     JKQTMathTextNode* n2=nullptr;
                     if (getToken()==MTTopenbrace) n2=parseLatexString(true);
-                    if (n1 && n2) nl->addNode(new JKQTMathTextFracNode(this, n1, n2, JKQTMathTextFracNode::MTFMstackrel));
+                    if (n1 && n2) nl->addChild(new JKQTMathTextFracNode(this, n1, n2, JKQTMathTextFracNode::MTFMstackrel));
                     else error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(currentInstructionName));
                 } else if (currentInstructionName=="binom") {
                     JKQTMathTextNode* n1=parseLatexString(true);
                     JKQTMathTextNode* n2=nullptr;
                     if (getToken()==MTTopenbrace) n2=parseLatexString(true);
-                    if (n1 && n2) nl->addNode(new JKQTMathTextBraceNode(this, MTBTParenthesis, MTBTParenthesis, new JKQTMathTextFracNode(this, n1, n2, JKQTMathTextFracNode::MTFMstackrel)));
+                    if (n1 && n2) nl->addChild(new JKQTMathTextBraceNode(this, MTBTParenthesis, MTBTParenthesis, new JKQTMathTextFracNode(this, n1, n2, JKQTMathTextFracNode::MTFMstackrel)));
                     else error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(currentInstructionName));
                 } else if (currentInstructionName=="underbrace") {
                     JKQTMathTextNode* n1=parseLatexString(true);
                     JKQTMathTextNode* n2=nullptr;
                     if (getToken()==MTTopenbrace) n2=parseLatexString(true);
-                    if (n1 && n2) nl->addNode(new JKQTMathTextFracNode(this, n1, n2, JKQTMathTextFracNode::MTFMunderbrace));
+                    if (n1 && n2) nl->addChild(new JKQTMathTextFracNode(this, n1, n2, JKQTMathTextFracNode::MTFMunderbrace));
                     else error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(currentInstructionName));
                 } else if (currentInstructionName=="underset") {
                     JKQTMathTextNode* n1=parseLatexString(true);
                     JKQTMathTextNode* n2=nullptr;
                     if (getToken()==MTTopenbrace) n2=parseLatexString(true);
-                    if (n1 && n2) nl->addNode(new JKQTMathTextFracNode(this, n1, n2, JKQTMathTextFracNode::MTFMunderset));
+                    if (n1 && n2) nl->addChild(new JKQTMathTextFracNode(this, n1, n2, JKQTMathTextFracNode::MTFMunderset));
                     else error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(currentInstructionName));
                 } else if (currentInstructionName=="overbrace") {
                     JKQTMathTextNode* n1=parseLatexString(true);
                     JKQTMathTextNode* n2=nullptr;
                     if (getToken()==MTTopenbrace) n2=parseLatexString(true);
-                    if (n1 && n2) nl->addNode(new JKQTMathTextFracNode(this, n1, n2, JKQTMathTextFracNode::MTFMoverbrace));
+                    if (n1 && n2) nl->addChild(new JKQTMathTextFracNode(this, n1, n2, JKQTMathTextFracNode::MTFMoverbrace));
                     else error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(currentInstructionName));
                 } else if (currentInstructionName=="overset") {
                     JKQTMathTextNode* n1=parseLatexString(true);
                     JKQTMathTextNode* n2=nullptr;
                     if (getToken()==MTTopenbrace) n2=parseLatexString(true);
-                    if (n1 && n2) nl->addNode(new JKQTMathTextFracNode(this, n1, n2, JKQTMathTextFracNode::MTFMoverset));
+                    if (n1 && n2) nl->addChild(new JKQTMathTextFracNode(this, n1, n2, JKQTMathTextFracNode::MTFMoverset));
                     else error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(currentInstructionName));
                 } else if (currentInstructionName=="begin") {
                     if (getToken()==MTTtext) {
@@ -1100,13 +1101,13 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
                                 first=false;
                             }
                             //std::cout<<"  creating matrix-node with "<<items.size()<<" items.\n";
-                            if (envname=="pmatrix") nl->addNode(new JKQTMathTextBraceNode(this, MTBTParenthesis, MTBTParenthesis, new JKQTMathTextMatrixNode(this, items)));
-                            else if (envname=="cases") nl->addNode(new JKQTMathTextBraceNode(this, MTBTCurlyBracket, MTBTNone, new JKQTMathTextMatrixNode(this, items)));
-                            else if (envname=="bmatrix") nl->addNode(new JKQTMathTextBraceNode(this, MTBTSquareBracket, MTBTSquareBracket, new JKQTMathTextMatrixNode(this, items)));
-                            else if (envname=="Bmatrix") nl->addNode(new JKQTMathTextBraceNode(this, MTBTCurlyBracket, MTBTCurlyBracket, new JKQTMathTextMatrixNode(this, items)));
-                            else if (envname=="vmatrix") nl->addNode(new JKQTMathTextBraceNode(this, MTBTSingleLine, MTBTSingleLine, new JKQTMathTextMatrixNode(this, items)));
-                            else if (envname=="Vmatrix") nl->addNode(new JKQTMathTextBraceNode(this, MTBTDoubleLine, MTBTDoubleLine, new JKQTMathTextMatrixNode(this, items)));
-                            else nl->addNode(new JKQTMathTextMatrixNode(this, items));
+                            if (envname=="pmatrix") nl->addChild(new JKQTMathTextBraceNode(this, MTBTParenthesis, MTBTParenthesis, new JKQTMathTextMatrixNode(this, items)));
+                            else if (envname=="cases") nl->addChild(new JKQTMathTextBraceNode(this, MTBTCurlyBracket, MTBTNone, new JKQTMathTextMatrixNode(this, items)));
+                            else if (envname=="bmatrix") nl->addChild(new JKQTMathTextBraceNode(this, MTBTSquareBracket, MTBTSquareBracket, new JKQTMathTextMatrixNode(this, items)));
+                            else if (envname=="Bmatrix") nl->addChild(new JKQTMathTextBraceNode(this, MTBTCurlyBracket, MTBTCurlyBracket, new JKQTMathTextMatrixNode(this, items)));
+                            else if (envname=="vmatrix") nl->addChild(new JKQTMathTextBraceNode(this, MTBTSingleLine, MTBTSingleLine, new JKQTMathTextMatrixNode(this, items)));
+                            else if (envname=="Vmatrix") nl->addChild(new JKQTMathTextBraceNode(this, MTBTDoubleLine, MTBTDoubleLine, new JKQTMathTextMatrixNode(this, items)));
+                            else nl->addChild(new JKQTMathTextMatrixNode(this, items));
                             //std::cout<<"  creating matrix-node ... done!\n";
                         } else {
                             error_list.append(tr("error @ ch. %1: unknown environment '%2'").arg(currentTokenID).arg(envname));
@@ -1131,47 +1132,47 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
                         getNew=true;
                     }
                 } else if (currentInstructionName=="vec") {
-                    nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDvec, parseLatexString(true)));
+                    nl->addChild(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDvec, parseLatexString(true)));
                 } else if (currentInstructionName=="overline"||currentInstructionName=="oline"||currentInstructionName=="ol") {
-                    nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDoverline, parseLatexString(true)));
+                    nl->addChild(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDoverline, parseLatexString(true)));
                 } else if (currentInstructionName=="underline"||currentInstructionName=="uline"||currentInstructionName=="ul") {
-                    nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDunderline, parseLatexString(true)));
+                    nl->addChild(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDunderline, parseLatexString(true)));
                 } else if (currentInstructionName=="uuline"||currentInstructionName=="uul") {
-                    nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDdoubleunderline, parseLatexString(true)));
+                    nl->addChild(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDdoubleunderline, parseLatexString(true)));
                 } else if (currentInstructionName=="ooline"||currentInstructionName=="ool") {
-                    nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDdoubleoverline, parseLatexString(true)));
+                    nl->addChild(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDdoubleoverline, parseLatexString(true)));
                 } else if (currentInstructionName=="arrow"||currentInstructionName=="overrightarrow"||currentInstructionName=="overarrow") {
-                    nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDarrow, parseLatexString(true)));
+                    nl->addChild(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDarrow, parseLatexString(true)));
                 } else if (currentInstructionName=="hat" || currentInstructionName=="^") {
-                    nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDhat, parseLatexString(true)));
+                    nl->addChild(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDhat, parseLatexString(true)));
                 } else if (currentInstructionName=="widehat") {
-                    nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDwidehat, parseLatexString(true)));
+                    nl->addChild(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDwidehat, parseLatexString(true)));
                 } else if (currentInstructionName=="check" || currentInstructionName=="v") {
-                    nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDcheck, parseLatexString(true)));
+                    nl->addChild(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDcheck, parseLatexString(true)));
                 } else if (currentInstructionName=="widecheck") {
-                    nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDwidecheck, parseLatexString(true)));
+                    nl->addChild(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDwidecheck, parseLatexString(true)));
                 } else if (currentInstructionName=="bar") {
-                    nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDbar, parseLatexString(true)));
+                    nl->addChild(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDbar, parseLatexString(true)));
                 } else if (currentInstructionName=="dot" || currentInstructionName==".") {
-                    nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDdot, parseLatexString(true)));
+                    nl->addChild(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDdot, parseLatexString(true)));
                 } else if (currentInstructionName=="ocirc") {
-                    nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDocirc, parseLatexString(true)));
+                    nl->addChild(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDocirc, parseLatexString(true)));
                 } else if (currentInstructionName=="tilde" || currentInstructionName=="~") {
-                    nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDtilde, parseLatexString(true)));
+                    nl->addChild(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDtilde, parseLatexString(true)));
                 } else if (currentInstructionName=="breve" || currentInstructionName=="u") {
-                    nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDbreve, parseLatexString(true)));
+                    nl->addChild(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDbreve, parseLatexString(true)));
                 } else if (currentInstructionName=="widetilde") {
-                    nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDwidetilde, parseLatexString(true)));
+                    nl->addChild(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDwidetilde, parseLatexString(true)));
                 } else if (currentInstructionName=="ddot") {
-                    nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDddot, parseLatexString(true)));
+                    nl->addChild(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDddot, parseLatexString(true)));
                 } else if (currentInstructionName=="cancel") {
-                    nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDcancel, parseLatexString(true)));
+                    nl->addChild(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDcancel, parseLatexString(true)));
                 } else if (currentInstructionName=="xcancel") {
-                    nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDxcancel, parseLatexString(true)));
+                    nl->addChild(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDxcancel, parseLatexString(true)));
                 } else if (currentInstructionName=="bcancel") {
-                    nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDbcancel, parseLatexString(true)));
+                    nl->addChild(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDbcancel, parseLatexString(true)));
                 } else if (currentInstructionName=="strike" || currentInstructionName=="st" || currentInstructionName=="sout") {
-                    nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDstrike, parseLatexString(true)));
+                    nl->addChild(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDstrike, parseLatexString(true)));
                 } else {
                     if (currentInstructionName=="textcolor" || currentInstructionName=="mathcolor" || currentInstructionName=="color" || currentInstructionName=="colorbox") {
                         bool foundError=true;
@@ -1185,11 +1186,11 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
                             }
                         }
                         if (foundError) error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(currentInstructionName));
-                        else nl->addNode(new JKQTMathTextInstruction1Node(this, currentInstructionName, parseLatexString(true), QStringList(col)));
+                        else nl->addChild(new JKQTMathTextInstruction1Node(this, currentInstructionName, parseLatexString(true), QStringList(col)));
 
 
                     } else {
-                        nl->addNode(new JKQTMathTextInstruction1Node(this, currentInstructionName, parseLatexString(true)));
+                        nl->addChild(new JKQTMathTextInstruction1Node(this, currentInstructionName, parseLatexString(true)));
                     }
                 }
             } else if (currentToken==MTTopenbracket && currentInstructionName!="left") {
@@ -1198,8 +1199,8 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
                     JKQTMathTextNode* n1=parseLatexString(true, MTBTAny, "", true);
                     JKQTMathTextListNode* n1lst=dynamic_cast<JKQTMathTextListNode*>(n1);
                     JKQTMathTextTextNode* n1txt=dynamic_cast<JKQTMathTextTextNode*>(n1);
-                    if (n1lst && n1lst->count()==1) {
-                        n1txt=dynamic_cast<JKQTMathTextTextNode*>(n1lst->child(0));
+                    if (n1lst && n1lst->childCount()==1) {
+                        n1txt=dynamic_cast<JKQTMathTextTextNode*>(n1lst->getChild(0));
                     }
                     int degree=2;
                     bool ok=false;
@@ -1213,10 +1214,10 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
                     if (getToken()==MTTopenbrace) n2=parseLatexString(true);
                     else error_list.append(tr("error @ ch. %1: expected one argument in '{' braces after '%2' command with an optional argument in []").arg(currentTokenID).arg(currentInstructionName));
 
-                    if (n1 && n2) nl->addNode(new JKQTMathTextSqrtNode(this, n2, degree));
+                    if (n1 && n2) nl->addChild(new JKQTMathTextSqrtNode(this, n2, degree));
                     else error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(currentInstructionName));
                 } else {
-                    nl->addNode(new JKQTMathTextTextNode(this, "[", false));
+                    nl->addChild(new JKQTMathTextTextNode(this, "[", false));
                 }
             } else {
                 //std::cout<<"did not find '{' after '"<<name.toStdString()<<"'\n";
@@ -1255,10 +1256,10 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
                             if (bracetype==MTBTNone) {
                                 currentTokenName=currentTokenName.right(currentTokenName.size()-1);
                                 JKQTMathTextNode* cn=parseLatexString(currentTokenName.size()<=0, MTBTAny);
-                                nl->addNode(new JKQTMathTextBraceNode(this, MTBTNone, bracetype, cn));
+                                nl->addChild(new JKQTMathTextBraceNode(this, MTBTNone, bracetype, cn));
                             } else if (isPrintableJKQTMathTextBraceType(bracetype)) {
                                 currentTokenName=currentTokenName.right(currentTokenName.size()-1); // we already used the first character from the text token!
-                                nl->addNode(new JKQTMathTextBraceNode(this, bracetype, bracetype, parseLatexString(currentTokenName.size()<=0, bracetype)));
+                                nl->addChild(new JKQTMathTextBraceNode(this, bracetype, bracetype, parseLatexString(currentTokenName.size()<=0, bracetype)));
                             } else {
                                 getNew=false;
                             }
@@ -1266,12 +1267,12 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
                     } else if (currentToken==MTTinstruction) {
                         const JKQTMathTextBraceType bracetypeopening=InstructionName2OpeningJKQTMathTextBraceType(currentTokenName);
                         if (bracetypeopening!=MTBTUnknown) {
-                            nl->addNode(new JKQTMathTextBraceNode(this, bracetypeopening, bracetypeopening, parseLatexString(true, bracetypeopening)));
+                            nl->addChild(new JKQTMathTextBraceNode(this, bracetypeopening, bracetypeopening, parseLatexString(true, bracetypeopening)));
                         } else if (currentToken==MTTinstruction && TokenNameMatchesJKQTMathTextBraceType(currentTokenName, quitOnClosingBrace, true)) {
                             break;
                         }
                     } else if (currentToken==MTTopenbracket) {
-                        nl->addNode(new JKQTMathTextBraceNode(this, MTBTSquareBracket, MTBTSquareBracket, parseLatexString(true, MTBTSquareBracket)));
+                        nl->addChild(new JKQTMathTextBraceNode(this, MTBTSquareBracket, MTBTSquareBracket, parseLatexString(true, MTBTSquareBracket)));
                     } else {
                         error_list.append(tr("error @ ch. %1: unexpected token after \\left").arg(currentTokenID));
                     }
@@ -1287,11 +1288,11 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
                         if (n0=='v' && n1.isLetter()) {
                             done=true;
                             //std::cout<<"found \\v... command\n";
-                            nl->addNode(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDvec, new JKQTMathTextTextNode(this, QString(n1), false, parsingMathEnvironment)));
+                            nl->addChild(new JKQTMathTextDecoratedNode(this, JKQTMathTextDecoratedNode::MTDvec, new JKQTMathTextTextNode(this, QString(n1), false, parsingMathEnvironment)));
                         } else if (n0=='c' && n1.isLetter()) {
                             done=true;
                             //std::cout<<"found \\v... command\n";
-                            nl->addNode(new JKQTMathTextInstruction1Node(this, "mathcal", new JKQTMathTextTextNode(this, QString(n1), false, parsingMathEnvironment)));
+                            nl->addChild(new JKQTMathTextInstruction1Node(this, "mathcal", new JKQTMathTextTextNode(this, QString(n1), false, parsingMathEnvironment)));
                         }
                     } else if (currentInstructionName.size()==3) {
                         QString n0=currentInstructionName.left(2);
@@ -1299,15 +1300,15 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
                         if (n0=="bb" && n1.isLetter()) {
                             done=true;
                             //std::cout<<"found \\v... command\n";
-                            nl->addNode(new JKQTMathTextInstruction1Node(this, "mathbb", new JKQTMathTextTextNode(this, QString(n1), false, parsingMathEnvironment)));
+                            nl->addChild(new JKQTMathTextInstruction1Node(this, "mathbb", new JKQTMathTextTextNode(this, QString(n1), false, parsingMathEnvironment)));
                         }
                     }
-                    if (!done) nl->addNode(new JKQTMathTextSymbolNode(this, currentInstructionName, false));//, addWhite));
+                    if (!done) nl->addChild(new JKQTMathTextSymbolNode(this, currentInstructionName, false));//, addWhite));
 
                 }
             }
         } else if (currentToken==MTTwhitespace) {
-            if (!parsingMathEnvironment) nl->addNode(new JKQTMathTextWhitespaceNode(this));
+            if (!parsingMathEnvironment) nl->addChild(new JKQTMathTextWhitespaceNode(this));
         } else if (currentToken==MTTunderscore) {
             getToken();
             JKQTMathTextNode* child=nullptr;
@@ -1336,8 +1337,8 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
             } else {
                 getNew=false;
             }
-            if (child!=nullptr) nl->addNode(new JKQTMathTextSubscriptNode(this, child));
-            if (child2!=nullptr) nl->addNode(child2);
+            if (child!=nullptr) nl->addChild(new JKQTMathTextSubscriptNode(this, child));
+            if (child2!=nullptr) nl->addChild(child2);
         } else if (currentToken==MTThat) {
             getToken();
             JKQTMathTextNode* child=nullptr;
@@ -1366,17 +1367,17 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
             } else {
                 getNew=false;
             }
-            if (child!=nullptr) nl->addNode(new JKQTMathTextSuperscriptNode(this, child));
-            if (child2!=nullptr) nl->addNode(child2);
+            if (child!=nullptr) nl->addChild(new JKQTMathTextSuperscriptNode(this, child));
+            if (child2!=nullptr) nl->addChild(child2);
         } else if (currentToken==MTTopenbrace) {
-            nl->addNode(parseLatexString(true));
+            nl->addChild(parseLatexString(true));
         } else if (currentToken==MTTclosebrace) {
             break;
         } else if (currentToken==MTTopenbracket) {
-            nl->addNode(new JKQTMathTextTextNode(this, "[", false));
+            nl->addChild(new JKQTMathTextTextNode(this, "[", false));
         } else if (currentToken==MTTclosebracket) {
             if (quitOnClosingBracket) break;
-            else nl->addNode(new JKQTMathTextTextNode(this, "]", false));
+            else nl->addChild(new JKQTMathTextTextNode(this, "]", false));
         } else if (currentToken==MTTampersand) {
             break;
         } else if (currentToken==MTTdollar) {
@@ -1385,13 +1386,13 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
                 break;
             } else { // starting math environment
                 parsingMathEnvironment=true;
-                nl->addNode(new JKQTMathTextInstruction1Node(this, "equation", parseLatexString(true)));
+                nl->addChild(new JKQTMathTextInstruction1Node(this, "equation", parseLatexString(true)));
             }
         }
         if (getNew) getToken();
     }
     //std::cout<<"    leaving parseLatexString()\n";
-    return JKQTMathTextListNode::simplyfyListNode(nl);
+    return simplifyJKQTMathTextNode(nl);
 }
 
 

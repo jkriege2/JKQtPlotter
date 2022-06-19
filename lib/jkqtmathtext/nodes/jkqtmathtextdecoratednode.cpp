@@ -100,9 +100,9 @@ JKQTMathTextDecoratedNode::~JKQTMathTextDecoratedNode() {
 void JKQTMathTextDecoratedNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* /*prevNodeSize*/) {
     const QFontMetricsF fm(currentEv.getFont(parentMathText), painter.device());
 
-    child->getSize(painter, currentEv, width, baselineHeight, overallHeight, strikeoutPos);
+    getChild()->getSize(painter, currentEv, width, baselineHeight, overallHeight, strikeoutPos);
 
-    const double italic_xcorrection=getNonItalicXCorretion(painter, width, currentEv, child);
+    const double italic_xcorrection=getNonItalicXCorretion(painter, width, currentEv, getChild());
     const double decoheightfactor=parentMathText->getDecorationHeightFactor();
     const double deco_miniwidth=((decoration==MTDtilde||decoration==MTDbreve)?fm.boundingRect("~").width():fm.boundingRect("^").width())-italic_xcorrection;
 
@@ -123,7 +123,7 @@ double JKQTMathTextDecoratedNode::draw(QPainter& painter, double x, double y, JK
     doDrawBoxes(painter, x, y, currentEv);
     JKQTMathTextEnvironment ev=currentEv;
     double width=0, baselineHeight=0, overallHeight=0, strikeoutPos=0;
-    child->getSize(painter, ev, width, baselineHeight, overallHeight, strikeoutPos);
+    getChild()->getSize(painter, ev, width, baselineHeight, overallHeight, strikeoutPos);
     const QFont font=ev.getFont(parentMathText);
     const QFontMetricsF fm(font, painter.device());
     const double width_X=fm.boundingRect("X").width();
@@ -135,7 +135,7 @@ double JKQTMathTextDecoratedNode::draw(QPainter& painter, double x, double y, JK
     const double strike_ypos=y-baselineHeight/2.0;
     const double decobelow_ypos=y+qMax((overallHeight-baselineHeight)*(1.0+decoheightfactor), fm.xHeight()*decoheightfactor);
     const double deco_height=decoheightfactor*baselineHeight;
-    const double italic_xcorrection=getNonItalicXCorretion(painter, width, ev, child);
+    const double italic_xcorrection=getNonItalicXCorretion(painter, width, ev, getChild());
     const double deco_xoffset=parentMathText->getDecorationWidthReductionXFactor()*width_X/2.0;
     const double deco_width=std::max<double>(width_x*0.5,width-2.0*deco_xoffset-italic_xcorrection);
     const double deco_vecwidth=width_x*0.33;
@@ -154,7 +154,7 @@ double JKQTMathTextDecoratedNode::draw(QPainter& painter, double x, double y, JK
     p.setColor(ev.color);
     p.setWidthF(qMax(parentMathText->ABS_MIN_LINEWIDTH, fm.lineWidth()));//ceil(currentEv.fontSize/16.0));
 
-    double xnew=child->draw(painter, x, y, ev);
+    double xnew=getChild()->draw(painter, x, y, ev);
 
     if (decoration==MTDvec) {
         painter.setPen(p);

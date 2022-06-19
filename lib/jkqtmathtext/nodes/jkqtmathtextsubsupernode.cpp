@@ -51,7 +51,7 @@ void JKQTMathTextSuperscriptNode::getSizeInternal(QPainter& painter, JKQTMathTex
     const QFontMetricsF fm(currentEv.getFont(parentMathText), painter.device());
     const QRectF tbr=JKQTMathTextGetTightBoundingRect(currentEv.getFont(parentMathText), "M", painter.device());
     double cstrikeoutPos=0;
-    child->getSize(painter, ev, width, baselineHeight, overallHeight, cstrikeoutPos);
+    getChild()->getSize(painter, ev, width, baselineHeight, overallHeight, cstrikeoutPos);
     double shift=parentMathText->getSuperShiftFactor()*tbr.height();
 
     if (prevNodeSize!=nullptr && prevNodeSize->baselineHeight>tbr.height()) {
@@ -70,7 +70,7 @@ double JKQTMathTextSuperscriptNode::draw(QPainter& painter, double x, double y, 
     ev.fontSize=ev.fontSize*parentMathText->getSubsuperSizeFactor();
 
     double cWidth, cBaselineHeight, cOverallHeight, cStrikeoutPos;
-    child->getSize(painter, ev, cWidth, cBaselineHeight, cOverallHeight, cStrikeoutPos);
+    getChild()->getSize(painter, ev, cWidth, cBaselineHeight, cOverallHeight, cStrikeoutPos);
 
     QFontMetricsF fm(currentEv.getFont(parentMathText), painter.device());
     QRectF tbr=JKQTMathTextGetTightBoundingRect(currentEv.getFont(parentMathText), "M", painter.device());
@@ -84,7 +84,7 @@ double JKQTMathTextSuperscriptNode::draw(QPainter& painter, double x, double y, 
     double xx=x;
     if (currentEv.italic && prevNodeSize==nullptr) xx=xx+double(fm.boundingRect(' ').width())*parentMathText->getItalicCorrectionFactor();
 
-    return child->draw(painter, xx, y-yshift, ev);//+0.5*fm.boundingRect("A").width();
+    return getChild()->draw(painter, xx, y-yshift, ev);//+0.5*fm.boundingRect("A").width();
 }
 
 
@@ -97,7 +97,7 @@ QString JKQTMathTextSuperscriptNode::getTypeName() const
 bool JKQTMathTextSuperscriptNode::toHtml(QString &html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv)
 {
     html=html+"<sup>";
-    bool ok=child->toHtml(html, currentEv, defaultEv);
+    bool ok=getChild()->toHtml(html, currentEv, defaultEv);
     html=html+"</sup>";
     return ok;
 }
@@ -121,7 +121,7 @@ void JKQTMathTextSubscriptNode::getSizeInternal(QPainter& painter, JKQTMathTextE
     JKQTMathTextEnvironment ev=currentEv;
     ev.fontSize=ev.fontSize*parentMathText->getSubsuperSizeFactor();
 
-    child->getSize(painter, ev, width, baselineHeight, overallHeight, strikeoutPos);
+    getChild()->getSize(painter, ev, width, baselineHeight, overallHeight, strikeoutPos);
 
     QFontMetricsF fm(ev.getFont(parentMathText), painter.device());
     QRectF tbr=JKQTMathTextGetTightBoundingRect(currentEv.getFont(parentMathText), "M", painter.device());
@@ -145,7 +145,7 @@ double JKQTMathTextSubscriptNode::draw(QPainter& painter, double x, double y, JK
     QRectF tbr=JKQTMathTextGetTightBoundingRect(currentEv.getFont(parentMathText), "M", painter.device());
 
     double width=0, baselineHeight=0, overallHeight=0, strikeoutPos=0;
-    child->getSize(painter, ev, width, baselineHeight, overallHeight, strikeoutPos);
+    getChild()->getSize(painter, ev, width, baselineHeight, overallHeight, strikeoutPos);
     double shift=parentMathText->getSubShiftFactor()*tbr.height();
 
     if (prevNodeSize!=nullptr && prevNodeSize->overallHeight-prevNodeSize->baselineHeight>shift) {
@@ -159,7 +159,7 @@ double JKQTMathTextSubscriptNode::draw(QPainter& painter, double x, double y, JK
     //qDebug()<<"shift="<<shift<<", yshift="<<yshift;
     double xx=x;
     if (currentEv.italic && prevNodeSize==nullptr) xx=xx-double(fm.boundingRect(' ').width())*parentMathText->getItalicCorrectionFactor();
-    return child->draw(painter, xx, y+yshift, ev);//+0.5*fm.boundingRect("A").width();
+    return getChild()->draw(painter, xx, y+yshift, ev);//+0.5*fm.boundingRect("A").width();
 }
 
 QString JKQTMathTextSubscriptNode::getTypeName() const
@@ -169,7 +169,7 @@ QString JKQTMathTextSubscriptNode::getTypeName() const
 
 bool JKQTMathTextSubscriptNode::toHtml(QString &html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) {
     html=html+"<sub>";
-    bool ok=child->toHtml(html, currentEv, defaultEv);
+    bool ok=getChild()->toHtml(html, currentEv, defaultEv);
     html=html+"</sub>";
     return ok;
 }

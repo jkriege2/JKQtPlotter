@@ -42,7 +42,7 @@
 class JKQTMathTextNode; // forward
 
 /*! \brief this class parses a LaTeX string and can then draw the contained text/equation onto a <a href="http://doc.qt.io/qt-5/qpainter.html">QPainter</a>
-    \ingroup jkqtmathtext
+    \ingroup jkqtmathtext_render
 
     
     JKQTMathText is a self-contained LaTeX-renderer for Qt. It is used to renderer
