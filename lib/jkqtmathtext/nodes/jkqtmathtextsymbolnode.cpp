@@ -758,7 +758,7 @@ JKQTMathTextSymbolNode::SymbolProps JKQTMathTextSymbolNode::getSymbolProp(const 
                     <<"subsetnot"<<"bot"<<"leftharpoonup"<<"rightharpoonup"<<"upharpoonleft"<<"downharpoonleft"<<"leftrightharpoon"<<"rightleftharpoon"<<"coprod"<<"leftharpoondown"
                     <<"rightharpoondown"<<"upharpoonright"<<"downharpoonright"<<"nwarrow"<<"nearrow"<<"searrow"<<"swarrow"<<"mapsto"<<"div"<<"multimap"<<"maporiginal"<<"mapimage"
                     <<"times"<<"propto"<<"bullet"<<"neq"<<"ne"<<"equiv"<<"approx"<<"otimes"<<"oplus"<<"oslash"<<"cap"<<"land"<<"cup"<<"lor"<<"supset"<<"supseteq"<<"supsetnot"
-                    <<"subset"<<"subseteq"<<"in"<<"notin"<<"cdot"<<"wedge"<<"vee"<<"cong"<<"bot"<<"mid"<<"+"<<"-"<<"|"<<"*"<<"/"<<"<"<<">";
+                    <<"subset"<<"subseteq"<<"in"<<"notin"<<"cdot"<<"wedge"<<"vee"<<"cong"<<"bot"<<"mid"<<"+"<<"-"<<"|"<<"*"<<"/"<<"<"<<">"<<"=";
     }
 
     if (extendWInMM.contains(n)) {
@@ -886,17 +886,17 @@ void JKQTMathTextSymbolNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvi
     if (props.italic>0) f.setItalic(true);
     if (props.bold<0) f.setBold(false);
     if (props.bold>0) f.setBold(true);
-    QFontMetricsF fm(f, painter.device());
+    const QFontMetricsF fm(f, painter.device());
     QString symb=props.symbol;
     width=0;
-    if (currentEv.insideMath) width=qMax(JKQTMathTextGetTightBoundingRect(f, symb, painter.device()).width(),JKQTMathTextGetTightBoundingRect(f, "i", painter.device()).width());//fm.width(symbol);
-    else width=fm.boundingRect(symb).width();//fm.width(symbol);
+    if (currentEv.insideMath) {
+        width=qMax(JKQTMathTextGetTightBoundingRect(f, symb, painter.device()).width(), JKQTMathTextGetTightBoundingRect(f, "(", painter.device()).width());
+    } else width=fm.boundingRect(symb).width();//fm.width(symbol);
 
-    width=qMax(fm.boundingRect("j").width(), width);
     if (symb.isEmpty()) {
         width=fm.boundingRect("a").width();
         if (symbolName=="|") width=fm.boundingRect("1").width()*0.8;
-        else if (symbolName=="infty") width=fm.boundingRect("M").width();
+        else if (symbolName=="infty") width=JKQTMathTextGetTightBoundingRect(f, "8", painter.device()).height();
         else if (symbolName=="quad" || symbolName=="qquad") width=JKQTMathTextGetTightBoundingRect(f, "M", painter.device()).width();
         else if (symbolName==" " || symbolName=="space") width=JKQTMathTextGetTightBoundingRect(f, "x", painter.device()).width();
         else if (symbolName==";") width=JKQTMathTextGetTightBoundingRect(f, "x", painter.device()).width()*0.75;
@@ -910,7 +910,7 @@ void JKQTMathTextSymbolNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvi
         else if (symbolName=="longleftrightarrow") { width=JKQTMathTextGetTightBoundingRect(f, "X", painter.device()).width()*3.5; symb="x"; }
         else if (symbolName=="Longleftrightarrow") { width=JKQTMathTextGetTightBoundingRect(f, "X", painter.device()).width()*3.5; symb="x"; }
     }
-    QRectF tbr=JKQTMathTextGetTightBoundingRect(f, symb, painter.device());
+    const QRectF tbr=JKQTMathTextGetTightBoundingRect(f, symb, painter.device());
     overallHeight=tbr.height();// fm.height();
     baselineHeight=tbr.height()-tbr.bottom();
     if (props.exactAscent) {
@@ -940,7 +940,7 @@ double JKQTMathTextSymbolNode::draw(QPainter& painter, double x, double y, JKQTM
     QFont fold=painter.font();
     QFont f=currentEv.getFont(parentMathText);
     QFont f1=f;
-    auto props=getSymbolProp(symbolName, currentEv);
+    const auto props=getSymbolProp(symbolName, currentEv);
     f.setFamily(props.font);
     f.setPointSizeF(f.pointSizeF()*props.fontFactor);
     if (props.italic<0) f.setItalic(false);
@@ -948,14 +948,12 @@ double JKQTMathTextSymbolNode::draw(QPainter& painter, double x, double y, JKQTM
     if (props.bold<0) f.setBold(false);
     if (props.bold>0) f.setBold(true);
     const QFontMetricsF fm(f, painter.device());
-    const QFontMetricsF fm1(f1, painter.device());
     painter.setFont(f);
 
     double shift=0;
     if (props.extendWidthInMathmode && currentEv.insideMath) {
-        const double origwidth=width/parentMathText->getMathoperatorWidthFactor();
-        shift=0.5*(width-origwidth);
-        //width=width*parent->getMathoperatorWidthFactor();
+        const QRectF tbr=JKQTMathTextGetTightBoundingRect(f, props.symbol, painter.device());
+        shift=0.5*width-tbr.width()/2.0-tbr.x();
     }
 
     //std::cout<<"symbol '"<<symbolName.toStdString()<<"' = "<<std::hex<<symbol.at(0).digitValue()<<" in font '"<<f.family().toStdString()<<"' ("<<QFontInfo(f).family().toStdString()<<"): "<<fm.inFont(symbol.at(0))<<std::endl;
@@ -968,19 +966,21 @@ double JKQTMathTextSymbolNode::draw(QPainter& painter, double x, double y, JKQTM
     const double xwi=fm.boundingRect("x").width();
     if (!props.symbol.isEmpty()) {
         // if the symbol has been recognized in the constructor: draw the symbol
-        painter.drawText(QPointF(x+shift, y+props.yfactor*overallHeight), props.symbol);
+        const QPointF x0(x+shift, y+props.yfactor*overallHeight);
+        painter.drawText(x0, props.symbol);
         if (props.drawBar) {
             const double xx=x+shift;
             const double yy=y-fm.xHeight()-(JKQTMathTextGetTightBoundingRect(f, "M", painter.device()).height()-fm.xHeight())/3.0;
             const QLineF l(xx, yy, xx+xwi/3.0+((currentEv.italic)?(xwi/3.0):0), yy);
-
             if (l.length()>0) painter.drawLine(l);
         }
+
     // try to draw some often used special symbols, by synthesizing them from
     // standard characters in the current drawing font
     } else if (symbolName=="infty") {
         //std::cout<<"draw infty\n";
         f1.setItalic(false);
+        const QFontMetricsF fm1(f1, painter.device());
         painter.setFont(f1);
         painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
         painter.translate(x+shift+fm1.boundingRect("8").width()/3.0, y-fm1.xHeight());
@@ -988,10 +988,10 @@ double JKQTMathTextSymbolNode::draw(QPainter& painter, double x, double y, JKQTM
         painter.drawText(QPointF(0,0), "8");
 
     } else if (symbolName=="|") {
-        //std::cout<<"draw infty\n";
+        //std::cout<<"draw ||\n";
         f1.setItalic(false);
+        const QFontMetricsF fm1(f1, painter.device());
         painter.setFont(f1);
-
         painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
         painter.translate(x+shift, y);
         painter.drawText(QPointF(0,0), "|");

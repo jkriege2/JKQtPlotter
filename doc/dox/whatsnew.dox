@@ -30,6 +30,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>FIXED: JKQTMathText added a little whitespace before and after the LaTeX-string. This was removed as it disturbed the layout of text in plots</li>
     <li>FIXED: height-calculation of frac-like instructions: before the ascent and descent were equal, even if the numerator and denominator have different heights</li>
     <li>FIXED: strikeoutPos was not correctly calculated in sub-/superscript node</li>
+    <li>FIXED: symbol spacing in math mode (and text mode)</li>
     <li>FIXED/IMPROVED: JKQTMathText renders several LaTeX strings better (simple braces in math mode, +-*... as symbols with proper sizes in math mode, added some missing instruction aliases, improved size of \vec and \hat, corrrected fonts usage for mathrm</li>
     <li>IMPROVED: high-dpr-support in JKQTMathText</li>
     <li>MODIFIED: brace node  now calculates the extension of the child height above or below the strikeoutPos, in order to center braces around the strikeoutPos</li>
