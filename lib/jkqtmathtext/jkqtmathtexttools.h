@@ -137,6 +137,65 @@ enum JKQTMathTextFontEncoding {
  */
 JKQTMATHTEXT_LIB_EXPORT QString JKQTMathTextFontEncoding2String(JKQTMathTextFontEncoding e);
 
+/** \brief types of available braces
+ *  \ingroup jkqtmathtext
+ */
+enum JKQTMathTextBraceType {
+    MTBTParenthesis=0,  /*!< \brief parantheses () \image html jkqtmathtext/jkqtmathtext_brace_round.png */
+    MTBTSquareBracket,  /*!< \brief brackets [] \image html jkqtmathtext/jkqtmathtext_brace_rect.png */
+    MTBTCurlyBracket,  /*!< \brief curly braces {} \image html jkqtmathtext/jkqtmathtext_brace_curly.png */
+    MTBTAngleBracket,  /*!< \brief angle backets <> \image html jkqtmathtext/jkqtmathtext_brace_tri.png */
+    MTBTCeilBracket,  /*!< \brief ceil brackets \image html jkqtmathtext/jkqtmathtext_brace_ceil.png */
+    MTBTFloorBracket,  /*!< \brief floor brackets \image html jkqtmathtext/jkqtmathtext_brace_floor.png */
+    MTBTDoubleLine,  /*!< \brief double-line brackets (norm ||...||) \image html jkqtmathtext/jkqtmathtext_brace_dblline.png */
+    MTBTSingleLine,  /*!< \brief single-line brackets (abs |...|) \image html jkqtmathtext/jkqtmathtext_brace_oneline.png */
+    MTBTNone,  /*!< \brief no bracket */
+    MTBTAny,  /*!< \brief any bracket, used by JKQTMathText::parseLatexString() */
+    MTBTUnknown  /*!< \brief an unknown tokenName presented to TokenName2JKQTMathTextBraceType() */
+};
+/** \brief convert a JKQTMathTextBraceType into a string
+ *  \ingroup jkqtmathtext
+ */
+JKQTMATHTEXT_LIB_EXPORT QString JKQTMathTextBraceType2String(JKQTMathTextBraceType type);
+/** \brief convert a string \a tokenName describing a LaTeX Token or Instruction into an opening or closing JKQTMathTextBraceType
+ *  \ingroup jkqtmathtext
+ */
+JKQTMATHTEXT_LIB_EXPORT JKQTMathTextBraceType TokenName2JKQTMathTextBraceType(const QString& tokenName);
+/** \brief convert a string \a tokenName describing a LaTeX Instruction into an opening JKQTMathTextBraceType
+ *  \ingroup jkqtmathtext
+ *
+ *  This returns a JKQTMathTextBraceType for which  isPrintableJKQTMathTextBraceType() is \c true, or MTBTUnknown,
+ *  never MTBTNone or MTBTAny.
+ */
+JKQTMATHTEXT_LIB_EXPORT JKQTMathTextBraceType InstructionName2OpeningJKQTMathTextBraceType(const QString& tokenName);
+/** \brief convert a string \a tokenName describing a LaTeX Instruction into an opening or closing JKQTMathTextBraceType
+ *  \ingroup jkqtmathtext
+ *
+ *  This returns a JKQTMathTextBraceType for which  isPrintableJKQTMathTextBraceType() is \c true, or MTBTUnknown,
+ *  never MTBTNone or MTBTAny.
+ */
+JKQTMATHTEXT_LIB_EXPORT JKQTMathTextBraceType InstructionName2JKQTMathTextBraceType(const QString& tokenName);
+/** \brief return \c true if \a type represents a printable type of brace (including MTBTNone), basically \c true
+ *         for any JKQTMathTextBraceType that can be used as parameter to JKQTMathTextBraceNode
+ *  \ingroup jkqtmathtext
+ */
+JKQTMATHTEXT_LIB_EXPORT bool isPrintableJKQTMathTextBraceType(JKQTMathTextBraceType type);
+/** \brief returns true, if the given token/instruction-Name \a token ("{", "(", ..., "lceil", ".", ...) matches the given \a type (returns true, when \a type == MTBTAny )
+ *  \ingroup jkqtmathtext
+ *
+ *  This accepts TokenName2JKQTMathTextBraceType(toke)==MTBTNone for any \a type, iff \a acceptMTBTNone \a ==true.
+ *
+ *  Optionally returns in \a tokenEqualsNone whether \a token was encoding for MTBTNone .
+ */
+JKQTMATHTEXT_LIB_EXPORT bool TokenNameMatchesJKQTMathTextBraceType(const QString &token, JKQTMathTextBraceType type, bool acceptMTBTNone, bool *tokenEqualsNone=nullptr);
+/** \brief returns true, if the given instruction-Name \a token ("|", "{", ..., "lceil", ".", ...) matches the given \a type (returns true, when \a type == MTBTAny )
+ *  \ingroup jkqtmathtext
+ *
+ *  This accepts TokenName2JKQTMathTextBraceType(toke)==MTBTNone for any \a type, iff \a acceptMTBTNone \a ==true.
+ *
+ *  Optionally returns in \a tokenEqualsNone whether \a token was encoding for MTBTNone .
+ */
+JKQTMATHTEXT_LIB_EXPORT bool InstructionNameMatchesJKQTMathTextBraceType(const QString &token, JKQTMathTextBraceType type, bool acceptMTBTNone, bool *tokenEqualsNone=nullptr);
 
 /** \brief the available logical fonts (default is MTEroman)
  *  \ingroup jkqtmathtext

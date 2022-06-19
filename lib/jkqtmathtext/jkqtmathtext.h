@@ -589,22 +589,30 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
 
         /** \brief the token types that may arrise in the string */
         enum tokenType {
-            MTTnone,
-            MTTtext,
-            MTTinstruction,
-            MTTunderscore,
-            MTThat,
-            MTTdollar,
-            MTTopenbrace,
-            MTTclosebrace,
-            MTTwhitespace,
-            MTTampersand
+            MTTnone, /*!< \brief no token */
+            MTTtext, /*!< \brief a piece of general text */
+            MTTinstruction, /*!< \brief an instruction, started by "\", e.g. "\textbf", ... */
+            MTTunderscore,  /*!< \brief the character "_" */
+            MTThat,  /*!< \brief the character "^" */
+            MTTdollar,  /*!< \brief the character "$" */
+            MTTopenbrace, /*!< \brief the character "{" */
+            MTTclosebrace, /*!< \brief the character "}" */
+            MTTopenbracket, /*!< \brief the character "[" */
+            MTTclosebracket, /*!< \brief the character "]" */
+            MTTwhitespace, /*!< \brief some whitespace */
+            MTTampersand  /*!< \brief the character "&" */
         };
 
         /** \brief tokenizer for the LaTeX parser */
         tokenType getToken();
-        /** \brief parse a LaTeX string */
-        JKQTMathTextNode* parseLatexString(bool get, const QString& quitOnClosingBrace=QString(""), const QString& quitOnEnvironmentEnd=QString(""));
+        /** \brief parse a LaTeX string
+         *
+         *  \param get if \c true this calls getToken()
+         *  \param quitOnClosingBrace if unequal MTBTAny, this returns if the given closing brace is found
+         *  \param quitOnEnvironmentEnd wuit if \end{quitOnEnvironmentEnd} is found
+         *  \param quitOnClosingBracket if \c true, quits on encountering a MTTclosebracket token
+         */
+        JKQTMathTextNode* parseLatexString(bool get, JKQTMathTextBraceType quitOnClosingBrace=JKQTMathTextBraceType::MTBTAny, const QString& quitOnEnvironmentEnd=QString(""), bool quitOnClosingBracket=false);
         /** \brief parse a LaTeX math environment */
         JKQTMathTextNode* parseMath(bool get);
 

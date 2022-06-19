@@ -50,10 +50,7 @@ JKQTMathTextListNode::JKQTMathTextListNode(JKQTMathText* _parent):
 }
 
 JKQTMathTextListNode::~JKQTMathTextListNode() {
-    for (int i=0; i<nodes.size(); i++) {
-        delete nodes[i];
-    }
-    nodes.clear();
+    clearChildren(true);
 }
 
 QString JKQTMathTextListNode::getTypeName() const
@@ -439,6 +436,49 @@ void JKQTMathTextListNode::setDrawBoxes(bool draw)
 
 QList<JKQTMathTextNode *> JKQTMathTextListNode::getNodes() const {
     return this->nodes;
+}
+
+int JKQTMathTextListNode::count() const
+{
+    return nodes.size();
+}
+
+int JKQTMathTextListNode::size() const
+{
+    return nodes.size();
+}
+
+void JKQTMathTextListNode::clearChildren(bool deleteChildren)
+{
+    if (deleteChildren) {
+        for (int i=0; i<nodes.size(); i++) {
+            delete nodes[i];
+        }
+    }
+    nodes.clear();
+}
+
+JKQTMathTextNode *JKQTMathTextListNode::child(int i)
+{
+    return nodes[i];
+}
+
+const JKQTMathTextNode *JKQTMathTextListNode::child(int i) const
+{
+    return nodes[i];
+}
+
+JKQTMathTextNode *JKQTMathTextListNode::simplyfyListNode(JKQTMathTextListNode *nl) {
+    return nl;
+    if (nl==nullptr) return nl;
+    if (nl->count()==1) {
+        // if there was only a single node: simplify the syntax tree, by removing the outer list node
+        JKQTMathTextNode* ret= nl->child(0);
+        nl->clearChildren(false);
+        delete nl;
+        return ret;
+    }
+    return nl;
 }
 
 

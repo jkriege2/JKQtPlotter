@@ -355,7 +355,7 @@ QTreeWidgetItem *TestForm::createTree(JKQTMathTextNode *node, QTreeWidgetItem* p
         name=QString("MTsqrtNode: deg=%1").arg(sqrtN->getDegree());
         if (sqrtN->getChild()) ti->addChild(createTree(sqrtN->getChild(), ti));
     } else if (braceN)  {
-        name=QString("MTbraceNode: l[showL=%3]='%1', r[showR=%4]='%2'").arg(braceN->getOpenbrace()).arg(braceN->getClosebrace()).arg(braceN->getShowOpeningBrace()).arg(braceN->getShowClosingBrace());
+        name=QString("MTbraceNode: l='%1', r='%2'").arg(JKQTMathTextBraceType2String(braceN->getOpenbrace())).arg(JKQTMathTextBraceType2String(braceN->getClosebrace()));
         if (braceN->getChild()) ti->addChild(createTree(braceN->getChild(), ti));
     } else if (superN)  {
         name=QString("MTsuperscriptNode");

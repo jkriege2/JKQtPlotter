@@ -51,6 +51,18 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextListNode: public JKQTMathTextNode {
         virtual void setDrawBoxes(bool draw) override;
         /** \copydoc nodes */ 
         QList<JKQTMathTextNode*> getNodes() const;
+        /** \brief return number of children */
+        int count() const;
+        /** \brief return number of children */
+        int size() const;
+        /** \brief clear all children, deleting them if \a deleteChildren==true */
+        void clearChildren(bool deleteChildren=true);
+        /** \brief return i-th child node */
+        JKQTMathTextNode* child(int i);
+        /** \brief return i-th child node */
+        const JKQTMathTextNode* child(int i) const;
+        /** \brief simplifies the given list-node, i.e. if it contains one child only, the child is returned and the list node destroyed, otherwise the list node \a nl is returned */
+        static JKQTMathTextNode* simplyfyListNode(JKQTMathTextListNode* nl);
     protected:
         /** \copydoc JKQTMathTextNode::getSizeInternal() */
         virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;

@@ -325,6 +325,87 @@ QString JKQTMathTextFontEncoding2String(JKQTMathTextFontEncoding e)
     return "???";
 }
 
+
+
+QString JKQTMathTextBraceType2String(JKQTMathTextBraceType type) {
+    switch(type) {
+    case MTBTAngleBracket:
+        return "angle_bracket";
+    case MTBTSquareBracket:
+        return "square_bracket";
+    case MTBTCeilBracket:
+        return "ceil_bracket";
+    case MTBTCurlyBracket:
+        return "curly_bracket";
+    case MTBTDoubleLine:
+        return "double_line";
+    case MTBTFloorBracket:
+        return "floor_bracket";
+    case MTBTParenthesis:
+        return "parenhesis";
+    case MTBTSingleLine:
+        return "single_line";
+    case MTBTAny:
+        return "any";
+    case MTBTNone:
+        return "none";
+    }
+    return "unknown";
+}
+
+JKQTMathTextBraceType TokenName2JKQTMathTextBraceType(const QString &tokenName)
+{
+    if (tokenName=="(" || tokenName==")") return MTBTParenthesis;
+    if (tokenName=="[" || tokenName=="]") return MTBTSquareBracket;
+    if (tokenName=="{" || tokenName=="}") return MTBTCurlyBracket;
+    if (tokenName=="|") return MTBTSingleLine;
+    if (tokenName=="||" || tokenName=="#") return MTBTDoubleLine;
+    if (tokenName=="<" || tokenName==">" || tokenName=="langle" || tokenName=="rangle") return MTBTAngleBracket;
+    if (tokenName=="_" || tokenName=="lfloor" || tokenName=="rfloor") return MTBTFloorBracket;
+    if (tokenName=="~" || tokenName=="lceil" || tokenName=="rceil") return MTBTCeilBracket;
+    if (tokenName=="any") return MTBTAny;
+    if (tokenName=="." || tokenName=="" || tokenName=="none") return MTBTNone;
+    return MTBTUnknown;
+}
+
+JKQTMathTextBraceType InstructionName2OpeningJKQTMathTextBraceType(const QString &tokenName)
+{
+    if (tokenName=="{") return MTBTCurlyBracket;
+    if (tokenName=="|") return MTBTDoubleLine;
+    if (tokenName=="langle") return MTBTAngleBracket;
+    if (tokenName=="lfloor") return MTBTFloorBracket;
+    if (tokenName=="lceil") return MTBTCeilBracket;
+    return MTBTUnknown;
+}
+
+JKQTMathTextBraceType InstructionName2JKQTMathTextBraceType(const QString &tokenName)
+{
+    if (tokenName=="{" || tokenName=="}") return MTBTCurlyBracket;
+    if (tokenName=="|") return MTBTDoubleLine;
+    if (tokenName=="langle" || tokenName=="rangle") return MTBTAngleBracket;
+    if (tokenName=="lfloor" || tokenName=="rfloor") return MTBTFloorBracket;
+    if (tokenName=="lceil" || tokenName=="rceil") return MTBTCeilBracket;
+    return MTBTUnknown;
+}
+
+bool TokenNameMatchesJKQTMathTextBraceType(const QString &token, JKQTMathTextBraceType type, bool acceptMTBTNone, bool* tokenEqualsNone)
+{
+    const JKQTMathTextBraceType bt=TokenName2JKQTMathTextBraceType(token);
+    if (tokenEqualsNone) *tokenEqualsNone=(bt==MTBTNone);
+    if (type==MTBTAny) return true;
+    if (acceptMTBTNone && bt==MTBTNone) return true;
+    return (bt==type);
+}
+
+bool InstructionNameMatchesJKQTMathTextBraceType(const QString &token, JKQTMathTextBraceType type, bool acceptMTBTNone, bool* tokenEqualsNone)
+{
+    const JKQTMathTextBraceType bt=InstructionName2JKQTMathTextBraceType(token);
+    if (tokenEqualsNone) *tokenEqualsNone=(bt==MTBTNone);
+    if (type==MTBTAny) return true;
+    if (acceptMTBTNone && bt==MTBTNone) return true;
+    return (bt==type);
+}
+
 JKQTMathTextEnvironment::JKQTMathTextEnvironment() {
     color=QColor("black");
     font=MTEroman;
@@ -577,3 +658,8 @@ QFont JKQTMathTextGetNonItalic(const QFont &font)
     return f;
 }
 
+
+bool isPrintableJKQTMathTextBraceType(JKQTMathTextBraceType type)
+{
+    return (type!=MTBTAny) && (type!=MTBTUnknown);
+}
