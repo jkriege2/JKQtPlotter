@@ -493,10 +493,6 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         void setDecorationWidthReductionXFactor(double __value);
         /** \copydoc decoration_width_reduction_Xfactor */
         double getDecorationWidthReductionXFactor() const;
-        /** \copydoc expensiveRendering */
-        void setExpensiveRendering(bool __value);
-        /** \copydoc expensiveRendering */ 
-        bool getExpensiveRendering() const;
         /** \copydoc useUnparsed */ 
         void setUseUnparsed(bool __value);
         /** \copydoc useUnparsed */ 
@@ -535,28 +531,49 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         double subsuper_size_factor;
         /** \brief fraction of a whitespace by which to shift a sub-/superscript left/right when the previous text is italic */
         double italic_correction_factor;
-        /** \brief like subsuper_size_factor, but for operators (\\sum, \\int) where the text is placed above/below the symbol */
+        /** \brief like subsuper_size_factor, but for operators (\C \\sum , \c \\int , ...) where the text is placed above/below the symbol */
         double operatorsubsuper_size_factor;
-        /** \brief factor, used to extend the size of an operator in math mode */
+        /** \brief factor, used to extend the size of an operator in math mode
+         *
+         *  The next image demonstrates the effect of this property, which adds extra space
+         *  around certain math operators in math mode:
+         *
+         *  \image html jkqtmathparser_mathoperator_width_factor.png
+         */
         double mathoperator_width_factor;
         /** \brief relative shift of text in superscript to normal text:
-         *         0= baseline kept, 1: baseline shifted to top of normal text */
+         *         0= baseline kept, 1: baseline shifted to top of normal text
+         *
+         *  \image html jkqtmathtext_superscriptnode_getSizeInternal.png
+         */
         double super_shift_factor;
         /** \brief relative shift of text in subscript to normal text:
-         *         0= baseline kept, 1: baseline shifted to bottom of normal text */
+         *         0= baseline kept, 1: baseline shifted to bottom of normal text
+         *
+         *  \image html jkqtmathtext_subscriptnode_getSizeInternal.png
+         */
         double sub_shift_factor;
 
 
-        /** \brief scaling factor for font size of nominator and denominator of a fraction */
+        /** \brief scaling factor for font size of nominator and denominator of a fraction
+         *
+         *  \image html jkqtmathtext_frac_factor.png
+         */
         double frac_factor;
-        /** \brief scaling factor for font size of nominator and denominator of a nested fraction */
+        /** \brief scaling factor for font size of nominator and denominator of a nested fraction
+         *
+         *  \image html jkqtmathtext_frac_factor.png
+         */
         double frac_nested_factor;
-        /** \brief shift of denominator/nummerator away from central line of a frac */
+        /** \brief shift of denominator/nummerator away from central line of a frac
+         *
+         *  \image html jkqtmathtext_fracnode_geo.png
+         */
         double frac_shift_factor;
         /** \brief scaling factor for font of underbrace/overbrace text */
         double underbrace_factor;
         /** \brief scaling factor for font of underset/overset text */
-        double undersetFactor;
+        double underset_factor;
         /** \brief fraction of the brace ascent that the brace is shifted downwards, when scaled */
         double brace_y_shift_factor;
         /** \brief size of the decorations (dot, tilde, ...), as fraction of the baselineheight
@@ -569,14 +586,8 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
          *  \image html jkqtmathtext/decoration_sizing.png
          */
         double decoration_width_reduction_Xfactor;
-        /** \brief switches on some options that will grant better rendering at the expense of higher time consumption */
-        bool expensiveRendering;
         /** \brief a list that will be filled with error messages while parsing, if any error occur */
         QStringList error_list;
-        /** \brief used by the parser. This is used to implement brace pairs with \\right. */
-        bool showRightBrace;
-        /** \brief used by the parser. This is used to implement brace pairs with \\left. */
-        bool showLeftBrace;
 
         /** \brief the result of parsing the last string supplied to the object via parse() */
         JKQTMathTextNode* parsedNode;
@@ -585,22 +596,23 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         /** \brief if true, the unparsedNode is drawn */
         bool useUnparsed;
 
-        JKQTMathTextNode* getTree() const;
+        /** \brief returns the syntax tree of JKQTMathTextNode's that was created by the last parse call */
+        JKQTMathTextNode* getNodeTree() const;
 
         /** \brief the token types that may arrise in the string */
         enum tokenType {
             MTTnone, /*!< \brief no token */
             MTTtext, /*!< \brief a piece of general text */
-            MTTinstruction, /*!< \brief an instruction, started by "\", e.g. "\textbf", ... */
-            MTTunderscore,  /*!< \brief the character "_" */
-            MTThat,  /*!< \brief the character "^" */
-            MTTdollar,  /*!< \brief the character "$" */
-            MTTopenbrace, /*!< \brief the character "{" */
-            MTTclosebrace, /*!< \brief the character "}" */
-            MTTopenbracket, /*!< \brief the character "[" */
-            MTTclosebracket, /*!< \brief the character "]" */
+            MTTinstruction, /*!< \brief an instruction, started by \c "\\", e.g. \c "\textbf", ... */
+            MTTunderscore,  /*!< \brief the character \c "_" */
+            MTThat,  /*!< \brief the character \c "^" */
+            MTTdollar,  /*!< \brief the character \c "$" */
+            MTTopenbrace, /*!< \brief the character \c "{" */
+            MTTclosebrace, /*!< \brief the character \c "}" */
+            MTTopenbracket, /*!< \brief the character \c "[" */
+            MTTclosebracket, /*!< \brief the character \c "]" */
             MTTwhitespace, /*!< \brief some whitespace */
-            MTTampersand  /*!< \brief the character "&" */
+            MTTampersand  /*!< \brief the character \c "&" */
         };
 
         /** \brief tokenizer for the LaTeX parser */

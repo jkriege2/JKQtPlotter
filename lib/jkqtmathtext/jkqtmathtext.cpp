@@ -72,18 +72,14 @@ JKQTMathText::JKQTMathText(QObject* parent):
     frac_nested_factor=0.7;
     frac_shift_factor=0.4;
     underbrace_factor=0.75;
-    undersetFactor=0.7;
+    underset_factor=0.7;
     decoration_height_factor=0.2;
     decoration_width_reduction_Xfactor=0.2;
     brace_y_shift_factor=0.7;//-1;
     operatorsubsuper_size_factor=0.65;
     mathoperator_width_factor=1.5;
 
-    expensiveRendering=true;
     blackboardSimulated=true;
-
-    showLeftBrace=true;
-    showRightBrace=true;
 
 
     static QString serifFont="serif";
@@ -210,7 +206,7 @@ void JKQTMathText::loadSettings(const QSettings& settings, const QString& group)
     frac_factor=settings.value(group+"frac_factor", frac_factor).toDouble();
     frac_shift_factor=settings.value(group+"frac_shift_factor", frac_shift_factor).toDouble();
     underbrace_factor=settings.value(group+"underbrace_factor", underbrace_factor).toDouble();
-    undersetFactor=settings.value(group+"undersetFactor", undersetFactor).toDouble();
+    underset_factor=settings.value(group+"undersetFactor", underset_factor).toDouble();
     brace_y_shift_factor=settings.value(group+"brace_y_shift_factor", brace_y_shift_factor).toDouble();
     decoration_height_factor=settings.value(group+"decoration_height_factor", decoration_height_factor).toDouble();
     decoration_width_reduction_Xfactor=settings.value(group+"decoration_width_reduction_xfactor", decoration_width_reduction_Xfactor).toDouble();
@@ -236,7 +232,7 @@ void JKQTMathText::saveSettings(QSettings& settings, const QString& group) const
     settings.setValue(group+ "frac_factor", frac_factor);
     settings.setValue(group+ "frac_shift_factor", frac_shift_factor);
     settings.setValue(group+ "underbrace_factor", underbrace_factor);
-    settings.setValue(group+ "undersetFactor", undersetFactor);
+    settings.setValue(group+ "undersetFactor", underset_factor);
     settings.setValue(group+ "operatorsubsuper_size_factor", operatorsubsuper_size_factor);
     settings.setValue(group+ "mathoperator_width_factor", mathoperator_width_factor);
     settings.setValue(group+ "brace_y_shift_factor", brace_y_shift_factor);
@@ -261,7 +257,6 @@ bool JKQTMathText::useSTIX(bool mathModeOnly) {
         res=true;
     }
 
-    brace_shrink_factor=0.6;
     return res;
 }
 
@@ -275,14 +270,12 @@ bool JKQTMathText::useXITS(bool mathModeOnly)
         setFontRoman(xits.fontName(), MTFEunicode);
         setSymbolfontSymbol(xits.fontName(), MTFEunicode);
         setSymbolfontGreek(xits.fontName(), MTFEunicode);
-        brace_shrink_factor=0.6;
         res=true;
     }
     if (!xits.mathFontName().isEmpty()) {
         setFontMathRoman(xits.mathFontName(), MTFEunicode);
         setSymbolfontSymbol(xits.fontName(), MTFEunicode);
         setSymbolfontGreek(xits.fontName(), MTFEunicode);
-        brace_shrink_factor=0.6;
         res=true;
     }
 
@@ -304,7 +297,6 @@ bool JKQTMathText::useASANA(bool mathModeOnly)
         res=true;
     }
 
-    brace_shrink_factor=0.6;
     return res;
 }
 
@@ -312,14 +304,13 @@ void JKQTMathText::useAnyUnicode(QString timesFont, const QString &sansFont, JKQ
 {
     if (!timesFont.isEmpty()) { setFontRoman(timesFont, encodingTimes); }
     if (!sansFont.isEmpty()) { setFontSans(sansFont, encodingSans); }
-    brace_shrink_factor=0.6;
 }
 
 
 QString JKQTMathText::toHtml(bool *ok, double fontPointSize) {
     QString s;
     bool okk=false;
-    if (getTree()!=nullptr) {
+    if (getNodeTree()!=nullptr) {
         JKQTMathTextEnvironment ev;
         ev.color=fontColor;
         ev.fontSize=fontPointSize;
@@ -327,7 +318,7 @@ QString JKQTMathText::toHtml(bool *ok, double fontPointSize) {
         JKQTMathTextEnvironment defaultev;
         defaultev.fontSize=fontPointSize;
 
-        okk=getTree()->toHtml(s, ev, defaultev);
+        okk=getNodeTree()->toHtml(s, ev, defaultev);
     }
     if (ok) *ok=okk;
     return s;
@@ -720,12 +711,12 @@ double JKQTMathText::getUnderbraceFactor() const
 
 void JKQTMathText::setUndersetFactor(double __value)
 {
-    this->undersetFactor = __value;
+    this->underset_factor = __value;
 }
 
 double JKQTMathText::getUndersetFactor() const
 {
-    return this->undersetFactor;
+    return this->underset_factor;
 }
 
 void JKQTMathText::setFracFactor(double __value)
@@ -786,16 +777,6 @@ void JKQTMathText::setDecorationWidthReductionXFactor(double __value)
 double JKQTMathText::getDecorationWidthReductionXFactor() const
 {
     return decoration_width_reduction_Xfactor;
-}
-
-void JKQTMathText::setExpensiveRendering(bool __value)
-{
-    this->expensiveRendering = __value;
-}
-
-bool JKQTMathText::getExpensiveRendering() const
-{
-    return this->expensiveRendering;
 }
 
 void JKQTMathText::setUseUnparsed(bool __value)
@@ -1227,10 +1208,6 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
                             bool tokenWasNoBrace=false;
                             const QString firstTokenChar(currentTokenName[0]);
                             if (TokenNameMatchesJKQTMathTextBraceType(firstTokenChar, quitOnClosingBrace, true, &tokenWasNoBrace)) {
-                                //std::cout<<"found \\right '"<<currentTokenName.toStdString()<<"'\n";
-                                showLeftBrace=(quitOnClosingBrace==MTBTAny || quitOnClosingBrace!=MTBTNone);
-                                showRightBrace=!tokenWasNoBrace;
-                                //if (!showRightBrace) std::cout<<"don't show right brace '"<<quitOnClosingBrace.toStdString()<<"' !!!\n";
                                 if (quitOnClosingBrace!=MTBTAny) currentTokenName=currentTokenName.right(currentTokenName.size()-1);
                                 break;
                             } else {
@@ -1430,7 +1407,7 @@ bool JKQTMathText::parse(const QString& text, bool addSpaceBeforeAndAfter){
 
 
 QSizeF JKQTMathText::getSize(QPainter& painter){
-    if (getTree()!=nullptr) {
+    if (getNodeTree()!=nullptr) {
         double w=0, a=0, d=0, s=0;
         getSizeDetail(painter, w, a, d, s);
         return QSizeF(w, a+d);
@@ -1455,13 +1432,13 @@ void JKQTMathText::getSizeDetail(QPainter& painter, double& width, double& ascen
     ascent=0;
     descent=0;
     strikeoutPos=0;
-    if (getTree()!=nullptr) {
+    if (getNodeTree()!=nullptr) {
         JKQTMathTextEnvironment ev;
         ev.color=fontColor;
         ev.fontSize=fontSize;
 
         double overallHeight=0;        
-        getTree()->getSize(painter, ev, width, ascent, overallHeight, strikeoutPos);
+        getNodeTree()->getSize(painter, ev, width, ascent, overallHeight, strikeoutPos);
         descent=overallHeight-ascent;
         ascent=ascent*1.1;
         descent=qMax(ascent*0.1, descent*1.1);
@@ -1470,7 +1447,7 @@ void JKQTMathText::getSizeDetail(QPainter& painter, double& width, double& ascen
 }
 
 void JKQTMathText::draw(QPainter& painter, double x, double y, bool drawBoxes){
-    if (getTree()!=nullptr) {
+    if (getNodeTree()!=nullptr) {
         JKQTMathTextEnvironment ev;
         ev.color=fontColor;
         ev.fontSize=fontSize;
@@ -1478,15 +1455,15 @@ void JKQTMathText::draw(QPainter& painter, double x, double y, bool drawBoxes){
         QPen p=pp;
         p.setStyle(Qt::SolidLine);
         painter.setPen(p);
-        getTree()->setDrawBoxes(drawBoxes);
+        getNodeTree()->setDrawBoxes(drawBoxes);
         painter.setPen(p);
-        getTree()->draw(painter, x, y, ev);
+        getNodeTree()->draw(painter, x, y, ev);
         painter.setPen(pp);
     }
 }
 
 void JKQTMathText::draw(QPainter& painter, unsigned int flags, QRectF rect, bool drawBoxes) {
-    if (getTree()!=nullptr) {
+    if (getNodeTree()!=nullptr) {
         QPen pp=painter.pen();
         QPen p=pp;
         p.setStyle(Qt::SolidLine);
@@ -1494,13 +1471,13 @@ void JKQTMathText::draw(QPainter& painter, unsigned int flags, QRectF rect, bool
         JKQTMathTextEnvironment ev;
         ev.color=fontColor;
         ev.fontSize=fontSize;
-        getTree()->setDrawBoxes(drawBoxes);
+        getNodeTree()->setDrawBoxes(drawBoxes);
         painter.setPen(p);
 
         double width=0;
         double baselineHeight=0;
         double overallHeight=0, strikeoutPos=0;
-        getTree()->getSize(painter, ev, width, baselineHeight, overallHeight, strikeoutPos);
+        getNodeTree()->getSize(painter, ev, width, baselineHeight, overallHeight, strikeoutPos);
 
         // align left top
         double x=rect.left();
@@ -1515,13 +1492,13 @@ void JKQTMathText::draw(QPainter& painter, unsigned int flags, QRectF rect, bool
         else if ((flags & Qt::AlignVCenter) != 0) y=y+(rect.height()-overallHeight)/2.0;
 
         // finally draw
-        getTree()->draw(painter, x, y, ev);
+        getNodeTree()->draw(painter, x, y, ev);
         painter.setPen(pp);
     }
 }
 
 
-JKQTMathTextNode *JKQTMathText::getTree() const {
+JKQTMathTextNode *JKQTMathText::getNodeTree() const {
     if (useUnparsed) return unparsedNode;
     return parsedNode;
 }

@@ -25,7 +25,7 @@
 
 
 /*! \def JKQTMATHTEXT_LIB_EXPORT
-    \ingroup jkqtmathtext
+    \ingroup jkqtmathtext_tools
 
     This define allows to export functions and classes from the jkqtcommon-library when building a dynamic/shared library.
     Usage is as follows:
@@ -58,7 +58,7 @@
  */
 
 /*! \def JKQTMATHTEXT_LIB_IN_DLL 
-    \ingroup jkqtmathtext
+    \ingroup jkqtmathtext_tools
     \brief declares that the application should link against a shared version of 
            JKQTMathText, i.e. \c JKQTMathTextSharedLib_XYZ .
            This needs to be defined while compiling the library and while compiling 
@@ -66,7 +66,7 @@
 */
 
 /*! \def JKQTMATHTEXT_LIB_EXPORT_LIBRARY 
-    \ingroup jkqtmathtext
+    \ingroup jkqtmathtext_tools
     \brief is only defined while compiling JKQTMathText into \c JKQTMathTextSharedLib_XYZ
            and ensures thet the symbols are exported. If it is not defined (e.g. while 
            compiling an application), the symbols are imported

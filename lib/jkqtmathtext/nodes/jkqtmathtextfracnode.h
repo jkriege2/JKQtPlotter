@@ -45,7 +45,6 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextFracNode: public JKQTMathTextDualChild
     public:
 
         /** \brief type of ffractions represented by JKQTMathTextFracNode
-         *  \ingroup jkqtmathtext
          *  \see JKQTMathTextFracNode, JKQTMathTextFracNode::FracType2String()
          */
         enum FracType {
@@ -62,7 +61,6 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextFracNode: public JKQTMathTextDualChild
         };
 
         /** \brief convert a JKQTMathTextFracNode::FracType into a QString
-         *  \ingroup jkqtmathtext
          *  \see JKQTMathTextFracNode::FracType
          */
         static QString FracType2String(FracType mode);
