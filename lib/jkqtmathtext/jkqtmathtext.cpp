@@ -1225,7 +1225,8 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
                     if (currentToken==MTTtext) {
                         if (currentTokenName.size()>0) {
                             bool tokenWasNoBrace=false;
-                            if (TokenNameMatchesJKQTMathTextBraceType(currentTokenName[0], quitOnClosingBrace, true, &tokenWasNoBrace)) {
+                            const QString firstTokenChar(currentTokenName[0]);
+                            if (TokenNameMatchesJKQTMathTextBraceType(firstTokenChar, quitOnClosingBrace, true, &tokenWasNoBrace)) {
                                 //std::cout<<"found \\right '"<<currentTokenName.toStdString()<<"'\n";
                                 showLeftBrace=(quitOnClosingBrace==MTBTAny || quitOnClosingBrace!=MTBTNone);
                                 showRightBrace=!tokenWasNoBrace;
@@ -1252,7 +1253,8 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
                 } else if (currentInstructionName=="left") {
                     if (currentToken==MTTtext) {
                         if (currentTokenName.size()>0) {
-                            const JKQTMathTextBraceType bracetype=TokenName2JKQTMathTextBraceType(currentTokenName[0]);
+                            const QString firstTokenChar(currentTokenName[0]);
+                            const JKQTMathTextBraceType bracetype=TokenName2JKQTMathTextBraceType(firstTokenChar);
                             if (bracetype==MTBTNone) {
                                 currentTokenName=currentTokenName.right(currentTokenName.size()-1);
                                 JKQTMathTextNode* cn=parseLatexString(currentTokenName.size()<=0, MTBTAny);
