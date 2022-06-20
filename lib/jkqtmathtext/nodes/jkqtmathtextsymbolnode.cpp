@@ -199,8 +199,11 @@ bool JKQTMathTextSymbolNode::getWinSymbolProp(JKQTMathTextSymbolNode::SymbolProp
       else if (n == "grqq") { props.symbol = "\""; props.bold = 0; props.italic = 0; }
       else if (n == "flq") { props.symbol = "<"; props.bold = 0; props.italic = 0; }
       else if (n == "frq") { props.symbol = ">"; props.bold = 0; props.italic = 0; }
-      else if (n == "flqq") { props.symbol = ""; props.bold = 0; props.italic = 0; }
-      else if (n == "frqq") { props.symbol = ""; props.bold = 0; props.italic = 0; }
+      else if (n == "flqq") { props.symbol = QChar(0xAB); props.bold = 0; props.italic = 0; }
+      else if (n == "frqq") { props.symbol = QChar(0xBB); props.bold = 0; props.italic = 0; }
+      else if (n == "prime") { props.symbol = "'"; props.bold = 0; props.italic = 0; }
+      else if (n == "dprime") { props.symbol = "''"; props.bold = 0; props.italic = 0; }
+      else if (n == "trprime") { props.symbol = "'''"; props.bold = 0; props.italic = 0; }
       else { return false; }
     }
 
@@ -450,8 +453,11 @@ bool JKQTMathTextSymbolNode::getUnicodeBaseSymbolProp(JKQTMathTextSymbolNode::Sy
         else if (n == "grqq") { props.symbol = QChar(0x201D); props.bold = 0; props.italic = 0; }
         else if (n == "flq") { props.symbol = QChar(0x2039); props.bold = 0; props.italic = 0; }
         else if (n == "frq") { props.symbol = QChar(0x203A); props.bold = 0; props.italic = 0; }
-        else if (n == "flqq") { props.symbol = ""; props.bold = 0; props.italic = 0; }
-        else if (n == "frqq") { props.symbol = ""; props.bold = 0; props.italic = 0; }
+        else if (n == "flqq") { props.symbol = QChar(0x00AB); props.bold = 0; props.italic = 0; }
+        else if (n == "frqq") { props.symbol = QChar(0x00BB); props.bold = 0; props.italic = 0; }
+        else if (n == "prime") { props.symbol = QChar(0x2032); props.bold = 0; props.italic = 0; }
+        else if (n == "dprime") { props.symbol = QChar(0x2033); props.bold = 0; props.italic = 0; }
+        else if (n == "trprime") { props.symbol = QChar(0x2034); props.bold = 0; props.italic = 0; }
         else { return false; }
     }
     //qDebug()<<"### found "<<n<<" in unicodeBaseSymbol";
@@ -1245,15 +1251,21 @@ bool JKQTMathTextSymbolNode::toHtml(QString &html, JKQTMathTextEnvironment curre
       entitylut.insert("%", "%");
       entitylut.insert("&", "&");
       entitylut.insert("#", "#");
+      entitylut.insert("|", "||");
+      entitylut.insert("<", "&lt;");
+      entitylut.insert(">", "&gt;");
       entitylut.insert("ast", "*");
-      entitylut.insert("glq", "'");
-      entitylut.insert("grq", "'");
-      entitylut.insert("glqq", "\"");
-      entitylut.insert("grqq", "\"");
-      entitylut.insert("flq", "&lt;");
-      entitylut.insert("frq", "&gt;");
-      entitylut.insert("flqq", "");
-      entitylut.insert("frqq", "");
+      entitylut.insert("glq", "&OpenCurlyQuote;");
+      entitylut.insert("grq", "&CloseCurlyQuote;");
+      entitylut.insert("glqq", "&OpenCurlyDoubleQuote;");
+      entitylut.insert("grqq", "&CloseCurlyDoubleQuote;");
+      entitylut.insert("flq", "&lsaquo;");
+      entitylut.insert("frq", "&rsaquo;");
+      entitylut.insert("flqq", "&laquo;");
+      entitylut.insert("frqq", "&raquo;");
+      entitylut.insert("prime", "&prime;");
+      entitylut.insert("dprime", "&Prime;");
+      entitylut.insert("trprime", "&tprime;");
     }
 
 
