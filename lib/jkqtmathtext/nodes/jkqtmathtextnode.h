@@ -84,6 +84,11 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextNode {
         JKQTMathTextNode* getParentNode();
         /** \copydoc parentNode */
         const JKQTMathTextNode* getParentNode() const;
+        /** \copydoc subSuperscriptAboveBelowNode */
+        bool isSubSuperscriptAboveBelowNode() const;
+        /** \copydoc subSuperscriptAboveBelowNode */
+        void setSubSuperscriptAboveBelowNode(bool __value);
+
     protected:
         /** \brief determine the size of the node, overwrite this function in derived classes
          *
@@ -104,6 +109,12 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextNode {
         JKQTMathTextNode* parentNode;
         /** \brief enables the drawing of colored boxes (for DEBUGGING) around the actual output of the node */
         bool drawBoxes;
+        /** \brief if \c true then following sub- and/or superscripts are placed below and above the node, not besides it.
+         *         This is activated when \c \\sum\\limits_{sub}^{sup} is used in LaTeX instead of simply \c \\sum_{sub}^{sup}
+         *
+         *  The default is c false
+         */
+        bool subSuperscriptAboveBelowNode;
         /** \brief draws colored boxes (for DEBUGGING) around the actual output of the node
          *
          * \param painter QPainter to use
@@ -189,6 +200,15 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextMultiChildNode: public JKQTMathTextNod
         /** \brief returns the i-th child node */
         virtual const JKQTMathTextNode* getChild(int i) const=0;
 
+        /** \brief returns the first child node */
+        virtual JKQTMathTextNode* getFirstChild();
+        /** \brief returns the first child node */
+        virtual const JKQTMathTextNode* getFirstChild() const;
+        /** \brief returns the last child node */
+        virtual JKQTMathTextNode* getLastChild();
+        /** \brief returns the last child node */
+        virtual const JKQTMathTextNode* getLastChild() const;
+
         /** \brief replaces the i-th child node with the node \a newChild , returns the replaced old node */
         virtual JKQTMathTextNode* replaceChild(int i, JKQTMathTextNode* newChild) =0;
 
@@ -197,6 +217,10 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextMultiChildNode: public JKQTMathTextNod
 
         /** \brief returns the number of child nodes */
         virtual int childCount() const =0;
+        /** \brief returns \c true if children exist */
+        bool hasChildren() const;
+        /** \brief returns \c true if there are no children */
+        bool isEmpty() const;
 
         /** \brief clear all children, deleting them if \a deleteChildren==true */
         virtual void clearChildren(bool deleteChildren=true) =0;

@@ -41,7 +41,8 @@
 JKQTMathTextNode::JKQTMathTextNode(JKQTMathText *_parent):
     parentMathText(_parent),
     parentNode(nullptr),
-    drawBoxes(false)
+    drawBoxes(false),
+    subSuperscriptAboveBelowNode(false)
 {
 
 }
@@ -138,6 +139,16 @@ JKQTMathTextNode *JKQTMathTextNode::getParentNode()
 const JKQTMathTextNode *JKQTMathTextNode::getParentNode() const
 {
     return parentNode;
+}
+
+bool JKQTMathTextNode::isSubSuperscriptAboveBelowNode() const
+{
+    return subSuperscriptAboveBelowNode;
+}
+
+void JKQTMathTextNode::setSubSuperscriptAboveBelowNode(bool __value)
+{
+    subSuperscriptAboveBelowNode=__value;
 }
 
 JKQTMathTextSingleChildNode::JKQTMathTextSingleChildNode(JKQTMathTextNode *_child, JKQTMathText *parentMathText):
@@ -302,6 +313,26 @@ QList<const JKQTMathTextNode *> JKQTMathTextMultiChildNode::getChildren() const
     return l;
 }
 
+JKQTMathTextNode *JKQTMathTextMultiChildNode::getFirstChild()
+{
+    return getChild(0);
+}
+
+const JKQTMathTextNode *JKQTMathTextMultiChildNode::getFirstChild() const
+{
+    return getChild(0);
+}
+
+JKQTMathTextNode *JKQTMathTextMultiChildNode::getLastChild()
+{
+    return getChild(childCount()-1);
+}
+
+const JKQTMathTextNode *JKQTMathTextMultiChildNode::getLastChild() const
+{
+    return getChild(childCount()-1);
+}
+
 void JKQTMathTextMultiChildNode::replaceAndDeleteChild(int i, JKQTMathTextNode *newChild)
 {
     JKQTMathTextNode* oldC=replaceChild(i, newChild);
@@ -309,6 +340,16 @@ void JKQTMathTextMultiChildNode::replaceAndDeleteChild(int i, JKQTMathTextNode *
         oldC->setParentNode(nullptr);
         delete oldC;
     }
+}
+
+bool JKQTMathTextMultiChildNode::hasChildren() const
+{
+    return childCount()>0;
+}
+
+bool JKQTMathTextMultiChildNode::isEmpty() const
+{
+    return childCount()==0;
 }
 
 void JKQTMathTextMultiChildNode::setDrawBoxes(bool draw)

@@ -14,173 +14,17 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="4" column="0" rowspan="11">
-    <widget class="QScrollArea" name="scrollArea">
-     <property name="widgetResizable">
-      <bool>true</bool>
-     </property>
-     <widget class="QWidget" name="scrollAreaWidgetContents">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>748</width>
-        <height>538</height>
-       </rect>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>TextLabel</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </widget>
-   </item>
-   <item row="11" column="1">
-    <widget class="QLabel" name="label_12">
+   <item row="7" column="1">
+    <widget class="QLabel" name="label_9">
      <property name="font">
       <font>
-       <weight>75</weight>
        <bold>true</bold>
       </font>
      </property>
      <property name="text">
-      <string>render times (getSize()+getAscent()/draw()):</string>
+      <string>HTML output:</string>
      </property>
     </widget>
-   </item>
-   <item row="0" column="0" colspan="2">
-    <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,2,0,2,0,0,1,0,0,0,0,0">
-     <item>
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>testset:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="cmbTestset">
-       <property name="currentIndex">
-        <number>-1</number>
-       </property>
-       <property name="maxVisibleItems">
-        <number>30</number>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_4">
-       <property name="text">
-        <string>fonts:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="cmbFont">
-       <property name="currentIndex">
-        <number>0</number>
-       </property>
-       <item>
-        <property name="text">
-         <string>Below</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Below+Math: XITS</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Below+Math: STIX</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Below+Math: ASANA</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>size:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="edtSizes">
-       <property name="text">
-        <string>90,30,20,10</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QCheckBox" name="chkBoxes">
-       <property name="text">
-        <string>boxes</string>
-       </property>
-       <property name="checked">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QCheckBox" name="chkAntiAlias">
-       <property name="text">
-        <string>anti-aliase</string>
-       </property>
-       <property name="checked">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QCheckBox" name="chkAntiAliasHQ">
-       <property name="text">
-        <string>HQ anti-aliase</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QCheckBox" name="chkAntiAliasText">
-       <property name="text">
-        <string>Text anti-aliase</string>
-       </property>
-       <property name="checked">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QCheckBox" name="chkSmoothTransform">
-       <property name="text">
-        <string>smooth transform</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
    </item>
    <item row="15" column="0" colspan="2">
     <widget class="JKQTMathTextLabel" name="labMath">
@@ -195,7 +39,6 @@
       <widget class="QLabel" name="label_8">
        <property name="font">
         <font>
-         <weight>75</weight>
          <bold>true</bold>
         </font>
        </property>
@@ -229,18 +72,10 @@
      </item>
     </layout>
    </item>
-   <item row="4" column="1" rowspan="2">
-    <widget class="QPlainTextEdit" name="textBrowserSource">
-     <property name="readOnly">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
    <item row="3" column="0">
     <widget class="QLabel" name="label_11">
      <property name="font">
       <font>
-       <weight>75</weight>
        <bold>true</bold>
       </font>
      </property>
@@ -249,16 +84,61 @@
      </property>
     </widget>
    </item>
-   <item row="7" column="1">
-    <widget class="QLabel" name="label_9">
+   <item row="13" column="1">
+    <widget class="QLabel" name="label_10">
      <property name="font">
       <font>
-       <weight>75</weight>
        <bold>true</bold>
       </font>
      </property>
      <property name="text">
-      <string>HTML output:</string>
+      <string>node tree:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="1">
+    <widget class="QTextBrowser" name="textBrowser"/>
+   </item>
+   <item row="4" column="0" rowspan="11">
+    <widget class="QScrollArea" name="scrollArea">
+     <property name="widgetResizable">
+      <bool>true</bool>
+     </property>
+     <widget class="QWidget" name="scrollAreaWidgetContents">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>752</width>
+        <height>552</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>TextLabel</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item row="12" column="1">
+    <widget class="QLabel" name="labRenderTimes">
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="1">
+    <widget class="QLabel" name="labParsingTimes">
+     <property name="text">
+      <string/>
      </property>
     </widget>
    </item>
@@ -301,18 +181,14 @@
      <item row="0" column="2">
       <widget class="QFontComboBox" name="cmbUnicodeSerif">
        <property name="currentFont">
-        <font>
-         <family>Times New Roman</family>
-        </font>
+        <font/>
        </property>
       </widget>
      </item>
      <item row="2" column="2">
       <widget class="QFontComboBox" name="cmbUnicodeBlackboard">
        <property name="currentFont">
-        <font>
-         <family>Times New Roman</family>
-        </font>
+        <font/>
        </property>
       </widget>
      </item>
@@ -326,9 +202,7 @@
      <item row="2" column="8">
       <widget class="QFontComboBox" name="cmbUnicodeSymbol">
        <property name="currentFont">
-        <font>
-         <family>Symbol</family>
-        </font>
+        <font/>
        </property>
       </widget>
      </item>
@@ -447,18 +321,14 @@
      <item row="0" column="8">
       <widget class="QFontComboBox" name="cmbUnicodeGreek">
        <property name="currentFont">
-        <font>
-         <family>Symbol</family>
-        </font>
+        <font/>
        </property>
       </widget>
      </item>
      <item row="0" column="5">
       <widget class="QFontComboBox" name="cmbUnicodeSans">
        <property name="currentFont">
-        <font>
-         <family>Arial</family>
-        </font>
+        <font/>
        </property>
       </widget>
      </item>
@@ -510,9 +380,7 @@
      <item row="2" column="5">
       <widget class="QFontComboBox" name="cmbUnicodeFraktur">
        <property name="currentFont">
-        <font>
-         <family>Times New Roman</family>
-        </font>
+        <font/>
        </property>
       </widget>
      </item>
@@ -553,9 +421,7 @@
      <item row="3" column="5">
       <widget class="QFontComboBox" name="cmbCaligraphic">
        <property name="currentFont">
-        <font>
-         <family>Script</family>
-        </font>
+        <font/>
        </property>
       </widget>
      </item>
@@ -596,9 +462,7 @@
      <item row="3" column="8">
       <widget class="QFontComboBox" name="cmbScript">
        <property name="currentFont">
-        <font>
-         <family>Script</family>
-        </font>
+        <font/>
        </property>
       </widget>
      </item>
@@ -639,9 +503,7 @@
      <item row="1" column="8">
       <widget class="QFontComboBox" name="cmbUnicodeFixed">
        <property name="currentFont">
-        <font>
-         <family>Courier New</family>
-        </font>
+        <font/>
        </property>
       </widget>
      </item>
@@ -682,9 +544,7 @@
      <item row="1" column="2">
       <widget class="QFontComboBox" name="cmbUnicodeSerifMath">
        <property name="currentFont">
-        <font>
-         <family>Times New Roman</family>
-        </font>
+        <font/>
        </property>
       </widget>
      </item>
@@ -725,9 +585,7 @@
      <item row="1" column="5">
       <widget class="QFontComboBox" name="cmbUnicodeSansMath">
        <property name="currentFont">
-        <font>
-         <family>Arial</family>
-        </font>
+        <font/>
        </property>
       </widget>
      </item>
@@ -760,15 +618,17 @@
      </item>
     </layout>
    </item>
-   <item row="12" column="1">
-    <widget class="QLabel" name="labRenderTimes">
+   <item row="11" column="1">
+    <widget class="QLabel" name="label_12">
+     <property name="font">
+      <font>
+       <bold>true</bold>
+      </font>
+     </property>
      <property name="text">
-      <string/>
+      <string>render times (getSize()+getAscent()/draw()):</string>
      </property>
     </widget>
-   </item>
-   <item row="8" column="1">
-    <widget class="QTextBrowser" name="textBrowser"/>
    </item>
    <item row="14" column="1">
     <widget class="QTreeWidget" name="tree">
@@ -782,24 +642,171 @@
      </column>
     </widget>
    </item>
-   <item row="13" column="1">
-    <widget class="QLabel" name="label_10">
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>node tree:</string>
-     </property>
-    </widget>
+   <item row="0" column="0" colspan="2">
+    <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,2,0,2,0,0,1,0,0,0,0,0">
+     <item>
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>testset:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="cmbTestset">
+       <property name="currentIndex">
+        <number>-1</number>
+       </property>
+       <property name="maxVisibleItems">
+        <number>30</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>fonts:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="cmbFont">
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <item>
+        <property name="text">
+         <string>Below</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Below+Math: XITS</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Below+Math: STIX</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Below+Math: ASANA</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Default-Constructed</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Default-Constructed+SetAppFont</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Default-Constructed+SetAppFont+XITS</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>useAnyUnicode(&quot;Times New Roman&quot;, &quot;Times New Roman&quot;)</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>useAnyUnicode(&quot;Arial&quot;, &quot;Arial&quot;)</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>useAnyUnicode(&quot;Courier New&quot;, &quot;Courier New&quot;)</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>useAnyUnicode(&quot;Comic Sans MS&quot;, &quot;Comic Sans MS&quot;)</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>size:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="edtSizes">
+       <property name="text">
+        <string>90,30,20,10</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="chkBoxes">
+       <property name="text">
+        <string>boxes</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="chkAntiAlias">
+       <property name="text">
+        <string>anti-aliase</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="chkAntiAliasHQ">
+       <property name="text">
+        <string>HQ anti-aliase</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="chkAntiAliasText">
+       <property name="text">
+        <string>Text anti-aliase</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="chkSmoothTransform">
+       <property name="text">
+        <string>smooth transform</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
    </item>
    <item row="9" column="1">
     <widget class="QLabel" name="label_13">
      <property name="font">
       <font>
-       <weight>75</weight>
        <bold>true</bold>
       </font>
      </property>
@@ -808,17 +815,32 @@
      </property>
     </widget>
    </item>
-   <item row="10" column="1">
-    <widget class="QLabel" name="labParsingTimes">
-     <property name="text">
-      <string/>
+   <item row="4" column="1" rowspan="2">
+    <widget class="QPlainTextEdit" name="textBrowserSource">
+     <property name="readOnly">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
    <item row="6" column="1">
-    <widget class="QLabel" name="labError">
-     <property name="text">
-      <string/>
+    <widget class="QTextBrowser" name="labError">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>48</height>
+      </size>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Plain</enum>
      </property>
     </widget>
    </item>

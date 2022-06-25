@@ -32,8 +32,11 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>FIXED: strikeoutPos was not correctly calculated in sub-/superscript node</li>
     <li>FIXED: symbol spacing in math mode (and text mode)</li>
     <li>FIXED/IMPROVED: JKQTMathText renders several LaTeX strings better (simple braces in math mode, +-*... as symbols with proper sizes in math mode, added some missing instruction aliases, improved size of \vec and \hat, corrrected fonts usage for mathrm</li>
+    <li>FIXED: \sum and \prod used the wrong symbol in XITS-mode</li>
     <li>IMPROVED: high-dpr-support in JKQTMathText</li>
+    <li>IMPROVED: typesetting of sub-/supercripts, especially for large math operators and braces</li>
     <li>MODIFIED: brace node  now calculates the extension of the child height above or below the strikeoutPos, in order to center braces around the strikeoutPos</li>
+    <li>remove/breaking: \v[a-zA-Z] and shorthand for \vec{a-zA-Z} was removed, implementation of \bbR,\bbC,... changed</li>
     <li>NEW: now supports new decoration instructions: \cancel, \xcancel, \bcancel, \sout, \ocirc, \widetilde, \widehat, \breve</li>
     <li>NEW: reworked drawing of decorations: improved appearance and positioning!</li>
     <li>NEW: reworked code structure: broke up large, single CPP-files into several smaller files!</li>
@@ -42,6 +45,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: shows strikeoutPos when drawing Debug-Boxes</li>
     <li>NEW: LaTeX-Parser understands optional instruction parameters in [...] now</li>
     <li>NEW: LaTeX-Parser simplifies parrse-tree to increase speed of execution</li>
+    <li>NEW: \limits and \nolimits works as in LaTeX now (before it was simply removed and the functionality implemented for a fixed list of symbols)</li>
   </ul>
 </ul>
 

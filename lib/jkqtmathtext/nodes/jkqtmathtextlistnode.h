@@ -34,6 +34,10 @@ class JKQTMathText; // forward
 
 /** \brief subclass representing a list of nodes in the syntax tree
  *  \ingroup jkqtmathtext_items
+ *
+ *  \note This type of node also implements typesetting sub-/superscript above/below the previous node (if
+ *        JKQTMathTextNode::is() is \c true for that previus node. The drawing is done as defined in the
+ *        following image \image html jkqtmathtext_subsuper_with_limits.png
  */
 class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextListNode: public JKQTMathTextMultiChildNode {
     public:
@@ -63,8 +67,9 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextListNode: public JKQTMathTextMultiChil
         /** \copydoc JKQTMathTextNode::getSizeInternal() */
         virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
         QList<JKQTMathTextNode*> nodes;
-        /** \brief the instructions in this can have the sub-script/superscript set below/above, not besides the node */
-        static QSet<QString> subsupOperations;
+    private:
+        /** \brief  internal implementation of clearChildren() that is non-virtual, so can be used in the destructor */
+        void clearChildrenImpl(bool deleteChildren);
 };
 
 #endif // JKQTMATHTEXTLISTNODE_H

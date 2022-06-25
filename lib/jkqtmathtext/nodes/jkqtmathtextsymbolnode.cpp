@@ -633,10 +633,10 @@ bool JKQTMathTextSymbolNode::getUnicodeFullSymbolProp(JKQTMathTextSymbolNode::Sy
     else if (n == "oiint") { props.symbol = QChar(0x222F); props.fontFactor = mathFontFactor; /*yfactor=+0.1;*/ props.heightIsAscent = true; props.exactAscent = true; }
     else if (n == "oiiint") { props.symbol = QChar(0x2230); props.fontFactor = mathFontFactor; /*yfactor=+0.1;*/ props.heightIsAscent = true; props.exactAscent = true; }
     else if (n == "coprod") { props.symbol = QChar(0x2210); props.heightIsAscent = true; props.exactAscent = true; }
-    else if (n == "bigcap") { props.symbol = QChar(0x22C2); props.heightIsAscent = true; props.exactAscent = true; props.heightIsAscent = true; props.exactAscent = true; }
-    else if (n == "bigcup") { props.symbol = QChar(0x22C3); props.heightIsAscent = true; props.exactAscent = true; props.heightIsAscent = true; props.exactAscent = true; }
-    else if (n == "bigvee") { props.symbol = QChar(0x22C1); props.heightIsAscent = true; props.exactAscent = true; props.heightIsAscent = true; props.exactAscent = true; }
-    else if (n == "bighat") { props.symbol = QChar(0x22C0); props.heightIsAscent = true; props.exactAscent = true; props.heightIsAscent = true; props.exactAscent = true; }
+    else if (n == "bigcap") { props.symbol = QChar(0x22C2); props.heightIsAscent = true; props.exactAscent = true; }
+    else if (n == "bigcup") { props.symbol = QChar(0x22C3); props.heightIsAscent = true; props.exactAscent = true; }
+    else if (n == "bigvee") { props.symbol = QChar(0x22C1); props.heightIsAscent = true; props.exactAscent = true; }
+    else if (n == "bighat") { props.symbol = QChar(0x22C0); props.heightIsAscent = true; props.exactAscent = true; }
     else if (n == "int") { props.symbol = QChar(0x222B); props.fontFactor = mathFontFactor; /*yfactor=+0.1;*/ props.heightIsAscent = true; props.exactAscent = true; }
     else {return false;}
     return true;
@@ -653,7 +653,7 @@ bool JKQTMathTextSymbolNode::getSymbolProp(JKQTMathTextSymbolNode::SymbolProps& 
     props.font = fnt.first;
     if (fnt.second==MTFEunicode) {
         props.font = fnt.first;
-        if (!getUnicodeBaseSymbolProp(props, n) && !getGreekSymbolProp(props, n, currentEv, mathFontFactor) && !getUnicodeFullSymbolProp(props,n,mathFontFactor) && !getGreekSymbolProp(props, n, currentEv, mathFontFactor)) {
+        if (!getUnicodeBaseSymbolProp(props, n) && !getUnicodeFullSymbolProp(props,n,mathFontFactor) && !getGreekSymbolProp(props, n, currentEv, mathFontFactor)) {
             return false;
         }
     } else if (fnt.second==MTFEunicodeLimited) {
@@ -661,7 +661,7 @@ bool JKQTMathTextSymbolNode::getSymbolProp(JKQTMathTextSymbolNode::SymbolProps& 
         if (!getUnicodeBaseSymbolProp(props, n) && !getGreekSymbolProp(props, n, currentEv, mathFontFactor)) {
             if (fntSym.second==MTFEunicode) {
                 props.font = fntSym.first;
-                if (!getUnicodeBaseSymbolProp(props, n) && !getUnicodeFullSymbolProp(props,n,mathFontFactor) && !getUnicodeFullSymbolProp(props,n,mathFontFactor) && !getGreekSymbolProp(props, n, currentEv, mathFontFactor)) {
+                if (!getUnicodeBaseSymbolProp(props, n) && !getUnicodeFullSymbolProp(props,n,mathFontFactor) && !getGreekSymbolProp(props, n, currentEv, mathFontFactor)) {
                     return false;
                 }
             } else if (fntSym.second==MTFEunicodeLimited) {
@@ -684,7 +684,7 @@ bool JKQTMathTextSymbolNode::getSymbolProp(JKQTMathTextSymbolNode::SymbolProps& 
         if (!getWinSymbolProp(props, n, currentEv, mathFontFactor)) {
             if (fntSym.second==MTFEunicode) {
                 props.font = fntSym.first;
-                if (!getUnicodeBaseSymbolProp(props, n) && !getUnicodeFullSymbolProp(props,n,mathFontFactor) && !getUnicodeFullSymbolProp(props,n,mathFontFactor) && !getGreekSymbolProp(props, n, currentEv, mathFontFactor)) {
+                if (!getUnicodeBaseSymbolProp(props, n) && !getUnicodeFullSymbolProp(props,n,mathFontFactor) && !getGreekSymbolProp(props, n, currentEv, mathFontFactor)) {
                     return false;
                 }
             } else if (fntSym.second==MTFEunicodeLimited) {
@@ -707,7 +707,7 @@ bool JKQTMathTextSymbolNode::getSymbolProp(JKQTMathTextSymbolNode::SymbolProps& 
         if (!getStandardTextSymbolProp(props, n)) {
             if (fntSym.second==MTFEunicode) {
                 props.font = fntSym.first;
-                if (!getUnicodeBaseSymbolProp(props, n) && !getUnicodeFullSymbolProp(props,n,mathFontFactor) && !getUnicodeFullSymbolProp(props,n,mathFontFactor) && !getGreekSymbolProp(props, n, currentEv, mathFontFactor)) {
+                if (!getUnicodeBaseSymbolProp(props, n) && !getUnicodeFullSymbolProp(props,n,mathFontFactor) && !getGreekSymbolProp(props, n, currentEv, mathFontFactor)) {
                     return false;
                 }
             } else if (fntSym.second==MTFEunicodeLimited) {
@@ -1271,12 +1271,14 @@ bool JKQTMathTextSymbolNode::toHtml(QString &html, JKQTMathTextEnvironment curre
 
     QMap<QString, QString>::iterator itS = entitylut.find(symbolName);
     if (itS!=entitylut.end()) { s=itS.value(); }
-    else if (symbolName == "sum") { ev.fontSize*=1.7; s="&sum;"; }
-    else if (symbolName == "prod") { ev.fontSize*=1.7; s="&prod;"; }
-    else if (symbolName == "bigcap") { ev.fontSize*=1.7; s="&cap;"; }
-    else if (symbolName == "bigcup") { ev.fontSize*=1.7; s="&cup;"; }
-    else if (symbolName == "bigvee") { ev.fontSize*=1.7; s="&or;"; }
-    else if (symbolName == "bighat") { ev.fontSize*=1.7; s="&and;"; }
+    else if (symbolName == "sum") {
+        ev.fontSize*=parentMathText->getBigMathoperatorFontFactor(); s="&sum;"; }
+    else if (symbolName == "prod") {
+        ev.fontSize*=parentMathText->getBigMathoperatorFontFactor(); s="&prod;"; }
+    else if (symbolName == "bigcap") { ev.fontSize*=parentMathText->getBigMathoperatorFontFactor(); s="&cap;"; }
+    else if (symbolName == "bigcup") { ev.fontSize*=parentMathText->getBigMathoperatorFontFactor(); s="&cup;"; }
+    else if (symbolName == "bigvee") { ev.fontSize*=parentMathText->getBigMathoperatorFontFactor(); s="&or;"; }
+    else if (symbolName == "bighat") { ev.fontSize*=parentMathText->getBigMathoperatorFontFactor(); s="&and;"; }
     else ok=false;
 
     if (ok) html=html+ev.toHtmlStart(defaultEv)+s+ev.toHtmlAfter(defaultEv);

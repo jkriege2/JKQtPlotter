@@ -27,7 +27,7 @@ class TestForm : public QWidget
     private:
         Ui::TestForm *ui;
         JKQTPHighResTimer ht;
-        double draw(QPainter& painter, double X, double YY, JKQTMathText& mt, QString name, double &durationSizingMS, double &durationTimingMS);
+        double draw(QPainter& painter, double X, double YY, JKQTMathText& mt, QString name, double &durationSizingMS, double &durationTimingMS, QStringList *lstErrors=nullptr);
 
         QTreeWidgetItem* createTree(JKQTMathTextNode* node, QTreeWidgetItem *parent=NULL);
 };

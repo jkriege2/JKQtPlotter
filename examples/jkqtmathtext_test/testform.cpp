@@ -34,15 +34,15 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbTestset->addItem("math: std dev", "$\\sigma_x=\\sqrt{\\langle (x-\\langle x\\rangle)^2\\rangle}=\\sqrt{\\frac{1}{N-1}\\cdot\\left( \\sum_{i=1}^N{x_i}^2-\\frac{1}{N}\\cdot\\left(\\sum_{i=1}^Nx_i\\right)^2\\right)}$");
     ui->cmbTestset->addItem("math: std dev 2", "$\\sigma_x=\\sqrt{\\langle (x-\\langle x\\rangle)^2\\rangle}=\\sqrt{\\frac{1}{N-1}\\cdot\\left( \\sum_{i=1}^Nx_i^2-\\frac{1}{N}\\cdot\\left(\\sum_{i=1}^Nx_i\\right)^2\\right)}$");
     ui->cmbTestset->addItem("math: rotation matrix", "$\\mathrm{\\mathbf{M}}(\\alpha) = \\left(\\begin{matrix}\\cos(\\alpha)+n_x^2\\cdot (1-\\cos(\\alpha))  &  n_x\\cdot n_y\\cdot (1-\\cos(\\alpha))-n_z\\cdot \\sin(\\alpha) &  n_x\\cdot n_z\\cdot (1-\\cos(\\alpha))+n_y\\cdot \\sin(\\alpha)\\\\n_x\\cdot n_y\\cdot (1-\\cos(\\alpha))+n_z\\cdot \\sin(\\alpha) & \\cos(\\alpha)+n_y^2\\cdot (1-\\cos(\\alpha))  &   n_y\\cdot n_z\\cdot (1-\\cos(\\alpha))-n_x\\cdot \\sin(\\alpha)\\\\n_z\\cdot n_x\\cdot (1-\\cos(\\alpha))-n_y\\cdot \\sin(\\alpha) & n_z\\cdot n_y\\cdot (1-\\cos(\\alpha))+n_x\\cdot \\sin(\\alpha)  & \\cos(\\alpha)+n_z^2\\cdot (1-\\cos(\\alpha))\\end{matrix}\\right)$");
-    ui->cmbTestset->addItem("text: like in label at bottom)", "\\left(\\left[\\sqrt{2\\pi\\cdot\\int_{-\\infty}^\\infty f(x)\\;\\mathrm{d}x}\\right]\\right)");
     ui->cmbTestset->addItem("math: like in label at bottom", "$\\left(\\left[\\sqrt{2\\pi\\cdot\\int_{-\\infty}^\\infty f(x)\\;\\mathrm{d}x}\\right]\\right)$");
+    ui->cmbTestset->addItem("text: like in label at bottom)", "\\left(\\left[\\sqrt{2\\pi\\cdot\\int_{-\\infty}^\\infty f(x)\\;\\mathrm{d}x}\\right]\\right)");
     ui->cmbTestset->addItem("text 0", "text");
     ui->cmbTestset->addItem("text 1", "text \\mathbf{bold}");
     ui->cmbTestset->addItem("text 2", "text \\mathbf{bold}\\textcolor{red}{RED}");
     const auto mathDecoExample=[](const QString& deco)->QString { return "\\"+deco+"{x}\\"+deco+"{i}\\"+deco+"{X}\\"+deco+"{\\psi}\\"+deco+"{abc}"; };
     ui->cmbTestset->addItem("decoration: math", "$"+mathDecoExample("vec")+" -- "+mathDecoExample("dot")+" -- "+mathDecoExample("ddot")+" -- "+mathDecoExample("ocirc")+" -- "+mathDecoExample("overline")+" -- "+mathDecoExample("underline")+" -- "+mathDecoExample("hat")+" -- "+mathDecoExample("widehat")+" -- "+mathDecoExample("check")+" -- "+mathDecoExample("widecheck")+" -- "+mathDecoExample("breve")+" -- "+mathDecoExample("tilde")+" -- "+mathDecoExample("widetilde")+" -- "+mathDecoExample("uul")+" -- "+mathDecoExample("ool")+" -- "+mathDecoExample("bar")+" -- "+mathDecoExample("arrow")+" -- "+mathDecoExample("cancel")+" -- "+mathDecoExample("bcancel")+" -- "+mathDecoExample("xcancel")+" -- "+mathDecoExample("sout")+"$");
     ui->cmbTestset->addItem("decoration: text", "Text \\ul{underlined Text Equator} -- \\ol{overlined Text Equator} -- \\sout{striked out Text Equator} -- \\cancel{canceled out Text Equator} -- \\bcancel{b-canceled out Text Equator} -- \\xcancel{x-canceled out Text Equator}");
-    ui->cmbTestset->addItem("mathtest", "This is normal text: $this is math:\\langle r^2(\\tau)\\rangle=\\left\\langle (\\vec{r}(t)-\\vec{r}(t+\\tau) )^2\\right\\rangle\\ \\ \\ g(\\tau)=\\frac{1}{N}\\cdot\\left(1+\\frac{2}{3}\\frac{\\langle r^2(\\tau)\\rangle}{w_{xy}^2}\\right)^{-1}  \\lfloor\\rfloor\\lceil\\rceil\\langle\\rangle\\left\\{\\va\\left|\\|\\va\\|_2\\geq2\\right.\\right\\} \\vr\\vR\\frac{\\sqrt{\\sqrt{\\sqrt{\\sum_{i=0}^\\infty \\hat{i}^2}+y^\\alpha}+1}}{\\dot{v}\\equiv\\ddot{r}}\\argmin_{\\vec{k}}\\sum_{\\sqrt{i}=0}^{N}\\int_{x_0}^{x_1}\\left(\\left(\\left(x\\right)\\right)\\right)\\underbrace{\\left[\\left\\{\\frac{\\partial f}{\\partial x}\\right\\}\\cdot\\frac{1}{2}\\right]}{\\text{underbraced text \\hbar}}\\cdots\\frac{\\sqrt{\\sum_{i=0}^2 \\hat{i}^2}+y^\\alpha}{\\dot{v}\\equiv\\ddot{r}}, \\hat{t}\\hat{T} \\overbrace{\\left|\\sqrt{x\\cdot Y}\\right|}{\\propto\\bbN\\circ\\bbZ}   \\left<\\arrow{x(\\tau)}\\cdot\\vec{R}(t+\\bar{\\tau})\\right>   \\alpha\\beta\\gamma\\delta\\epsilon\\Gamma\\Delta\\Theta\\Omega  \\left\\_\\left~\\cbrt{\\hbar\\omega}\\right~\\right\\_$");
+    ui->cmbTestset->addItem("mathtest", "This is normal text: $this is math:\\langle r^2(\\tau)\\rangle=\\left\\langle (\\vec{r}(t)-\\vec{r}(t+\\tau) )^2\\right\\rangle\\ \\ \\ g(\\tau)=\\frac{1}{N}\\cdot\\left(1+\\frac{2}{3}\\frac{\\langle r^2(\\tau)\\rangle}{w_{xy}^2}\\right)^{-1}  \\lfloor\\rfloor\\lceil\\rceil\\langle\\rangle\\left\\{\\vec{a}\\left|\\|\\vec{a}\\|_2\\geq2\\right.\\right\\} \\vec{r}\\vec{R}\\frac{\\sqrt{\\sqrt{\\sqrt{\\sum_{i=0}^\\infty \\hat{i}^2}+y^\\alpha}+1}}{\\dot{v}\\equiv\\ddot{r}}\\argmin_{\\vec{k}}\\sum_{\\sqrt{i}=0}^{N}\\int_{x_0}^{x_1}\\left(\\left(\\left(x\\right)\\right)\\right)\\underbrace{\\left[\\left\\{\\frac{\\partial f}{\\partial x}\\right\\}\\cdot\\frac{1}{2}\\right]}{\\text{underbraced text \\hbar}}\\cdots\\frac{\\sqrt{\\sum_{i=0}^2 \\hat{i}^2}+y^\\alpha}{\\dot{v}\\equiv\\ddot{r}}, \\hat{t}\\hat{T} \\overbrace{\\left|\\sqrt{x\\cdot Y}\\right|}{\\propto\\bbN\\circ\\bbZ}   \\left<\\arrow{x(\\tau)}\\cdot\\vec{R}(t+\\bar{\\tau})\\right>   \\alpha\\beta\\gamma\\delta\\epsilon\\Gamma\\Delta\\Theta\\Omega  \\left\\_\\left~\\cbrt{\\hbar\\omega}\\right~\\right\\_$");
     ui->cmbTestset->addItem("math: upper/lower parantheses test:", "$\\text{bblabla} \\frac{1}{2}\\cdot\\left(\\frac{1}{\\mathrm{e}^x+\\mathrm{e}^{-x}}\\right)\\cdot\\left(\\frac{1}{\\frac{1+2}{5+x}}\\right)\\cdot\\left(\\frac{1}{\\exp\\left[-\\frac{y^2}{\\sqrt{x}}\\right]\\cdot\\exp\\left[-\\frac{1}{\\frac{1}{2}}\\right]}\\right) $");
     ui->cmbTestset->addItem("math: ACF test", "$g_{rg}^{ab}(\\tau)=\\frac{1}{N}\\cdot\\left(1+\\frac{2}{3}\\frac{\\langle r^2(\\tau)\\rangle}{w_{xy}^2}\\right)^{-1}\\cdot\\left(1+\\frac{2}{3}\\frac{\\langle r^2(\\tau)\\rangle}{w_{xy}^2}\\right)^{-\\frac{1}{2}}$");
     ui->cmbTestset->addItem("math: MSD test", "$\\mathrm{MSD}(\\tau)\\equiv\\langle r^2(\\tau)\\rangle=\\left\\langle (\\vec{r}(t)-\\vec{r}(t+\\tau) )^2\\right\\rangle=2n\\cdot\\frac{K_\\alpha}{\\Gamma(1+\\alpha)}\\cdot\\tau^\\alpha$");
@@ -92,11 +92,11 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbTestset->addItem("text: non-2 radicals", "\\sqrt[3]{a}\\sqrt[3]{5}\\sqrt[3]{-1}\\sqrt[3]{h}\\sqrt[3]{\\vec{A}}\\sqrt[3]{\\frac{1}{a}}\\frac{\\sqrt[3]{a}}{\\sqrt[3]{a}}\\sqrt[3]{\\frac{1}{1+\\frac{1}{a}}}\\frac{1}{\\sqrt[3]{1+\\frac{1}{a}}}\\sqrt[3]{a+\\sqrt[3]{a+b}}");
     ui->cmbTestset->addItem("math: long non-2 radicals", "$\\sqrt[3.14156]{a}\\sqrt[3.14156]{5}$");
     ui->cmbTestset->addItem("text: long non-2 radicals", "\\sqrt[3.14156]{a}\\sqrt[3.14156]{5}");
-    ui->cmbTestset->addItem("math: sum, prod, ...", "no-limits: $\\prod_{i=1}^n \\sum_{j=1}^c (i + j)\\cdot\\frac{1}{2}$\\ \\ \\ --\\ \\ \\ limits: $\\prod\\limits_{i=1}^n \\sum\\limits_{j=1}^c (i + j)\\cdot\\frac{1}{2}$\\ \\ \\ --\\ \\ \\ long-below: $\\sum_{n=\\{a,b,c,d,e,f,g\\}} f(x)$\\ \\ \\ --\\ \\ \\ long-above: $\\sum^{n=\\{a,b,c,d,e,f,g\\}} f(x)$");
-    ui->cmbTestset->addItem("text: sum, prod, ...", "no-limits: \\prod_{i=1}^n \\sum_{j=1}^c (i + j)\\cdot\\frac{1}{2}\\ \\ \\ --\\ \\ \\ limits: \\prod\\limits_{i=1}^n \\sum\\limits_{j=1}^c (i + j)\\cdot\\frac{1}{2}\\ \\ \\ --\\ \\ \\ long-below: \\sum_{n=\\{a,b,c,d,e,f,g\\}} f(x)\\ \\ \\ --\\ \\ \\ long-above: \\sum^{n=\\{a,b,c,d,e,f,g\\}} f(x)");
-    ui->cmbTestset->addItem("math: more sum-symbols ", "$\\sum_{i=0}^N\\prod_{i=0}^N\\coprod_{i=0}^N\\bigcup_{i=0}^N\\bigcap_{i=0}^N\\bigsqcup_{i=0}^N\\bigvee_{i=0}^N\\bigwedge_{i=0}^N\\bigoplus_{i=0}^N\\bigotimes_{i=0}^N\\bigodot_{i=0}^N\\biguplus_{i=0}^N$");
-    ui->cmbTestset->addItem("math: integrals", "no-limits: $\\int_{0}^1 f(x)\\;\\mathrm{d}x\\ \\iint_{0}^1 f(x)\\;\\mathrm{d}x\\ \\iiint_{0}^1 f(x)\\;\\mathrm{d}x\\ \\oint_{0}^1 f(x)\\;\\mathrm{d}x\\ \\int_{x} f(x)\\;\\mathrm{d}x$\\ \\ \\ --\\ \\ \\ limits: $\\int\\limits_{0}^1 f(x)\\;\\mathrm{d}x\\ \\iint\\limits_{0}^1 f(x)\\;\\mathrm{d}x\\ \\iiint\\limits_{0}^1 f(x)\\;\\mathrm{d}x\\ \\oint\\limits_{0}^1 f(x)\\;\\mathrm{d}x\\ \\int\\limits_{x} f(x)\\;\\mathrm{d}x$");
-    ui->cmbTestset->addItem("text: integrals", "no-limits: \\int_{0}^1 f(x)\\;\\mathrm{d}x\\ \\iint_{0}^1 f(x)\\;\\mathrm{d}x\\ \\iiint_{0}^1 f(x)\\;\\mathrm{d}x\\ \\oint_{0}^1 f(x)\\;\\mathrm{d}x\\ \\int_{x} f(x)\\;\\mathrm{d}x$\\ \\ \\ --\\ \\ \\ limits: $\\int\\limits_{0}^1 f(x)\\;\\mathrm{d}x\\ \\iint\\limits_{0}^1 f(x)\\;\\mathrm{d}x\\ \\iiint\\limits_{0}^1 f(x)\\;\\mathrm{d}x\\ \\oint\\limits_{0}^1 f(x)\\;\\mathrm{d}x\\ \\int\\limits_{x} f(x)\\;\\mathrm{d}x");
+    ui->cmbTestset->addItem("math: sum, prod, ... bare/+\\nolimits", "no-limits: $\\prod\\nolimits_{i=1}^n \\sum\\nolimits_{j=1}^c (i + j)\\cdot\\frac{1}{2}$\\ \\ \\ --\\ \\ \\ bare: $\\prod_{i=1}^n \\sum_{j=1}^c (i + j)\\cdot\\frac{1}{2}$\\ \\ \\ --\\ \\ \\ long-below, bare: $\\sum_{n=\\{a,b,c,d,e,f,g\\}} f(x)$\\ \\ \\ --\\ \\ \\ long-above, bare: $\\sum^{n=\\{a,b,c,d,e,f,g\\}} f(x)$");
+    ui->cmbTestset->addItem("text: sum, prod, ... bare/+\\limits", "bare: \\prod_{i=1}^n \\sum_{j=1}^c (i + j)\\cdot\\frac{1}{2}\\ \\ \\ --\\ \\ \\ limits: \\prod\\limits_{i=1}^n \\sum\\limits_{j=1}^c (i + j)\\cdot\\frac{1}{2}\\ \\ \\ --\\ \\ \\ long-below, bare: \\sum_{n=\\{a,b,c,d,e,f,g\\}} f(x)\\ \\ \\ --\\ \\ \\ long-above, bare: \\sum^{n=\\{a,b,c,d,e,f,g\\}} f(x)");
+    ui->cmbTestset->addItem("math: more sum-symbols ", "$\\sum\\limits_{i=0}^N\\prod\\limits_{i=0}^N\\coprod\\limits_{i=0}^N\\bigcup\\limits_{i=0}^N\\bigcap\\limits_{i=0}^N\\bigsqcup\\limits_{i=0}^N\\bigvee\\limits_{i=0}^N\\bigwedge\\limits_{i=0}^N\\bigoplus\\limits_{i=0}^N\\bigotimes\\limits_{i=0}^N\\bigodot\\limits_{i=0}^N\\biguplus\\limits_{i=0}^N$");
+    ui->cmbTestset->addItem("math: integrals+sums, bare/+\\nolimits", "bare: $\\int_{0}^1 f(x)\\;\\mathrm{d}x\\ \\sum_{x=0}^1f(x)\\ \\iint_{0}^1 f(x)\\;\\mathrm{d}x\\ \\iiint_{0}^1 f(x)\\;\\mathrm{d}x\\ \\oint_{0}^1 f(x)\\;\\mathrm{d}x\\ \\int_{x} f(x)\\;\\mathrm{d}x$\\ \\ \\ --\\ \\ \\ nolimits: $\\int\\nolimits_{0}^1 f(x)\\;\\mathrm{d}x\\ \\sum\\nolimits_{x=0}^1f(x)\\ \\iint\\nolimits_{0}^1 f(x)\\;\\mathrm{d}x\\ \\iiint\\nolimits_{0}^1 f(x)\\;\\mathrm{d}x\\ \\oint\\nolimits_{0}^1 f(x)\\;\\mathrm{d}x\\ \\int\\nolimits_{x} f(x)\\;\\mathrm{d}x$");
+    ui->cmbTestset->addItem("text: integrals+sums, bare/+\\limits", "bare: \\int_{0}^1 f(x)\\;\\mathrm{d}x\\ \\sum_{x=0}^1f(x)\\ \\iint_{0}^1 f(x)\\;\\mathrm{d}x\\ \\iiint_{0}^1 f(x)\\;\\mathrm{d}x\\ \\oint_{0}^1 f(x)\\;\\mathrm{d}x\\ \\int_{x} f(x)\\;\\mathrm{d}x$\\ \\ \\ --\\ \\ \\ limits: $\\int\\limits_{0}^1 f(x)\\;\\mathrm{d}x\\ \\sum\\limits_{x=0}^1f(x)\\ \\iint\\limits_{0}^1 f(x)\\;\\mathrm{d}x\\ \\iiint\\limits_{0}^1 f(x)\\;\\mathrm{d}x\\ \\oint\\limits_{0}^1 f(x)\\;\\mathrm{d}x\\ \\int\\limits_{x} f(x)\\;\\mathrm{d}x");
     ui->cmbTestset->addItem("math: frac test", "$\\frac{a}{b}+\\frac{g}{a}-\\frac{a^2}{b^2}\\cdot\\frac{a^2}{b^{\\frac{1}{2}}}$");
     ui->cmbTestset->addItem("math/text: stacked frac", "math: $\\frac{1+\\frac{a}{b}}{1+\\frac{1}{1+\\frac{1}{a}}}$\\ \\ text: \\frac{1+\\frac{a}{b}}{1+\\frac{1}{1+\\frac{1}{a}}}\\ \\ \\ \\ \\ --\\ \\ \\ \\ \\ math: $a_0+\\cfrac{1}{a_1+\\cfrac{1}{a_2+\\cfrac{1}{a_3+\\cdots}}}$\\ \\ text: a_0+\\cfrac{1}{a_1+\\cfrac{1}{a_2+\\cfrac{1}{a_3+\\cdots}}}");
     ui->cmbTestset->addItem("math: tfrac test", "$\\tfrac{a}{b}+\\tfrac{g}{a}-\\tfrac{a^2}{b^2}\\cdot\\tfrac{a^2}{b^{\\tfrac{1}{2}}}$");
@@ -217,7 +217,7 @@ TestForm::TestForm(QWidget *parent) :
 
     ui->cmbTestset->setCurrentIndex(0);
 
-    ui->labMath->setMath("\\left(\\left[\\sqrt{2\\pi\\cdot\\int_{-\\infty}^\\infty f(x)\\;\\mathrm{d}x}\\right]\\right)");
+    ui->labMath->setMath("$\\left(\\left[\\sqrt{2\\pi\\cdot\\int_{-\\infty}^\\infty f(x)\\;\\mathrm{d}x}\\right]\\right)$");
     ui->cmbFont->setCurrentIndex(1);
 
     connect(ui->chkBoxes, SIGNAL(toggled(bool)), this, SLOT(updateMath()));
@@ -268,7 +268,7 @@ TestForm::~TestForm()
 
 
 
-double TestForm::draw(QPainter& painter, double X, double YY, JKQTMathText& mt, QString name, double& durationSizingMS, double&durationTimingMS) {
+double TestForm::draw(QPainter& painter, double X, double YY, JKQTMathText& mt, QString name, double& durationSizingMS, double&durationTimingMS, QStringList* lstErrors) {
 
 
     double Y=YY;
@@ -298,6 +298,7 @@ double TestForm::draw(QPainter& painter, double X, double YY, JKQTMathText& mt, 
     qDebug()<<"   drawing in "<<durationTimingMS<<" ms";
     p.setColor("blue");
     painter.setPen(p);
+    if (lstErrors) *lstErrors=mt.getErrorList();
 
     QFont f;
     f.setFamily("sans serif");
@@ -364,7 +365,7 @@ QTreeWidgetItem *TestForm::createTree(JKQTMathTextNode *node, QTreeWidgetItem* p
         name=QString("MTsubscriptNode");
         if (subN->getChild()) ti->addChild(createTree(subN->getChild(), ti));
     } else if (inst1N)  {
-        name=QString("MTinstruction1Node: \'%1\'").arg(inst1N->getName());
+        name=QString("MTinstruction1Node: \'%1\' (subsuper=%2").arg(inst1N->getName()).arg(inst1N->isSubSuperscriptAboveBelowNode());
         if (inst1N->getChild()) ti->addChild(createTree(inst1N->getChild(), ti));
     } else if (lstN)  {
         name=QString("MTlistNode");
@@ -373,7 +374,7 @@ QTreeWidgetItem *TestForm::createTree(JKQTMathTextNode *node, QTreeWidgetItem* p
             ti->addChild(createTree(list[i], ti));
         }
     } else if (symN)  {
-        name=QString("MTSymbolNode: \'%1\' (addWhite: %2)").arg(symN->getSymbolName()).arg(symN->getAddWhitespace());
+        name=QString("MTSymbolNode: \'%1\' (addWhite: %2, subsuper=%3)").arg(symN->getSymbolName()).arg(symN->getAddWhitespace()).arg(symN->isSubSuperscriptAboveBelowNode());
     } else if (spN)  {
         name=QString("MTWhitespaceNode :\'%1\'").arg(txtN->getText());
     } else if (txtN)  {
@@ -445,24 +446,36 @@ void TestForm::updateMath()
     ht.start();
 
 
+    if (ui->cmbFont->currentIndex()<=3) {
+        mt.setFontRoman(ui->cmbUnicodeSerif->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingSerif->currentIndex()));
+        mt.setFontSans(ui->cmbUnicodeSans->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingSans->currentIndex()));
+        mt.setFontMathRoman(ui->cmbUnicodeSerifMath->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingSerifMath->currentIndex()));
+        mt.setFontMathSans(ui->cmbUnicodeSansMath->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingSansMath->currentIndex()));
+        mt.setFontTypewriter(ui->cmbUnicodeFixed->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingTypewriter->currentIndex()));
+        mt.setFontCaligraphic(ui->cmbCaligraphic->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingCaligraphic->currentIndex()));
+        mt.setFontScript(ui->cmbScript->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingScript->currentIndex()));
+        mt.setFontFraktur(ui->cmbUnicodeFraktur->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingFraktur->currentIndex()));
+        mt.setFontBlackboard(ui->cmbUnicodeBlackboard->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingBlackboard->currentIndex()));
+        mt.setSymbolfontSymbol(ui->cmbUnicodeSymbol->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingSymbol->currentIndex()));
+        mt.setSymbolfontGreek(ui->cmbUnicodeGreek->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingGreek->currentIndex()));
+    } else if (ui->cmbFont->currentIndex()==5 || ui->cmbFont->currentIndex()==6) {
+        mt.setFontRoman(QGuiApplication::font().family());
+    } else if (ui->cmbFont->currentIndex()==7) {
+        mt.useAnyUnicode("Times New Roman", "Times New Roman");
+    } else if (ui->cmbFont->currentIndex()==8) {
+        mt.useAnyUnicode("Arial", "Arial");
+    } else if (ui->cmbFont->currentIndex()==9) {
+        mt.useAnyUnicode("Courier New", "Courier New");
+    } else if (ui->cmbFont->currentIndex()==10) {
+        mt.useAnyUnicode("Comic Sans MS", "Comic Sans MS");
+    }
 
-    mt.setFontRoman(ui->cmbUnicodeSerif->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingSerif->currentIndex()));
-    mt.setFontSans(ui->cmbUnicodeSans->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingSans->currentIndex()));
-    mt.setFontMathRoman(ui->cmbUnicodeSerifMath->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingSerifMath->currentIndex()));
-    mt.setFontMathSans(ui->cmbUnicodeSansMath->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingSansMath->currentIndex()));
-    mt.setFontTypewriter(ui->cmbUnicodeFixed->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingTypewriter->currentIndex()));
-    mt.setFontCaligraphic(ui->cmbCaligraphic->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingCaligraphic->currentIndex()));
-    mt.setFontScript(ui->cmbScript->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingScript->currentIndex()));
-    mt.setFontFraktur(ui->cmbUnicodeFraktur->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingFraktur->currentIndex()));
-    mt.setFontBlackboard(ui->cmbUnicodeBlackboard->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingBlackboard->currentIndex()));
-    mt.setSymbolfontSymbol(ui->cmbUnicodeSymbol->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingSymbol->currentIndex()));
-    mt.setSymbolfontGreek(ui->cmbUnicodeGreek->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingGreek->currentIndex()));
     mt.setFontBlackboardSimulated(ui->chkSimulateBlackboard->isChecked());
 
     if (ui->cmbFont->currentIndex()==1) qDebug()<<"useXITS: "<<mt.useXITS();
     else if (ui->cmbFont->currentIndex()==2) qDebug()<<"useSTIX: "<<mt.useSTIX();
     else if (ui->cmbFont->currentIndex()==3) qDebug()<<"useASANA: "<<mt.useASANA();
-
+    else if (ui->cmbFont->currentIndex()==6) qDebug()<<"useXITS: "<<mt.useXITS();
     ui->tree->clear();
     ht.start();
     double durationParse=0;
@@ -490,18 +503,21 @@ void TestForm::updateMath()
         Y+=draw(painter, X1, Y, mt, QString("%1, %2, %3pt").arg(ui->cmbTestset->currentText()).arg(ui->cmbFont->currentText()).arg(size), durationSizingMS, durationTimingMS);
 
         if (i==0) {
+            ui->labError->clear();
             if (mt.getErrorList().size()>0) {
-                ui->labError->setText("<span color=\"red\">"+mt.getErrorList().join("<br>")+"</span>");
+                ui->labError->setHtml("<span color=\"red\">"+mt.getErrorList().join("<br>")+"</span>");
             } else {
-                ui->labError->setText("<span color=\"green\">OK</span>");
+                ui->labError->setHtml("<span color=\"green\">OK</span>");
             }
         }
 
         ui->labRenderTimes->setText(ui->labRenderTimes->text()+QString("     %1pt: %2ms/%3ms").arg(size).arg(durationSizingMS, 0, 'F', 1).arg(durationTimingMS, 0, 'F', 1));
-        ui->textBrowser->textCursor().insertHtml("<hr>"+mt.toHtml(&okh)+"<hr><br><br>");
-        qDebug()<<"HTML: ---------------------------------------------\n"<<mt.toHtml(&okh)<<"\nHTML: --------------------------------------------- ok="<<okh;
-        if (mt.getErrorList().size()>0) {
-            qDebug()<<mt.getErrorList().join("\n")<<"\n";
+        if (i==0) {
+            ui->textBrowser->textCursor().insertHtml("<hr>"+mt.toHtml(&okh)+"<hr><br><br>");
+            qDebug()<<"HTML: ---------------------------------------------\n"<<mt.toHtml(&okh)<<"\nHTML: --------------------------------------------- ok="<<okh;
+            if (mt.getErrorList().size()>0) {
+                qDebug()<<mt.getErrorList().join("\n")<<"\n";
+            }
         }
     }
 
