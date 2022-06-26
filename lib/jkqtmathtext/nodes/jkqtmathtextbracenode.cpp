@@ -109,8 +109,8 @@ double JKQTMathTextBraceNode::draw(QPainter& painter, double x, double y, JKQTMa
     {
         bool showOpeningBrace=true;
         const double xbrace1=xnew+lw;
-        const double xbrace2=qMin(xnew+paren_fraction*bracewidth, xnew+bracewidth-lw/2.0);
-        const double xbrace2s=qMin(xnew+brace_fraction*bracewidth, xnew+bracewidth-lw/2.0);
+        const double xbrace2=xnew+qMin(paren_fraction*bracewidth, bracewidth-lw/2.0);
+        const double xbrace2s=xnew+qMin(brace_fraction*bracewidth, bracewidth-lw/2.0);
         if (openbrace==MTBTParenthesis) {
             QPainterPath path;
             const double y1=y+(nodeOverallHeight-nodeBaselineHeight);
@@ -126,6 +126,22 @@ double JKQTMathTextBraceNode::draw(QPainter& painter, double x, double y, JKQTMa
             path.lineTo(xbrace1, y1);
             path.lineTo(xbrace1, y2);
             path.lineTo(xbrace2s, y2);
+            painter.drawPath(path);
+        } else if (openbrace==MTBTTopCorner) {
+            QPainterPath path;
+            const double dx=fabs(xbrace2s-xbrace1);
+            const double y1=y-nodeBaselineHeight;
+            path.moveTo(xbrace2s, y1);
+            path.lineTo(xbrace1, y1);
+            path.lineTo(xbrace1, y1+dx);
+            painter.drawPath(path);
+        } else if (openbrace==MTBTBottomCorner) {
+            QPainterPath path;
+            const double dx=fabs(xbrace2s-xbrace1);
+            const double y1=y+(nodeOverallHeight-nodeBaselineHeight);
+            path.moveTo(xbrace2s, y1);
+            path.lineTo(xbrace1, y1);
+            path.lineTo(xbrace1, y1-dx);
             painter.drawPath(path);
         } else if (openbrace==MTBTCurlyBracket) {
             QPainterPath path=JKQTMathTextMakeHBracePath(0,0,nodeOverallHeight, bracewidth*brace_fraction);
@@ -204,6 +220,22 @@ double JKQTMathTextBraceNode::draw(QPainter& painter, double x, double y, JKQTMa
             path.lineTo(xbrace2, y2);
             path.lineTo(xbrace1s, y2);
             painter.drawPath(path);
+        } else if (closebrace==MTBTBottomCorner) {
+            QPainterPath path;
+            const double dx=fabs(xbrace1s-xbrace2);
+            const double y1=y+(nodeOverallHeight-nodeBaselineHeight);
+            path.moveTo(xbrace1s, y1);
+            path.lineTo(xbrace2, y1);
+            path.lineTo(xbrace2, y1-dx);
+            painter.drawPath(path);
+        } else if (closebrace==MTBTTopCorner) {
+            QPainterPath path;
+            const double dx=fabs(xbrace1s-xbrace2);
+            const double y1=y-nodeBaselineHeight;
+            path.moveTo(xbrace1s, y1);
+            path.lineTo(xbrace2, y1);
+            path.lineTo(xbrace2, y1+dx);
+            painter.drawPath(path);
         } else if (closebrace==MTBTCurlyBracket) {
             QPainterPath path=JKQTMathTextMakeHBracePath(0,0,nodeOverallHeight, bracewidth*brace_fraction);
             painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
@@ -271,6 +303,8 @@ bool JKQTMathTextBraceNode::toHtml(QString &html, JKQTMathTextEnvironment curren
     else if (openbrace==MTBTCurlyBracket) ob="{";
     else if (openbrace==MTBTSingleLine) ob="|";
     else if (openbrace==MTBTDoubleLine) ob="||";
+    else if (openbrace==MTBTTopCorner) ob="&ulcorner;";
+    else if (openbrace==MTBTBottomCorner) ob="&llcorner;";
     if (closebrace==MTBTAngleBracket) cb="&rang;";
     else if (closebrace==MTBTFloorBracket) cb="&rfloor;";
     else if (closebrace==MTBTCeilBracket) cb="&rceil;";
@@ -279,6 +313,8 @@ bool JKQTMathTextBraceNode::toHtml(QString &html, JKQTMathTextEnvironment curren
     else if (closebrace==MTBTCurlyBracket) cb="}";
     else if (closebrace==MTBTSingleLine) cb="|";
     else if (closebrace==MTBTDoubleLine) cb="||";
+    else if (closebrace==MTBTTopCorner) ob="&urcorner;";
+    else if (closebrace==MTBTBottomCorner) ob="&lrcorner;";
 
 
     html=html+ob;

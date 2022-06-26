@@ -345,6 +345,10 @@ QString JKQTMathTextBraceType2String(JKQTMathTextBraceType type) {
         return "parenhesis";
     case MTBTSingleLine:
         return "single_line";
+    case MTBTTopCorner:
+        return "top_corner";
+    case MTBTBottomCorner:
+        return "bottom_corner";
     case MTBTAny:
         return "any";
     case MTBTNone:
@@ -363,6 +367,8 @@ JKQTMathTextBraceType TokenName2JKQTMathTextBraceType(const QString &tokenName)
     if (tokenName=="<" || tokenName==">" || tokenName=="langle" || tokenName=="rangle") return MTBTAngleBracket;
     if (tokenName=="_" || tokenName=="lfloor" || tokenName=="rfloor") return MTBTFloorBracket;
     if (tokenName=="~" || tokenName=="lceil" || tokenName=="rceil") return MTBTCeilBracket;
+    if (tokenName=="ulcorner" || tokenName=="urcorner"||tokenName=="tlcorner" || tokenName=="trcorner") return MTBTTopCorner;
+    if (tokenName=="blcorner" || tokenName=="brcorner"||tokenName=="llcorner" || tokenName=="lrcorner") return MTBTBottomCorner;
     if (tokenName=="any") return MTBTAny;
     if (tokenName=="." || tokenName=="" || tokenName=="none") return MTBTNone;
     return MTBTUnknown;
@@ -375,6 +381,8 @@ JKQTMathTextBraceType InstructionName2OpeningJKQTMathTextBraceType(const QString
     if (tokenName=="langle") return MTBTAngleBracket;
     if (tokenName=="lfloor") return MTBTFloorBracket;
     if (tokenName=="lceil") return MTBTCeilBracket;
+    if (tokenName=="tlcorner"||tokenName=="ulcorner") return MTBTTopCorner;
+    if (tokenName=="blcorner"||tokenName=="llcorner") return MTBTBottomCorner;
     return MTBTUnknown;
 }
 
@@ -385,6 +393,8 @@ JKQTMathTextBraceType InstructionName2JKQTMathTextBraceType(const QString &token
     if (tokenName=="langle" || tokenName=="rangle") return MTBTAngleBracket;
     if (tokenName=="lfloor" || tokenName=="rfloor") return MTBTFloorBracket;
     if (tokenName=="lceil" || tokenName=="rceil") return MTBTCeilBracket;
+    if (tokenName=="ulcorner" || tokenName=="urcorner"||tokenName=="tlcorner" || tokenName=="trcorner") return MTBTTopCorner;
+    if (tokenName=="blcorner" || tokenName=="brcorner"||tokenName=="llcorner" || tokenName=="lrcorner") return MTBTBottomCorner;
     return MTBTUnknown;
 }
 

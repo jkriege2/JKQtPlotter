@@ -513,6 +513,14 @@ bool JKQTMathTextSymbolNode::getUnicodeFullSymbolProp(JKQTMathTextSymbolNode::Sy
       unicodeSymbol.insert("rceil", QChar(0x2309));
       unicodeSymbol.insert("lfloor", QChar(0x230A));
       unicodeSymbol.insert("rfloor", QChar(0x230B));
+      unicodeSymbol.insert("llcorner", QChar(0x231E));
+      unicodeSymbol.insert("lrcorner", QChar(0x231F));
+      unicodeSymbol.insert("ulcorner", QChar(0x231C));
+      unicodeSymbol.insert("urcorner", QChar(0x231D));
+      unicodeSymbol.insert("blcorner", QChar(0x231E));
+      unicodeSymbol.insert("brcorner", QChar(0x231F));
+      unicodeSymbol.insert("tlcorner", QChar(0x231C));
+      unicodeSymbol.insert("trcorner", QChar(0x231D));
       unicodeSymbol.insert("subsetnot", QChar(0x2284));
       unicodeSymbol.insert("DC", QChar(0x2393));
       unicodeSymbol.insert("bot", QChar(0x22A4));
@@ -916,7 +924,7 @@ void JKQTMathTextSymbolNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvi
         else if (symbolName=="longleftrightarrow") { width=JKQTMathTextGetTightBoundingRect(f, "X", painter.device()).width()*3.5; symb="x"; }
         else if (symbolName=="Longleftrightarrow") { width=JKQTMathTextGetTightBoundingRect(f, "X", painter.device()).width()*3.5; symb="x"; }
     }
-    const QRectF tbr=JKQTMathTextGetTightBoundingRect(f, symb, painter.device());
+    const QRectF tbr=(symb.isEmpty())?JKQTMathTextGetTightBoundingRect(f, "X", painter.device()):JKQTMathTextGetTightBoundingRect(f, symb, painter.device());
     overallHeight=tbr.height();// fm.height();
     baselineHeight=tbr.height()-tbr.bottom();
     if (props.exactAscent) {
@@ -1208,6 +1216,14 @@ bool JKQTMathTextSymbolNode::toHtml(QString &html, JKQTMathTextEnvironment curre
       entitylut.insert("exists", "&exist;");
       entitylut.insert("cong", "&sim;");
       entitylut.insert("bot", "&perp;");
+      entitylut.insert("llcorner", "&ulcorner;");
+      entitylut.insert("lrcorner", "&urcorner;");
+      entitylut.insert("ulcorner", "&ulcorner;");
+      entitylut.insert("urcorner", "&urcorner;");
+      entitylut.insert("blcorner", "&llcorner;");
+      entitylut.insert("brcorner", "&llcorner;");
+      entitylut.insert("tlcorner", "&lrcorner;");
+      entitylut.insert("trcorner", "&lrcorner;");
 
 
       entitylut.insert("ll", "<<");
