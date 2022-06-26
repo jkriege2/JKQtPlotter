@@ -121,6 +121,7 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbTestset->addItem("text/math: brace test:  left/right { }", "text: "+fAddBraceTest("\\{","\\}")+" -- math: $"+fAddBraceTest("\\{","\\}")+"$");
     ui->cmbTestset->addItem("text/math: brace test:  left/right || ||", "text: "+fAddBraceTest("\\|","\\|")+" -- math: $"+fAddBraceTest("\\|","\\|")+"$");
     ui->cmbTestset->addItem("text/math: brace test:  left/right | |", "text: "+fAddBraceTest("|","|")+" -- math: $"+fAddBraceTest("|","|")+"$");
+    ui->cmbTestset->addItem("text/math: brace test:  left/right angles", "text: \\left\\langle\\left\\langle\\left\\langle r^{123}\\right\\rangle\\right\\rangle\\right\\rangle -- math: $\\left\\langle\\left\\langle\\left\\langle r^{123}\\right\\rangle\\right\\rangle\\right\\rangle$");
     ui->cmbTestset->addItem("text/math: brace test:  left/right floor", "text: \\left\\lfloor\\left\\lfloor\\left\\lfloor r^{123}\\right\\rfloor\\right\\rfloor\\right\\rfloor -- math: $\\left\\lfloor\\left\\lfloor\\left\\lfloor r^{123}\\right\\rfloor\\right\\rfloor\\right\\rfloor$");
     ui->cmbTestset->addItem("text/math: brace test:  left/right ceil", "text: \\left\\lceil\\left\\lceil\\left\\lceil r^{123}\\right\\rceil\\right\\rceil\\right\\rceil -- math: $\\left\\lceil\\left\\lceil\\left\\lceil r^{123}\\right\\rceil\\right\\rceil\\right\\rceil$");
     ui->cmbTestset->addItem("text/math: brace test:  left/right top-corner", "text: "+fAddBraceTest("\\ulcorner","\\urcorner")+" -- math: $"+fAddBraceTest("\\ulcorner","\\urcorner")+"$");
@@ -130,6 +131,7 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbTestset->addItem("text/math: brace test:  non-left/right [ ]", "text: [[[r^{123}]]] -- math: $[[[r^{123}]]]$");
     ui->cmbTestset->addItem("text/math: brace test:  non-left/right { }", "text: \\{\\{\\{r^{123}\\}\\}\\} -- math: $\\{\\{\\{ r^{123}\\}\\}\\}$");
     ui->cmbTestset->addItem("text/math: brace test:  non-left/right | |", "text: |||r^{123}||| -- math: $|||r^{123}|||$");
+    ui->cmbTestset->addItem("text/math: brace test:  non-left/right angle", "text: \\langle\\langle\\langle r^{123}\\rangle\\rangle\\rangle -- math: $\\langle\\langle\\langle r^{123}\\rangle\\rangle\\rangle$");
     ui->cmbTestset->addItem("text/math: brace test:  non-left/right floor", "text: \\lfloor\\lfloor\\lfloor r^{123}\\rfloor\\rfloor\\rfloor -- math: $\\lfloor\\lfloor\\lfloor r^{123}\\rfloor\\rfloor\\rfloor$");
     ui->cmbTestset->addItem("text/math: brace test:  non-left/right ceil", "text: \\lceil\\lceil\\lceil r^{123}\\rceil\\rceil\\rceil -- math: $\\lceil\\lceil\\lceil r^{123}\\rceil\\rceil\\rceil$");
     ui->cmbTestset->addItem("text/math: brace test:  non-left/right top-corner", "text: \\ulcorner\\ulcorner\\ulcorner r^{123}\\urcorner\\urcorner\\urcorner -- math: $\\ulcorner\\ulcorner\\ulcorner r^{123}\\urcorner\\urcorner\\urcorner$");

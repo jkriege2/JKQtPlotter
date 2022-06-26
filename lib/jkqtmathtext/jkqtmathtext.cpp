@@ -60,25 +60,28 @@ JKQTMathText::JKQTMathText(QObject* parent):
     //qDebug()<<"init_resoucre: "<<std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now()-t0).count()/1000.0<<"ms"; t0=std::chrono::high_resolution_clock::now();
 
     fontSize=10;
+    fontColor=QColor("black");
+    italic_correction_factor=0.4;
     brace_factor=1.04;
+    brace_shrink_factor=0.45;
+    brace_y_shift_factor=0.7;//-1;
+
     subsuper_size_factor=0.7;
     subsuper_mode_selection_by_size_factor=1.01;
-    italic_correction_factor=0.4;
     sub_shift_factor=0.4;
     super_shift_factor=0.7;
     special_sub_shift_factor=0.4;
     special_super_shift_factor=0.4;
-    brace_shrink_factor=0.6;
-    fontColor=QColor("black");
 
     frac_factor=1.0;
     frac_nested_factor=0.7;
     frac_shift_factor=0.4;
+
     underbrace_factor=0.75;
     underset_factor=0.7;
     decoration_height_factor=0.2;
     decoration_width_reduction_Xfactor=0.2;
-    brace_y_shift_factor=0.7;//-1;
+
     operatorsubsuper_size_factor=0.65;
     operatorsubsuper_distance_factor=0.25;
     operatorsubsuper_extraspace_factor=0.5;

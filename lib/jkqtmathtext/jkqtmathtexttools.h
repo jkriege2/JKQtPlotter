@@ -293,12 +293,22 @@ struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextFontDefinition {
 };
 
 
-/** \brief create a QPainterPath for drawing horizontal braces
+/** \brief create a QPainterPath for drawing horizontal braces, use QPainter::fillPath() with a vanishing line-width to draw this
  *  \ingroup jkqtmathtext_tools
  *
  *  \image html jkqtmathtext/JKQTMathTextMakeHBracePath.png
+ *
+ *  \param x x-center-position of the brace
+ *  \param ybrace y-center-position of the brace
+ *  \param width with of the overall brace
+ *  \param height of the brace
+ *  \param lineWidth linewidth when drawing, used for correcting so the brace exactly fills the rectangle and not overshoots it
+ *  \param cubicshrink
+ *  \param cubiccontrolfac
+ *  \param lineWidthShrinkFactor the width of the tips is lineWidth reduced by this factor
+ *  \param lineWidthGrowFactor the width of the horizontal bars is increased by this factor from lineWidth
  */
-JKQTMATHTEXT_LIB_EXPORT QPainterPath JKQTMathTextMakeHBracePath(double x, double ybrace, double width, double bw, double cubicshrink=0.5, double cubiccontrolfac=0.3);
+JKQTMATHTEXT_LIB_EXPORT QPainterPath JKQTMathTextMakeHBracePath(double x, double ybrace, double width, double bw, double lineWidth, double cubicshrink=0.5, double cubiccontrolfac=0.3, double lineWidthShrinkFactor=0.3, double lineWidthGrowFactor=0.9);
 
 
 /** \brief create a QPainterPath for drawing horizontal arrows

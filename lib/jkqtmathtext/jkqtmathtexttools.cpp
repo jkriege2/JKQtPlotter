@@ -566,20 +566,51 @@ QPainterPath JKQTMathTextMakeArrow(double x, double y, double width, double arro
     return path;
 }
 
-QPainterPath JKQTMathTextMakeHBracePath(double x, double ybrace, double width, double bw, double cubicshrink, double cubiccontrolfac) {
-    double xl1=x-(width)*cubicshrink+bw*cubicshrink;
-    double xr2=x+(width)*cubicshrink-bw*cubicshrink;
-    double xl2=x-bw*cubicshrink;
-    double xr1=x+bw*cubicshrink;
+QPainterPath JKQTMathTextMakeHBracePath(double x, double ybrace, double width, double bw, double lineWidth, double cubicshrink, double cubiccontrolfac, double lineWidthShrinkFactor, double lineWidthGrowFactor) {
+    const double thinLW=lineWidthShrinkFactor*lineWidth;
+    const double thickLW=lineWidth*lineWidthGrowFactor;
+    const double xleft=x-width/2.0;
+    const double xleft_inner=xleft+thinLW;
+    const double xleftflat_leftbottom=xleft+cubicshrink*bw;
+    const double xleftflat_lefttop=xleft_inner+cubicshrink*bw;
+    const double xright=x+width/2.0;
+    const double xright_inner=xright-thinLW;
+    const double xrightflat_rightbottom=xright-cubicshrink*bw;
+    const double xrightflat_righttop=xright_inner-cubicshrink*bw;
+    const double xleftflat_righttop=x-bw*cubicshrink;
+    const double xlefttip=x-thinLW/2.0;
+    const double xleftflat_rightbottom=xlefttip-bw*cubicshrink;
+    const double xrightflat_lefttop=x+bw*cubicshrink;
+    const double xrighttip=x+thinLW/2.0;
+    const double xrightflat_leftbottom=xrighttip+bw*cubicshrink;
+
+    const double ytop=ybrace-bw*cubicshrink;
+    const double yctop=ybrace-thickLW/2.0;
+    const double ycbottom=ybrace+thickLW/2.0;
+    const double ybottom=ybrace+bw*cubicshrink;
+    const double ybottomtip=ybottom-thickLW;
+
+    const double dxyControl=bw*cubiccontrolfac;
 
     QPainterPath path;
-    path.moveTo(xl1-bw*cubicshrink, ybrace-bw*cubicshrink);
-    path.cubicTo(xl1-bw*cubicshrink, ybrace-bw*cubicshrink+bw*cubiccontrolfac, xl1-bw*cubiccontrolfac, ybrace, xl1, ybrace);
-    path.lineTo(xl2, ybrace);
-    path.cubicTo(xl2+bw*cubiccontrolfac, ybrace, (xl2+xr1)/2.0, ybrace+bw*cubicshrink-bw*cubiccontrolfac, (xl2+xr1)/2.0, ybrace+bw*cubicshrink);
-    path.cubicTo((xl2+xr1)/2.0, ybrace+bw*cubicshrink-bw*cubiccontrolfac, xr1-bw*cubiccontrolfac, ybrace, xr1, ybrace);
-    path.lineTo(xr2, ybrace);
-    path.cubicTo(xr2+bw*cubiccontrolfac, ybrace, xr2+bw*cubicshrink, ybrace-bw*cubicshrink+bw*cubiccontrolfac, xr2+bw*cubicshrink, ybrace-bw*cubicshrink);
+    path.moveTo(xleft_inner, ytop);
+    path.lineTo(xleft, ytop);  // top-left flat
+    path.cubicTo(xleft, ytop+dxyControl, xleftflat_leftbottom-dxyControl, ycbottom, xleftflat_leftbottom, ycbottom);
+    path.lineTo(xleftflat_rightbottom,ycbottom); // left arm, bottom
+    path.cubicTo(xleftflat_rightbottom+dxyControl, ycbottom, xlefttip, ybottom-dxyControl, xlefttip, ybottom);
+    path.lineTo(xrighttip, ybottom); // bottom flat
+    path.cubicTo(xrighttip, ybottom-dxyControl,xrightflat_leftbottom-dxyControl, ycbottom, xrightflat_leftbottom, ycbottom);
+    path.lineTo(xrightflat_rightbottom, ycbottom); // right arm, bottom
+    path.cubicTo(xrightflat_rightbottom+dxyControl, ycbottom, xright, ytop+dxyControl, xright, ytop);
+
+    path.lineTo(xright_inner,ytop); // top-right flat
+    path.cubicTo(xright_inner, ytop+dxyControl, xrightflat_righttop+dxyControl, yctop, xrightflat_righttop, yctop);
+    path.lineTo(xrightflat_lefttop, yctop); // right arm, top
+    path.cubicTo(xrightflat_lefttop-dxyControl, yctop, x, yctop, x, ybottomtip); // center-tip
+    path.cubicTo(x, yctop, xleftflat_righttop+dxyControl, yctop, xleftflat_righttop, yctop);
+    path.lineTo(xleftflat_lefttop, yctop); // left arm, top
+    path.cubicTo(xleftflat_lefttop-dxyControl, yctop, xleft_inner,ytop+dxyControl, xleft_inner, ytop);
+    path.closeSubpath();
     return path;
 }
 

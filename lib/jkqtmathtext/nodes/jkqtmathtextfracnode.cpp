@@ -248,9 +248,12 @@ double JKQTMathTextFracNode::draw(QPainter& painter, double x, double y, JKQTMat
         deltaWidth=xwidth;
     } else if (mode==JKQTMathTextFracNode::MTFMunderbrace) {
         double ybrace=y+descent1+bw/2.0;
-        const QPainterPath path=JKQTMathTextMakeHBracePath(x+xwidth/2.0+(width1)/2.0, ybrace, maxWidth, bw);
-        painter.drawPath(path);
-
+        {
+            const QPainterPath path=JKQTMathTextMakeHBracePath(x+xwidth/2.0+(width1)/2.0, ybrace, maxWidth, bw, p.width());
+            QPen plocal=p;
+            plocal.setWidthF(0.0001);
+            painter.fillPath(path, QBrush(ev1.color));
+        }
         child1->draw(painter, x+xwidth/2.0+(maxWidth-width1)/2.0, y, ev1);
         child2->draw(painter, x+xwidth/2.0+(maxWidth-width2)/2.0, y+descent1+bw+ascent2, ev2);
         deltaWidth=xwidth;
@@ -265,8 +268,10 @@ double JKQTMathTextFracNode::draw(QPainter& painter, double x, double y, JKQTMat
             painter.save(); auto __finalpaintinner=JKQTPFinally([&painter]() {painter.restore();});
             painter.translate(x+xwidth/2.0+(width1)/2.0, ybrace);
             painter.rotate(180);
-            const QPainterPath path=JKQTMathTextMakeHBracePath(0,0, maxWidth, bw);
-            painter.drawPath(path);
+            const QPainterPath path=JKQTMathTextMakeHBracePath(0,0, maxWidth, bw, p.widthF());
+            QPen plocal=p;
+            plocal.setWidthF(0.0001);
+            painter.fillPath(path, QBrush(ev1.color));
         }
 
         child1->draw(painter, x+xwidth/2.0+(maxWidth-width1)/2.0, y, ev1);
