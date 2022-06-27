@@ -87,6 +87,8 @@ JKQTMathText::JKQTMathText(QObject* parent):
     operatorsubsuper_size_factor=0.65;
     operatorsubsuper_distance_factor=0.25;
     operatorsubsuper_extraspace_factor=0.5;
+    intsubsuper_xcorrection_factor=0.25;
+    intsubbesides_xcorrection_xfactor=0.33;
     mathoperator_width_factor=1.5;
     bigmathoperator_font_factor=1.8;
 
@@ -230,6 +232,8 @@ void JKQTMathText::loadSettings(const QSettings& settings, const QString& group)
     operatorsubsuper_distance_factor=settings.value(group+"operatorsubsuper_distance_factor", operatorsubsuper_distance_factor).toDouble();
     operatorsubsuper_extraspace_factor=settings.value(group+"operatorsubsuper_extraspace_factor", operatorsubsuper_extraspace_factor).toDouble();
     mathoperator_width_factor=settings.value(group+"mathoperator_width_factor", mathoperator_width_factor).toDouble();
+    intsubsuper_xcorrection_factor=settings.value(group+"intsubsuper_xcorrection_factor", intsubsuper_xcorrection_factor).toDouble();
+    intsubbesides_xcorrection_xfactor=settings.value(group+"intsubbesides_xcorrection_xfactor", intsubbesides_xcorrection_xfactor).toDouble();
 
 
     if (settings.value(group+"use_stix_fonts", false).toBool()) useSTIX();
@@ -260,6 +264,8 @@ void JKQTMathText::saveSettings(QSettings& settings, const QString& group) const
     settings.setValue(group+ "operatorsubsuper_distance_factor", operatorsubsuper_distance_factor);
     settings.setValue(group+ "operatorsubsuper_extraspace_factor", operatorsubsuper_extraspace_factor);
     settings.setValue(group+ "mathoperator_width_factor", mathoperator_width_factor);
+    settings.setValue(group+ "intsubsuper_xcorrection_factor", intsubsuper_xcorrection_factor);
+    settings.setValue(group+ "intsubbesides_xcorrection_xfactor", intsubbesides_xcorrection_xfactor);
     settings.setValue(group+ "brace_y_shift_factor", brace_y_shift_factor);
     settings.setValue(group+ "decoration_height_factor", decoration_height_factor);
     settings.setValue(group+ "decoration_width_reduction_xfactor", decoration_width_reduction_Xfactor);
@@ -720,6 +726,26 @@ void JKQTMathText::setMathoperatorWidthFactor(double __value)
 double JKQTMathText::getMathoperatorWidthFactor() const
 {
     return this->mathoperator_width_factor;
+}
+
+void JKQTMathText::setIntSubSuperXCorrectionFactor(double __value)
+{
+    intsubsuper_xcorrection_factor=__value;
+}
+
+double JKQTMathText::getIntSubSuperXCorrectionFactor() const
+{
+    return intsubsuper_xcorrection_factor;
+}
+
+void JKQTMathText::setIntSubBesidesXCorrectionXFactor(double __value)
+{
+    intsubbesides_xcorrection_xfactor=__value;
+}
+
+double JKQTMathText::getIntSubBesidesXCorrectionXFactor() const
+{
+    return intsubbesides_xcorrection_xfactor;
 }
 
 void JKQTMathText::setBigMathoperatorFontFactor(double __value)

@@ -891,7 +891,13 @@ JKQTMathTextSymbolNode::SymbolProps JKQTMathTextSymbolNode::getSymbolProp(const 
 
 }
 
-void JKQTMathTextSymbolNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* /*prevNodeSize*/) {
+void JKQTMathTextSymbolNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize) {
+    double dummy1, dummy2;
+    getSymbolSizeInternal(painter, currentEv, width, baselineHeight, overallHeight, strikeoutPos, dummy1, dummy2, prevNodeSize);
+}
+
+void JKQTMathTextSymbolNode::getSymbolSizeInternal(QPainter &painter, JKQTMathTextEnvironment currentEv, double &width, double &baselineHeight, double &overallHeight, double &strikeoutPos, double &subSuperXCorrection, double &subBesidesXCorrection, const JKQTMathTextNodeSize *prevNodeSize)
+{
     QFont f=currentEv.getFont(parentMathText);
     auto props=getSymbolProp(symbolName, currentEv);
     f.setFamily(props.font);
@@ -942,6 +948,11 @@ void JKQTMathTextSymbolNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvi
 
     if (props.extendWidthInMathmode && currentEv.insideMath) width=width*parentMathText->getMathoperatorWidthFactor();
 
+    static QSet<QString> intCorrectionSymbolNames=QSet<QString>()<<"int"<<"iint"<<"iiint"<<"oint"<<"oiint"<<"oiiint";
+    if (intCorrectionSymbolNames.contains(symbolName)) {
+        subSuperXCorrection=parentMathText->getIntSubSuperXCorrectionFactor()*tbr.width();
+        subBesidesXCorrection=parentMathText->getIntSubBesidesXCorrectionXFactor()*JKQTMathTextGetTightBoundingRect(f, "X", painter.device()).width();
+    }
 }
 
 double JKQTMathTextSymbolNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* /*prevNodeSize*/) {
@@ -1315,4 +1326,17 @@ bool JKQTMathTextSymbolNode::getAddWhitespace() const
 {
     return addWhitespace;
 }
+
+void JKQTMathTextSymbolNode::getSymbolSize(QPainter &painter, JKQTMathTextEnvironment currentEv, double &width, double &baselineHeight, double &overallHeight, double &strikeoutPos, double &subSuperXCorrection, double &subBesidesXCorrection, const JKQTMathTextNodeSize *prevNodeSize)
+{
+    double w=width, b=baselineHeight, o=overallHeight, s=strikeoutPos;
+    getSymbolSizeInternal(painter, currentEv, w, b, o, s, subSuperXCorrection, subBesidesXCorrection, prevNodeSize);
+
+    if (w<1e5) width=w;
+    if (b<1e5) baselineHeight=b;
+    if (o<1e5) overallHeight=o;
+    if (s<1e5) strikeoutPos=s;
+
+}
+
 

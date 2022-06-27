@@ -458,6 +458,14 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         void setMathoperatorWidthFactor(double __value);
         /** \copydoc mathoperator_width_factor */
         double getMathoperatorWidthFactor() const;
+        /** \copydoc intsubsuper_xcorrection_factor */
+        void setIntSubSuperXCorrectionFactor(double __value);
+        /** \copydoc intsubsuper_xcorrection_factor */
+        double getIntSubSuperXCorrectionFactor() const;
+        /** \copydoc intsubbesides_xcorrection_xfactor */
+        void setIntSubBesidesXCorrectionXFactor(double __value);
+        /** \copydoc intsubbesides_xcorrection_xfactor */
+        double getIntSubBesidesXCorrectionXFactor() const;
         /** \copydoc bigmathoperator_font_factor */
         void setBigMathoperatorFontFactor(double __value);
         /** \copydoc bigmathoperator_font_factor */
@@ -592,6 +600,23 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
          *  \image html jkqtmathtext_subsuper_with_limits.png
          */
         double operatorsubsuper_extraspace_factor;
+        /** \brief for integrals (\c \\int , \c \\oint , ...) the sub-/superscripts above/below the symbol have to be shifted a bit to the left/right to accomodate the shape of the operator symbol (i.e. some free space at the top-left and bottom-right)
+         *
+         *  This factor is multiplied by the symbol width: xshift=intsubsuper_xcorrection_factor*symbolWidth
+         *  Then the subscript below is placed at centerx(symbol)-xshift and the superscript at centerx(symbol)+shiftx.
+         *  This is also used to correct a subset next to the symbol by shifting it to rightx(symbol)-xshift.
+         *
+         *  This correction is applied to \\int, \\iint, \\iiint, \\oint, ...
+         */
+        double intsubsuper_xcorrection_factor;
+        /** \brief for integrals (\c \\int , \c \\oint , ...) the subscripts besides the symbol have to be shifted to the left a bit to the left to accomodate the shape of the operator symbol (i.e. some free space at the bottom-right)
+         *
+         *  This factor is multiplied by the width of an x: xshift=intsubbesides_xcorrection_xfactor*xWidth
+         *  Then the subscript besides the symbol is shifted by xshift to the left
+         *
+         *  This correction is applied to \\int, \\iint, \\iiint, \\oint, ...
+         */
+        double intsubbesides_xcorrection_xfactor;
         /** \brief factor, used to extend the size of an operator in math mode
          *
          *  The next image demonstrates the effect of this property, which adds extra space
