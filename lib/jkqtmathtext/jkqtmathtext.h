@@ -486,7 +486,15 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         void setUnderbraceFactor(double __value);
         /** \copydoc underbrace_factor */ 
         double getUnderbraceFactor() const;
-        /** \copydoc undersetFactor */ 
+        /** \copydoc underbrace_separation_xfactor */
+        void setUnderbraceSeparationXFactor(double __value);
+        /** \copydoc underbrace_separation_xfactor */
+        double getUnderbraceSeparationXFactor() const;
+        /** \copydoc underbrace_bracesize_xfactor */
+        void setUnderbraceBraceSizeXFactor(double __value);
+        /** \copydoc underbrace_bracesize_xfactor */
+        double getUnderbraceBraceSizeXFactor() const;
+        /** \copydoc undersetFactor */
         void setUndersetFactor(double __value);
         /** \copydoc undersetFactor */ 
         double getUndersetFactor() const;
@@ -641,6 +649,10 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         double underbrace_factor;
         /** \brief scaling factor for font of underset/overset text */
         double underset_factor;
+        /** \brief additional space between the main text to the curly brace and the brace to underbrace/overbrace, multiplied with height("x") */
+        double underbrace_separation_xfactor;
+        /** \brief height of the brace in underbrace/overbrace, multiplied with ascent */
+        double underbrace_bracesize_xfactor;
         /** \brief fraction of the brace ascent that the brace is shifted downwards, when scaled */
         double brace_y_shift_factor;
         /** \brief size of the decorations (dot, tilde, ...), as fraction of the baselineheight

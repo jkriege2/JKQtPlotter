@@ -78,6 +78,8 @@ JKQTMathText::JKQTMathText(QObject* parent):
     frac_shift_factor=0.4;
 
     underbrace_factor=0.75;
+    underbrace_separation_xfactor=0.25;
+    underbrace_bracesize_xfactor=0.5;
     underset_factor=0.7;
     decoration_height_factor=0.2;
     decoration_width_reduction_Xfactor=0.2;
@@ -218,6 +220,8 @@ void JKQTMathText::loadSettings(const QSettings& settings, const QString& group)
     frac_factor=settings.value(group+"frac_factor", frac_factor).toDouble();
     frac_shift_factor=settings.value(group+"frac_shift_factor", frac_shift_factor).toDouble();
     underbrace_factor=settings.value(group+"underbrace_factor", underbrace_factor).toDouble();
+    underbrace_bracesize_xfactor=settings.value(group+"underbrace_bracesize_xfactor", underbrace_bracesize_xfactor).toDouble();
+    underbrace_separation_xfactor=settings.value(group+"underbrace_separation_xfactor", underbrace_separation_xfactor).toDouble();
     underset_factor=settings.value(group+"undersetFactor", underset_factor).toDouble();
     brace_y_shift_factor=settings.value(group+"brace_y_shift_factor", brace_y_shift_factor).toDouble();
     decoration_height_factor=settings.value(group+"decoration_height_factor", decoration_height_factor).toDouble();
@@ -249,6 +253,8 @@ void JKQTMathText::saveSettings(QSettings& settings, const QString& group) const
     settings.setValue(group+ "frac_factor", frac_factor);
     settings.setValue(group+ "frac_shift_factor", frac_shift_factor);
     settings.setValue(group+ "underbrace_factor", underbrace_factor);
+    settings.setValue(group+ "underbrace_bracesize_xfactor", underbrace_bracesize_xfactor);
+    settings.setValue(group+ "underbrace_separation_xfactor", underbrace_separation_xfactor);
     settings.setValue(group+ "undersetFactor", underset_factor);
     settings.setValue(group+ "operatorsubsuper_size_factor", operatorsubsuper_size_factor);
     settings.setValue(group+ "operatorsubsuper_distance_factor", operatorsubsuper_distance_factor);
@@ -784,6 +790,26 @@ void JKQTMathText::setUnderbraceFactor(double __value)
 double JKQTMathText::getUnderbraceFactor() const
 {
     return this->underbrace_factor;
+}
+
+void JKQTMathText::setUnderbraceSeparationXFactor(double __value)
+{
+    underbrace_separation_xfactor=__value;
+}
+
+double JKQTMathText::getUnderbraceSeparationXFactor() const
+{
+    return underbrace_separation_xfactor;
+}
+
+void JKQTMathText::setUnderbraceBraceSizeXFactor(double __value)
+{
+    underbrace_bracesize_xfactor=__value;
+}
+
+double JKQTMathText::getUnderbraceBraceSizeXFactor() const
+{
+    return underbrace_bracesize_xfactor;
 }
 
 void JKQTMathText::setUndersetFactor(double __value)

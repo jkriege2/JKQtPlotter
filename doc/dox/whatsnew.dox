@@ -36,7 +36,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>IMPROVED: high-dpr-support in JKQTMathText</li>
     <li>IMPROVED: typesetting of sub-/supercripts, especially for large math operators and braces</li>
     <li>MODIFIED: brace node  now calculates the extension of the child height above or below the strikeoutPos, in order to center braces around the strikeoutPos</li>
-    <li>IMPROVED: improved drawing of parantheses, square brackets ...</li>
+    <li>IMPROVED: improved drawing of parantheses, square brackets ... , underbrace/overbrace</li>
     <li>remove/breaking: \v[a-zA-Z] and shorthand for \vec{a-zA-Z} was removed, implementation of \bbR,\bbC,... changed</li>
     <li>NEW: now supports new decoration instructions: \cancel, \xcancel, \bcancel, \sout, \ocirc, \widetilde, \widehat, \breve</li>
     <li>NEW: reworked drawing of decorations: improved appearance and positioning!</li>
