@@ -1146,7 +1146,7 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
                 if (currentInstructionName=="sqrt") {
                     nl->addChild(new JKQTMathTextSqrtNode(this, parseLatexString(true)));
                 } else if (currentInstructionName=="cbrt") {
-                    nl->addChild(new JKQTMathTextSqrtNode(this, parseLatexString(true), 3));
+                    nl->addChild(new JKQTMathTextSqrtNode(this, parseLatexString(true), new JKQTMathTextTextNode(this, "3", false)));
                 } else if (currentInstructionName=="verb") {
                     QString text="";
                     currentTokenID++;
@@ -1370,24 +1370,11 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
                 //std::cout<<"found '[' after '"<<name.toStdString()<<"'\n";
                 if (currentInstructionName=="sqrt") {
                     JKQTMathTextNode* n1=parseLatexString(true, MTBTAny, "", true);
-                    JKQTMathTextListNode* n1lst=dynamic_cast<JKQTMathTextListNode*>(n1);
-                    JKQTMathTextTextNode* n1txt=dynamic_cast<JKQTMathTextTextNode*>(n1);
-                    if (n1lst && n1lst->childCount()==1) {
-                        n1txt=dynamic_cast<JKQTMathTextTextNode*>(n1lst->getChild(0));
-                    }
-                    int degree=2;
-                    bool ok=false;
-                    if (n1txt) degree=n1txt->getText().toInt(&ok);
-                    if (!ok) {
-                        degree=2;
-                        error_list.append(tr("error @ ch. %1: an integer in [] after '%2' command").arg(currentTokenID).arg(currentInstructionName));
-                    }
-
                     JKQTMathTextNode* n2=nullptr;
                     if (getToken()==MTTopenbrace) n2=parseLatexString(true);
                     else error_list.append(tr("error @ ch. %1: expected one argument in '{' braces after '%2' command with an optional argument in []").arg(currentTokenID).arg(currentInstructionName));
 
-                    if (n1 && n2) nl->addChild(new JKQTMathTextSqrtNode(this, n2, degree));
+                    if (n1 && n2) nl->addChild(new JKQTMathTextSqrtNode(this, n2, n1));
                     else error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(currentInstructionName));
                 } else {
                     nl->addChild(new JKQTMathTextTextNode(this, "[", false));

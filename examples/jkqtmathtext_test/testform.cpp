@@ -369,7 +369,8 @@ QTreeWidgetItem *TestForm::createTree(JKQTMathTextNode *node, QTreeWidgetItem* p
         if (fracN->getChild1()) ti->addChild(createTree(fracN->getChild1(), ti));
         if (fracN->getChild2()) ti->addChild(createTree(fracN->getChild2(), ti));
     } else if (sqrtN)  {
-        name=QString("MTsqrtNode: deg=%1").arg(sqrtN->getDegree());
+        name=QString("MTsqrtNode");
+        if (sqrtN->getChildDegree()) ti->addChild(createTree(sqrtN->getChildDegree(), ti));
         if (sqrtN->getChild()) ti->addChild(createTree(sqrtN->getChild(), ti));
     } else if (braceN)  {
         name=QString("MTbraceNode: l='%1', r='%2'").arg(JKQTMathTextBraceType2String(braceN->getOpenbrace())).arg(JKQTMathTextBraceType2String(braceN->getClosebrace()));

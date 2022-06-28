@@ -47,7 +47,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: improved frac-rendering: font-scaling takes nesting-level into account, overall-rendering, sizes, if a brace surrounds a frac, the heights are equal above and below to center the brace , ...</li>
     <li>NEW: shows strikeoutPos when drawing Debug-Boxes</li>
     <li>NEW: LaTeX-Parser understands optional instruction parameters in [...] now</li>
-    <li>NEW: LaTeX-Parser simplifies parrse-tree to increase speed of execution</li>
+    <li>NEW: LaTeX-Parser simplifies parse-tree to increase speed of execution</li>
     <li>NEW: \limits and \nolimits works as in LaTeX now (before it was simply removed and the functionality implemented for a fixed list of symbols)</li>
     <li>NEW: added top-corner (\ulcorner/\urcorner) and bottom-corner brackets (\llcorner/\lrcorner)</li>
     <li>NEW: added \overbracket and \underbracket</li>
