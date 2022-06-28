@@ -152,6 +152,12 @@ class JKQTMathTextNode; // forward
       - You can use \c \\left. or \c \\right. to have only right or only left brace
     .
 
+    \subsection JKQTMathTextSuppoertedLaTeXRoots Roots
+    There are also instructions that allow to write roots:
+      - <code>$\\sqrt{1+\\sqrt{1+x}}$</code> \image html jkqtmathtext/jkqtmathtext_sqrt.png
+      - <code>$\\sqrt[3]{1+\\sqrt[3]{1+x}}$</code> \image html jkqtmathtext/jkqtmathtext_cbrt.png
+    .
+
     \subsection JKQTMathTextSuppoertedLaTeXUnderOver Undersetting, Oversetting, Underbraces, Overbraces ...
     There are also instructions that allow to under/overset braces, arrows, ...:
       - <code>$\\underbrace{x+x+...+x}{k\\ \\mathrm{times}}$</code> \image html jkqtmathtext/jkqtmathtext_brace_underbrace.png
@@ -535,6 +541,23 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         void setDecorationWidthReductionXFactor(double __value);
         /** \copydoc decoration_width_reduction_Xfactor */
         double getDecorationWidthReductionXFactor() const;
+
+
+        /** \copydoc sqrt_width_Xfactor */
+        void setSqrtWidthXFactor(double __value);
+        /** \copydoc sqrt_width_Xfactor */
+        double getSqrtWidthXFactor() const;
+        /** \copydoc sqrt_height_factor */
+        void setSqrtHeightFactor(double __value);
+        /** \copydoc sqrt_height_factor */
+        double getSqrtHeightFactor() const;
+        /** \copydoc sqrt_smallfont_factor */
+        void setSqrtSmallFontFactor(double __value);
+        /** \copydoc sqrt_smallfont_factor */
+        double getSqrtSmallFontFactor() const;
+
+
+
         /** \copydoc useUnparsed */ 
         void setUseUnparsed(bool __value);
         /** \copydoc useUnparsed */ 
@@ -692,6 +715,12 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
          *  \image html jkqtmathtext/decoration_sizing.png
          */
         double decoration_width_reduction_Xfactor;
+        /** \brief scaling factor for the small font used to indicate the degree of the sqrt */
+        double sqrt_smallfont_factor;
+        /** \brief width of the sqrt-symbol, as factor to width("X") */
+        double sqrt_width_Xfactor;
+        /** \brief height-increase of the sqrt-symbol, as factor of the child's height */
+        double sqrt_height_factor;
         /** \brief a list that will be filled with error messages while parsing, if any error occur */
         QStringList error_list;
 

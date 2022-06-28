@@ -35,6 +35,10 @@ class JKQTMathText; // forward
 
 /** \brief subclass representing a sqrt node
  *  \ingroup jkqtmathtext_items
+ *
+ *  This node renders square roots without and with an explicitly shown degree:
+ *  \image html jkqtmathtext/jkqtmathtext_sqrt.png
+ *  \image html jkqtmathtext/jkqtmathtext_cbrt.png
   */
 class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSqrtNode: public JKQTMathTextSingleChildNode {
     public:

@@ -92,6 +92,10 @@ JKQTMathText::JKQTMathText(QObject* parent):
     mathoperator_width_factor=1.5;
     bigmathoperator_font_factor=1.8;
 
+    sqrt_width_Xfactor=0.8;
+    sqrt_height_factor=1.2;
+    sqrt_smallfont_factor=0.57;
+
     blackboardSimulated=true;
 
 
@@ -234,6 +238,9 @@ void JKQTMathText::loadSettings(const QSettings& settings, const QString& group)
     mathoperator_width_factor=settings.value(group+"mathoperator_width_factor", mathoperator_width_factor).toDouble();
     intsubsuper_xcorrection_factor=settings.value(group+"intsubsuper_xcorrection_factor", intsubsuper_xcorrection_factor).toDouble();
     intsubbesides_xcorrection_xfactor=settings.value(group+"intsubbesides_xcorrection_xfactor", intsubbesides_xcorrection_xfactor).toDouble();
+    sqrt_width_Xfactor=settings.value(group+"sqrt_width_Xfactor", sqrt_width_Xfactor).toDouble();
+    sqrt_height_factor=settings.value(group+"sqrt_height_factor", sqrt_height_factor).toDouble();
+    sqrt_smallfont_factor=settings.value(group+"sqrt_smallfont_factor", sqrt_smallfont_factor).toDouble();
 
 
     if (settings.value(group+"use_stix_fonts", false).toBool()) useSTIX();
@@ -269,6 +276,9 @@ void JKQTMathText::saveSettings(QSettings& settings, const QString& group) const
     settings.setValue(group+ "brace_y_shift_factor", brace_y_shift_factor);
     settings.setValue(group+ "decoration_height_factor", decoration_height_factor);
     settings.setValue(group+ "decoration_width_reduction_xfactor", decoration_width_reduction_Xfactor);
+    settings.setValue(group+ "sqrt_width_Xfactor", sqrt_width_Xfactor);
+    settings.setValue(group+ "sqrt_height_factor", sqrt_height_factor);
+    settings.setValue(group+ "sqrt_smallfont_factor", sqrt_smallfont_factor);
 }
 
 bool JKQTMathText::useSTIX(bool mathModeOnly) {
@@ -906,6 +916,36 @@ void JKQTMathText::setDecorationWidthReductionXFactor(double __value)
 double JKQTMathText::getDecorationWidthReductionXFactor() const
 {
     return decoration_width_reduction_Xfactor;
+}
+
+void JKQTMathText::setSqrtWidthXFactor(double __value)
+{
+    sqrt_width_Xfactor=__value;
+}
+
+double JKQTMathText::getSqrtWidthXFactor() const
+{
+    return sqrt_width_Xfactor;
+}
+
+void JKQTMathText::setSqrtHeightFactor(double __value)
+{
+    sqrt_height_factor=__value;
+}
+
+double JKQTMathText::getSqrtHeightFactor() const
+{
+    return sqrt_height_factor;
+}
+
+void JKQTMathText::setSqrtSmallFontFactor(double __value)
+{
+    sqrt_smallfont_factor=__value;
+}
+
+double JKQTMathText::getSqrtSmallFontFactor() const
+{
+    return sqrt_smallfont_factor;
 }
 
 void JKQTMathText::setUseUnparsed(bool __value)

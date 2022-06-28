@@ -45,54 +45,92 @@ JKQTMathTextSqrtNode::~JKQTMathTextSqrtNode() {
 }
 
 void JKQTMathTextSqrtNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* /*prevNodeSize*/) {
-    QFontMetricsF fm(currentEv.getFont(parentMathText), painter.device());
+    const QFontMetricsF fm(currentEv.getFont(parentMathText), painter.device());
+    QFont fsmall=currentEv.getFont(parentMathText);
+    fsmall.setPointSizeF(fsmall.pointSizeF()*parentMathText->getSqrtSmallFontFactor());
+    fsmall.setItalic(false);
+    const QFontMetricsF fmsmall(fsmall, painter.device());
 
     getChild()->getSize(painter, currentEv, width, baselineHeight, overallHeight, strikeoutPos);
+    const double descent=overallHeight-baselineHeight;
+    const double sqrtwidth=fm.boundingRect("X").width()*parentMathText->getSqrtWidthXFactor();
+    const double newAscent=qMax(baselineHeight*parentMathText->getSqrtHeightFactor(), fm.ascent());
+    const double newDescent=qMax(descent*parentMathText->getSqrtHeightFactor(), fm.descent());
 
-    overallHeight=overallHeight*1.2;//+fm.ascent()*0.1;
-    baselineHeight=baselineHeight*1.2;//+fm.ascent()*0.1;
-    width=width+fm.boundingRect("A").width()*2; // 1.53
+    overallHeight=newAscent+newDescent;;
+    baselineHeight=newAscent;
+    width=width+sqrtwidth;
+    if (degree!=2) {
+        const QString degreetext=QLocale::c().toString(degree);
+        const double degwidth=fmsmall.width(degreetext);
+        const double smalltextIndent=0.6*sqrtwidth;
+        if (degwidth>smalltextIndent) width=width+(degwidth-smalltextIndent);
+    }
 }
 
 double JKQTMathTextSqrtNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* /*prevNodeSize*/) {
     doDrawBoxes(painter, x, y, currentEv);
-    double width=0, baselineHeight=0, overallHeight=0, sp=0;
-    getChild()->getSize(painter, currentEv, width, baselineHeight, overallHeight, sp);
-    QFont f=currentEv.getFont(parentMathText);
+
+    const QFont f=currentEv.getFont(parentMathText);
     QFont fsmall=f;
-    QFontMetricsF fm(f, painter.device());
-    double w=fm.boundingRect("A").width();
-    double a=baselineHeight*1.15;
-    double d=overallHeight-baselineHeight;
+    const QFontMetricsF fm(f, painter.device());
+    fsmall.setPointSizeF(fsmall.pointSizeF()*parentMathText->getSqrtSmallFontFactor());
+    fsmall.setItalic(false);
+    const QFontMetricsF fmsmall(fsmall, painter.device());
+
+    double width=0, baselineHeight=0, overallHeight=0, strikeoutPos=0;
+    getChild()->getSize(painter, currentEv, width, baselineHeight, overallHeight, strikeoutPos);
+    const double descent=overallHeight-baselineHeight;
+    const double sqrtwidth=fm.boundingRect("X").width()*parentMathText->getSqrtWidthXFactor();
+    const double newAscent=qMax(baselineHeight*parentMathText->getSqrtHeightFactor(), fm.ascent());
+    const double newDescent=qMax(descent*parentMathText->getSqrtHeightFactor(), fm.descent());
+    const double linewidth=fm.lineWidth();
+    const double tinyhookSize=sqrtwidth*0.1;
+    const double smalltextIndent=0.6*sqrtwidth;
+    const QString degreetext=(degree!=2)?QLocale::c().toString(degree):"";
+    const double degwidth=fmsmall.width(degreetext);
+    const double degheight=fmsmall.boundingRect(degreetext).height();
+    const double degree_overwidth=(degwidth>smalltextIndent)?(degwidth-smalltextIndent):0.0;
+
     //painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     QPen p=painter.pen();
     p.setColor(currentEv.color);
-    p.setWidthF(fm.lineWidth());
+    p.setWidthF(linewidth);
+    p.setCapStyle(Qt::RoundCap);
+    p.setJoinStyle(Qt::RoundJoin);
     //painter.setPen(p);
-    QPainterPath path;
-    if (w>0) {
-        path.moveTo(x+0.1*w, y-0.4*a);
-        path.lineTo(x+0.33*w, y-0.4*a);
-        path.lineTo( x+0.66*w, y+0.5*d);
-        path.lineTo(x+w, y-a);
-    }
-    if (degree!=2) {
-        fsmall.setPointSizeF(fsmall.pointSizeF()/2.0);
-        fsmall.setItalic(false);
-        painter.setFont(fsmall);
-        painter.drawText(QPointF(x+0.33*w, y-0.55*a), QLocale::c().toString(degree));
-    }
-    //painter.restore();
-    double xnew=getChild()->draw(painter, x+1.2*w, y, currentEv);
-    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-    painter.setPen(p);
-    if (w>0) {
-        path.lineTo( xnew+0.2*w, y-a);
-        path.lineTo(xnew+0.2*w, y-0.8*a);
+
+    double xnew=getChild()->draw(painter, x+sqrtwidth+degree_overwidth, y, currentEv);
+
+    const bool useAltForm=overallHeight>4.0*sqrtwidth;
+    const double y_tinyhooktop=y-strikeoutPos;
+    const double y_bottom=y+newDescent-linewidth/2.0;
+    const double y_top=y-newAscent+linewidth/2.0;
+    const double x_start=x+degree_overwidth+linewidth/2.0;
+    const double x_tinyhooktop=x_start+tinyhookSize;
+    const double x_hookbottom=(!useAltForm)?(x_start+0.33*sqrtwidth):(x_start+0.66*sqrtwidth);
+    const double x_hooktop=(!useAltForm)?(x_start+sqrtwidth):x_hookbottom;
+    const double x_smalltextend=x_start+smalltextIndent;
+    const double y_smalltext=y_top+fmsmall.ascent()+(fabs(y_top-(y_tinyhooktop-linewidth))-degheight)/2.0;
+    if (sqrtwidth>0) {
+        QPainterPath path;
+        path.moveTo(x_start, y_tinyhooktop+tinyhookSize);
+        path.lineTo(x_tinyhooktop, y_tinyhooktop);
+        path.lineTo(x_hookbottom, y_bottom);
+        path.lineTo(x_hooktop, y_top);
+        path.lineTo(xnew-linewidth/2.0, y_top);
+        path.moveTo(x_tinyhooktop,y_tinyhooktop);
+        path.lineTo(x_tinyhooktop+linewidth*0.8, y_tinyhooktop-linewidth*0.8);
+        path.lineTo(x_hookbottom, y_bottom-2.0*linewidth);
+        painter.setPen(p);
         painter.drawPath(path);
     }
+    if (degree!=2) {
+        painter.setFont(fsmall);
+        painter.drawText(QPointF(x_smalltextend-degwidth, y_smalltext), degreetext);
+    }
 
-    return xnew+0.33*w;
+    return xnew;
 }
 
 bool JKQTMathTextSqrtNode::toHtml(QString &html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) {
