@@ -81,8 +81,9 @@ JKQTMathText::JKQTMathText(QObject* parent):
     underbrace_separation_xfactor=0.25;
     underbrace_bracesize_xfactor=0.5;
     underset_factor=0.7;
-    decoration_height_factor=0.2;
+    decoration_height_factor=0.3;
     decoration_width_reduction_Xfactor=0.2;
+    decoration_separation_factor=0.1;
 
     operatorsubsuper_size_factor=0.65;
     operatorsubsuper_distance_factor=0.25;
@@ -231,6 +232,7 @@ void JKQTMathText::loadSettings(const QSettings& settings, const QString& group)
     underset_factor=settings.value(group+"undersetFactor", underset_factor).toDouble();
     brace_y_shift_factor=settings.value(group+"brace_y_shift_factor", brace_y_shift_factor).toDouble();
     decoration_height_factor=settings.value(group+"decoration_height_factor", decoration_height_factor).toDouble();
+    decoration_separation_factor=settings.value(group+"decoration_separation_factor", decoration_separation_factor).toDouble();
     decoration_width_reduction_Xfactor=settings.value(group+"decoration_width_reduction_xfactor", decoration_width_reduction_Xfactor).toDouble();
     operatorsubsuper_size_factor=settings.value(group+"operatorsubsuper_size_factor", operatorsubsuper_size_factor).toDouble();
     operatorsubsuper_distance_factor=settings.value(group+"operatorsubsuper_distance_factor", operatorsubsuper_distance_factor).toDouble();
@@ -275,6 +277,7 @@ void JKQTMathText::saveSettings(QSettings& settings, const QString& group) const
     settings.setValue(group+ "intsubbesides_xcorrection_xfactor", intsubbesides_xcorrection_xfactor);
     settings.setValue(group+ "brace_y_shift_factor", brace_y_shift_factor);
     settings.setValue(group+ "decoration_height_factor", decoration_height_factor);
+    settings.setValue(group+ "decoration_separation_factor", decoration_separation_factor);
     settings.setValue(group+ "decoration_width_reduction_xfactor", decoration_width_reduction_Xfactor);
     settings.setValue(group+ "sqrt_width_Xfactor", sqrt_width_Xfactor);
     settings.setValue(group+ "sqrt_height_factor", sqrt_height_factor);
@@ -908,7 +911,17 @@ double JKQTMathText::getDecorationHeightFactor() const
     return this->decoration_height_factor;
 }
 
-void JKQTMathText::setDecorationWidthReductionXFactor(double __value)
+void JKQTMathText::setDecorationSeparationXFactor(double __value)
+{
+    decoration_separation_factor=__value;
+}
+
+double JKQTMathText::getDecorationSeparationFactor() const
+{
+    return decoration_separation_factor;
+}
+
+void JKQTMathText::setDecorationWidthReductionFactor(double __value)
 {
     decoration_width_reduction_Xfactor=__value;
 }

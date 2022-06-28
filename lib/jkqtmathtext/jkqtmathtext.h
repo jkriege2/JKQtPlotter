@@ -537,8 +537,12 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         void setDecorationHeightFactor(double __value);
         /** \copydoc decoration_height_factor */
         double getDecorationHeightFactor() const;
+        /** \copydoc decoration_separation_factor */
+        void setDecorationSeparationXFactor(double __value);
+        /** \copydoc decoration_separation_factor */
+        double getDecorationSeparationFactor() const;
         /** \copydoc decoration_width_reduction_Xfactor */
-        void setDecorationWidthReductionXFactor(double __value);
+        void setDecorationWidthReductionFactor(double __value);
         /** \copydoc decoration_width_reduction_Xfactor */
         double getDecorationWidthReductionXFactor() const;
 
@@ -705,11 +709,16 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         double underbrace_bracesize_xfactor;
         /** \brief fraction of the brace ascent that the brace is shifted downwards, when scaled */
         double brace_y_shift_factor;
-        /** \brief size of the decorations (dot, tilde, ...), as fraction of the baselineheight
+        /** \brief size of the decorations (dot, tilde, ...), as fraction of the ascent
          *
          *  \image html jkqtmathtext/decoration_sizing.png
          */
         double decoration_height_factor;
+        /** \brief separation between the text and the decorations (dot, tilde, ...), as fraction of the ascent
+         *
+         *  \image html jkqtmathtext/decoration_sizing.png
+         */
+        double decoration_separation_factor;
         /** \brief a decoration has a size, which is slightly smaller than the text- width. the width is reduced by \c decoration_width_reduction_Xfactor*width("X") and the position is centered around the child-box. Also an italic correction is applied:
          *
          *  \image html jkqtmathtext/decoration_sizing.png
