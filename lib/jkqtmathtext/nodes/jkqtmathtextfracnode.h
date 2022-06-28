@@ -55,6 +55,8 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextFracNode: public JKQTMathTextDualChild
             MTFMstfrac,  /*!< \brief slanted text fraction \image html jkqtmathtext/MTFMstfrac.png */
             MTFMunderbrace,  /*!< \brief curly underbrace \image html jkqtmathtext/MTFMunderbrace.png */
             MTFMoverbrace,  /*!< \brief curly overbrace \image html jkqtmathtext/MTFMoverbrace.png */
+            MTFMunderbracket,  /*!< \brief square underbracket \image html jkqtmathtext/MTFMunderbracket.png */
+            MTFMoverbracket,  /*!< \brief square overbracket \image html jkqtmathtext/MTFMoverbracket.png */
             MTFMstackrel,  /*!< \brief binom/fraction without line \image html jkqtmathtext/MTFMstackrel.png */
             MTFMunderset,  /*!< \brief underset text \image html jkqtmathtext/MTFMunderset.png */
             MTFMoverset  /*!< \brief overset text \image html jkqtmathtext/MTFMoverset.png */

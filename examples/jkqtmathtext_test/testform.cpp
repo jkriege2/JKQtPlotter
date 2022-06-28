@@ -155,9 +155,9 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbTestset->addItem("math 7", "$\\left(\\frac{\\partial^2}{\\partial x^2}+\\frac{\\partial^2}{\\partial y^2}\\right)\\left|\\varphi(x+\\mathrm{i}y)\\right|^2=0$");
     ui->cmbTestset->addItem("math 8", "$2^{2^{2^{x}}}$");
     ui->cmbTestset->addItem("math 9", "$\\iint_Df(x,y)\\;\\mathrm{d}x\\;\\mathrm{d}y$");
-    ui->cmbTestset->addItem("math 10 (overbrace)", "$\\overbrace{x+x+...+x}{k\\ \\mathrm{times}}$");
-    ui->cmbTestset->addItem("math 11 (underbrace)", "$\\underbrace{x+x+...+x}{k\\ \\mathrm{times}}$");
-    ui->cmbTestset->addItem("math 12 (under/overbrace)", "$\\underbrace{\\overbrace{x+x+...+x}{k\\ \\mathrm{times}} \\overbrace{x+x+...+x}{k\\ \\mathrm{times}}}{2k\\ \\mathrm{times}}$");
+    ui->cmbTestset->addItem("math 10 (overbrace+overbracket)", "$\\overbrace{x+x+...+x}{k\\ \\mathrm{times}}\\ \\ \\ \\overbracket{x+x+...+x}{k\\ \\mathrm{times}}$");
+    ui->cmbTestset->addItem("math 11 (underbrace+underbracket)", "$\\underbrace{x+x+...+x}{k\\ \\mathrm{times}}\\ \\ \\ \\underbracket{x+x+...+x}{k\\ \\mathrm{times}}$");
+    ui->cmbTestset->addItem("math 12 (under/overbrace+under/overbracket)", "$\\underbrace{\\overbrace{x+x+...+x}{k\\ \\mathrm{times}} \\overbrace{x+x+...+x}{k\\ \\mathrm{times}}}{2k\\ \\mathrm{times}}\\ \\ \\ \\underbracket{\\overbracket{x+x+...+x}{k\\ \\mathrm{times}} \\overbracket{x+x+...+x}{k\\ \\mathrm{times}}}{2k\\ \\mathrm{times}}$");
     ui->cmbTestset->addItem("math 13", "$y_1''\\ \\ \\ y_2'''$");
     ui->cmbTestset->addItem("math 14", "$f(x)=\\begin{cases} 1/3 & \\mathrm{if}\\ 0\\leq x\\leq1 \\\\ 2/3 & \\mathrm{if}\\ 3\\leq x\\leq4 \\\\0 & \\mathrm{elsewhere} \\end{cases}$");
     ui->cmbTestset->addItem("math 15", "$\\Re(z) =\\frac{n\\pi \\dfrac{\\theta +\\psi}{2}}{\\left(\\dfrac{\\theta +\\psi}{2}\\right)^2 + \\left( \\dfrac{1}{2}\\log \\left\\lvert\\dfrac{B}{A}\\right\\rvert\\right)^2}.$");

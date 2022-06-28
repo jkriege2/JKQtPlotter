@@ -156,6 +156,8 @@ class JKQTMathTextNode; // forward
     There are also instructions that allow to under/overset braces, arrows, ...:
       - <code>$\\underbrace{x+x+...+x}{k\\ \\mathrm{times}}$</code> \image html jkqtmathtext/jkqtmathtext_brace_underbrace.png
       - <code>$\\overbrace{x+x+...+x}{k\\ \\mathrm{times}}$</code> \image html jkqtmathtext/jkqtmathtext_brace_overbrace.png
+      - <code>$\\underbracket{x+x+...+x}{k\\ \\mathrm{times}}$</code> \image html jkqtmathtext/MTFMunderbracket.png
+      - <code>$\\overbracket{x+x+...+x}{k\\ \\mathrm{times}}$</code> \image html jkqtmathtext/MTFMoverbracket.png
       - <code>$\\overset{main}{over}$</code> \image html jkqtmathtext/jkqtmathtext_brace_overset.png
       - <code>$\\underset{main}{under}$</code> \image html jkqtmathtext/jkqtmathtext_brace_underset.png
     .

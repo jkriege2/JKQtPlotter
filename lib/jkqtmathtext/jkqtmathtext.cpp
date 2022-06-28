@@ -1168,6 +1168,12 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
                     if (getToken()==MTTopenbrace) n2=parseLatexString(true);
                     if (n1 && n2) nl->addChild(new JKQTMathTextFracNode(this, n1, n2, JKQTMathTextFracNode::MTFMunderbrace));
                     else error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(currentInstructionName));
+                } else if (currentInstructionName=="underbracket") {
+                    JKQTMathTextNode* n1=parseLatexString(true);
+                    JKQTMathTextNode* n2=nullptr;
+                    if (getToken()==MTTopenbrace) n2=parseLatexString(true);
+                    if (n1 && n2) nl->addChild(new JKQTMathTextFracNode(this, n1, n2, JKQTMathTextFracNode::MTFMunderbracket));
+                    else error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(currentInstructionName));
                 } else if (currentInstructionName=="underset") {
                     JKQTMathTextNode* n1=parseLatexString(true);
                     JKQTMathTextNode* n2=nullptr;
@@ -1179,6 +1185,12 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
                     JKQTMathTextNode* n2=nullptr;
                     if (getToken()==MTTopenbrace) n2=parseLatexString(true);
                     if (n1 && n2) nl->addChild(new JKQTMathTextFracNode(this, n1, n2, JKQTMathTextFracNode::MTFMoverbrace));
+                    else error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(currentInstructionName));
+                } else if (currentInstructionName=="overbracket") {
+                    JKQTMathTextNode* n1=parseLatexString(true);
+                    JKQTMathTextNode* n2=nullptr;
+                    if (getToken()==MTTopenbrace) n2=parseLatexString(true);
+                    if (n1 && n2) nl->addChild(new JKQTMathTextFracNode(this, n1, n2, JKQTMathTextFracNode::MTFMoverbracket));
                     else error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(currentInstructionName));
                 } else if (currentInstructionName=="overset") {
                     JKQTMathTextNode* n1=parseLatexString(true);
