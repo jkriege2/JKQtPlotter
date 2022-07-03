@@ -253,11 +253,36 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         double getAscent(QPainter& painter);
         /** \brief return the detailes sizes of the text */
         void getSizeDetail(QPainter& painter, double& width, double& ascent, double& descent, double& strikeoutPos);
-        /** \brief draw a representation to the <a href="http://doc.qt.io/qt-5/qpainter.html">QPainter</a> object at the specified position */
-        void draw(QPainter& painter, double x, double y, bool drawBoxes=false);
-        /** \brief overloaded version of draw(QPainter& painter, double x, double y).
+        /** \brief draw a representation to the  object at the specified position \a x , \a y
          *
-         *  This version draws the text inside the given rectangle according to the specified flags.
+         *  \param painter the <a href="http://doc.qt.io/qt-5/qpainter.html">QPainter</a> to use for drawing
+         *  \param x position of the left border of the text/expression to be drawn (see sketch below)
+         *  \param drawBoxes if \c true boxes defining the size of each node are drawn, example output: \image html jkqtmathtext/jkqtmathtext_drawboxes.png
+         *
+         *  Here is an illustration of the geometry of the drawn text/expression:
+         *  \image html jkqtmathtext/jkqtmathtext_node_geo.png
+         */
+        void draw(QPainter& painter, QPointF x, bool drawBoxes=false);
+        /** \brief draw a representation to the  object at the specified position \a x , \a y
+         *
+         *  \param painter the <a href="http://doc.qt.io/qt-5/qpainter.html">QPainter</a> to use for drawing
+         *  \param x x-position of the left border of the text/expression to be drawn (see sketch below)
+         *  \param y y-position of the baseline of the text/expression to be drawn (see sketch below)
+         *  \param drawBoxes if \c true boxes defining the size of each node are drawn, example output: \image html jkqtmathtext/jkqtmathtext_drawboxes.png
+         *
+         *  Here is an illustration of the geometry of the drawn text/expression:
+         *  \image html jkqtmathtext/jkqtmathtext_node_geo.png
+         */
+        void draw(QPainter& painter, double x, double y, bool drawBoxes=false);
+        /** \brief draw into a rectangle \a rect with alignment defined in \a flags (see below)
+         *
+         *  \param painter the <a href="http://doc.qt.io/qt-5/qpainter.html">QPainter</a> to use for drawing
+         *  \param rect rectangle to draw the text/expression into (see sketch below)
+         *  \param flags alignment within \a rect (see below), use e.g. \c Qt::AlignHCenter|Qt::AlignVCenter to center the expression inside \a rect
+         *  \param drawBoxes if \c true boxes defining the size of each node are drawn, example output: \image html jkqtmathtext/jkqtmathtext_drawboxes.png
+         *
+         *  These options are interpreted for \a flags (dark-red is the rectangle \a rect):
+         *  \image html jkqtmathtext/jkqtmathtext_draw_flags.png
          */
         void draw(QPainter& painter, unsigned int flags, QRectF rect, bool drawBoxes=false);
 

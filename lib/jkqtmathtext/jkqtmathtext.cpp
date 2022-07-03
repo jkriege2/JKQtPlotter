@@ -1648,6 +1648,11 @@ void JKQTMathText::getSizeDetail(QPainter& painter, double& width, double& ascen
     }
 }
 
+void JKQTMathText::draw(QPainter &painter, QPointF x, bool drawBoxes)
+{
+    draw(painter, x.x(), x.y(), drawBoxes);
+}
+
 void JKQTMathText::draw(QPainter& painter, double x, double y, bool drawBoxes){
     if (getNodeTree()!=nullptr) {
         JKQTMathTextEnvironment ev;

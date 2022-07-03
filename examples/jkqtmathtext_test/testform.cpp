@@ -251,11 +251,11 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbFont->setCurrentIndex(1);
 
     connect(ui->chkBoxes, SIGNAL(toggled(bool)), this, SLOT(updateMath()));
+    connect(ui->chkBigBox, SIGNAL(toggled(bool)), this, SLOT(updateMath()));
     connect(ui->chkAntiAlias, SIGNAL(toggled(bool)), this, SLOT(updateMath()));
-    connect(ui->chkAntiAliasHQ, SIGNAL(toggled(bool)), this, SLOT(updateMath()));
     connect(ui->chkAntiAliasText, SIGNAL(toggled(bool)), this, SLOT(updateMath()));
-    connect(ui->chkSmoothTransform, SIGNAL(toggled(bool)), this, SLOT(updateMath()));
     connect(ui->chkSimulateBlackboard, SIGNAL(toggled(bool)), this, SLOT(updateMath()));
+    connect(ui->cmbLastAlign, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
     connect(ui->cmbFont, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
     connect(ui->cmbScript, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
     connect(ui->cmbTestset, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
@@ -309,15 +309,17 @@ double TestForm::draw(QPainter& painter, double X, double YY, JKQTMathText& mt, 
     durationSizingMS=ht.getTime()/1000.0;
     qDebug()<<"    sizing in "<<durationSizingMS<<" ms\n";
     QPen p=painter.pen();
-    p.setColor("lightcoral");
-    p.setStyle(Qt::DashLine);
-    p.setWidth(2);
-    painter.setPen(p);
-    QRectF r(X, Y-mt.getAscent(painter),s.width(), s.height());
-    painter.drawRect(r);
-    p.setColor("lightblue");
-    painter.setPen(p);
-    painter.drawLine(X, Y, X+s.width(), Y);
+    if (ui->chkBigBox->isChecked()) {
+        p.setColor("lightcoral");
+        p.setStyle(Qt::DashLine);
+        p.setWidth(2);
+        painter.setPen(p);
+        QRectF r(X, Y-mt.getAscent(painter),s.width(), s.height());
+        painter.drawRect(r);
+        p.setColor("lightblue");
+        painter.setPen(p);
+        painter.drawLine(X, Y, X+s.width(), Y);
+    }
     ht.start();
     p.setStyle(Qt::SolidLine);
     p.setWidth(1);
@@ -339,6 +341,52 @@ double TestForm::draw(QPainter& painter, double X, double YY, JKQTMathText& mt, 
     painter.restore();
     qDebug()<<name<<":  width="<<s.width()<<"  height="<<s.height()<<"  ascent="<<mt.getAscent(painter)<<"  descent="<<mt.getDescent(painter);
     return mt.getDescent(painter)+mt.getAscent(painter)+40;
+}
+
+double TestForm::drawAligned(QPainter& painter, double X, double YY, JKQTMathText& mt, QString name) {
+
+
+    double Y=YY;
+    painter.save();
+    ht.start();
+    const QSizeF s=mt.getSize(painter);
+    const QRectF rect(X, Y, s.width()+32, s.height()+32);
+    int flags=Qt::AlignLeft|Qt::AlignTop;
+    switch(ui->cmbLastAlign->currentIndex()) {
+    case 0: flags=Qt::AlignLeft|Qt::AlignTop; break;
+    case 1: flags=Qt::AlignLeft|Qt::AlignVCenter; break;
+    case 2: flags=Qt::AlignLeft|Qt::AlignBottom; break;
+    case 3: flags=Qt::AlignHCenter|Qt::AlignTop; break;
+    case 4: flags=Qt::AlignHCenter|Qt::AlignVCenter; break;
+    case 5: flags=Qt::AlignHCenter|Qt::AlignBottom; break;
+    case 6: flags=Qt::AlignRight|Qt::AlignTop; break;
+    case 7: flags=Qt::AlignRight|Qt::AlignVCenter; break;
+    case 8: flags=Qt::AlignRight|Qt::AlignBottom; break;
+    }
+
+    QPen p=painter.pen();
+    p.setColor("darkred");
+    p.setStyle(Qt::SolidLine);
+    p.setWidth(2);
+    painter.setPen(p);
+    painter.drawRect(rect);
+    p.setStyle(Qt::SolidLine);
+    p.setWidth(1);
+    p.setColor("black");
+    painter.setPen(p);
+    mt.draw(painter, flags, rect, ui->chkBoxes->isChecked());
+    p.setColor("blue");
+    painter.setPen(p);
+
+    QFont f;
+    f.setFamily("sans serif");
+    f.setUnderline(true);
+    f.setPointSize(10);
+    painter.setFont(f);
+    painter.drawText(X, Y-6, name+":");
+    painter.restore();
+    qDebug()<<name<<":  width="<<s.width()<<"  height="<<s.height()<<"  ascent="<<mt.getAscent(painter)<<"  descent="<<mt.getDescent(painter);
+    return rect.bottom()+40;
 }
 
 QTreeWidgetItem *TestForm::createTree(JKQTMathTextNode *node, QTreeWidgetItem* parent)
@@ -469,11 +517,7 @@ void TestForm::updateMath()
 
     painter.begin(&pix);
     if (ui->chkAntiAlias->isChecked()) painter.setRenderHint(QPainter::Antialiasing);
-#if (QT_VERSION<QT_VERSION_CHECK(6, 0, 0))
-    if (ui->chkAntiAliasHQ->isChecked()) painter.setRenderHint(QPainter::HighQualityAntialiasing);
-#endif
     if (ui->chkAntiAliasText->isChecked()) painter.setRenderHint(QPainter::TextAntialiasing);
-    if (ui->chkSmoothTransform->isChecked()) painter.setRenderHint(QPainter::QPainter::SmoothPixmapTransform);
     ht.start();
 
 
@@ -525,7 +569,7 @@ void TestForm::updateMath()
     QStringList sl=ui->edtSizes->text().split(",");
     ui->labRenderTimes->setText("");
 
-    for (int i=0; i<sl.size(); i++) {
+    for (int i=0; i<sl.size()-1; i++) {
         bool ok=true;
         int size=sl[i].trimmed().toUInt(&ok);
         if (!ok) size=10+i*5;
@@ -550,6 +594,14 @@ void TestForm::updateMath()
                 qDebug()<<mt.getErrorList().join("\n")<<"\n";
             }
         }
+    }
+
+    if (sl.size()>0) {
+        bool ok=true;
+        int size=sl.last().trimmed().toUInt(&ok);
+        if (!ok) size=font().pointSizeF();
+        mt.setFontSize(size);
+        Y+=drawAligned(painter, X1, Y, mt, QString("%1, %2pt, align: %3").arg(ui->cmbTestset->currentText()).arg(size).arg(ui->cmbLastAlign->currentText()));
     }
 
     painter.end();

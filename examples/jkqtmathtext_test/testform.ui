@@ -588,7 +588,7 @@
     </widget>
    </item>
    <item row="0" column="0" colspan="2">
-    <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,2,0,2,0,0,1,0,0,0,0,0">
+    <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,2,0,2,0,0,1,0,0,0,0,0,0">
      <item>
       <widget class="QLabel" name="label_3">
        <property name="text">
@@ -685,7 +685,7 @@
      <item>
       <widget class="QLineEdit" name="edtSizes">
        <property name="text">
-        <string>90,30,20,10</string>
+        <string>90,30,20,10,12</string>
        </property>
       </widget>
      </item>
@@ -693,6 +693,16 @@
       <widget class="QCheckBox" name="chkBoxes">
        <property name="text">
         <string>boxes</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="chkBigBox">
+       <property name="text">
+        <string>big-box</string>
        </property>
        <property name="checked">
         <bool>true</bool>
@@ -710,26 +720,12 @@
       </widget>
      </item>
      <item>
-      <widget class="QCheckBox" name="chkAntiAliasHQ">
-       <property name="text">
-        <string>HQ anti-aliase</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QCheckBox" name="chkAntiAliasText">
        <property name="text">
         <string>Text anti-aliase</string>
        </property>
        <property name="checked">
         <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QCheckBox" name="chkSmoothTransform">
-       <property name="text">
-        <string>smooth transform</string>
        </property>
       </widget>
      </item>
@@ -745,6 +741,62 @@
         </size>
        </property>
       </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_5">
+       <property name="text">
+        <string>last-align</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="cmbLastAlign">
+       <item>
+        <property name="text">
+         <string>lt</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>lc</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>lb</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>ct</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>cc</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>cb</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>rt</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>rc</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>rb</string>
+        </property>
+       </item>
+      </widget>
      </item>
     </layout>
    </item>
