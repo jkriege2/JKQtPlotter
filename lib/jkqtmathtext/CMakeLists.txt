@@ -36,6 +36,7 @@ set(SOURCES
   ${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextsubsupernode.cpp
   ${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextsymbolnode.cpp
   ${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextnodetools.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextwhitespacenode.cpp
 )
 
 set(HEADERS
@@ -69,6 +70,8 @@ set(HEADERS
   $<INSTALL_INTERFACE:nodes/jkqtmathtextsymbolnode.h>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextnodetools.h>
   $<INSTALL_INTERFACE:nodes/jkqtmathtextnodetools.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextwhitespacenode.h>
+  $<INSTALL_INTERFACE:nodes/jkqtmathtextwhitespacenode.h>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtmathtext_imexport.h>
   $<INSTALL_INTERFACE:jkqtmathtext_imexport.h>
 )

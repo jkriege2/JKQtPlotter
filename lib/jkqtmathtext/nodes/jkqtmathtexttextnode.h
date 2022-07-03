@@ -68,18 +68,6 @@ class JKQTMATHTEXT_LIB_EXPORT MTplainTextNode: public JKQTMathTextTextNode {
         /** \copydoc JKQTMathTextTextNode::textTransform() */
         virtual QString textTransform(const QString& text, JKQTMathTextEnvironment currentEv, bool forSize=false) override;
 };
-/** \brief subclass representing one whitepsace node in the syntax tree
- *  \ingroup jkqtmathtext_items
- */
-class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextWhitespaceNode: public JKQTMathTextTextNode {
-    public:
-        explicit JKQTMathTextWhitespaceNode(JKQTMathText* parent);
-        virtual ~JKQTMathTextWhitespaceNode() override;
-        /** \copydoc JKQTMathTextNode::getTypeName() */
-        virtual QString getTypeName() const override;
-        /** \copydoc JKQTMathTextNode::toHtml() */
-        virtual bool toHtml(QString& html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) override;
-};
 
 #endif // JKQTMATHTEXTTEXTNODE_H
 

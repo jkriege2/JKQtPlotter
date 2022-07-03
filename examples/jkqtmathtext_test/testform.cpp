@@ -11,6 +11,7 @@
 #include "jkqtmathtext/nodes/jkqtmathtextsqrtnode.h"
 #include "jkqtmathtext/nodes/jkqtmathtextsubsupernode.h"
 #include "jkqtmathtext/nodes/jkqtmathtextsymbolnode.h"
+#include "jkqtmathtext/nodes/jkqtmathtextwhitespacenode.h"
 
 
 TestForm::TestForm(QWidget *parent) :
@@ -21,6 +22,19 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbTestset->addItem("text: fonts", "rm: \\textrm{ABCabc123}, sf: \\textsf{ABCabc123}, tt: \\texttt{ABCabc123}, cal: \\textcal{ABCabc123}, scr: \\textscr{ABCabc123}, bb: \\textbb{ABCabc123}, frak: \\textfrak{ABCabc123}, ");
     ui->cmbTestset->addItem("math-fonts", "rm: $\\mathrm{ABCabc123}$, sf: $\\mathsf{ABCabc123}$, tt: $\\mathtt{ABCabc123}$, cal: $\\mathcal{ABCabc123}$, scr: $\\mathscr{ABCabc123}$, bb: $\\mathbb{ABCabc123}$, frak: $\\mathfrak{ABCabc123}$, ");
     ui->cmbTestset->addItem("math: simple relations", "$a{\\leq}b$, $a{\\geq}b$, $a{\\equiv}b$, $a=b$, $a{\\neq}b$, $a<b$, $a>b$");
+    const auto wsExample=[](const QStringList& spaces, const QString before, const QString& after)->QString {
+        QString s;
+        for (int i=0; i<spaces.size(); i++) {
+            s+="text: {\\backslash}"+spaces[i]+": "+before+"{\\"+spaces[i]+"}"+after;
+            s+="\\ \\ \\ \\ ";
+        }
+        return s;
+    };
+    QStringList whitespaces=QStringList()<<" "<<"enspace"<<"quad"<<"qquad"<<","<<":"<<";"<<"!"<<"negmedspace"<<"negthickspace";
+    ui->cmbTestset->addItem("text: whitespaces arrows", "text: "+wsExample(whitespaces, "\\rightarrow", "\\leftarrow"));
+    ui->cmbTestset->addItem("text: whitespaces fg", "text: "+wsExample(whitespaces, "f", "g"));
+    ui->cmbTestset->addItem("math: whitespaces arrows", "math: "+wsExample(whitespaces, "$\\rightarrow", "\\leftarrow$"));
+    ui->cmbTestset->addItem("math: whitespaces fg", "math: "+wsExample(whitespaces, "$f", "g$"));
     ui->cmbTestset->addItem("text/math: simple relations in different modes", "math: $a{\\leq}b$, math/no braces: $a\\leq b$, no math: a{\\leq}b, no math/no braces: a\\leq b");
     ui->cmbTestset->addItem("math: named symbols 1", "ll: $\\ll$\\ gg: $\\gg$\\ leq: $\\leq$\\ geq: $\\geq$\\ pm: $\\pm$\\ mp: $\\mp$\\ ");
     ui->cmbTestset->addItem("math: named symbols 2", "nexists: $\\nexists$\\ ni: $\\ni$\\ notni: $\\notni$\\ circ: $\\circ$\\ sim: $\\sim$\\ emptyset: $\\emptyset$\\ odot: $\\odot$\\ ominus: $\\ominus$\\ subsetnot: $\\subsetnot$\\ bot: $\\bot$");
@@ -212,7 +226,7 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbEncodingSerifMath->setCurrentIndex(static_cast<int>(mt.getFontEncodingMathRoman()));
     ui->cmbUnicodeSansMath->setCurrentFont(QFont(mt.getFontMathSans()));
     ui->cmbEncodingSansMath->setCurrentIndex(static_cast<int>(mt.getFontEncodingMathSans()));
-    ui->cmbUnicodeFixed->setCurrentFont(QFont(mt.getFontTypewriter()));
+    ui->cmbUnicodeTypewriter->setCurrentFont(QFont(mt.getFontTypewriter()));
     ui->cmbEncodingTypewriter->setCurrentIndex(static_cast<int>(mt.getFontEncodingTypewriter()));
     ui->cmbCaligraphic->setCurrentFont(QFont(mt.getFontCaligraphic()));
     ui->cmbEncodingCaligraphic->setCurrentIndex(static_cast<int>(mt.getFontEncodingCaligraphic()));
@@ -222,10 +236,10 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbEncodingFraktur->setCurrentIndex(static_cast<int>(mt.getFontEncodingFraktur()));
     ui->cmbUnicodeBlackboard->setCurrentFont(QFont(mt.getFontBlackboard()));
     ui->cmbEncodingBlackboard->setCurrentIndex(static_cast<int>(mt.getFontEncodingBlackboard()));
-    ui->cmbUnicodeSymbol->setCurrentFont(QFont(mt.getSymbolfontSymbol(JKQTMathTextEnvironmentFont::MTEroman)));
-    ui->cmbEncodingSymbol->setCurrentIndex(static_cast<int>(mt.getSymbolfontEncodingSymbol(JKQTMathTextEnvironmentFont::MTEroman)));
-    ui->cmbUnicodeGreek->setCurrentFont(QFont(mt.getSymbolfontGreek(JKQTMathTextEnvironmentFont::MTEroman)));
-    ui->cmbEncodingGreek->setCurrentIndex(static_cast<int>(mt.getSymbolfontEncodingGreek(JKQTMathTextEnvironmentFont::MTEroman)));
+    ui->cmbUnicodeSymbol->setCurrentFont(QFont(mt.getFallbackFontSymbols()));
+    ui->cmbEncodingSymbol->setCurrentIndex(static_cast<int>(mt.getFontEncodingFallbackFontSymbols()));
+    ui->cmbUnicodeGreek->setCurrentFont(QFont(mt.getFallbackFontGreek()));
+    ui->cmbEncodingGreek->setCurrentIndex(static_cast<int>(mt.getFontEncodingFallbackFontGreek()));
     ui->chkSimulateBlackboard->setChecked(mt.isFontBlackboardSimulated());
 
 
@@ -250,7 +264,7 @@ TestForm::TestForm(QWidget *parent) :
     connect(ui->cmbUnicodeSansMath, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
     connect(ui->cmbEncodingSans, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
     connect(ui->cmbEncodingSansMath, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
-    connect(ui->cmbUnicodeFixed, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
+    connect(ui->cmbUnicodeTypewriter, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
     connect(ui->cmbUnicodeGreek, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
     connect(ui->cmbUnicodeSerif, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
     connect(ui->cmbUnicodeSerifMath, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
@@ -393,7 +407,7 @@ QTreeWidgetItem *TestForm::createTree(JKQTMathTextNode *node, QTreeWidgetItem* p
     } else if (symN)  {
         name=QString("MTSymbolNode: \'%1\' (addWhite: %2, subsuper=%3)").arg(symN->getSymbolName()).arg(symN->getAddWhitespace()).arg(symN->isSubSuperscriptAboveBelowNode());
     } else if (spN)  {
-        name=QString("MTWhitespaceNode :\'%1\'").arg(txtN->getText());
+        name=QString("MTWhitespaceNode :type=%1, count=%2").arg(spN->Type2String(spN->getWhitespaceType())).arg(spN->getWhitespaceCount());
     } else if (txtN)  {
         name=QString("MTTextNode: \'%1\'").arg(txtN->getText());
 
@@ -468,13 +482,13 @@ void TestForm::updateMath()
         mt.setFontSans(ui->cmbUnicodeSans->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingSans->currentIndex()));
         mt.setFontMathRoman(ui->cmbUnicodeSerifMath->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingSerifMath->currentIndex()));
         mt.setFontMathSans(ui->cmbUnicodeSansMath->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingSansMath->currentIndex()));
-        mt.setFontTypewriter(ui->cmbUnicodeFixed->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingTypewriter->currentIndex()));
+        mt.setFontTypewriter(ui->cmbUnicodeTypewriter->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingTypewriter->currentIndex()));
         mt.setFontCaligraphic(ui->cmbCaligraphic->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingCaligraphic->currentIndex()));
         mt.setFontScript(ui->cmbScript->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingScript->currentIndex()));
         mt.setFontFraktur(ui->cmbUnicodeFraktur->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingFraktur->currentIndex()));
         mt.setFontBlackboard(ui->cmbUnicodeBlackboard->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingBlackboard->currentIndex()));
-        mt.setSymbolfontSymbol(ui->cmbUnicodeSymbol->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingSymbol->currentIndex()));
-        mt.setSymbolfontGreek(ui->cmbUnicodeGreek->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingGreek->currentIndex()));
+        mt.setFallbackFontSymbols(ui->cmbUnicodeSymbol->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingSymbol->currentIndex()));
+        mt.setFallbackFontGreek(ui->cmbUnicodeGreek->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingGreek->currentIndex()));
     } else if (ui->cmbFont->currentIndex()==5 || ui->cmbFont->currentIndex()==6) {
         mt.setFontRoman(QGuiApplication::font().family());
     } else if (ui->cmbFont->currentIndex()==7) {

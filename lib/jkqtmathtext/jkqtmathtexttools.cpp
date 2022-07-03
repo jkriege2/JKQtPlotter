@@ -317,10 +317,9 @@ JKQTMathTextFontSpecifier JKQTMathTextFontSpecifier::getSTIXFamilies()
 QString JKQTMathTextFontEncoding2String(JKQTMathTextFontEncoding e)
 {
     switch(e) {
-        case MTFEunicode: return "MTFEunicode";
-        case MTFEStandard: return "MTFEStandard";
-        case MTFEunicodeLimited: return "MTFEunicodeLimited";
-        case MTFEwinSymbol: return "MTFEwinSymbol";
+        case MTFEUnicode: return "MTFEUnicode";
+        case MTFEStandard: return "MTFELatin1";
+        case MTFEWinSymbol: return "MTFEWinSymbol";
     }
     return "???";
 }
@@ -429,6 +428,33 @@ JKQTMathTextEnvironment::JKQTMathTextEnvironment() {
     insideMath=false;
 }
 
+JKQTMathTextFontEncoding JKQTMathTextEnvironment::getFontEncoding(JKQTMathText* parent) const {
+    switch (font) {
+        case MTEsans: if (insideMath) {
+                return parent->getFontEncodingMathSans();
+            } else {
+                return parent->getFontEncodingSans();
+            }
+            break;
+        case MTEmathSans: return parent->getFontEncodingMathSans(); break;
+        case MTEtypewriter: return parent->getFontEncodingTypewriter(); break;
+        case MTEscript: return parent->getFontEncodingScript(); break;
+        case MTEcaligraphic: return parent->getFontEncodingCaligraphic(); break;
+        case MTEblackboard: return parent->getFontEncodingBlackboard(); break;
+        case MTEfraktur: return parent->getFontEncodingFraktur(); break;
+        case MTEmathRoman: return parent->getFontEncodingMathRoman(); break;
+        case MTEroman: if (insideMath) {
+                return parent->getFontEncodingMathRoman();
+            } else {
+                return parent->getFontEncodingRoman();
+            }
+            break;
+        default:
+            return MTFEStandard;
+    }
+    return MTFEStandard;
+}
+
 QFont JKQTMathTextEnvironment::getFont(JKQTMathText* parent) const {
     QFont f;
     switch (font) {
@@ -445,6 +471,9 @@ QFont JKQTMathTextEnvironment::getFont(JKQTMathText* parent) const {
         case MTEblackboard: f.setFamily(parent->getFontBlackboard()); break;
         case MTEfraktur: f.setFamily(parent->getFontFraktur()); break;
         case MTEmathRoman: f.setFamily(parent->getFontMathRoman()); break;
+        case MTEFallbackSymbols: f.setFamily(parent->getFallbackFontSymbols()); break;
+        case MTEFallbackGreek: f.setFamily(parent->getFallbackFontGreek()); break;
+        case MTECustomFont: f.setFamily(customFontName); break;
         default:
         case MTEroman: if (insideMath) {
                 f.setFamily(parent->getFontMathRoman());
@@ -503,9 +532,7 @@ JKQTMathTextNodeSize::JKQTMathTextNodeSize():
 
 
 JKQTMathTextFontDefinition::JKQTMathTextFontDefinition():
-    fontName("Times New Roman"), fontEncoding(MTFEStandard),
-    symbolfontGreek("Symbol"), symbolfontGreekEncoding(MTFEwinSymbol),
-    symbolfontSymbol("Symbol"), symbolfontSymbolEncoding(MTFEwinSymbol)
+    fontName("Times New Roman"), fontEncoding(MTFEStandard)
 {
 
 }
@@ -703,4 +730,18 @@ QFont JKQTMathTextGetNonItalic(const QFont &font)
 bool isPrintableJKQTMathTextBraceType(JKQTMathTextBraceType type)
 {
     return (type!=MTBTAny) && (type!=MTBTUnknown);
+}
+
+JKQTMathTextFontEncoding estimateJKQTMathTextFontEncoding(QFont font)
+{
+    font.setStyleStrategy(QFont::NoFontMerging);
+    const QString fontFamily=font.family().toLower();
+    if (fontFamily=="symbol") return JKQTMathTextFontEncoding::MTFEWinSymbol;
+    if (fontFamily.startsWith("xits") || fontFamily.startsWith("stix")||fontFamily.startsWith("asana")) return JKQTMathTextFontEncoding::MTFEUnicode;
+    const QFontMetricsF fm(font);
+    if (fm.inFont(QChar(0x3B1))) return JKQTMathTextFontEncoding::MTFEUnicode; // griechisch alpha
+    if (fm.inFont(QChar(0x2192))) return JKQTMathTextFontEncoding::MTFEUnicode; // pfeil nach rechts
+    if (fm.inFont(QChar(0x2202))) return JKQTMathTextFontEncoding::MTFEUnicode; // partial
+    if (fm.inFont(QChar(0x2208))) return JKQTMathTextFontEncoding::MTFEUnicode; // element
+    return JKQTMathTextFontEncoding::MTFELatin1;
 }

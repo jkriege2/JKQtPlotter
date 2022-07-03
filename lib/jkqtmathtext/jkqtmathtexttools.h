@@ -126,11 +126,18 @@ private:
  *  \ingroup jkqtmathtext_tools
 */
 enum JKQTMathTextFontEncoding {
-    MTFEwinSymbol,      /*!< \brief This assumes that symbols shall be taken from a MS Windows style Symbol font */
-    MTFEunicode,        /*!< \brief This assumes that symbols shall be taken from a Unicode font  (e.g. the STIX fonts from <a href="http://www.stixfonts.org/">http://www.stixfonts.org/</a>)*/
-    MTFEunicodeLimited, /*!< \brief This assumes that the fonts used are Unicode, but only offer a limited set of symbols.  Especially math symbols are missing from this encoding */
-    MTFEStandard,       /*!< \brief the encoding of a standard TTF font (i.e. we can only expect letters,number and not many special characters) */
+    MTFEWinSymbol=0,      /*!< \brief This assumes that symbols shall be taken from a MS Windows style Symbol font */
+    MTFEUnicode=1,        /*!< \brief This assumes that symbols shall be taken from a Unicode font, which ideally offers full symbol support  (e.g. the XITS fonts, STIX fonts from <a href="http://www.stixfonts.org/">http://www.stixfonts.org/</a>)*/
+    MTFELatin1=2,         /*!< \brief the encoding of a standard Latin1 TTF font (i.e. we can only expect letters,number and not many special characters) */
+    MTFEStandard=MTFELatin1
 };
+
+/** \brief this function tries to determine the JKQTMathTextFontEncoding of a given font (HEURISTICS!!!)
+ *  \ingroup jkqtmathtext_tools
+*/
+JKQTMATHTEXT_LIB_EXPORT JKQTMathTextFontEncoding estimateJKQTMathTextFontEncoding(QFont font);
+
+
 
 /** \brief convert MTfontEncoding to a string
  *  \ingroup jkqtmathtext_tools
@@ -213,7 +220,11 @@ enum JKQTMathTextEnvironmentFont {
     MTEcaligraphic, /*!< \brief caligraphic font, e.g. <code>\\mathcal{}</code> */
     MTEfraktur,     /*!< \brief fraktur font, e.g. <code>\\mathfrak{}</code> */
 
-    MTenvironmentFontCount  /*!< \brief internal enum value that allows to iterate over MTenvironmentFont \internal */
+    MTEEnvironmentFontCount,  /*!< \brief internal enum value that allows to iterate over MTenvironmentFont \internal */
+    MTECurrentFont,  /*!< \brief internal enum value that specifies that the currently set font shall be used \internal */
+    MTECustomFont,  /*!< \brief internal enum value that specifies that a custom font specified elsewhere shall be used \internal */
+    MTEFallbackSymbols,      /*!< \brief symbol font */
+    MTEFallbackGreek,       /*!< \brief greek letters font */
 };
 
 
@@ -226,6 +237,8 @@ struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextEnvironment {
     QColor color;
     /** \brief current font */
     JKQTMathTextEnvironmentFont font;
+    /** \brief custom font, when font==MTECustomFont */
+    QString customFontName;
     /** \brief current font size [pt] */
     double fontSize;
     /** \brief is the text currently bold? */
@@ -246,6 +259,8 @@ struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextEnvironment {
 
     /** \brief build a QFont object from the settings in this object */
     QFont getFont(JKQTMathText* parent) const;
+    /** \brief return the encoding of the given Font */
+    JKQTMathTextFontEncoding getFontEncoding(JKQTMathText *parent) const;
     /** \brief generate a HTML prefix that formats the text after it according to the settings in this object
      *
      * \param defaultEv environment before applying the current object (to detect changes)
@@ -281,15 +296,6 @@ struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextFontDefinition {
     QString fontName;
     /** \brief specifies the encoding of the font (default is \c MTFEwinSymbol ) */
     JKQTMathTextFontEncoding fontEncoding;
-
-    /** \brief symbol font used for greek symbols, or empty when \a fontName shall be used */
-    QString symbolfontGreek;
-    /** \brief specifies the encoding of symbolfontGreek */
-    JKQTMathTextFontEncoding symbolfontGreekEncoding;
-    /** \brief symbol font, used for math symbols, or empty when \a fontName shall be used */
-    QString symbolfontSymbol;
-    /** \brief specifies the encoding of symbolfontSymbol */
-    JKQTMathTextFontEncoding symbolfontSymbolEncoding;
 };
 
 

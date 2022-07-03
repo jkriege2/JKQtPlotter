@@ -63,7 +63,6 @@ void JKQTMathTextTextNode::getSizeInternal(QPainter& painter, JKQTMathTextEnviro
                                  text==QString(QChar(0x2329)) || text==QString(QChar(0x232A)) || text==QString(QChar(0x2308)) ||
                                  text==QString(QChar(0x2309)) || text==QString(QChar(0x230A)) || text==QString(QChar(0x230B)))) {
             f.setItalic(false);
-            //f.setFamily(parent->getFontData(currentEv.font, currentEv.insideMath, FontSubclass::Text).first);
         }
     QString txt=textTransform(text, currentEv, true);
     QFontMetricsF fm(f, painter.device());
@@ -200,7 +199,7 @@ QString JKQTMathTextTextNode::textTransform(const QString &text, JKQTMathTextEnv
 {
     QString txt=text;
     auto fnt=parentMathText->getFontData(currentEv.font, currentEv.insideMath);
-    if (fnt.second==MTFEunicode || fnt.second==MTFEunicodeLimited) {
+    if (fnt.second==MTFEUnicode || fnt.second==MTFEUnicode) {
         if (currentEv.insideMath) {
             txt="";
             for (int i=0; i<text.size(); i++) {
@@ -244,21 +243,3 @@ QString MTplainTextNode::textTransform(const QString &_text, JKQTMathTextEnviron
 }
 
 
-JKQTMathTextWhitespaceNode::JKQTMathTextWhitespaceNode(JKQTMathText *_parent):
-    JKQTMathTextTextNode(_parent, " ", false, false)
-{
-
-}
-
-JKQTMathTextWhitespaceNode::~JKQTMathTextWhitespaceNode()
-= default;
-
-QString JKQTMathTextWhitespaceNode::getTypeName() const
-{
-    return QLatin1String("JKQTMathTextWhitespaceNode(")+text+")";
-}
-
-bool JKQTMathTextWhitespaceNode::toHtml(QString &html, JKQTMathTextEnvironment /*currentEv*/, JKQTMathTextEnvironment /*defaultEv*/) {
-    html=html+"&nbsp;";
-    return true;
-}
