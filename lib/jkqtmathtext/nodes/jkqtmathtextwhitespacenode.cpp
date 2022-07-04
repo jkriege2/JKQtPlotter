@@ -111,8 +111,7 @@ double JKQTMathTextWhitespaceNode::draw(QPainter &painter, double x, double y, J
 
 void JKQTMathTextWhitespaceNode::getSizeInternal(QPainter &painter, JKQTMathTextEnvironment currentEv, double &width, double &baselineHeight, double &overallHeight, double &strikeoutPos, const JKQTMathTextNodeSize *prevNodeSize)
 {
-    const double singelWidthPT=Type2PointWidth(whitespace.type, currentEv);
-    const double singelWidthPIX=singelWidthPT/72.0*painter.device()->logicalDpiX();
+    const double singelWidthPIX=Type2PixelWidth(whitespace.type, currentEv, painter.device());
     const QFontMetricsF fm(currentEv.getFont(parentMathText));
     width=singelWidthPIX*static_cast<double>(whitespace.count);
     baselineHeight=0;
@@ -127,7 +126,7 @@ void JKQTMathTextWhitespaceNode::fillSupportedInstructions()
     if (supportedInstructions.size()==0) {
         supportedInstructions[" "]=WhitespaceProps(WSTthicker, 1);
         supportedInstructions["nbsp"]=WhitespaceProps(WSTNonbreaking, 1);
-        supportedInstructions["enspace"]=WhitespaceProps(WST1en, 1);
+        supportedInstructions["enspace"]=supportedInstructions["enskip"]=WhitespaceProps(WST1en, 1);
         supportedInstructions["quad"]=supportedInstructions["emspace"]=WhitespaceProps(WSTQuad, 1);
         supportedInstructions["qquad"]=WhitespaceProps(WSTQuad, 2);
         supportedInstructions[","]=supportedInstructions["thinspace"]=WhitespaceProps(WSTthin, 1);
@@ -159,13 +158,18 @@ QString JKQTMathTextWhitespaceNode::Type2String(Types type)
     return "???";
 }
 
-double JKQTMathTextWhitespaceNode::Type2PointWidth(Types type, JKQTMathTextEnvironment currentEv) const
+double JKQTMathTextWhitespaceNode::Type2PixelWidth(Types type, JKQTMathTextEnvironment currentEv, QPaintDevice* pd) const
 {
-    const double em=currentEv.fontSize;
+    const QFontMetricsF fm(currentEv.getFont(parentMathText), pd);
+#if QT_VERSION >= QT_VERSION_CHECK(5,11,0)
+    const double em=fm.horizontalAdvance(QChar(0x2003));//currentEv.fontSize;
+#else
+    const double em=fm.width(QChar(0x2003));//currentEv.fontSize;
+#endif
     const double en=em/2.0;
     switch (type) {
-        case WSTNormal: return QFontMetricsF(currentEv.getFont(parentMathText)).width(' ');
-        case WSTNonbreaking: return QFontMetricsF(currentEv.getFont(parentMathText)).width(' ');
+        case WSTNormal: return fm.width(' ');
+        case WSTNonbreaking: return fm.width(' ');
         case WST1en: return en;
         case WST1em: return em;
         case WSThair: return em/12.0;

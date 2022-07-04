@@ -258,6 +258,7 @@ TestForm::TestForm(QWidget *parent) :
     connect(ui->cmbLastAlign, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
     connect(ui->cmbFont, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
     connect(ui->cmbScript, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
+    connect(ui->cmbSizeUnit, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
     connect(ui->cmbTestset, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
     connect(ui->cmbCaligraphic, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
     connect(ui->cmbUnicodeSans, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
@@ -573,9 +574,11 @@ void TestForm::updateMath()
         bool ok=true;
         int size=sl[i].trimmed().toUInt(&ok);
         if (!ok) size=10+i*5;
-        mt.setFontSize(size);
+        QString unit="";
+        if (ui->cmbSizeUnit->currentIndex()==0) { unit="pt"; mt.setFontSize(size); }
+        else {unit="px"; mt.setFontSizePixels(size); }
         double durationSizingMS=0, durationTimingMS=0;
-        Y+=draw(painter, X1, Y, mt, QString("%1, %2, %3pt").arg(ui->cmbTestset->currentText()).arg(ui->cmbFont->currentText()).arg(size), durationSizingMS, durationTimingMS);
+        Y+=draw(painter, X1, Y, mt, QString("%1, %2, %3"+unit).arg(ui->cmbTestset->currentText()).arg(ui->cmbFont->currentText()).arg(size), durationSizingMS, durationTimingMS);
 
         if (i==0) {
             ui->labError->clear();
@@ -600,8 +603,10 @@ void TestForm::updateMath()
         bool ok=true;
         int size=sl.last().trimmed().toUInt(&ok);
         if (!ok) size=font().pointSizeF();
-        mt.setFontSize(size);
-        Y+=drawAligned(painter, X1, Y, mt, QString("%1, %2pt, align: %3").arg(ui->cmbTestset->currentText()).arg(size).arg(ui->cmbLastAlign->currentText()));
+        QString unit;
+        if (ui->cmbSizeUnit->currentIndex()==0) { unit="pt"; mt.setFontSize(size); }
+        else { unit="px"; mt.setFontSizePixels(size); }
+        Y+=drawAligned(painter, X1, Y, mt, QString("%1, %2"+unit+", align: %3").arg(ui->cmbTestset->currentText()).arg(size).arg(ui->cmbLastAlign->currentText()));
     }
 
     painter.end();

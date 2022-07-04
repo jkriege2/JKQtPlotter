@@ -93,9 +93,9 @@ double JKQTMathTextBraceNode::draw(QPainter& painter, double x, double y, JKQTMa
     double nodeOverallHeight=0, nodeStrikeoutPos=0;
     double bracewidth=0, braceheight=0;
     getSizeInternalAndBrace(painter, currentEv, nodeWidth, nodeBaselineHeight, nodeOverallHeight, nodeStrikeoutPos, bracewidth, braceheight);
+    const QFontMetricsF fm(currentEv.getFont(parentMathText));
 
-
-    const double lw=qMax(0.25,ceil(currentEv.fontSize/16.0));//fm.lineWidth();
+    const double lw=qMax(0.25,fm.lineWidth());
 
     double xnew=x;
 
@@ -425,7 +425,8 @@ JKQTMathTextBraceType JKQTMathTextBraceNode::getClosebrace() const {
 
 void JKQTMathTextBraceNode::getBraceSize(QPainter &/*painter*/, JKQTMathTextEnvironment ev, double /*baselineHeight*/, double overallHeight, double &bracewidth, double &braceheight) const
 {
-    const double lw=qMax(0.25,ceil(ev.fontSize/12.0));
+    const QFontMetricsF fm(ev.getFont(parentMathText));
+    const double lw=qMax(0.25,fm.lineWidth());
     braceheight=overallHeight*parentMathText->getBraceFactor();
     bracewidth=0.6*pow(braceheight, 0.6);
     if (openbrace==MTBTCurlyBracket || closebrace==MTBTCurlyBracket)  bracewidth=qMax(bracewidth, lw*3.5);

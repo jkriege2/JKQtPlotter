@@ -61,6 +61,7 @@ JKQTMathText::JKQTMathText(QObject* parent):
     //qDebug()<<"init_resoucre: "<<std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now()-t0).count()/1000.0<<"ms"; t0=std::chrono::high_resolution_clock::now();
 
     fontSize=10;
+    fontSizeUnits=JKQTMathTextEnvironment::POINTS;
     fontColor=QColor("black");
     italic_correction_factor=0.4;
     brace_factor=1.04;
@@ -121,30 +122,6 @@ JKQTMathText::JKQTMathText(QObject* parent):
 #else
         const auto fonts=QFontDatabase::families();
 #endif
-        //qDebug()<<"fonts:\n"<<fonts;
-
-        /*if (SCAN_FONTS_ON_STARTUP) {
-            for (const QString& f: fonts) {
-                QFont fnt(f);
-                QFontInfo fi(fnt);
-                if (typewriterFont=="typewriter" && fi.styleHint()==QFont::TypeWriter) {
-                    typewriterFont=f;
-                }
-                if (decorativeFont=="decorative" && fi.styleHint()==QFont::Decorative) {
-                    decorativeFont=f;
-                }
-                if (serifFont=="serif" && fi.styleHint()==QFont::Serif) {
-                    serifFont=f;
-                }
-                if (sansFont=="sans" && fi.styleHint()==QFont::SansSerif) {
-                    sansFont=f;
-                }
-                if (scriptFont=="script" && fi.styleHint()==QFont::Cursive) {
-                    scriptFont=f;
-                }
-            }
-        }*/
-        //qDebug()<<"iterate "<<fonts.size()<<" fonts: "<<std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now()-t0).count()/1000.0<<"ms"; t0=std::chrono::high_resolution_clock::now();
 
 
         auto checkForFonts=[&fonts](QString& targetfont, const QStringList& fontoptions) {
@@ -220,6 +197,7 @@ JKQTMathText::~JKQTMathText() {
 
 void JKQTMathText::loadSettings(const QSettings& settings, const QString& group){
     fontSize=settings.value(group+"font_size", fontSize).toDouble();
+    fontSizeUnits=JKQTMathTextEnvironment::String2FontSizeUnit(settings.value(group+"font_size_units", JKQTMathTextEnvironment::FontSizeUnit2String(fontSizeUnits)).toString());
     fontColor=jkqtp_String2QColor(settings.value(group+"font_color", jkqtp_QColor2String(fontColor)).toString());
     brace_factor=settings.value(group+"brace_factor", brace_factor).toDouble();
     brace_shrink_factor=settings.value(group+"brace_shrink_factor", brace_shrink_factor).toDouble();
@@ -261,6 +239,7 @@ void JKQTMathText::loadSettings(const QSettings& settings, const QString& group)
 
 void JKQTMathText::saveSettings(QSettings& settings, const QString& group) const{
     settings.setValue(group+"font_size", fontSize);
+    settings.setValue(group+"font_size_units", JKQTMathTextEnvironment::FontSizeUnit2String(fontSizeUnits));
     settings.setValue(group+"font_color", jkqtp_QColor2String(fontColor));
     settings.setValue(group+ "brace_factor", brace_factor);
     settings.setValue(group+ "brace_shrink_factor", brace_shrink_factor);
@@ -364,6 +343,24 @@ bool JKQTMathText::useASANA(bool mathModeOnly)
 
 void JKQTMathText::useAnyUnicode(QString timesFont, const QString &sansFont, JKQTMathTextFontEncoding encodingTimes, JKQTMathTextFontEncoding encodingSans)
 {
+    if (!timesFont.isEmpty()) {
+        setFontRoman(timesFont, encodingTimes);
+        setFontMathRoman(timesFont, encodingTimes);
+    }
+    if (!sansFont.isEmpty()) {
+        setFontSans(sansFont, encodingSans);
+        setFontMathSans(sansFont, encodingSans);
+    }
+}
+
+void JKQTMathText::useAnyUnicodeForMathOnly(QString timesFont, const QString &sansFont, JKQTMathTextFontEncoding encodingTimes, JKQTMathTextFontEncoding encodingSans)
+{
+    if (!timesFont.isEmpty()) { setFontMathRoman(timesFont, encodingTimes); }
+    if (!sansFont.isEmpty()) { setFontMathSans(sansFont, encodingSans); }
+}
+
+void JKQTMathText::useAnyUnicodeForTextOnly(QString timesFont, const QString &sansFont, JKQTMathTextFontEncoding encodingTimes, JKQTMathTextFontEncoding encodingSans)
+{
     if (!timesFont.isEmpty()) { setFontRoman(timesFont, encodingTimes); }
     if (!sansFont.isEmpty()) { setFontSans(sansFont, encodingSans); }
 }
@@ -376,9 +373,11 @@ QString JKQTMathText::toHtml(bool *ok, double fontPointSize) {
         JKQTMathTextEnvironment ev;
         ev.color=fontColor;
         ev.fontSize=fontPointSize;
+        ev.fontSizeUnit=JKQTMathTextEnvironment::POINTS;
 
         JKQTMathTextEnvironment defaultev;
         defaultev.fontSize=fontPointSize;
+        defaultev.fontSizeUnit=JKQTMathTextEnvironment::POINTS;
 
         okk=getNodeTree()->toHtml(s, ev, defaultev);
     }
@@ -399,12 +398,36 @@ QColor JKQTMathText::getFontColor() const
 
 void JKQTMathText::setFontSize(double __value)
 {
-    this->fontSize = __value;
+    setFontPointSize(__value);
+}
+
+void JKQTMathText::setFontPointSize(double __value)
+{
+    fontSize = __value;
+    fontSizeUnits=JKQTMathTextEnvironment::POINTS;
+}
+
+void JKQTMathText::setFontSizePixels(double __value)
+{
+    fontSize = __value;
+    fontSizeUnits=JKQTMathTextEnvironment::PIXELS;
 }
 
 double JKQTMathText::getFontSize() const
 {
-    return this->fontSize;
+    return getFontPointSize();
+}
+
+double JKQTMathText::getFontPointSize() const
+{
+    if (fontSizeUnits==JKQTMathTextEnvironment::POINTS) return fontSize;
+    else return -1;
+}
+
+double JKQTMathText::getFontSizePixels() const
+{
+    if (fontSizeUnits==JKQTMathTextEnvironment::PIXELS) return fontSize;
+    else return -1;
 }
 
 void JKQTMathText::addReplacementFont(const QString &nonUseFont, const QString &useFont, JKQTMathTextFontEncoding useFontEncoding) {
@@ -1638,6 +1661,7 @@ void JKQTMathText::getSizeDetail(QPainter& painter, double& width, double& ascen
         JKQTMathTextEnvironment ev;
         ev.color=fontColor;
         ev.fontSize=fontSize;
+        ev.fontSizeUnit=fontSizeUnits;
 
         double overallHeight=0;        
         getNodeTree()->getSize(painter, ev, width, ascent, overallHeight, strikeoutPos);
@@ -1658,6 +1682,7 @@ void JKQTMathText::draw(QPainter& painter, double x, double y, bool drawBoxes){
         JKQTMathTextEnvironment ev;
         ev.color=fontColor;
         ev.fontSize=fontSize;
+        ev.fontSizeUnit=fontSizeUnits;
         QPen pp=painter.pen();
         QPen p=pp;
         p.setStyle(Qt::SolidLine);
@@ -1678,6 +1703,7 @@ void JKQTMathText::draw(QPainter& painter, unsigned int flags, QRectF rect, bool
         JKQTMathTextEnvironment ev;
         ev.color=fontColor;
         ev.fontSize=fontSize;
+        ev.fontSizeUnit=fontSizeUnits;
         getNodeTree()->setDrawBoxes(drawBoxes);
         painter.setPen(p);
 

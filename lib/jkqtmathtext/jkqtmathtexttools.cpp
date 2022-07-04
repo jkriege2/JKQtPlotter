@@ -415,10 +415,28 @@ bool InstructionNameMatchesJKQTMathTextBraceType(const QString &token, JKQTMathT
     return (bt==type);
 }
 
+QString JKQTMathTextEnvironment::FontSizeUnit2String(FontSizeUnit unit)
+{
+    switch(unit) {
+    case PIXELS: return "pix";
+    default:
+    case POINTS: return "pt";
+    }
+}
+
+JKQTMathTextEnvironment::FontSizeUnit JKQTMathTextEnvironment::String2FontSizeUnit(QString unit)
+{
+    unit=unit.toLower().trimmed();
+    if (unit=="pt" || unit=="points" || unit=="point") return POINTS;
+    if (unit=="pix" || unit=="pixel" || unit=="pixels" || unit=="px") return PIXELS;
+    return POINTS;
+}
+
 JKQTMathTextEnvironment::JKQTMathTextEnvironment() {
     color=QColor("black");
     font=MTEroman;
     fontSize=10;
+    fontSizeUnit=POINTS;
     bold=false;
     italic=false;
     smallCaps=false;
@@ -489,14 +507,17 @@ QFont JKQTMathTextEnvironment::getFont(JKQTMathText* parent) const {
     f.setStrikeOut(strike);
     f.setCapitalization(QFont::MixedCase);
     if (smallCaps) f.setCapitalization(QFont::SmallCaps);
-    f.setPointSizeF(fontSize);
+    if (fontSizeUnit==POINTS) f.setPointSizeF(fontSize);
+    else if (fontSizeUnit==PIXELS) f.setPixelSize(static_cast<int>(fontSize));
     f.setStyleStrategy(QFont::NoFontMerging);
     return f;
 }
 
 QString JKQTMathTextEnvironment::toHtmlStart(JKQTMathTextEnvironment defaultEv) const {
     QString s;
-    s=s+"font-size: "+QLocale::c().toString(fontSize)+"pt; ";
+    if (fontSizeUnit==POINTS) s=s+"font-size: "+QLocale::c().toString(fontSize)+"pt; ";
+    else if (fontSizeUnit==PIXELS) s=s+"font-size: "+QLocale::c().toString(fontSize)+"px; ";
+
     if (insideMath) {
         if (defaultEv.italic) {
             if (!italic) s=s+"font-style: italic; ";

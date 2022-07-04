@@ -232,6 +232,16 @@ enum JKQTMathTextEnvironmentFont {
  *  \ingroup jkqtmathtext_tools
  */
 struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextEnvironment {
+    /** \brief units for the property JKQTMathTextEnvironment::fontSize (Points/PT or Pixels) */
+    enum FontSizeUnit {
+        POINTS,
+        PIXELS
+    };
+    /** \brief convert a FontSizeUnit to a string \see FontSizeUnit,String2FontSizeUnit() */
+    static QString FontSizeUnit2String(FontSizeUnit unit);
+    /** \brief convert a string into a FontSizeUnit \see FontSizeUnit,FontSizeUnit2String()  */
+    static FontSizeUnit String2FontSizeUnit(QString unit);
+
     JKQTMathTextEnvironment();
     /** \brief current font color */
     QColor color;
@@ -239,8 +249,11 @@ struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextEnvironment {
     JKQTMathTextEnvironmentFont font;
     /** \brief custom font, when font==MTECustomFont */
     QString customFontName;
-    /** \brief current font size [pt] */
+    /** \brief current font size the unit is determined by fontSizeUnit */
     double fontSize;
+    /** \brief the unit of the font size fontSize */
+    FontSizeUnit fontSizeUnit;
+
     /** \brief is the text currently bold? */
     bool bold;
     /** \brief is the text currently italic? */

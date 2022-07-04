@@ -588,7 +588,7 @@
     </widget>
    </item>
    <item row="0" column="0" colspan="2">
-    <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,2,0,2,0,0,1,0,0,0,0,0,0">
+    <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,2,0,2,0,0,0,1,0,0,0,0,0,0">
      <item>
       <widget class="QLabel" name="label_3">
        <property name="text">
@@ -671,6 +671,26 @@
        <item>
         <property name="text">
          <string>useAnyUnicode(&quot;Comic Sans MS&quot;, &quot;Comic Sans MS&quot;)</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="cmbSizeUnit">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <item>
+        <property name="text">
+         <string>pt</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>px</string>
         </property>
        </item>
       </widget>

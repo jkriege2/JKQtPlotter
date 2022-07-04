@@ -57,8 +57,8 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextWhitespaceNode: public JKQTMathTextNod
         };
         /** \brief converts Types \a type into a string */
         static QString Type2String(Types type);
-        /** \brief converts Types \a type into its width in points (pt), based on \a currentEv */
-        double Type2PointWidth(Types type, JKQTMathTextEnvironment currentEv) const;
+        /** \brief converts Types \a type into its width in pixels, based on \a currentEv and \a pd */
+        double Type2PixelWidth(Types type, JKQTMathTextEnvironment currentEv, QPaintDevice *pd) const;
         /** \brief checks whether a given LaTeX instruction name is supported by this node class type */
         static bool supportsInstructionName(const QString& instruction);
         /** \brief constructs a node with count=1 and type=WSTNormal */

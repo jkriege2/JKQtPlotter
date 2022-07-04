@@ -294,10 +294,22 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         void setFontColor(const QColor & __value);
         /** \copydoc fontColor */ 
         QColor getFontColor() const;
-        /** \copydoc fontSize */ 
+        /** \copydoc setFontPointSize() */
         void setFontSize(double __value);
-        /** \copydoc fontSize */ 
+        /** \brief set the default font size in points
+         *  \see getFontSize(), fontSize, fontSizeUnits */
+        void setFontPointSize(double __value);
+        /** \brief set the default font soze in pixels
+         *  \see getFontSizePixels(), fontSize, fontSizeUnits */
+        void setFontSizePixels(double __value);
+        /** \brief returns the currently set default font size in points, if it was defined in points using setFontSize(), or -1 if it was set in pixels with setFontSizePixels()
+         *  \see setFontSize(), fontSize, fontSizeUnits */
+        double getFontPointSize() const;
+        /** \copydoc getFontPointSize() */
         double getFontSize() const;
+        /** \brief returns the currently set default font size in pixels, if it was defined in points using setFontSizePixels(), or -1 if it was set in points with setFontSize()
+         *  \see setFontSizePixels(), fontSize, fontSizeUnits */
+        double getFontSizePixels() const;
         /** \brief add a font pair to the table with font replacements
          *
          * e.g. if it is known that a certain font is not good for rendering, you can add an alternative with this function.
@@ -440,8 +452,9 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
 
         /** \brief sets \a timesFont (with its encoding \a encodingTimes ) for serif-text and \a sansFont (with its encoding \a encodingSans ) for both mathmode and textmode fonts
          *
-         * use generic Unicode fonts, e.g. "Arial" and "Times New Roman" in math-mode.
-         * You should use fonts that contain as many of the mathematical symbols as possible to ensure good rendering results.
+         * \note use generic Unicode fonts, e.g. "Arial" and "Times New Roman" in math-mode.
+         *       You should use fonts that contain as many of the mathematical symbols as possible
+         *       to ensure good rendering results.
          *
          * <code>useAnyUnicode("Times New Roman", "Times New Roman")</code>:<br>\image html jkqtmathtext/jkqtmathparser_timesnewroman.png  <br><br>
          * <code>useAnyUnicode("Arial", "Arial")</code>:<br>\image html jkqtmathtext/jkqtmathparser_arial.png  <br><br>
@@ -449,7 +462,20 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
          * <code>useAnyUnicode("Comic Sans MS", "Comic Sans MS")</code>:<br>\image html jkqtmathtext/jkqtmathparser_comicsans.png  <br><br>
          *
          */
-        void useAnyUnicode(QString timesFont=QString(""), const QString& sansFont=QString(""), JKQTMathTextFontEncoding encodingTimes=JKQTMathTextFontEncoding::MTFEUnicode, JKQTMathTextFontEncoding encodingSans=JKQTMathTextFontEncoding::MTFEUnicode);
+        void useAnyUnicode(QString timesFont, const QString& sansFont, JKQTMathTextFontEncoding encodingTimes=JKQTMathTextFontEncoding::MTFEUnicode, JKQTMathTextFontEncoding encodingSans=JKQTMathTextFontEncoding::MTFEUnicode);
+        /** \brief sets \a timesFont (with its encoding \a encodingTimes ) for serif-text and \a sansFont (with its encoding \a encodingSans ) for mathmode fonts only
+         *
+         * \note use generic Unicode fonts, e.g. "Arial" and "Times New Roman" in math-mode.
+         *       You should use fonts that contain as many of the mathematical symbols as possible to ensure good rendering results.
+         *
+         * \see useAnyUnicodeForTextOnly(), useAnyUnicode()
+         */
+        void useAnyUnicodeForMathOnly(QString timesFont, const QString& sansFont, JKQTMathTextFontEncoding encodingTimes=JKQTMathTextFontEncoding::MTFEUnicode, JKQTMathTextFontEncoding encodingSans=JKQTMathTextFontEncoding::MTFEUnicode);
+        /** \brief sets \a timesFont (with its encoding \a encodingTimes ) for serif-text and \a sansFont (with its encoding \a encodingSans ) for both mathmode fonts only
+         *
+         *  \see useAnyUnicodeForMathOnly(), useAnyUnicode()
+         */
+        void useAnyUnicodeForTextOnly(QString timesFont, const QString& sansFont, JKQTMathTextFontEncoding encodingTimes=JKQTMathTextFontEncoding::MTFEUnicode, JKQTMathTextFontEncoding encodingSans=JKQTMathTextFontEncoding::MTFEUnicode);
 
 
 
@@ -601,8 +627,10 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
 
         /** \brief font color */
         QColor fontColor;
-        /** \brief base font size in points */
+        /** \brief base font size in the units defined in fontSizeUnits \see fontSizeUnits */
         double fontSize;
+        /** \brief unit of fontSize */
+        JKQTMathTextEnvironment::FontSizeUnit fontSizeUnits;
 
 
         /** \brief stores information about the different fonts used by LaTeX markup */
