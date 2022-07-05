@@ -105,6 +105,7 @@ for:
       # Init compiler environment
       - cmd: echo == INIT COMPILER ENVIRONMENT ====================================================================
       - cmd: set QTDIR=C:\Qt\%QTVER%\%QTABI%\bin
+      - cmd: set QT_DIR=C:\Qt\%QTVER%\%QTABI%\bin
       - cmd: set PATH=%QTDIR%;%JOMDIR%;%PATH%
       - cmd: if %COMPILER%==MinGW set "PATH=%MINGWDIR%\bin;%PATH%"
       - cmd: if %QTABI%==msvc2019 call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars32.bat"
@@ -112,6 +113,7 @@ for:
       # Rename sh.exe as sh.exe in PATH interferes with MinGW
       - cmd: if %COMPILER%==MinGW rename "C:\Program Files\Git\usr\bin\sh.exe" "sh2.exe"
       - cmd: echo QTDIR=%QTDIR%
+      - cmd: echo QT_DIR=%QT_DIR%
       - cmd: echo JOMDIR=%JOMDIR%
       - cmd: echo PATH=%PATH%
       # Install OpenCV
@@ -161,10 +163,12 @@ for:
       # Init compiler environment
       - sh: echo == INIT COMPILER ENVIRONMENT ====================================================================
       - sh: export QTDIR=$HOME/Qt/$QTVER/$QTABI/
+      - sh: export QT_DIR=$HOME/Qt/$QTVER/$QTABI/
       - sh: export Qt5_DIR=$QTDIR/lib/cmake
       - sh: sudo apt update -qq
       - sh: sudo apt install -y build-essential git graphviz doxygen mesa-common-dev libglu1-mesa-dev qt5-qmake cmake
       - sh: echo QTDIR=$QTDIR
+      - sh: echo QT_DIR=$QT_DIR
       - sh: echo Qt5_DIR=$Qt5_DIR
       - sh: ls /home/appveyor
       - sh: ls /home/appveyor/Qt
