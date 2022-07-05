@@ -161,15 +161,17 @@ QString JKQTMathTextWhitespaceNode::Type2String(Types type)
 double JKQTMathTextWhitespaceNode::Type2PixelWidth(Types type, JKQTMathTextEnvironment currentEv, QPaintDevice* pd) const
 {
     const QFontMetricsF fm(currentEv.getFont(parentMathText), pd);
-#if QT_VERSION >= QT_VERSION_CHECK(5,11,0)
+#if (QT_VERSION>=QT_VERSION_CHECK(5, 15, 0))
     const double em=fm.horizontalAdvance(QChar(0x2003));//currentEv.fontSize;
+    const double sp=fm.horizontalAdvance(' ');//currentEv.fontSize;
 #else
     const double em=fm.width(QChar(0x2003));//currentEv.fontSize;
+    const double sp=fm.width(' ');//currentEv.fontSize;
 #endif
     const double en=em/2.0;
     switch (type) {
-        case WSTNormal: return fm.width(' ');
-        case WSTNonbreaking: return fm.width(' ');
+        case WSTNormal: return sp;
+        case WSTNonbreaking: return sp;
         case WST1en: return en;
         case WST1em: return em;
         case WSThair: return em/12.0;
