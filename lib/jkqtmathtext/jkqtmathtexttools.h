@@ -219,12 +219,10 @@ enum JKQTMathTextEnvironmentFont {
     MTEblackboard,  /*!< \brief blackboard font, e.g. <code>\\mathbb{}</code> */
     MTEcaligraphic, /*!< \brief caligraphic font, e.g. <code>\\mathcal{}</code> */
     MTEfraktur,     /*!< \brief fraktur font, e.g. <code>\\mathfrak{}</code> */
+    MTEFallbackSymbols, /*!< \brief symbol font */
 
-    MTEEnvironmentFontCount,  /*!< \brief internal enum value that allows to iterate over MTenvironmentFont \internal */
     MTECurrentFont,  /*!< \brief internal enum value that specifies that the currently set font shall be used \internal */
     MTECustomFont,  /*!< \brief internal enum value that specifies that a custom font specified elsewhere shall be used \internal */
-    MTEFallbackSymbols,      /*!< \brief symbol font */
-    MTEFallbackGreek,       /*!< \brief greek letters font */
 };
 
 

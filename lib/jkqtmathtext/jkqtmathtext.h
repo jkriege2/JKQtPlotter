@@ -195,8 +195,7 @@ class JKQTMathTextNode; // forward
       - A "blackboard" (MTEblackboard) font used to display double stroked characters ( setFontBlackboard() )
       - A "caligraphic" (MTEcaligraphic) font used to display caligraphic characters ( setFontCaligraphic() )
       - A "fraktur" (MTEfraktur) font used to display fraktur characters ( setFontFraktur() )
-      - A fallback font MTEFallbackGreek for greek letter (if the letters are not present in the currently used font) \c \\alpha ... ( setFallbackFontGreek() )
-      - A fallback font MTEFallbackSymbols for (math) symbols (if the symbols are not present in the currently used font). ( setFallbackFontSymbols() )
+      - A fallback font MTEFallbackSymbols for (math) symbols, greek letters ... (if the symbols are not present in the currently used font). ( setFallbackFontSymbols() )
     .
 
     These fonts are generic font classes, which font is actually used can be configured in JKQTMathText class with the \c set...() functions mentioned above. You can also use these functions to set the fonts used for math rendering in math-mode:
@@ -207,6 +206,7 @@ class JKQTMathTextNode; // forward
         <br>using "Arial": \image html jkqtmathtext/jkqtmathparser_arial.png
         <br>using "Courier New": \image html jkqtmathtext/jkqtmathparser_couriernew.png
         <br>using "Comic Sans MS": \image html jkqtmathtext/jkqtmathparser_comicsans.png
+        <br>using "Old English Text": \image html jkqtmathtext/jkqtmathparser_OldEnglish.png
     .
 
     Math-mode is activated by enclosing your equation in \c $...$ or \c \\[...\\] . This mode is optimized for mathematical equations. Here is an example of the difference:
@@ -216,7 +216,7 @@ class JKQTMathTextNode; // forward
 
     Font Lookup for symbols works as follows in JKQTMathTextSymbolNode:
       - if a character is found in the current (or to be used) font, it is taken from there
-      - if the character is not found, it is looked for in the fallback fonts MTEFallbackGreek and MTEFallbackSymbols
+      - if the character is not found, it is looked for in the fallback fonts MTEFallbackSymbols
       - as a last resort, some symbols can be created otherwise, so if neither of the two options above
         contain the required symbol, the symbol might be synthesized otherwise, or a rectangle with the size of "X" is drawn instead
     
@@ -378,10 +378,6 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         bool isFontBlackboardSimulated() const;
         /** \brief retrieves the font to be used for text in the logical font MTEblackboard   */
         QString getFontBlackboard() const;
-        /** \brief set the font \a fontName and it's encoding \a encoding to be used for greek letters in the logical font \a font   */
-        void setFallbackFontGreek(const QString & fontName, JKQTMathTextFontEncoding encoding=JKQTMathTextFontEncoding::MTFEStandard);
-        /** \brief retrieves the font to be used for greek letters in the logical font \a font   */
-        QString getFallbackFontGreek() const;
         /** \brief set the font \a fontName and it's encoding \a encoding to be used for symbols in the logical font \a font   */
         void setFallbackFontSymbols(const QString & fontName, JKQTMathTextFontEncoding encoding=JKQTMathTextFontEncoding::MTFEStandard);
         /** \brief retrieves the font to be used for symbols in the logical font \a font   */
@@ -389,8 +385,6 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
 
         /** \brief retrieves the encoding used for the symbol font to be used for symbols   */
         JKQTMathTextFontEncoding getFontEncodingFallbackFontSymbols() const;
-        /** \brief retrieves the encoding used for the greek letter font to be used for greek letters   */
-        JKQTMathTextFontEncoding getFontEncodingFallbackFontGreek() const;
         /** \brief retrieves the encoding used for the script font  */
         JKQTMathTextFontEncoding getFontEncodingScript() const;
         /** \brief retrieves the encoding used for the Fraktur font  */
@@ -460,7 +454,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
          * <code>useAnyUnicode("Arial", "Arial")</code>:<br>\image html jkqtmathtext/jkqtmathparser_arial.png  <br><br>
          * <code>useAnyUnicode("Courier New", "Courier New")</code>:<br>\image html jkqtmathtext/jkqtmathparser_couriernew.png  <br><br>
          * <code>useAnyUnicode("Comic Sans MS", "Comic Sans MS")</code>:<br>\image html jkqtmathtext/jkqtmathparser_comicsans.png  <br><br>
-         *
+         * <code>useAnyUnicodeForTextOnly("Comic Sans MS", "Comic Sans MS");</code>:<br/>\image html jkqtmathparser_comicsans_textonly.png
          */
         void useAnyUnicode(QString timesFont, const QString& sansFont, JKQTMathTextFontEncoding encodingTimes=JKQTMathTextFontEncoding::MTFEUnicode, JKQTMathTextFontEncoding encodingSans=JKQTMathTextFontEncoding::MTFEUnicode);
         /** \brief sets \a timesFont (with its encoding \a encodingTimes ) for serif-text and \a sansFont (with its encoding \a encodingSans ) for mathmode fonts only
@@ -474,6 +468,9 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         /** \brief sets \a timesFont (with its encoding \a encodingTimes ) for serif-text and \a sansFont (with its encoding \a encodingSans ) for both mathmode fonts only
          *
          *  \see useAnyUnicodeForMathOnly(), useAnyUnicode()
+         *
+         * <code>useAnyUnicode("Comic Sans MS", "Comic Sans MS")</code>:<br>\image html jkqtmathtext/jkqtmathparser_comicsans.png  <br><br>
+         * <code>useAnyUnicodeForTextOnly("Comic Sans MS", "Comic Sans MS");</code>:<br/>\image html jkqtmathparser_comicsans_textonly.png
          */
         void useAnyUnicodeForTextOnly(QString timesFont, const QString& sansFont, JKQTMathTextFontEncoding encodingTimes=JKQTMathTextFontEncoding::MTFEUnicode, JKQTMathTextFontEncoding encodingSans=JKQTMathTextFontEncoding::MTFEUnicode);
 

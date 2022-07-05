@@ -57,7 +57,7 @@ class JKQTMathText; // forward
  */
 class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSymbolNode: public JKQTMathTextNode {
     public:
-        explicit JKQTMathTextSymbolNode(JKQTMathText* parent, const QString& name, bool addWhitespace);
+        explicit JKQTMathTextSymbolNode(JKQTMathText* parent, const QString& name);
         virtual ~JKQTMathTextSymbolNode() override;
         /** \copydoc JKQTMathTextNode::getTypeName() */
         virtual QString getTypeName() const override;
@@ -67,8 +67,6 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSymbolNode: public JKQTMathTextNode {
         virtual bool toHtml(QString& html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) override;
         /** \copydoc symbolName */ 
         QString getSymbolName() const;
-        /** \copydoc addWhitespace */
-        bool getAddWhitespace() const;
         /** \brief determine the size of the node, calls getSizeInternal() implementation of the actual type \see getSizeInternal()
          *
          * \param painter painter to use for determining the size
@@ -94,8 +92,6 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSymbolNode: public JKQTMathTextNode {
 
         /** \brief this string will be sent to the drawText method with properly set fonts */
         QString symbolName;
-        /** \brief add a whitespace to the symbol? */
-        bool addWhitespace;
 
         /** \brief flags specifying additional symbol features */
         enum SymbolFlags: uint64_t {
@@ -104,12 +100,15 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSymbolNode: public JKQTMathTextNode {
             ItalicOff= 1 << 1,             /*!< \brief make font non-italic (i.e. upright) in any case */
             BoldOn=    1 << 2,             /*!< \brief make font bold in any case */
             BoldOff=   1 << 3,             /*!< \brief make font non-bold (i,,e, normal weight) in any case */
-            DrawBar=   1 << 4,             /*!< \brief indicates whether to draw a bar (like for \c \\hbar ) */
-            FlipUpDown=1 << 5,             /*!< \brief indicates to flip the given symbol upside-down */
-            FlipLeftRight=1 << 6,          /*!< \brief indicates to flip the given symbol left-right */
-            Rotate90=1 << 7,               /*!< \brief indicates to rotate the symbol 90 degree */
-            DrawSlash=1 << 8,               /*!< \brief indicates to overdraw a backslash (e.g. to combine 0 and / to form \\varnothing ) */
-            HeightIsAscent= 1 << 9,        /*!< \brief if true, the height of the symbol equals the ascent of the font */
+            DrawLeftHBar= 1 << 4,          /*!< \brief indicates whether to draw a bar on the left half of the character, above the xHeight (like for \c \\hbar ), implements an italic-correction */
+            DrawRightHBar= 1 << 5,         /*!< \brief indicates whether to draw a bar on the right half of the character, above the xHeight, implements an italic-correction */
+            FlipSymbolUpDown=1 << 6,       /*!< \brief indicates to flip the given symbol upside-down */
+            FlipSymbolLeftRight=1 << 7,    /*!< \brief indicates to flip the given symbol left-right */
+            RotateSymbol90=1 << 8,         /*!< \brief indicates to rotate the symbol 90 degree */
+            DrawSlash=1 << 9,              /*!< \brief indicates to overdraw a slash (e.g. to combine 0 and / to form \\varnothing ) */
+            DrawBackSlash=1 << 10,         /*!< \brief indicates to overdraw a backslash */
+            DrawVertLine=1 << 11,          /*!< \brief indicates to overdraw a centered vertical line (slightly tilted if italic) */
+            HeightIsAscent= 1 << 12,       /*!< \brief if true, the height of the symbol equals the ascent of the font */
             Upright=ItalicOff,
             NormalWeight=BoldOff,
         };
@@ -145,13 +144,17 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSymbolNode: public JKQTMathTextNode {
         /** \brief calculates the tight bounding rect of \a text using \a fm and taking the flags from \a globalFlags into account */
         static QRectF getTightBoundingRect(const QFontMetricsF& fm, const QString& text, GlobalSymbolFlags globalFlags);
         /** \brief draw \a text at (0,0) using QPainter \a p and taking  the flags from \a globalFlags into account */
-        static void drawText(QPainter &p, const QString &text, GlobalSymbolFlags globalFlags);
+        static void drawText(QPainter &p, const QString &text, GlobalSymbolFlags globalFlags, SymbolFlags symflags);
 
         /** \brief properties of the symbol */
         struct SymbolProps {
             SymbolProps();
             /** \brief this constructor sets the given properties and sets html=symbol! replaces whitespaces in \a _ymbol with \c &thinsp; for html, iff MakeWhitespaceHalf is set in \a _flags*/
             SymbolProps(const QString& _symbol, SymbolFlags _flags=AsOutside, double _fontScalingFactor=1.0, double _yShiftFactor=0.0);
+            SymbolProps(SymbolProps&& other)=default;
+            SymbolProps(const SymbolProps& other)=default;
+            SymbolProps& operator=(SymbolProps&& other)=default;
+            SymbolProps& operator=(const SymbolProps& other)=default;
             /** \brief the symbol or text used to render the symbol (i.e. not the name,
              *         e.g. if the instruction/symbol name \c \\int is used, this would be \c QChar(0xF2) ,
              *         for \c \\sin it would be \c QString("sin") ...)  */
@@ -173,6 +176,10 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSymbolNode: public JKQTMathTextNode {
         struct SymbolFullProps  {
             /** \brief default constructor */
             SymbolFullProps();
+            SymbolFullProps(SymbolFullProps&& other)=default;
+            SymbolFullProps(const SymbolFullProps& other)=default;
+            SymbolFullProps& operator=(SymbolFullProps&& other)=default;
+            SymbolFullProps& operator=(const SymbolFullProps& other)=default;
             /** \brief typesets the symbol (described in \a props ) from the specified \a font, \a props is stored with encoding MTFEStandard, an optional HTML-string \A _html can be given */
             SymbolFullProps(const QString& font, const SymbolProps& props, const QString& _html=QString(), SymbolFlags _htmlflags=AsOutside, double _htmlfontScalingFactor=1.0, double _htmlyShiftFactor=0.0);
             /** \brief typesets the \a symbol from the specified \a font, \a props is stored with encoding MTFEStandard, an optional HTML-string \A _html can be given */
@@ -205,6 +212,8 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSymbolNode: public JKQTMathTextNode {
             SymbolProps html;
             /** \brief specifies global symbol flags */
             GlobalSymbolFlags globalFlags;
+            /** \brief accesses entries in props for a given \a key. This also looks for fallback options (e.g.  MTFEStandard when MTFEUnicode is not available). Returns \a defaultValue when nothing is found */
+            SymbolProps getProps(JKQTMathTextFontEncoding key, const SymbolProps& defaultValue=SymbolProps(), JKQTMathTextFontEncoding* foundEncodingOut=nullptr) const;
 
             SymbolFullProps &add(JKQTMathTextFontEncoding enc, const SymbolProps& props);
             SymbolFullProps& addWinSymbol(const QString& _symbol, SymbolFlags _flags=AsOutside, double _fontScalingFactor=1.0, double _yShiftFactor=0.0);
@@ -227,7 +236,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSymbolNode: public JKQTMathTextNode {
         };
 
         /** \brief creates a SymbolFullProps object for a symbol that can be typeset in any font, for SymbolFullProps::html the same text as a\a symbol is used */
-        static SymbolFullProps SimpleTextSymbol(const QString& symbol);
+        static SymbolFullProps SimpleTextSymbol(const QString& symbol, SymbolFlags _flags=AsOutside, double _fontScalingFactor=1.0, double _yShiftFactor=0.0);
         /** \brief creates a SymbolFullProps object for a symbol that can be typeset in any font, a special html-string is given */
         static SymbolFullProps SimpleTextSymbol(const QString& symbol, const QString& html);
         /** \brief creates a SymbolFullProps object for a symbol that can be typeset in any font, for SymbolFullProps::html the same text as a\a symbol is used */
@@ -242,18 +251,27 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSymbolNode: public JKQTMathTextNode {
         static SymbolFullProps MathOperatorText(const QString& op);
         /** \brief constructs a SymbolProps with explicit HTML for a math-operator like \c \\sin ..., i.e. ItalicOff, BoldOff, HeightIsAscent, ExtendWidthInMathmode */
         static SymbolFullProps MathOperatorText(const QString& op, const QString& ophtml);
-        /** \brief constructs a SymbolProps for greek letter with the symbol in unicode-encoding \a letterUnicode and in WinSymbol-encoding letterWinWsymbol */
+        /** \brief constructs a SymbolProps for a greek letter with the symbol in unicode-encoding \a letterUnicode and in WinSymbol-encoding letterWinWsymbol */
         static SymbolFullProps GreekLetter_WinSymbol_Unicode_Html(const QString& letterWinSymbol, const QString& letterUnicode, const QString& html);
+        /** \brief constructs a SymbolProps for an upright greek letter with the symbol in unicode-encoding \a letterUnicode and in WinSymbol-encoding letterWinWsymbol */
+        static SymbolFullProps UprightGreekLetter_WinSymbol_Unicode_Html(const QString& letterWinSymbol, const QString& letterUnicode, const QString& html);
+        /** \brief insert GreekLetter_WinSymbol_Unicode_Html() as \a baseInstructionName and UprightGreekLetter_WinSymbol_Unicode_Html and "up"+\a letterWinSymbol into symbols */
+        static void addGreekLetterVariants_WinSymbol_Unicode_Html(const QString& baseInstructionName, const QString& letterWinSymbol, const QString& letterUnicode, const QString& html);
         /** \brief constructs a SymbolProps for a symbol with encoding in Standard-fonts a */
-        static SymbolFullProps SymbolStd(const QString& symbol, const QString& html=QString());
+        static SymbolFullProps SymbolStd(const QString& symbol, const QString& html);
         /** \brief constructs a SymbolProps for a symbol with encoding in UnicodeFull-fonts a */
-        static SymbolFullProps SymbolUnicode(const QString& symbol, const QString& html=QString());
+        static SymbolFullProps SymbolUnicode(const QString& symbol, const QString& html);
+        /** \brief constructs a SymbolProps for a symbol with encoding in Standard-fonts a */
+        static SymbolFullProps SymbolStd(const QString& symbol, SymbolFlags _flags=AsOutside, double _fontScalingFactor=1.0, double _yShiftFactor=0.0);
+        /** \brief constructs a SymbolProps for a symbol with encoding in UnicodeFull-fonts a */
+        static SymbolFullProps SymbolUnicode(const QString& symbol, SymbolFlags _flags=AsOutside, double _fontScalingFactor=1.0, double _yShiftFactor=0.0);
         /** \brief constructs a SymbolProps for a symbol with encoding in Standard-fonts a */
         static SymbolFullProps UprightSymbolStd(const QString& symbol, const QString& html=QString());
         /** \brief constructs a SymbolProps for a symbol with encoding in UnicodeFull-fonts a */
         static SymbolFullProps UprightSymbolUnicode(const QString& symbol, const QString& html=QString());
         /** \brief constructs a SymbolProps for a math-operator symbol like \c \\pm ... in unicode-full-encoding, i.e. ItalicOff, BoldOff, ExtendWidthInMathmode */
         static SymbolFullProps MathOperatorSymbolUnicode(const QString& unicode);
+
 
         /** \brief symbols that can be generated in any standard-font */
         static QHash<QString, SymbolFullProps> symbols;

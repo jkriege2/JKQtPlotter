@@ -171,7 +171,6 @@ JKQTMathText::JKQTMathText(QObject* parent):
     }
     setFontScript(scriptFont, estimateJKQTMathTextFontEncoding(scriptFont));
     setFontFraktur(fracturFont, estimateJKQTMathTextFontEncoding(fracturFont));
-    setFallbackFontGreek(symbolFont, estimateJKQTMathTextFontEncoding(symbolFont));
     setFallbackFontSymbols(symbolFont, estimateJKQTMathTextFontEncoding(symbolFont));
     //qDebug()<<"set fonts: "<<std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now()-t0).count()/1000.0<<"ms"; t0=std::chrono::high_resolution_clock::now();
     useXITS();
@@ -284,12 +283,10 @@ bool JKQTMathText::useSTIX(bool mathModeOnly) {
     }
     if (!stixs.mathFontName().isEmpty()) {
         setFontMathRoman(stixs.mathFontName(), MTFEUnicode);
-        setFallbackFontGreek(stixs.mathFontName(), MTFEUnicode);
         setFallbackFontSymbols(stixs.mathFontName(), MTFEUnicode);
         res=true;
     } else if (!stixs.fontName().isEmpty()) {
         setFontMathRoman(stixs.fontName(), MTFEUnicode);
-        setFallbackFontGreek(stixs.fontName(), MTFEUnicode);
         setFallbackFontSymbols(stixs.fontName(), MTFEUnicode);
         res=true;
     }
@@ -305,13 +302,11 @@ bool JKQTMathText::useXITS(bool mathModeOnly)
 
     if (!mathModeOnly && !xits.fontName().isEmpty()) {
         setFontRoman(xits.fontName(), MTFEUnicode);
-        setFallbackFontGreek(xits.fontName(), MTFEUnicode);
         setFallbackFontSymbols(xits.fontName(), MTFEUnicode);
         res=true;
     }
     if (!xits.mathFontName().isEmpty()) {
         setFontMathRoman(xits.mathFontName(), MTFEUnicode);
-        setFallbackFontGreek(xits.mathFontName(), MTFEUnicode);
         setFallbackFontSymbols(xits.mathFontName(), MTFEUnicode);
         res=true;
     }
@@ -327,13 +322,11 @@ bool JKQTMathText::useASANA(bool mathModeOnly)
 
     if (!mathModeOnly && !asana.fontName().isEmpty()) {
         setFontRoman(asana.fontName(), MTFEUnicode);
-        setFallbackFontGreek(asana.fontName(), MTFEUnicode);
         setFallbackFontSymbols(asana.fontName(), MTFEUnicode);
         res=true;
     }
     if (!asana.mathFontName().isEmpty()) {
         setFontMathRoman(asana.mathFontName(), MTFEUnicode);
-        setFallbackFontGreek(asana.mathFontName(), MTFEUnicode);
         setFallbackFontSymbols(asana.mathFontName(), MTFEUnicode);
         res=true;
     }
@@ -573,13 +566,6 @@ JKQTMathTextFontEncoding JKQTMathText::getFontEncodingFraktur() const
     return fontDefinitions[MTEfraktur].fontEncoding;
 }
 
-void JKQTMathText::setFallbackFontGreek(const QString &fontName, JKQTMathTextFontEncoding encoding)
-{
-    auto f=getReplacementFont(fontName, fontName, encoding);
-    fontDefinitions[MTEFallbackGreek].fontName = f.first;
-    fontDefinitions[MTEFallbackGreek].fontEncoding = f.second;
-}
-
 void JKQTMathText::setFallbackFontSymbols(const QString &fontName, JKQTMathTextFontEncoding encoding)
 {
     auto f=getReplacementFont(fontName, fontName, encoding);
@@ -588,20 +574,11 @@ void JKQTMathText::setFallbackFontSymbols(const QString &fontName, JKQTMathTextF
 }
 
 
-QString JKQTMathText::getFallbackFontGreek() const
-{
-    return fontDefinitions[MTEFallbackGreek].fontName;
-}
-
 QString JKQTMathText::getFallbackFontSymbols() const
 {
     return fontDefinitions[MTEFallbackSymbols].fontName;
 }
 
-JKQTMathTextFontEncoding JKQTMathText::getFontEncodingFallbackFontGreek() const
-{
-    return fontDefinitions[MTEFallbackGreek].fontEncoding;
-}
 
 JKQTMathTextFontEncoding JKQTMathText::getFontEncodingFallbackFontSymbols() const
 {
@@ -1170,7 +1147,7 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
             getNew=addWhite;
             if (parsingMathEnvironment) {
                 if (mathEnvironmentSpecialText.contains(text.trimmed()) && JKQTMathTextSymbolNode::hasSymbol(text.trimmed())) {
-                    nl->addChild(new JKQTMathTextSymbolNode(this, text.trimmed(), addWhite));
+                    nl->addChild(new JKQTMathTextSymbolNode(this, text.trimmed()));
                 } else {
                     nl->addChild(new JKQTMathTextTextNode(this, text, addWhite, parsingMathEnvironment));
                 }
@@ -1183,7 +1160,7 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
             if (JKQTMathTextWhitespaceNode::supportsInstructionName(currentInstructionName)) {
                 nl->addChild(new JKQTMathTextWhitespaceNode(currentInstructionName, this));
             } else if (JKQTMathTextSymbolNode::hasSymbol(currentInstructionName)) {
-                nl->addChild(new JKQTMathTextSymbolNode(this, currentInstructionName, false));
+                nl->addChild(new JKQTMathTextSymbolNode(this, currentInstructionName));
             } else {
                 getToken(); // look at next token
                 if (currentToken==MTTopenbrace) {
@@ -1484,7 +1461,7 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
                     } else if (JKQTMathTextWhitespaceNode::supportsInstructionName(currentInstructionName)) {
                         nl->addChild(new JKQTMathTextWhitespaceNode(currentInstructionName, this));
                     } else if (JKQTMathTextSymbolNode::hasSymbol(currentInstructionName)) {
-                        nl->addChild(new JKQTMathTextSymbolNode(this, currentInstructionName, false));
+                        nl->addChild(new JKQTMathTextSymbolNode(this, currentInstructionName));
                         static QSet<QString> subsupOperations= (QSet<QString>()<<"sum"<<"prod"<<"coprod"
                                                                                <<"bigcap"<<"bigcup"<<"bigvee"<<"bighat"
                                                                                <<"int"<<"iint"<<"iiint"<<"oint"<<"oiint"<<"oiiint"
@@ -1522,7 +1499,7 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
                     child=new JKQTMathTextWhitespaceNode(name, this);
                 } else if (JKQTMathTextSymbolNode::hasSymbol(name)) {
                     getNew=false;
-                    child=new JKQTMathTextSymbolNode(this, name, false);
+                    child=new JKQTMathTextSymbolNode(this, name);
                 } else {
                     error_list.append(tr("error @ ch. %1: unknown instruction \\%2").arg(currentTokenID).arg(name));
                 }
@@ -1551,7 +1528,7 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
                     nl->addChild(new JKQTMathTextWhitespaceNode(currentInstructionName, this));
                 } else if (JKQTMathTextSymbolNode::hasSymbol(currentInstructionName)){
                     getNew=true;
-                    child=new JKQTMathTextSymbolNode(this, currentInstructionName, false);
+                    child=new JKQTMathTextSymbolNode(this, currentInstructionName);
                 } else {
                     getToken(); // look at next token
                     if (currentToken==MTTopenbrace) {

@@ -194,7 +194,7 @@ double JKQTMathTextFracNode::draw(QPainter& painter, double x, double y, JKQTMat
 
     const double xheight=fm.xHeight();
     const double xwidth=JKQTMathTextGetTightBoundingRect(f, "x", painter.device()).width();
-    const double linewideth=qMax(0.0,ceil(currentEv.fontSize/16.0));//fm.lineWidth();
+    const double linewideth=fm.lineWidth();
     const double Mheight=JKQTMathTextGetTightBoundingRect(f, "M", painter.device()).height();//fm.ascent();
     const double qheight=JKQTMathTextGetTightBoundingRect(f, "q", painter.device()).height();//fm.ascent();
     const double braceheight=fm.xHeight()*parentMathText->getUnderbraceBraceSizeXFactor();
@@ -238,7 +238,7 @@ double JKQTMathTextFracNode::draw(QPainter& painter, double x, double y, JKQTMat
     painter.setPen(p);
     if (mode==JKQTMathTextFracNode::MTFMfrac || mode==JKQTMathTextFracNode::MTFMdfrac || mode==JKQTMathTextFracNode::MTFMtfrac) {
         deltaWidth=xwidth/2.0;
-        const QLineF l(x+p.widthF(), yline, x+maxWidth+deltaWidth-p.widthF(), yline);
+        const QLineF l(x+p.widthF()*2.0, yline, x+maxWidth+deltaWidth-p.widthF()*2.0, yline);
         if (l.length()>0) painter.drawLine(l);
         child1->draw(painter, x+deltaWidth/2.0+(maxWidth-width1)/2.0, yline-xheight*(parentMathText->getFracShiftFactor())-descent1, ev1);
         child2->draw(painter, x+deltaWidth/2.0+(maxWidth-width2)/2.0, yline+xheight*(parentMathText->getFracShiftFactor())+ascent2, ev2);

@@ -144,13 +144,6 @@
    </item>
    <item row="1" column="0" colspan="2">
     <layout class="QGridLayout" name="gridLayout_2">
-     <item row="2" column="7">
-      <widget class="QLabel" name="label_7">
-       <property name="text">
-        <string>fallback-greek:</string>
-       </property>
-      </widget>
-     </item>
      <item row="0" column="4">
       <widget class="QLabel" name="label_14">
        <property name="text">
@@ -192,25 +185,6 @@
        <property name="text">
         <string>Symbol/Unicode fonts:</string>
        </property>
-      </widget>
-     </item>
-     <item row="2" column="9">
-      <widget class="QComboBox" name="cmbEncodingGreek">
-       <item>
-        <property name="text">
-         <string>WinSymbol</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Unicode</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Latin1</string>
-        </property>
-       </item>
       </widget>
      </item>
      <item row="0" column="9">
@@ -519,13 +493,6 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="8">
-      <widget class="QFontComboBox" name="cmbUnicodeGreek">
-       <property name="currentFont">
-        <font/>
-       </property>
-      </widget>
-     </item>
      <item row="3" column="5">
       <widget class="QFontComboBox" name="cmbCaligraphic">
        <property name="currentFont">
@@ -645,32 +612,57 @@
        </item>
        <item>
         <property name="text">
-         <string>Default-Constructed+SetAppFont</string>
+         <string>Default-Constructed+SetAppFontRoman+SetAppFontMath</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Default-Constructed+SetAppFont+XITS</string>
+         <string>Default-Constructed+SetAppFontRoman+SetAppFontMath+XITS</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>useAnyUnicode(&quot;Times New Roman&quot;, &quot;Times New Roman&quot;)</string>
+         <string>useXITS(true)+useAnyUnicode(&quot;Times New Roman&quot;, &quot;Times New Roman&quot;)</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>useAnyUnicode(&quot;Arial&quot;, &quot;Arial&quot;)</string>
+         <string>useXITS(true)+useAnyUnicode(&quot;Arial&quot;, &quot;Arial&quot;)</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>useAnyUnicode(&quot;Courier New&quot;, &quot;Courier New&quot;)</string>
+         <string>useXITS(true)+useAnyUnicode(&quot;Courier New&quot;, &quot;Courier New&quot;)</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>useAnyUnicode(&quot;Comic Sans MS&quot;, &quot;Comic Sans MS&quot;)</string>
+         <string>useXITS(true)+useAnyUnicode(&quot;Comic Sans MS&quot;, &quot;Comic Sans MS&quot;)</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>useAnyUnicodeForTextOnly(&quot;Times New Roman&quot;, &quot;Times New Roman&quot;)+useXITS(true)</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>useAnyUnicodeForTextOnly(&quot;Arial&quot;, &quot;Arial&quot;)+useXITS(true)</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>useAnyUnicodeForTextOnly(&quot;Courier New&quot;, &quot;Courier New&quot;)+useXITS(true)</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>useAnyUnicodeForTextOnly(&quot;Comic Sans MS&quot;, &quot;Comic Sans MS&quot;)+useXITS(true)</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>useXITS(false)</string>
         </property>
        </item>
       </widget>

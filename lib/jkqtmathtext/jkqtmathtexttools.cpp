@@ -490,7 +490,6 @@ QFont JKQTMathTextEnvironment::getFont(JKQTMathText* parent) const {
         case MTEfraktur: f.setFamily(parent->getFontFraktur()); break;
         case MTEmathRoman: f.setFamily(parent->getFontMathRoman()); break;
         case MTEFallbackSymbols: f.setFamily(parent->getFallbackFontSymbols()); break;
-        case MTEFallbackGreek: f.setFamily(parent->getFallbackFontGreek()); break;
         case MTECustomFont: f.setFamily(customFontName); break;
         default:
         case MTEroman: if (insideMath) {

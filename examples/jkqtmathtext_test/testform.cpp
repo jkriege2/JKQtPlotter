@@ -1,6 +1,7 @@
 #include "testform.h"
 #include "ui_testform.h"
 #include <QDebug>
+#include <sstream>
 #include "jkqtmathtext/nodes/jkqtmathtexttextnode.h"
 #include "jkqtmathtext/nodes/jkqtmathtextbracenode.h"
 #include "jkqtmathtext/nodes/jkqtmathtextdecoratednode.h"
@@ -44,6 +45,7 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbTestset->addItem("math: named symbols 6", "times: $\\times$\\ ast: $\\ast$\\ star: $\\star$\\ propto: $\\propto$\\ bullet: $\\bullet$\\ neq: $\\neq$\\ ne: $\\ne$\\ equiv: $\\equiv$\\ approx: $\\approx$\\ otimes: $\\otimes$\\ oplus: $\\oplus$");
     ui->cmbTestset->addItem("math: named symbols 7", "oslash: $\\oslash$\\ cap: $\\cap$\\ land: $\\land$\\ cup: $\\cup$\\ lor: $\\lor$\\ supset: $\\supset$\\ supseteq: $\\supseteq$\\ supsetnot: $\\supsetnot$\\ subset: $\\subset$");
     ui->cmbTestset->addItem("math: named symbols 8", "subseteq: $\\subseteq$\\ in: $\\in$\\ notin: $\\notin$\\ cdot: $\\cdot$\\ wedge: $\\wedge$\\ vee: $\\vee$\\ cong: $\\cong$\\ bot: $\\bot$");
+    ui->cmbTestset->addItem("math: named symbols with special fallback-drawing", "\\infty\\ \\prod\\ \\coprod\\ \\nexists\\ \\sum\\ \\varnothing\\ \\exists\\ \\forall\\ \\neq\\ \\ni\\ \\alpha\\beta\\Omega");
     ui->cmbTestset->addItem("math: symbols", "$\\ll\\gg\\leq\\geq\\leftrightarrow\\leftarrow\\rightarrow\\to\\uparrow\\downarrow\\updownarrow\\Leftrightarrow\\iff\\Leftarrow\\Rightarrow\\Uparrow\\Downarrow\\Updownarrow\\pm\\mp\\nexists\\ni\\notni\\circ\\sim\\emptyset\\odot\\ominus\\subsetnot\\bot\\leftharpoonup\\rightharpoonup\\upharpoonleft\\downharpoonleft\\leftrightharpoon\\rightleftharpoon\\coprod\\leftharpoondown\\rightharpoondown\\upharpoonright\\downharpoonright\\nwarrow\\nearrow\\searrow\\swarrow\\mapsto\\div\\multimap\\maporiginal\\mapimage\\times\\propto\\bullet\\neq\\ne\\equiv\\approx\\otimes\\oplus\\oslash\\cap\\land\\cup\\lor\\supset\\supseteq\\supsetnot\\subset\\subseteq\\in\\notin\\cdot\\wedge\\vee\\cong\\bot$");
     ui->cmbTestset->addItem("math: std dev", "$\\sigma_x=\\sqrt{\\langle (x-\\langle x\\rangle)^2\\rangle}=\\sqrt{\\frac{1}{N-1}\\cdot\\left( \\sum_{i=1}^N{x_i}^2-\\frac{1}{N}\\cdot\\left(\\sum_{i=1}^Nx_i\\right)^2\\right)}$");
     ui->cmbTestset->addItem("math: std dev 2", "$\\sigma_x=\\sqrt{\\langle (x-\\langle x\\rangle)^2\\rangle}=\\sqrt{\\frac{1}{N-1}\\cdot\\left( \\sum_{i=1}^Nx_i^2-\\frac{1}{N}\\cdot\\left(\\sum_{i=1}^Nx_i\\right)^2\\right)}$");
@@ -204,7 +206,7 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbTestset->addItem("math: lim, sum ...", "$\\lim_{x\\to\\infty} f(x) = \\binom{k}{r} + \\frac{a}{b} \\sum_{n=1}^\\infty a_n + \\displaystyle{ \\left\\{ \\frac{1}{13} \\sum_{n=1}^\\infty b_n \\right\\} }.$");
     ui->cmbTestset->addItem("math: array test", "$f(x) := \\left\\{\\begin{array} x^2 \\sin \\frac{1}{x} & \\textrm{if } x \\ne 0, \\\\ 0 & \\textrm{if } x = 0 . \\end{array}\\right.$");
     ui->cmbTestset->addItem("math: Schwinger-Dyson", "$\\left\\langle\\psi\\left|\\mathcal{T}\\{F \\phi^j\\}\\right|\\psi\\right\\rangle=\\left\\langle\\psi\\left|\\mathcal{T}\\{iF_{,i}D^{ij}-FS_{int,i}D^{ij}\\}\\right|\\psi\\right\\rangle.$");
-    ui->cmbTestset->addItem(QLatin1String("math: Schrödinger's equation"), "$\\left[-\\frac{\\hbar^2}{2m}\\frac{\\partial^2}{\\partial x^2}+V\\right]\\Psi(x)=\\mathrm{i}\\hbar\\frac{\\partial}{\\partial t}\\Psi(x)$");
+    ui->cmbTestset->addItem(QString(QString("math: Schr")+QChar(0xF6)+"dinger's equation"), QString("Schr")+QChar(0xF6)+"dinger's equation: $\\left[-\\frac{\\hbar^2}{2m}\\frac{\\partial^2}{\\partial x^2}+V\\right]\\Psi(x)=\\mathrm{i}\\hbar\\frac{\\partial}{\\partial t}\\Psi(x)$");
     ui->cmbTestset->addItem("math: Cauchy-Schwarz inequality", "$\\left( \\sum_{k=1}^n a_k b_k \\right)^2 \\leq \\left( \\sum_{k=1}^n a_k^2 \\right) \\left( \\sum_{k=1}^n b_k^2 \\right)$");
     ui->cmbTestset->addItem("math: Maxwell's equations", "$\\begin{aligned}\\nabla \\times \\vec{\\mathbf{B}} -\\, \\frac{1}{c}\\, \\frac{\\partial\\vec{\\mathbf{E}}}{\\partial t} & = \\frac{4\\pi}{c}\\vec{\\mathbf{j}} \\\\   \\nabla \\cdot \\vec{\\mathbf{E}} & = 4 \\pi \\rho \\\\\\nabla \\times \\vec{\\mathbf{E}}\\, +\\, \\frac{1}{c}\\, \\frac{\\partial\\vec{\\mathbf{B}}}{\\partial t} & = \\vec{\\mathbf{0}} \\\\\\nabla \\cdot \\vec{\\mathbf{B}} & = 0 \\end{aligned}$");
     ui->cmbTestset->addItem("math: Langevin Equation", "$m \\dot{v}(t) = -\\gamma v(t) + F(x,t)+ f(t)$");
@@ -238,8 +240,6 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbEncodingBlackboard->setCurrentIndex(static_cast<int>(mt.getFontEncodingBlackboard()));
     ui->cmbUnicodeSymbol->setCurrentFont(QFont(mt.getFallbackFontSymbols()));
     ui->cmbEncodingSymbol->setCurrentIndex(static_cast<int>(mt.getFontEncodingFallbackFontSymbols()));
-    ui->cmbUnicodeGreek->setCurrentFont(QFont(mt.getFallbackFontGreek()));
-    ui->cmbEncodingGreek->setCurrentIndex(static_cast<int>(mt.getFontEncodingFallbackFontGreek()));
     ui->chkSimulateBlackboard->setChecked(mt.isFontBlackboardSimulated());
 
 
@@ -266,10 +266,8 @@ TestForm::TestForm(QWidget *parent) :
     connect(ui->cmbEncodingSans, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
     connect(ui->cmbEncodingSansMath, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
     connect(ui->cmbUnicodeTypewriter, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
-    connect(ui->cmbUnicodeGreek, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
     connect(ui->cmbUnicodeSerif, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
     connect(ui->cmbUnicodeSerifMath, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
-    connect(ui->cmbEncodingGreek, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
     connect(ui->cmbEncodingSerif, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
     connect(ui->cmbEncodingSerifMath, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
     connect(ui->cmbUnicodeSymbol, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
@@ -321,6 +319,7 @@ double TestForm::draw(QPainter& painter, double X, double YY, JKQTMathText& mt, 
         painter.setPen(p);
         painter.drawLine(X, Y, X+s.width(), Y);
     }
+    qDebug()<<getFonts(mt);
     ht.start();
     p.setStyle(Qt::SolidLine);
     p.setWidth(1);
@@ -365,6 +364,7 @@ double TestForm::drawAligned(QPainter& painter, double X, double YY, JKQTMathTex
     case 8: flags=Qt::AlignRight|Qt::AlignBottom; break;
     }
 
+    qDebug()<<getFonts(mt);
     QPen p=painter.pen();
     p.setColor("darkred");
     p.setStyle(Qt::SolidLine);
@@ -387,7 +387,24 @@ double TestForm::drawAligned(QPainter& painter, double X, double YY, JKQTMathTex
     painter.drawText(X, Y-6, name+":");
     painter.restore();
     qDebug()<<name<<":  width="<<s.width()<<"  height="<<s.height()<<"  ascent="<<mt.getAscent(painter)<<"  descent="<<mt.getDescent(painter);
+    qDebug()<<getFonts(mt);
     return rect.bottom()+40;
+}
+
+QString TestForm::getFonts(const JKQTMathText& mt) const
+{
+    std::ostringstream str;
+    str<<"Roman: "<<mt.getFontRoman().toStdString()<<", "<<JKQTMathTextFontEncoding2String(mt.getFontEncodingRoman()).toStdString()<<"\n";
+    str<<"Math-Roman: "<<mt.getFontMathRoman().toStdString()<<", "<<JKQTMathTextFontEncoding2String(mt.getFontEncodingMathRoman()).toStdString()<<"\n";
+    str<<"Sans: "<<mt.getFontSans().toStdString()<<", "<<JKQTMathTextFontEncoding2String(mt.getFontEncodingSans()).toStdString()<<"\n";
+    str<<"Math-Sans: "<<mt.getFontMathSans().toStdString()<<", "<<JKQTMathTextFontEncoding2String(mt.getFontEncodingMathSans()).toStdString()<<"\n";
+    str<<"FallbackSymbols: "<<mt.getFallbackFontSymbols().toStdString()<<", "<<JKQTMathTextFontEncoding2String(mt.getFontEncodingFallbackFontSymbols()).toStdString()<<"\n";
+    str<<"Fraktur: "<<mt.getFontFraktur().toStdString()<<", "<<JKQTMathTextFontEncoding2String(mt.getFontEncodingFraktur()).toStdString()<<"\n";
+    str<<"Script: "<<mt.getFontScript().toStdString()<<", "<<JKQTMathTextFontEncoding2String(mt.getFontEncodingScript()).toStdString()<<"\n";
+    str<<"Typewriter: "<<mt.getFontTypewriter().toStdString()<<", "<<JKQTMathTextFontEncoding2String(mt.getFontEncodingTypewriter()).toStdString()<<"\n";
+    str<<"Caligraphic: "<<mt.getFontCaligraphic().toStdString()<<", "<<JKQTMathTextFontEncoding2String(mt.getFontEncodingCaligraphic()).toStdString()<<"\n";
+    str<<"Blackboard: "<<mt.getFontBlackboard().toStdString()<<", "<<JKQTMathTextFontEncoding2String(mt.getFontEncodingBlackboard()).toStdString()<<", isSimulated="<<mt.isFontBlackboardSimulated();
+    return str.str().c_str();
 }
 
 QTreeWidgetItem *TestForm::createTree(JKQTMathTextNode *node, QTreeWidgetItem* parent)
@@ -454,12 +471,11 @@ QTreeWidgetItem *TestForm::createTree(JKQTMathTextNode *node, QTreeWidgetItem* p
             ti->addChild(createTree(list[i], ti));
         }
     } else if (symN)  {
-        name=QString("MTSymbolNode: \'%1\' (addWhite: %2, subsuper=%3)").arg(symN->getSymbolName()).arg(symN->getAddWhitespace()).arg(symN->isSubSuperscriptAboveBelowNode());
+        name=QString("MTSymbolNode: \'%1\' (subsuper=%3)").arg(symN->getSymbolName()).arg(symN->isSubSuperscriptAboveBelowNode());
     } else if (spN)  {
         name=QString("MTWhitespaceNode :type=%1, count=%2").arg(spN->Type2String(spN->getWhitespaceType())).arg(spN->getWhitespaceCount());
     } else if (txtN)  {
         name=QString("MTTextNode: \'%1\'").arg(txtN->getText());
-
     } else {
         name=QString("unknown");
     }
@@ -522,6 +538,7 @@ void TestForm::updateMath()
     ht.start();
 
 
+    mt.setFallbackFontSymbols(ui->cmbUnicodeSymbol->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingSymbol->currentIndex()));
     if (ui->cmbFont->currentIndex()<=3) {
         mt.setFontRoman(ui->cmbUnicodeSerif->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingSerif->currentIndex()));
         mt.setFontSans(ui->cmbUnicodeSans->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingSans->currentIndex()));
@@ -533,17 +550,35 @@ void TestForm::updateMath()
         mt.setFontFraktur(ui->cmbUnicodeFraktur->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingFraktur->currentIndex()));
         mt.setFontBlackboard(ui->cmbUnicodeBlackboard->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingBlackboard->currentIndex()));
         mt.setFallbackFontSymbols(ui->cmbUnicodeSymbol->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingSymbol->currentIndex()));
-        mt.setFallbackFontGreek(ui->cmbUnicodeGreek->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingGreek->currentIndex()));
     } else if (ui->cmbFont->currentIndex()==5 || ui->cmbFont->currentIndex()==6) {
         mt.setFontRoman(QGuiApplication::font().family());
+        mt.setFontMathRoman(QGuiApplication::font().family());
     } else if (ui->cmbFont->currentIndex()==7) {
+        mt.useXITS();
         mt.useAnyUnicode("Times New Roman", "Times New Roman");
     } else if (ui->cmbFont->currentIndex()==8) {
+        mt.useXITS();
         mt.useAnyUnicode("Arial", "Arial");
     } else if (ui->cmbFont->currentIndex()==9) {
+        mt.useXITS();
         mt.useAnyUnicode("Courier New", "Courier New");
     } else if (ui->cmbFont->currentIndex()==10) {
+        mt.useXITS();
         mt.useAnyUnicode("Comic Sans MS", "Comic Sans MS");
+    } else if (ui->cmbFont->currentIndex()==11) {
+        mt.useAnyUnicodeForTextOnly("Times New Roman", "Times New Roman");
+        mt.useXITS();
+    } else if (ui->cmbFont->currentIndex()==12) {
+        mt.useAnyUnicodeForTextOnly("Arial", "Arial");
+        mt.useXITS();
+    } else if (ui->cmbFont->currentIndex()==13) {
+        mt.useAnyUnicodeForTextOnly("Courier New", "Courier New");
+        mt.useXITS();
+    } else if (ui->cmbFont->currentIndex()==14) {
+        mt.useAnyUnicodeForTextOnly("Comic Sans MS", "Comic Sans MS");
+        mt.useXITS();
+    } else if (ui->cmbFont->currentIndex()==15) {
+        mt.useXITS(false);
     }
 
     mt.setFontBlackboardSimulated(ui->chkSimulateBlackboard->isChecked());
@@ -583,9 +618,9 @@ void TestForm::updateMath()
         if (i==0) {
             ui->labError->clear();
             if (mt.getErrorList().size()>0) {
-                ui->labError->setHtml("<span color=\"red\">"+mt.getErrorList().join("<br>")+"</span>");
+                ui->labError->setHtml(QString("<span color=\"red\">"+mt.getErrorList().join("<br>")+"</span><br><br><b>Fonts:</b><br><i>%1</i>").arg(getFonts(mt).replace("\n", "<br>")));
             } else {
-                ui->labError->setHtml("<span color=\"green\">OK</span>");
+                ui->labError->setHtml(QString("<span color=\"green\">OK</span><br><br><b>Fonts:</b><br><i>%1</i>").arg(getFonts(mt).replace("\n", "<br>")));
             }
         }
 
