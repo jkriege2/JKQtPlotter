@@ -204,6 +204,7 @@ JKQTMathTextNode *JKQTMathTextSqrtNode::replaceChild(int i, JKQTMathTextNode *ne
         if (childDegree) childDegree->setParentNode(this);
         return c;
     }
+    return nullptr;
 }
 
 int JKQTMathTextSqrtNode::childCount() const
