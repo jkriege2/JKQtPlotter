@@ -818,6 +818,8 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
 
         /** \brief used by the tokenizer. type of the current token */
         tokenType currentToken;
+        /** \brief the JKQTMathTextBraceType associated with the last \c \\right command the parser encountered */
+        JKQTMathTextBraceType lastRightBraceType;
         /** \brief used by the tokenizer. Name of the current token, id applicable */
         QString currentTokenName;
         /** \brief used by the tokenizer. Points to the currently read character in parseString */

@@ -68,6 +68,15 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextDecoratedNode: public JKQTMathTextSing
         /** \brief convert a DecorationType into a string
          */
         static QString DecorationType2String(DecorationType mode);
+        /** \brief returns the FracType corresponding to \a instructionName
+         *  \see JKQTMathTextFracNode::FracType
+         */
+        static DecorationType InstructionName2DecorationType(const QString& mode);
+
+        /** \brief returns true, if the given \a instructionName can be converted to a FracType
+         *  \see JKQTMathTextFracNode::FracType
+         */
+        static bool supportsInstructionName(const QString& instructionName);
 
         JKQTMathTextDecoratedNode(JKQTMathText* parent, DecorationType decoration, JKQTMathTextNode* child);
         virtual ~JKQTMathTextDecoratedNode() override;
@@ -84,6 +93,10 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextDecoratedNode: public JKQTMathTextSing
         virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
         /** \brief type of decoration that is added to the child node */
         DecorationType decoration;
+        /** \brief lists all supported instructions */
+        static QHash<QString, DecorationType> instructions;
+        /** \biref fills instructions */
+        static void fillInstructions();
 };
 #endif // JKQTMATHTEXTDECORATEDNODE_H
 

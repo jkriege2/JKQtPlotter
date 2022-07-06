@@ -67,6 +67,16 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextFracNode: public JKQTMathTextDualChild
          */
         static QString FracType2String(FracType mode);
 
+        /** \brief returns the FracType corresponding to \a instructionName
+         *  \see JKQTMathTextFracNode::FracType
+         */
+        static FracType InstructionName2FracType(const QString& mode);
+
+        /** \brief returns true, if the given \a instructionName can be converted to a FracType
+         *  \see JKQTMathTextFracNode::FracType
+         */
+        static bool supportsInstructionName(const QString& instructionName);
+
 
         JKQTMathTextFracNode(JKQTMathText* parent, JKQTMathTextNode* child_top, JKQTMathTextNode* child_bottom, JKQTMathTextFracNode::FracType mode);
         virtual ~JKQTMathTextFracNode() override;
@@ -79,6 +89,10 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextFracNode: public JKQTMathTextDualChild
         /** \copydoc mode */ 
         JKQTMathTextFracNode::FracType getMode() const;
     protected:
+        /** \brief lists all supported instructions */
+        static QHash<QString, FracType> instructions;
+        /** \biref fills instructions */
+        static void fillInstructions();
         /** \copydoc JKQTMathTextNode::getSizeInternal() */
         virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
         /** \brief actual display type of fraction object */

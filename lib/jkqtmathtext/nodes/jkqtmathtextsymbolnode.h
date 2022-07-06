@@ -83,6 +83,8 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSymbolNode: public JKQTMathTextNode {
         void getSymbolSize(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, double& subSuperXCorrection, double& subBesidesXCorrection, const JKQTMathTextNodeSize* prevNodeSize=nullptr);
         /** \brief checks whether the given symbol name can be prepresented by this type of node */
         static bool hasSymbol(const QString& symbolName);
+        /** \brief checks whether the given symbol name can be prepresented by this type of node */
+        static bool isSubSuperscriptBelowAboveSymbol(const QString& symbolName);
     protected:
         /** \copydoc JKQTMathTextNode::getSizeInternal() */
         virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
@@ -126,8 +128,10 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSymbolNode: public JKQTMathTextNode {
         enum GlobalSymbolFlags: uint64_t {
             NoGLobalSymbolFlags= 0,        /*!< \brief indicates that no properties are activated */
             ExtendWidthInMathmode= 1 << 0, /*!< \brief this symbol has an extended width, when used within a moth-environment/in math-mode */
-            MakeWhitespaceHalf= 1 << 1,    /*!< \brief symbol uses whitespaces in its text (SymbolProps::symbol). These should be typeset as half-spaces */
-            IntLikeSymbolCorrection= 1 << 2, /*!< \brief symbols, like \c \\int,\\iint,... require a correction in x-direction for subsequent sub-/superscripts ... this flag marks such symbols */
+            SmallExtendWidthInMathmode= 1 << 1, /*!< \brief like ExtendWidthInMathmode but adds a smaller whitespace */
+            MakeWhitespaceHalf= 1 << 2,    /*!< \brief symbol uses whitespaces in its text (SymbolProps::symbol). These should be typeset as half-spaces */
+            IntLikeSymbolCorrection= 1 << 3, /*!< \brief symbols, like \c \\int,\\iint,... require a correction in x-direction for subsequent sub-/superscripts ... this flag marks such symbols */
+            SubSuperscriptBelowAboveSymbol= 1 << 4, /*!< \brief symbols, like \c \\int,\\iint,... if appearing in math-mode cause typesetting following sub-/superscripts below/above the symbol, not besides it. */
         };
 
         friend inline GlobalSymbolFlags operator~ (GlobalSymbolFlags a) { return (GlobalSymbolFlags)~static_cast<uint64_t>(a); }
@@ -271,6 +275,8 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSymbolNode: public JKQTMathTextNode {
         static SymbolFullProps UprightSymbolUnicode(const QString& symbol, const QString& html=QString());
         /** \brief constructs a SymbolProps for a math-operator symbol like \c \\pm ... in unicode-full-encoding, i.e. ItalicOff, BoldOff, ExtendWidthInMathmode */
         static SymbolFullProps MathOperatorSymbolUnicode(const QString& unicode);
+        /** \brief constructs a SymbolProps for a math-operator symbol like \c \\pm ... in unicode-full-encoding, i.e. ItalicOff, BoldOff, SmallExtendWidthInMathmode */
+        static SymbolFullProps NarrowMathOperatorSymbolUnicode(const QString& unicode);
 
 
         /** \brief symbols that can be generated in any standard-font */

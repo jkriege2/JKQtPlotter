@@ -86,6 +86,18 @@ QString JKQTMathTextDecoratedNode::DecorationType2String(JKQTMathTextDecoratedNo
     return "unknown";
 }
 
+JKQTMathTextDecoratedNode::DecorationType JKQTMathTextDecoratedNode::InstructionName2DecorationType(const QString &mode)
+{
+    fillInstructions();
+    return instructions[mode];
+}
+
+bool JKQTMathTextDecoratedNode::supportsInstructionName(const QString &instructionName)
+{
+    fillInstructions();
+    return instructions.contains(instructionName);
+}
+
 
 
 JKQTMathTextDecoratedNode::JKQTMathTextDecoratedNode(JKQTMathText* _parent, DecorationType decoration, JKQTMathTextNode* child):
@@ -130,6 +142,50 @@ void JKQTMathTextDecoratedNode::getSizeInternal(QPainter& painter, JKQTMathTextE
     baselineHeight=ascent;
     strikeoutPos=cstrikeoutPos;
     width=std::max<double>(deco_miniwidth,cwidth);
+}
+
+QHash<QString, JKQTMathTextDecoratedNode::DecorationType> JKQTMathTextDecoratedNode::instructions;
+
+void JKQTMathTextDecoratedNode::fillInstructions()
+{
+    if (instructions.size()>0) return;
+
+    instructions["vec"]=MTDvec;
+    instructions["overline"]=MTDoverline;
+    instructions["oline"]=MTDoverline;
+    instructions["ol"]=MTDoverline;
+    instructions["underline"]=MTDunderline;
+    instructions["uline"]=MTDunderline;
+    instructions["ul"]=MTDunderline;
+    instructions["uuline"]=MTDdoubleunderline;
+    instructions["uul"]=MTDdoubleunderline;
+    instructions["ooline"]=MTDdoubleoverline;
+    instructions["ool"]=MTDdoubleoverline;
+    instructions["arrow"]=MTDarrow;
+    instructions["overrightarrow"]=MTDarrow;
+    instructions["overarrow"]=MTDarrow;
+    instructions["hat"]=MTDhat;
+    instructions["^"]=MTDhat;
+    instructions["widehat"]=MTDwidehat;
+    instructions["check"]=MTDcheck;
+    instructions["v"]=MTDcheck;
+    instructions["widecheck"]=MTDwidecheck;
+    instructions["bar"]=MTDbar;
+    instructions["dot"]=MTDdot;
+    instructions["."]=MTDdot;
+    instructions["ocirc"]=MTDocirc;
+    instructions["tilde"]=MTDtilde;
+    instructions["~"]=MTDtilde;
+    instructions["breve"]=MTDbreve;
+    instructions["u"]=MTDbreve;
+    instructions["widetilde"]=MTDwidetilde;
+    instructions["ddot"]=MTDddot;
+    instructions["cancel"]=MTDcancel;
+    instructions["xcancel"]=MTDxcancel;
+    instructions["bcancel"]=MTDbcancel;
+    instructions["strike"]=MTDstrike;
+    instructions["st"]=MTDstrike;
+    instructions["sout"]=MTDstrike;
 }
 
 double JKQTMathTextDecoratedNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* /*prevNodeSize*/) {

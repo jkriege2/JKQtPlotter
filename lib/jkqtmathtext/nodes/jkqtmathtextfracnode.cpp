@@ -34,6 +34,34 @@
 #include <QFont>
 
 
+QHash<QString, JKQTMathTextFracNode::FracType> JKQTMathTextFracNode::instructions;
+
+
+void JKQTMathTextFracNode::fillInstructions()
+{
+    if (instructions.size()>0) return;
+    instructions["frac"]=MTFMfrac;
+    instructions["dfrac"] = MTFMdfrac;
+    instructions["cfrac"]=MTFMdfrac;
+    instructions["sfrac"] = MTFMsfrac;
+    instructions["slantfrac"] = MTFMsfrac;
+    instructions["xfrac"]=MTFMsfrac;
+    instructions["stfrac"] = MTFMstfrac;
+    instructions["nicefrac"] = MTFMstfrac;
+    instructions["slanttextfrac"] = MTFMstfrac;
+    instructions["xtfrac"]=MTFMstfrac;
+    instructions["tfrac"]=MTFMtfrac;
+    instructions["stackrel"]=MTFMstackrel;
+    instructions["underbrace"]=MTFMunderbrace;
+    instructions["underbracket"]=MTFMunderbracket;
+    instructions["underset"]=MTFMunderset;
+    instructions["overbrace"]=MTFMoverbrace;
+    instructions["overbracket"]=MTFMoverbracket;
+    instructions["overset"]=MTFMoverset;
+}
+
+
+
 
 
 QString JKQTMathTextFracNode::FracType2String(JKQTMathTextFracNode::FracType mode)
@@ -65,6 +93,18 @@ QString JKQTMathTextFracNode::FracType2String(JKQTMathTextFracNode::FracType mod
             return "stackrel";
     }
     return "unknown";
+}
+
+JKQTMathTextFracNode::FracType JKQTMathTextFracNode::InstructionName2FracType(const QString &mode)
+{
+    fillInstructions();
+    return instructions.value(mode, MTFMfrac);
+}
+
+bool JKQTMathTextFracNode::supportsInstructionName(const QString &instructionName)
+{
+    fillInstructions();
+    return instructions.contains(instructionName);
 }
 
 
@@ -342,6 +382,3 @@ bool JKQTMathTextFracNode::toHtml(QString &/*html*/, JKQTMathTextEnvironment /*c
 JKQTMathTextFracNode::FracType JKQTMathTextFracNode::getMode() const {
     return this->mode;
 }
-
-
-
