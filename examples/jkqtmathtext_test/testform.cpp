@@ -46,6 +46,7 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbTestset->addItem("math: named symbols 7", "oslash: $\\oslash$\\ cap: $\\cap$\\ land: $\\land$\\ cup: $\\cup$\\ lor: $\\lor$\\ supset: $\\supset$\\ supseteq: $\\supseteq$\\ supsetnot: $\\supsetnot$\\ subset: $\\subset$");
     ui->cmbTestset->addItem("math: named symbols 8", "subseteq: $\\subseteq$\\ in: $\\in$\\ notin: $\\notin$\\ cdot: $\\cdot$\\ wedge: $\\wedge$\\ vee: $\\vee$\\ cong: $\\cong$\\ bot: $\\bot$");
     ui->cmbTestset->addItem("math: named symbols with special fallback-drawing", "\\infty\\ \\prod\\ \\coprod\\ \\nexists\\ \\sum\\ \\varnothing\\ \\exists\\ \\forall\\ \\neq\\ \\ni\\ \\alpha\\beta\\Omega");
+    ui->cmbTestset->addItem("text: named symbols from custom fonts", "\\HandRight\\HandLeft");
     ui->cmbTestset->addItem("math: symbols", "$\\ll\\gg\\leq\\geq\\leftrightarrow\\leftarrow\\rightarrow\\to\\uparrow\\downarrow\\updownarrow\\Leftrightarrow\\iff\\Leftarrow\\Rightarrow\\Uparrow\\Downarrow\\Updownarrow\\pm\\mp\\nexists\\ni\\notni\\circ\\sim\\emptyset\\odot\\ominus\\subsetnot\\bot\\leftharpoonup\\rightharpoonup\\upharpoonleft\\downharpoonleft\\leftrightharpoon\\rightleftharpoon\\coprod\\leftharpoondown\\rightharpoondown\\upharpoonright\\downharpoonright\\nwarrow\\nearrow\\searrow\\swarrow\\mapsto\\div\\multimap\\maporiginal\\mapimage\\times\\propto\\bullet\\neq\\ne\\equiv\\approx\\otimes\\oplus\\oslash\\cap\\land\\cup\\lor\\supset\\supseteq\\supsetnot\\subset\\subseteq\\in\\notin\\cdot\\wedge\\vee\\cong\\bot$");
     ui->cmbTestset->addItem("math: std dev", "$\\sigma_x=\\sqrt{\\langle (x-\\langle x\\rangle)^2\\rangle}=\\sqrt{\\frac{1}{N-1}\\cdot\\left( \\sum_{i=1}^N{x_i}^2-\\frac{1}{N}\\cdot\\left(\\sum_{i=1}^Nx_i\\right)^2\\right)}$");
     ui->cmbTestset->addItem("math: std dev 2", "$\\sigma_x=\\sqrt{\\langle (x-\\langle x\\rangle)^2\\rangle}=\\sqrt{\\frac{1}{N-1}\\cdot\\left( \\sum_{i=1}^Nx_i^2-\\frac{1}{N}\\cdot\\left(\\sum_{i=1}^Nx_i\\right)^2\\right)}$");
@@ -69,6 +70,8 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbTestset->addItem("math: arrowtest 2", "$\\nwarrow \\nearrow \\searrow \\swarrow \\mapsto \\leftharpoonup \\rightharpoonup \\upharpoonleft \\downharpoonleft \\leftrightharpoon \\rightleftharpoon \\leftharpoondown \\rightharpoondown \\upharpoonright \\downharpoonright $");
     ui->cmbTestset->addItem("math-font: greek letters", "$\\alpha\\beta\\gamma\\delta\\epsilon\\varepsilon\\zeta\\eta\\theta\\vartheta\\iota\\kappa\\lambda\\mu\\nu\\xi\\pi\\varpi\\rho\\varrho\\sigma\\varsigma\\tau\\upsilon\\phi\\varphi\\chi\\psi\\omega\\Omega\\Gamma\\Delta\\Theta\\Lambda\\Xi\\Pi\\Sigma\\Upsilon\\Phi\\Psi$");
     ui->cmbTestset->addItem("text-font: greek letters", "\\alpha\\beta\\gamma\\delta\\epsilon\\varepsilon\\zeta\\eta\\theta\\vartheta\\iota\\kappa\\lambda\\mu\\nu\\xi\\pi\\varpi\\rho\\varrho\\sigma\\varsigma\\tau\\upsilon\\phi\\varphi\\chi\\psi\\omega\\Omega\\Gamma\\Delta\\Theta\\Lambda\\Xi\\Pi\\Sigma\\Upsilon\\Phi\\Psi");
+    ui->cmbTestset->addItem("math-font: upgreek letters", "$\\upalpha\\upbeta\\upgamma\\updelta\\upepsilon\\upvarepsilon\\upzeta\\upeta\\uptheta\\upvartheta\\upiota\\upkappa\\uplambda\\upmu\\upnu\\upxi\\uppi\\upvarpi\\uprho\\upvarrho\\upsigma\\upvarsigma\\uptau\\upupsilon\\upphi\\upvarphi\\upchi\\uppsi\\upomega\\upOmega\\upGamma\\upDelta\\upTheta\\upLambda\\upXi\\upPi\\upSigma\\upUpsilon\\upPhi\\upPsi$");
+    ui->cmbTestset->addItem("text-font: upgreek letters", "\\upalpha\\upbeta\\upgamma\\updelta\\upepsilon\\upvarepsilon\\upzeta\\upeta\\uptheta\\upvartheta\\upiota\\upkappa\\uplambda\\upmu\\upnu\\upxi\\uppi\\upvarpi\\uprho\\upvarrho\\upsigma\\upvarsigma\\uptau\\upupsilon\\upphi\\upvarphi\\upchi\\uppsi\\upomega\\upOmega\\upGamma\\upDelta\\upTheta\\upLambda\\upXi\\upPi\\upSigma\\upUpsilon\\upPhi\\upPsi");
     ui->cmbTestset->addItem("math-font: blackboard", "$\\mathbb{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}$");
     ui->cmbTestset->addItem("math-font: bf", "$\\mathbf{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}$");
     ui->cmbTestset->addItem("math-font: it", "$\\mathit{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}$");
@@ -290,7 +293,7 @@ TestForm::~TestForm()
     delete ui;
 }
 
-#define W 3000
+#define W 4000
 #define H 2000
 #define X1 15
 #define Y1 50

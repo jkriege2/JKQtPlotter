@@ -436,6 +436,13 @@ void JKQTMathTextSymbolNode::fillSymbolTables()
     symbols["|"]=SimpleUprightTextSymbol("||", "&Vert;").addUprightUnicode(QChar(0x2016));
     symbols["}"]=SimpleUprightTextSymbol("}");
     symbols["AC"]=UprightSymbolUnicode(QChar(0x223F)).addUprightHtml("&acd;").addUprightStd("~");
+    symbols["aa"]=SimpleTextSymbol(QChar(0xE5));
+    symbols["ae"]=SimpleTextSymbol(QChar(0xE6));
+    symbols["AE"]=SimpleTextSymbol(QChar(0xC6));
+    symbols["AA"]=SimpleTextSymbol(QChar(0xC5));
+    symbols["oe"]=SymbolUnicode(QChar(0x153)).addStd("oe").addHtml("&oelig;");
+    symbols["OE"]=SymbolUnicode(QChar(0x152)).addStd("OE").addHtml("&OElig;");
+    symbols["ss"]=SimpleTextSymbol(QChar(0xDF)).addHtml("&szlig;");
     { auto s=UprightSymbolUnicode(QChar(0x212B)).addUprightStd(QChar(0xC5));
       symbols["Angstrom"]=s; symbols["Angstroem"]=s; }
     { auto s=SymbolUnicode(QChar(0x2136)).addHtml("&beth;");
@@ -468,12 +475,15 @@ void JKQTMathTextSymbolNode::fillSymbolTables()
     { auto s=SymbolUnicode(QChar(0x2103)).addUprightStd("°C").addUprightHtml("&deg;C");
         symbols["celsius"]=s; symbols["degC"]=s; }
     symbols["cent"]=SimpleTextSymbol(QChar(0xA2), "&cent;");
+    symbols["checkmark"]=UprightSymbolStd(QChar(0x2713)).addUprightHtml("&check;");
     symbols["circ"]=UprightSymbolStd(QChar(0x2218)).addUprightHtml("&SmallCircle;").addStd("o", ItalicOff,0.7, -0.25);
     symbols["co"]=UprightSymbolUnicode(QChar(0x2105));
     { auto s=SimpleTextSymbol(QChar(0xA5), "&copy;");
         symbols["copyright"]=s; symbols["textcopyright"]=s; }
-    symbols["dagger"]=UprightSymbolUnicode(QChar(0x2020)).addUprightHtml("&dagger;");
-    symbols["ddagger"]=UprightSymbolUnicode(QChar(0x2021)).addUprightHtml("&ddagger;");
+    { auto s=UprightSymbolUnicode(QChar(0x2020)).addUprightHtml("&dagger;");
+        symbols["dagger"]=s; symbols["dag"]=s; symbols["textdagger"]=s; }
+    { auto s=UprightSymbolUnicode(QChar(0x2021)).addUprightHtml("&ddagger;");
+        symbols["ddagger"]=s; symbols["ddag"]=s; symbols["textdaggerdbl"]=s; }
     { auto s=SymbolUnicode(QChar(0x2138)).addHtml("&daleth;");
         symbols["dalet"]=s; symbols["Dalet"]=s; symbols["daleth"]=s; symbols["Daleth"]=s; }
     symbols["dd"] = SymbolFullProps(SymbolProps("d", Upright|BoldOff), "d", Upright|BoldOff);
@@ -777,6 +787,21 @@ void JKQTMathTextSymbolNode::fillSymbolTables()
     addGreekLetterVariants_WinSymbol_Unicode_Html("Psi", "Y", QChar(0x3A8),"&Psi;");
 
 
+    /**************************************************************************************
+     * SYMBOLS from special fonts
+     **************************************************************************************/
+#if (QT_VERSION<QT_VERSION_CHECK(6, 0, 0))
+        QFontDatabase fdb;
+        const auto fonts=fdb.families();
+#else
+        const auto fonts=QFontDatabase::families();
+#endif
+    if (fonts.contains("Wingdings")) {
+        { auto s=SymbolFullProps("Wingdings", QChar(0x46));
+        symbols["lefthand"]=s; symbols["HandRight"]=s;}
+        { auto s=SymbolFullProps("Wingdings", QChar(0x45));
+        symbols["righthand"]=s; symbols["HandLeft"]=s;}
+    }
 
 }
 
@@ -1034,14 +1059,27 @@ QPair<QFont, JKQTMathTextSymbolNode::SymbolProps> JKQTMathTextSymbolNode::Symbol
         //qDebug()<<"      ==>2 fontType==MTECurrentFont";
         JKQTMathTextFontEncoding localEnc=currentEnc;
         outProps=getProps(currentEnc, outProps, &localEnc);
-        const QChar ch=outProps.getSymbolSingleChar();
-        if (!ch.isNull() && !currentFM.inFont(ch)) {
-            //qDebug()<<"        ==>2.1 ch="<<ch<<" !ch.isNull() && !currentFM.inFont(ch)";
-            if (!chFallbackSym.isNull() && fallbackSymbolsFM.inFont(chFallbackSym)) {
-                //qDebug()<<"          ==>2.1.1 !chFallbackSym.isNull() && fallbackSymbolsFM.inFont(chFallbackSym)";
-                outProps=props[fallbackSymbolsFontEnc];
-                currentEv.font=MTEFallbackSymbols;
+
+        const QChar chLocal=outProps.getSymbolSingleChar();
+        bool foundConfig=false;
+        if (outProps.symbol.size()>1 ||(!chLocal.isNull() && currentFM.inFont(chLocal))) {
+            foundConfig=true;
+        } else if (localEnc!=MTFEStandard && props.contains(MTFEStandard)) {
+            outProps=props[MTFEStandard];
+            const QChar chStd=outProps.getSymbolSingleChar();
+            if (outProps.symbol.size()>1 || (!chStd.isNull() && currentFM.inFont(chStd))) {
+                foundConfig=true;
             }
+        }
+        if (!foundConfig && !chFallbackSym.isNull() && fallbackSymbolsFM.inFont(chFallbackSym)) {
+            //qDebug()<<"          ==>2.1.1 !chFallbackSym.isNull() && fallbackSymbolsFM.inFont(chFallbackSym)";
+            outProps=props[fallbackSymbolsFontEnc];
+            currentEv.font=MTEFallbackSymbols;
+            foundConfig=true;
+        }
+        if (!foundConfig) {
+            currentEv.font=MTECurrentFont;
+            outProps=getProps(currentEnc, outProps, &localEnc);
         }
     } else {
         //qDebug()<<"      ==>3 else";
