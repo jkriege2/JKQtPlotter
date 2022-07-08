@@ -726,7 +726,7 @@ void JKQTMathTextSymbolNode::fillSymbolTables()
     symbols["searrow"]=UprightSymbolUnicode(QChar(0x2198)).addUprightHtml("&LowerRightArrow;");
     symbols["setminus"]=MathOperatorSymbolUnicode(QChar(0x2216)).addMathOperatorHtml("&smallsetminus;");
     { auto s=MathOperatorSymbolUnicode(QChar(0x223C)).addMathOperatorHtml("&tilde;").addMathOperatorStd("~");
-        symbols["~"]=s; symbols["sim"]=s; symbols["tilde"]=s; }
+        symbols["~"]=s; symbols["sim"]=s; }
     symbols["simeq"]=MathOperatorSymbolUnicode(QChar(0x2243)).addMathOperatorHtml("&TildeEqual;");
     symbols["sqcap"]=MathOperatorSymbolUnicode(QChar(0x2293)).addMathOperatorHtml("&SquareIntersection;");
     symbols["sqcup"]=MathOperatorSymbolUnicode(QChar(0x2294)).addMathOperatorHtml("&SquareUnion;");

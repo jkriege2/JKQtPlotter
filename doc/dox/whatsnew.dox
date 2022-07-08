@@ -42,6 +42,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>IMPROVED: rendering and size calculation of decorations</li>
     <li>IMPROVED/breaking: refactored symbol node JKQTMathTextSymbolNode and changed font-lookup!</li>
     <li>IMPROVED/NEW/breaking: refactored whitespace-processing node JKQTMathTextWhitespaceNode, now all major LaTeX whitespace commands are supported properly</li>
+    <li>IMPROVED/NEW/breaking: refactored LaTeX parser in JKQTMathText</li>
     <li>REMOVED/breaking: \v[a-zA-Z] and shorthand for \vec{a-zA-Z} was removed, implementation of \bbR,\bbC,... changed</li>
     <li>NEW: now supports new decoration instructions: \cancel, \xcancel, \bcancel, \sout, \ocirc, \widetilde, \widehat, \breve</li>
     <li>NEW: reworked drawing of decorations: improved appearance and positioning!</li>
@@ -54,6 +55,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: \limits and \nolimits works as in LaTeX now (before it was simply removed and the functionality implemented for a fixed list of symbols)</li>
     <li>NEW: added top-corner (\ulcorner/\urcorner) and bottom-corner brackets (\llcorner/\lrcorner)</li>
     <li>NEW: added \overbracket and \underbracket</li>
+    <li>NEW: added \shaded{color}{...}</li>
     <li>NEW: added functions to set the font-size in pixels (as alternative to the existing functions that set them in points), implements request <a href="https://github.com/jkriege2/JKQtPlotter/issues/76">#76</a> from <a href="https://github.com/igormironchik">user:igormironchik</a> </li>
   </ul>
 </ul>

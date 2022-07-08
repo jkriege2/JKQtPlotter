@@ -191,7 +191,7 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbTestset->addItem("math: operator test (textmode)", "x=0\\ \\ y>0\\ \\ x+y\\ \\ -1\\ \\ x-2\\ \\ x\\cdot y\\ \\ x\\geq 4\\ \\ x~4");
     ui->cmbTestset->addItem("math: operator test (mathmode)", "$x=0\\ \\ y>0\\ \\ x+y\\ \\ -1\\ \\ x-2\\ \\ x\\cdot y\\ \\ x\\geq 4\\ \\ x~4$");
     ui->cmbTestset->addItem("text: color test", "\\textcolor{red}{RED}\\textcolor{blue}{BLUE}");
-    ui->cmbTestset->addItem("text: boxed test", "test: \\boxed{boxed text} in the middle");
+    ui->cmbTestset->addItem("text: boxed test", "test: {\\backslash}boxed: \\boxed{boxed text} {\\backslash}doublebox: \\doublebox{boxed text} {\\backslash}ovalbox: \\ovalbox{boxed text} {\\backslash}Ovalbox: \\Ovalbox{boxed text} {\\backslash}ovaldoublebox: \\ovaldoublebox{boxed text} {\\backslash}colorbox\\{red\\}: \\colorbox{red}{boxed text} {\\backslash}shaded\\{AliceBlue\\}: \\shaded{AliceBlue}{boxed text} {\\backslash}fcolorbox\\{red\\}\\{AliceBlue\\}: \\fcolorbox{red}{AliceBlue}{boxed text} in the middle");
     ui->cmbTestset->addItem("mathboxed test", "$\\fbox{2^{2^{\\colorbox{red}{2^{x}}}}}$");
     ui->cmbTestset->addItem("axiom of power test", "$\\forall A \\, \\exists P \\, \\forall B \\, [B \\in P \\iff \\forall C \\, (C \\in B \\Rightarrow C \\in A)]$");
     ui->cmbTestset->addItem("math: De Morgan's law", "$\\neg(P\\land Q)\\iff(\\neg P)\\lor(\\neg Q)$ or $\\overline{\\bigcap_{i \\in I} A_{i}}\\equiv\\bigcup_{i \\in I} \\overline{A_{i}}$ or $\\overline{A \\cup B}\\equiv\\overline{A} \\cap \\overline{B}$");
@@ -417,7 +417,8 @@ QTreeWidgetItem *TestForm::createTree(JKQTMathTextNode *node, QTreeWidgetItem* p
     JKQTMathTextWhitespaceNode* spN=dynamic_cast<JKQTMathTextWhitespaceNode*>(node);
     JKQTMathTextSymbolNode* symN=dynamic_cast<JKQTMathTextSymbolNode*>(node);
     JKQTMathTextListNode* lstN=dynamic_cast<JKQTMathTextListNode*>(node);
-    JKQTMathTextInstruction1Node* inst1N=dynamic_cast<JKQTMathTextInstruction1Node*>(node);
+    JKQTMathTextModifiedTextPropsInstructionNode* inst1N=dynamic_cast<JKQTMathTextModifiedTextPropsInstructionNode*>(node);
+    JKQTMathTextBoxInstructionNode* inst1B=dynamic_cast<JKQTMathTextBoxInstructionNode*>(node);
     JKQTMathTextSubscriptNode* subN=dynamic_cast<JKQTMathTextSubscriptNode*>(node);
     JKQTMathTextSuperscriptNode* superN=dynamic_cast<JKQTMathTextSuperscriptNode*>(node);
     JKQTMathTextBraceNode* braceN=dynamic_cast<JKQTMathTextBraceNode*>(node);
@@ -465,8 +466,11 @@ QTreeWidgetItem *TestForm::createTree(JKQTMathTextNode *node, QTreeWidgetItem* p
         name=QString("MTsubscriptNode");
         if (subN->getChild()) ti->addChild(createTree(subN->getChild(), ti));
     } else if (inst1N)  {
-        name=QString("MTinstruction1Node: \'%1\' (subsuper=%2").arg(inst1N->getName()).arg(inst1N->isSubSuperscriptAboveBelowNode());
+        name=QString("ModTxtPropsInstructionNode: \'%1\' (subsuper=%2, params=%3)").arg(inst1N->getInstructionName()).arg(inst1N->isSubSuperscriptAboveBelowNode()).arg(inst1N->getParameters().join("/"));
         if (inst1N->getChild()) ti->addChild(createTree(inst1N->getChild(), ti));
+    } else if (inst1B)  {
+        name=QString("BoxInstructionNode: \'%1\' (subsuper=%2, params=%3)").arg(inst1B->getInstructionName()).arg(inst1B->isSubSuperscriptAboveBelowNode()).arg(inst1B->getParameters().join("/"));
+        if (inst1B->getChild()) ti->addChild(createTree(inst1B->getChild(), ti));
     } else if (lstN)  {
         name=QString("MTlistNode");
         QList<JKQTMathTextNode*> list=lstN->getChildren();
