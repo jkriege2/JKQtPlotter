@@ -362,8 +362,7 @@ double JKQTMathTextBoxInstructionNode::draw(QPainter& painter, double x, double 
     getChild()->getSize(painter, ev, width, baselineHeight, overallHeight, strikeoutPos);
 
     {
-        painter.save();
-        JKQTPFinalAct __finalpaint([&painter]() { painter.restore(); });
+        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
         painter.setBrush(b);
         painter.setPen(p);
         const QRectF rect(x+lw/2.0, y-baselineHeight-padding-lw/2.0, width+2.0*padding, overallHeight+2.0*padding);
