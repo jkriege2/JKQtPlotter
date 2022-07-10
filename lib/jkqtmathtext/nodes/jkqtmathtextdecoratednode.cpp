@@ -42,6 +42,10 @@ QString JKQTMathTextDecoratedNode::DecorationType2String(JKQTMathTextDecoratedNo
     switch(mode) {
         case MTDvec:
             return "vec";
+        case MTDgrave:
+            return "grave";
+        case MTDacute:
+            return "acute";
         case MTDtilde:
             return "tilde";
         case MTDbreve:
@@ -171,11 +175,16 @@ void JKQTMathTextDecoratedNode::fillInstructions()
     instructions["v"]=MTDcheck;
     instructions["widecheck"]=MTDwidecheck;
     instructions["bar"]=MTDbar;
+    instructions["="]=MTDbar;
     instructions["dot"]=MTDdot;
     instructions["."]=MTDdot;
     instructions["ocirc"]=MTDocirc;
     instructions["tilde"]=MTDtilde;
     instructions["~"]=MTDtilde;
+    instructions["acute"]=MTDacute;
+    instructions["'"]=MTDacute;
+    instructions["grave"]=MTDgrave;
+    instructions["`"]=MTDgrave;
     instructions["breve"]=MTDbreve;
     instructions["u"]=MTDbreve;
     instructions["widetilde"]=MTDwidetilde;
@@ -210,6 +219,7 @@ double JKQTMathTextDecoratedNode::draw(QPainter& painter, double x, double y, JK
     const double deco_width=std::max<double>(width_x*0.5,cwidth-2.0*deco_xoffset-italic_xcorrection);
     const double deco_vecwidth=width_x*0.33;
     const double deco_vecheight=deco_height*0.33;
+    const double deco_accentwidth=deco_height/4.0;
     const double deco_miniwidth=((decoration==MTDtilde||decoration==MTDbreve)?fm.boundingRect("j").width():fm.boundingRect("^").width())-italic_xcorrection;
     const double decotop_xcenter=x+italic_xcorrection+(cwidth-italic_xcorrection)/2.0;
     const double decotop_xstart=decotop_xcenter-deco_width/2.0+linewidth/2.0;
@@ -217,9 +227,9 @@ double JKQTMathTextDecoratedNode::draw(QPainter& painter, double x, double y, JK
     const double decobot_xstart=x+linewidth/2.0;
     const double decobot_xend=x+cwidth-italic_xcorrection-linewidth/2.0;
     const double decobot_xcenter=(decobot_xstart+decobot_xend)/2.0;
-    const double deco_ypos=y-cbaselineHeight-decoSeparation-linewidth/2.0;
-    const double deco_ytop=y-cbaselineHeight-decoSeparation-deco_height+linewidth/2.0;
-    const double deco_ycenter=y-cbaselineHeight-decoSeparation-deco_height/2.0;
+    const double deco_ytopbot=y-cbaselineHeight-decoSeparation-linewidth/2.0;
+    const double deco_ytoptop=y-cbaselineHeight-decoSeparation-deco_height+linewidth/2.0;
+    const double deco_ytopcenter=y-cbaselineHeight-decoSeparation-deco_height/2.0;
 
 
 
@@ -232,15 +242,55 @@ double JKQTMathTextDecoratedNode::draw(QPainter& painter, double x, double y, JK
 
     double xnew=getChild()->draw(painter, x, y, ev);
 
+    auto fDrawFontAccent=[&](QChar aDirect=QChar(), QChar aFallback=QChar()) -> bool {
+        if (!aDirect.isNull() && fm.inFont(aDirect)) {
+            painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+            const QRectF tbra=fm.tightBoundingRect(aDirect);
+            painter.translate(decotop_xcenter-tbra.width()/2.0, (deco_ytopcenter+deco_ytopbot)/2.0);
+            //painter.setPen("red");
+            //painter.drawEllipse(0-2,0-2,4,4);
+            painter.translate(-tbra.x(), -tbra.y());
+            //painter.setPen("magenta");
+            //painter.drawEllipse(0-2,0-2,4,4);
+            if (tbra.width()>0 && tbra.height()>0) {
+                painter.setFont(font);
+                painter.drawText(0,0,aDirect);
+                //painter.setPen("blue");
+                //painter.drawRect(tbra);
+                //painter.drawEllipse(0-2,0-2,4,4);
+                return true;
+            }
+        }
+        if (!aFallback.isNull() && fm.inFont(aFallback)) {
+            painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+            const QRectF tbra=fm.tightBoundingRect(aFallback);
+            painter.translate(decotop_xcenter-tbra.width()/2.0, deco_ytopcenter);
+            //painter.setPen("yellow");
+            //painter.drawEllipse(0-2,0-2,4,4);
+            painter.translate(-tbra.x(), -tbra.y());
+            //painter.setPen("cyan");
+            //painter.drawEllipse(0-2,0-2,4,4);
+            if (tbra.width()>0 && tbra.height()>0) {
+                painter.setFont(font);
+                painter.drawText(0,0,aFallback);
+                //painter.setPen("green");
+                //painter.drawRect(tbra);
+                //painter.drawEllipse(0-2,0-2,4,4);
+                return true;
+            }
+        }
+        return false;
+    };
+
     if (decoration==MTDvec) {
         painter.setPen(p);
         QPolygonF poly;
-        poly<<QPointF(decotop_xstart, deco_ypos)<<QPointF(decotop_xend, deco_ypos)<<QPointF(decotop_xend-deco_vecwidth, deco_ypos-deco_vecheight);
+        poly<<QPointF(decotop_xstart, deco_ytopbot)<<QPointF(decotop_xend, deco_ytopbot)<<QPointF(decotop_xend-deco_vecwidth, deco_ytopbot-deco_vecheight);
         painter.drawPolyline(poly);
         painter.setPen(pold);
     } else if (decoration==MTDoverline) {
         painter.setPen(p);
-        const QLineF l(decotop_xstart, deco_ypos, decotop_xend, deco_ypos);
+        const QLineF l(decotop_xstart, deco_ytopbot, decotop_xend, deco_ytopbot);
         if (l.length()>0) painter.drawLine(l);
         painter.setPen(pold);
     } else if (decoration==MTDbar) {
@@ -250,9 +300,9 @@ double JKQTMathTextDecoratedNode::draw(QPainter& painter, double x, double y, JK
         painter.setPen(pold);
     } else if (decoration==MTDdoubleoverline) {
         painter.setPen(p);
-        const QLineF l(decotop_xstart, deco_ypos, decotop_xend, deco_ypos);
+        const QLineF l(decotop_xstart, deco_ytopbot, decotop_xend, deco_ytopbot);
         if (l.length()>0) painter.drawLine(l);
-        const QLineF l2(decotop_xstart, deco_ypos-2.0*p.widthF(), decotop_xend, deco_ypos-2.0*p.widthF());
+        const QLineF l2(decotop_xstart, deco_ytopbot-2.0*p.widthF(), decotop_xend, deco_ytopbot-2.0*p.widthF());
         if (l2.length()>0) painter.drawLine(l2);
         painter.setPen(pold);
     } else if (decoration==MTDunderline) {
@@ -269,100 +319,124 @@ double JKQTMathTextDecoratedNode::draw(QPainter& painter, double x, double y, JK
         painter.setPen(pold);
     } else if (decoration==MTDarrow) {
         painter.setPen(p);
-        const QLineF l(decotop_xstart, deco_ycenter, decotop_xend, deco_ycenter);
+        const QLineF l(decotop_xstart, deco_ytopcenter, decotop_xend, deco_ytopcenter);
         if (l.length()>0) painter.drawLine(l);
         QPolygonF poly;
-        poly<<QPointF(decotop_xend-deco_vecwidth, deco_ypos)<<QPointF(decotop_xend, deco_ycenter)<<QPointF(decotop_xend-deco_vecwidth, deco_ytop);
+        poly<<QPointF(decotop_xend-deco_vecwidth, deco_ytopbot)<<QPointF(decotop_xend, deco_ytopcenter)<<QPointF(decotop_xend-deco_vecwidth, deco_ytoptop);
         painter.drawPolyline(poly);
         painter.setPen(pold);
     } else if (decoration==MTDhat) {
-        painter.setPen(p);
-        QPolygonF poly;
-        poly<<QPointF(decotop_xcenter-0.5*deco_miniwidth, deco_ypos)<<QPointF(decotop_xcenter, deco_ycenter)<<QPointF(decotop_xcenter+0.5*deco_miniwidth, deco_ypos);
-        painter.drawPolyline(poly);
-        painter.setPen(pold);
+        if (!fDrawFontAccent(QChar(0x302), QChar(0x2c6))) {
+            painter.setPen(p);
+            QPolygonF poly;
+            poly<<QPointF(decotop_xcenter-0.5*deco_miniwidth, deco_ytopbot)<<QPointF(decotop_xcenter, deco_ytopcenter)<<QPointF(decotop_xcenter+0.5*deco_miniwidth, deco_ytopbot);
+            painter.drawPolyline(poly);
+            painter.setPen(pold);
+        }
     } else if (decoration==MTDwidehat) {
         painter.setPen(p);
         QPolygonF poly;
-        poly<<QPointF(decotop_xstart, deco_ypos)<<QPointF(decotop_xcenter, deco_ytop)<<QPointF(decotop_xend, deco_ypos);
+        poly<<QPointF(decotop_xstart, deco_ytopbot)<<QPointF(decotop_xcenter, deco_ytoptop)<<QPointF(decotop_xend, deco_ytopbot);
         painter.drawPolyline(poly);
         painter.setPen(pold);
 
     } else if (decoration==MTDcheck) {
-        painter.setPen(p);
-        QPolygonF poly;
-        poly<<QPointF(decotop_xcenter-0.5*deco_miniwidth, deco_ycenter)<<QPointF(decotop_xcenter, deco_ypos)<<QPointF(decotop_xcenter+0.5*deco_miniwidth, deco_ycenter);
-        painter.drawPolyline(poly);
-        painter.setPen(pold);
+        if (!fDrawFontAccent(QChar(0x30C), QChar(0x2C7))) {
+            painter.setPen(p);
+            QPolygonF poly;
+            poly<<QPointF(decotop_xcenter-0.5*deco_miniwidth, deco_ytopcenter)<<QPointF(decotop_xcenter, deco_ytopbot)<<QPointF(decotop_xcenter+0.5*deco_miniwidth, deco_ytopcenter);
+            painter.drawPolyline(poly);
+            painter.setPen(pold);
+        }
     } else if (decoration==MTDwidecheck) {
         painter.setPen(p);
         QPolygonF poly;
-        poly<<QPointF(decotop_xstart, deco_ytop)<<QPointF(decotop_xcenter, deco_ypos)<<QPointF(decotop_xend, deco_ytop);
+        poly<<QPointF(decotop_xstart, deco_ytoptop)<<QPointF(decotop_xcenter, deco_ytopbot)<<QPointF(decotop_xend, deco_ytoptop);
         painter.drawPolyline(poly);
         painter.setPen(pold);
     } else if (decoration==MTDbreve) {
-        painter.setPen(p);
-        QPainterPath path;
-        const double x0=decotop_xcenter-deco_miniwidth/2.0;
-        const double x1=decotop_xcenter+deco_miniwidth/2.0;
-        path.moveTo(x0, deco_ypos);
-        path.cubicTo(x0, deco_ytop,  x1, deco_ytop    , x1, deco_ypos);
-        painter.drawPath(path);
-        painter.setPen(pold);
-
+        if (!fDrawFontAccent(QChar(0x306), QChar(0x2D8))) {
+            painter.setPen(p);
+            QPainterPath path;
+            const double x0=decotop_xcenter-deco_miniwidth/2.0;
+            const double x1=decotop_xcenter+deco_miniwidth/2.0;
+            path.moveTo(x0, deco_ytopbot);
+            path.cubicTo(x0, deco_ytoptop,  x1, deco_ytoptop    , x1, deco_ytopbot);
+            painter.drawPath(path);
+            painter.setPen(pold);
+        }
     } else if (decoration==MTDtilde) {
-
-        painter.setPen(p);
-        QPainterPath path;
-        const double x0=decotop_xcenter-deco_miniwidth/2.0;
-        const double x1=decotop_xcenter+deco_miniwidth/2.0;
-        path.moveTo(x0, deco_ycenter);
-        path.cubicTo((x0+x1)/2.0, deco_ypos,  (x0+x1)/2.0, deco_ytop    , x1, deco_ycenter);
-        painter.drawPath(path);
-        painter.setPen(pold);
+        if (!fDrawFontAccent(QChar(0x2DC), QChar('~'))) {
+            painter.setPen(p);
+            QPainterPath path;
+            const double x0=decotop_xcenter-deco_miniwidth/2.0;
+            const double x1=decotop_xcenter+deco_miniwidth/2.0;
+            path.moveTo(x0, deco_ytopcenter);
+            path.cubicTo((x0+x1)/2.0, deco_ytopbot,  (x0+x1)/2.0, deco_ytoptop    , x1, deco_ytopcenter);
+            painter.drawPath(path);
+            painter.setPen(pold);
+        }
+    } else if (decoration==MTDacute) {
+        if (!fDrawFontAccent(QChar(0x301), QChar(0x2CA))) {
+            painter.setPen(p);
+            painter.drawLine(QLineF(decotop_xcenter, deco_ytopbot, decotop_xcenter-deco_accentwidth, deco_ytopcenter));
+            painter.setPen(pold);
+        }
+    } else if (decoration==MTDgrave) {
+        if (!fDrawFontAccent(QChar(0x300), QChar(0x2CB))) {
+            painter.setPen(p);
+            painter.drawLine(QLineF(decotop_xcenter, deco_ytopbot, decotop_xcenter+deco_accentwidth, deco_ytopcenter));
+            painter.setPen(pold);
+        }
 
     } else if (decoration==MTDwidetilde) {
         painter.setPen(p);
         QPainterPath path;
         const double x0=decotop_xstart;
         const double x1=decotop_xend;
-        path.moveTo(x0, deco_ycenter);
-        path.cubicTo((x0+x1)/2.0, deco_ypos,  (x0+x1)/2.0, deco_ytop    , x1, deco_ycenter);
+        path.moveTo(x0, deco_ytopcenter);
+        path.cubicTo((x0+x1)/2.0, deco_ytopbot,  (x0+x1)/2.0, deco_ytoptop    , x1, deco_ytopcenter);
         painter.drawPath(path);
         painter.setPen(pold);
 
     } else if (decoration==MTDocirc) {
-        painter.setPen(p);
-        const QBrush bold=painter.brush();
-        painter.setBrush(Qt::NoBrush);
-        const double r=qMin(width_dot/1.5, deco_height/2.0-linewidth/2.0);
-        painter.drawEllipse(QPointF(decotop_xcenter, deco_ycenter), r, r);
-        painter.setBrush(bold);
-        painter.setPen(pold);
+        if (!fDrawFontAccent(QChar(0x2DA), QChar(0xBA))) {
+            painter.setPen(p);
+            const QBrush bold=painter.brush();
+            painter.setBrush(Qt::NoBrush);
+            const double r=qMin(width_dot/1.5, deco_height/2.0-linewidth/2.0);
+            painter.drawEllipse(QPointF(decotop_xcenter, deco_ytopcenter), r, r);
+            painter.setBrush(bold);
+            painter.setPen(pold);
+        }
     } else if (decoration==MTDdot) {
-        p.setWidthF(0.01);
-        painter.setPen(p);
-        QBrush b=painter.brush();
-        const QBrush bold=b;
-        b.setColor(ev.color);
-        b.setStyle(Qt::SolidPattern);
-        painter.setBrush(b);
-        painter.drawEllipse(QPointF(decotop_xcenter, deco_ycenter), width_dot/2.0, width_dot/2.0);
-        painter.setBrush(bold);
-        painter.setPen(pold);
+        if (!fDrawFontAccent(QChar(0x2D9), QChar('.'))) {
+            p.setWidthF(0.01);
+            painter.setPen(p);
+            QBrush b=painter.brush();
+            const QBrush bold=b;
+            b.setColor(ev.color);
+            b.setStyle(Qt::SolidPattern);
+            painter.setBrush(b);
+            painter.drawEllipse(QPointF(decotop_xcenter, deco_ytopcenter), width_dot/2.0, width_dot/2.0);
+            painter.setBrush(bold);
+            painter.setPen(pold);
+        }
     } else if (decoration==MTDddot) {
-        p.setWidthF(0.01);
-        painter.setPen(p);
-        QBrush b=painter.brush();
-        const QBrush bold=b;
-        b.setColor(ev.color);
-        b.setStyle(Qt::SolidPattern);
-        painter.setBrush(b);
-        painter.drawEllipse(QPointF(decotop_xcenter-width_dot, deco_ycenter), width_dot/2.0, width_dot/2.0);
-        painter.drawEllipse(QPointF(decotop_xcenter+width_dot, deco_ycenter), width_dot/2.0, width_dot/2.0);
-        painter.setBrush(bold);
-        painter.setPen(pold);
-        painter.setBrush(bold);
+        if (!fDrawFontAccent(QChar(0x308))) {
+            p.setWidthF(0.01);
+            painter.setPen(p);
+            QBrush b=painter.brush();
+            const QBrush bold=b;
+            b.setColor(ev.color);
+            b.setStyle(Qt::SolidPattern);
+            painter.setBrush(b);
+            painter.drawEllipse(QPointF(decotop_xcenter-width_dot, deco_ytopcenter), width_dot/2.0, width_dot/2.0);
+            painter.drawEllipse(QPointF(decotop_xcenter+width_dot, deco_ytopcenter), width_dot/2.0, width_dot/2.0);
+            painter.setBrush(bold);
+            painter.setPen(pold);
+            painter.setBrush(bold);
+        }
     } else if (decoration==MTDstrike) {
         painter.setPen(p);
         const QLineF l((decotop_xstart+decobot_xstart)/2.0, strike_ypos, (decotop_xend+decobot_xend)/2.0, strike_ypos);
@@ -370,19 +444,19 @@ double JKQTMathTextDecoratedNode::draw(QPainter& painter, double x, double y, JK
         painter.setPen(pold);
     } else if (decoration==MTDcancel) {
         painter.setPen(p);
-        const QLineF l(decobot_xstart, decobelow_ypos, decotop_xend, deco_ypos);
+        const QLineF l(decobot_xstart, decobelow_ypos, decotop_xend, deco_ytopbot);
         if (l.length()>0) painter.drawLine(l);
         painter.setPen(pold);
     } else if (decoration==MTDbcancel) {
         painter.setPen(p);
-        const QLineF l(decobot_xstart, deco_ypos, decotop_xend, decobelow_ypos);
+        const QLineF l(decobot_xstart, deco_ytopbot, decotop_xend, decobelow_ypos);
         if (l.length()>0) painter.drawLine(l);
         painter.setPen(pold);
     } else if (decoration==MTDxcancel) {
         painter.setPen(p);
-        const QLineF l(decobot_xstart, deco_ypos, decotop_xend, decobelow_ypos);
+        const QLineF l(decobot_xstart, deco_ytopbot, decotop_xend, decobelow_ypos);
         if (l.length()>0) painter.drawLine(l);
-        const QLineF l1(decobot_xstart, decobelow_ypos, decotop_xend, deco_ypos);
+        const QLineF l1(decobot_xstart, decobelow_ypos, decotop_xend, deco_ytopbot);
         if (l1.length()>0) painter.drawLine(l1);
         painter.setPen(pold);
     }

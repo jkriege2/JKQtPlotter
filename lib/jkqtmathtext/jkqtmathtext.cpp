@@ -996,16 +996,288 @@ JKQTMathText::tokenType JKQTMathText::getToken() {
     static QSet<QChar> TokenCharacters;
     static QSet<QChar> mathEnvironmentSpecialChars, mathEnvironmentSpecialEndChars;
     static QSet<QChar> SingleCharInstructions;
+    static QHash<QString, QChar> accentLetters;
+    static QSet<int> accentLetters_LenBackslash;
+    static QSet<int> accentLetters_LenCurly;
     if (TokenCharacters.size()==0) {
         mathEnvironmentSpecialChars<<'(' << '[' << '|' << ')' << ']' << '+' << '-' << '*' << '/' << '<' << '>' << '=';
         mathEnvironmentSpecialEndChars<<'(' << '&' << '[' << '|' << ')' << ']' << '\\' << '$' << '{' << '}' << '_' << '^' << '+' << '-' << '/' << '*' << '=' << '<' << '>';
         TokenCharacters<<'_'<<'^'<<'\\'<<'$'<<'&'<<'}'<<'{'<<'['<<']';
         SingleCharInstructions<<'|'<<';'<<':'<<'!'<<','<<'_'<<'\\'<<'$'<<'%'<<'&'<<'#'<<'}'<<'{'<<' '<<'['<<']';
+
+        auto fAddUml=[](const QString& cmd, const QChar& letter, const QChar& ch) {
+            QString i;
+            if (cmd.size()>0 && !letter.isNull()) {
+                i="\\"+cmd+letter;
+                accentLetters[i]=ch; accentLetters_LenBackslash.insert(i.size());
+                i="{\\"+cmd+letter+"}";
+                accentLetters[i]=ch; accentLetters_LenCurly.insert(i.size());
+                i="\\"+cmd+"{"+letter+"}";
+                accentLetters[i]=ch;  accentLetters_LenBackslash.insert(i.size());
+            } else if  (cmd.size()>0 && letter.isNull()) {
+                i="\\"+cmd+" ";
+                accentLetters[i]=ch; accentLetters_LenBackslash.insert(i.size());
+                i="\\"+cmd+"\t";
+                accentLetters[i]=ch; accentLetters_LenBackslash.insert(i.size());
+                i="\\"+cmd+"\n";
+                accentLetters[i]=ch; accentLetters_LenBackslash.insert(i.size());
+                i="\\"+cmd+"\\";
+                accentLetters[i]=ch; accentLetters_LenBackslash.insert(i.size());
+                i="{\\"+cmd+"}";
+                accentLetters[i]=ch; accentLetters_LenCurly.insert(i.size());
+            }
+        };
+        // instructions like \"{a}
+        fAddUml("\"", 'A', QChar(0xC4));
+        fAddUml("\"", 'E', QChar(0xCB));
+        fAddUml("\"", 'I', QChar(0xCF));
+        fAddUml("\"", 'O', QChar(0xD6));
+        fAddUml("\"", 'U', QChar(0xDC));
+        fAddUml("\"", 'Y', QChar(0x178));
+        fAddUml("\"", 'a', QChar(0xE4));
+        fAddUml("\"", 'e', QChar(0xEB));
+        fAddUml("\"", 'i', QChar(0xEF));
+        fAddUml("\"", 'o', QChar(0xF6));
+        fAddUml("\"", 'u', QChar(0xFC));
+        fAddUml("\"", 'y', QChar(0xFF));
+
+        fAddUml("'", 'A', QChar(0xC1));
+        fAddUml("'", 'E', QChar(0xC9));
+        fAddUml("'", 'I', QChar(0xCD));
+        fAddUml("'", 'O', QChar(0xD3));
+        fAddUml("'", 'U', QChar(0xDA));
+        fAddUml("'", 'Y', QChar(0xDD));
+        fAddUml("'", 'a', QChar(0xE1));
+        fAddUml("'", 'e', QChar(0xE9));
+        fAddUml("'", 'i', QChar(0xED));
+        fAddUml("'", 'o', QChar(0xF3));
+        fAddUml("'", 'u', QChar(0xFA));
+        fAddUml("'", 'y', QChar(0xFD));
+        fAddUml("'", 'C', QChar(0x106));
+        fAddUml("'", 'c', QChar(0x107));
+        fAddUml("'", 'L', QChar(0x139));
+        fAddUml("'", 'l', QChar(0x13A));
+        fAddUml("'", 'N', QChar(0x143));
+        fAddUml("'", 'n', QChar(0x144));
+        fAddUml("'", 'R', QChar(0x154));
+        fAddUml("'", 'r', QChar(0x155));
+        fAddUml("'", 'S', QChar(0x15A));
+        fAddUml("'", 's', QChar(0x15B));
+        fAddUml("'", 'Z', QChar(0x179));
+        fAddUml("'", 'z', QChar(0x17A));
+        fAddUml("'", 'G', QChar(0x1F4));
+        fAddUml("'", 'g', QChar(0x1F5));
+
+        fAddUml("`", 'A', QChar(0xC0));
+        fAddUml("`", 'E', QChar(0xC8));
+        fAddUml("`", 'I', QChar(0xCC));
+        fAddUml("`", 'O', QChar(0xD2));
+        fAddUml("`", 'U', QChar(0xD9));
+        fAddUml("`", 'a', QChar(0xE0));
+        fAddUml("`", 'e', QChar(0xE8));
+        fAddUml("`", 'i', QChar(0xEC));
+        fAddUml("`", 'o', QChar(0xF2));
+        fAddUml("`", 'u', QChar(0xF9));
+        fAddUml("`", 'N', QChar(0x1F8));
+        fAddUml("`", 'n', QChar(0x1F9));
+
+        fAddUml("^", 'A', QChar(0xC2));
+        fAddUml("^", 'E', QChar(0xCA));
+        fAddUml("^", 'I', QChar(0xCE));
+        fAddUml("^", 'O', QChar(0xD4));
+        fAddUml("^", 'U', QChar(0xDB));
+        fAddUml("^", 'a', QChar(0xE2));
+        fAddUml("^", 'e', QChar(0xEA));
+        fAddUml("^", 'i', QChar(0xEE));
+        fAddUml("^", 'o', QChar(0xF4));
+        fAddUml("^", 'u', QChar(0xFB));
+        fAddUml("^", 'C', QChar(0x108));
+        fAddUml("^", 'c', QChar(0x109));
+        fAddUml("^", 'G', QChar(0x11C));
+        fAddUml("^", 'g', QChar(0x11D));
+        fAddUml("^", 'H', QChar(0x124));
+        fAddUml("^", 'h', QChar(0x125));
+        fAddUml("^", 'J', QChar(0x134));
+        fAddUml("^", 'j', QChar(0x135));
+        fAddUml("^", 'S', QChar(0x15C));
+        fAddUml("^", 's', QChar(0x15D));
+        fAddUml("^", 'W', QChar(0x174));
+        fAddUml("^", 'w', QChar(0x175));
+        fAddUml("^", 'Y', QChar(0x176));
+        fAddUml("^", 'y', QChar(0x177));
+
+        fAddUml("v", 'C', QChar(0x10C));
+        fAddUml("v", 'c', QChar(0x10D));
+        fAddUml("v", 'D', QChar(0x10E));
+        fAddUml("v", 'd', QChar(0x10F));
+        fAddUml("v", 'E', QChar(0x11A));
+        fAddUml("v", 'e', QChar(0x11B));
+        fAddUml("v", 'L', QChar(0x13D));
+        fAddUml("v", 'l', QChar(0x13E));
+        fAddUml("v", 'N', QChar(0x147));
+        fAddUml("v", 'n', QChar(0x148));
+        fAddUml("v", 'R', QChar(0x158));
+        fAddUml("v", 'r', QChar(0x159));
+        fAddUml("v", 'S', QChar(0x160));
+        fAddUml("v", 's', QChar(0x161));
+        fAddUml("v", 'T', QChar(0x164));
+        fAddUml("v", 't', QChar(0x165));
+        fAddUml("v", 'Z', QChar(0x17D));
+        fAddUml("v", 'z', QChar(0x17E));
+        fAddUml("v", 'A', QChar(0x1CD));
+        fAddUml("v", 'a', QChar(0x1CE));
+        fAddUml("v", 'I', QChar(0x1CF));
+        fAddUml("v", 'i', QChar(0x1D0));
+        fAddUml("v", 'O', QChar(0x1D1));
+        fAddUml("v", 'o', QChar(0x1D2));
+        fAddUml("v", 'U', QChar(0x1D3));
+        fAddUml("v", 'u', QChar(0x1D4));
+        fAddUml("v", 'G', QChar(0x1E6));
+        fAddUml("v", 'g', QChar(0x1E7));
+        fAddUml("v", 'K', QChar(0x1E8));
+        fAddUml("v", 'k', QChar(0x1E9));
+        fAddUml("v", 'j', QChar(0x1F0));
+        fAddUml("v", 'H', QChar(0x21E));
+        fAddUml("v", 'h', QChar(0x21F));
+
+        fAddUml("~", 'A', QChar(0xC3));
+        fAddUml("~", 'N', QChar(0xD1));
+        fAddUml("~", 'O', QChar(0xD5));
+        fAddUml("~", 'a', QChar(0xE3));
+        fAddUml("~", 'n', QChar(0xF1));
+        fAddUml("~", 'o', QChar(0xF5));
+        fAddUml("~", 'I', QChar(0x128));
+        fAddUml("~", 'i', QChar(0x129));
+        fAddUml("~", 'U', QChar(0x168));
+        fAddUml("~", 'u', QChar(0x169));
+
+        fAddUml("r", 'A', QChar(0xC5));
+        fAddUml("r", 'a', QChar(0xE5));
+        fAddUml("r", 'U', QChar(0x16E));
+        fAddUml("r", 'u', QChar(0x16F));
+
+
+        fAddUml("=", 'A', QChar(0xC2));
+        fAddUml("=", 'E', QChar(0xCA));
+        fAddUml("=", 'I', QChar(0xCE));
+        fAddUml("=", 'O', QChar(0xD4));
+        fAddUml("=", 'U', QChar(0xDB));
+        fAddUml("=", 'a', QChar(0xE2));
+        fAddUml("=", 'e', QChar(0xEA));
+        fAddUml("=", 'i', QChar(0xEE));
+        fAddUml("=", 'o', QChar(0xF4));
+        fAddUml("=", 'u', QChar(0xFB));
+        fAddUml("=", 'Y', QChar(0x108));
+        fAddUml("=", 'y', QChar(0x109));
+
+        fAddUml(".", 'C', QChar(0x10A));
+        fAddUml(".", 'c', QChar(0x10B));
+        fAddUml(".", 'E', QChar(0x116));
+        fAddUml(".", 'e', QChar(0x117));
+        fAddUml(".", 'G', QChar(0x120));
+        fAddUml(".", 'g', QChar(0x121));
+        fAddUml(".", 'I', QChar(0x130));
+        fAddUml(".", 'Z', QChar(0x17B));
+        fAddUml(".", 'z', QChar(0x17C));
+        fAddUml(".", 'A', QChar(0x226));
+        fAddUml(".", 'a', QChar(0x227));
+        fAddUml(".", 'O', QChar(0x22E));
+        fAddUml(".", 'o', QChar(0x22F));
+        fAddUml(".", 'B', QChar(0x1E02));
+        fAddUml(".", 'b', QChar(0x1E03));
+        fAddUml(".", 'D', QChar(0x1E0A));
+        fAddUml(".", 'd', QChar(0x1E0B));
+        fAddUml(".", 'F', QChar(0x1E1E));
+        fAddUml(".", 'f', QChar(0x1E1F));
+        fAddUml(".", 'H', QChar(0x1E22));
+        fAddUml(".", 'h', QChar(0x1E23));
+        fAddUml(".", 'M', QChar(0x1E40));
+        fAddUml(".", 'm', QChar(0x1E41));
+        fAddUml(".", 'N', QChar(0x1E44));
+        fAddUml(".", 'n', QChar(0x1E45));
+        fAddUml(".", 'P', QChar(0x1E56));
+        fAddUml(".", 'p', QChar(0x1E57));
+        fAddUml(".", 'R', QChar(0x1E58));
+        fAddUml(".", 'r', QChar(0x1E59));
+        fAddUml(".", 'S', QChar(0x1E60));
+        fAddUml(".", 's', QChar(0x1E61));
+        fAddUml(".", 'T', QChar(0x1E6A));
+        fAddUml(".", 't', QChar(0x1E6B));
+        fAddUml(".", 'W', QChar(0x1E86));
+        fAddUml(".", 'w', QChar(0x1E87));
+        fAddUml(".", 'X', QChar(0x1E8A));
+        fAddUml(".", 'x', QChar(0x1E8B));
+        fAddUml(".", 'Y', QChar(0x1E8E));
+        fAddUml(".", 'y', QChar(0x1E8F));
+
+        fAddUml("u", 'A', QChar(0x102));
+        fAddUml("u", 'a', QChar(0x103));
+        fAddUml("u", 'E', QChar(0x114));
+        fAddUml("u", 'e', QChar(0x115));
+        fAddUml("u", 'G', QChar(0x11E));
+        fAddUml("u", 'g', QChar(0x11F));
+        fAddUml("u", 'I', QChar(0x12C));
+        fAddUml("u", 'i', QChar(0x12D));
+        fAddUml("u", 'O', QChar(0x14E));
+        fAddUml("u", 'o', QChar(0x14F));
+        fAddUml("u", 'U', QChar(0x16C));
+        fAddUml("u", 'u', QChar(0x16D));
+
+
+        fAddUml("c", 'C', QChar(0xC7));
+        fAddUml("c", 'c', QChar(0xE7));
+        fAddUml("c", 'G', QChar(0x122));
+        fAddUml("c", 'g', QChar(0x123));
+        fAddUml("c", 'K', QChar(0x136));
+        fAddUml("c", 'k', QChar(0x137));
+        fAddUml("c", 'L', QChar(0x13B));
+        fAddUml("c", 'l', QChar(0x13C));
+        fAddUml("c", 'N', QChar(0x145));
+        fAddUml("c", 'n', QChar(0x146));
+        fAddUml("c", 'R', QChar(0x156));
+        fAddUml("c", 'r', QChar(0x157));
+        fAddUml("c", 'S', QChar(0x15E));
+        fAddUml("c", 's', QChar(0x15F));
+        fAddUml("c", 'T', QChar(0x162));
+        fAddUml("c", 't', QChar(0x163));
+        fAddUml("c", 'E', QChar(0x228));
+        fAddUml("c", 'e', QChar(0x229));
+        fAddUml("c", 'D', QChar(0x1E10));
+        fAddUml("c", 'd', QChar(0x1E11));
+        fAddUml("c", 'H', QChar(0x1E28));
+        fAddUml("c", 'h', QChar(0x1E29));
+
+        // ligatures, instructions without {letter}
+        fAddUml("ss", QChar(), QChar(0xDF));
+        fAddUml("ae", QChar(), QChar(0xE6));
+        fAddUml("AE", QChar(), QChar(0xC6));
+        fAddUml("oe", QChar(), QChar(0x153));
+        fAddUml("OE", QChar(), QChar(0x152));
+        fAddUml("o", QChar(), QChar(0xF8));
+        fAddUml("O", QChar(), QChar(0xD8));
+        fAddUml("S", QChar(), QChar(0xA7));
+        fAddUml("l", QChar(), QChar(0x142));
+        fAddUml("L", QChar(), QChar(0x141));
+        fAddUml("aa", QChar(), QChar(0xE5));
+        fAddUml("AA", QChar(), QChar(0xC5));
     }
 
     //----------------------------------------------------------
     // read an instruction name
     if (c=='\\') {
+        //----------------------------------------------------------
+        // parsing accent instructions like \ss \"{a} ...
+        if (!parsingMathEnvironment){
+            for (int len: accentLetters_LenBackslash) {
+                const QString acc=parseString.mid(currentTokenID, len);
+                if (acc.size()==len && accentLetters.contains(acc)) {
+                    currentTokenName=accentLetters[acc];
+                    currentTokenID+=acc.trimmed().size()-1; // forward the instruction, omit trailing whitespace in instruction
+                    if (acc.endsWith('\\')) currentTokenID--;
+                    return currentToken=MTTtext;
+                }
+            }
+        }
         currentTokenID++;
         if (currentTokenID>=parseString.size()-1) return currentToken=MTTnone;
         c=parseString[currentTokenID];
@@ -1042,32 +1314,39 @@ JKQTMathText::tokenType JKQTMathText::getToken() {
     //----------------------------------------------------------
     // check for { character
     } else if (c=='{') {
-        //std::cout<<"found openbrace\n";
+        //----------------------------------------------------------
+        // parsing accent instructions like {\ss}
+        if (!parsingMathEnvironment){
+            for (int len: accentLetters_LenCurly) {
+                const QString acc=parseString.mid(currentTokenID, len);
+                if (acc.size()==len && accentLetters.contains(acc)) {
+                    currentTokenName=accentLetters[acc];
+                    currentTokenID+=acc.trimmed().size()-1; // forward the instruction, omit trailing whitespace in instruction
+                    if (acc.endsWith('\\')) currentTokenID--;
+                    return currentToken=MTTtext;
+                }
+            }
+        }
         return currentToken=MTTopenbrace;
     //----------------------------------------------------------
     // check for } character
     } else if (c=='}') {
-        //std::cout<<"found closebrace\n";
         return currentToken=MTTclosebrace;
     //----------------------------------------------------------
     // check for [ character
     } else if (c=='[') {
-        //std::cout<<"found openbracket\n";
         return currentToken=MTTopenbracket;
     //----------------------------------------------------------
     // check for ] character
     } else if (c==']') {
-        //std::cout<<"found closebracket\n";
         return currentToken=MTTclosebracket;
     //----------------------------------------------------------
     // check for _ character
     } else if (c=='_') {
-        //std::cout<<"found underscore\n";
         return currentToken=MTTunderscore;
     //----------------------------------------------------------
     // check for ^ character
     } else if (c=='^') {
-        //std::cout<<"found hat\n";
         return currentToken=MTThat;
     //----------------------------------------------------------
     // check for whitespace character
@@ -1142,9 +1421,27 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
     while (currentToken!=MTTnone) {
         getNew=true;
         if (currentToken==MTTtext) {
-            const QString text=currentTokenName;
-            const bool addWhite=(getToken()==MTTwhitespace) && (!parsingMathEnvironment);
-            getNew=addWhite;
+            QString text=currentTokenName;
+            bool addWhite=false;
+            if (!parsingMathEnvironment) {
+                getToken();
+                getNew=false;
+                while (currentToken==MTTtext || currentToken==MTTwhitespace) {
+                    if (currentToken==MTTtext) {
+                        text+=currentTokenName;
+                        getNew=true;
+                    } else if (currentToken==MTTwhitespace) {
+                        text+=" ";
+                        getNew=true;
+                    }
+                    getToken();
+                    getNew=false;
+                }
+                if (text.size()>0 && text[text.size()-1].isSpace()) {
+                    addWhite=true;
+                    text=text.left(text.size()-1);
+                }
+            }
             if (parsingMathEnvironment) {
                 if (mathEnvironmentSpecialText.contains(text.trimmed()) && JKQTMathTextSymbolNode::hasSymbol(text.trimmed())) {
                     nl->addChild(new JKQTMathTextSymbolNode(this, text.trimmed()));

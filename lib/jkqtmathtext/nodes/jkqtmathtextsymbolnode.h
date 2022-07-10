@@ -262,13 +262,13 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSymbolNode: public JKQTMathTextNode {
         /** \brief insert GreekLetter_WinSymbol_Unicode_Html() as \a baseInstructionName and UprightGreekLetter_WinSymbol_Unicode_Html and "up"+\a letterWinSymbol into symbols */
         static void addGreekLetterVariants_WinSymbol_Unicode_Html(const QString& baseInstructionName, const QString& letterWinSymbol, const QString& letterUnicode, const QString& html);
         /** \brief constructs a SymbolProps for a symbol with encoding in Standard-fonts a */
-        static SymbolFullProps SymbolStd(const QString& symbol, const QString& html);
+        static SymbolFullProps StdSymbol(const QString& symbol, const QString& html);
         /** \brief constructs a SymbolProps for a symbol with encoding in UnicodeFull-fonts a */
-        static SymbolFullProps SymbolUnicode(const QString& symbol, const QString& html);
+        static SymbolFullProps UnicodeSymbol(const QString& symbol, const QString& html);
         /** \brief constructs a SymbolProps for a symbol with encoding in Standard-fonts a */
-        static SymbolFullProps SymbolStd(const QString& symbol, SymbolFlags _flags=AsOutside, double _fontScalingFactor=1.0, double _yShiftFactor=0.0);
+        static SymbolFullProps StdSymbol(const QString& symbol, SymbolFlags _flags=AsOutside, double _fontScalingFactor=1.0, double _yShiftFactor=0.0);
         /** \brief constructs a SymbolProps for a symbol with encoding in UnicodeFull-fonts a */
-        static SymbolFullProps SymbolUnicode(const QString& symbol, SymbolFlags _flags=AsOutside, double _fontScalingFactor=1.0, double _yShiftFactor=0.0);
+        static SymbolFullProps UnicodeSymbol(const QString& symbol, SymbolFlags _flags=AsOutside, double _fontScalingFactor=1.0, double _yShiftFactor=0.0);
         /** \brief constructs a SymbolProps for a symbol with encoding in Standard-fonts a */
         static SymbolFullProps UprightSymbolStd(const QString& symbol, const QString& html=QString());
         /** \brief constructs a SymbolProps for a symbol with encoding in UnicodeFull-fonts a */

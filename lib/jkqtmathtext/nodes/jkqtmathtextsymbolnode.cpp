@@ -378,22 +378,22 @@ void JKQTMathTextSymbolNode::addGreekLetterVariants_WinSymbol_Unicode_Html(const
     symbols["up"+baseInstructionName]=UprightGreekLetter_WinSymbol_Unicode_Html(letterWinSymbol, letterUnicode, html);
 }
 
-JKQTMathTextSymbolNode::SymbolFullProps JKQTMathTextSymbolNode::SymbolStd(const QString &symbol, const QString &html)
+JKQTMathTextSymbolNode::SymbolFullProps JKQTMathTextSymbolNode::StdSymbol(const QString &symbol, const QString &html)
 {
     return SymbolFullProps(MTFEStandard, SymbolProps(symbol), html);
 }
 
-JKQTMathTextSymbolNode::SymbolFullProps JKQTMathTextSymbolNode::SymbolUnicode(const QString &symbol, SymbolFlags _flags, double _fontScalingFactor, double _yShiftFactor)
+JKQTMathTextSymbolNode::SymbolFullProps JKQTMathTextSymbolNode::UnicodeSymbol(const QString &symbol, SymbolFlags _flags, double _fontScalingFactor, double _yShiftFactor)
 {
     return SymbolFullProps(MTFEUnicode, SymbolProps(symbol, _flags, _fontScalingFactor, _yShiftFactor));
 }
 
-JKQTMathTextSymbolNode::SymbolFullProps JKQTMathTextSymbolNode::SymbolUnicode(const QString &symbol, const QString &html)
+JKQTMathTextSymbolNode::SymbolFullProps JKQTMathTextSymbolNode::UnicodeSymbol(const QString &symbol, const QString &html)
 {
     return SymbolFullProps(MTFEUnicode, SymbolProps(symbol), html);
 }
 
-JKQTMathTextSymbolNode::SymbolFullProps JKQTMathTextSymbolNode::SymbolStd(const QString &symbol, SymbolFlags _flags, double _fontScalingFactor, double _yShiftFactor)
+JKQTMathTextSymbolNode::SymbolFullProps JKQTMathTextSymbolNode::StdSymbol(const QString &symbol, SymbolFlags _flags, double _fontScalingFactor, double _yShiftFactor)
 {
     return SymbolFullProps(MTFEStandard, SymbolProps(symbol, _flags, _fontScalingFactor, _yShiftFactor), symbol);
 }
@@ -455,26 +455,30 @@ void JKQTMathTextSymbolNode::fillSymbolTables()
     symbols["ae"]=SimpleTextSymbol(QChar(0xE6));
     symbols["AE"]=SimpleTextSymbol(QChar(0xC6));
     symbols["AA"]=SimpleTextSymbol(QChar(0xC5));
-    symbols["oe"]=SymbolUnicode(QChar(0x153)).addStd("oe").addHtml("&oelig;");
-    symbols["OE"]=SymbolUnicode(QChar(0x152)).addStd("OE").addHtml("&OElig;");
+    symbols["oe"]=UnicodeSymbol(QChar(0x153)).addStd("oe").addHtml("&oelig;");
+    symbols["OE"]=UnicodeSymbol(QChar(0x152)).addStd("OE").addHtml("&OElig;");
     symbols["ss"]=SimpleTextSymbol(QChar(0xDF)).addHtml("&szlig;");
+    symbols["l"]=UnicodeSymbol(QChar(0x141)).addHtml("&lstrok;");
+    symbols["L"]=UnicodeSymbol(QChar(0x142)).addHtml("&Lstrok;");
+    symbols["o"]=SimpleTextSymbol(QChar(0xF8)).addHtml("&oslash;");
+    symbols["O"]=SimpleTextSymbol(QChar(0xD8)).addHtml("&Oslash;");
     { auto s=UprightSymbolUnicode(QChar(0x212B)).addUprightStd(QChar(0xC5));
       symbols["Angstrom"]=s; symbols["Angstroem"]=s; }
-    { auto s=SymbolUnicode(QChar(0x2136)).addHtml("&beth;");
+    { auto s=UnicodeSymbol(QChar(0x2136)).addHtml("&beth;");
       symbols["Beth"]=s; symbols["Bet"]=s; symbols["beth"]=s; symbols["bet"]=s; }
     symbols["Box"]=UprightSymbolUnicode(QChar(0x25A1));
-    symbols["DC"]=SymbolUnicode(QChar(0x2393)).addWinSymbol(QChar(0xBB)).addStd("=");
-    symbols["EUR"]=SymbolUnicode(QChar(0x20AC));
+    symbols["DC"]=UnicodeSymbol(QChar(0x2393)).addWinSymbol(QChar(0xBB)).addStd("=");
+    symbols["EUR"]=UnicodeSymbol(QChar(0x20AC));
     symbols["Im"]=UprightSymbolUnicode(QChar(0x2111)).addHtml("&image;").addWinSymbol(QChar(0xC1));
-    symbols["No"]=SymbolUnicode(QChar(0x2116));
+    symbols["No"]=UnicodeSymbol(QChar(0x2116));
     { auto s=UprightSymbolUnicode(QChar(0x2126)).addUprightWinSymbol("W").addUprightHtml("&Omega;");
       symbols["Ohm"]=s; symbols["ohm"]=s; }
     symbols["P"]=SimpleTextSymbol(QChar(0xB6)).addHtml("&para;");
-    symbols["Re"]=SymbolUnicode(QChar(0x211C)).addHtml("&Rfr;").addWinSymbol(QChar(0xC2));
+    symbols["Re"]=UnicodeSymbol(QChar(0x211C)).addHtml("&Rfr;").addWinSymbol(QChar(0xC2));
     { auto s=SimpleTextSymbol(QChar(0xA7)).addHtml("&sect;");
         symbols["S"]=s; symbols["§"]=s;}
-    symbols["accurrent"]=SymbolUnicode(QChar(0x23E6));
-    { auto s=SymbolUnicode(QChar(0x2135)).addHtml("&aleph;").addWinSymbol(QChar(0xC0));
+    symbols["accurrent"]=UnicodeSymbol(QChar(0x23E6));
+    { auto s=UnicodeSymbol(QChar(0x2135)).addHtml("&aleph;").addWinSymbol(QChar(0xC0));
         symbols["alef"]=s; symbols["aleph"]=s; symbols["Aleph"]=s; symbols["Alef"]=s; }
     symbols["angle"]=UprightSymbolUnicode(QChar(0x2220)).addHtml("&angle;").addWinSymbol(QChar(0xD0));
     symbols["backslash"]=SimpleTextSymbol("\\");
@@ -486,8 +490,8 @@ void JKQTMathTextSymbolNode::fillSymbolTables()
     { auto s=UprightSymbolUnicode(QChar(0x231F));
         symbols["brcorner"]=s; symbols["lrcorner"]=s; }
     symbols["bullet"]=UprightSymbolUnicode(QChar(0x2022)).addUprightHtml("&bull;").addUprightWinSymbol(QChar(0xB7));
-    symbols["cdots"]=SymbolUnicode(QChar(0x22EF)).addHtml("&middot;&middot;&middot;").addStd(QString(3, QChar(0xB7)));
-    { auto s=SymbolUnicode(QChar(0x2103)).addUprightStd("°C").addUprightHtml("&deg;C");
+    symbols["cdots"]=UnicodeSymbol(QChar(0x22EF)).addHtml("&middot;&middot;&middot;").addStd(QString(3, QChar(0xB7)));
+    { auto s=UnicodeSymbol(QChar(0x2103)).addUprightStd("°C").addUprightHtml("&deg;C");
         symbols["celsius"]=s; symbols["degC"]=s; }
     symbols["cent"]=SimpleTextSymbol(QChar(0xA2), "&cent;");
     symbols["checkmark"]=UprightSymbolStd(QChar(0x2713)).addUprightHtml("&check;");
@@ -499,53 +503,53 @@ void JKQTMathTextSymbolNode::fillSymbolTables()
         symbols["dagger"]=s; symbols["dag"]=s; symbols["textdagger"]=s; }
     { auto s=UprightSymbolUnicode(QChar(0x2021)).addUprightHtml("&ddagger;");
         symbols["ddagger"]=s; symbols["ddag"]=s; symbols["textdaggerdbl"]=s; }
-    { auto s=SymbolUnicode(QChar(0x2138)).addHtml("&daleth;");
+    { auto s=UnicodeSymbol(QChar(0x2138)).addHtml("&daleth;");
         symbols["dalet"]=s; symbols["Dalet"]=s; symbols["daleth"]=s; symbols["Daleth"]=s; }
     symbols["dd"] = SymbolFullProps(SymbolProps("d", Upright|BoldOff), "d", Upright|BoldOff);
     symbols["diamond"]=UprightSymbolUnicode(QChar(0x22C4)).addHtml("&diam;").addWinSymbol(QChar(0xE0));
-    symbols["dollar"]=SymbolUnicode(QChar(0x0024));
+    symbols["dollar"]=UnicodeSymbol(QChar(0x0024));
     { auto s=SimpleTextSymbol(QChar(0x24), "&dollar;");
         symbols["dollar"]=s; symbols["$"]=s; }
-    symbols["dprime"]=SymbolUnicode(QChar(0x2033)).addHtml("&Prime;").addStd("''");
+    symbols["dprime"]=UnicodeSymbol(QChar(0x2033)).addHtml("&Prime;").addStd("''");
     symbols["ee"] = SymbolFullProps(SymbolProps("e", Upright|BoldOff), "e", Upright|BoldOff);
-    { auto s=SymbolUnicode(QChar(0x2026)).addHtml("&mldr;").addWinSymbol(QChar(0xBC)).addStd("...");
+    { auto s=UnicodeSymbol(QChar(0x2026)).addHtml("&mldr;").addWinSymbol(QChar(0xBC)).addStd("...");
         symbols["ellipsis"]=s; symbols["dots"]=s; symbols["ldots"]=s; }
     { auto s=SimpleTextSymbol(QChar(0x20AC), "&euro;");
         symbols["euro"]=s; symbols["EUR"]=s; }
-    { auto s=SymbolUnicode(QChar(0x2109));
+    { auto s=UnicodeSymbol(QChar(0x2109));
         symbols["fahrenheit"]=s; symbols["degF"]=s; }
-    symbols["female"]=SymbolUnicode(QChar(0x2640)).addHtml("&female;");
-    symbols["flq"]=SymbolUnicode(QChar(0x2039)).addHtml("&lsaquo;").addStd("<");
-    symbols["flqq"]=SymbolUnicode(QChar(0x00AB)).addHtml("&laquo;").addStd(QChar(0xAB));
-    symbols["frown"]=SymbolUnicode(QChar(0x2322)).addHtml("&frown;");
-    symbols["frq"]=SymbolUnicode(QChar(0x203A)).addHtml("&rsaquo;").addStd(">");
-    symbols["frqq"]=SymbolUnicode(QChar(0x00BB)).addHtml("&raquo;").addStd(QChar(0xBB));
-    { auto s=SymbolUnicode(QChar(0x2137)).addHtml("&gimel;");
+    symbols["female"]=UnicodeSymbol(QChar(0x2640)).addHtml("&female;");
+    symbols["flq"]=UnicodeSymbol(QChar(0x2039)).addHtml("&lsaquo;").addStd("<");
+    symbols["flqq"]=UnicodeSymbol(QChar(0x00AB)).addHtml("&laquo;").addStd(QChar(0xAB));
+    symbols["frown"]=UnicodeSymbol(QChar(0x2322)).addHtml("&frown;");
+    symbols["frq"]=UnicodeSymbol(QChar(0x203A)).addHtml("&rsaquo;").addStd(">");
+    symbols["frqq"]=UnicodeSymbol(QChar(0x00BB)).addHtml("&raquo;").addStd(QChar(0xBB));
+    { auto s=UnicodeSymbol(QChar(0x2137)).addHtml("&gimel;");
         symbols["gimel"]=s; symbols["Gimel"]=s; }
-    symbols["glq"]=SymbolUnicode(QChar(0x2018)).addHtml("&OpenCurlyQuote;").addStd("'");
-    symbols["glqq"]=SymbolUnicode(QChar(0x201C)).addHtml("&OpenCurlyDoubleQuote;").addStd("\"");
-    symbols["grq"]=SymbolUnicode(QChar(0x2019)).addHtml("&CloseCurlyQuote;").addStd("'");
-    symbols["grqq"]=SymbolUnicode(QChar(0x201D)).addHtml("&CloseCurlyDoubleQuote;").addStd("\"");
+    symbols["glq"]=UnicodeSymbol(QChar(0x2018)).addHtml("&OpenCurlyQuote;").addStd("'");
+    symbols["glqq"]=UnicodeSymbol(QChar(0x201C)).addHtml("&OpenCurlyDoubleQuote;").addStd("\"");
+    symbols["grq"]=UnicodeSymbol(QChar(0x2019)).addHtml("&CloseCurlyQuote;").addStd("'");
+    symbols["grqq"]=UnicodeSymbol(QChar(0x201D)).addHtml("&CloseCurlyDoubleQuote;").addStd("\"");
     symbols["hbar"]=UprightSymbolUnicode(QChar(0x210F)).addUprightHtml("&hbar;").addStd("h", ItalicOn|DrawLeftHBar);
     symbols["hexagon"]=UprightSymbolUnicode(QChar(0x2394));
     symbols["ii"] = SymbolFullProps(SymbolProps("i", Upright|BoldOff), "i", Upright|BoldOff);
-    symbols["infty"]=SymbolUnicode(QChar(0x221E)).addHtml("&infin;").addWinSymbol(QChar(0xA5)).addStd("8", RotateSymbol90);
+    symbols["infty"]=UnicodeSymbol(QChar(0x221E)).addHtml("&infin;").addWinSymbol(QChar(0xA5)).addStd("8", RotateSymbol90);
     symbols["langle"]=UprightSymbolUnicode(QChar(0x2329)).addWinSymbol(QChar(0xE1));
     symbols["lceil"]=UprightSymbolUnicode(QChar(0x2308)).addHtml("&LeftCeiling;").addWinSymbol(QChar(0xE9));
     { auto s=SimpleTextSymbol("...").addUnicode(QChar(0x2026)).addWinSymbol(QChar(0xB6));
         symbols["ldots"]=s; symbols["dots"]=s; }
     symbols["lfloor"]=UprightSymbolUnicode(QChar(0x230A)).addHtml("&LeftFloor;").addWinSymbol(QChar(0xEB));
-    symbols["lightning"]=SymbolUnicode(QChar(0x21AF));
-    symbols["male"]=SymbolUnicode(QChar(0x2642)).addHtml("&male;");
+    symbols["lightning"]=UnicodeSymbol(QChar(0x21AF));
+    symbols["male"]=UnicodeSymbol(QChar(0x2642)).addHtml("&male;");
     symbols["measuredangle"]=UprightSymbolUnicode(QChar(0x2221)).addHtml("&measuredangle;");
     symbols["micro"] = SimpleTextSymbol(QChar(0xB5), "&micro;");
     symbols["ohm"]=UprightSymbolUnicode(QChar(0x2126)).addUprightHtml("&Omega;").addUprightWinSymbol(QChar(0x57));
     symbols["partial"]=UprightSymbolUnicode(QChar(0x2202)).addUprightHtml("&part;").addUprightWinSymbol(QChar(0xB6));
-    { auto s=SymbolUnicode(QChar(0x2030)).addHtml("&permil;");
+    { auto s=UnicodeSymbol(QChar(0x2030)).addHtml("&permil;");
         symbols["perthousand"]=s; symbols["permil"]=s; }
     symbols["pound"]=SimpleTextSymbol(QChar(0xA3), "&pound;");
-    symbols["pound"]=SymbolUnicode(QChar(0x00A3));
-    symbols["prime"]=SymbolUnicode(QChar(0x2032)).addHtml("&prime;").addStd("'");
+    symbols["pound"]=UnicodeSymbol(QChar(0x00A3));
+    symbols["prime"]=UnicodeSymbol(QChar(0x2032)).addHtml("&prime;").addStd("'");
     symbols["rangle"]=UprightSymbolUnicode(QChar(0x232A)).addWinSymbol(QChar(0xF1));
     symbols["rceil"]=UprightSymbolUnicode(QChar(0x2309)).addHtml("&RightCeiling;").addWinSymbol(QChar(0xF9));
     { auto s=SimpleTextSymbol(QChar(0xAA), "&reg;");
@@ -555,21 +559,21 @@ void JKQTMathTextSymbolNode::fillSymbolTables()
     symbols["smile"]=UprightSymbolUnicode(QChar(0x2323)).addHtml("&smile;");
     symbols["sphericalangle"]=UprightSymbolUnicode(QChar(0x2222)).addHtml("&angsph;");
     symbols["star"]=UprightSymbolUnicode(QChar(0x22C6));
-    symbols["tcohm"]=SymbolUnicode(QChar(0x2126));
+    symbols["tcohm"]=UnicodeSymbol(QChar(0x2126));
     symbols["textbar"]=SimpleTextSymbol("|", "&VerticalLine;");
     { auto s=SimpleTextSymbol(QChar(0xB0), "&deg;");
         symbols["textdegree"]=s; symbols["degree"] = s; }
     symbols["textgreater"]=SimpleTextSymbol(">", "&gt;");
     symbols["textless"]=SimpleTextSymbol("<", "&lt;");
-    { auto s=SymbolUnicode(QChar(0x231C));
+    { auto s=UnicodeSymbol(QChar(0x231C));
         symbols["tlcorner"]=s; symbols["ulcorner"]=s; }
-    symbols["trademark"]=SymbolUnicode(QChar(0x2122)).addHtml("&trade;").addWinSymbol(QChar(0xD4)).addStd("(TM)");
-    symbols["trapezium"]=SymbolUnicode(QChar(0x23E2)).addHtml("&trpezium;");
+    symbols["trademark"]=UnicodeSymbol(QChar(0x2122)).addHtml("&trade;").addWinSymbol(QChar(0xD4)).addStd("(TM)");
+    symbols["trapezium"]=UnicodeSymbol(QChar(0x23E2)).addHtml("&trpezium;");
     { auto s=UprightSymbolUnicode(QChar(0x231D));
         symbols["trcorner"]=s; symbols["urcorner"]=s; }
-    symbols["trprime"]=SymbolUnicode(QChar(0x2034)).addHtml("&tprime;").addStd("'''");
-    symbols["varcarriagereturn"]=SymbolUnicode(QChar(0x23CE)).addWinSymbol(QChar(0xBF));
-    symbols["varhexagonlrbonds"]=SymbolUnicode(QChar(0x232C));
+    symbols["trprime"]=UnicodeSymbol(QChar(0x2034)).addHtml("&tprime;").addStd("'''");
+    symbols["varcarriagereturn"]=UnicodeSymbol(QChar(0x23CE)).addWinSymbol(QChar(0xBF));
+    symbols["varhexagonlrbonds"]=UnicodeSymbol(QChar(0x232C));
     symbols["yen"]=SimpleTextSymbol(QChar(0xA5), "&yen;");
 
 
@@ -636,7 +640,7 @@ void JKQTMathTextSymbolNode::fillSymbolTables()
     symbols["Uparrow"]=UprightSymbolUnicode(QChar(0x21D1)).addUprightHtml("&DoubleUpArrow;").addUprightWinSymbol(QChar(0xDD));
     symbols["Updownarrow"]=UprightSymbolUnicode(QChar(0x21D5)).addUprightHtml("&Updownarrow;");
     symbols["approx"]=MathOperatorSymbolUnicode(QChar(0x2248)).addMathOperatorHtml("&asymp;").addMathOperatorWinSymbol(QChar(0xBB));
-    symbols["bbC"]=SymbolUnicode(QChar(0x2102));
+    symbols["bbC"]=UnicodeSymbol(QChar(0x2102));
     symbols["bbH"]=MathOperatorSymbolUnicode(QChar(0x210D));
     symbols["bbN"]=MathOperatorSymbolUnicode(QChar(0x2115));
     symbols["bbP"]=MathOperatorSymbolUnicode(QChar(0x2119));

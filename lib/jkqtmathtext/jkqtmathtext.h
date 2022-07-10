@@ -140,7 +140,7 @@ class JKQTMathTextNode; // forward
                                           symbols may differ (there are not all symbols defined in the MS Windows Symbol
                                           font!). Best coverage should be given by Unicode font encoding with a good
                                           unicode font installed!<br>\image html jkqtmathtext/jkqtmathtext_symbols.png
-      - <code>\\vec{x} \\dot{x} \\ddot{x} \\overline{x} \\underline{x} \\hat{x} \\tilde{x} \\uul{x} \\ool{x} \\bar{x} \\arrow{x} </code>: Decorations over/under symbols \image html jkqtmathtext/jkqtmathtext_mathdeco.png
+      - <code>\\vec{x} \\dot{x} \\ddot{x} \\overline{x} \\underline{x} \\hat{x} \\tilde{x} \\uul{x} \\ool{x} \\bar{x} \\arrow{x} \\widehat{x} \\widetilde{x} ...</code>: Decorations over/under symbols \image html jkqtmathtext/jkqtmathtext_mathdeco.png
       - <code>\\verb{don't parse this _aaa\\LaTeX} </code>: interpret enclosed text as verbose \image html jkqtmathtext/jkqtmathtext_verb.png
     .
 

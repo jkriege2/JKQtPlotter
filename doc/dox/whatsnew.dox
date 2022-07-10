@@ -40,6 +40,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>IMPROVED: added x-correction for sub/superscript above/below/besides integrals</li>
     <li>IMPROVED: rendering of sqrt</li>
     <li>IMPROVED: rendering and size calculation of decorations</li>
+    <li>IMPROVED: tokenizing and parsing of text in text-mode: now a lot of accents with commands like \"a, \'e and variants (e.g. {\"a}, \"{a}, ...) are supported now</li>
     <li>IMPROVED/breaking: refactored symbol node JKQTMathTextSymbolNode and changed font-lookup!</li>
     <li>IMPROVED/NEW/breaking: refactored whitespace-processing node JKQTMathTextWhitespaceNode, now all major LaTeX whitespace commands are supported properly</li>
     <li>IMPROVED/NEW/breaking: refactored LaTeX parser in JKQTMathText</li>
@@ -56,6 +57,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: added top-corner (\ulcorner/\urcorner) and bottom-corner brackets (\llcorner/\lrcorner)</li>
     <li>NEW: added \overbracket and \underbracket</li>
     <li>NEW: added \shaded{color}{...}</li>
+    <li>NEW: added \acute{X}, \grave{X}, \acute{X}</li>
     <li>NEW: added functions to set the font-size in pixels (as alternative to the existing functions that set them in points), implements request <a href="https://github.com/jkriege2/JKQtPlotter/issues/76">#76</a> from <a href="https://github.com/igormironchik">user:igormironchik</a> </li>
   </ul>
 </ul>
