@@ -16,7 +16,9 @@ endif()
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
     option(CMAKE_INSTALL_PREFIX "Install directory" ${CMAKE_CURRENT_SOURCE_DIR}/install)
 endif()
-
+if(NOT DEFINED QT_PRINT_SUPPORT)
+    option(QT_PRINT_SUPPORT "Use QtPrinterSupport" ON)
+endif()
 
 #evaluate the settings above
 if (NOT CMAKE_INSTALL_LIBDIR)
