@@ -10,7 +10,7 @@ if(${QT_VERSION_MAJOR} VERSION_GREATER_EQUAL "6")
     find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS OpenGLWidgets)
 endif()
 if (${QT_PRINT_SUPPORT})
-    set(QT_PRINT_SUPPORT_STRING ${QT_PRINT_SUPPORT_STRING})
+    set(QT_PRINT_SUPPORT_STRING Qt${QT_VERSION_MAJOR}::PrintSupport)
     find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS PrintSupport REQUIRED)
 endif ()
 # configure compiler
