@@ -19,11 +19,7 @@ endif()
 if(NOT DEFINED QT_PRINT_SUPPORT)
     option(QT_PRINT_SUPPORT "Use QtPrinterSupport" ON)
 endif()
-if (${CMAKE_SYSTEM_NAME} STREQUAL "iOS")
-    if(NOT DEFINED BUNDLE_DESTINATION)
-        option(BUNDLE_DESTINATION "MACOSX_BUNDLE Destination" "/Applications")
-    endif()
-endif()
+
 #evaluate the settings above
 if (NOT CMAKE_INSTALL_LIBDIR)
     set(CMAKE_INSTALL_LIBDIR "lib")
