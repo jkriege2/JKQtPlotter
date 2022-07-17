@@ -466,11 +466,15 @@ void JKQTPEnhancedTableView::keyPressEvent(QKeyEvent *event)
     if (event->matches(QKeySequence::Copy)) {
         copySelectionToExcel(Qt::EditRole, false);
         event->accept();
-    } else if (event->matches(QKeySequence::Print)) {
+    }
+#ifndef QT_NO_PRINTER
+    else if (event->matches(QKeySequence::Print)) {
         print();
         event->accept();
-    } else QTableView::keyPressEvent(event);
-    emit keyPressed(event->key(), event->modifiers(), event->text());
+    }
+#endif
+    else QTableView::keyPressEvent(event);
+        emit keyPressed(event->key(), event->modifiers(), event->text());
 }
 
 #ifndef QT_NO_PRINTER

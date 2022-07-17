@@ -3893,7 +3893,6 @@ void JKQTBasePlotter::copyPixelImage() {
 
 
 }
-#endif
 void JKQTBasePlotter::saveAsSVG(const QString& filename, bool displayPreview) {
     loadUserSettings();
     QString fn=filename;
@@ -3938,6 +3937,7 @@ void JKQTBasePlotter::saveAsSVG(const QString& filename, bool displayPreview) {
     }
     saveUserSettings();
 }
+#endif
 
 
 void JKQTBasePlotter::setPlotBorder(int left, int right, int top, int bottom){

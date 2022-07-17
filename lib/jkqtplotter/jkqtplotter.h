@@ -1007,12 +1007,13 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
             plotter->setShowZeroAxes(showXY);
         }
 
+#ifndef QT_NO_PRINTER
         /** \brief save the current plot as an image file, with the current widget aspect ratio, if filename is empty a file selection dialog is displayed.
         *          The image format is extracted from the file extension (jpeg, tiff, png, pdf, ...) */
         inline void saveImage(const QString& filename=QString(""), bool displayPreview=true) {
             plotter->saveImage(filename, displayPreview);
         }
-
+#endif
         /** \brief save the data used for the current plot. The file format is extracted from the file extension (csv, ...)
          *
          * The parameter \a format specifies the export format. if it is empty the format will be choosen according to the file extension, or

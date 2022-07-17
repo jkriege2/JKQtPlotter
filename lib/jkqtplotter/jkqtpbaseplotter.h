@@ -1312,10 +1312,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
 
         /** \brief copy the current plot as a pixel image to the clipboard */
         void copyPixelImage();
-#endif
+
         /** \brief save the current plot as a SVG file, with the current widget aspect ratio, if filename is empty a file selection dialog is displayed  */
         void saveAsSVG(const QString& filename=QString(""), bool displayPreview=true);
-#ifndef QT_NO_PRINTER
         /** \brief save the current plot as a PDF file, with the current widget aspect ratio, if filename is empty a file selection dialog is displayed  */
         void saveAsPDF(const QString& filename=QString(""), bool displayPreview=true);
 
