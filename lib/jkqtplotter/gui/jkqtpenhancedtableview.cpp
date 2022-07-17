@@ -32,7 +32,9 @@ Copyright (c) 2008-2020 Jan W. Krieger (<jan@jkrieger.de>)
 #include <QCheckBox>
 #include <QDialogButtonBox>
 #include <QHeaderView>
+#ifndef QT_NO_PRINTER
 #include <QPrintDialog>
+#endif
 #include <QLabel>
 #include "jkqtplotter/jkqtptools.h"
 #include "jkqtcommon/jkqtpenhancedpainter.h"
@@ -57,10 +59,12 @@ JKQTPEnhancedTableView::JKQTPEnhancedTableView(QWidget *parent):
     act=new QAction(QIcon(":/JKQTPlotter/jkqtp_copy16_nohead.png"), tr("Copy Selection to clipboard (as CSV ...) without header row/column"), this);
     connect(act, SIGNAL(triggered()), this, SLOT(copySelectionToCSVNoHead()));
     addAction(act);
+#ifndef QT_NO_PRINTER
     act=new QAction(QIcon(":/JKQTPlotter/jkqtp_printtable.png"), tr("Print Table"), this);
     connect(act, SIGNAL(triggered()), this, SLOT(print()));
     addAction(act);
     printAction=act;
+#endif
 }
 
 JKQTPEnhancedTableView::~JKQTPEnhancedTableView()

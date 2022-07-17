@@ -1024,12 +1024,12 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
         inline void saveData(const QString& filename=QString(""), const QString& format=QString("")) {
             plotter->saveData(filename, format);
         }
-
+#ifndef QT_NO_PRINTER
         /** \brief print the current plot, if printer is \c nullptr a printer selection dialog is displayed */
         inline void print(QPrinter* printer=nullptr) {
             plotter->print(printer);
         }
-
+#endif
         /** \brief copy displayed data to cpliboard */
         inline void copyData() {
             plotter->copyData();

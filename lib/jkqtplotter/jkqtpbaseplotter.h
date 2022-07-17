@@ -37,7 +37,9 @@
 #include <QMap>
 #include <QVector>
 #include <QPair>
+#ifndef QT_NO_PRINTER
 #include <QtPrintSupport/QPrintPreviewWidget>
+#endif
 #include <QDoubleSpinBox>
 #include <QLabel>
 #include <QPointer>
@@ -1385,10 +1387,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
          * \param filename the file to save to, if \a filename is empty, a file open dialog will be shown
          */
         void saveAsGerExcelCSV(const QString& filename=QString(""));
-
+#ifndef QT_NO_PRINTER
         /** \brief print the current plot, if printer is \c nullptr a printer selection dialog is displayed */
         void print(QPrinter* printer=nullptr, bool displayPreview=true);
-
+#endif
         /** \brief this method zooms the graph so that all plotted datapoints are visible.
          *
          * \param zoomX if set \c true (default) zooms the x axis
@@ -1687,6 +1689,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
          * \internal
          */
         void updatePreviewLabel();
+#ifndef QT_NO_PRINTER
         /** \brief internal function for print preview
          * \internal
          */
@@ -1695,6 +1698,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
          * \internal
          */
         void printpreviewPaintRequestedNew(QPrinter *printer);
+#endif
         /** \brief internal function for print preview
          * \internal
          */
@@ -2126,7 +2130,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         double printSizeX_Millimeter;
         double printSizeY_Millimeter;
         double printMagnification;
+#ifndef QT_NO_PRINTER
         QPointer<QPrintPreviewWidget> printPreview;
+#endif
         QPointer<JKQTPEnhancedDoubleSpinBox> spinSizeX;
         QPointer<JKQTPEnhancedDoubleSpinBox> spinSizeY;
         QPointer<QLabel> exportPreviewLabel;

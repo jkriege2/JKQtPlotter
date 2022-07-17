@@ -35,9 +35,11 @@ Copyright (c) 2008-2020 Jan W. Krieger (<jan@jkrieger.de>)
 #include <QCheckBox>
 #include <QGridLayout>
 #include <QLabel>
+#ifndef QT_NO_PRINTER
 #include <QPrinter>
-#include <QHeaderView>
 #include <QPrintDialog>
+#endif
+#include <QHeaderView>
 #include <QDialogButtonBox>
 #include <cstring>
 #include <cstdlib>
