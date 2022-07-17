@@ -1306,22 +1306,23 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
          * \param showXY indicates whether to show the zero-axis associated with the x- and y-axis
          * */
         void setShowZeroAxes(bool showXY);
-
+#ifndef QT_NO_PRINTER
         /** \brief save the current plot as a pixel image image (PNG ...), if filename is empty a file selection dialog is displayed */
         void saveAsPixelImage(const QString& filename=QString(""), bool displayPreview=true, const QByteArray &outputFormat=QByteArray());
 
         /** \brief copy the current plot as a pixel image to the clipboard */
         void copyPixelImage();
-
+#endif
         /** \brief save the current plot as a SVG file, with the current widget aspect ratio, if filename is empty a file selection dialog is displayed  */
         void saveAsSVG(const QString& filename=QString(""), bool displayPreview=true);
-
+#ifndef QT_NO_PRINTER
         /** \brief save the current plot as a PDF file, with the current widget aspect ratio, if filename is empty a file selection dialog is displayed  */
         void saveAsPDF(const QString& filename=QString(""), bool displayPreview=true);
 
         /** \brief save the current plot as an image file, with the current widget aspect ratio, if filename is empty a file selection dialog is displayed.
         *          The image format is extracted from the file extension (jpeg, tiff, png, pdf, ...) */
         void saveImage(const QString& filename=QString(""), bool displayPreview=true);
+#endif
 
         /** \brief save the data used for the current plot. The file format is extracted from the file extension (csv, ...)
          *
@@ -1664,12 +1665,13 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
          * The implementation in here returns zero size!
          */
         void getKeyExtent(JKQTPEnhancedPainter& painter, double *width, double *height, double *text_width=nullptr, double *text_height=nullptr, int *columns_count=nullptr, int* lines_count=nullptr);
+#ifndef QT_NO_PRINTER
         /** \brief show the print preview window for a given print \a p */
         bool printpreviewNew(QPaintDevice* paintDevice, bool setAbsolutePaperSize=false, double printsizeX_inMM=-1.0, double printsizeY_inMM=-1.0, bool displayPreview=true);
 
         /** \brief show the export preview window for a given page size \a pageSize, either in pixels (\a unitIsMM \c ==false ) or in millimeters (\a unitIsMM \c ==true ) */
         bool exportpreview(QSizeF pageSize, bool unitIsMM=false);
-
+#endif
         /** \copydoc fontSizeMultiplier */
         void setFontSizeMultiplier(double __value);
         /** \copydoc lineWidthMultiplier */

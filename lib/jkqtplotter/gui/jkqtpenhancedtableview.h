@@ -66,7 +66,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPEnhancedTableView : public QTableView {
          * \image html JKQTPEnhancedTableViewPrintSinglepage.png "Print on one page (onePageWide=true onePageHigh=true)"
          */
         void print(QPrinter* printer, bool onePageWide=false, bool onePageHigh=false);
-#endif
         /** \brief draw the contents of the table-view into the given \a pageRect, using the given \a painter
          *
          * The output look like this:
@@ -76,7 +75,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPEnhancedTableView : public QTableView {
          * \see print()
          */
         void paint(QPainter& painter, QRect pageRec=QRect());
-        /** \brief returns the totoal size of the table-view \see paint() */
+#endif
+
+    /** \brief returns the totoal size of the table-view \see paint() */
         QSizeF getTotalSize() const;
 #ifndef QT_NO_PRINTER
         /** \brief return a QAction that prints the table using the methode print() \see print() */
@@ -111,7 +112,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPEnhancedTableView : public QTableView {
          * \see copySelectionToCSV()
          */
         void copySelectionToCSVNoHead(int copyrole=Qt::EditRole, const QString& separator=", ", const QChar& decimalpoint='.');
-        /** \brief print the table contents
+#ifndef QT_NO_PRINTER
+    /** \brief print the table contents
          *
          * Before printing this function opens a <a href="http://doc.qt.io/qt-5/qprintdialog.html">QPrintDialog</a> to select a printer
          * and then opens a second dialog that allows to set different options for the printout:
@@ -129,7 +131,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPEnhancedTableView : public QTableView {
          *
          */
         void print();
-
+#endif
     protected:
         /** \brief handles key presses and reacts to some standard keys
          *  \internal
