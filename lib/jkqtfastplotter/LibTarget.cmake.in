@@ -7,7 +7,7 @@
 
 
 # package requires Qt 5/6
-find_package(Qt@QT_VERSION_MAJOR@ COMPONENTS Core Gui Widgets PrintSupport Svg Xml OpenGL REQUIRED)
+find_package(Qt@QT_VERSION_MAJOR@ COMPONENTS Core Gui Widgets @QT_PRINT_SUPPORT_STRING@ Svg Xml OpenGL REQUIRED)
 if(${QT_VERSION_MAJOR} VERSION_GREATER_EQUAL "6")
     find_package(Qt@QT_VERSION_MAJOR@ REQUIRED COMPONENTS OpenGLWidgets)
 endif()
