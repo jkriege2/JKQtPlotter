@@ -1758,10 +1758,11 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         /** \brief internal function for print preview
          * \internal
          */
-#endif
 
         void printpreviewUpdate();
-        /** \brief internal function for getDataColumnsByUser()
+#endif
+
+    /** \brief internal function for getDataColumnsByUser()
          * \internal
          */
         void getDataColumnsByUserCheckAll();
