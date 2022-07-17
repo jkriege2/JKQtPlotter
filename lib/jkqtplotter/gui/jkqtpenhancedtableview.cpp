@@ -473,7 +473,7 @@ void JKQTPEnhancedTableView::keyPressEvent(QKeyEvent *event)
     emit keyPressed(event->key(), event->modifiers(), event->text());
 }
 
-
+#ifndef QT_NO_PRINTER
 void JKQTPEnhancedTableView::print()
 {
     QPrinter* tablePrinter=getPrinter(nullptr);
@@ -501,6 +501,7 @@ void JKQTPEnhancedTableView::print()
         delete tablePrinter;
     }
 }
+
 
 
 
@@ -630,7 +631,7 @@ void JKQTPEnhancedTableView::paint(QPainter &painter, QRect pageRect)
     paint(painter, scale, -1, hhh, vhw, pageCols, pageRows);
     
 }
-
+#endif
 QSizeF JKQTPEnhancedTableView::getTotalSize() const
 {
     const int rows = model()->rowCount();
@@ -652,7 +653,7 @@ QSizeF JKQTPEnhancedTableView::getTotalSize() const
 
     return QSizeF((totalWidth), (totalHeight));
 }
-
+#ifndef QT_NO_PRINTER
 void JKQTPEnhancedTableView::paint(QPainter &painter, double scale, int page, double hhh, double vhw, const QList<int>& pageCols, const QList<int>& pageRows, QPrinter* p)
 {
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
@@ -772,3 +773,4 @@ QPrinter *JKQTPEnhancedTableView::getPrinter(QPrinter *printerIn, bool *localPri
     return p;
 }
 
+#endif

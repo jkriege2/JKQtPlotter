@@ -1685,11 +1685,11 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
 
 
     protected slots:
+#ifndef QT_NO_PRINTER
         /** \brief internal function for print/export preview
          * \internal
          */
         void updatePreviewLabel();
-#ifndef QT_NO_PRINTER
         /** \brief internal function for print preview
          * \internal
          */
@@ -1698,7 +1698,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
          * \internal
          */
         void printpreviewPaintRequestedNew(QPrinter *printer);
-#endif
         /** \brief internal function for print preview
          * \internal
          */
@@ -1758,6 +1757,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         /** \brief internal function for print preview
          * \internal
          */
+#endif
+
         void printpreviewUpdate();
         /** \brief internal function for getDataColumnsByUser()
          * \internal

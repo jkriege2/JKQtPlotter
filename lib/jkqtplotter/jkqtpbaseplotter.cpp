@@ -28,14 +28,16 @@
 #include <QSvgGenerator>
 #include <QDebug>
 #include <QElapsedTimer>
+#ifndef QT_NO_PRINTER
 #include <QtPrintSupport/QPrintPreviewWidget>
+#include <QPrinter>
+#include <QPrinterInfo>
+#include <QPrintDialog>
+#endif
 #include <QDialog>
 #include "jkqtplotter/jkqtpbaseplotter.h"
 #include "jkqtplotter/gui/jkqtpgraphsmodel.h"
 #include "jkqtplotter/gui/jkqtpenhancedtableview.h"
-#include <QPrinter>
-#include <QPrinterInfo>
-#include <QPrintDialog>
 #include <QGridLayout>
 #include <QCheckBox>
 #include <QDialogButtonBox>
@@ -191,8 +193,9 @@ JKQTBasePlotter::JKQTBasePlotter(bool datastore_internal, QObject* parent, JKQTP
     lineWidthMultiplier=1;
     userSettigsFilename=globalUserSettigsFilename;
     userSettigsPrefix=globalUserSettigsPrefix;
+#ifndef QT_NO_PRINTER
     currentPrinter=QPrinterInfo::defaultPrinter().printerName();
-
+#endif
     if (datastore_internal) {
       datastore=new JKQTPDatastore();
       datastoreInternal=true;
@@ -1466,7 +1469,7 @@ void JKQTBasePlotter::gridPaint(JKQTPEnhancedPainter& painter, QSizeF pageRect, 
 }
 
 
-
+#ifndef QT_NO_PRINTER
 void JKQTBasePlotter::print(QPrinter* printer, bool displayPreview) {
     loadUserSettings();
     QPrinter* p=printer;
@@ -1865,7 +1868,7 @@ bool JKQTBasePlotter::exportpreview(QSizeF pageSize, bool unitIsMM) {
     }
     return result;
 }
-
+#endif
 void JKQTBasePlotter::setFontSizeMultiplier(double __value)
 {
     this->fontSizeMultiplier = __value;
@@ -1896,6 +1899,7 @@ double JKQTBasePlotter::getPaintMagnification() const
     return this->paintMagnification;
 }
 
+#ifndef QT_NO_PRINTER
 void JKQTBasePlotter::updatePreviewLabel() {
     double factor=1;
     if (exportUnitInMM) factor=600.0/double(printSizeX_Millimeter);
@@ -1912,7 +1916,6 @@ void JKQTBasePlotter::updatePreviewLabel() {
         exportPreviewLabel->resize(pm.size());
     }
 }
-
 void JKQTBasePlotter::printpreviewPaintRequested(QPrinter* printer) {
     double lw=lineWidthMultiplier;
     double fs=fontSizeMultiplier;
@@ -2088,7 +2091,6 @@ void JKQTBasePlotter::printpreviewPaintRequestedNew(QPaintDevice *paintDevice)
     paintMagnification=oldpm;
     plotterStyle.widgetBackgroundBrush=bc;
 }
-
 void JKQTBasePlotter::exportpreviewPaintRequested(JKQTPEnhancedPainter &painter, QSize size) {
     double lw=lineWidthMultiplier;
     double fs=fontSizeMultiplier;
@@ -2115,7 +2117,6 @@ void JKQTBasePlotter::exportpreviewPaintRequested(JKQTPEnhancedPainter &painter,
     fontSizeMultiplier=fs;
     plotterStyle.widgetBackgroundBrush=bc;
 }
-
 void JKQTBasePlotter::printpreviewSetZoom(double value) {
     printZoomFactor=value/100.0;
     if (printPreview) printPreview->updatePreview();
@@ -2141,7 +2142,6 @@ void JKQTBasePlotter::printpreviewSetSizeY(double value) {
         if (exportPreviewLabel) updatePreviewLabel();
     }
 }
-
 void JKQTBasePlotter::printpreviewSetSizeXNew(double value) {
     printSizeX_Millimeter=value;
     if (printKeepAspect) {
@@ -2154,13 +2154,11 @@ void JKQTBasePlotter::printpreviewSetSizeYNew(double value) {
     printSizeY_Millimeter=value;
 
 }
-
 void JKQTBasePlotter::printpreviewSetMagnification(double value) {
     printMagnification=value/100.0;
     if (printPreview) printPreview->updatePreview();
     if (exportPreviewLabel) updatePreviewLabel();
 }
-
 
 void JKQTBasePlotter::printpreviewSetMagnificationNew(double value)
 {
@@ -2221,7 +2219,7 @@ void JKQTBasePlotter::printpreviewUpdate()
         if (exportPreviewLabel) updatePreviewLabel();
     }
 }
-
+#endif
 void JKQTBasePlotter::draw(JKQTPEnhancedPainter& painter, const QRect& rect) {
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot(QString("JKQTBasePlotter::draw(rect, %1)"));
@@ -3576,7 +3574,7 @@ void JKQTBasePlotter::saveAsGerExcelCSV(const QString& filename) {
     }
     saveUserSettings();
 }
-
+#ifndef QT_NO_PRINTER
 void JKQTBasePlotter::saveAsPDF(const QString& filename, bool displayPreview) {
     loadUserSettings();
     QString fn=filename;
@@ -3895,7 +3893,7 @@ void JKQTBasePlotter::copyPixelImage() {
 
 
 }
-
+#endif
 void JKQTBasePlotter::saveAsSVG(const QString& filename, bool displayPreview) {
     loadUserSettings();
     QString fn=filename;
@@ -4960,8 +4958,9 @@ void JKQTBasePlotter::showPlotData() {
 
     JKQTPEnhancedTableView* tv=new JKQTPEnhancedTableView(dlg);
     layout->addWidget(tv);
+#ifndef QT_NO_PRINTER
     tb->addAction(tv->getActionPrint());
-
+#endif
     JKQTPDatastoreModel* model=new JKQTPDatastoreModel(getDatastore(), this);
     tv->setModel(model);
     tv->resizeColumnsToContents();
