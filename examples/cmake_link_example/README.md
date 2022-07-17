@@ -48,7 +48,7 @@ This example uses very simple code, which simply displays a plotter and shows so
 	target_link_libraries(${EXENAME} Qt5::Core Qt5::Widgets Qt5::Gui Qt5::PrintSupport Qt5::Svg Qt5::Xml JKQTPlotterLib)
 
 	# Installation
-	install(TARGETS ${EXENAME} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} BUNDLE DESTINATION ${CMAKE_INSTALL_BINDIR})
+	install(TARGETS ${EXENAME} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 	#Installation of Qt DLLs on Windows
 	include(${CMAKE_CURRENT_SOURCE_DIR}/../../cmake/jkqtplotter_deployqt.cmake)

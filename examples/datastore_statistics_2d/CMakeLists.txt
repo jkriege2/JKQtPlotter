@@ -15,14 +15,14 @@ set(UIS  )
 add_executable(${EXENAME} WIN32 ${SOURCES} ${HEADERS} ${RESOURCES} ${UIS})
 target_include_directories(${EXENAME} PRIVATE ../../lib)
 if(JKQtPlotter_BUILD_STATIC_LIBS)
-    target_link_libraries(${EXENAME} JKQTPlotterLib ${QT_PRINT_SUPPORT_STRING} Qt${QT_VERSION_MAJOR}::Xml)
+    target_link_libraries(${EXENAME} JKQTPlotterLib Qt${QT_VERSION_MAJOR}::PrintSupport Qt${QT_VERSION_MAJOR}::Xml)
 elseif(JKQtPlotter_BUILD_SHARED_LIBS)
-    target_link_libraries(${EXENAME} JKQTPlotterSharedLib ${QT_PRINT_SUPPORT_STRING} Qt${QT_VERSION_MAJOR}::Xml)
+    target_link_libraries(${EXENAME} JKQTPlotterSharedLib Qt${QT_VERSION_MAJOR}::PrintSupport Qt${QT_VERSION_MAJOR}::Xml)
 endif()
 
 
 
 # Installation
-install(TARGETS ${EXENAME} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} BUNDLE DESTINATION ${CMAKE_INSTALL_BINDIR})
+install(TARGETS ${EXENAME} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 #Installation of Qt DLLs on Windows
 jkqtplotter_deployqt(${EXENAME})
