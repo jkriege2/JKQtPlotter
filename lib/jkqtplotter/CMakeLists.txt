@@ -201,7 +201,7 @@ if(JKQtPlotter_BUILD_SHARED_LIBS)
     )
     set_property(TARGET ${libsh_name} PROPERTY VERSION "${PROJECT_VERSION}")
     set_property(TARGET ${libsh_name} PROPERTY OUTPUT_NAME  "${libsh_name_decorated}")
-    target_link_libraries(${libsh_name} PUBLIC Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Gui Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::PrintSupport Qt${QT_VERSION_MAJOR}::Svg Qt${QT_VERSION_MAJOR}::Xml JKQTCommonSharedLib JKQTMathTextSharedLib)
+    target_link_libraries(${libsh_name} PUBLIC Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Gui Qt${QT_VERSION_MAJOR}::Widgets ${QT_PRINT_SUPPORT_STRING} Qt${QT_VERSION_MAJOR}::Svg Qt${QT_VERSION_MAJOR}::Xml JKQTCommonSharedLib JKQTMathTextSharedLib)
     if(${QT_VERSION_MAJOR} VERSION_LESS "6")
         set_property(TARGET ${libsh_name} PROPERTY CXX_STANDARD 11)
         set_property(TARGET ${libsh_name} PROPERTY CXX_STANDARD_REQUIRED TRUE)
@@ -256,7 +256,7 @@ if(JKQtPlotter_BUILD_STATIC_LIBS)
         $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/../>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>  
     )
-    target_link_libraries(${lib_name} PUBLIC Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Gui Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::PrintSupport Qt${QT_VERSION_MAJOR}::Svg Qt${QT_VERSION_MAJOR}::Xml JKQTCommonLib JKQTMathTextLib)
+    target_link_libraries(${lib_name} PUBLIC Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Gui Qt${QT_VERSION_MAJOR}::Widgets ${QT_PRINT_SUPPORT_STRING} Qt${QT_VERSION_MAJOR}::Svg Qt${QT_VERSION_MAJOR}::Xml JKQTCommonLib JKQTMathTextLib)
     write_basic_package_version_file(${CMAKE_CURRENT_BINARY_DIR}/${lib_name}Version.cmake
                                      VERSION ${PROJECT_VERSION} 
                                      COMPATIBILITY AnyNewerVersion )    
@@ -324,5 +324,5 @@ install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${lib_name}_Readme.txt" DESTINATION d
 install(FILES "${PROJECT_SOURCE_DIR}/LICENSE" DESTINATION doc/JKQtPlotter RENAME "${lib_name}_LICENSE.txt" )
 
 
-#get_target_property(printsupp_inc Qt${QT_VERSION_MAJOR}::PrintSupport INTERFACE_INCLUDE_DIRECTORIES)
-#message("Qt${QT_VERSION_MAJOR}::PrintSupport::INTERFACE_INCLUDE_DIRECTORIES = ${printsupp_inc}")
+#get_target_property(printsupp_inc ${QT_PRINT_SUPPORT_STRING} INTERFACE_INCLUDE_DIRECTORIES)
+#message("${QT_PRINT_SUPPORT_STRING}::INTERFACE_INCLUDE_DIRECTORIES = ${printsupp_inc}")

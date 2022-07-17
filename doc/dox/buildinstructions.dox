@@ -117,7 +117,7 @@ Here is the \c CMakeLists.txt from that directory:
 	target_link_libraries(${EXENAME} Qt5::Core Qt5::Widgets Qt5::Gui Qt5::PrintSupport Qt5::Svg Qt5::Xml JKQTPlotterLib)
 
 	# Installation
-	install(TARGETS ${EXENAME} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+	install(TARGETS ${EXENAME} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} BUNDLE DESTINATION ${CMAKE_INSTALL_BINDIR})
 \endcode
 
 

@@ -24,7 +24,7 @@ if(OpenCV_FOUND)
     target_link_libraries(${EXENAME} ${OpenCV_LIBS} )
 
     # Installation
-    install(TARGETS ${EXENAME} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+    install(TARGETS ${EXENAME} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} BUNDLE DESTINATION ${CMAKE_INSTALL_BINDIR})
     
 
     #Installation of Qt DLLs on Windows

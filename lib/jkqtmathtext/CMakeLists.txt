@@ -89,7 +89,7 @@ if(JKQtPlotter_BUILD_SHARED_LIBS)
     add_library(${libsh_name} SHARED  ${SOURCES} ${RESOURCES} ${HEADERS} )
     set_property(TARGET ${libsh_name} PROPERTY VERSION "${PROJECT_VERSION}")
     set_property(TARGET ${libsh_name} PROPERTY OUTPUT_NAME  "${libsh_name_decorated}")
-    target_link_libraries(${libsh_name} PUBLIC Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Gui Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::PrintSupport JKQTCommonSharedLib)
+    target_link_libraries(${libsh_name} PUBLIC Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Gui Qt${QT_VERSION_MAJOR}::Widgets ${QT_PRINT_SUPPORT_STRING} JKQTCommonSharedLib)
     target_compile_definitions(${libsh_name} PUBLIC JKQTMATHTEXT_LIB_IN_DLL)
     target_compile_definitions(${libsh_name} PRIVATE JKQTMATHTEXT_LIB_EXPORT_LIBRARY)
     if(${QT_VERSION_MAJOR} VERSION_LESS "6")
@@ -146,7 +146,7 @@ if(JKQtPlotter_BUILD_STATIC_LIBS)
     if(JKQtPlotter_BUILD_INCLUDE_XITS_FONTS)
         target_compile_definitions(${lib_name} PRIVATE JKQTMATHTEXT_COMPILED_WITH_XITS)
     endif(JKQtPlotter_BUILD_INCLUDE_XITS_FONTS)
-    target_link_libraries(${lib_name} PUBLIC Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Gui Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::PrintSupport JKQTCommonLib)
+    target_link_libraries(${lib_name} PUBLIC Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Gui Qt${QT_VERSION_MAJOR}::Widgets ${QT_PRINT_SUPPORT_STRING} JKQTCommonLib)
 	  target_include_directories(${lib_name} PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/../>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>  
