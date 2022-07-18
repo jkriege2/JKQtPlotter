@@ -29,11 +29,11 @@ This software is licensed under the term of the [GNU Lesser General Public Licen
 ![EXAMPLES-Page](./screenshots/examplesbanner.png)
 
 ## Main Features
-- 2D Plotter widget class (JKQTPlotter)
+- 2D Plotter widget class ([JKQTPlotter](http://jkriege2.github.io/JKQtPlotter/group__jkqtplotter.html)
   - high-quality plotting
   - no other dependencies than Qt >= 5.0 ([CImg](https://cimg.eu/) and [OpenCV](https://opencv.org/) are optional dependencies)
   - highly customizable axes/grids (linear/log, date/time, custom ticks ...)
-  - integrated LaTeX parser (pure C++, no dependencies) to render mathematical equations in axis labels, ticks, ...
+  - [JKQTMathText:](http://jkriege2.github.io/JKQtPlotter/group__jkqtmathtext.html) integrated LaTeX parser (pure C++, no dependencies) to render mathematical equations in axis labels, ticks, ...
   - extensive user-interactions pre-programmed (several zooming modes, selecting regions, custom context menus, switch graph visibility, ...)
   - full print and export (PDF,PNG,...) support with preview and parametrization out-the-box
   - highly customizable look and feel
@@ -68,6 +68,10 @@ This software is licensed under the term of the [GNU Lesser General Public Licen
 ## [Documentation](http://jkriege2.github.io/JKQtPlotter/index.html)
 A Documentation (auto-)generated with [doxygen](http://www.doxygen.nl/) from the trunk source code can be found here: 
 **[http://jkriege2.github.io/JKQTPlotter/index.html](http://jkriege2.github.io/JKQtPlotter/index.html)**
+
+There are also some subpage of general intetest:
+- [TODO List](http://jkriege2.github.io/JKQtPlotter/page_todo.html)
+- [Release Notes & Version Overview](http://jkriege2.github.io/JKQtPlotter/page_whatsnew.html)
 
 ## [Examples](./examples/)
 There is a [large set of usage examples (with explanations for each) and tutorials](./examples/) in the folder [`./examples/`](./examples).

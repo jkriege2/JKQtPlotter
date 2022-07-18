@@ -45,6 +45,7 @@ function(JKQtFastPlotter_setDefaultLibOptions TARGETNAME)
         set_property(TARGET ${TARGETNAME} PROPERTY CXX_STANDARD 17)
         set_property(TARGET ${TARGETNAME} PROPERTY CXX_STANDARD_REQUIRED TRUE)
         target_compile_features(${TARGETNAME} PUBLIC cxx_std_17)
+        target_link_libraries(${TARGETNAME} PUBLIC Qt${QT_VERSION_MAJOR}::OpenGLWidgets)
     endif()
     if(MINGW)
       # COMPILER-SETTINGS FOR MINGW
