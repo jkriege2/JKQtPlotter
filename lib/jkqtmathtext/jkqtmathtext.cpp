@@ -1247,6 +1247,24 @@ JKQTMathText::tokenType JKQTMathText::getToken() {
         fAddUml("c", 'H', QChar(0x1E28));
         fAddUml("c", 'h', QChar(0x1E29));
 
+        fAddUml("H", 'O', QChar(0x150));
+        fAddUml("H", 'o', QChar(0x151));
+        fAddUml("H", 'U', QChar(0x170));
+        fAddUml("H", 'u', QChar(0x171));
+        fAddUml("H", 'Y', QChar(0x4F2));
+        fAddUml("H", 'y', QChar(0x4F3));
+
+        fAddUml("k", 'A', QChar(0x104));
+        fAddUml("k", 'a', QChar(0x105));
+        fAddUml("k", 'E', QChar(0x118));
+        fAddUml("k", 'e', QChar(0x119));
+        fAddUml("k", 'I', QChar(0x12E));
+        fAddUml("k", 'i', QChar(0x12F));
+        fAddUml("k", 'U', QChar(0x172));
+        fAddUml("k", 'u', QChar(0x173));
+        fAddUml("k", 'O', QChar(0x1EA));
+        fAddUml("k", 'u', QChar(0x1EB));
+
         // ligatures, instructions without {letter}
         fAddUml("ss", QChar(), QChar(0xDF));
         fAddUml("ae", QChar(), QChar(0xE6));
