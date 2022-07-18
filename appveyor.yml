@@ -58,11 +58,17 @@ environment:
       COMPILER: GCC
       QTVER: 6.2
       CMAKE_GENERATOR: "Unix Makefiles"
+
+    - QTABI: macos
+      COMPILER: CLANG
+      QTVER: 6.2
+      CMAKE_GENERATOR: "Unix Makefiles"
       
 image:
   # AppVeyor builds are ordered by the image list:
   - Visual Studio 2019
   - Ubuntu2004
+  - macos-monterey
 
 matrix:
   exclude:
@@ -73,6 +79,8 @@ matrix:
       QTABI: mingw53_32
     - image: Visual Studio 2019
       QTABI: msvc2015
+    - image: Visual Studio 2019
+      QTABI: macos
     - image: Ubuntu2004
       QTABI: mingw81_64
     - image: Ubuntu2004
@@ -83,6 +91,20 @@ matrix:
       QTABI: msvc2015
     - image: Ubuntu2004
       QTABI: mingw53_32
+    - image: Ubuntu2004
+      QTABI: macos
+    - image: macos-monterey
+      QTABI: msvc2015_64
+    - image: macos-monterey
+      QTABI: msvc2015
+    - image: macos-monterey
+      QTABI: mingw53_32
+    - image: macos-monterey
+      QTABI: gcc_64
+    - image: macos-monterey
+      QTABI: mingw81_64
+    - image: macos-monterey
+      QTABI: msvc2019_64
 
 
 for:
@@ -145,12 +167,12 @@ for:
 
 
 
-
-  # Linux (Ubuntu2004)
+  # Linux (Ubuntu2004) and MacOS (Monterey)
   - 
     matrix:
       only:
         - image: Ubuntu2004
+        - image: macos-monterey
             
     init:
       - sh: echo == INIT SYSTEM ENVIRONMENT ======================================================================
