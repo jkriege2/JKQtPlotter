@@ -248,7 +248,6 @@ for:
       - sh: mkdir build
       - sh: cd build
       - sh: echo --- Run CMake Configure ----------------------------------------------------------------------------- 
-      - sh: doxygen --version 
       - sh: cmake --version 
       - sh: cmake -G "$CMAKE_GENERATOR" "-DCMAKE_PREFIX_PATH=$QTDIR" .. 
       - sh: echo --- Build using CMake ------------------------------------------------------------------------------- 
