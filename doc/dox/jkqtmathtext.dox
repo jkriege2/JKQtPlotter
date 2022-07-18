@@ -17,7 +17,7 @@
   \ingroup jkqtmathtext
 
   \defgroup jkqtmathtext_items JKQTMathText Render-Tree Items
-  \ingroup jkqtmathtext_render
+  \ingroup jkqtmathtext
 
   \defgroup jkqtmathtext_widgets JKQTMathText widgets
   \ingroup jkqtmathtext
@@ -25,8 +25,5 @@
   \defgroup jkqtmathtext_tools JKQTMathText Tool Functions and Types
   \ingroup jkqtmathtext
   
-  \defgroup jkqtmathtext_tools JKQTMathText Tool Functions and Types
-  \ingroup jkqtmathtext
-
 
 */
