@@ -38,10 +38,14 @@ TestUserInteraction::TestUserInteraction(QWidget *parent) :
     // Some of the are also available in the context menu and toolbar of the JKQTPlotter
     // others are not
     QMenu* menuPlot=menuBar()->addMenu("Plot-Menu");
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
     menuPlot->addAction(plot->getPlotter()->getActionPrint());
+#endif
     QMenu* menuPlotS=menuPlot->addMenu("Save ...");
     menuPlotS->addAction(plot->getPlotter()->getActionSaveData());
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
     menuPlotS->addAction(plot->getPlotter()->getActionSavePDF()); // not available from JKQTPlotter by default
+#endif
     menuPlotS->addAction(plot->getPlotter()->getActionSavePlot());
     QMenu* menuPlotZ=menuPlot->addMenu("Zoom ...");
     menuPlotZ->addAction(plot->getPlotter()->getActionZoomAll());

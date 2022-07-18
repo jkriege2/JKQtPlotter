@@ -33,7 +33,7 @@ This page lists several todos and wishes for future version of JKQTPlotter
     <li>graphs: add candlestick charts (financial, see https://en.m.wikipedia.org/wiki/Candlestick_chart)</li>
     <li>graphs: add OHLC charts (financial, see https://en.m.wikipedia.org/wiki/Open-high-low-close_chart)</li>
     <li>graphs: explore/demonstrate/improve plotting speed for large dataset (e.g. only draw visible elements, use algorithm to draw fewer lines if they overlay ...)</li>
-    <li></li>
+    <li>plot: refactor print preview/export preview code </li>
     <li></li>
     <li></li>
   </ul></li>

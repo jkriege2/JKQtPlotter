@@ -51,6 +51,7 @@ The CMake build system offers several configuration variables that you may set/c
   - \c JKQtPlotter_BUILD_SHARED_LIBS : Build as shared library (default: \c ON )
   - \c JKQtPlotter_BUILD_STATIC_LIBS : Build as static library (default: \c ON )
   - \c JKQtPlotter_BUILD_INCLUDE_XITS_FONTS : Include XITS fonts as resources in library (default: \c ON )
+  - \c JKQtPlotter_BUILD_FORCE_NO_PRINTER_SUPPORT : switches off print-support (when set to \c ON ), even if the current platform supports it (default: \c OFF )
   - \c JKQtPlotter_BUILD_DECORATE_LIBNAMES_WITH_BUILDTYPE : If set, the build-type is appended to the library name (default: \c ON )
   - \c JKQtPlotter_BUILD_EXAMPLES : Build examples (default: \c ON )
   - \c CMAKE_INSTALL_PREFIX : Install directory for the library

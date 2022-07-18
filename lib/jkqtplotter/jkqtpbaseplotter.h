@@ -20,6 +20,8 @@
 #ifndef JKQTPBASEPLOTTER_H
 #define JKQTPBASEPLOTTER_H
 
+#include "jkqtplotter/jkqtplotter_configmacros.h"
+
 #include "jkqtplotter/jkqtptools.h"
 #include "jkqtplotter/jkqtpdatastorage.h"
 #include "jkqtplotter/jkqtpbaseplotterstyle.h"
@@ -37,7 +39,10 @@
 #include <QMap>
 #include <QVector>
 #include <QPair>
-#include <QtPrintSupport/QPrintPreviewWidget>
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
+#  include <QPrinter>
+#  include <QtPrintSupport/QPrintPreviewWidget>
+#endif
 #include <QDoubleSpinBox>
 #include <QLabel>
 #include <QPointer>
@@ -832,14 +837,16 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         QAction* getActionCopyPixelImage() const;
         /** \copydoc actCopyMatlab */ 
         QAction* getActionCopyMatlab() const;
-        /** \copydoc actSavePDF */ 
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
+        /** \copydoc actSavePDF */
         QAction* getActionSavePDF() const;
+        /** \copydoc actSaveSVG */
+        QAction* getActionSaveSVG() const;
+        /** \copydoc actPrint */
+        QAction* getActionPrint() const;
+#endif
         /** \copydoc actSavePix */
         QAction* getActionSavePix() const;
-        /** \copydoc actSaveSVG */ 
-        QAction* getActionSaveSVG() const;
-        /** \copydoc actPrint */ 
-        QAction* getActionPrint() const;
         /** \copydoc actSaveCSV */ 
         QAction* getActionSaveCSV() const;
         /** \copydoc actZoomAll */ 
@@ -1311,11 +1318,19 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         /** \brief copy the current plot as a pixel image to the clipboard */
         void copyPixelImage();
 
-        /** \brief save the current plot as a SVG file, with the current widget aspect ratio, if filename is empty a file selection dialog is displayed  */
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
+        /** \brief save the current plot as a SVG file, with the current widget aspect ratio, if filename is empty a file selection dialog is displayed
+         *
+         *  \note Exporting to SVG requires QPrinter-support, if it is not available on your platform, this function will not be available either!
+         */
         void saveAsSVG(const QString& filename=QString(""), bool displayPreview=true);
 
-        /** \brief save the current plot as a PDF file, with the current widget aspect ratio, if filename is empty a file selection dialog is displayed  */
+        /** \brief save the current plot as a PDF file, with the current widget aspect ratio, if filename is empty a file selection dialog is displayed
+         *
+         *  \note Exporting to PDF requires QPrinter-support, if it is not available on your platform, this function will not be available either!
+         */
         void saveAsPDF(const QString& filename=QString(""), bool displayPreview=true);
+#endif
 
         /** \brief save the current plot as an image file, with the current widget aspect ratio, if filename is empty a file selection dialog is displayed.
         *          The image format is extracted from the file extension (jpeg, tiff, png, pdf, ...) */
@@ -1386,8 +1401,13 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
          */
         void saveAsGerExcelCSV(const QString& filename=QString(""));
 
-        /** \brief print the current plot, if printer is \c nullptr a printer selection dialog is displayed */
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
+        /** \brief print the current plot, if printer is \c nullptr a printer selection dialog is displayed
+         *
+         *  \note This function is only available on platforms with QPrinter support!
+         */
         void print(QPrinter* printer=nullptr, bool displayPreview=true);
+#endif
 
         /** \brief this method zooms the graph so that all plotted datapoints are visible.
          *
@@ -1662,6 +1682,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
          * The implementation in here returns zero size!
          */
         void getKeyExtent(JKQTPEnhancedPainter& painter, double *width, double *height, double *text_width=nullptr, double *text_height=nullptr, int *columns_count=nullptr, int* lines_count=nullptr);
+
         /** \brief show the print preview window for a given print \a p */
         bool printpreviewNew(QPaintDevice* paintDevice, bool setAbsolutePaperSize=false, double printsizeX_inMM=-1.0, double printsizeY_inMM=-1.0, bool displayPreview=true);
 
@@ -1687,6 +1708,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
          * \internal
          */
         void updatePreviewLabel();
+
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
         /** \brief internal function for print preview
          * \internal
          */
@@ -1694,15 +1717,12 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         /** \brief internal function for print preview
          * \internal
          */
-        void printpreviewPaintRequestedNew(QPrinter *printer);
+        void printpreviewPaintRequestedNewPrinter(QPrinter *printer);
+#endif
         /** \brief internal function for print preview
          * \internal
          */
-        void printpreviewPaintRequestedNew(QPaintDevice *paintDevice);
-        /** \brief internal function for export preview
-         * \internal
-         */
-        void exportpreviewPaintRequested(JKQTPEnhancedPainter& painter, QSize size);
+        void printpreviewPaintRequestedNewPaintDevice(QPaintDevice *paintDevice);
         /** \brief internal function for print preview
          * \internal
          */
@@ -1755,6 +1775,12 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
          * \internal
          */
         void printpreviewUpdate();
+
+        /** \brief internal function for export preview
+         * \internal
+         */
+        void exportpreviewPaintRequested(JKQTPEnhancedPainter& painter, QSize size);
+
         /** \brief internal function for getDataColumnsByUser()
          * \internal
          */
@@ -2069,14 +2095,16 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         QAction* actCopyPixelImage;
         /** \brief QAction which triggers copying of the data to the clipboard in Matlab format */
         QAction* actCopyMatlab;
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
         /** \brief QAction which triggers the saving as PDF */
         QAction* actSavePDF;
-        /** \brief QAction which triggers the saving as pixel image */
-        QAction* actSavePix;
         /** \brief QAction which triggers the saving as Scalable Vector Graphics (SVG) */
         QAction* actSaveSVG;
         /** \brief QAction which triggers the printing */
         QAction* actPrint;
+#endif
+        /** \brief QAction which triggers the saving as pixel image */
+        QAction* actSavePix;
         /** \brief QAction which triggers the saving as CSV (data only) */
         QAction* actSaveCSV;
         /** \brief QAction which triggers zoom all */
@@ -2126,7 +2154,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         double printSizeX_Millimeter;
         double printSizeY_Millimeter;
         double printMagnification;
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
         QPointer<QPrintPreviewWidget> printPreview;
+#endif
         QPointer<JKQTPEnhancedDoubleSpinBox> spinSizeX;
         QPointer<JKQTPEnhancedDoubleSpinBox> spinSizeY;
         QPointer<QLabel> exportPreviewLabel;

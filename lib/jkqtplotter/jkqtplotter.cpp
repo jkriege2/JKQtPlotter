@@ -1078,7 +1078,9 @@ void JKQTPlotter::initContextMenu()
 
     contextMenu->addAction(plotter->getActionSaveData());
     contextMenu->addAction(plotter->getActionSavePlot());
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
     contextMenu->addAction(plotter->getActionPrint());
+#endif
     contextMenu->addSeparator();
     contextMenu->addAction(plotter->getActionCopyPixelImage());
     contextMenu->addAction(plotter->getActionCopyData());
@@ -1616,7 +1618,9 @@ void JKQTPlotter::populateToolbar(QToolBar *toolbar) const
 {
     toolbar->addAction(plotter->getActionSaveData());
     toolbar->addAction(plotter->getActionSavePlot());
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
     toolbar->addAction(plotter->getActionPrint());
+#endif
     toolbar->addSeparator();
     toolbar->addAction(plotter->getActionCopyPixelImage());
     toolbar->addAction(plotter->getActionCopyData());
@@ -1702,32 +1706,6 @@ void JKQTPlotter::openSpecialContextMenu(int x, int y)
 {
     //qDebug()<<"openSpecialContextMenu("<<x<<y<<menuSpecialContextMenu<<")";
     if (menuSpecialContextMenu) {
-        /*
-        // reset the internal context menu ...
-        resetContextMenu(true);
-        // ... and add all actions from the special menu into the new menu: ...
-        for (int i=0; i<menuSpecialContextMenu->actions().size(); i++) {
-            //qDebug()<<"  - "<<menuSpecialContextMenu->actions().at(i)->text();
-            contextMenu->addAction(menuSpecialContextMenu->actions().at(i));
-        }
-        // ... and copy the basic properties from the other menu
-        contextMenu->setIcon(menuSpecialContextMenu->icon());
-        contextMenu->setTitle(menuSpecialContextMenu->title());
-        contextMenu->setSeparatorsCollapsible(menuSpecialContextMenu->separatorsCollapsible());
-        contextMenu->setTearOffEnabled(menuSpecialContextMenu->isTearOffEnabled());
-        contextMenu->setToolTipsVisible(menuSpecialContextMenu->toolTipsVisible());
-        contextMenu->setFont(menuSpecialContextMenu->font());
-        contextMenu->setToolTip(menuSpecialContextMenu->toolTip());
-        contextMenu->setWhatsThis(menuSpecialContextMenu->whatsThis());
-        contextMenu->setWindowOpacity(menuSpecialContextMenu->windowOpacity());
-        mouseContextX=plotter->p2x(x/magnification);
-        mouseContextY=plotter->p2y((y-getPlotYOffset())/magnification);
-        contextMenu->popup(mapToGlobal(QPoint(x,y)));
-        contextMenu->resize(contextMenu->sizeHint());
-        //qDebug()<<" -> "<<mapToGlobal(QPoint(x,y))<<contextMenu->size()<<contextMenu->pos()<<contextMenu->parent();
-        emit contextMenuOpened(mouseContextX, mouseContextY, contextMenu);
-        //qDebug()<<"openSpecialContextMenu("<<x<<y<<contextMenu<<") ... DONE";
-        */
 
 
         mouseContextX=plotter->p2x(x/magnification);

@@ -21,8 +21,12 @@
 #ifndef JKQTPEnhancedTableView_H_INCLUDED
 #define JKQTPEnhancedTableView_H_INCLUDED
 #include "jkqtplotter/jkqtplotter_imexport.h"
+#include "jkqtplotter/jkqtplotter_configmacros.h"
 #include <QTableView>
-#include <QPrinter>
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
+#  include <QPrintDialog>
+#  include <QPrinter>
+#endif
 
 /*! \brief this class extends the <a href="http://doc.qt.io/qt-5/qtableview.html">QTableView</a>
     \ingroup jkqtptools_qtwidgets
@@ -46,6 +50,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPEnhancedTableView : public QTableView {
 
         /** \brief return the contents of the table view as HTML fragment */
         QString toHtml(int borderWidth=1, bool non_breaking=false, int fontSizePt=-1) const;
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
         /** \brief print the contents of the table view
          *
          * \param printer the QPrinter to use for printing the table view
@@ -62,7 +67,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPEnhancedTableView : public QTableView {
          * \image html JKQTPEnhancedTableViewPrintSinglepage.png "Print on one page (onePageWide=true onePageHigh=true)"
          */
         void print(QPrinter* printer, bool onePageWide=false, bool onePageHigh=false);
-
+#endif
         /** \brief draw the contents of the table-view into the given \a pageRect, using the given \a painter
          *
          * The output look like this:
@@ -74,9 +79,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPEnhancedTableView : public QTableView {
         void paint(QPainter& painter, QRect pageRec=QRect());
         /** \brief returns the totoal size of the table-view \see paint() */
         QSizeF getTotalSize() const;
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
         /** \brief return a QAction that prints the table using the methode print() \see print() */
-        QAction* getActionPrint() const { return printAction; }
-
+        inline QAction* getActionPrint() { return printAction; }
+#endif
     signals:
         /** \brief emitted when a key is pressed in the context of this widget */
         void keyPressed(int key, Qt::KeyboardModifiers modifiers, const QString& text);
@@ -106,6 +112,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPEnhancedTableView : public QTableView {
          * \see copySelectionToCSV()
          */
         void copySelectionToCSVNoHead(int copyrole=Qt::EditRole, const QString& separator=", ", const QChar& decimalpoint='.');
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
         /** \brief print the table contents
          *
          * Before printing this function opens a <a href="http://doc.qt.io/qt-5/qprintdialog.html">QPrintDialog</a> to select a printer
@@ -124,7 +131,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPEnhancedTableView : public QTableView {
          *
          */
         void print();
-
+#endif
     protected:
         /** \brief handles key presses and reacts to some standard keys
          *  \internal
@@ -133,11 +140,17 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPEnhancedTableView : public QTableView {
         /** \brief internal paintig method
          *  \internal
          */
-        void paint(QPainter &painter, double scale, int page, double hhh, double vhw, const QList<int>& pageCols, const QList<int>& pageRows, QPrinter* p=nullptr);        
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
+        void paint(QPainter &painter, double scale, int page, double hhh, double vhw, const QList<int>& pageCols, const QList<int>& pageRows, QPrinter* p=nullptr);
+#else
+        void paint(QPainter &painter, double scale, int page, double hhh, double vhw, const QList<int>& pageCols, const QList<int>& pageRows);
+#endif
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
         /** \brief select a printer, using a print-selection dialog if necessary */
         QPrinter* getPrinter(QPrinter* printerIn=nullptr, bool *localPrinter=nullptr);
         /** \brief action that calls print() */
         QAction* printAction;
+#endif
     private:
 };
 

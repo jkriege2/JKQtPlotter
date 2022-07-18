@@ -32,7 +32,10 @@ Copyright (c) 2008-2020 Jan W. Krieger (<jan@jkrieger.de>)
 #include <QCheckBox>
 #include <QDialogButtonBox>
 #include <QHeaderView>
-#include <QPrintDialog>
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
+#  include <QPrintDialog>
+#  include <QPrinter>
+#endif
 #include <QLabel>
 #include "jkqtplotter/jkqtptools.h"
 #include "jkqtcommon/jkqtpenhancedpainter.h"
@@ -57,10 +60,12 @@ JKQTPEnhancedTableView::JKQTPEnhancedTableView(QWidget *parent):
     act=new QAction(QIcon(":/JKQTPlotter/jkqtp_copy16_nohead.png"), tr("Copy Selection to clipboard (as CSV ...) without header row/column"), this);
     connect(act, SIGNAL(triggered()), this, SLOT(copySelectionToCSVNoHead()));
     addAction(act);
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
     act=new QAction(QIcon(":/JKQTPlotter/jkqtp_printtable.png"), tr("Print Table"), this);
     connect(act, SIGNAL(triggered()), this, SLOT(print()));
     addAction(act);
     printAction=act;
+#endif
 }
 
 JKQTPEnhancedTableView::~JKQTPEnhancedTableView()
@@ -462,14 +467,16 @@ void JKQTPEnhancedTableView::keyPressEvent(QKeyEvent *event)
     if (event->matches(QKeySequence::Copy)) {
         copySelectionToExcel(Qt::EditRole, false);
         event->accept();
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
     } else if (event->matches(QKeySequence::Print)) {
         print();
         event->accept();
+#endif
     } else QTableView::keyPressEvent(event);
     emit keyPressed(event->key(), event->modifiers(), event->text());
 }
 
-
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
 void JKQTPEnhancedTableView::print()
 {
     QPrinter* tablePrinter=getPrinter(nullptr);
@@ -497,9 +504,9 @@ void JKQTPEnhancedTableView::print()
         delete tablePrinter;
     }
 }
+#endif
 
-
-
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
 void JKQTPEnhancedTableView::print(QPrinter *printer, bool onePageWide, bool onePageHigh)
 {
     QPrinter* p=printer;
@@ -607,6 +614,7 @@ void JKQTPEnhancedTableView::print(QPrinter *printer, bool onePageWide, bool one
 
      /// PRINT DONE //////////////////////////////////////////////////////////////////////////////////
 }
+#endif
 
 void JKQTPEnhancedTableView::paint(QPainter &painter, QRect pageRect)
 {
@@ -649,7 +657,11 @@ QSizeF JKQTPEnhancedTableView::getTotalSize() const
     return QSizeF((totalWidth), (totalHeight));
 }
 
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
 void JKQTPEnhancedTableView::paint(QPainter &painter, double scale, int page, double hhh, double vhw, const QList<int>& pageCols, const QList<int>& pageRows, QPrinter* p)
+#else
+void JKQTPEnhancedTableView::paint(QPainter &painter, double scale, int page, double hhh, double vhw, const QList<int>& pageCols, const QList<int>& pageRows)
+#endif
 {
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     QStyleOptionViewItem option;
@@ -736,17 +748,22 @@ void JKQTPEnhancedTableView::paint(QPainter &painter, double scale, int page, do
                 }
 
 
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
                 if (p && pw<pagesWide-1) p->newPage();
+#endif
             }
             pageCnt++;
         }
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
         if (p && ph<pagesHigh-1) p->newPage();
+#endif
     }
     
 }
 
 
 
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
 QPrinter *JKQTPEnhancedTableView::getPrinter(QPrinter *printerIn, bool *localPrinter)
 {
     QPrinter* p=printerIn;
@@ -767,4 +784,4 @@ QPrinter *JKQTPEnhancedTableView::getPrinter(QPrinter *printerIn, bool *localPri
 
     return p;
 }
-
+#endif

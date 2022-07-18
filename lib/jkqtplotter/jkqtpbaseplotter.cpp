@@ -28,14 +28,16 @@
 #include <QSvgGenerator>
 #include <QDebug>
 #include <QElapsedTimer>
-#include <QtPrintSupport/QPrintPreviewWidget>
 #include <QDialog>
 #include "jkqtplotter/jkqtpbaseplotter.h"
 #include "jkqtplotter/gui/jkqtpgraphsmodel.h"
 #include "jkqtplotter/gui/jkqtpenhancedtableview.h"
-#include <QPrinter>
-#include <QPrinterInfo>
-#include <QPrintDialog>
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
+#  include <QPrintDialog>
+#  include <QPrinter>
+#  include <QPrinterInfo>
+#  include <QtPrintSupport/QPrintPreviewWidget>
+#endif
 #include <QGridLayout>
 #include <QCheckBox>
 #include <QDialogButtonBox>
@@ -191,7 +193,9 @@ JKQTBasePlotter::JKQTBasePlotter(bool datastore_internal, QObject* parent, JKQTP
     lineWidthMultiplier=1;
     userSettigsFilename=globalUserSettigsFilename;
     userSettigsPrefix=globalUserSettigsPrefix;
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
     currentPrinter=QPrinterInfo::defaultPrinter().printerName();
+#endif
 
     if (datastore_internal) {
       datastore=new JKQTPDatastore();
@@ -237,18 +241,22 @@ JKQTBasePlotter::JKQTBasePlotter(bool datastore_internal, QObject* parent, JKQTP
     actCopyPixelImage->setToolTip(tr("Copy the plot as a pixel image to the clipboard"));
 
 
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
     actSavePDF=new QAction(QIcon(":/JKQTPlotter/jkqtp_savepdf.png"), tr("Save P&DF"), this);
     actSavePDF->setToolTip(tr("Save as PDF"));
     //toolbar->addAction(actSavePDF);
     actSaveSVG=new QAction(QIcon(":/JKQTPlotter/jkqtp_savesvg.png"), tr("Save S&VG"), this);
     actSaveSVG->setToolTip(tr("Save as Scalable Vector Graphics (SVG)"));
     //toolbar->addAction(actSaveSVG);
+#endif
     actSavePix=new QAction(QIcon(":/JKQTPlotter/jkqtp_savepix.png"), tr("Save &Image"), this);
     actSavePix->setToolTip(tr("Save as Pixel Image (PNG, JPEG, TIFF ...)"));
     //toolbar->addAction(actSavePix);
 
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
     actPrint=new QAction(QIcon(":/JKQTPlotter/jkqtp_print.png"), tr("&Print"), this);
     actPrint->setToolTip("Print");
+#endif
     //toolbar->addSeparator();
     actSaveCSV=new QAction(QIcon(":/JKQTPlotter/jkqtp_savecsv.png"), tr("Save &CSV"), this);
     actSaveCSV->setToolTip(tr("Save the data which is used for the plot as Comma Separated Values (CSV)"));
@@ -273,11 +281,13 @@ JKQTBasePlotter::JKQTBasePlotter(bool datastore_internal, QObject* parent, JKQTP
     connect(actCopyMatlab,   SIGNAL(triggered()), this, SLOT(copyDataMatlab()));
     connect(actShowPlotData,   SIGNAL(triggered()), this, SLOT(showPlotData()));
 
-    connect(actSavePDF,    SIGNAL(triggered()), this, SLOT(saveAsPDF()));
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
+    connect(actPrint,      SIGNAL(triggered()), this, SLOT(print()));
     connect(actSaveSVG,    SIGNAL(triggered()), this, SLOT(saveAsSVG()));
+    connect(actSavePDF,    SIGNAL(triggered()), this, SLOT(saveAsPDF()));
+#endif
     connect(actSavePix,    SIGNAL(triggered()), this, SLOT(saveAsPixelImage()));
 
-    connect(actPrint,      SIGNAL(triggered()), this, SLOT(print()));
     connect(actSaveCSV,    SIGNAL(triggered()), this, SLOT(saveAsCSV()));
     connect(actZoomAll,    SIGNAL(triggered()), this, SLOT(zoomToFit()));
     connect(actZoomIn,     SIGNAL(triggered()), this, SLOT(zoomIn()));
@@ -1466,7 +1476,7 @@ void JKQTBasePlotter::gridPaint(JKQTPEnhancedPainter& painter, QSizeF pageRect, 
 }
 
 
-
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
 void JKQTBasePlotter::print(QPrinter* printer, bool displayPreview) {
     loadUserSettings();
     QPrinter* p=printer;
@@ -1503,12 +1513,14 @@ void JKQTBasePlotter::print(QPrinter* printer, bool displayPreview) {
     if (delP) delete p;
     saveUserSettings();
 }
-
+#endif
 
 
 bool JKQTBasePlotter::printpreviewNew(QPaintDevice* paintDevice, bool setAbsolutePaperSize, double printsizeX_inMM, double printsizeY_inMM, bool displayPreview) {
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
     QPrinter *printer=dynamic_cast<QPrinter*>(paintDevice);
     QSvgGenerator* svg=dynamic_cast<QSvgGenerator*>(paintDevice);
+#endif
     double lw=lineWidthMultiplier;
     double fs=fontSizeMultiplier;
     double oldP=paintMagnification;
@@ -1521,12 +1533,14 @@ bool JKQTBasePlotter::printpreviewNew(QPaintDevice* paintDevice, bool setAbsolut
     paintMagnification=1.0;
     gridPrintingCalc();
 
-    //double resolution=paintDevice->logicalDpiX();
-    //if (printer) resolution=printer->resolution();
 
     printAspect=gridPrintingSize.height()/gridPrintingSize.width();
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
     if (printer) printPageSizeMM=printer->pageLayout().pageSize().size(QPageSize::Millimeter);
     else if (paintDevice) printPageSizeMM=QSizeF(paintDevice->widthMM(), paintDevice->heightMM());
+#else
+    if (paintDevice) printPageSizeMM=QSizeF(paintDevice->widthMM(), paintDevice->heightMM());
+#endif
     printSizeX_Millimeter=double(gridPrintingSize.width())/96.0*25.4;//double(resolution)*25.4; // convert current widget size in pt to millimeters, assuming 96dpi (default screen resolution)
     printSizeY_Millimeter=double(gridPrintingSize.height())/96.0*25.4;//double(resolution)*25.4;
     if (printsizeX_inMM>0) printSizeX_Millimeter=printsizeX_inMM;
@@ -1553,6 +1567,7 @@ bool JKQTBasePlotter::printpreviewNew(QPaintDevice* paintDevice, bool setAbsolut
     dlg->setWindowTitle(tr("Graph print/export preview ..."));
     dlg->setWindowIcon(QIcon(":/JKQTPlotter/jkqtp_exportprintpreview.png"));
 
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
     bool delPrinter=false;
     if (svg) {
         printer=new QPrinter();
@@ -1571,11 +1586,9 @@ bool JKQTBasePlotter::printpreviewNew(QPaintDevice* paintDevice, bool setAbsolut
         delPrinter=true;
     }
 
-
     printPreview=new QPrintPreviewWidget(printer, dlg);
-    connect(printPreview, SIGNAL(paintRequested(QPrinter*)), this, SLOT(printpreviewPaintRequestedNew(QPrinter*)));
-
-
+    connect(printPreview, SIGNAL(paintRequested(QPrinter*)), this, SLOT(printpreviewPaintRequestedNewPrinter(QPrinter*)));
+#endif
 
     spinSizeX=new JKQTPEnhancedDoubleSpinBox(dlg);
     spinSizeX->setRange(10,100000);
@@ -1604,9 +1617,11 @@ bool JKQTBasePlotter::printpreviewNew(QPaintDevice* paintDevice, bool setAbsolut
 
     if (setAbsolutePaperSize) {
         layout->addWidget(new QLabel(tr("paper/plot size: ")), 0,layout->columnCount());
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
     } else if (printer && !svg) {
         int y=layout->columnCount();
         layout->addWidget(new QLabel(tr("plot size: ")), 0,y);
+#endif
     } else {
         int y=layout->columnCount();
         layout->addWidget(new QLabel(tr("paper size: ")), 1,y);
@@ -1616,6 +1631,7 @@ bool JKQTBasePlotter::printpreviewNew(QPaintDevice* paintDevice, bool setAbsolut
     layout->addWidget(new QLabel(tr(" x ")), 0,layout->columnCount());
     layout->addWidget(spinSizeY, 0,layout->columnCount());
     layout->addWidget(chkAspect, 0,layout->columnCount());
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
     if (!setAbsolutePaperSize && printer && !svg) {
         layout->addWidget(new QLabel(tr("%1x%2 mm^2").arg(printer->pageLayout().pageSize().size(QPageSize::Millimeter).width()).arg(printer->pageLayout().pageSize().size(QPageSize::Millimeter).height())), 1,layout->columnCount()-4, 1, 4);
 
@@ -1647,7 +1663,7 @@ bool JKQTBasePlotter::printpreviewNew(QPaintDevice* paintDevice, bool setAbsolut
         layout->addWidget(chkSetMagnification, 0,layout->columnCount());
         layout->addWidget(spinMagnification, 0,layout->columnCount());
     }
-
+#endif
 
 
     JKQTPEnhancedDoubleSpinBox* spinLineWidthMult=new JKQTPEnhancedDoubleSpinBox(dlg);
@@ -1685,7 +1701,9 @@ bool JKQTBasePlotter::printpreviewNew(QPaintDevice* paintDevice, bool setAbsolut
     layout->addWidget(spinFontSizeMult, 1,gpos+1);
     layout->addWidget(new QWidget(), 0,layout->columnCount());
     layout->setColumnStretch(layout->columnCount()-1, 1);
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
     layout->addWidget(printPreview, layout->rowCount(),0, 1, layout->columnCount());
+#endif
     QDialogButtonBox* buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
     connect(buttonBox, SIGNAL(accepted()), dlg, SLOT(accept()));
     connect(buttonBox, SIGNAL(rejected()), dlg, SLOT(reject()));
@@ -1693,15 +1711,16 @@ bool JKQTBasePlotter::printpreviewNew(QPaintDevice* paintDevice, bool setAbsolut
     dlg->resize(800,500);
 
     bool res=false;
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
     if (printer) {
         if (!displayPreview || dlg->exec()==QDialog::Accepted) {
             //qDebug()<<svg<<printer<<delPrinter;
             if (svg) {
-                printpreviewPaintRequestedNew(svg);
+                printpreviewPaintRequestedNewPaintDevice(svg);
             } else if (!delPrinter) {
-                printpreviewPaintRequestedNew(printer);
+                printpreviewPaintRequestedNewPrinter(printer);
             } else {
-                printpreviewPaintRequestedNew(paintDevice);
+                printpreviewPaintRequestedNewPaintDevice(paintDevice);
             }
             res=true;
         }
@@ -1709,8 +1728,11 @@ bool JKQTBasePlotter::printpreviewNew(QPaintDevice* paintDevice, bool setAbsolut
     if ((svg||delPrinter) && printer) {
         delete printer;
     }
+#endif
     delete dlg;
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
     printPreview=nullptr;
+#endif
     lineWidthMultiplier=lw;
     fontSizeMultiplier=fs;
     plotterStyle.widgetBackgroundBrush=bc;
@@ -1723,7 +1745,9 @@ bool JKQTBasePlotter::printpreviewNew(QPaintDevice* paintDevice, bool setAbsolut
 }
 
 bool JKQTBasePlotter::exportpreview(QSizeF pageSize, bool unitIsMM) {
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
     printPreview=nullptr;
+#endif
     printSizeX_Millimeter=pageSize.width();
     printSizeY_Millimeter=pageSize.height();
     printAspect=1;
@@ -1741,8 +1765,6 @@ bool JKQTBasePlotter::exportpreview(QSizeF pageSize, bool unitIsMM) {
     dlg->setLayout(layout);
     dlg->setWindowTitle(tr("Graph export preview ..."));
     dlg->setWindowIcon(QIcon(":/JKQTPlotter/jkqtp_exportprintpreview.png"));
-    /*printPreview=new QPrintPreviewWidget(p, dlg);
-    connect(printPreview, SIGNAL(paintRequested(QPrinter*)), this, SLOT(printpreviewPaintRequested(QPrinter*)));*/
     QScrollArea* scroll=new QScrollArea(dlg);
     {
         QPalette p(scroll->palette());
@@ -1913,6 +1935,7 @@ void JKQTBasePlotter::updatePreviewLabel() {
     }
 }
 
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
 void JKQTBasePlotter::printpreviewPaintRequested(QPrinter* printer) {
     double lw=lineWidthMultiplier;
     double fs=fontSizeMultiplier;
@@ -1989,17 +2012,20 @@ void JKQTBasePlotter::printpreviewPaintRequested(QPrinter* printer) {
 }
 
 
-void JKQTBasePlotter::printpreviewPaintRequestedNew(QPrinter* printer) {
+void JKQTBasePlotter::printpreviewPaintRequestedNewPrinter(QPrinter* printer) {
     QPaintDevice* paintDevice=dynamic_cast<QPaintDevice*>(printer);
-    printpreviewPaintRequestedNew(paintDevice);
+    printpreviewPaintRequestedNewPaintDevice(paintDevice);
 
 }
+#endif
 
-void JKQTBasePlotter::printpreviewPaintRequestedNew(QPaintDevice *paintDevice)
+void JKQTBasePlotter::printpreviewPaintRequestedNewPaintDevice(QPaintDevice *paintDevice)
 {
     //QPaintDevice* paintDevice=dynamic_cast<QPaintDevice*>(printer);
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
     QPrinter* printer=dynamic_cast<QPrinter*>(paintDevice);
     QSvgGenerator* svg=dynamic_cast<QSvgGenerator*>(paintDevice);
+#endif
 
     double lw=lineWidthMultiplier;
     double fs=fontSizeMultiplier;
@@ -2021,6 +2047,7 @@ void JKQTBasePlotter::printpreviewPaintRequestedNew(QPaintDevice *paintDevice)
 #ifdef SHOW_JKQTPLOTTER_DEBUG
         qDebug()<<"set printing abs. size to "<<QSizeF(printSizeX_Millimeter, printSizeY_Millimeter)<<" mm^2";
 #endif
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
         if (printer) {
             printer->setPageOrientation(QPageLayout::Portrait);
             printer->setPageSize(QPageSize(QSizeF(printSizeX_Millimeter, printSizeY_Millimeter), QPageSize::Millimeter));
@@ -2029,24 +2056,29 @@ void JKQTBasePlotter::printpreviewPaintRequestedNew(QPaintDevice *paintDevice)
             svg->setSize(QSizeF(ceil(siz.width()*svg->resolution()/25.4), ceil(siz.height()*svg->resolution()/25.4)).toSize());
             svg->setViewBox(QRect(0,0,-1,-1));//*25.4/double(svg->resolution()), printSizeY_Millimeter*25.4/double(svg->resolution())));
         }
-
+#endif
     }
     paintMagnification=gridPrintingSize.width()/(printSizeX_Millimeter/25.4*double(paintDevice->logicalDpiX()));
     if (!gridPrinting) widgetHeight=jkqtp_roundTo<int>(widgetWidth*printSizeY_Millimeter/printSizeX_Millimeter);
 
     JKQTPEnhancedPainter painter;
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
     if (printer) painter.begin(printer);
     else if (svg) painter.begin(svg);
     else painter.begin(paintDevice);
-
+#else
+    painter.begin(paintDevice);
+#endif
     if (printKeepAbsoluteFontSizes) {
         fontSizeMultiplier=1.0;//1.0/paintMagnification;
     }
 
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
     if (svg) {
         lineWidthMultiplier=lineWidthMultiplier*72.0/96.0;
         fontSizeMultiplier=fontSizeMultiplier*72.0/96.0;
     }
+#endif
 #ifdef SHOW_JKQTPLOTTER_DEBUG
     qDebug()<<"\n\n\n==========================================================================";
     qDebug()<<"printAspect = "<<printAspect;
@@ -2074,9 +2106,13 @@ void JKQTBasePlotter::printpreviewPaintRequestedNew(QPaintDevice *paintDevice)
     qDebug()<<"x-axis label fontsize = "<<xAxis->getLabelFontSize()<<" pt";
     qDebug()<<"y-axis label fontsize = "<<yAxis->getLabelFontSize()<<" pt";
 #endif
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
     if (printer) gridPaint(painter, printer->pageLayout().paintRectPixels(printer->resolution()).size(), printScaleToPagesize, printScaleToPagesize);
     else if (svg) gridPaint(painter, svg->size(), printScaleToPagesize, printScaleToPagesize);
     else gridPaint(painter, QSizeF(paintDevice->width(), paintDevice->height()), printScaleToPagesize, printScaleToPagesize);
+#else
+    gridPaint(painter, QSizeF(paintDevice->width(), paintDevice->height()), printScaleToPagesize, printScaleToPagesize);
+#endif
     painter.end();
     widgetWidth=oldWidgetWidth;
     widgetHeight=oldWidgetHeight;
@@ -2118,7 +2154,9 @@ void JKQTBasePlotter::exportpreviewPaintRequested(JKQTPEnhancedPainter &painter,
 
 void JKQTBasePlotter::printpreviewSetZoom(double value) {
     printZoomFactor=value/100.0;
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
     if (printPreview) printPreview->updatePreview();
+#endif
     if (exportPreviewLabel) updatePreviewLabel();
 }
 
@@ -2129,15 +2167,20 @@ void JKQTBasePlotter::printpreviewSetSizeX(double value) {
         spinSizeY->setValue(printSizeY_Millimeter);
     }
     if (printDoUpdate) {
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
         if (printPreview) printPreview->updatePreview();
+#endif
         if (exportPreviewLabel) updatePreviewLabel();
     }
 }
+
 void JKQTBasePlotter::printpreviewSetSizeY(double value) {
     if (printKeepAspect) return;
     printSizeY_Millimeter=value;
     if (printDoUpdate) {
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
         if (printPreview) printPreview->updatePreview();
+#endif
         if (exportPreviewLabel) updatePreviewLabel();
     }
 }
@@ -2148,16 +2191,17 @@ void JKQTBasePlotter::printpreviewSetSizeXNew(double value) {
         printSizeY_Millimeter=printSizeX_Millimeter*printAspect;
         spinSizeY->setValue(printSizeY_Millimeter);
     }
-
 }
+
 void JKQTBasePlotter::printpreviewSetSizeYNew(double value) {
     printSizeY_Millimeter=value;
-
 }
 
 void JKQTBasePlotter::printpreviewSetMagnification(double value) {
     printMagnification=value/100.0;
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
     if (printPreview) printPreview->updatePreview();
+#endif
     if (exportPreviewLabel) updatePreviewLabel();
 }
 
@@ -2183,14 +2227,18 @@ void JKQTBasePlotter::printpreviewSetAspectRatio(bool checked) {
         printSizeY_Millimeter=printSizeX_Millimeter*printAspect;
         spinSizeY->setValue(printSizeY_Millimeter);
     }
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
     if (printPreview) printPreview->updatePreview();
+#endif
     if (exportPreviewLabel) updatePreviewLabel();
 }
 
 void JKQTBasePlotter::printpreviewSetKeepAbsFontsize(bool checked)
 {
     printKeepAbsoluteFontSizes=checked;
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
     if (printPreview) printPreview->updatePreview();
+#endif
     if (exportPreviewLabel) updatePreviewLabel();
 }
 
@@ -2204,20 +2252,26 @@ void JKQTBasePlotter::printpreviewToggleMagnification(bool checked)
 
 void JKQTBasePlotter::printpreviewSetLineWidthMultiplier(double value) {
     lineWidthPrintMultiplier=value/100.0;
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
     if (printPreview) printPreview->updatePreview();
+#endif
     if (exportPreviewLabel) updatePreviewLabel();
 }
 
 void JKQTBasePlotter::printpreviewSetFontSizeMultiplier(double value) {
     fontSizePrintMultiplier=value/100.0;
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
     if (printPreview) printPreview->updatePreview();
+#endif
     if (exportPreviewLabel) updatePreviewLabel();
 }
 
 void JKQTBasePlotter::printpreviewUpdate()
 {
     if (printDoUpdate) {
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
         if (printPreview) printPreview->updatePreview();
+#endif
         if (exportPreviewLabel) updatePreviewLabel();
     }
 }
@@ -3201,20 +3255,22 @@ QAction *JKQTBasePlotter::getActionCopyMatlab() const {
     return this->actCopyMatlab;
 }
 
-QAction *JKQTBasePlotter::getActionSavePDF() const {
-    return this->actSavePDF;
-}
-
-QAction *JKQTBasePlotter::getActionSavePix() const {
-    return this->actSavePix;
-}
-
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
 QAction *JKQTBasePlotter::getActionSaveSVG() const {
     return this->actSaveSVG;
 }
 
 QAction *JKQTBasePlotter::getActionPrint() const {
     return this->actPrint;
+}
+
+QAction *JKQTBasePlotter::getActionSavePDF() const {
+    return this->actSavePDF;
+}
+#endif
+
+QAction *JKQTBasePlotter::getActionSavePix() const {
+    return this->actSavePix;
 }
 
 QAction *JKQTBasePlotter::getActionSaveCSV() const {
@@ -3577,6 +3633,7 @@ void JKQTBasePlotter::saveAsGerExcelCSV(const QString& filename) {
     saveUserSettings();
 }
 
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
 void JKQTBasePlotter::saveAsPDF(const QString& filename, bool displayPreview) {
     loadUserSettings();
     QString fn=filename;
@@ -3609,14 +3666,16 @@ void JKQTBasePlotter::saveAsPDF(const QString& filename, bool displayPreview) {
     }
     saveUserSettings();
 }
-
+#endif
 
 void JKQTBasePlotter::saveImage(const QString& filename, bool displayPreview) {
     loadUserSettings();
     QString fn=filename;
     QStringList filt;
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
     filt<<tr("Portable Document Format PDF [Qt] (*.pdf)");
     filt<<tr("Scalable Vector Graphics [Qt] (*.svg)");
+#endif
     filt<<tr("PNG Image [Qt] (*.png)");
     filt<<tr("BMP Image [Qt] (*.bmp)");
     filt<<tr("TIFF Image [Qt] (*.tif *.tiff)");
@@ -3660,11 +3719,17 @@ void JKQTBasePlotter::saveImage(const QString& filename, bool displayPreview) {
             }
         }
         //qDebug()<<"filtID="<<filtID<<"   isWithSpecialDeviceAdapter="<<isWithSpecialDeviceAdapter<<"   adapterID="<<adapterID;
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
         if (filtID==0) {
             saveAsPDF(fn, displayPreview);
-        } else if (filtID==1) {
+            return;
+        }
+        if (filtID==1) {
             saveAsSVG(fn, displayPreview);
-        } else if (isWithSpecialDeviceAdapter && adapterID>=0 && adapterID<jkqtpPaintDeviceAdapters.size()) {
+            return;
+        }
+#endif
+        if (isWithSpecialDeviceAdapter && adapterID>=0 && adapterID<jkqtpPaintDeviceAdapters.size()) {
             QString tempFM="";
             if (QFile::exists(fn)) {
 #ifdef QFWIDLIB_LIBRARY
@@ -3682,10 +3747,11 @@ void JKQTBasePlotter::saveImage(const QString& filename, bool displayPreview) {
             mathText.setUseUnparsed(!jkqtpPaintDeviceAdapters[adapterID]->useLatexParser());
 
             gridPrintingCalc();
-            QPaintDevice* svg=jkqtpPaintDeviceAdapters[adapterID]->createPaintdevice(fn, jkqtp_roundTo<int>(gridPrintingSize.width()), jkqtp_roundTo<int>(gridPrintingSize.height()));
+            QPaintDevice* paintDevice=jkqtpPaintDeviceAdapters[adapterID]->createPaintdevice(fn, jkqtp_roundTo<int>(gridPrintingSize.width()), jkqtp_roundTo<int>(gridPrintingSize.height()));
 
-            if (!printpreviewNew(svg, jkqtpPaintDeviceAdapters[adapterID]->getSetAbsolutePaperSize(), jkqtpPaintDeviceAdapters[adapterID]->getPrintSizeXInMM(), jkqtpPaintDeviceAdapters[adapterID]->getPrintSizeYInMM(), displayPreview)) {
-                delete svg;
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
+            if (!printpreviewNew(paintDevice, jkqtpPaintDeviceAdapters[adapterID]->getSetAbsolutePaperSize(), jkqtpPaintDeviceAdapters[adapterID]->getPrintSizeXInMM(), jkqtpPaintDeviceAdapters[adapterID]->getPrintSizeYInMM(), displayPreview)) {
+                delete paintDevice;
 
 
                 if (QFile::exists(tempFM)) {
@@ -3693,10 +3759,13 @@ void JKQTBasePlotter::saveImage(const QString& filename, bool displayPreview) {
                     QFile::remove(tempFM);
                 }
             } else {
-                delete svg;
-                svg=jkqtpPaintDeviceAdapters[adapterID]->createPaintdeviceMM(fn,printSizeX_Millimeter,printSizeY_Millimeter);
-                printpreviewPaintRequestedNew(svg);
-                delete svg;
+#else
+            {
+#endif
+                delete paintDevice;
+                paintDevice=jkqtpPaintDeviceAdapters[adapterID]->createPaintdeviceMM(fn,printSizeX_Millimeter,printSizeY_Millimeter);
+                printpreviewPaintRequestedNewPaintDevice(paintDevice);
+                delete paintDevice;
             }
 
         } else {
@@ -3714,12 +3783,6 @@ void JKQTBasePlotter::saveAsPixelImage(const QString& filename, bool displayPrev
     for (int i=0; i<writerformats.size(); i++) {
         filt<<QString("%1 Image (*.%2)").arg(QString(writerformats[i]).toUpper()).arg(QString(writerformats[i].toLower()));
     }
-    /*filt<<tr("PNG Image (*.png)");
-    filt<<tr("BMP Image (*.bmp)");
-    filt<<tr("TIFF Image (*.tif *.tiff)");
-    filt<<tr("JPEG Image (*.jpg *.jpeg)");
-    filt<<tr("X11 Bitmap (*.xbm)");
-    filt<<tr("X11 Pixmap (*.xpm)");*/
     QString selFormat;
     if (fn.isEmpty()) {
         selFormat=currentFileFormat;
@@ -3896,6 +3959,7 @@ void JKQTBasePlotter::copyPixelImage() {
 
 }
 
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
 void JKQTBasePlotter::saveAsSVG(const QString& filename, bool displayPreview) {
     loadUserSettings();
     QString fn=filename;
@@ -3940,7 +4004,7 @@ void JKQTBasePlotter::saveAsSVG(const QString& filename, bool displayPreview) {
     }
     saveUserSettings();
 }
-
+#endif
 
 void JKQTBasePlotter::setPlotBorder(int left, int right, int top, int bottom){
     plotterStyle.plotBorderTop=top;
@@ -4960,7 +5024,9 @@ void JKQTBasePlotter::showPlotData() {
 
     JKQTPEnhancedTableView* tv=new JKQTPEnhancedTableView(dlg);
     layout->addWidget(tv);
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
     tb->addAction(tv->getActionPrint());
+#endif
 
     JKQTPDatastoreModel* model=new JKQTPDatastoreModel(getDatastore(), this);
     tv->setModel(model);

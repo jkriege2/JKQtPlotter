@@ -31,14 +31,6 @@ Copyright (c) 2008-2020 Jan W. Krieger (<jan@jkrieger.de>)
 #include <QKeyEvent>
 #include <QAction>
 #include <QLocale>
-#include <QDialog>
-#include <QCheckBox>
-#include <QGridLayout>
-#include <QLabel>
-#include <QPrinter>
-#include <QHeaderView>
-#include <QPrintDialog>
-#include <QDialogButtonBox>
 #include <cstring>
 #include <cstdlib>
 #include <cstdio>
