@@ -27,7 +27,7 @@
     \ingroup jkqtpplottersupprt
     \brief This is defined if JKQtPlotter shall be compiled without print-support, or print-support is not available.
 
-    This can be used by surrounding code that is requires print-support with
+    This can be used by surrounding code that requires print-support with
     \code
     #ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
     // ...
@@ -45,12 +45,27 @@
 #  endif
 #endif
 
+
+/*! \def JKQTPLOTTER_WORKAROUND_QGADGET_BUG
+    \ingroup jkqtpplottersupprt
+    \brief This \c #define is used to work around a bug in Qt when compiled with CLANG (see https://bugreports.qt.io/browse/QTBUG-104874):
+           Multiple inheritance does not work with Q_GADGET in this setup.
+
+    This can be used by surrounding code that causes compile-errors due to this bug with
+    \code
+    #ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
+    // ...
+    // Code that require Print Support
+    // ...
+    #endif
+    \endcode
+*/
 #if defined(Q_CC_CLANG) && (QT_VERSION < QT_VERSION_CHECK(7, 0, 0))
-#  define JKQTPLOTTER_WORKAROUND_QGADET_BUG
+#  define JKQTPLOTTER_WORKAROUND_QGADGET_BUG
 #  warning("deactivating some Q_GADGET-declarations due to a bug in Qt on CLANG: https://bugreports.qt.io/browse/QTBUG-104874")
 #else
-#  ifdef JKQTPLOTTER_WORKAROUND_QGADET_BUG
-#    undef JKQTPLOTTER_WORKAROUND_QGADET_BUG
+#  ifdef JKQTPLOTTER_WORKAROUND_QGADGET_BUG
+#    undef JKQTPLOTTER_WORKAROUND_QGADGET_BUG
 #  endif
 #endif
 
