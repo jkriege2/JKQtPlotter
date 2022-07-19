@@ -36,6 +36,7 @@ environment:
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
       CMAKE_GENERATOR: "Visual Studio 16 2019"
       CMAKE_BUILDFLAGS: /verbosity:minimal /maxcpucount
+      MAKETOOL: jom
            
     - QTABI: msvc2019_64
       COMPILER: MSVC
