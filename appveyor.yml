@@ -158,7 +158,7 @@ for:
       - cmd: cd build
       - cmd: if %USE_CMAKE%==true cmake --version 
       - cmd: if %USE_CMAKE%==true cmake -G "%CMAKE_GENERATOR%" "-DCMAKE_PREFIX_PATH=%QTDIR%;%CIMG_INCLUDE_DIR%" .. 
-      - cmd: if %USE_CMAKE%==true cmake --build . --config "%CONFIGURATION%" -- %CMAKE_BUILDFLAGS% 
+      - cmd: if %USE_CMAKE%==true cmake --build . --config "%CONFIGURATION%" -j%NUMBER_OF_PROCESSORS% -- %CMAKE_BUILDFLAGS%
       - cmd: if %USE_CMAKE%==false qmake.exe -v 
       - cmd: if %USE_CMAKE%==false qmake.exe CONFIG+=%CONFIGURATION% ..\JKQtPlotterBuildAllExamples.pro 
       - cmd: if %USE_CMAKE%==false call %MAKETOOL% 
@@ -209,7 +209,7 @@ for:
       - sh: cmake --version 
       - sh: cmake -G "$CMAKE_GENERATOR" "-DCMAKE_PREFIX_PATH=$QTDIR" .. 
       - sh: echo --- Build using CMake ------------------------------------------------------------------------------- 
-      - sh: cmake --build . --config "$CONFIGURATION" -- $CMAKE_BUILDFLAGS 
+      - sh: cmake --build . --config "$CONFIGURATION" -j$(getconf _NPROCESSORS_ONLN)  -- $CMAKE_BUILDFLAGS
 
 
 
@@ -251,4 +251,4 @@ for:
       - sh: cmake --version 
       - sh: cmake -G "$CMAKE_GENERATOR" "-DCMAKE_PREFIX_PATH=$QTDIR" .. 
       - sh: echo --- Build using CMake ------------------------------------------------------------------------------- 
-      - sh: cmake --build . --config "$CONFIGURATION" -- $CMAKE_BUILDFLAGS 
+      - sh: cmake --build . --config "$CONFIGURATION" -j$(getconf _NPROCESSORS_ONLN)  -- $CMAKE_BUILDFLAGS
