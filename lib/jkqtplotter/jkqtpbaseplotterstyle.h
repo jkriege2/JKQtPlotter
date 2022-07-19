@@ -27,6 +27,7 @@
 #include "jkqtplotter/jkqtpimagetools.h"
 #include "jkqtplotter/jkqtpgraphsbasestyle.h"
 #include "jkqtplotter/jkqtplotter_imexport.h"
+#include "jkqtplotter/jkqtplotter_configmacros.h"
 #include "jkqtcommon/jkqtpdrawingtools.h"
 #include "jkqtcommon/jkqtpbasicimagetools.h"
 #include <QColor>

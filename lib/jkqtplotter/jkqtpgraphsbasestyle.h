@@ -28,6 +28,7 @@
 #include "jkqtplotter/jkqtplotter_imexport.h"
 #include "jkqtcommon/jkqtpdrawingtools.h"
 #include "jkqtcommon/jkqtpbasicimagetools.h"
+#include "jkqtplotter/jkqtplotter_configmacros.h"
 #include <QColor>
 #include <QPainter>
 #include <QString>
@@ -45,7 +46,9 @@ class JKQTBasePlotterStyle; // forward
  *  \see JKQTBasePlotter, \ref jkqtpplotter_styling
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTGraphsSpecificStyleProperties {
-        Q_GADGET
+#ifndef JKQTPLOTTER_WORKAROUND_QGADET_BUG
+      Q_GADGET
+#endif
     public:
         /** \brief initializes the object for the given \a type and takes some properties from the \a parent */
         JKQTGraphsSpecificStyleProperties(JKQTPPlotStyleType type, const JKQTBasePlotterStyle& parent);
@@ -104,7 +107,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTGraphsSpecificStyleProperties {
     protected:
         /** \brief modifies some of the settings to match the defaults for the given JKQTPPlotStyleType (e.g. sets line-width for impulses ...) */
         void modifyForDefaultStyle(JKQTPPlotStyleType type);
- };
+};
 
 
 
@@ -113,9 +116,11 @@ class JKQTPLOTTER_LIB_EXPORT JKQTGraphsSpecificStyleProperties {
  *
  *  \see JKQTBasePlotter, \ref jkqtpplotter_styling
  */
- class JKQTPLOTTER_LIB_EXPORT JKQTGeometricSpecificStyleProperties: public JKQTGraphsSpecificStyleProperties {
-     Q_GADGET
- public:
+class JKQTPLOTTER_LIB_EXPORT JKQTGeometricSpecificStyleProperties: public JKQTGraphsSpecificStyleProperties {
+#ifndef JKQTPLOTTER_WORKAROUND_QGADET_BUG
+      Q_GADGET
+#endif
+public:
      JKQTGeometricSpecificStyleProperties(const JKQTBasePlotterStyle& parent);
      JKQTGeometricSpecificStyleProperties(const JKQTBasePlotterStyle& parent, const JKQTGraphsSpecificStyleProperties& other);
      JKQTGeometricSpecificStyleProperties(JKQTPPlotStyleType type, const JKQTBasePlotterStyle& parent);
@@ -153,7 +158,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTGraphsSpecificStyleProperties {
      Qt::BrushStyle defaultFillStyle;
 
 
- };
+};
 
 
  /** \brief Support Class for JKQTBasePlotter, which summarizes all properties that define the visual styling of annotation elements
@@ -161,9 +166,11 @@ class JKQTPLOTTER_LIB_EXPORT JKQTGraphsSpecificStyleProperties {
  *
  *  \see JKQTBasePlotter, \ref jkqtpplotter_styling
  */
- class JKQTPLOTTER_LIB_EXPORT JKQTAnnotationsSpecificStyleProperties: public JKQTGeometricSpecificStyleProperties {
-     Q_GADGET
- public:
+class JKQTPLOTTER_LIB_EXPORT JKQTAnnotationsSpecificStyleProperties: public JKQTGeometricSpecificStyleProperties {
+#ifndef JKQTPLOTTER_WORKAROUND_QGADET_BUG
+      Q_GADGET
+#endif
+public:
      JKQTAnnotationsSpecificStyleProperties(const JKQTBasePlotterStyle& parent);
      JKQTAnnotationsSpecificStyleProperties(const JKQTBasePlotterStyle& parent, const JKQTGraphsSpecificStyleProperties& other);
      JKQTAnnotationsSpecificStyleProperties(const JKQTAnnotationsSpecificStyleProperties& other)=default;
@@ -198,7 +205,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTGraphsSpecificStyleProperties {
      QString defaultFontName;
 
 
- };
+};
 
 
 
@@ -208,7 +215,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTGraphsSpecificStyleProperties {
  *  \see JKQTBasePlotter, \ref jkqtpplotter_styling
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTGraphsBaseStyle {
-        Q_GADGET
+#ifndef JKQTPLOTTER_WORKAROUND_QGADET_BUG
+      Q_GADGET
+#endif
     public:
         JKQTGraphsBaseStyle(const JKQTBasePlotterStyle& parent);
 

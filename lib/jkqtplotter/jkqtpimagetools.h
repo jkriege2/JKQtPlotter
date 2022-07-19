@@ -26,6 +26,7 @@
 #include <QStringList>
 #include "jkqtplotter/jkqtplotter_imexport.h"
 #include "jkqtcommon/jkqtpbasicimagetools.h"
+#include "jkqtplotter/jkqtplotter_configmacros.h"
 #include <cmath>
 #include <cfloat>
 #include <stdint.h>
@@ -41,7 +42,9 @@ class JKQTBasePlotter; // forward
     \ingroup jkqtplotter_imagelots_tools
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPColorPaletteStyleAndToolsMixin {
-        Q_GADGET
+#ifndef JKQTPLOTTER_WORKAROUND_QGADET_BUG
+      Q_GADGET
+#endif
     public:
 
         JKQTPColorPaletteStyleAndToolsMixin(JKQTBasePlotter *parent);
@@ -251,7 +254,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPColorPaletteStyleAndToolsMixin {
     \ingroup jkqtplotter_imagelots_tools
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPColorPaletteWithModifierStyleAndToolsMixin : public JKQTPColorPaletteStyleAndToolsMixin {
-        Q_GADGET
+#ifndef JKQTPLOTTER_WORKAROUND_QGADET_BUG
+      Q_GADGET
+#endif
     public:
 
 

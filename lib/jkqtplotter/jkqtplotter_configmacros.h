@@ -21,6 +21,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <QtGlobal>
 
 /*! \def JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
     \ingroup jkqtpplottersupprt
@@ -44,7 +45,14 @@
 #  endif
 #endif
 
-
+#if defined(Q_CC_CLANG) && (QT_VERSION < QT_VERSION_CHECK(7, 0, 0))
+#  define JKQTPLOTTER_WORKAROUND_QGADET_BUG
+#  warning("deactivating some Q_GADGET-declarations due to a bug in Qt on CLANG: https://bugreports.qt.io/browse/QTBUG-104874")
+#else
+#  ifdef JKQTPLOTTER_WORKAROUND_QGADET_BUG
+#    undef JKQTPLOTTER_WORKAROUND_QGADET_BUG
+#  endif
+#endif
 
 
 #endif // JKQTPLOTTER_CONFIGMACROS_H
