@@ -10,7 +10,7 @@ cmake_minimum_required(VERSION 3.16)
 #   - v2018.08  <--> 2.0.0
 #   - v2019.11  <--> 3.x.y
 #   ==> sematic versioning starts with 4.0.0
-project(JKQTPlotter LANGUAGES CXX VERSION 4.0.0)
+project(JKQTPlotter LANGUAGES CXX VERSION 5.0.0)
 
 
 # set search path for CMake files
