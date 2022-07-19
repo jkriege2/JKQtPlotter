@@ -36,76 +36,33 @@ environment:
       QTVER: 5.15
       CMAKE_GENERATOR: "Visual Studio 16 2019"
       CMAKE_BUILDFLAGS: /verbosity:minimal /maxcpucount
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
       
     - QTABI: msvc2019_64
       COMPILER: MSVC
       QTVER: 6.3
       CMAKE_GENERATOR: "Visual Studio 16 2019"
       CMAKE_BUILDFLAGS: /verbosity:minimal /maxcpucount
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
       
-#    - QTABI: mingw81_64
-#      COMPILER: MinGW
-#      MINGWDIR: C:\Qt\Tools\mingw810_64
-#      QTVER: 5.15
-#      CMAKE_GENERATOR: "MinGW Makefiles"
-#
     - QTABI: gcc_64
       COMPILER: GCC
       QTVER: 5.15
       CMAKE_GENERATOR: "Unix Makefiles"
+      APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
 
     - QTABI: gcc_64
       COMPILER: GCC
       QTVER: 6.2
       CMAKE_GENERATOR: "Unix Makefiles"
+      APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
 
     - QTABI: macos
       COMPILER: CLANG
       QTVER: 6.2
       CMAKE_GENERATOR: "Unix Makefiles"
-      
-image:
-  # AppVeyor builds are ordered by the image list:
-  - macos-monterey
-  - Ubuntu2004
-  - Visual Studio 2019
-
-matrix:
-  exclude:
-    # Exclude invalid options
-    - image: Visual Studio 2019
-      QTABI: gcc_64
-    - image: Visual Studio 2019
-      QTABI: mingw53_32
-    - image: Visual Studio 2019
-      QTABI: msvc2015
-    - image: Visual Studio 2019
-      QTABI: macos
-    - image: Ubuntu2004
-      QTABI: mingw81_64
-    - image: Ubuntu2004
-      QTABI: msvc2019_64
-    - image: Ubuntu2004
-      QTABI: msvc2015_64
-    - image: Ubuntu2004
-      QTABI: msvc2015
-    - image: Ubuntu2004
-      QTABI: mingw53_32
-    - image: Ubuntu2004
-      QTABI: macos
-    - image: macos-monterey
-      QTABI: msvc2015_64
-    - image: macos-monterey
-      QTABI: msvc2015
-    - image: macos-monterey
-      QTABI: mingw53_32
-    - image: macos-monterey
-      QTABI: gcc_64
-    - image: macos-monterey
-      QTABI: mingw81_64
-    - image: macos-monterey
-      QTABI: msvc2019_64
-
+      APPVEYOR_BUILD_WORKER_IMAGE: macos-monterey
+     
 
 for:
   # Windows (MinGW 8.1 & MSVC2019)
