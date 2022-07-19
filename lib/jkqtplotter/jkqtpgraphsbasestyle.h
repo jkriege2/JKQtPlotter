@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2020 Jan W. Krieger (<jan@jkrieger.de>)
+    Copyright (c) 2008-2022 Jan W. Krieger (<jan@jkrieger.de>)
 
 
 
@@ -46,7 +46,7 @@ class JKQTBasePlotterStyle; // forward
  *  \see JKQTBasePlotter, \ref jkqtpplotter_styling
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTGraphsSpecificStyleProperties {
-#ifndef JKQTPLOTTER_WORKAROUND_QGADET_BUG
+#ifndef JKQTPLOTTER_WORKAROUND_QGADGET_BUG
       Q_GADGET
 #endif
     public:
@@ -117,7 +117,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTGraphsSpecificStyleProperties {
  *  \see JKQTBasePlotter, \ref jkqtpplotter_styling
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTGeometricSpecificStyleProperties: public JKQTGraphsSpecificStyleProperties {
-#ifndef JKQTPLOTTER_WORKAROUND_QGADET_BUG
+#ifndef JKQTPLOTTER_WORKAROUND_QGADGET_BUG
       Q_GADGET
 #endif
 public:
@@ -167,7 +167,7 @@ public:
  *  \see JKQTBasePlotter, \ref jkqtpplotter_styling
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTAnnotationsSpecificStyleProperties: public JKQTGeometricSpecificStyleProperties {
-#ifndef JKQTPLOTTER_WORKAROUND_QGADET_BUG
+#ifndef JKQTPLOTTER_WORKAROUND_QGADGET_BUG
       Q_GADGET
 #endif
 public:
@@ -215,7 +215,7 @@ public:
  *  \see JKQTBasePlotter, \ref jkqtpplotter_styling
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTGraphsBaseStyle {
-#ifndef JKQTPLOTTER_WORKAROUND_QGADET_BUG
+#ifndef JKQTPLOTTER_WORKAROUND_QGADGET_BUG
       Q_GADGET
 #endif
     public:

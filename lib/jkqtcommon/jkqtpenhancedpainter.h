@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2020 Jan W. Krieger (<jan@jkrieger.de>)
+    Copyright (c) 2008-2022 Jan W. Krieger (<jan@jkrieger.de>)
 
     
 
@@ -35,97 +35,6 @@ class JKQTCOMMON_LIB_EXPORT JKQTPEnhancedPainter : public QPainter {
         JKQTPEnhancedPainter(QPaintDevice* device);
         JKQTPEnhancedPainter();
 
-
-        //void drawPath(const QPainterPath &path);
-        //void drawPoints(const QPoint *points, int pointCount);
-        //void drawPoints(const QPointF *points, int pointCount);
-//        void drawLines(const QLineF *lines, int lineCount);
-//        void drawLines(const QPointF *pointPairs, int lineCount);
-//        void drawLines(const QLine *lines, int lineCount);
-//        void drawLines(const QPoint *pointPairs, int lineCount);
-
-
-//        inline void drawPoint(const QPointF &p) {
-//            drawPoints(&p, 1);
-//        }
-
-//        inline void drawPoint(const QPoint &p) {
-//             drawPoints(&p, 1);
-//        }
-
-//        inline void drawPoint(int x, int y) {
-//            drawPoint(QPointF(x,y));
-//        }
-
-//        inline void drawPoint(double x, double y) {
-//            drawPoint(QPointF(x,y));
-//        }
-
-//        inline void drawPoints(const QPolygonF &points){
-//             drawPoints(points.constData(), points.size());
-//        }
-
-//        inline void drawPoints(const QPolygon &points){
-//            drawPoints(points.constData(), points.size());
-//        }
-
-//        inline void drawLine(const QLineF &line) {
-//            drawLines(&l, 1);
-//        }
-
-//        inline void drawLine(const QLine &line) {
-//            drawLines(&l, 1);
-//        }
-
-//        inline void drawLine(int x1, int y1, int x2, int y2) {
-//            drawLines(QLineF(x1,y1,x2,y2), 1);
-//        }
-
-//        inline void drawLine(double x1, double y1, double x2, double y2) {
-//            drawLines(QLineF(x1,y1,x2,y2), 1);
-//        }
-
-//        inline void drawLine(const QPoint &p1, const QPoint &p2) {
-//            drawLine(QLineF(QLine(p1, p2)));
-//        }
-
-//        inline void drawLine(const QPointF &p1, const QPointF &p2) {
-//            drawLine(QLineF(p1, p2));
-//        }
-
-//        inline void drawLines(const QVector<QLineF> &lines) {
-//            drawLines(lines.constData(), lines.size());
-//        }
-
-//        inline void drawLines(const QVector<QPointF> &pointPairs) {
-//            drawLines(pointPairs.constData(), pointPairs.size() / 2);
-//        }
-
-//        inline void drawLines(const QVector<QLine> &lines) {
-//            drawLines(lines.constData(), lines.size());
-//        }
-
-//        inline void drawLines(const QVector<QPoint> &pointPairs) {
-//            drawLines(pointPairs.constData(), pointPairs.size() / 2);
-//        }
-
-//        inline void drawRect(const QRectF &rect) {
-//            drawRects(&rect, 1);
-//        }
-
-//        inline void drawRect(int x1, int y1, int w, int h) {
-//            QRectF r(x, y, w, h);
-//            drawRects(&r, 1);
-//        }
-
-//        inline void drawRect(double x1, double y1, double w, double h) {
-//            QRectF r(x, y, w, h);
-//            drawRects(&r, 1);
-//        }
-
-//        inline void drawRect(const QRect &rect) {
-//           drawRects(&r, 1);
-//        }
 
     protected:
         void initQEnhacedPainter();

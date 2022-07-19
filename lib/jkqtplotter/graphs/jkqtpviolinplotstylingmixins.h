@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2020 Jan W. Krieger (<jan@jkrieger.de>)
+    Copyright (c) 2008-2022 Jan W. Krieger (<jan@jkrieger.de>)
 
     
 
@@ -41,7 +41,7 @@
 
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPGraphViolinplotStyleMixin: public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin {
-#ifndef JKQTPLOTTER_WORKAROUND_QGADET_BUG
+#ifndef JKQTPLOTTER_WORKAROUND_QGADGET_BUG
       Q_GADGET
 #endif
     public:

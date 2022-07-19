@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2020 Jan W. Krieger (<jan@jkrieger.de>)
+    Copyright (c) 2008-2022 Jan W. Krieger (<jan@jkrieger.de>)
 
     
 
@@ -43,7 +43,7 @@
 
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPGraphErrorStyleMixin {
-#ifndef JKQTPLOTTER_WORKAROUND_QGADET_BUG
+#ifndef JKQTPLOTTER_WORKAROUND_QGADGET_BUG
       Q_GADGET
 #endif
     public:
@@ -195,7 +195,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphErrorStyleMixin {
     \see JKQTPYGraphErrorData, \ref jkqtplotter_graphsgroup_classstructure_mixins
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPXGraphErrorData  {
-#ifndef JKQTPLOTTER_WORKAROUND_QGADET_BUG
+#ifndef JKQTPLOTTER_WORKAROUND_QGADGET_BUG
       Q_GADGET
 #endif
     public:
@@ -247,7 +247,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXGraphErrorData  {
     \see JKQTPXGraphErrorData \ref jkqtplotter_graphsgroup_classstructure_mixins
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPYGraphErrorData  {
-#ifndef JKQTPLOTTER_WORKAROUND_QGADET_BUG
+#ifndef JKQTPLOTTER_WORKAROUND_QGADGET_BUG
       Q_GADGET
 #endif
     public:
@@ -297,7 +297,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPYGraphErrorData  {
     \see JKQTPXGraphErrorData, JKQTPGraphErrorStyleMixin, \ref jkqtplotter_graphsgroup_classstructure_mixins
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPXGraphErrors: public JKQTPXGraphErrorData, public JKQTPGraphErrorStyleMixin {
-#ifndef JKQTPLOTTER_WORKAROUND_QGADET_BUG
+#ifndef JKQTPLOTTER_WORKAROUND_QGADGET_BUG
       Q_GADGET
 #endif
     public:
@@ -321,7 +321,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXGraphErrors: public JKQTPXGraphErrorData, pub
     \see JKQTPYGraphErrorData, JKQTPGraphErrorStyleMixin, \ref jkqtplotter_graphsgroup_classstructure_mixins
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPYGraphErrors: public JKQTPYGraphErrorData, public JKQTPGraphErrorStyleMixin {
-#ifndef JKQTPLOTTER_WORKAROUND_QGADET_BUG
+#ifndef JKQTPLOTTER_WORKAROUND_QGADGET_BUG
       Q_GADGET
 #endif
     public:
@@ -347,7 +347,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPYGraphErrors: public JKQTPYGraphErrorData, pub
     \see JKQTPXGraphErrorData, JKQTPYGraphErrorData, JKQTPGraphErrorStyleMixin, \ref jkqtplotter_graphsgroup_classstructure_mixins
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPXYGraphErrors: public JKQTPXGraphErrorData, public JKQTPYGraphErrorData, public JKQTPGraphErrorStyleMixin {
-#ifndef JKQTPLOTTER_WORKAROUND_QGADET_BUG
+#ifndef JKQTPLOTTER_WORKAROUND_QGADGET_BUG
       Q_GADGET
 #endif
     public:

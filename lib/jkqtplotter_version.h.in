@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2020 Jan W. Krieger (<jan@jkrieger.de>)
+    Copyright (c) 2008-2022 Jan W. Krieger (<jan@jkrieger.de>)
 
     
 
@@ -27,4 +27,3 @@ namespace JKQTPLOTTER_VERSION {
 }
 
 #JKQTPLOTTER_VERSION_DEFINES_H
-// vim: ft=cpp

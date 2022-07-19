@@ -1,9 +1,5 @@
 /*
-Copyright (c) 2008-2020 Jan W. Krieger (<jan@jkrieger.de>)
-
-    
-
-    
+    Copyright (c) 2008-2022 Jan W. Krieger (<jan@jkrieger.de>)
 
     This software is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License (LGPL) as published by
@@ -37,26 +33,6 @@ JKQTPEnhancedPainter::JKQTPEnhancedPainter():
 {
     initQEnhacedPainter();
 }
-
-//void JKQTPEnhancedPainter::drawLines(const QLineF *lines, int lineCount)
-//{
-
-//}
-
-//void JKQTPEnhancedPainter::drawLines(const QPointF *lines, int lineCount)
-//{
-
-//}
-
-//void JKQTPEnhancedPainter::drawLines(const QLine *lines, int lineCount)
-//{
-
-//}
-
-//void JKQTPEnhancedPainter::drawLines(const QPoint *lines, int lineCount)
-//{
-
-//}
 
 
 void JKQTPEnhancedPainter::initQEnhacedPainter()

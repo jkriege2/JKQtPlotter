@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2020 Jan W. Krieger (<jan@jkrieger.de>)
+    Copyright (c) 2008-2022 Jan W. Krieger (<jan@jkrieger.de>)
 
     
 
@@ -42,7 +42,7 @@ class JKQTBasePlotter; // forward
     \ingroup jkqtplotter_imagelots_tools
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPColorPaletteStyleAndToolsMixin {
-#ifndef JKQTPLOTTER_WORKAROUND_QGADET_BUG
+#ifndef JKQTPLOTTER_WORKAROUND_QGADGET_BUG
       Q_GADGET
 #endif
     public:
@@ -254,7 +254,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPColorPaletteStyleAndToolsMixin {
     \ingroup jkqtplotter_imagelots_tools
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPColorPaletteWithModifierStyleAndToolsMixin : public JKQTPColorPaletteStyleAndToolsMixin {
-#ifndef JKQTPLOTTER_WORKAROUND_QGADET_BUG
+#ifndef JKQTPLOTTER_WORKAROUND_QGADGET_BUG
       Q_GADGET
 #endif
     public:

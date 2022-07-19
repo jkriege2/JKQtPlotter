@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2020-2020 Jan W. Krieger (<jan@jkrieger.de>)
+    Copyright (c) 2020-2022 Jan W. Krieger (<jan@jkrieger.de>)
 
     
 

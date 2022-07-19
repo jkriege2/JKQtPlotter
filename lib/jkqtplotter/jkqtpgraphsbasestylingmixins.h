@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2020 Jan W. Krieger (<jan@jkrieger.de>)
+    Copyright (c) 2008-2022 Jan W. Krieger (<jan@jkrieger.de>)
 
     
 
@@ -119,7 +119,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphLineStyleMixin {
         QColor getHighlightingLineColor() const;
 
 
-#ifndef JKQTPLOTTER_WORKAROUND_QGADET_BUG
+#ifndef JKQTPLOTTER_WORKAROUND_QGADGET_BUG
         Q_PROPERTY(QColor highlightingLineColor MEMBER m_highlightingLineColor READ getHighlightingLineColor WRITE setHighlightingLineColor)
         Q_PROPERTY(QColor lineColor MEMBER m_lineColor READ getLineColor WRITE setLineColor)
         Q_PROPERTY(Qt::PenStyle lineStyle MEMBER m_lineStyle READ getLineStyle WRITE setLineStyle)
@@ -159,7 +159,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphLineStyleMixin {
     \see JKQTPGraphDecoratedLineStyleMixin for a Mix-In for both ends
 */
 class JKQTPLOTTER_LIB_EXPORT JKQTPGraphDecoratedHeadLineStyleMixin: public JKQTPGraphLineStyleMixin {
-#ifndef JKQTPLOTTER_WORKAROUND_QGADET_BUG
+#ifndef JKQTPLOTTER_WORKAROUND_QGADGET_BUG
       Q_GADGET
 #endif
 public:
@@ -188,7 +188,7 @@ public:
 
 
 
-#ifndef JKQTPLOTTER_WORKAROUND_QGADET_BUG
+#ifndef JKQTPLOTTER_WORKAROUND_QGADGET_BUG
     Q_PROPERTY(JKQTPLineDecoratorStyle headDecoratorStyle MEMBER m_headDecoratorStyle READ getHeadDecoratorStyle WRITE setHeadDecoratorStyle)
     Q_PROPERTY(double headDecoratorSizeFactor MEMBER m_headDecoratorSizeFactor READ getHeadDecoratorSizeFactor WRITE setHeadDecoratorSizeFactor)
 #endif
@@ -214,7 +214,7 @@ private:
     \see JKQTPGraphDecoratedHeadLineStyleMixin for a Mix-In for one end (head) only
 */
 class JKQTPLOTTER_LIB_EXPORT JKQTPGraphDecoratedLineStyleMixin: public JKQTPGraphLineStyleMixin {
-#ifndef JKQTPLOTTER_WORKAROUND_QGADET_BUG
+#ifndef JKQTPLOTTER_WORKAROUND_QGADGET_BUG
       Q_GADGET
 #endif
 public:
@@ -256,7 +256,7 @@ public:
 
 
 
-#ifndef JKQTPLOTTER_WORKAROUND_QGADET_BUG
+#ifndef JKQTPLOTTER_WORKAROUND_QGADGET_BUG
     Q_PROPERTY(JKQTPLineDecoratorStyle headDecoratorStyle MEMBER m_headDecoratorStyle READ getHeadDecoratorStyle WRITE setHeadDecoratorStyle)
     Q_PROPERTY(JKQTPLineDecoratorStyle tailDecoratorStyle MEMBER m_tailDecoratorStyle READ getTailDecoratorStyle WRITE setTailDecoratorStyle)
     Q_PROPERTY(double headDecoratorSizeFactor MEMBER m_headDecoratorSizeFactor READ getHeadDecoratorSizeFactor WRITE setHeadDecoratorSizeFactor)
@@ -289,7 +289,7 @@ private:
     .
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPGraphSymbolStyleMixin {
-#ifndef JKQTPLOTTER_WORKAROUND_QGADET_BUG
+#ifndef JKQTPLOTTER_WORKAROUND_QGADGET_BUG
       Q_GADGET
 #endif
     public:
@@ -327,7 +327,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphSymbolStyleMixin {
 
 
 
-#ifndef JKQTPLOTTER_WORKAROUND_QGADET_BUG
+#ifndef JKQTPLOTTER_WORKAROUND_QGADGET_BUG
         Q_PROPERTY(JKQTPGraphSymbols symbolType MEMBER m_symbolType READ getSymbolType WRITE setSymbolType)
         Q_PROPERTY(QColor symbolColor MEMBER m_symbolColor READ getSymbolColor WRITE setSymbolColor)
         Q_PROPERTY(QColor symbolFillColor MEMBER m_symbolFillColor READ getSymbolFillColor WRITE setSymbolFillColor)
@@ -408,7 +408,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphSymbolStyleMixin {
     .
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPGraphFillStyleMixin {
-#ifndef JKQTPLOTTER_WORKAROUND_QGADET_BUG
+#ifndef JKQTPLOTTER_WORKAROUND_QGADGET_BUG
       Q_GADGET
 #endif
     public:
@@ -451,7 +451,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphFillStyleMixin {
         /** \brief sets a fill transformation */
         void setFillTransform(const QTransform& b);
 
-#ifndef JKQTPLOTTER_WORKAROUND_QGADET_BUG
+#ifndef JKQTPLOTTER_WORKAROUND_QGADGET_BUG
         Q_PROPERTY(Qt::BrushStyle fillStyle MEMBER m_fillStyle READ getFillStyle WRITE setFillStyle)
         Q_PROPERTY(QColor fillColor MEMBER m_fillColor READ getFillColor WRITE setFillColor)
 #endif
@@ -472,7 +472,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphFillStyleMixin {
  *  \ingroup jkqtplotter_basegraphs_stylemixins
 */
 class JKQTPLOTTER_LIB_EXPORT JKQTPGraphLineAndFillStyleMixin: public JKQTPGraphFillStyleMixin, public JKQTPGraphLineStyleMixin {
-#ifndef JKQTPLOTTER_WORKAROUND_QGADET_BUG
+#ifndef JKQTPLOTTER_WORKAROUND_QGADGET_BUG
       Q_GADGET
 #endif
 public:
@@ -494,7 +494,7 @@ public:
     bool doFillCurve() const;
 
 
-#ifndef JKQTPLOTTER_WORKAROUND_QGADET_BUG
+#ifndef JKQTPLOTTER_WORKAROUND_QGADGET_BUG
     Q_PROPERTY(bool drawLine MEMBER m_drawLine READ getDrawLine WRITE setDrawLine)
     Q_PROPERTY(bool fillCurve MEMBER m_fillCurve READ getFillCurve WRITE setFillCurve)
 #endif
@@ -517,7 +517,7 @@ private:
     .
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPGraphTextStyleMixin {
-#ifndef JKQTPLOTTER_WORKAROUND_QGADET_BUG
+#ifndef JKQTPLOTTER_WORKAROUND_QGADGET_BUG
       Q_GADGET
 #endif
     public:
@@ -546,7 +546,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphTextStyleMixin {
 
 
 
-#ifndef JKQTPLOTTER_WORKAROUND_QGADET_BUG
+#ifndef JKQTPLOTTER_WORKAROUND_QGADGET_BUG
         Q_PROPERTY(QColor textColor MEMBER m_textColor READ getTextColor WRITE setTextColor)
         Q_PROPERTY(double textFontSize MEMBER m_textFontSize READ getTextFontSize WRITE setTextFontSize)
         Q_PROPERTY(QString textFontName MEMBER m_textFontName READ getTextFontName WRITE setTextFontName)
