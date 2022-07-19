@@ -24,6 +24,8 @@ set(SOURCES
   ${CMAKE_CURRENT_LIST_DIR}/jkqtmathtext.cpp
   ${CMAKE_CURRENT_LIST_DIR}/jkqtmathtexttools.cpp
   ${CMAKE_CURRENT_LIST_DIR}/jkqtmathtextlabel.cpp
+)
+set(SOURCES_NODES
   ${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextnode.cpp
   ${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtexttextnode.cpp
   ${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextbracenode.cpp
@@ -46,6 +48,10 @@ set(HEADERS
   $<INSTALL_INTERFACE:jkqtmathtexttools.h>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtmathtextlabel.h>
   $<INSTALL_INTERFACE:jkqtmathtextlabel.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtmathtext_imexport.h>
+  $<INSTALL_INTERFACE:jkqtmathtext_imexport.h>
+)
+set(HEADERS_NODES
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextnode.h>
   $<INSTALL_INTERFACE:nodes/jkqtmathtextnode.h>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtexttextnode.h>
@@ -72,8 +78,6 @@ set(HEADERS
   $<INSTALL_INTERFACE:nodes/jkqtmathtextnodetools.h>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextwhitespacenode.h>
   $<INSTALL_INTERFACE:nodes/jkqtmathtextwhitespacenode.h>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtmathtext_imexport.h>
-  $<INSTALL_INTERFACE:jkqtmathtext_imexport.h>
 )
 
 if(JKQtPlotter_BUILD_INCLUDE_XITS_FONTS)
@@ -115,7 +119,7 @@ function(JKQtMathText_setDefaultLibOptions TARGETNAME)
 endfunction()
 
 if(JKQtPlotter_BUILD_SHARED_LIBS)
-    add_library(${libsh_name} SHARED  ${SOURCES} ${RESOURCES} ${HEADERS} )
+    add_library(${libsh_name} SHARED  ${SOURCES} ${RESOURCES} ${HEADERS} ${SOURCES_NODES} ${HEADERS_NODES} )
     JKQtMathText_setDefaultLibOptions(${libsh_name})
     set_property(TARGET ${libsh_name} PROPERTY OUTPUT_NAME  "${libsh_name_decorated}")
     target_link_libraries(${libsh_name} PUBLIC JKQTCommonSharedLib)
@@ -128,8 +132,8 @@ if(JKQtPlotter_BUILD_SHARED_LIBS)
 endif()
 
 if(JKQtPlotter_BUILD_STATIC_LIBS)
-    add_library(${lib_name} STATIC ${SOURCES} ${RESOURCES} ${HEADERS})
-    JKQtMathText_setDefaultLibOptions(${libsh_name})
+    add_library(${lib_name} STATIC ${SOURCES} ${RESOURCES} ${HEADERS} ${SOURCES_NODES} ${HEADERS_NODES})
+    JKQtMathText_setDefaultLibOptions(${lib_name})
     set_property(TARGET ${lib_name} PROPERTY OUTPUT_NAME  "${lib_name_decorated}")
 
     target_link_libraries(${lib_name} PUBLIC JKQTCommonLib)
@@ -184,8 +188,11 @@ if(JKQtPlotter_BUILD_STATIC_LIBS)
 endif(JKQtPlotter_BUILD_STATIC_LIBS)
 
 install(FILES ${HEADERS}
-		DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${libIncludeSubdir}
-		COMPONENT Headers)
+                DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${libIncludeSubdir}
+                COMPONENT Headers)
+install(FILES ${HEADERS_NODES}
+                DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${libIncludeSubdir}/nodes
+                COMPONENT Headers)
 
 configure_file(${PROJECT_SOURCE_DIR}/readme.txt.in ${CMAKE_CURRENT_BINARY_DIR}/${lib_name}_Readme.txt @ONLY)
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${lib_name}_Readme.txt" DESTINATION doc/JKQtPlotter )
