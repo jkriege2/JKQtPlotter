@@ -18,7 +18,9 @@ isEmpty(JKQTP_MATHTEXT_PRI_INCLUDED) {
                $$PWD/jkqtmathtext/nodes/jkqtmathtextmatrixnode.h \
                $$PWD/jkqtmathtext/nodes/jkqtmathtextsqrtnode.h \
                $$PWD/jkqtmathtext/nodes/jkqtmathtextsubsupernode.h \
-               $$PWD/jkqtmathtext/nodes/jkqtmathtextsymbolnode.h 
+               $$PWD/jkqtmathtext/nodes/jkqtmathtextsymbolnode.h  \
+               $$PWD/jkqtmathtext/nodes/jkqtmathtextwhitespacenode.h  \
+               $$PWD/jkqtmathtext/nodes/jkqtmathtextnodetools.h 
 
     SOURCES += $$PWD/jkqtmathtext/jkqtmathtext.cpp \
                $$PWD/jkqtmathtext/jkqtmathtextlabel.cpp \
@@ -33,7 +35,9 @@ isEmpty(JKQTP_MATHTEXT_PRI_INCLUDED) {
                $$PWD/jkqtmathtext/nodes/jkqtmathtextmatrixnode.cpp \
                $$PWD/jkqtmathtext/nodes/jkqtmathtextsqrtnode.cpp \
                $$PWD/jkqtmathtext/nodes/jkqtmathtextsubsupernode.cpp \
-               $$PWD/jkqtmathtext/nodes/jkqtmathtextsymbolnode.cpp
+               $$PWD/jkqtmathtext/nodes/jkqtmathtextsymbolnode.cpp \
+               $$PWD/jkqtmathtext/nodes/jkqtmathtextwhitespacenode.cpp \
+               $$PWD/jkqtmathtext/nodes/jkqtmathtextnodetools.cpp
 
     include($$PWD/jkqtmathtext/resources/xits.pri)
     DEFINES += AUTOLOAD_XITS_FONTS

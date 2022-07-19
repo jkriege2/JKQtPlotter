@@ -10,6 +10,8 @@ isEmpty(JKQTP_PLOTTER_PRI_INCLUDED) {
 
 
     HEADERS += \
+               $$PWD/jkqtplotter/jkqtplotter_configmacros.h \
+               $$PWD/jkqtplotter/jkqtplotter_imexport.h \
                $$PWD/jkqtplotter/jkqtptools.h \
                $$PWD/jkqtplotter/jkqtpbaseelements.h \
                $$PWD/jkqtplotter/jkqtpbaseplotter.h \
