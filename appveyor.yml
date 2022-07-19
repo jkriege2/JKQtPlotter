@@ -10,10 +10,8 @@ branches:
 
 shallow_clone: true
 
-# build options
-build:
-  parallel: true
-  verbosity: detailed
+# auto-build VSProject: OFF
+build: false
 
 
 #configurations to build
@@ -35,85 +33,49 @@ environment:
       COMPILER: MSVC
       QTVER: 5.15
       USE_CMAKE: false
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
       CMAKE_GENERATOR: "Visual Studio 16 2019"
       CMAKE_BUILDFLAGS: /verbosity:minimal /maxcpucount
            
     - QTABI: msvc2019_64
       COMPILER: MSVC
       QTVER: 5.15
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
       CMAKE_GENERATOR: "Visual Studio 16 2019"
       CMAKE_BUILDFLAGS: /verbosity:minimal /maxcpucount
            
     - QTABI: msvc2019_64
       COMPILER: MSVC
       QTVER: 6.3
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
       CMAKE_GENERATOR: "Visual Studio 16 2019"
       CMAKE_BUILDFLAGS: /verbosity:minimal /maxcpucount
       
     - QTABI: gcc_64
       COMPILER: GCC
       QTVER: 5.15
+      APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
       CMAKE_GENERATOR: "Unix Makefiles"
 
     - QTABI: gcc_64
       COMPILER: GCC
       QTVER: 6.2
+      APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
       CMAKE_GENERATOR: "Unix Makefiles"
 
     - QTABI: macos
       COMPILER: CLANG
       QTVER: 6.2
+      APPVEYOR_BUILD_WORKER_IMAGE: macos-monterey
       CMAKE_GENERATOR: "Unix Makefiles"
-      
-image:
-  # AppVeyor builds are ordered by the image list:
-  - macos-monterey
-  - Ubuntu2004
-  - Visual Studio 2019
-
-matrix:
-  exclude:
-    # Exclude invalid options
-    - image: Visual Studio 2019
-      QTABI: gcc_64
-    - image: Visual Studio 2019
-      QTABI: mingw53_32
-    - image: Visual Studio 2019
-      QTABI: msvc2015
-    - image: Visual Studio 2019
-      QTABI: macos
-    - image: Ubuntu2004
-      QTABI: mingw81_64
-    - image: Ubuntu2004
-      QTABI: msvc2019_64
-    - image: Ubuntu2004
-      QTABI: msvc2015_64
-    - image: Ubuntu2004
-      QTABI: msvc2015
-    - image: Ubuntu2004
-      QTABI: mingw53_32
-    - image: Ubuntu2004
-      QTABI: macos
-    - image: macos-monterey
-      QTABI: msvc2015_64
-    - image: macos-monterey
-      QTABI: msvc2015
-    - image: macos-monterey
-      QTABI: mingw53_32
-    - image: macos-monterey
-      QTABI: gcc_64
-    - image: macos-monterey
-      QTABI: mingw81_64
-    - image: macos-monterey
-      QTABI: msvc2019_64
-
+  
 
 for:
   # Windows (MinGW 8.1 & MSVC2019)
   - 
     matrix:
       only:
-        - image: Visual Studio 2019
+        - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
      
     init:
       - cmd: echo == INIT SYSTEM ENVIRONMENT ======================================================================
@@ -172,7 +134,7 @@ for:
   - 
     matrix:
       only:
-        - image: Ubuntu2004
+        - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
         
     init:
       - sh: echo == INIT SYSTEM ENVIRONMENT ======================================================================
@@ -223,7 +185,7 @@ for:
   - 
     matrix:
       only:
-        - image: macos-monterey
+        - APPVEYOR_BUILD_WORKER_IMAGE: macos-monterey
             
     init:
       - sh: echo == INIT SYSTEM ENVIRONMENT ======================================================================
