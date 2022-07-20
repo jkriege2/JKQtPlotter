@@ -29,14 +29,14 @@ environment:
     USE_CMAKE: true
  
   matrix:
-    - QTABI: msvc2019_64
-      COMPILER: MSVC
+      
+    - QTABI: gcc_64
+      COMPILER: GCC
       QTVER: 5.15
       USE_CMAKE: false
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
-      CMAKE_GENERATOR: "Visual Studio 16 2019"
-      CMAKE_BUILDFLAGS: /verbosity:minimal /maxcpucount
-      MAKETOOL: jom
+      APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
+      CMAKE_GENERATOR: "Unix Makefiles"
+      MAKETOOL: make
            
     - QTABI: msvc2019_64
       COMPILER: MSVC
@@ -168,15 +168,20 @@ for:
       - sh: echo == BUILD JKQtPlotter ============================================================================
       - sh: mkdir build
       - sh: cd build
-      - sh: echo --- Run CMake Configure ----------------------------------------------------------------------------- 
-      - sh: doxygen --version 
-      - sh: cmake --version 
-      - sh: cmake -G "$CMAKE_GENERATOR" "-DCMAKE_PREFIX_PATH=$QTDIR" .. 
-      - sh: echo --- Build using CMake ------------------------------------------------------------------------------- 
-      - sh: cmake --build . --config "$CONFIGURATION" -j$(getconf _NPROCESSORS_ONLN)  -- $CMAKE_BUILDFLAGS
-
-
-
+      - sh: if [ "$USE_CMAKE" = true ]; then 
+              echo --- Run CMake Configure ----------------------------------------------------------------------------- 
+              cmake --version 
+              cmake -G "$CMAKE_GENERATOR" "-DCMAKE_PREFIX_PATH=$QTDIR" .. 
+              echo --- Build using CMake ------------------------------------------------------------------------------- 
+              cmake --build . --config "$CONFIGURATION" -j$(getconf _NPROCESSORS_ONLN)  -- $CMAKE_BUILDFLAGS
+            fi
+      - sh: if [ "$USE_CMAKE" = false ]; then 
+              echo --- Run QMake Configure ----------------------------------------------------------------------------- 
+              qmake -v 
+              qmake CONFIG+=%CONFIGURATION% ..\JKQtPlotterBuildAllExamples.pro
+              echo --- Build using QMake ------------------------------------------------------------------------------- 
+              Make -j$(getconf _NPROCESSORS_ONLN) 
+            fi
 
 
 
