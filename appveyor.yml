@@ -25,9 +25,7 @@ environment:
   global:
     JOMDIR: C:\Qt\Tools\QtCreator\bin
     VSVER: 0
-    MAKETOOL: make  # or $JOMDIR\jom
     CMAKE_BUILDFLAGS: 
-    BUILDFLAGS: 
     USE_CMAKE: true
  
   matrix:
@@ -38,8 +36,6 @@ environment:
       USE_CMAKE: false
       APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
       CMAKE_GENERATOR: "Unix Makefiles"
-      MAKETOOL: make
-      BUILDFLAGS:  -j$(getconf _NPROCESSORS_ONLN) 
            
     - QTABI: msvc2019_64
       COMPILER: MSVC
@@ -185,7 +181,7 @@ for:
               qmake -v 
               qmake -makefile -o Makefile CONFIG+=%CONFIGURATION% ..\JKQtPlotterBuildAllExamples.pro
               echo --- Build for QMake --------------------------------------------------------------------------------- 
-              $MAKETOOL $BUILDFLAGS 
+              make -j$(getconf _NPROCESSORS_ONLN) 
             fi
 
 
