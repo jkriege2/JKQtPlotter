@@ -26,6 +26,8 @@
 #include <QColor>
 #include <QString>
 #include <QSettings>
+#include <QPen>
+#include <QBrush>
 
 class JKQTBasePlotterStyle; // forward
 

@@ -24,8 +24,8 @@
 #include "jkqtcommon/jkqtcommon_imexport.h"
 #include <QString>
 #include <QLocale>
-#include <QPainter>
-
+#include <string>
+#include <QtGlobal>
 
 /** \brief converts a QT::PenStyle into a string
  * \ingroup jkqtptools_string

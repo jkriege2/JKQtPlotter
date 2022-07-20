@@ -16,6 +16,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
 <ul>
   <li>General:<ul>
     <li>CLEANUP (BREAKING) of library structure</li>
+    <li>NEW: Using precompiled headers in CMake-build to speed up build times</li>
   </ul></li>
   <li>JKQtPlotter:<ul>
     <li>FIXED issue described in <a href="https://github.com/jkriege2/JKQtPlotter/pull/62">#62: Fix custom labels draw, because giving exactly two label-strings did not display all of them</a>, thanks to <a href="https://github.com/FalsinSoft">user:FalsinSoft</a></li>

@@ -43,6 +43,7 @@
 #include <cstdint>
 #include <stdexcept>
 #include <cctype>
+#include <QColor>
 #include "jkqtcommon/jkqtpstringtools.h"
 #include "jkqtcommon/jkqtpdebuggingtools.h"
 #include "jkqtcommon/jkqtpmathtools.h"

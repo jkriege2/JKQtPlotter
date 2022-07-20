@@ -18,6 +18,9 @@
 */
 
 
+#ifndef JKQTPGRAPHSBASE_H
+#define JKQTPGRAPHSBASE_H
+
 #include <QString>
 #include <QPainter>
 #include <QPair>
@@ -26,9 +29,6 @@
 #include "jkqtplotter/jkqtptools.h"
 #include "jkqtplotter/jkqtplotter_imexport.h"
 #include "jkqtplotter/jkqtpimagetools.h"
-
-#ifndef JKQTPGRAPHSBASE_H
-#define JKQTPGRAPHSBASE_H
 
 // forward declarations
 class JKQTPlotter;

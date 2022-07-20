@@ -26,8 +26,12 @@ add_executable(${EXENAME} WIN32 ${SOURCES}  ${HEADERS} ${RESOURCES} ${UIS})
 target_include_directories(${EXENAME} PRIVATE ../../lib)
 if(JKQtPlotter_BUILD_STATIC_LIBS)
     target_link_libraries(${EXENAME} JKQTPlotterLib)
+    # precomiled headers to speed up compilation
+    target_precompile_headers(${EXENAME} PRIVATE ../../lib/jkqtplotter/private/jkqtplotter_precomp.h)
 elseif(JKQtPlotter_BUILD_SHARED_LIBS)
     target_link_libraries(${EXENAME} JKQTPlotterSharedLib)
+    # precomiled headers to speed up compilation
+    target_precompile_headers(${EXENAME} PRIVATE ../../lib/jkqtplotter/private/jkqtplotter_precomp.h)
 endif()
 
 

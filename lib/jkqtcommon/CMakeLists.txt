@@ -119,6 +119,9 @@ function(JKQtCommon_setDefaultLibOptions TARGETNAME)
         $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/../>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
     )
+    # precomiled headers to speed up compilation
+    target_precompile_headers(${TARGETNAME} PRIVATE ${CMAKE_CURRENT_LIST_DIR}/private/jkqtcommon_precomp.h)
+    target_sources(${TARGETNAME} PRIVATE ${CMAKE_CURRENT_LIST_DIR}/private/jkqtcommon_precomp.h)
 endfunction()
 
 

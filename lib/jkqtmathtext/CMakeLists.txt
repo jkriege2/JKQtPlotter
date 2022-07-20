@@ -116,6 +116,10 @@ function(JKQtMathText_setDefaultLibOptions TARGETNAME)
     if(JKQtPlotter_BUILD_INCLUDE_XITS_FONTS)
         target_compile_definitions(${TARGETNAME} PRIVATE JKQTMATHTEXT_COMPILED_WITH_XITS)
     endif(JKQtPlotter_BUILD_INCLUDE_XITS_FONTS)
+
+    # precomiled headers to speed up compilation
+    target_precompile_headers(${TARGETNAME} PRIVATE ${CMAKE_CURRENT_LIST_DIR}/private/jkqtmathtext_precomp.h)
+    target_sources(${TARGETNAME} PRIVATE ${CMAKE_CURRENT_LIST_DIR}/private/jkqtmathtext_precomp.h)
 endfunction()
 
 if(JKQtPlotter_BUILD_SHARED_LIBS)
