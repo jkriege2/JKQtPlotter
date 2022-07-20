@@ -181,7 +181,7 @@ for:
               $QTDIR/bin/qmake -v 
               $QTDIR/bin/qmake -makefile -o Makefile "CONFIG+=%CONFIGURATION%" ../JKQtPlotterBuildAllExamples.pro
               echo --- Build for QMake --------------------------------------------------------------------------------- 
-              make -j$(getconf _NPROCESSORS_ONLN)  qmake_all
+              make -j$(getconf _NPROCESSORS_ONLN) 
             fi
 
 
