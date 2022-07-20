@@ -32,6 +32,8 @@
 #include <QPaintDevice>
 #include <QPaintEngine>
 #include <QPrinter>
+#include <QPainterPath>
+#include <QString>
 
 class QFile;
 class QTeXPaintEngine;

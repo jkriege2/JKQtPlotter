@@ -37,7 +37,8 @@ isEmpty(JKQTP_COMMON_PRI_INCLUDED) {
                $$PWD/jkqtcommon/jkqtpstatkde.h \
                $$PWD/jkqtcommon/jkqtpstatregression.h \
                $$PWD/jkqtcommon/jkqtpstatpoly.h \
-               $$PWD/jkqtcommon/jkqtpstatgrouped.h
+               $$PWD/jkqtcommon/jkqtpstatgrouped.h \
+               $$PWD/jkqtcommon/jkqtpicons.h
 
 
 
@@ -60,7 +61,8 @@ isEmpty(JKQTP_COMMON_PRI_INCLUDED) {
                $$PWD/jkqtcommon/jkqtpstatkde.cpp \
                $$PWD/jkqtcommon/jkqtpstatregression.cpp \
                $$PWD/jkqtcommon/jkqtpstatpoly.cpp \
-               $$PWD/jkqtcommon/jkqtpstatgrouped.cpp
+               $$PWD/jkqtcommon/jkqtpstatgrouped.cpp \
+               $$PWD/jkqtcommon/jkqtpicons.cpp
 
 
     INCLUDEPATH += $$PWD
