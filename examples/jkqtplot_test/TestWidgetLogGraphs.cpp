@@ -100,14 +100,14 @@ TestWidgetLogGraphs::TestWidgetLogGraphs(QWidget *parent) :
 
     QDoubleSpinBox* spinLOGAngle=new QDoubleSpinBox(this);
     spinLOGAngle->setRange(-90,90);
-    spinLOGAngle->setSuffix(QLatin1String("°"));
+    spinLOGAngle->setSuffix(QChar(0xB0));
     connect(spinLOGAngle, SIGNAL(valueChanged(double)), plotLOG->getPlotter()->getXAxis(), SLOT(setTickLabelAngle(double)));
     layWid->addRow("X-Axis tick label angle", spinLOGAngle);
     spinLOGAngle->setValue(0);
 
     spinLOGAngle=new QDoubleSpinBox(this);
     spinLOGAngle->setRange(-90,90);
-    spinLOGAngle->setSuffix(QLatin1String("°"));
+    spinLOGAngle->setSuffix(QChar(0xB0));
     connect(spinLOGAngle, SIGNAL(valueChanged(double)), plotLOG->getPlotter()->getYAxis(), SLOT(setTickLabelAngle(double)));
     layWid->addRow(tr("Y-axis label angle = "), spinLOGAngle);
     spinLOGAngle->setValue(0);
