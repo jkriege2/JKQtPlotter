@@ -24,8 +24,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
-
+#define _USE_MATH_DEFINES
 
 #include "jkqtcommon/jkqtpcodestructuring.h"
 #include "jkqtcommon/jkqtpstringtools.h"

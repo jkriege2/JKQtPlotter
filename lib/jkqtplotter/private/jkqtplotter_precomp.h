@@ -23,6 +23,7 @@
     You should have received a copy of the GNU Lesser General Public License (LGPL)
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+#define _USE_MATH_DEFINES
 
 #include "jkqtcommon/jkqtpbasicimagetools.h"
 #include "jkqtcommon/jkqtpcodestructuring.h"
