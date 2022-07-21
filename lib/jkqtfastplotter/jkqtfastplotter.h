@@ -34,6 +34,9 @@
 #include <cmath>
 #include <iostream>
 #include <QMutex>
+#include <QPen>
+#include <QPainter>
+#include <QBrush>
 #if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
 #include <QtOpenGLWidgets/QOpenGLWidget>
 #define JKQTFASTPLOTTER_BASE QOpenGLWidget
