@@ -587,7 +587,7 @@ void JKQTPColorPaletteWithModifierStyleAndToolsMixin::cbGetOutsideSize(JKQTPEnha
     }
 }
 
-void JKQTPColorPaletteWithModifierStyleAndToolsMixin::cbDrawOutside(JKQTPEnhancedPainter &painter, QRect leftSpace, QRect rightSpace, QRect topSpace, QRect bottomSpace)
+void JKQTPColorPaletteWithModifierStyleAndToolsMixin::cbDrawOutside(JKQTPEnhancedPainter &painter, QRect /*leftSpace*/, QRect rightSpace, QRect topSpace, QRect /*bottomSpace*/)
 {
     if (showColorBar) {
         double internalDataMin=0;

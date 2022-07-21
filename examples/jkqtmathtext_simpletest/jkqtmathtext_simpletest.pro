@@ -12,10 +12,10 @@ DEPENDPATH += ../../lib  ../../qmake/staticlib/jkqtmathtextlib
 INCLUDEPATH += ../../lib
 CONFIG (debug, debug|release) {
     DEPENDPATH += ../../qmake/staticlib/jkqtmathtextlib/debug
-    LIBS += -L../../qmake/staticlib/jkqtmathtextlib/debug -ljkqtmathtextlib_debug
+    LIBS += -L../../qmake/staticlib/jkqtmathtextlib/debug -L../../../qmake/staticlib/jkqtmathtextlib/debug -ljkqtmathtextlib_debug
 } else {
     DEPENDPATH += ../../qmake/staticlib/jkqtmathtextlib/release
-    LIBS += -L../../qmake/staticlib/jkqtmathtextlib/release -ljkqtmathtextlib
+    LIBS += -L../../qmake/staticlib/jkqtmathtextlib/release -L../../../qmake/staticlib/jkqtmathtextlib/release -ljkqtmathtextlib
 }
 message("LIBS = $$LIBS")
 

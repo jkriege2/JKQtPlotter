@@ -129,7 +129,7 @@ void JKQTMathTextSubscriptNode::getSizeInternal(QPainter& painter, JKQTMathTextE
 
     double cWidth=0, cBaselineHeight=0, cOverallHeight=0, cStrikeoutPos=0;
     getChild()->getSize(painter, ev, cWidth, cBaselineHeight, cOverallHeight, cStrikeoutPos);
-    const double childDescent=cOverallHeight-cBaselineHeight;
+    //const double childDescent=cOverallHeight-cBaselineHeight;
     double shift_to_childBaseline=cBaselineHeight-parentMathText->getSubShiftFactor()*tbr_of_letterM.height();
 
     if (prevNodeSize!=nullptr) {

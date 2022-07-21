@@ -100,3 +100,4 @@ Sicherungskopie_*
 /CMakeSettings.json
 /out
 *.synctex.gz
+*.bak

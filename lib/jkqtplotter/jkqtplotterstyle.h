@@ -151,7 +151,6 @@ public:
     /** \brief action to perform on a double-click of the mouse buttons (depending on the button and the modifiers) */
     JKQTPMouseDoubleClickActionsHashMap registeredMouseDoubleClickActions;
 
-
     /** \brief the currently executed MouseMoveAction */
     JKQTPMouseMoveActionsHashMap registeredMouseMoveActions;
 

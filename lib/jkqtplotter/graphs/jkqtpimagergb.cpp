@@ -1178,7 +1178,7 @@ JKQTPColumnRGBMathImage::JKQTPColumnRGBMathImage(JKQTBasePlotter *parent):
 }
 
 JKQTPColumnRGBMathImage::JKQTPColumnRGBMathImage(double x, double y, double width, double height, JKQTBasePlotter *parent):
-    JKQTPRGBMathImage(x,y,width,height,JKQTPMathImageDataType::DoubleArray,nullptr,Nx,Ny,parent)
+    JKQTPRGBMathImage(x,y,width,height,JKQTPMathImageDataType::DoubleArray,nullptr,0,0,parent)
 {
     this->modifierColumn=-1;
     this->imageRColumn=-1;

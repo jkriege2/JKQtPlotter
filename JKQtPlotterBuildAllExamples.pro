@@ -15,6 +15,9 @@ SUBDIRS +=  jkqtplotterlib \
             jkqtfastplotter_test
 
 
+OUTBASEDIR=$$OUT_PWD
+
+
 jkqtplotterlib.file = qmake/staticlib/jkqtplotterlib/jkqtplotterlib.pro
 jkqtplotterlib_sharedlib.file = qmake/sharedlib/jkqtplotterlib/jkqtplotterlib.pro
 
@@ -28,18 +31,18 @@ jkqtfastplotterlib.file = qmake/staticlib/jkqtfastplotterlib/jkqtfastplotterlib.
 jkqtfastplotterlib_sharedlib.file = qmake/sharedlib/jkqtfastplotterlib/jkqtfastplotterlib.pro
 
 jkqtmathtext_simpletest.subdir = examples/jkqtmathtext_simpletest
-jkqtmathtext_simpletest.depends = jkqtmathtextlib 
+jkqtmathtext_simpletest.depends = jkqtmathtextlib jkqtpcommonlib
 
 jkqtmathtext_test.subdir = examples/jkqtmathtext_test
-jkqtmathtext_test.depends = jkqtplotterlib
+jkqtmathtext_test.depends = jkqtplotterlib jkqtpcommonlib
 
 jkqtplotter_simpletest.file = examples/simpletest/simpletest.pro
-jkqtplotter_simpletest.depends = jkqtplotterlib
+jkqtplotter_simpletest.depends = jkqtplotterlib jkqtpcommonlib
 
 jkqtplot_test.file = examples/jkqtplot_test/jkqtplot_test.pro
 jkqtplot_test.depends = jkqtplotterlib
 
-jkqtfastplotter_test.file = $$PWD/examples/jkqtfastplotter_test/jkqtfastplotter_test.pro
+jkqtfastplotter_test.file = examples/jkqtfastplotter_test/jkqtfastplotter_test.pro
 jkqtfastplotter_test.depends = jkqtfastplotterlib
 
 defineTest(addSimpleTest) {

@@ -56,7 +56,7 @@ void JKQTMathTextSymbolNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvi
     getSymbolSizeInternal(painter, currentEv, width, baselineHeight, overallHeight, strikeoutPos, dummy1, dummy2, prevNodeSize);
 }
 
-void JKQTMathTextSymbolNode::getSymbolSizeInternal(QPainter &painter, JKQTMathTextEnvironment currentEv, double &width, double &baselineHeight, double &overallHeight, double &strikeoutPos, double &subSuperXCorrection, double &subBesidesXCorrection, const JKQTMathTextNodeSize *prevNodeSize)
+void JKQTMathTextSymbolNode::getSymbolSizeInternal(QPainter &painter, JKQTMathTextEnvironment currentEv, double &width, double &baselineHeight, double &overallHeight, double &strikeoutPos, double &subSuperXCorrection, double &subBesidesXCorrection, const JKQTMathTextNodeSize */*prevNodeSize*/)
 {
     const auto fullProps=symbols.value(symbolName, SymbolFullProps());
     const GlobalSymbolFlags globalFlags=fullProps.globalFlags;
@@ -70,7 +70,7 @@ void JKQTMathTextSymbolNode::getSymbolSizeInternal(QPainter &painter, JKQTMathTe
     const QRectF br=getBoundingRect(fm, sym, globalFlags);
     const QRectF tbrNoSymbol=JKQTMathTextGetTightBoundingRect(f, "X", painter.device());
     const QRectF mintbr=JKQTMathTextGetTightBoundingRect(f, "(", painter.device());
-    const double yShift=symprops.yShiftFactor*tbr.height();
+    //const double yShift=symprops.yShiftFactor*tbr.height();
 
 
     if (currentEv.insideMath) {
@@ -212,7 +212,7 @@ double JKQTMathTextSymbolNode::draw(QPainter& painter, double x, double y, JKQTM
     const QString sym=symprops.symbol;
     const QRectF tbr=getTightBoundingRect(fm, sym, globalFlags);
     const QRectF tbrNonItalic=getTightBoundingRect(fmNonItalic, sym, globalFlags);
-    const QRectF br=getBoundingRect(fm, sym, globalFlags);
+    //const QRectF br=getBoundingRect(fm, sym, globalFlags);
     const QRectF tbrNoSymbol=JKQTMathTextGetTightBoundingRect(f, "X", painter.device());
     const double yShift=symprops.yShiftFactor*tbr.height();
     const double xShift=(width-tbr.width())/2.0;
@@ -826,81 +826,81 @@ void JKQTMathTextSymbolNode::fillSymbolTables()
 
 
 JKQTMathTextSymbolNode::SymbolFullProps::SymbolFullProps():
+    fontType(MTECurrentFont),
     customFontFamily(),
     html(),
-    fontType(MTECurrentFont),
     globalFlags(NoGLobalSymbolFlags)
 {
 
 }
 
 JKQTMathTextSymbolNode::SymbolFullProps::SymbolFullProps(const QString &_font, const SymbolProps &props, const QString &_html, SymbolFlags _htmlflags, double _htmlfontScalingFactor, double _htmlyShiftFactor):
+    fontType(MTECustomFont),
     customFontFamily(_font),
     html(_html, _htmlflags, _htmlfontScalingFactor, _htmlyShiftFactor),
-    fontType(MTECustomFont),
     globalFlags(NoGLobalSymbolFlags)
 {
     this->props[MTFEStandard]=props;
 }
 
 JKQTMathTextSymbolNode::SymbolFullProps::SymbolFullProps(const QString &_font, const QString &symbol, const QString &_html, SymbolFlags _htmlflags, double _htmlfontScalingFactor, double _htmlyShiftFactor):
+    fontType(MTECustomFont),
     customFontFamily(_font),
     html(_html, _htmlflags, _htmlfontScalingFactor, _htmlyShiftFactor),
-    fontType(MTECustomFont),
     globalFlags(NoGLobalSymbolFlags)
 {
     this->props[MTFEStandard]=SymbolProps(symbol);
 }
 
 JKQTMathTextSymbolNode::SymbolFullProps::SymbolFullProps(const SymbolProps &props, const QString &_html, SymbolFlags _htmlflags, double _htmlfontScalingFactor, double _htmlyShiftFactor):
+    fontType(MTECurrentFont),
     customFontFamily(),
     html(_html, _htmlflags, _htmlfontScalingFactor, _htmlyShiftFactor),
-    fontType(MTECurrentFont),
     globalFlags(NoGLobalSymbolFlags)
 {
     this->props[MTFEStandard]=props;
 }
 
 JKQTMathTextSymbolNode::SymbolFullProps::SymbolFullProps(JKQTMathTextEnvironmentFont _fontType, const SymbolProps &props, const QString &_html, SymbolFlags _htmlflags, double _htmlfontScalingFactor, double _htmlyShiftFactor):
+    fontType(_fontType),
     customFontFamily(),
     html(_html, _htmlflags, _htmlfontScalingFactor, _htmlyShiftFactor),
-    fontType(_fontType),
     globalFlags(NoGLobalSymbolFlags)
 {
     this->props[MTFEStandard]=props;
 }
 
 JKQTMathTextSymbolNode::SymbolFullProps::SymbolFullProps(JKQTMathTextEnvironmentFont _fontType, const QString &symbol, const QString &_html, SymbolFlags _htmlflags, double _htmlfontScalingFactor, double _htmlyShiftFactor):
+    fontType(_fontType),
     customFontFamily(),
     html(_html, _htmlflags, _htmlfontScalingFactor, _htmlyShiftFactor),
-    fontType(_fontType),
     globalFlags(NoGLobalSymbolFlags)
 {
     this->props[MTFEStandard]=SymbolProps(symbol);
 }
 
 JKQTMathTextSymbolNode::SymbolFullProps::SymbolFullProps(JKQTMathTextFontEncoding enc0, const SymbolProps &props0, const QString &_html, SymbolFlags _htmlflags, double _htmlfontScalingFactor, double _htmlyShiftFactor):
+    fontType(MTECurrentFont),
     customFontFamily(),
     html(_html, _htmlflags, _htmlfontScalingFactor, _htmlyShiftFactor),
-    fontType(MTECurrentFont),
     globalFlags(NoGLobalSymbolFlags)
 {
     this->props[enc0]=props0;
 }
 
 JKQTMathTextSymbolNode::SymbolFullProps::SymbolFullProps(JKQTMathTextEnvironmentFont _fontType, JKQTMathTextFontEncoding enc0, const SymbolProps &props0, const QString &_html, SymbolFlags _htmlflags, double _htmlfontScalingFactor, double _htmlyShiftFactor):
+    fontType(_fontType),
     customFontFamily(),
     html(_html, _htmlflags, _htmlfontScalingFactor, _htmlyShiftFactor),
-    fontType(_fontType),
     globalFlags(NoGLobalSymbolFlags)
 {
     this->props[enc0]=props0;
 }
 
 JKQTMathTextSymbolNode::SymbolFullProps::SymbolFullProps(JKQTMathTextFontEncoding enc0, const SymbolProps &props0, JKQTMathTextFontEncoding enc1, const SymbolProps &props1, const QString &_html, SymbolFlags _htmlflags, double _htmlfontScalingFactor, double _htmlyShiftFactor):
+    fontType(MTECurrentFont),
     customFontFamily(),
     html(_html, _htmlflags, _htmlfontScalingFactor, _htmlyShiftFactor),
-    fontType(MTECurrentFont),
     globalFlags(NoGLobalSymbolFlags)
 {
     this->props[enc0]=props0;
@@ -908,9 +908,9 @@ JKQTMathTextSymbolNode::SymbolFullProps::SymbolFullProps(JKQTMathTextFontEncodin
 }
 
 JKQTMathTextSymbolNode::SymbolFullProps::SymbolFullProps(JKQTMathTextEnvironmentFont _fontType, JKQTMathTextFontEncoding enc0, const SymbolProps &props0, JKQTMathTextFontEncoding enc1, const SymbolProps &props1, const QString &_html, SymbolFlags _htmlflags, double _htmlfontScalingFactor, double _htmlyShiftFactor):
+    fontType(_fontType),
     customFontFamily(),
     html(_html, _htmlflags, _htmlfontScalingFactor, _htmlyShiftFactor),
-    fontType(_fontType),
     globalFlags(NoGLobalSymbolFlags)
 {
     this->props[enc0]=props0;
@@ -918,9 +918,9 @@ JKQTMathTextSymbolNode::SymbolFullProps::SymbolFullProps(JKQTMathTextEnvironment
 }
 
 JKQTMathTextSymbolNode::SymbolFullProps::SymbolFullProps(JKQTMathTextFontEncoding enc0, const SymbolProps &props0, JKQTMathTextFontEncoding enc1, const SymbolProps &props1, JKQTMathTextFontEncoding enc2, const SymbolProps &props2, const QString &_html, SymbolFlags _htmlflags, double _htmlfontScalingFactor, double _htmlyShiftFactor):
+    fontType(MTECurrentFont),
     customFontFamily(),
     html(_html, _htmlflags, _htmlfontScalingFactor, _htmlyShiftFactor),
-    fontType(MTECurrentFont),
     globalFlags(NoGLobalSymbolFlags)
 {
     this->props[enc0]=props0;
@@ -929,9 +929,9 @@ JKQTMathTextSymbolNode::SymbolFullProps::SymbolFullProps(JKQTMathTextFontEncodin
 }
 
 JKQTMathTextSymbolNode::SymbolFullProps::SymbolFullProps(JKQTMathTextEnvironmentFont _fontType, JKQTMathTextFontEncoding enc0, const SymbolProps &props0, JKQTMathTextFontEncoding enc1, const SymbolProps &props1, JKQTMathTextFontEncoding enc2, const SymbolProps &props2, const QString &_html, SymbolFlags _htmlflags, double _htmlfontScalingFactor, double _htmlyShiftFactor):
+    fontType(_fontType),
     customFontFamily(),
     html(_html, _htmlflags, _htmlfontScalingFactor, _htmlyShiftFactor),
-    fontType(_fontType),
     globalFlags(NoGLobalSymbolFlags)
 {
     this->props[enc0]=props0;

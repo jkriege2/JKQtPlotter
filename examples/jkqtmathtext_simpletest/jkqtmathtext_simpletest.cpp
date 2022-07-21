@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
 #if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
     const qreal dpr = lab.devicePixelRatioF();
 #else
-    const dpr=1.0;
+    const qreal dpr=1.0;
 #endif
     QPixmap pix(600*dpr,400*dpr);
     pix.setDevicePixelRatio(dpr);

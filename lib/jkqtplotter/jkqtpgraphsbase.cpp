@@ -993,7 +993,8 @@ void JKQTPXYBaselineGraph::setBaseline(double __value)
     m_baseline=__value;
 }
 
-JKQTPPlotAnnotationElement::JKQTPPlotAnnotationElement(JKQTBasePlotter *parent)
+JKQTPPlotAnnotationElement::JKQTPPlotAnnotationElement(JKQTBasePlotter *parent):
+    JKQTPPlotElement(parent)
 {
 
 }

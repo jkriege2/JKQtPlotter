@@ -67,7 +67,7 @@ void JKQTMathTextListNode::getSizeInternal(QPainter& painter, JKQTMathTextEnviro
 
 
     double xnew=0;
-    bool wasBrace=false;
+    //bool wasBrace=false;
     for (int i=0; i<nodes.size(); i++) {
         JKQTMathTextNodeSize prevNodeSize;
         JKQTMathTextNodeSize* prevNodeSizePtrForSubscript=nullptr;
@@ -321,7 +321,7 @@ void JKQTMathTextListNode::getSizeInternal(QPainter& painter, JKQTMathTextEnviro
             xnew+=w;
             //qDebug()<<i<<xnew;
         }
-         wasBrace=dynamic_cast<JKQTMathTextBraceNode*>(nodes[i]);
+         //wasBrace=dynamic_cast<JKQTMathTextBraceNode*>(nodes[i]);
     }
     width=xnew;
 }

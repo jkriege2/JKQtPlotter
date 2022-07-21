@@ -440,7 +440,7 @@ JKQTPColorDerivationMode::JKQTPColorDerivationMode(PredefinedModes mode):
     case JKQTPFFCMSameEvenLessTransparentColor:
         transparencyModification=TransparencyChangeMode::LessTransparent;
         transparencyModficationStrength=0.66;
-
+        break;
     case JKQTPFFCMInvertedColor:
         colorModification=ColorChangeMode::InvertColor;
         break;

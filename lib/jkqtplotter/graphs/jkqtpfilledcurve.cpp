@@ -131,7 +131,7 @@ void JKQTPFilledCurveXGraph::draw(JKQTPEnhancedPainter& painter) {
 
     QPen p=getLinePen(painter, parent);
     QPen ph=getHighlightingLinePen(painter, parent);
-    QPen np(Qt::NoPen);
+    //QPen np(Qt::NoPen);
     QBrush b=getFillBrush(painter, parent);
     QBrush b_below=fillStyleBelow().getFillBrush(painter, parent);
 
@@ -144,7 +144,7 @@ void JKQTPFilledCurveXGraph::draw(JKQTPEnhancedPainter& painter) {
         QPainterPath pl, pf;
 
         double xold=-1;
-        double yold=-1;
+        //double yold=-1;
         double y0=transformY(getBaseline());
         if (parent->getYAxis()->isLogAxis()) {
             y0=transformY(parent->getYAxis()->getMin());
@@ -173,7 +173,7 @@ void JKQTPFilledCurveXGraph::draw(JKQTPEnhancedPainter& painter) {
                         pf.lineTo(x, y);
                     }
                     xold=x;
-                    yold=y;
+                    //yold=y;
                     subsequentItem=true;
                 }
             }
@@ -257,7 +257,7 @@ void JKQTPFilledCurveYGraph::draw(JKQTPEnhancedPainter &painter)
 
         QPainterPath pl, pf;
 
-        double xold=-1;
+        //double xold=-1;
         double yold=-1;
         double x0=transformX(getBaseline());
         if (parent->getXAxis()->isLogAxis()) {
@@ -286,7 +286,7 @@ void JKQTPFilledCurveYGraph::draw(JKQTPEnhancedPainter &painter)
                         pf.moveTo(x0, y);
                         pf.lineTo(x, y);
                     }
-                    xold=x;
+                    //xold=x;
                     yold=y;
                     first=true;
                 }

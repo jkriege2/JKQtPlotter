@@ -44,8 +44,10 @@ JKQTMathTextSqrtNode::JKQTMathTextSqrtNode(JKQTMathText* _parent, JKQTMathTextNo
 }
 
 JKQTMathTextSqrtNode::~JKQTMathTextSqrtNode() {
-    if (child) delete child; child=nullptr;
-    if (childDegree) delete childDegree; childDegree=nullptr;
+    if (child) { delete child; }
+    child=nullptr;
+    if (childDegree) { delete childDegree; }
+    childDegree=nullptr;
 }
 
 void JKQTMathTextSqrtNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* /*prevNodeSize*/) {

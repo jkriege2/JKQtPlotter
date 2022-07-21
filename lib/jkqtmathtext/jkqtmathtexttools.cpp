@@ -352,8 +352,10 @@ QString JKQTMathTextBraceType2String(JKQTMathTextBraceType type) {
         return "any";
     case MTBTNone:
         return "none";
+    case MTBTUnknown:
+        return "unknow";
     }
-    return "unknown";
+    return "???";
 }
 
 JKQTMathTextBraceType TokenName2JKQTMathTextBraceType(const QString &tokenName)

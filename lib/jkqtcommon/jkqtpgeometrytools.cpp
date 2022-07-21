@@ -19,6 +19,7 @@
 #include "jkqtcommon/jkqtpgeometrytools.h"
 #include <QDebug>
 #include <algorithm>
+#include <QTransform>
 
 
 

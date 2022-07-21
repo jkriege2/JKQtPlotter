@@ -226,7 +226,7 @@ double JKQTMathTextDecoratedNode::draw(QPainter& painter, double x, double y, JK
     const double decotop_xend=decotop_xcenter+deco_width/2.0-linewidth/2.0;
     const double decobot_xstart=x+linewidth/2.0;
     const double decobot_xend=x+cwidth-italic_xcorrection-linewidth/2.0;
-    const double decobot_xcenter=(decobot_xstart+decobot_xend)/2.0;
+    //const double decobot_xcenter=(decobot_xstart+decobot_xend)/2.0;
     const double deco_ytopbot=y-cbaselineHeight-decoSeparation-linewidth/2.0;
     const double deco_ytoptop=y-cbaselineHeight-decoSeparation-deco_height+linewidth/2.0;
     const double deco_ytopcenter=y-cbaselineHeight-decoSeparation-deco_height/2.0;

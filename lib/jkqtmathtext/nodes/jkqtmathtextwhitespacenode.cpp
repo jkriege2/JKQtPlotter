@@ -102,14 +102,14 @@ size_t JKQTMathTextWhitespaceNode::getWhitespaceCount() const
     return whitespace.count;
 }
 
-double JKQTMathTextWhitespaceNode::draw(QPainter &painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize *prevNodeSize)
+double JKQTMathTextWhitespaceNode::draw(QPainter &painter, double x, double /*y*/, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize *prevNodeSize)
 {
     double width=0, bh=0, oh=0, sp=0;
     getSize(painter, currentEv, width, bh, oh, sp, prevNodeSize);
     return x+width;
 }
 
-void JKQTMathTextWhitespaceNode::getSizeInternal(QPainter &painter, JKQTMathTextEnvironment currentEv, double &width, double &baselineHeight, double &overallHeight, double &strikeoutPos, const JKQTMathTextNodeSize *prevNodeSize)
+void JKQTMathTextWhitespaceNode::getSizeInternal(QPainter &painter, JKQTMathTextEnvironment currentEv, double &width, double &baselineHeight, double &overallHeight, double &strikeoutPos, const JKQTMathTextNodeSize */*prevNodeSize*/)
 {
     const double singelWidthPIX=Type2PixelWidth(whitespace.type, currentEv, painter.device());
     const QFontMetricsF fm(currentEv.getFont(parentMathText));

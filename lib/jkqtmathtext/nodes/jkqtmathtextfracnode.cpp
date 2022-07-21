@@ -131,7 +131,7 @@ void JKQTMathTextFracNode::getSizeInternal(QPainter& painter, JKQTMathTextEnviro
 
     const double xheight=fm.xHeight(); //tightBoundingRect("x").height();
     const double line_ascent=xheight/2.0;
-    const double Mheight=JKQTMathTextGetTightBoundingRect(f, "M", painter.device()).height();//fm.ascent();
+    //const double Mheight=JKQTMathTextGetTightBoundingRect(f, "M", painter.device()).height();//fm.ascent();
     const double xwidth=JKQTMathTextGetTightBoundingRect(f, "x", painter.device()).width();
     const double qheight=JKQTMathTextGetTightBoundingRect(f, "q", painter.device()).height();//fm.ascent();
     const double braceheight=fm.xHeight()*parentMathText->getUnderbraceBraceSizeXFactor();
@@ -205,7 +205,7 @@ void JKQTMathTextFracNode::getSizeInternal(QPainter& painter, JKQTMathTextEnviro
     }
 }
 
-int JKQTMathTextFracNode::getNestingLevel(bool sameType) const
+int JKQTMathTextFracNode::getNestingLevel(bool /*sameType*/) const
 {
     QList<const JKQTMathTextFracNode*> parents=getParents<JKQTMathTextFracNode>();
     int cnt=0;

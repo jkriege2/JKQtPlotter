@@ -508,7 +508,7 @@ void TestUserInteraction::userEllipseFinished(double x, double y, double radiusX
     labMouseAction->setText(QString("userEllipseFinished(x=%1, y=%2, radiusX=%3, radiusY=%4, modifiers=%5)").arg(x).arg(y).arg(radiusX).arg(radiusY).arg(KeyboradMod2String(modifiers)));
 }
 
-void TestUserInteraction::tooltipDisplayed(double x, double y, const QStringList& entries, const QList<JKQTPPlotElement*>& graphs)
+void TestUserInteraction::tooltipDisplayed(double x, double y, const QStringList& entries, const QList<JKQTPPlotElement*>& /*graphs*/)
 {
     labMouseAction->setText(QString("tooltipDisplayed(x=%1, y=%2, entries=%3)").arg(x).arg(y).arg(entries.join(";;")));
 }

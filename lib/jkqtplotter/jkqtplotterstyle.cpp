@@ -25,8 +25,8 @@ JKQTPlotterStyle::JKQTPlotterStyle():
     usePaletteColors(true),
     registeredMouseDragActionModes(),
     registeredMouseWheelActions(),
-    registeredMouseMoveActions(),
-    registeredMouseDoubleClickActions()
+    registeredMouseDoubleClickActions(),
+    registeredMouseMoveActions()
 {
     // default user-actions:
     registeredMouseDragActionModes[qMakePair<Qt::MouseButton, Qt::KeyboardModifiers>(Qt::LeftButton, Qt::NoModifier)]=JKQTPMouseDragActions::jkqtpmdaZoomByRectangle;

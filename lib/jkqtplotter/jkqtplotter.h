@@ -1766,9 +1766,9 @@ QT_BEGIN_NAMESPACE
  *  \ingroup jkqtpplottersupprt
 */
 #if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
-inline size_t qHash(const QPair<Qt::MouseButton,Qt::KeyboardModifiers> &key, size_t seed=0) {
+inline size_t qHash(const QPair<Qt::MouseButton,Qt::KeyboardModifiers> &key, size_t /*seed=0*/) {
 #else
-inline uint qHash(const QPair<Qt::MouseButton,Qt::KeyboardModifiers> &key, uint seed=0) {
+inline uint qHash(const QPair<Qt::MouseButton,Qt::KeyboardModifiers> &key, uint /*seed=0*/) {
 #endif
     return static_cast<uint>(key.first)+static_cast<uint>(key.second);
 }
