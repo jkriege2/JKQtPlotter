@@ -23,6 +23,11 @@ if (OpenCV_FOUND)
         include_directories(${EXENAME} ${OpenCV_INCLUDE_DIRS} )
         target_link_libraries(${EXENAME} ${OpenCV_LIBS} )
 
+        # precomiled headers to speed up compilation
+        if (JKQtPlotter_BUILD_WITH_PRECOMPILED_HEADERS)
+          target_precompile_headers(${EXENAME} REUSE_FROM jkqtptest_simpletest)
+        endif (JKQtPlotter_BUILD_WITH_PRECOMPILED_HEADERS)
+
 
         # Installation
         install(TARGETS ${EXENAME} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})

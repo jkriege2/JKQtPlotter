@@ -5,6 +5,11 @@ message( STATUS "...............................................................
 message( STATUS ".. BUILDING EXAMPLES" )
 message( STATUS "............................................................................." )
 
+# needs to be first for Precompiled Headers to work
+add_subdirectory(simpletest)
+
+
+
 add_subdirectory(jkqtfastplotter_test)
 
 add_subdirectory(jkqtmathtext_simpletest)
@@ -49,7 +54,6 @@ add_subdirectory(rgbimageplot)
 add_subdirectory(rgbimageplot_cimg)
 add_subdirectory(rgbimageplot_opencv)
 add_subdirectory(rgbimageplot_qt)
-add_subdirectory(simpletest)
 add_subdirectory(speed)
 add_subdirectory(stackedbars)
 add_subdirectory(stepplots)

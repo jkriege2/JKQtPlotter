@@ -222,8 +222,10 @@ function(JKQtPlottter_setDefaultLibOptions TARGETNAME)
     )
 
     # precomiled headers to speed up compilation
-    target_precompile_headers(${TARGETNAME} PRIVATE ${CMAKE_CURRENT_LIST_DIR}/private/jkqtplotter_precomp.h)
-    target_sources(${TARGETNAME} PRIVATE ${CMAKE_CURRENT_LIST_DIR}/private/jkqtplotter_precomp.h)
+    if (JKQtPlotter_BUILD_WITH_PRECOMPILED_HEADERS)
+      target_precompile_headers(${TARGETNAME} PRIVATE ${CMAKE_CURRENT_LIST_DIR}/private/jkqtplotter_precomp.h)
+      target_sources(${TARGETNAME} PRIVATE ${CMAKE_CURRENT_LIST_DIR}/private/jkqtplotter_precomp.h)
+    endif (JKQtPlotter_BUILD_WITH_PRECOMPILED_HEADERS)
 
 endfunction()
 
