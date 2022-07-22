@@ -179,7 +179,7 @@ for:
             if [ "$USE_CMAKE" = false ]; then 
               echo --- Run QMake Configure ----------------------------------------------------------------------------- 
               $QTDIR/bin/qmake -v 
-              $QTDIR/bin/qmake -makefile -o Makefile "CONFIG+=%CONFIGURATION%" ../JKQtPlotterBuildAllExamples.pro
+              $QTDIR/bin/qmake -makefile -o Makefile "CONFIG+=%CONFIGURATION%" ../JKQtPlotterBuildLibsOnly.pro
               echo --- Build for QMake --------------------------------------------------------------------------------- 
               make -j$(getconf _NPROCESSORS_ONLN) 
             fi
