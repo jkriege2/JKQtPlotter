@@ -1,21 +1,12 @@
 /*!
 
-\defgroup jkqtptools Support Function libraries (e.g. for JKQTPlotter)
-
-This group contains several tool functions and datatypesthat are neccessary for 
-JKQTPlotter, JKQTMathtext and the other major classes in this library, but may 
-also be used separately. The functions and datatypes are sorted into several
-functionaly groups.
-
-
 \defgroup jkqtptools_jkqtcommon JKQTCommon: Diverse Basic Utilities
-\ingroup jkqtptools
 
 This summarizes all functions from JKQTCommon-library, which provides basic (Qt-bound) tools for all other libs in the package JKQtPlotter (i.e. also JKQtFastPlotter and JKQtMathText).
 
 
 \defgroup jkqtptools_math_basic Mathematical Functions & Tools
-\ingroup jkqtptools_math
+\ingroup jkqtptools_jkqtcommon
 
 
 This group assembles a variety of mathematical tool functions that are used in different places.
@@ -23,29 +14,29 @@ This group assembles a variety of mathematical tool functions that are used in d
 
 
 \defgroup jkqtptools_string String/String-Conversion Tool Functions
-\ingroup jkqtptools
+\ingroup jkqtptools_jkqtcommon
 
 Offers diverse function to convert different datatypes (e.g. double, int, diverse enums) to and from strings and for string manipulation.
 
 \defgroup jkqtptools_qt Additional Tools for Qt
-\ingroup jkqtptools
+\ingroup jkqtptools_jkqtcommon
 
 
 \defgroup jkqtptools_qtwidgets Additional Widgets for Qt
-\ingroup jkqtptools
+\ingroup jkqtptools_jkqtcommon
 
 \defgroup jkqtptools_drawing Drawing & Graphics Tools
-\ingroup jkqtptools
+\ingroup jkqtptools_jkqtcommon
 
 Specialized drawing functions used by the plotters and LaTeX renderers.
 
 \defgroup jkqtptools_debugging Debugging Tools
-\ingroup jkqtptools
+\ingroup jkqtptools_jkqtcommon
 
 Functions that help during debugging (e.g. an assert function/macro).
 
 \defgroup jkqtptools_codestructuring Code Structuring Tools
-\ingroup jkqtptools
+\ingroup jkqtptools_jkqtcommon
 
 Classes and functions that help to structure the code (e.g. RAII constructs)
 

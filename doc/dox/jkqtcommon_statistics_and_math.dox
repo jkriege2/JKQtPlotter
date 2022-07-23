@@ -2,7 +2,6 @@
 
 
 \defgroup jkqtcommon_statistics_and_math JKQTCommonStatisticsAndMath: Special Math and Statistics Utilities
-\ingroup jkqtptools
 
 This summarizes all functions from JKQTCommonStatisticsAndMath-library, which provides special and advanced math and statistics tools, mostly used by JKQtPlotter.
 
@@ -10,8 +9,22 @@ This summarizes all functions from JKQTCommonStatisticsAndMath-library, which pr
 \defgroup jkqtptools_algorithms Diverse Algorithms
 \ingroup jkqtcommon_statistics_and_math
 
-\defgroup jkqtptools_math Mathematical Computations & Expression Parsing
+\defgroup jkqtptools_math_parser Parser/Evaluator for Mathematical Expressions
 \ingroup jkqtcommon_statistics_and_math
+
+In this group there are classes that form a parser and evluator for mathematical expressions.
+In the context of the sequencer program this is a tool class that can be used by the classes
+in the project. E.g. used by JKQTPXParsedFunctionLineGraph, JKQTPYParsedFunctionLineGraph 
+
+
+\defgroup jkmpultil JKQTPMathParser: Utilities
+\ingroup jkqtptools_math_parser
+
+\defgroup jkmpNodes JKQTPMathParser: Memory Representation of Expressions
+\ingroup jkqtptools_math_parser
+
+\defgroup jkmpErrorhandling JKQTPMathParser Error Handling
+\ingroup jkqtptools_math_parser
 
 \defgroup jkqtptools_math_array Data Array Tools
 \ingroup jkqtcommon_statistics_and_math

@@ -18,24 +18,6 @@
 */
 
 
-
-/*! \defgroup jkmp Parser/Evaluator for Mathematical Expressions
-    \ingroup jkqtptools_math
-
- In this group there are classes that form a parser and evaluator for mathematical expressions.
- In the context of the sequencer program this is a tool class that can be used by the classes
- in the project. E.g. used by JKQTPXParsedFunctionLineGraph, JKQTPYParsedFunctionLineGraph 
-
- \defgroup jkmpultil JKQTPMathParser: Utilities
- \ingroup jkmp
-
- \defgroup jkmpNodes JKQTPMathParser: Memory Representation of Expressions
- \ingroup jkmp
-
- \defgroup jkmpErrorhandling JKQTPMathParser Error Handling
- \ingroup jkmp
-*/
-
 #include <iostream>
 #include <string>
 #include <cstdio>
@@ -56,7 +38,7 @@
 
 /*! \brief A simple function parser to parse (build memory tree representation) and
            evaluate simple mathematical expressions
-    \ingroup jkmp
+    \ingroup jkqtptools_math_parser
     
     
  This class implements a simple function parser which can parse
