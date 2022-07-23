@@ -24,6 +24,6 @@ include(../../../lib/jkqtplotter.pri)
 
 
 include(../../../lib/jkqtplotter_pch.pri)
-precompile_header:!isEmpty(PRECOMPILED_HEADER) {
+!isEmpty(PRECOMPILED_HEADER) {
   DEFINES += USING_PCH
 }
