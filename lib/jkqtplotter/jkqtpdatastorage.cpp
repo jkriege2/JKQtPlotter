@@ -711,7 +711,7 @@ void JKQTPDatastore::copyColumnData(size_t toColumn, size_t fromColumn)
 {
     resizeColumn(toColumn, getRows(fromColumn));
     std::copy(begin(fromColumn), end(fromColumn), begin(toColumn));
-    setColumnImageWidth(toColumn, getColumnImageWidth(fromColumn));
+    setColumnImageWidth(toColumn, getColumnImageWidth(static_cast<int>(fromColumn)));
 }
 
 

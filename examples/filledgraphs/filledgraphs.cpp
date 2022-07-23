@@ -67,11 +67,11 @@ int main(int argc, char* argv[])
     // set graph colors (lines: non-transparent, fill: semi-transparent) and style
     QColor col;
     col=QColor("red"); graphR->setColor(col);
-    col.setAlphaF(0.25); graphR->setFillColor(col);
+    col.setAlphaF(0.25f); graphR->setFillColor(col);
     col=QColor("green"); graphG->setColor(col);
-    col.setAlphaF(0.25); graphG->setFillColor(col);
+    col.setAlphaF(0.25f); graphG->setFillColor(col);
     col=QColor("blue"); graphB->setColor(col);
-    col.setAlphaF(0.25); graphB->setFillColor(col);
+    col.setAlphaF(0.25f); graphB->setFillColor(col);
     graphR->setLineWidth(1);
     graphG->setLineWidth(1);
     graphB->setLineWidth(1);

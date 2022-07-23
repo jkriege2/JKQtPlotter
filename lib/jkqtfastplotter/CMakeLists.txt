@@ -40,6 +40,10 @@ function(JKQtFastPlotter_setDefaultLibOptions TARGETNAME)
     set_property(TARGET ${TARGETNAME} PROPERTY CXX_STANDARD ${JKQtPlotter_QT_CXX_STANDARD})
     set_property(TARGET ${TARGETNAME} PROPERTY CXX_STANDARD_REQUIRED ${JKQtPlotter_QT_CXX_STANDARD_REQUIRED})
     target_compile_features(${TARGETNAME} PUBLIC ${JKQtPlotter_QT_CXX_COMPILE_FEATURE})
+    if(${QT_VERSION_MAJOR} VERSION_GREATER_EQUAL "6")
+        target_link_libraries(${TARGETNAME} PUBLIC Qt${QT_VERSION_MAJOR}::OpenGLWidgets)
+    endif()
+
     if(MINGW)
       # COMPILER-SETTINGS FOR MINGW
       target_compile_options(${TARGETNAME} PUBLIC -fexceptions)

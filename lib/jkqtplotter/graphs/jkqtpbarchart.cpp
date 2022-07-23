@@ -150,7 +150,7 @@ void JKQTPBarVerticalGraph::setBarPositionColumn(int column)
 
 void JKQTPBarVerticalGraph::setBarPositionColumn(size_t column)
 {
-    xColumn=column;
+    xColumn=static_cast<int>(column);
 }
 
 void JKQTPBarVerticalGraph::setBarHeightColumn(int column)
@@ -160,7 +160,7 @@ void JKQTPBarVerticalGraph::setBarHeightColumn(int column)
 
 void JKQTPBarVerticalGraph::setBarHeightColumn(size_t column)
 {
-    yColumn=column;
+    yColumn=static_cast<int>(column);
 }
 
 bool JKQTPBarVerticalGraph::considerForAutoscaling(JKQTPBarGraphBase *other) const
@@ -206,7 +206,7 @@ void JKQTPBarHorizontalGraph::setBarPositionColumn(int column)
 
 void JKQTPBarHorizontalGraph::setBarPositionColumn(size_t column)
 {
-    yColumn=column;
+    yColumn=static_cast<int>(column);
 }
 
 void JKQTPBarHorizontalGraph::setBarHeightColumn(int column)
@@ -216,7 +216,7 @@ void JKQTPBarHorizontalGraph::setBarHeightColumn(int column)
 
 void JKQTPBarHorizontalGraph::setBarHeightColumn(size_t column)
 {
-    xColumn=column;
+    xColumn=static_cast<int>(column);
 }
 
 bool JKQTPBarHorizontalGraph::considerForAutoscaling(JKQTPBarGraphBase *other) const
@@ -397,7 +397,7 @@ void JKQTPBarHorizontalErrorGraph::setBarErrorColumn(int column)
 
 void JKQTPBarHorizontalErrorGraph::setBarErrorColumn(size_t column)
 {
-    setXErrorColumn(column);
+    setXErrorColumn(static_cast<int>(column));
 }
 
 void JKQTPBarHorizontalErrorGraph::setBarLowerErrorColumn(int column)
@@ -407,7 +407,7 @@ void JKQTPBarHorizontalErrorGraph::setBarLowerErrorColumn(int column)
 
 void JKQTPBarHorizontalErrorGraph::setBarLowerErrorColumn(size_t column)
 {
-    setXErrorColumnLower(column);
+    setXErrorColumnLower(static_cast<int>(column));
 }
 
 JKQTPBarVerticalErrorGraph::JKQTPBarVerticalErrorGraph(JKQTBasePlotter *parent):
@@ -523,7 +523,7 @@ void JKQTPBarVerticalErrorGraph::setBarErrorColumn(int column)
 
 void JKQTPBarVerticalErrorGraph::setBarErrorColumn(size_t column)
 {
-    setYErrorColumn(column);
+    setYErrorColumn(static_cast<int>(column));
 }
 
 void JKQTPBarVerticalErrorGraph::setBarLowerErrorColumn(int column)
@@ -533,7 +533,7 @@ void JKQTPBarVerticalErrorGraph::setBarLowerErrorColumn(int column)
 
 void JKQTPBarVerticalErrorGraph::setBarLowerErrorColumn(size_t column)
 {
-    setYErrorColumnLower(column);
+    setYErrorColumnLower(static_cast<int>(column));
 }
 
 void JKQTPBarVerticalErrorGraph::drawErrorsAfter(JKQTPEnhancedPainter &painter)

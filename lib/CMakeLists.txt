@@ -39,6 +39,12 @@ message( STATUS "Installing to:       ${CMAKE_INSTALL_PREFIX}" )
 message( STATUS "=============================================================================" )
 message( STATUS )
 
+message( STATUS )
+message( STATUS "............................................................................." )
+message( STATUS ".. BUILDING LIBRARIES" )
+message( STATUS "............................................................................." )
+
+
 configure_file(${CMAKE_CURRENT_LIST_DIR}/jkqtplotter_version.h.in
                ${CMAKE_CURRENT_BINARY_DIR}/jkqtplotter_version.h)
 

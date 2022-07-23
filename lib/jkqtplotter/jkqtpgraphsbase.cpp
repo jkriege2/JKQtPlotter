@@ -828,7 +828,7 @@ bool JKQTPXYYGraph::getIndexRange(int &imin, int &imax) const
         if (parent==nullptr)  return false;
         if (yColumn2<0) return false;
         const JKQTPDatastore* datastore=parent->getDatastore();
-        const auto rows=datastore->getRows(static_cast<size_t>(yColumn2));
+        const int rows=static_cast<int>(datastore->getRows(static_cast<size_t>(yColumn2)));
         imax=qMin<int>(imax, rows);
     }
     return ok;
@@ -971,7 +971,7 @@ bool JKQTPXXYGraph::getIndexRange(int &imin, int &imax) const
         if (parent==nullptr)  return false;
         if (xColumn2<0) return false;
         const JKQTPDatastore* datastore=parent->getDatastore();
-        const auto rows=datastore->getRows(static_cast<size_t>(xColumn2));
+        const int rows=static_cast<int>(datastore->getRows(static_cast<size_t>(xColumn2)));
         imax=qMin<int>(imax, rows);
     }
     return ok;

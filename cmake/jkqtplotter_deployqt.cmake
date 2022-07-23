@@ -8,7 +8,14 @@ function(jkqtplotter_deployqt TARGET_NAME)
           find_program(WINDEPLOYQT_EXECUTABLE NAMES windeployqt.debug.bat HINTS "${_qt_bin_dir}")
         else()
           find_program(WINDEPLOYQT_EXECUTABLE NAMES windeployqt HINTS "${_qt_bin_dir}")
-        endif()        
+        endif()
+        if (NOT EXISTS ${WINDEPLOYQT_EXECUTABLE})
+          find_program(WINDEPLOYQT_EXECUTABLE NAMES windeployqt HINTS "${_qt_bin_dir}")
+        endif()
+        if (NOT EXISTS ${WINDEPLOYQT_EXECUTABLE})
+          find_program(WINDEPLOYQT_EXECUTABLE NAMES windeployqt.exe HINTS "${_qt_bin_dir}")
+        endif()
+
 
 
 

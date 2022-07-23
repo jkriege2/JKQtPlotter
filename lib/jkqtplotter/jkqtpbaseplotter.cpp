@@ -1210,7 +1210,7 @@ void JKQTBasePlotter::drawKey(JKQTPEnhancedPainter& painter) {
         if (plotterStyle.debugShowRegionBoxes) {
             painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
             QPen p("orange");
-            QColor col=p.color(); col.setAlphaF(0.8); p.setColor(col);
+            QColor col=p.color(); col.setAlphaF(0.8f); p.setColor(col);
             p.setWidthF(plotterStyle.debugRegionLineWidth);
             p.setStyle(Qt::DashLine);
             painter.setPen(p);
@@ -1285,7 +1285,7 @@ void JKQTBasePlotter::drawPlot(JKQTPEnhancedPainter& painter) {
         if (plotterStyle.debugShowRegionBoxes) {
             painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
             QPen p("blue");
-            QColor col=p.color(); col.setAlphaF(0.8); p.setColor(col);
+            QColor col=p.color(); col.setAlphaF(0.8f); p.setColor(col);
             p.setWidthF(plotterStyle.debugRegionLineWidth);
             painter.setBrush(QBrush(QColor(Qt::transparent)));
             painter.setPen(p);
@@ -1314,20 +1314,20 @@ void JKQTBasePlotter::drawPlot(JKQTPEnhancedPainter& painter) {
     if (plotterStyle.debugShowRegionBoxes) {
         painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
         QPen p("red");
-        QColor col=p.color(); col.setAlphaF(0.8); p.setColor(col);
+        QColor col=p.color(); col.setAlphaF(0.8f); p.setColor(col);
         p.setWidthF(plotterStyle.debugRegionLineWidth);
         p.setStyle(Qt::DashLine);
         painter.setPen(p);
         painter.setBrush(QBrush(QColor(Qt::transparent)));
         painter.drawRect(QRectF(internalPlotBorderLeft, internalPlotBorderTop, internalPlotWidth, internalPlotHeight));
         p.setColor(QColor("maroon"));
-        col=p.color(); col.setAlphaF(0.8); p.setColor(col);
+        col=p.color(); col.setAlphaF(0.8f); p.setColor(col);
         p.setWidthF(plotterStyle.debugRegionLineWidth);
         p.setStyle(Qt::DotLine);
         painter.setPen(p);
         painter.drawRect(QRectF(internalPlotBorderLeft_notIncludingOutsidePlotSections, internalPlotBorderTop_notIncludingOutsidePlotSections, widgetWidth-internalPlotBorderLeft_notIncludingOutsidePlotSections-internalPlotBorderRight_notIncludingOutsidePlotSections, widgetHeight-internalPlotBorderTop_notIncludingOutsidePlotSections-internalPlotBorderBottom_notIncludingOutsidePlotSections));
         p.setColor(QColor("yellow"));
-        col=p.color(); col.setAlphaF(0.8); p.setColor(col);
+        col=p.color(); col.setAlphaF(0.8f); p.setColor(col);
         p.setWidthF(plotterStyle.debugRegionLineWidth);
         p.setStyle(Qt::SolidLine);
         painter.setPen(p);
@@ -4175,7 +4175,7 @@ void JKQTBasePlotter::drawGraphs(JKQTPEnhancedPainter& painter){
                 painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
                 QPen p("green");
                 p.setWidthF(plotterStyle.debugRegionLineWidth);
-                QColor col=p.color(); col.setAlphaF(0.8); p.setColor(col);
+                QColor col=p.color(); col.setAlphaF(0.8f); p.setColor(col);
                 painter.setPen(p);
                 painter.setBrush(QBrush(QColor(Qt::transparent)));
                 if (rleft.width()>0 && rleft.height()>0) painter.drawRect(rleft);
@@ -4241,7 +4241,7 @@ void JKQTBasePlotter::drawKeyContents(JKQTPEnhancedPainter& painter, double x, d
                 if (plotterStyle.debugShowRegionBoxes) {
                     painter.save(); auto __finalpaintinner=JKQTPFinally([&painter]() {painter.restore();});
                     QPen p("orange");
-                    QColor col=p.color(); col.setAlphaF(0.8); p.setColor(col);
+                    QColor col=p.color(); col.setAlphaF(0.8f); p.setColor(col);
                     p.setWidthF(plotterStyle.debugRegionLineWidth/2.0);
                     p.setStyle(Qt::DashLine);
                     painter.setPen(p);
@@ -4276,7 +4276,7 @@ void JKQTBasePlotter::drawKeyContents(JKQTPEnhancedPainter& painter, double x, d
                 if (plotterStyle.debugShowRegionBoxes) {
                     painter.save(); auto __finalpaintinner=JKQTPFinally([&painter]() {painter.restore();});
                     QPen p("orange");
-                    QColor col=p.color(); col.setAlphaF(0.8); p.setColor(col);
+                    QColor col=p.color(); col.setAlphaF(0.8f); p.setColor(col);
                     p.setWidthF(plotterStyle.debugRegionLineWidth/2.0);
                     p.setStyle(Qt::DashLine);
                     painter.setPen(p);
@@ -4325,7 +4325,7 @@ void JKQTBasePlotter::drawKeyContents(JKQTPEnhancedPainter& painter, double x, d
                 if (plotterStyle.debugShowRegionBoxes) {
                     painter.save(); auto __finalpaintinner=JKQTPFinally([&painter]() {painter.restore();});
                     QPen p("orange");
-                    QColor col=p.color(); col.setAlphaF(0.8); p.setColor(col);
+                    QColor col=p.color(); col.setAlphaF(0.8f); p.setColor(col);
                     p.setWidthF(plotterStyle.debugRegionLineWidth/2.0);
                     p.setStyle(Qt::DashLine);
                     painter.setPen(p);

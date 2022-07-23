@@ -1551,7 +1551,7 @@ void JKQTPVerticalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
         if (getParent()->getCurrentPlotterStyle().debugShowRegionBoxes) {
             painter.save(); auto __finalpaintinnerif=JKQTPFinally([&painter]() {painter.restore();});
             QPen p("magenta");
-            QColor col=p.color(); col.setAlphaF(0.8); p.setColor(col);
+            QColor col=p.color(); col.setAlphaF(0.8f); p.setColor(col);
             p.setWidthF(getParent()->getCurrentPlotterStyle().debugRegionLineWidth/2.0);
             painter.setPen(p);
             painter.setBrush(QBrush(QColor(Qt::transparent)));
@@ -1591,7 +1591,7 @@ void JKQTPVerticalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
         if (getParent()->getCurrentPlotterStyle().debugShowRegionBoxes) {
             painter.save(); auto __finalpaintinnerif=JKQTPFinally([&painter]() {painter.restore();});
             QPen p("magenta");
-            QColor col=p.color(); col.setAlphaF(0.8); p.setColor(col);
+            QColor col=p.color(); col.setAlphaF(0.8f); p.setColor(col);
             p.setWidthF(getParent()->getCurrentPlotterStyle().debugRegionLineWidth/2.0);
             painter.setPen(p);
             painter.setBrush(QBrush(QColor(Qt::transparent)));
@@ -1607,7 +1607,7 @@ void JKQTPVerticalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
         painter.save(); auto __finalpaintif=JKQTPFinally([&painter]() {painter.restore();});
         QPen p("cyan");
         p.setWidthF(getParent()->getCurrentPlotterStyle().debugRegionLineWidth);
-        QColor col=p.color(); col.setAlphaF(0.8); p.setColor(col);
+        QColor col=p.color(); col.setAlphaF(0.8f); p.setColor(col);
         painter.setPen(p);
         painter.setBrush(QBrush(QColor(Qt::transparent)));
         QSizeF s1, s2;
@@ -2147,7 +2147,7 @@ void JKQTPHorizontalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
         if (getParent()->getCurrentPlotterStyle().debugShowRegionBoxes) {
             painter.save(); auto __finalpaintinnerif=JKQTPFinally([&painter]() {painter.restore();});
             QPen p("magenta");
-            QColor col=p.color(); col.setAlphaF(0.8); p.setColor(col);
+            QColor col=p.color(); col.setAlphaF(0.8f); p.setColor(col);
             p.setWidthF(getParent()->getCurrentPlotterStyle().debugRegionLineWidth/2.0);
             painter.setPen(p);
             painter.setBrush(QBrush(QColor(Qt::transparent)));
@@ -2186,7 +2186,7 @@ void JKQTPHorizontalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
         if (getParent()->getCurrentPlotterStyle().debugShowRegionBoxes) {
             painter.save(); auto __finalpaintinnerif=JKQTPFinally([&painter]() {painter.restore();});
             QPen p("magenta");
-            QColor col=p.color(); col.setAlphaF(0.8); p.setColor(col);
+            QColor col=p.color(); col.setAlphaF(0.8f); p.setColor(col);
             p.setWidthF(getParent()->getCurrentPlotterStyle().debugRegionLineWidth/2.0);
             painter.setPen(p);
             painter.setBrush(QBrush(QColor(Qt::transparent)));
@@ -2200,7 +2200,7 @@ void JKQTPHorizontalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
     if (getParent()->getCurrentPlotterStyle().debugShowRegionBoxes) {
         painter.save(); auto __finalpaintif=JKQTPFinally([&painter]() {painter.restore();});
         QPen p("cyan");
-        QColor col=p.color(); col.setAlphaF(0.8); p.setColor(col);
+        QColor col=p.color(); col.setAlphaF(0.8f); p.setColor(col);
         p.setWidthF(getParent()->getCurrentPlotterStyle().debugRegionLineWidth);
         painter.setPen(p);
         painter.setBrush(QBrush(QColor(Qt::transparent)));

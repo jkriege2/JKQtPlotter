@@ -20,7 +20,9 @@
 
 
 #define COMPILING_THIS_JKMATHPARSER
-#define _USE_MATH_DEFINES
+#ifndef _USE_MATH_DEFINES
+#  define _USE_MATH_DEFINES
+#endif
 #include <cmath>
 #include "jkqtcommon_statistics_and_math/jkqtpmathparser.h" // class's header file
 #include <iostream>
