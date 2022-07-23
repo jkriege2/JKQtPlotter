@@ -20,3 +20,9 @@ include(../../../lib/jkqtplotter.pri)
 include(../../../lib/jkqtpcommon.pri)
 include(../../../lib/jkqtmathtext.pri)
 include(../../../lib/jkqtfastplotter.pri)
+
+
+include(../../../lib/jkqtplotter_pch.pri)
+precompile_header:!isEmpty(PRECOMPILED_HEADER) {
+  DEFINES += USING_PCH
+}

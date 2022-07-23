@@ -16,3 +16,10 @@ include(../../../lib/jkqtfastplotter.pri)
 
 win32-msvc*: DEFINES += _USE_MATH_DEFINES
 win32-msvc*: DEFINES += NOMINMAX
+
+
+
+include(../../../lib/jkqtplotter_pch.pri)
+precompile_header:!isEmpty(PRECOMPILED_HEADER) {
+  DEFINES += USING_PCH
+}

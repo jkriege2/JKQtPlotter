@@ -1,0 +1,8 @@
+isEmpty(JKQTP_PLOTTER_PRECOMP_PRI_INCLUDED) {
+    JKQTP_PLOTTER_PRECOMP_PRI_INCLUDED = 1
+
+    INCLUDEPATH += $PWD
+
+
+    PRECOMPILED_HEADER = $$PWD/jkqtplotter/private/jkqtplotter_precomp.h
+}
