@@ -47,3 +47,4 @@ if(JKQtPlotter_BUILD_DECORATE_LIBNAMES_WITH_BUILDTYPE)
 else()
     set(JKQtPlotter_LIBNAME_ADDITION )
 endif()
+

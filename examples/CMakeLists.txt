@@ -1,22 +1,45 @@
 cmake_minimum_required(VERSION 3.16)
 
+
 message( STATUS )
 message( STATUS "............................................................................." )
 message( STATUS ".. BUILDING EXAMPLES" )
 message( STATUS "............................................................................." )
+if(CImg_FOUND)
+  message( STATUS "..   - CIMG available: BUILDING CImg-binding examples" )
+else()
+  message( STATUS "..   - CIMG NOT available: SKIPPING CImg-binding examples" )
+endif()
+if(OpenCV_FOUND)
+  message( STATUS "..   - OpenCV available: BUILDING OpenCV-binding examples" )
+else()
+  message( STATUS "..   - OpenCV NOT available: SKIPPING OpenCV-binding examples" )
+endif()
+if (JKQtPlotter_BUILD_WITH_PRECOMPILED_HEADERS)
+  message( STATUS "..   - Precompiled Header:  ON" )
+else()
+  message( STATUS "..   - Precompiled Header:  OFF")
+endif()
 
-# needs to be first for Precompiled Headers to work
-add_subdirectory(simpletest)
+message( STATUS "............................................................................." )
 
 
 
+# examples for JKQtFastPlotter
+message( STATUS ".. BUILDING EXAMPLES FOR JKQTFASTPLOTTER:" )
 add_subdirectory(jkqtfastplotter_test)
 
+# examples specific to JKQtMathText
+message( STATUS ".. BUILDING EXAMPLES FOR JKQTMATHTEXT:" )
 add_subdirectory(jkqtmathtext_simpletest)
 add_subdirectory(jkqtmathtext_test)
 
-add_subdirectory(jkqtplot_test)
+# examples for JKQtPlotter
+message( STATUS ".. BUILDING EXAMPLES FOR JKQTPLOTTER:" )
+# needs to be first for Precompiled Headers to work
+add_subdirectory(simpletest)
 
+add_subdirectory(jkqtplot_test)
 add_subdirectory(advplotstyling)
 add_subdirectory(barchart)
 add_subdirectory(boxplot)
