@@ -47,7 +47,7 @@
 #include "jkqtcommon/jkqtpstringtools.h"
 #include "jkqtcommon/jkqtpdebuggingtools.h"
 #include "jkqtcommon/jkqtpmathtools.h"
-#include "jkqtcommon/jkqtpalgorithms.h"
+#include "jkqtcommon_statistics_and_math/jkqtpalgorithms.h"
 #include "jkqtcommon/jkqtpcodestructuring.h"
 
 

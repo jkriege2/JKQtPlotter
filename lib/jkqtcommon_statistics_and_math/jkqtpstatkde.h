@@ -34,11 +34,11 @@
 #include <ostream>
 #include <iomanip>
 #include <sstream>
-#include "jkqtcommon/jkqtcommon_imexport.h"
-#include "jkqtcommon/jkqtplinalgtools.h"
-#include "jkqtcommon/jkqtparraytools.h"
+#include "jkqtcommon_statistics_and_math/jkqtcommon_statistics_and_math_imexport.h"
+#include "jkqtcommon_statistics_and_math/jkqtplinalgtools.h"
+#include "jkqtcommon_statistics_and_math/jkqtparraytools.h"
 #include "jkqtcommon/jkqtpdebuggingtools.h"
-#include "jkqtcommon/jkqtpstatbasics.h"
+#include "jkqtcommon_statistics_and_math/jkqtpstatbasics.h"
 
 
 
@@ -49,64 +49,64 @@
 
     \f[ k(t):=\frac{1}{\sqrt{2\pi}}\exp \left(-\frac{1}{2}t^2\right) \f]
 */
-JKQTCOMMON_LIB_EXPORT double jkqtpstatKernel1DGaussian(double t);
+JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT double jkqtpstatKernel1DGaussian(double t);
 /*! \brief a 1D Cauchy kernel function, e.g. for Kernel Density Estimation
     \ingroup jkqtptools_math_statistics_1dkde_kernels
 
     \f[ k(t):=\frac{1}{\pi(1+t^2)} \f]
 */
-JKQTCOMMON_LIB_EXPORT double jkqtpstatKernel1DCauchy(double t);
+JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT double jkqtpstatKernel1DCauchy(double t);
 
 /*! \brief a 1D Picard kernel function, e.g. for Kernel Density Estimation
     \ingroup jkqtptools_math_statistics_1dkde_kernels
 
     \f[ k(t):=\frac{1}{2}\exp(-|t|) \f]
 */
-JKQTCOMMON_LIB_EXPORT double jkqtpstatKernel1DPicard(double t);
+JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT double jkqtpstatKernel1DPicard(double t);
 /*! \brief a 1D Epanechnikov kernel function, e.g. for Kernel Density Estimation
     \ingroup jkqtptools_math_statistics_1dkde_kernels
 
     \f[ k(t) :=\begin{cases}\frac{3}{4} ( 1- t^2 ),  & \text{if }t\in [-1;1]\\0, & \text{else}\end{cases} \f]
 */
-JKQTCOMMON_LIB_EXPORT double jkqtpstatKernel1DEpanechnikov(double t);
+JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT double jkqtpstatKernel1DEpanechnikov(double t);
 /*! \brief a 1D uniform kernel function, e.g. for Kernel Density Estimation
     \ingroup jkqtptools_math_statistics_1dkde_kernels
 
     \f[ k(t) :=\begin{cases}0.5,  & \text{if }t\in [-1;1]\\0, & \text{else}\end{cases} \f]
 */
-JKQTCOMMON_LIB_EXPORT double jkqtpstatKernel1DUniform(double t);
+JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT double jkqtpstatKernel1DUniform(double t);
 /*! \brief a 1D Epanechnikov kernel function, e.g. for Kernel Density Estimation
     \ingroup jkqtptools_math_statistics_1dkde_kernels
 
     \f[ k(t) :=\begin{cases}1-|t|,  & \text{if }t\in [-1;1]\\0, & \text{else}\end{cases} \f]
 */
-JKQTCOMMON_LIB_EXPORT double jkqtpstatKernel1DTriangle(double t);
+JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT double jkqtpstatKernel1DTriangle(double t);
 
 /*! \brief a 1D quartic kernel function, e.g. for Kernel Density Estimation
     \ingroup jkqtptools_math_statistics_1dkde_kernels
 
     \f[ k(t) :=\begin{cases}\frac{15}{16}(1-t^2)^2,  & \text{if }t\in [-1;1]\\0, & \text{else}\end{cases} \f]
 */
-JKQTCOMMON_LIB_EXPORT double jkqtpstatKernel1DQuartic(double t);
+JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT double jkqtpstatKernel1DQuartic(double t);
 /*! \brief a 1D triweight kernel function, e.g. for Kernel Density Estimation
     \ingroup jkqtptools_math_statistics_1dkde_kernels
 
     \f[ k(t) :=\begin{cases}\frac{35}{32}(1-t^2)^3,  & \text{if }t\in [-1;1]\\0, & \text{else}\end{cases} \f]
 */
-JKQTCOMMON_LIB_EXPORT double jkqtpstatKernel1DTriweight(double t);
+JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT double jkqtpstatKernel1DTriweight(double t);
 
 /*! \brief a 1D tricube kernel function, e.g. for Kernel Density Estimation
     \ingroup jkqtptools_math_statistics_1dkde_kernels
 
     \f[ k(t) :=\begin{cases}\frac{70}{81}(1-|t|^3)^3,  & \text{if }t\in [-1;1]\\0, & \text{else}\end{cases} \f]
 */
-JKQTCOMMON_LIB_EXPORT double jkqtpstatKernel1DTricube(double t);
+JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT double jkqtpstatKernel1DTricube(double t);
 /*! \brief a 1D cosine kernel function, e.g. for Kernel Density Estimation
     \ingroup jkqtptools_math_statistics_1dkde_kernels
 
     \f[ k(t) :=\begin{cases}\frac{\pi}{4}\cos\left(\frac{\pi}{2}t\right),  & \text{if }t\in [-1;1]\\0, & \text{else}\end{cases} \f]
 */
-JKQTCOMMON_LIB_EXPORT double jkqtpstatKernel1DCosine(double t);
+JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT double jkqtpstatKernel1DCosine(double t);
 
 
 
@@ -125,14 +125,14 @@ JKQTCOMMON_LIB_EXPORT double jkqtpstatKernel1DCosine(double t);
 
     \f[ k(t_x, t_y):=\frac{1}{2\pi}\exp \left(-\frac{t_x^2+t_y^2}{2}\right) \f]
 */
-JKQTCOMMON_LIB_EXPORT double jkqtpstatKernel2DGaussian(double tx, double ty);
+JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT double jkqtpstatKernel2DGaussian(double tx, double ty);
 
 /*! \brief a 1D Gaussian kernel function, e.g. for Kernel Density Estimation
     \ingroup jkqtptools_math_statistics_2dkde_kernels
 
     \f[ k(t_x, t_y):=\begin{cases}\frac{1}{4},  & \text{if }t_x,t_y\in [-1;1]\\0, & \text{else}\end{cases} \f]
 */
-JKQTCOMMON_LIB_EXPORT double jkqtpstatKernel2DUniform(double tx, double ty);
+JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT double jkqtpstatKernel2DUniform(double tx, double ty);
 
 
 

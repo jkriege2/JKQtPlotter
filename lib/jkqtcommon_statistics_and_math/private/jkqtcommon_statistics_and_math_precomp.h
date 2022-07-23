@@ -2,8 +2,8 @@
  * it is not intended for external use!
  */
 
-#ifndef jkqtcommon_precomp_h
-#define jkqtcommon_precomp_h
+#ifndef jkqtcommon_statistics_and_math_precomp_H
+#define jkqtcommon_statistics_and_math_precomp_H
 
 /*
     Copyright (c) 2008-2022 Jan W. Krieger (<jan@jkrieger.de>)
@@ -25,30 +25,6 @@
 */
 #define _USE_MATH_DEFINES
 
-
-#include <QColor>
-#include <QDebug>
-#include <QElapsedTimer>
-#include <QIcon>
-#include <QImage>
-#include <QLine>
-#include <QLineF>
-#include <QLocale>
-#include <QPaintDevice>
-#include <QPainter>
-#include <QPainterPath>
-#include <QPoint>
-#include <QPointF>
-#include <QPolygon>
-#include <QPolygonF>
-#include <QRect>
-#include <QRectF>
-#include <QSettings>
-#include <QSplitter>
-#include <QString>
-#include <QStringList>
-#include <QVector>
-#include <QWidget>
 #include <QtGlobal>
 #include <cfloat>
 #include <chrono>
@@ -68,8 +44,12 @@
 #include <string>
 #include <utility>
 #include <vector>
+#include "jkqtcommon_statistics_and_math/jkqtplinalgtools.h"
+#include "jkqtcommon_statistics_and_math/jkqtpstatbasics.h"
+#include "jkqtcommon_statistics_and_math/jkqtparraytools.h"
+#include "jkqtcommon_statistics_and_math/jkqtpalgorithms.h"
 #include "jkqtcommon/jkqtpmathtools.h"
-#include "jkqtcommon/jkqtpcodestructuring.h"
+#include "jkqtcommon/jkqtpstringtools.h"
 #include "jkqtcommon/jkqtpdebuggingtools.h"
 
-#endif // jkqtcommon_precomp_h
+#endif // jkqtcommon_statistics_and_math_precomp_H

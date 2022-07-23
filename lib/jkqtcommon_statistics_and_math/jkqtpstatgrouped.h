@@ -34,11 +34,11 @@
 #include <ostream>
 #include <iomanip>
 #include <sstream>
-#include "jkqtcommon/jkqtcommon_imexport.h"
-#include "jkqtcommon/jkqtplinalgtools.h"
-#include "jkqtcommon/jkqtparraytools.h"
+#include "jkqtcommon_statistics_and_math/jkqtcommon_statistics_and_math_imexport.h"
+#include "jkqtcommon_statistics_and_math/jkqtplinalgtools.h"
+#include "jkqtcommon_statistics_and_math/jkqtparraytools.h"
 #include "jkqtcommon/jkqtpdebuggingtools.h"
-#include "jkqtcommon/jkqtpstatbasics.h"
+#include "jkqtcommon_statistics_and_math/jkqtpstatbasics.h"
 
 /*! \brief a functor \f$ f(x): \mathbb{R}\rightarrow\mathbb{R} \f$ which assignes a value \f$ x \f$ to a group center \f$ f(x) \f$
     \ingroup jkqtptools_math_statistics_grouped
@@ -60,13 +60,13 @@ typedef std::function<double(double)> JKQTPStatGroupDefinitionFunctor1D;
 
     \see JKQTPStatGroupDefinitionFunctor1D
 */
-JKQTCOMMON_LIB_EXPORT double jkqtpstatGroupingIdentity1D(double v);
+JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT double jkqtpstatGroupingIdentity1D(double v);
 /*! \brief use a rounded column value as group ID directly \f$ f(x)=\mbox{round}(x) \f$
     \ingroup jkqtptools_math_statistics_grouped
 
     \see JKQTPStatGroupDefinitionFunctor1D
 */
-JKQTCOMMON_LIB_EXPORT double jkqtpstatGroupingRound1D(double v);
+JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT double jkqtpstatGroupingRound1D(double v);
 /*! \brief assign each value to groups \f$ \mbox{firstGroupCenter} \f$ , \f$ \mbox{firstGroupCenter}\pm\mbox{groupWidth}/2\f$ , \f$ \mbox{firstGroupCenter}\pm2\cdot\mbox{groupWidth}/2 \f$ , \f$ \mbox{firstGroupCenter}\pm3\cdot\mbox{groupWidth}/2 \f$ , ...
     \ingroup jkqtptools_math_statistics_grouped
 
@@ -74,7 +74,7 @@ JKQTCOMMON_LIB_EXPORT double jkqtpstatGroupingRound1D(double v);
 
     \see JKQTPStatGroupDefinitionFunctor1D, jkqtpstatMakeGroupingCustomRound1D() for a factory-function that returns a functor of this function bound to specific arguments.
 */
-JKQTCOMMON_LIB_EXPORT double jkqtpstatGroupingCustomRound1D(double v, double firstGroupCenter, double groupWidth);
+JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT double jkqtpstatGroupingCustomRound1D(double v, double firstGroupCenter, double groupWidth);
 /*! \brief generates a functor of jkqtpstatGroupingCustomRound1D() with the two paramaters \a firstGroupCenter and \a groupWidth fixed to the given values
     \ingroup jkqtptools_math_statistics_grouped
 
@@ -82,7 +82,7 @@ JKQTCOMMON_LIB_EXPORT double jkqtpstatGroupingCustomRound1D(double v, double fir
 
     \see JKQTPStatGroupDefinitionFunctor1D, jkqtpstatGroupingCustomRound1D()
 */
-JKQTCOMMON_LIB_EXPORT JKQTPStatGroupDefinitionFunctor1D jkqtpstatMakeGroupingCustomRound1D(double firstGroupCenter, double groupWidth);
+JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPStatGroupDefinitionFunctor1D jkqtpstatMakeGroupingCustomRound1D(double firstGroupCenter, double groupWidth);
 
 
 

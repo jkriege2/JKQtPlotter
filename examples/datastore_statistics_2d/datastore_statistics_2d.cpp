@@ -10,7 +10,7 @@
 #include "jkqtplotter/graphs/jkqtpstatisticsadaptors.h"
 #include "jkqtplotter/graphs/jkqtpgeometric.h"
 #include "jkqtplotter/graphs/jkqtpscatter.h"
-#include "jkqtcommon/jkqtpstatisticstools.h"
+#include "jkqtcommon_statistics_and_math/jkqtpstatisticstools.h"
 #include "jkqtcommon/jkqtpstringtools.h"
 #include <random>
 #include <cmath>

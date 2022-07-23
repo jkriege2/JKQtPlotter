@@ -46,6 +46,7 @@ configure_file(${CMAKE_CURRENT_LIST_DIR}/jkqtplotter_version.h.in
 include_directories(.)
 
 add_subdirectory(jkqtcommon)
+add_subdirectory(jkqtcommon_statistics_and_math)
 add_subdirectory(jkqtmathtext)
 add_subdirectory(jkqtfastplotter)
 add_subdirectory(jkqtplotter)

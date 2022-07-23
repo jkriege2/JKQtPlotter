@@ -22,7 +22,7 @@
 #define COMPILING_THIS_JKMATHPARSER
 #define _USE_MATH_DEFINES
 #include <cmath>
-#include "jkqtcommon/jkqtpmathparser.h" // class's header file
+#include "jkqtcommon_statistics_and_math/jkqtpmathparser.h" // class's header file
 #include <iostream>
 #include <float.h>
 #include <ctime>

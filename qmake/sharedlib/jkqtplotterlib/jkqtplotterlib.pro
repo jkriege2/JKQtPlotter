@@ -16,10 +16,11 @@ win32-msvc*: DEFINES += _USE_MATH_DEFINES
 win32-msvc*: DEFINES += NOMINMAX
 
 
-include(../../../lib/jkqtplotter.pri)
-include(../../../lib/jkqtpcommon.pri)
+include(../../../lib/jkqtcommon.pri)
+include(../../../lib/jkqtcommon_statistics_and_math.pri)
 include(../../../lib/jkqtmathtext.pri)
 include(../../../lib/jkqtfastplotter.pri)
+include(../../../lib/jkqtplotter.pri)
 
 
 include(../../../lib/jkqtplotter_pch.pri)

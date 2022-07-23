@@ -19,7 +19,7 @@
 
 
 
-#include "jkqtpstatgrouped.h"
+#include "jkqtcommon_statistics_and_math/jkqtpstatgrouped.h"
 
 double jkqtpstatGroupingIdentity1D(double v) {
     return v;

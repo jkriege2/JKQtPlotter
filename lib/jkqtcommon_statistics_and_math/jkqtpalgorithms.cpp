@@ -1,7 +1,6 @@
 /*
     Copyright (c) 2008-2022 Jan W. Krieger (<jan@jkrieger.de>)
 
-    last modification: $LastChangedDate$  (revision $Rev$)
 
     This software is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License (LGPL) as published by
@@ -18,18 +17,5 @@
 */
 
 
-#ifndef JKQTPSTATISTICSTOOLS_H_INCLUDED
-#define JKQTPSTATISTICSTOOLS_H_INCLUDED
 
-
-#include "jkqtcommon/jkqtpstatbasics.h"
-#include "jkqtcommon/jkqtpstathistogram.h"
-#include "jkqtcommon/jkqtpstatkde.h"
-#include "jkqtcommon/jkqtpstatpoly.h"
-#include "jkqtcommon/jkqtpstatregression.h"
-#include "jkqtcommon/jkqtpstatgrouped.h"
-
-
-#endif // JKQTPSTATISTICSTOOLS_H_INCLUDED
-
-
+#include "jkqtcommon_statistics_and_math/jkqtpalgorithms.h"

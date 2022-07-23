@@ -19,7 +19,7 @@
 
 
 
-#include "jkqtpstatkde.h"
+#include "jkqtcommon_statistics_and_math/jkqtpstatkde.h"
 
 
 double jkqtpstatKernel1DGaussian(double t) {

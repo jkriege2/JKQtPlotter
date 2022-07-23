@@ -13,7 +13,7 @@ win32 {
 }
 
 include(../../../lib/jkqtfastplotter.pri)
-include(../../../lib/jkqtpcommon.pri)
+include(../../../lib/jkqtcommon.pri)
 
 win32-msvc*: DEFINES += _USE_MATH_DEFINES
 win32-msvc*: DEFINES += NOMINMAX

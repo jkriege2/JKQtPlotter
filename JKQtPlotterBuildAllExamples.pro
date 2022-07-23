@@ -4,8 +4,8 @@ SUBDIRS +=  jkqtplotterlib \
             jkqtplotterlib_sharedlib \
             jkqtmathtextlib \
             jkqtmathtextlib_sharedlib \
-            jkqtpcommonlib \
-            jkqtpcommonlib_sharedlib \
+            jkqtcommonlib \
+            jkqtcommonlib_sharedlib \
             jkqtfastplotterlib \
             jkqtfastplotterlib_sharedlib \
             jkqtmathtext_simpletest \
@@ -24,20 +24,20 @@ jkqtplotterlib_sharedlib.file = qmake/sharedlib/jkqtplotterlib/jkqtplotterlib.pr
 jkqtmathtextlib.file = qmake/staticlib/jkqtmathtextlib/jkqtmathtextlib.pro
 jkqtmathtextlib_sharedlib.file = qmake/sharedlib/jkqtmathtextlib/jkqtmathtextlib.pro
 
-jkqtpcommonlib.file = qmake/staticlib/jkqtpcommonlib/jkqtpcommonlib.pro
-jkqtpcommonlib_sharedlib.file = qmake/sharedlib/jkqtpcommonlib/jkqtpcommonlib.pro
+jkqtcommonlib.file = qmake/staticlib/jkqtcommonlib/jkqtcommonlib.pro
+jkqtcommonlib_sharedlib.file = qmake/sharedlib/jkqtcommonlib/jkqtcommonlib.pro
 
 jkqtfastplotterlib.file = qmake/staticlib/jkqtfastplotterlib/jkqtfastplotterlib.pro
 jkqtfastplotterlib_sharedlib.file = qmake/sharedlib/jkqtfastplotterlib/jkqtfastplotterlib.pro
 
 jkqtmathtext_simpletest.subdir = examples/jkqtmathtext_simpletest
-jkqtmathtext_simpletest.depends = jkqtmathtextlib jkqtpcommonlib
+jkqtmathtext_simpletest.depends = jkqtmathtextlib jkqtcommonlib
 
 jkqtmathtext_test.subdir = examples/jkqtmathtext_test
-jkqtmathtext_test.depends = jkqtplotterlib jkqtpcommonlib
+jkqtmathtext_test.depends = jkqtplotterlib jkqtcommonlib
 
 jkqtplotter_simpletest.file = examples/simpletest/simpletest.pro
-jkqtplotter_simpletest.depends = jkqtplotterlib jkqtpcommonlib
+jkqtplotter_simpletest.depends = jkqtplotterlib jkqtcommonlib
 
 jkqtplot_test.file = examples/jkqtplot_test/jkqtplot_test.pro
 jkqtplot_test.depends = jkqtplotterlib

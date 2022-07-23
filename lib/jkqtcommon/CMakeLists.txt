@@ -23,24 +23,14 @@ set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 set(SOURCES
   ${CMAKE_CURRENT_LIST_DIR}/jkqtpdebuggingtools.cpp
   ${CMAKE_CURRENT_LIST_DIR}/jkqtpmathtools.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/jkqtpalgorithms.cpp
   ${CMAKE_CURRENT_LIST_DIR}/jkqtpstringtools.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/jkqtplinalgtools.cpp
   ${CMAKE_CURRENT_LIST_DIR}/jkqtpcodestructuring.cpp
   ${CMAKE_CURRENT_LIST_DIR}/jkqtpbasicimagetools.cpp
   ${CMAKE_CURRENT_LIST_DIR}/jkqtpgeometrytools.cpp
   ${CMAKE_CURRENT_LIST_DIR}/jkqtpdrawingtools.cpp
   ${CMAKE_CURRENT_LIST_DIR}/jkqtpenhancedpainter.cpp
   ${CMAKE_CURRENT_LIST_DIR}/jkqtphighrestimer.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/jkqtpmathparser.cpp
   ${CMAKE_CURRENT_LIST_DIR}/jkqttools.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/jkqtparraytools.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/jkqtpstatbasics.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/jkqtpstathistogram.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/jkqtpstatkde.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/jkqtpstatregression.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/jkqtpstatpoly.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/jkqtpstatgrouped.cpp
   ${CMAKE_CURRENT_LIST_DIR}/jkqtpicons.cpp
 )
 
@@ -49,46 +39,20 @@ set(HEADERS
   $<INSTALL_INTERFACE:jkqtcommon_imexport.h>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpdebuggingtools.h>
   $<INSTALL_INTERFACE:jkqtpdebuggingtools.h>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpmathtools.h>
-  $<INSTALL_INTERFACE:jkqtpmathtools.h>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpalgorithms.h>
-  $<INSTALL_INTERFACE:jkqtpalgorithms.h>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpstringtools.h>
   $<INSTALL_INTERFACE:jkqtpstringtools.h>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtplinalgtools.h>
-  $<INSTALL_INTERFACE:jkqtplinalgtools.h>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpcodestructuring.h>
   $<INSTALL_INTERFACE:jkqtpcodestructuring.h>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpbasicimagetools.h>
   $<INSTALL_INTERFACE:jkqtpbasicimagetools.h>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpgeometrytools.h>
-  $<INSTALL_INTERFACE:jkqtpgeometrytools.h>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpdrawingtools.h>
   $<INSTALL_INTERFACE:jkqtpdrawingtools.h>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpenhancedpainter.h>
   $<INSTALL_INTERFACE:jkqtpenhancedpainter.h>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtphighrestimer.h>
   $<INSTALL_INTERFACE:jkqtphighrestimer.h>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpmathparser.h>
-  $<INSTALL_INTERFACE:jkqtpmathparser.h>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqttools.h>
   $<INSTALL_INTERFACE:jkqttools.h>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtparraytools.h>
-  $<INSTALL_INTERFACE:jkqtparraytools.h>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpstatisticstools.h>
-  $<INSTALL_INTERFACE:jkqtpstatisticstools.h>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpstatbasics.h>
-  $<INSTALL_INTERFACE:jkqtpstatbasics.h>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpstathistogram.h>
-  $<INSTALL_INTERFACE:jkqtpstathistogram.h>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpstatkde.h>
-  $<INSTALL_INTERFACE:jkqtpstatkde.h>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpstatregression.h>
-  $<INSTALL_INTERFACE:jkqtpstatregression.h>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpstatpoly.h>
-  $<INSTALL_INTERFACE:jkqtpstatpoly.h>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpstatgrouped.h>
-  $<INSTALL_INTERFACE:jkqtpstatgrouped.h>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpicons.h>
   $<INSTALL_INTERFACE:jkqtpicons.h>
 )
