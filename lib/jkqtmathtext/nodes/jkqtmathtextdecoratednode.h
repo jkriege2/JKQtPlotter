@@ -97,7 +97,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextDecoratedNode: public JKQTMathTextSing
         DecorationType decoration;
         /** \brief lists all supported instructions */
         static QHash<QString, DecorationType> instructions;
-        /** \biref fills instructions */
+        /** \brief fills instructions */
         static void fillInstructions();
 };
 #endif // JKQTMATHTEXTDECORATEDNODE_H

@@ -642,6 +642,30 @@ void JKQTFastPlotter::updateDataImmediate() {
     repaint();
 }
 
+void JKQTFastPlotter::setXMin(double value){
+    setPlotUpdateEnabled(false);
+    setXRange(value,xMax,xAxisLog);
+    setPlotUpdateEnabled(true);
+}
+
+void JKQTFastPlotter::setXMax(double value){
+    setPlotUpdateEnabled(false);
+    setXRange(xMin,value,xAxisLog);
+    setPlotUpdateEnabled(true);
+}
+
+void JKQTFastPlotter::setYMin(double value){
+    setPlotUpdateEnabled(false);
+    setYRange(value,yMax,yAxisLog);
+    setPlotUpdateEnabled(true);
+}
+
+void JKQTFastPlotter::setYMax(double value){
+    setPlotUpdateEnabled(false);
+    setYRange(yMin,value,yAxisLog);
+    setPlotUpdateEnabled(true);
+}
+
 void JKQTFastPlotter::calcPlotScaling() {
     internalPlotBorderBottom=plotBorderBottom;
     internalPlotBorderTop=plotBorderTop;

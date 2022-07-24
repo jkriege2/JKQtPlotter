@@ -24,7 +24,7 @@
 
 
 /*! \def JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT
-    \ingroup tools
+    \ingroup jkqtcommon_statistics_and_math_libfacilities
 
     This define allows to export functions and classes from the jkqtcommon_statistics_and_math-library when building a dynamic/shared library.
     Usage is as follows:
@@ -56,16 +56,24 @@
 
  */
 
-/*! \def JKQTCOMMON_STATISTICS_AND_MATH_LIB_IN_DLL 
-    \ingroup tools
+// necessary to add this define to the Doxygen autodoc!!!
+#ifdef DOXYGEN
+#  define JKQTCOMMON_STATISTICS_AND_MATH_LIB_IN_DLL
+#endif
+/*! \def JKQTCOMMON_STATISTICS_AND_MATH_LIB_IN_DLL
+    \ingroup jkqtcommon_statistics_and_math_libfacilities
     \brief declares that the application should link against a shared version of 
            JKQTCommonStatisticsAndMath, i.e. \c JKQTCommonStatisticsAndMathSharedLib_XYZ .
            This needs to be defined while compiling the library and while compiling 
            any application linking against  \c JKQTCommonStatisticsAndMathSharedLib_XYZ. 
 */
 
-/*! \def JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT_LIBRARY 
-    \ingroup tools
+// necessary to add this define to the Doxygen autodoc!!!
+#ifdef DOXYGEN
+#  define JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT_LIBRARY
+#endif
+/*! \def JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT_LIBRARY
+    \ingroup jkqtcommon_statistics_and_math_libfacilities
     \brief is only defined while compiling JKQTCommonStatisticsAndMath into \c JKQTCommonStatisticsAndMathSharedLib_XYZ
            and ensures thet the symbols are exported. If it is not defined (e.g. while 
            compiling an application), the symbols are imported

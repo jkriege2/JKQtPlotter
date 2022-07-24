@@ -318,7 +318,7 @@ struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextFontDefinition {
  *  \param x x-center-position of the brace
  *  \param ybrace y-center-position of the brace
  *  \param width with of the overall brace
- *  \param height of the brace
+ *  \param bw height of the brace
  *  \param lineWidth linewidth when drawing, used for correcting so the brace exactly fills the rectangle and not overshoots it
  *  \param cubicshrink
  *  \param cubiccontrolfac

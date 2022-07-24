@@ -23,6 +23,10 @@
 
 #include <QtGlobal>
 
+// necessary to add this define to the Doxygen autodoc!!!
+#ifdef DOXYGEN
+#  define JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
+#endif
 /*! \def JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
     \ingroup jkqtpplottersupprt
     \brief This is defined if JKQtPlotter shall be compiled without print-support, or print-support is not available.
@@ -46,9 +50,13 @@
 #endif
 
 
+// necessary to add this define to the Doxygen autodoc!!!
+#ifdef DOXYGEN
+#  define JKQTPLOTTER_WORKAROUND_QGADGET_BUG
+#endif
 /*! \def JKQTPLOTTER_WORKAROUND_QGADGET_BUG
     \ingroup jkqtpplottersupprt
-    \brief This \c #define is used to work around a bug in Qt when compiled with CLANG (see https://bugreports.qt.io/browse/QTBUG-104874):
+    \brief This \c \#define is used to work around a bug in Qt when compiled with CLANG (see https://bugreports.qt.io/browse/QTBUG-104874):
            Multiple inheritance does not work with Q_GADGET in this setup.
 
     This can be used by surrounding code that causes compile-errors due to this bug with

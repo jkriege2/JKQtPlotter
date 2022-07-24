@@ -91,6 +91,11 @@ class JKQTFPPlot;
         both in pixel and world coordinates by using plotterSizesChanged() and synchronizeX() / synchronizeY().
     .
 
+    \image html jkqtfastplotter_test.png
+
+    \see An example for the usage of this class can be found here: \ref JKQTFastPlotterTest
+
+
 */
 class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter :
         #if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
@@ -979,29 +984,13 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter :
         void updateDataImmediate();
 
         /** \brief set xMin*/
-        void setXMin(double value){
-            setPlotUpdateEnabled(false);
-            setXRange(value,xMax,xAxisLog);
-            setPlotUpdateEnabled(true);
-        }
+        void setXMin(double value);
         /** \brief set xMax*/
-        void setXMax(double value){
-            setPlotUpdateEnabled(false);
-            setXRange(xMin,value,xAxisLog);
-            setPlotUpdateEnabled(true);
-        }
+        void setXMax(double value);
         /** \brief set yMin*/
-        void setYMin(double value){
-            setPlotUpdateEnabled(false);
-            setYRange(value,yMax,yAxisLog);
-            setPlotUpdateEnabled(true);
-        }
+        void setYMin(double value);
         /** \brief set yMax*/
-        void setYMax(double value){
-            setPlotUpdateEnabled(false);
-            setYRange(yMin,value,yAxisLog);
-            setPlotUpdateEnabled(true);
-        }
+        void setYMax(double value);
 
 
 };
@@ -1011,7 +1000,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter :
 
 
 /*! \brief base class for all plots that may be plotted by JKQTFastPlotter
-    \ingroup jkqtfastplotter
+    \ingroup jkqtfastplotter_PlotItems
 */
 class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPPlot: public QObject {
         Q_OBJECT
@@ -1050,7 +1039,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPPlot: public QObject {
 
 
 /*! \brief a simple line plot for JKQTFastPlotter
-    \ingroup jkqtfastplotter
+    \ingroup jkqtfastplotter_PlotItems
 
     This class plots data as (x,y) points connected by straight lines. If errors for the y values are
     provided, also y+/-yerr errorlines are drawn.
@@ -1279,7 +1268,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPLinePlot: public JKQTFPPlot {
 
 
 /*! \brief a simple plot that draws a cross for every datapoint
-    \ingroup jkqtfastplotter
+    \ingroup jkqtfastplotter_PlotItems
 
     This class does not support y errors!
 */
@@ -1334,7 +1323,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPVCrossPlot: public JKQTFPLinePlot {
 
 
 /*! \brief a simple vertical bar plot for JKQTFastPlotter
-    \ingroup jkqtfastplotter
+    \ingroup jkqtfastplotter_PlotItems
 
     This class does not support y errors!
 */
@@ -1370,7 +1359,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPVBarPlot: public JKQTFPLinePlot {
 
 
 /*! \brief plot a range of x values
-    \ingroup jkqtfastplotter
+    \ingroup jkqtfastplotter_PlotItems
 
 */
 class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPXRangePlot: public JKQTFPPlot {
@@ -1534,7 +1523,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPXRangePlot: public JKQTFPPlot {
 
 
 /*! \brief plot a range of x values
-    \ingroup jkqtfastplotter
+    \ingroup jkqtfastplotter_PlotItems
 
 */
 class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPYRangePlot: public JKQTFPPlot {
@@ -1698,7 +1687,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPYRangePlot: public JKQTFPPlot {
 
 
 /*! \brief a plot of a QImage
-    \ingroup jkqtfastplotter
+    \ingroup jkqtfastplotter_PlotItems
 */
 class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPQImagePlot: public JKQTFPPlot {
         Q_OBJECT
@@ -1795,7 +1784,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPQImagePlot: public JKQTFPPlot {
 
 /*!
    \brief An enum for selecting the palette for coloring
-    \ingroup jkqtfastplotter
+    \ingroup jkqtfastplotter_tools
 
    Here, the color palettes are illustrated (left is the color for the minimum and right for the maximum).
  */
@@ -1822,7 +1811,7 @@ enum JKQTFPColorPalette {
 };
 
 /*! \brief datatype for an image plotpalette for coloring
-    \ingroup jkqtfastplotter
+    \ingroup jkqtfastplotter_tools
 
    Here, the color palettes are illustrated (left is the color for the minimum and right for the maximum).
  */
@@ -1838,7 +1827,7 @@ enum JKQTFPImageFormat {
 
 
 /*! \brief convert a 2D image (as 1D array) into a QImage with given palette (see JKQTFPColorPalette)
-    \ingroup jkqtfastplotter
+    \ingroup jkqtfastplotter_tools
 
     This method uses lookup tables which are saved as static variables to convert the 2D array into
     an image. The luts are only created once, and stored then, so mor CPU time is saved. The precompiler define
@@ -2358,24 +2347,24 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 };
 
 /*! \brief get list with all available palettes
-    \ingroup jkqtfastplotter
+    \ingroup jkqtfastplotter_tools
     \see JKQTFPimagePlot_array2image()
  */
 JKQTFASTPLOTTER_LIB_EXPORT QStringList JKQTFPimagePlot_getPalettes();
 /*! \brief get QIcon representing the given palette
-    \ingroup jkqtfastplotter
+    \ingroup jkqtfastplotter_tools
     \see JKQTFPimagePlot_array2image()
 */
 JKQTFASTPLOTTER_LIB_EXPORT QIcon JKQTFPimagePlot_getPaletteIcon(int i);
 /*! \brief get QIcon representing the given palette
-    \ingroup jkqtfastplotter
+    \ingroup jkqtfastplotter_tools
     \see JKQTFPimagePlot_array2image()
 */
 JKQTFASTPLOTTER_LIB_EXPORT QIcon JKQTFPimagePlot_getPaletteIcon(JKQTFPColorPalette palette);
 
 
 /*! \brief plots a given grayscale image with a given color palette
-    \ingroup jkqtfastplotter
+    \ingroup jkqtfastplotter_PlotItems
 
       - This plot may plot any 2D array of data (8-, 16-, 32-bit integer images, float and double).
       - This class also draws a color bar in the right border of the plot
@@ -2644,7 +2633,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPimagePlot: public JKQTFPPlot {
 
 
 /*! \brief convert a 2D image (as 1D array) into a QImage and puts the image values into one color channel (set by \a channel).
-    \ingroup jkqtfastplotter
+    \ingroup jkqtfastplotter_tools
 
 */
 template <class T>
@@ -2746,7 +2735,7 @@ inline void JKQTFPRGBImageOverlayPlot_array2image(T* dbl, int width, int height,
 
 
 /*! \brief plots 1,2 or 3 given grayscale images as an overlay plot, where each channel is drawn as one color channel (e.g. red, green or blue).
-    \ingroup jkqtfastplotter
+    \ingroup jkqtfastplotter_PlotItems
 
       - This plot may plot any 2D array of data (8-, 16-, 32-bit integer images, float and double).
       - The images all have to have the same size
@@ -3112,7 +3101,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPRGBImageOverlayPlot: public JKQTFPPlot {
 
 /*! \brief plots an image overlay, i.e. a boolean image where each \c true pixel is drawn with a given color
            and the \c false pixels are transparent
-    \ingroup jkqtfastplotter
+    \ingroup jkqtfastplotter_PlotItems
 
 */
 class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPimageOverlayPlot: public JKQTFPPlot {
@@ -3267,7 +3256,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPimageOverlayPlot: public JKQTFPPlot {
 
 
 /*! \brief plot a horizontal scale bar
-    \ingroup jkqtfastplotter
+    \ingroup jkqtfastplotter_PlotItems
 
 */
 class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPQScaleBarXPlot: public JKQTFPPlot {
@@ -3391,7 +3380,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPQScaleBarXPlot: public JKQTFPPlot {
 
 
 /*! \brief plot a horizontal scale bar
-    \ingroup jkqtfastplotter
+    \ingroup jkqtfastplotter_PlotItems
 
 */
 class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPQOverlayLinearGridPlot: public JKQTFPPlot {

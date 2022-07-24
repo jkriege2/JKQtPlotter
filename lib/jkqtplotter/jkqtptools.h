@@ -304,7 +304,7 @@ public:
         LighterColor,
         InvertColor
     };
-    /** \brif specifies how the color should change */
+    /** \brief specifies how the color should change */
     ColorChangeMode colorModification;
     /** \brief replacement color when colorModification==ColorChangeMode::ReplaceColor */
     QColor targetColor;

@@ -19,7 +19,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: Using precompiled headers in CMake-build to speed up build times</li>
     <li>NEW/BREAKING: split jkqtcommon into basic tools and jkqtcommon_statistics_and_math for advanced math tools not used by all libs</li>
   </ul></li>
-  <li>JKQtPlotter:<ul>
+  <li>JKQTPlotter:<ul>
     <li>FIXED issue described in <a href="https://github.com/jkriege2/JKQtPlotter/pull/62">#62: Fix custom labels draw, because giving exactly two label-strings did not display all of them</a>, thanks to <a href="https://github.com/FalsinSoft">user:FalsinSoft</a></li>
     <li>FIXED issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/70">#70: Typo in jkqtplotter/CMakeLists.txt</a>, thanks to <a href="https://github.com/tedlinlab">user:tedlinlab</a></li>
     <li>FIXED issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/80">#80: Bug with multiple inheritance with Q_GDAGET with CLANG</a>, thanks to <a href="https://github.com/igormironchik">user:igormironchik</a>, caused by <a href="https://bugreports.qt.io/browse/QTBUG-104874">QTBUG-104874</a></li>
@@ -31,15 +31,15 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW/BREAKING CHANGE: changed JKQTPColorDerivationMode into a struct, which extends its capabilities above the previously available few enum-items</li>
     <li>NEW: added debug-feature to show boxes around text in the plot</li>
     <li>BREAKING: Print-Support can now be switched off with a CMAKE-option JKQtPlotter_BUILD_FORCE_NO_PRINTER_SUPPORT=ON. This also switches off PDF and SVG export, partly solves issue <a href="https://github.com/jkriege2/JKQtPlotter/issues/81">#81</a>, many thanks to <a href="https://github.com/sufuk">user:sufuk</a> for contributing part of the code and supplying the idea!  </li>
-  </ul>
+  </ul></li>
   
   <li>JKQTMathText:<ul>
     <li>FIXED: JKQTMathText added a little whitespace before and after the LaTeX-string. This was removed as it disturbed the layout of text in plots</li>
     <li>FIXED: height-calculation of frac-like instructions: before the ascent and descent were equal, even if the numerator and denominator have different heights</li>
     <li>FIXED: strikeoutPos was not correctly calculated in sub-/superscript node</li>
     <li>FIXED: symbol spacing in math mode (and text mode)</li>
-    <li>FIXED/IMPROVED: JKQTMathText renders several LaTeX strings better (simple braces in math mode, +-*... as symbols with proper sizes in math mode, added some missing instruction aliases, improved size of \vec and \hat, corrrected fonts usage for mathrm</li>
-    <li>FIXED: \sum and \prod used the wrong symbol in XITS-mode</li>
+    <li>FIXED/IMPROVED: JKQTMathText renders several LaTeX strings better (simple braces in math mode, \c +-*... as symbols with proper sizes in math mode, added some missing instruction aliases, improved size of \\vec and \\hat, corrrected fonts usage for \\mathrm</li>
+    <li>FIXED: \c \\sum and \c \\prod used the wrong symbol in XITS-mode</li>
     <li>IMPROVED: high-dpr-support in JKQTMathText</li>
     <li>IMPROVED: typesetting of sub-/supercripts, especially for large math operators and braces</li>
     <li>MODIFIED: brace node  now calculates the extension of the child height above or below the strikeoutPos, in order to center braces around the strikeoutPos</li>
@@ -47,12 +47,12 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>IMPROVED: added x-correction for sub/superscript above/below/besides integrals</li>
     <li>IMPROVED: rendering of sqrt</li>
     <li>IMPROVED: rendering and size calculation of decorations</li>
-    <li>IMPROVED: tokenizing and parsing of text in text-mode: now a lot of accents with commands like \"a, \'e and variants (e.g. {\"a}, \"{a}, ...) are supported now</li>
+    <li>IMPROVED: tokenizing and parsing of text in text-mode: now a lot of accents with commands like \c \\\"a, \c \\'e and variants (e.g. \c {\\\"a}, \c \\\"{a}, ...) are supported now</li>
     <li>IMPROVED/breaking: refactored symbol node JKQTMathTextSymbolNode and changed font-lookup!</li>
     <li>IMPROVED/NEW/breaking: refactored whitespace-processing node JKQTMathTextWhitespaceNode, now all major LaTeX whitespace commands are supported properly</li>
     <li>IMPROVED/NEW/breaking: refactored LaTeX parser in JKQTMathText</li>
-    <li>REMOVED/breaking: \v[a-zA-Z] and shorthand for \vec{a-zA-Z} was removed, implementation of \bbR,\bbC,... changed</li>
-    <li>NEW: now supports new decoration instructions: \cancel, \xcancel, \bcancel, \sout, \ocirc, \widetilde, \widehat, \breve</li>
+    <li>REMOVED/breaking: \c \\v[a-zA-Z] and shorthand for \c \\vec{a-zA-Z} was removed, implementation of \c \\bbR,\c \\bbC,... changed</li>
+    <li>NEW: now supports new decoration instructions: \c \\cancel, \c \\xcancel, \c \\bcancel, \c \\sout, \c \\ocirc, \c \\widetilde, \c \\widehat, \c \\breve</li>
     <li>NEW: reworked drawing of decorations: improved appearance and positioning!</li>
     <li>NEW: reworked code structure: broke up large, single CPP-files into several smaller files!</li>
     <li>NEW: reworked node class tree: inserted base-class nodes for single-child, dual-child!</li>
@@ -60,13 +60,13 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: shows strikeoutPos when drawing Debug-Boxes</li>
     <li>NEW: LaTeX-Parser understands optional instruction parameters in [...] now</li>
     <li>NEW: LaTeX-Parser simplifies parse-tree to increase speed of execution</li>
-    <li>NEW: \limits and \nolimits works as in LaTeX now (before it was simply removed and the functionality implemented for a fixed list of symbols)</li>
-    <li>NEW: added top-corner (\ulcorner/\urcorner) and bottom-corner brackets (\llcorner/\lrcorner)</li>
-    <li>NEW: added \overbracket and \underbracket</li>
-    <li>NEW: added \shaded{color}{...}</li>
-    <li>NEW: added \acute{X}, \grave{X}, \acute{X}</li>
+    <li>NEW: \c \\limits and \c \\nolimits works as in LaTeX now (before it was simply removed and the functionality implemented for a fixed list of symbols)</li>
+    <li>NEW: added top-corner (\c \\ulcorner/\c \\urcorner ) and bottom-corner brackets (\c \\llcorner/\c \\lrcorner )</li>
+    <li>NEW: added \c \\overbracket and \c \\underbracket</li>
+    <li>NEW: added \c \\shaded{color}{...} </li>
+    <li>NEW: added \c \\acute{X}, \c \\grave{X}, \c \\acute{X}</li>
     <li>NEW: added functions to set the font-size in pixels (as alternative to the existing functions that set them in points), implements request <a href="https://github.com/jkriege2/JKQtPlotter/issues/76">#76</a> from <a href="https://github.com/igormironchik">user:igormironchik</a> </li>
-  </ul>
+  </ul></li>
 </ul>
 
 \subsection page_whatsnew_TRUNK_DOWNLOAD trunk: Download
@@ -123,7 +123,7 @@ Changes, compared to  \ref page_whatsnew_V2019_11 "v2019.11" include:
   <li>new: added support for high-dpi devices (thanks for <a href="https://github.com/jkriege2/JKQtPlotter/pull/55">PR #55: Enable high-dpi support for plots </a> by <a href="https://github.com/akenmorris">user:akenmorris</a>.</li>
   <li>new: added geometric plot objects JKQTPGeoArrow to draw arrows (aka lines with added line-end decorators, also extended JKQTPGeoLine, JKQTPGeoInfiniteLine, JKQTPGeoPolyLines to draw line-end decorator (aka arrows)</li>
   <li>new: all geometric objects can either be drawn as graphic element (i.e. lines are straight line, even on non-linear axes), or as mathematical curve (i.e. on non-linear axes, lines become the appropriate curve representing the linear function, connecting the given start/end-points). The only exceptions are ellipses (and the derived arcs,pies,chords), which are always drawn as mathematical curves</li>
-  <li>new: a new graph class JKQTPXYFunctionLineGraph draws parametric 2D curves ( \f$ [x,y] = f(t) \f$ ), see \ref JKQTPlotterEvalCurves for an example</li>
+  <li>new: a new graph class JKQTPXYFunctionLineGraph draws parametric 2D curves ( \\f$ [x,y] = f(t) \\f$ ), see \ref JKQTPlotterEvalCurves for an example</li>
   <li>new: added several new copy/set-functions to JKQTPDatastore</li>
   <li>new: added JKQTPlotter signal, when widget was resized</li>
   <li>new: added JKQTPFilledHorizontalRangeGraph, complementing JKQTPFilledVerticalRangeGraph</li>
@@ -159,7 +159,7 @@ Changes, compared to  \ref page_whatsnew_V2018_08 "v2018.08" include:
     <ul>
 	  <li> new: added JKQTPSingleColumnSymbolsGraph for single-column data, e.g. drawn as (random) scatter or bee-swarm or rug plots </li>
 	  <li> new: stacked barcharts with JKQTPBarVerticalStackableGraph, JKQTPBarHorizontalStackableGraph </li>
-	  <li> new: use/support of C++11 features (e.g. \c std::function<> and lambda functions in JKQTPXFunctionLineGraph / JKQTPYFunctionLineGraph )</li>
+	  <li> new: use/support of C++11 features (e.g. \\c std::function<> and lambda functions in JKQTPXFunctionLineGraph / JKQTPYFunctionLineGraph )</li>
 	  <li> new: \ref jkqtpinterfaceopencv  "optional OpenCV interface" </li>
 	  <li> new: \ref jkqtpinterfacecimg  "optional CImg interface" </li>
 	  <li> new: \ref jkqtpplotter_styling  "Styling System for JKQTPlotter" </li>
@@ -167,32 +167,32 @@ Changes, compared to  \ref page_whatsnew_V2018_08 "v2018.08" include:
 	  <li> new: frames (plot viewport, key/legend ...) may be rounded off at the corners</li>
 	  <li> new: diverse new styling options (default font name/size ...)</li>
 	  <li> new: additionl options for styling coordinate axes</li>
-      <li> new: Mix-In classes to unify plot styleing functions (setters/getters) in all graphs </li>
-      <li> new: additional options for graph filling (color gradients, textures, ...) as provided by QBrush </li>
-      <li> new: added a general feature to JKQTPPlotElement which allows to show a graph in a highlighted state (if supported by the derived graph class!) </li>
-      <li> new: JKQTPXYParametrizedScatterGraph: added functors to transform column values into symbol type+size and line-width to give even more control </li>
-      <li> new: user-interaction tool that shows coordinates of data points near the current mouse position (when mouse is dragged, while mouse button is pressed), see: jkqtpmdaToolTipForClosestDataPoint </li>
-      <li> new: user-interaction tool that measures distances and angles when mouse is dragged, while mouse button is pressed), see: jkqtpmdaRuler </li>
-      <li> new: advanced styling options for boxplots + example for the styling: \ref JKQTPlotterBoxplotStyling </li>
-      <li> new: notched boxplots, see: \ref JKQTPlotterBoxplotStyling </li>
-      <li> new: several new plot symbols, see: JKQTPGraphSymbols </li>
-      <li> new: Statistics library with functions to calculate histograms, regression, kernel density estimates, ... see: \ref jkqtptools_math_statistics </li>
-      <li> new: iterator interface and improved documentation for JKQTPDatastore </li>
-      <li> new: violin plots (see \ref JKQTPlotterViolinplotGraphs ) </li>
-      <li> changed: removed old selection-code and replaced by general highlighting feature </li>
-      <li> changed: JKQTPStepHorizontalGraph has been renamed to JKQTPSpecialLineHorizontalGraph (vertical variants also) and have gained additional features (baseline for filling and drawing of symbols) </li>
-      <li> changed: filled curve graphs (e.g. JKQTPSpecialLineHorizontalGraph) are now merely a specializedly initialized JKQTPSpecialLineHorizontalGraph </li>
-      <li> removed: Removed datarange-feature </li>
-      <li> update: \ref JKQTPLOTTER_USERINTERACTION "reworked user interactions API" </li>
-      <li> update: \ref jkqtplotter_basegraphserrors "reworked error indicator base classes" </li>
-      <li> update: improvements to contour plots (e.g. highlighting single contour levels, split into a class for simple C-arrays [JKQTPContourPlot] and one for image data in a JKQTPDatastore column [JKQTPColumnContourPlot]) + added example, see JKQTPColumnContourPlot and \ref JKQTPlotterContourPlot </li>
+    <li> new: Mix-In classes to unify plot styleing functions (setters/getters) in all graphs </li>
+    <li> new: additional options for graph filling (color gradients, textures, ...) as provided by QBrush </li>
+    <li> new: added a general feature to JKQTPPlotElement which allows to show a graph in a highlighted state (if supported by the derived graph class!) </li>
+    <li> new: JKQTPXYParametrizedScatterGraph: added functors to transform column values into symbol type+size and line-width to give even more control </li>
+    <li> new: user-interaction tool that shows coordinates of data points near the current mouse position (when mouse is dragged, while mouse button is pressed), see: jkqtpmdaToolTipForClosestDataPoint </li>
+    <li> new: user-interaction tool that measures distances and angles when mouse is dragged, while mouse button is pressed), see: jkqtpmdaRuler </li>
+    <li> new: advanced styling options for boxplots + example for the styling: \ref JKQTPlotterBoxplotStyling </li>
+    <li> new: notched boxplots, see: \ref JKQTPlotterBoxplotStyling </li>
+    <li> new: several new plot symbols, see: JKQTPGraphSymbols </li>
+    <li> new: Statistics library with functions to calculate histograms, regression, kernel density estimates, ... see: \ref jkqtptools_math_statistics </li>
+    <li> new: iterator interface and improved documentation for JKQTPDatastore </li>
+    <li> new: violin plots (see \ref JKQTPlotterViolinplotGraphs ) </li>
+    <li> changed: removed old selection-code and replaced by general highlighting feature </li>
+    <li> changed: JKQTPStepHorizontalGraph has been renamed to JKQTPSpecialLineHorizontalGraph (vertical variants also) and have gained additional features (baseline for filling and drawing of symbols) </li>
+    <li> changed: filled curve graphs (e.g. JKQTPSpecialLineHorizontalGraph) are now merely a specializedly initialized JKQTPSpecialLineHorizontalGraph </li>
+    <li> removed: Removed datarange-feature </li>
+    <li> update: \ref JKQTPLOTTER_USERINTERACTION "reworked user interactions API" </li>
+    <li> update: \ref jkqtplotter_basegraphserrors "reworked error indicator base classes" </li>
+    <li> update: improvements to contour plots (e.g. highlighting single contour levels, split into a class for simple C-arrays [JKQTPContourPlot] and one for image data in a JKQTPDatastore column [JKQTPColumnContourPlot]) + added example, see JKQTPColumnContourPlot and \ref JKQTPlotterContourPlot </li>
 	  <li> fixed: colorbars at top were positioned over the plot label </li>
 	  <li> fixed: RGB-image plots now work properly with inverted axes (image is inverted, befor image was not shown at all) </li>
 	</ul></li>
  <li> Updates to JKQTMathText: 
     <ul>
 	  <li> new: slanted fractions (<code>\\sfrac{}{}</code>, <code>\\stfrac{}{}</code>) </li>
-      <li> update/fix: several general improvements and bugfixes </li>
+    <li> update/fix: several general improvements and bugfixes </li>
 	  <li> update/fix: improved error handling </li>
 	  <li> update: updated contained version of STIX fonts, better handling of different STIX versions </li>
 	  <li> update: improved documentation</li>

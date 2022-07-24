@@ -88,7 +88,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSymbolNode: public JKQTMathTextNode {
     protected:
         /** \copydoc JKQTMathTextNode::getSizeInternal() */
         virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
-        /** \copydoc JKQTMathTextNode::getSizeInternal() */
+        /** \copydoc JKQTMathTextSymbolNode::getSymbolSize() */
         virtual void getSymbolSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, double& subSuperXCorrection, double& subBesidesXCorrection, const JKQTMathTextNodeSize* prevNodeSize=nullptr) ;
 
 
@@ -184,15 +184,15 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSymbolNode: public JKQTMathTextNode {
             SymbolFullProps(const SymbolFullProps& other)=default;
             SymbolFullProps& operator=(SymbolFullProps&& other)=default;
             SymbolFullProps& operator=(const SymbolFullProps& other)=default;
-            /** \brief typesets the symbol (described in \a props ) from the specified \a font, \a props is stored with encoding MTFEStandard, an optional HTML-string \A _html can be given */
+            /** \brief typesets the symbol (described in \a props ) from the specified \a font, \a props is stored with encoding MTFEStandard, an optional HTML-string \a _html can be given */
             SymbolFullProps(const QString& font, const SymbolProps& props, const QString& _html=QString(), SymbolFlags _htmlflags=AsOutside, double _htmlfontScalingFactor=1.0, double _htmlyShiftFactor=0.0);
-            /** \brief typesets the \a symbol from the specified \a font, \a props is stored with encoding MTFEStandard, an optional HTML-string \A _html can be given */
+            /** \brief typesets the \a symbol from the specified \a font, \a props is stored with encoding MTFEStandard, an optional HTML-string \a _html can be given */
             SymbolFullProps(const QString& font, const QString& symbol, const QString& _html=QString(), SymbolFlags _htmlflags=AsOutside, double _htmlfontScalingFactor=1.0, double _htmlyShiftFactor=0.0);
-            /** \brief \a props is stored with encoding MTFEStandard, an optional HTML-string \A _html can be given */
+            /** \brief \a props is stored with encoding MTFEStandard, an optional HTML-string \a _html can be given */
             SymbolFullProps(const SymbolProps& props, const QString& _html=QString(), SymbolFlags _htmlflags=AsOutside, double _htmlfontScalingFactor=1.0, double _htmlyShiftFactor=0.0);
-            /** \brief \a props is stored with encoding MTFEStandard, uses the specified \a _fontType for drawing, an optional HTML-string \A _html can be given */
+            /** \brief \a props is stored with encoding MTFEStandard, uses the specified \a _fontType for drawing, an optional HTML-string \a _html can be given */
             SymbolFullProps(JKQTMathTextEnvironmentFont _fontType, const SymbolProps& props, const QString& _html=QString(), SymbolFlags _htmlflags=AsOutside, double _htmlfontScalingFactor=1.0, double _htmlyShiftFactor=0.0);
-            /** \brief takes a \a symbol from the specified \a _fontType assuming MTFEStandard encoding, an optional HTML-string \A _html can be given */
+            /** \brief takes a \a symbol from the specified \a _fontType assuming MTFEStandard encoding, an optional HTML-string \a _html can be given */
             SymbolFullProps(JKQTMathTextEnvironmentFont _fontType, const QString& symbol, const QString& _html=QString(), SymbolFlags _htmlflags=AsOutside, double _htmlfontScalingFactor=1.0, double _htmlyShiftFactor=0.0);
             /** \brief single-alternative symbol for encoding \a enc0 and using symbol description \a props0 for it. An optional HTML-string \a _html can be provided */
             SymbolFullProps(JKQTMathTextFontEncoding enc0, const SymbolProps& props0, const QString& _html=QString(), SymbolFlags _htmlflags=AsOutside, double _htmlfontScalingFactor=1.0, double _htmlyShiftFactor=0.0);

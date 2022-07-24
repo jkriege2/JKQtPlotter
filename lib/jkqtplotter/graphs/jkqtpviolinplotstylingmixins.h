@@ -313,7 +313,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphViolinplotStyleMixin: public JKQTPGraphLi
             ViolinBottom=ViolinLeft,    /*!< \brief draw violin on the bottom side only (for horizontal violins) \image html JKQTPGraphViolinplot_ViolinBottom.png */
             ViolinRight,                /*!< \brief draw violin on the right hand side only (for vertical violins) \image html JKQTPGraphViolinplot_ViolinRight.png */
             ViolinTop=ViolinRight,      /*!< \brief draw violin on the top side only (for horizontal violins) \image html JKQTPGraphViolinplot_ViolinTop.png */
-            ViolinBoth                  /*!< \brief draw violin on the left+right or top+bottom side \image html JKQTPGraphViolinplot_ViolinBoth.png  \image html JKQTPGraphViolinplot_ViolinHBoth.png */
+            ViolinBoth                  /*!< \brief draw violin on the left+right or top+bottom side
+                                                    \image html JKQTPGraphViolinplot_ViolinBoth.png
+                                                    \image html JKQTPGraphViolinplot_ViolinHBoth.png */
         };
 
         /** \brief returns the position mode of the violin plot */

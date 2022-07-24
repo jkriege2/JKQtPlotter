@@ -24,6 +24,7 @@ This page lists several todos and wishes for future version of JKQTPlotter
     <li>graphic elements: annotation graphic element with text positionable like legend, or with (0..1),(0..1)-coordinates within plot</li>
     <li>graphic elements: cubic/bezier curves for graphic elements</li>
     <li>data management: allow for other datatypes than double, would be good to have, double, float, ints, bool, string ... as for images</li>
+    <li>data management: binding  for the <a href="https://eigen.tuxfamily.org/index.php?title=Main_Page">Eigen library</a></li>
     <li>user interactions: support for touch/pad gestures</li>
     <li>graphic elements: make coordinate systems selectable for all: x/y-axis, 0..1/0..1, topleft/topright... </li>
     <li>plot: reqork layouting of legends: there are some inconsistencies/too large gaps ...</li>
@@ -38,15 +39,15 @@ This page lists several todos and wishes for future version of JKQTPlotter
     <li></li>
   </ul></li>
   <li>JKQTMathText:<ul>
-    <li>add instruction for unicode-characters \charDDDD,  \char"XXXX, \unicode{XXXX}, \utf8{XXXX}, \utf16{XXXX}, \utf32{XXXX} ...</li>
+    <li>add instruction for unicode-characters \\charDDDD,  \\char"XXXX, \\unicode{XXXX}, \\utf8{XXXX}, \\utf16{XXXX}, \\utf32{XXXX} ...</li>
     <li>check sub/superscript with italic text in math mode, possibly a correction is necessary</li>
     <li>explore where QFontMetricsF::horizontalAdvance() can be used (for Qt >=5.15)</li>
-    <li>add support for \bigl,\bigr,\Bigr,... commands for fixed-size but large paramtheses</li>
-    <li>explore options to make font-environment-modifying commands avails, like "{blacktext\color{red}redtext}", today only commands like "\textcolor{red}{redtext}" work</li>
+    <li>add support for \\bigl,\\bigr,\\Bigr,... commands for fixed-size but large paramtheses</li>
+    <li>explore options to make font-environment-modifying commands avails, like "{blacktext\\color{red}redtext}", today only commands like "\\textcolor{red}{redtext}" work</li>
     <li>maybe: add support for text with linebreaks by adding a JKQTMathTextVerticalListNode in addition to JKQTMathTextListNode</li>
     <li>maybe: add tool programs to auto-generate some example images</li>
-    <li>add support for \substack command below \sum etc.</li>
-    <li>improve support for array-environment with limited support for formatting string like l|r|c and maybe add support for \hline command, possibly also \cellcolor etz.</li>
+    <li>add support for \\substack command below \\sum etc.</li>
+    <li>improve support for array-environment with limited support for formatting string like l|r|c and maybe add support for \\hline command, possibly also \\cellcolor etz.</li>
     <li></li>
   </ul></li>
 </ul>

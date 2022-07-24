@@ -107,4 +107,4 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 
 | Screenshot    | Description   | Notes         |
 |:-------------:| ------------- | ------------- |
-| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest1_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest/README.md) | [CMake Example Linking Against JKQTPlotter](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/cmake_link_example) | explains how to link against JKQTPlotter with CMake |
+| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_cmakelink_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/cmake_link_example/README.md) | [CMake Example Linking Against JKQTPlotter](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/cmake_link_example) | explains how to link against JKQTPlotter with CMake |

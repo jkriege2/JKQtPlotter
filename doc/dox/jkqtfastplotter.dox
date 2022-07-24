@@ -6,6 +6,16 @@
 	output quality. It lacks several of the advanced features of JKQTPlotter, but can be used in cases, where fast
 	update of plots or real-time plotting is required.
 
-	An example for the usage of this class can be found here: \subpage JKQTFastPlotterTest
+	An example for the usage of this class can be found here: \ref JKQTFastPlotterTest
+  
+  \image html jkqtfastplotter_test.png
+  
+ 
+
+  \defgroup jkqtfastplotter_PlotItems Plot Elements available in JKQTFastPlotter 
+  \ingroup jkqtfastplotter
+  
+  \defgroup jkqtfastplotter_tools Tool Functions, Enums, Classes for JKQTFastPlotter
+  \ingroup jkqtfastplotter
 
 */

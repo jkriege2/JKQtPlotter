@@ -52,7 +52,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextNode {
          *
          */
         void getSize(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr);
-        /** \brief calculates the x-size-difference between the given (probably) italic (width externally calculated: \A width_potentiallyitalic, \a ev_potentiallyitalic) and the non-italic version of \a child */
+        /** \brief calculates the x-size-difference between the given (probably) italic (width externally calculated: \a width_potentiallyitalic, \a ev_potentiallyitalic) and the non-italic version of \a child */
         double getNonItalicXCorretion(QPainter &painter, double width_potentiallyitalic, const JKQTMathTextEnvironment &ev_potentiallyitalic, JKQTMathTextNode* child) const;
         /** \brief draw the contents at the designated position
          *

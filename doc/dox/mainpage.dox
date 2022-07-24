@@ -36,7 +36,7 @@
   - \ref jkqtplotter_filledgraphs "filled curves"
   - \ref jkqtplotter_barssticks "barcharts (also stacked)"
   - extensive support for different styles of error indicators
-  - \ref jkmp "integrated mathematical function parser for function plots (with intelligent rendering algorithm)"
+  - \ref jkqtptools_math_parser "integrated mathematical function parser for function plots (with intelligent rendering algorithm)"
   - \ref jkqtplotter_functiongraphs "line/scatter graphs can also be based on C/C++ functions instead of data series (C++11 support!)"
   - \ref jkqtplotter_statgraphs "statistical plots (e.g. boxplots)"
   - \ref jkqtplotter_imagelots_elements "extensive library of image plots" (inclusing different color-scale modes, RGBA-plots, overlays/masks)

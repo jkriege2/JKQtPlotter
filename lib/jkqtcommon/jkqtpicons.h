@@ -32,28 +32,28 @@
 #include "jkqtcommon/jkqtpdrawingtools.h"
 
 /** \brief make a QIcon representing a QColor
- * \ingroup tools
+ * \ingroup jkqtptools_icons
  */
 JKQTCOMMON_LIB_EXPORT QIcon jkqtp_makeQColorIcon(QColor style);
 
 /** \brief make a QIcon representing a Qt::BrushStyle
- * \ingroup tools
+ * \ingroup jkqtptools_icons
  */
 JKQTCOMMON_LIB_EXPORT QIcon jkqtp_makeQBrushStyleIcon(Qt::BrushStyle style);
 
 
 /** \brief make a QIcon representing a Qt::PenStyle
- * \ingroup tools
+ * \ingroup jkqtptools_icons
  */
 JKQTCOMMON_LIB_EXPORT QIcon jkqtp_makeQPenStyleIcon(Qt::PenStyle style);
 
 /** \brief make a QIcon representing a JKQTPLineDecoratorStyle
- * \ingroup tools
+ * \ingroup jkqtptools_icons
  */
 JKQTCOMMON_LIB_EXPORT QIcon JKQTPLineDecoratorStyle2Icon(JKQTPLineDecoratorStyle style);
 
 /** \brief make a QIcon representing a JKQTPGraphSymbols
- * \ingroup tools
+ * \ingroup jkqtptools_icons
  */
 JKQTCOMMON_LIB_EXPORT QIcon JKQTPGraphSymbols2Icon(JKQTPGraphSymbols style);
 

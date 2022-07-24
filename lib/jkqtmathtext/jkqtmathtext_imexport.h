@@ -25,7 +25,7 @@
 
 
 /*! \def JKQTMATHTEXT_LIB_EXPORT
-    \ingroup jkqtmathtext_tools
+    \ingroup jkqtmathtext_libfacilities
 
     This define allows to export functions and classes from the jkqtcommon-library when building a dynamic/shared library.
     Usage is as follows:
@@ -57,16 +57,24 @@
 
  */
 
-/*! \def JKQTMATHTEXT_LIB_IN_DLL 
-    \ingroup jkqtmathtext_tools
+// necessary to add this define to the Doxygen autodoc!!!
+#ifdef DOXYGEN
+#  define JKQTMATHTEXT_LIB_IN_DLL
+#endif
+/*! \def JKQTMATHTEXT_LIB_IN_DLL
+    \ingroup jkqtmathtext_libfacilities
     \brief declares that the application should link against a shared version of 
            JKQTMathText, i.e. \c JKQTMathTextSharedLib_XYZ .
            This needs to be defined while compiling the library and while compiling 
            any application linking against  \c JKQTMathTextSharedLib_XYZ. 
 */
 
-/*! \def JKQTMATHTEXT_LIB_EXPORT_LIBRARY 
-    \ingroup jkqtmathtext_tools
+// necessary to add this define to the Doxygen autodoc!!!
+#ifdef DOXYGEN
+#  define JKQTMATHTEXT_LIB_EXPORT_LIBRARY
+#endif
+/*! \def JKQTMATHTEXT_LIB_EXPORT_LIBRARY
+    \ingroup jkqtmathtext_libfacilities
     \brief is only defined while compiling JKQTMathText into \c JKQTMathTextSharedLib_XYZ
            and ensures thet the symbols are exported. If it is not defined (e.g. while 
            compiling an application), the symbols are imported

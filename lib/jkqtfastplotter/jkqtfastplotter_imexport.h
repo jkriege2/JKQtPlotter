@@ -25,7 +25,7 @@
 
 
 /*! \def JKQTFASTPLOTTER_LIB_EXPORT
-    \ingroup tools
+    \ingroup jkqtfastplotter_tools
 
     This define allows to export functions and classes from the jkqtcommon-library when building a dynamic/shared library.
     Usage is as follows:
@@ -57,16 +57,24 @@
 
  */
 
-/*! \def JKQTFASTPLOTTER_LIB_IN_DLL 
-    \ingroup tools
+// necessary to add this define to the Doxygen autodoc!!!
+#ifdef DOXYGEN
+#  define JKQTFASTPLOTTER_LIB_IN_DLL
+#endif
+/*! \def JKQTFASTPLOTTER_LIB_IN_DLL
+    \ingroup jkqtfastplotter_tools
     \brief declares that the application should link against a shared version of 
            JKQTFastPlotter, i.e. \c JKQTFastPlotterSharedLib_XYZ .
            This needs to be defined while compiling the library and while compiling 
            any application linking against  \c JKQTFastPlotterSharedLib_XYZ. 
 */
 
-/*! \def JKQTFASTPLOTTER_LIB_EXPORT_LIBRARY 
-    \ingroup tools
+// necessary to add this define to the Doxygen autodoc!!!
+#ifdef DOXYGEN
+#  define JKQTFASTPLOTTER_LIB_EXPORT_LIBRARY
+#endif
+/*! \def JKQTFASTPLOTTER_LIB_EXPORT_LIBRARY
+    \ingroup jkqtfastplotter_tools
     \brief is only defined while compiling JKQTFastPlotter into \c JKQTFastPlotterSharedLib_XYZ
            and ensures thet the symbols are exported. If it is not defined (e.g. while 
            compiling an application), the symbols are imported

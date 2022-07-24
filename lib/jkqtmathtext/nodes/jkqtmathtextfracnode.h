@@ -91,7 +91,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextFracNode: public JKQTMathTextDualChild
     protected:
         /** \brief lists all supported instructions */
         static QHash<QString, FracType> instructions;
-        /** \biref fills instructions */
+        /** \brief fills instructions */
         static void fillInstructions();
         /** \copydoc JKQTMathTextNode::getSizeInternal() */
         virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;

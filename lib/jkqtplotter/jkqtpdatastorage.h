@@ -105,6 +105,7 @@ enum class JKQTPDatastoreItemFormat {
   *      matrix with \c width columns and \c height rows.
   *    - copyColumn() duplicates an existing column
   *    - addCopiedColumn() copies an external dataset into the datastore. e.g. with code like:
+  *
   *        \code{.cpp}
   *           QVector<double> X, Y;
   *           const int Ndata=100;
@@ -118,6 +119,7 @@ enum class JKQTPDatastoreItemFormat {
   *          linegraph->setXColumn(datastore->addCopiedColumn(X, "x"));
   *          linegraph->setYColumn(datastore->addCopiedColumn(Y, "y"));
   *        \endcode
+  *
   *   - addLinearColumn() adds a column with linearly increasing numbers (in a given range)
   *   - addLogColumn() and addDecadeLogColumn() add columns with logarithmically spaced values
   *   - addLinearGridColumns() adds two columns which represent x- and y- coordinates of points

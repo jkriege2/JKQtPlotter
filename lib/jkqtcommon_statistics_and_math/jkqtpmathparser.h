@@ -222,7 +222,7 @@ class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPMathParser
         void* data;
 
         /** \brief the possible tokens that can be recognized by the tokenizer in JKQTPMathParser::getToken() 
-        *   \ingroup jkmpultil
+        *   \ingroup jkqtptools_math_parser_utils
         */
         enum jkmpTokenType {
             END,                /*!< \brief end token */
@@ -260,7 +260,7 @@ class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPMathParser
 
 
         /** \brief internal names for logic operations
-        *   \ingroup jkmpultil */
+        *   \ingroup jkqtptools_math_parser_utils */
         enum {
           jkmpLOPand='a',
           jkmpLOPor='o',
@@ -272,7 +272,7 @@ class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPMathParser
 
 
         /** \brief jkmpCOMPdefs internal names for compare operations 
-        *   \ingroup jkmpultil*/
+        *   \ingroup jkqtptools_math_parser_utils*/
         enum {
             jkmpCOMPequal='=',
             jkmpCOMPnequal='!',
@@ -286,7 +286,7 @@ class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPMathParser
     public:
 
         /** \brief possible result types
-         *   \ingroup jkmpultil
+         *   \ingroup jkqtptools_math_parser_utils
          */
         enum jkmpResultType {jkmpDouble,  /*!< \brief a floating-point number with double precision. This is also used to deal with integers */
                              jkmpString,  /*!< \brief a string of characters */
@@ -295,7 +295,7 @@ class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPMathParser
 
 
         /** \brief result of any expression  
-        *   \ingroup jkmpultil*/
+        *   \ingroup jkqtptools_math_parser_utils*/
         struct JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT jkmpResult {
           jkmpResult();
 
@@ -315,7 +315,7 @@ class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPMathParser
 
         /** \brief This struct is for managing variables. Unlike jkmpResult this struct
           * only contains pointers to the data
-        *   \ingroup jkmpultil
+        *   \ingroup jkqtptools_math_parser_utils
           */
         struct JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT jkmpVariable {
           jkmpVariable();
@@ -327,7 +327,7 @@ class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPMathParser
         };
 
         /** \brief This struct is for managing temporary variables. It is generally like jkmpVariable.
-        *   \ingroup jkmpultil
+        *   \ingroup jkqtptools_math_parser_utils
           */
         struct JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT jkmpTempVariable {
           std::string name;       /*!< \brief name of the variable */
@@ -379,7 +379,7 @@ class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPMathParser
         /**
          * \brief This class is the abstract base class for nodes.
          * All allowed node types must inherit from jkmpNode
-         * \ingroup jkmpNodes 
+         * \ingroup jkqtptools_math_parser_Nodes
          */
         class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT jkmpNode {
           protected:
@@ -409,7 +409,7 @@ class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPMathParser
         /**
          * \brief This class represents a binary arithmetic operation:
          *  add (+), subtract (-), multiply (*), divide (/), a to the power of b (a^b)
-         * \ingroup jkmpNodes 
+         * \ingroup jkqtptools_math_parser_Nodes
          */
         class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT jkmpBinaryArithmeticNode: public jkmpNode {
           private:
@@ -434,7 +434,7 @@ class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPMathParser
 
         /**
          * \brief This class represents a binary boolean operation: and, or, xor, nor, nand
-         * \ingroup jkmpNodes 
+         * \ingroup jkqtptools_math_parser_Nodes
          */
         class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT jkmpBinaryBoolNode: public jkmpNode {
           private:
@@ -459,7 +459,7 @@ class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPMathParser
 
         /**
          * \brief This class represents a binary compare operation: !=, ==, >=, <=, >, <
-         * \ingroup jkmpNodes 
+         * \ingroup jkqtptools_math_parser_Nodes
          */
         class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT jkmpCompareNode: public jkmpNode {
           private:
@@ -484,7 +484,7 @@ class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPMathParser
 
         /**
          * \brief This class represents a unary operations: ! (bool negation), - (arithmetic negation)
-         * \ingroup jkmpNodes 
+         * \ingroup jkqtptools_math_parser_Nodes
          */
         class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT jkmpUnaryNode: public jkmpNode {
           private:
@@ -508,7 +508,7 @@ class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPMathParser
 
         /**
          * \brief This class represents a variable assignment (a = expression)
-         * \ingroup jkmpNodes 
+         * \ingroup jkqtptools_math_parser_Nodes
          */
         class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT jkmpVariableAssignNode: public jkmpNode {
           private:
@@ -533,7 +533,7 @@ class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPMathParser
 
         /**
          * \brief This class represents a number, a string contant or a boolean contant (true/false)
-         * \ingroup jkmpNodes 
+         * \ingroup jkqtptools_math_parser_Nodes
          */
         class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT jkmpConstantNode: public jkmpNode {
           private:
@@ -552,7 +552,7 @@ class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPMathParser
 
         /**
          * \brief This class represents a variable.
-         * \ingroup jkmpNodes 
+         * \ingroup jkqtptools_math_parser_Nodes
          */
         class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT jkmpVariableNode: public jkmpNode {
           private:
@@ -571,7 +571,7 @@ class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPMathParser
 
         /**
          * \brief This class represents an arbitrary function.
-         * \ingroup jkmpNodes 
+         * \ingroup jkqtptools_math_parser_Nodes
          *
          * When initialized this class will get the function description that is
          * linked to the supplied function name from JKQTPMathParser object. This
@@ -604,7 +604,7 @@ class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPMathParser
 
         /**
          * \brief This class represents a list of jkmpNode.
-         * \ingroup jkmpNodes 
+         * \ingroup jkqtptools_math_parser_Nodes
          *
          * when evaluating the result will be the result of the last node in the list.
          */
@@ -640,7 +640,7 @@ class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPMathParser
 
 
         /** \brief error handling: exceptions of the type of this class will be thrown if an error occurs
-         *  \ingroup jkmpErrorhandling 
+         *  \ingroup jkqtptools_math_parser_Errorhandling
          *
          * \attention If you do not want to use the exception handling which throws
          * jkmpException exceptions, but want to write your own error handling, you should write your own
@@ -669,26 +669,26 @@ class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPMathParser
         };
 
         /** \brief type for a custom error handler. This an alternative error handling
-         *  \ingroup jkmpErrorhandling  */
+         *  \ingroup jkqtptools_math_parser_Errorhandling  */
         typedef void (*jkmpexceptionf)(std::string);
 
 
         /** \brief function that throws an exception or calls an error handler 
-         *  \ingroup jkmpErrorhandling */
+         *  \ingroup jkqtptools_math_parser_Errorhandling */
         void jkmpError(const std::string& st);
 
     private:
         /** \brief if this is nullptr then an exception may be thrown otherwise this should point to an error handler that will be called.
-         *  \ingroup jkmpErrorhandling  */
+         *  \ingroup jkqtptools_math_parser_Errorhandling  */
         jkmpexceptionf jkmathparser_exception_function;
 
     public:
         /** \brief activate error handling by use of an exception function
-         *  \ingroup jkmpErrorhandling  */
+         *  \ingroup jkqtptools_math_parser_Errorhandling  */
         void setException_function(jkmpexceptionf exception_function);
 
         /** \brief deactivate error handling by use of an exception function
-         *  \ingroup jkmpErrorhandling  */
+         *  \ingroup jkqtptools_math_parser_Errorhandling  */
         void resetException_function();
 
 

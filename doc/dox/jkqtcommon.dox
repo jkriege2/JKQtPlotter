@@ -5,6 +5,9 @@
 This summarizes all functions from JKQTCommon-library, which provides basic (Qt-bound) tools for all other libs in the package JKQtPlotter (i.e. also JKQtFastPlotter and JKQtMathText).
 
 
+\defgroup jkqtptools_general General Functions & Tools
+\ingroup jkqtptools_jkqtcommon
+
 \defgroup jkqtptools_math_basic Mathematical Functions & Tools
 \ingroup jkqtptools_jkqtcommon
 
@@ -12,17 +15,21 @@ This summarizes all functions from JKQTCommon-library, which provides basic (Qt-
 This group assembles a variety of mathematical tool functions that are used in different places.
 
 
-
-\defgroup jkqtptools_string String/String-Conversion Tool Functions
+\defgroup jkqtptools_string String(-Conversion) Functions
 \ingroup jkqtptools_jkqtcommon
 
 Offers diverse function to convert different datatypes (e.g. double, int, diverse enums) to and from strings and for string manipulation.
 
-\defgroup jkqtptools_qt Additional Tools for Qt
+\defgroup jkqtptools_qt Tools around Qt's clasess
 \ingroup jkqtptools_jkqtcommon
 
+\defgroup jkqtptools_icons Special QIcon generation
+\ingroup jkqtptools_jkqtcommon
 
-\defgroup jkqtptools_qtwidgets Additional Widgets for Qt
+In many cases it makes sense to generate special QIcons to represent a certain property, enum entry, QBrush, QPen etc.
+This group assembles functions that do exactly that.
+
+\defgroup jkqtptools_qtwidgets Additional Widgets for
 \ingroup jkqtptools_jkqtcommon
 
 \defgroup jkqtptools_drawing Drawing & Graphics Tools
@@ -40,6 +47,9 @@ Functions that help during debugging (e.g. an assert function/macro).
 
 Classes and functions that help to structure the code (e.g. RAII constructs)
 
+
+\defgroup jkqtptools_libfacilities Library Facilities for JKQTCommon
+\ingroup jkqtptools_jkqtcommon
 
 
 

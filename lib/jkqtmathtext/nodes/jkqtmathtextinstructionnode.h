@@ -46,7 +46,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextInstruction1Node: public JKQTMathTextS
     public:
         explicit JKQTMathTextInstruction1Node(JKQTMathText* parent, const QString& name, JKQTMathTextNode* child, const QStringList& parameters=QStringList());
         virtual ~JKQTMathTextInstruction1Node() override;
-        /** \copydoc name */
+        /** \copydoc instructionName */
         const QString& getInstructionName() const;
         /** \copydoc parameters */
         const QStringList& getParameters() const;
@@ -162,9 +162,9 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextBoxInstructionNode: public JKQTMathTex
             static ModifyEnvironmentFunctor NoModification;
             /** \brief this functor returns the QPen to use for the box outline */
             typedef std::function<QPen(JKQTMathTextEnvironment& ev, const QStringList& parameters, JKQTMathText* parent)> GetBoxPenFunctor;
-            /** \bbrief generates a QPen with the lineWidth associated with the QFont of the environment (using QFontMetricsF::lineWidth() ) */
+            /** \brief generates a QPen with the lineWidth associated with the QFont of the environment (using QFontMetricsF::lineWidth() ) */
             static GetBoxPenFunctor DefaultPen;
-            /** \bbrief generates an invisible pen with 0 width */
+            /** \brief generates an invisible pen with 0 width */
             static GetBoxPenFunctor NoPen;
             /** \brief this functor returns the QBrush to use for the box fill */
             typedef std::function<QBrush(JKQTMathTextEnvironment& ev, const QStringList& parameters, JKQTMathText* parent)> GetBoxBrushFunctor;

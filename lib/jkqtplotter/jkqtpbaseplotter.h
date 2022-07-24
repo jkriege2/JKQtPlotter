@@ -122,7 +122,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPPaintDeviceAdapter {
  * how to use it. This class implement a graph management, where graphs simply point to a set of columns inside the datastore
  * that contain the actual plot data!
  *
- * If you call the \link JKQTBasePlotter::JKQTBasePlotter() constructor \endlink with no arguments, it will create an internal
+ * If you call the JKQTBasePlotter::JKQTBasePlotter() constructor with no arguments, it will create an internal
  * datastore object and you can start adding data by using getDatastore(). If you have an external JKQTPDatastore object you can
  * give it as parameter to the constructor or use one of the other methods:
  *  - useExternalDatastore(): \copybrief JKQTBasePlotter::useExternalDatastore()

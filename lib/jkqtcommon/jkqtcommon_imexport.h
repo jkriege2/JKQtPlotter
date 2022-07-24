@@ -24,7 +24,7 @@
 
 
 /*! \def JKQTCOMMON_LIB_EXPORT
-    \ingroup tools
+    \ingroup jkqtptools_libfacilities
 
     This define allows to export functions and classes from the jkqtcommon-library when building a dynamic/shared library.
     Usage is as follows:
@@ -56,16 +56,24 @@
 
  */
 
+// necessary to add this define to the Doxygen autodoc!!!
+#ifdef DOXYGEN
+#  define JKQTCOMMON_LIB_IN_DLL
+#endif
 /*! \def JKQTCOMMON_LIB_IN_DLL 
-    \ingroup tools
+    \ingroup jkqtptools_libfacilities
     \brief declares that the application should link against a shared version of 
            JKQTCommon, i.e. \c JKQTCommonSharedLib_XYZ .
            This needs to be defined while compiling the library and while compiling 
            any application linking against  \c JKQTCommonSharedLib_XYZ. 
 */
 
-/*! \def JKQTCOMMON_LIB_EXPORT_LIBRARY 
-    \ingroup tools
+// necessary to add this define to the Doxygen autodoc!!!
+#ifdef DOXYGEN
+#  define JKQTCOMMON_LIB_EXPORT_LIBRARY
+#endif
+/*! \def JKQTCOMMON_LIB_EXPORT_LIBRARY
+    \ingroup jkqtptools_libfacilities
     \brief is only defined while compiling JKQTCommon into \c JKQTCommonSharedLib_XYZ
            and ensures thet the symbols are exported. If it is not defined (e.g. while 
            compiling an application), the symbols are imported

@@ -198,25 +198,21 @@ enum JKQTPMathImageColorRangeFailAction {
 
 /*! \brief tool structure that summarizes several static properties of JKQTPlotters palette system,
            also provides functions to work with palettes and register user-defined palettes.
-    \ingroup jkqtptools_qt
+    \ingroup jkqtplotter_imagelots_tools
 
     \see \ref JKQTPlotterImagePlot
 */
 struct JKQTPImageTools {
 
-        /*! \brief Datatype to store lookup-tables used to map data values (scales to 0..size-1) onto RGB-colors
-            \ingroup jkqtptools_qt */
+        /*! \brief Datatype to store lookup-tables used to map data values (scales to 0..size-1) onto RGB-colors */
         typedef QVector<QRgb> LUTType;
 
-        /*! \brief Width of the Palette-Icons, generated e.g. by JKQTPImageTools::GetPaletteIcon()
-            \ingroup jkqtptools_qt */
+        /*! \brief Width of the Palette-Icons, generated e.g. by JKQTPImageTools::GetPaletteIcon() */
         static JKQTCOMMON_LIB_EXPORT const int PALETTE_ICON_WIDTH;
-        /*! \brief Height of the Palette-Icons, generated e.g. by JKQTPImageTools::GetPaletteIcon()
-            \ingroup jkqtptools_qt */
+        /*! \brief Height of the Palette-Icons, generated e.g. by JKQTPImageTools::GetPaletteIcon() */
         static JKQTCOMMON_LIB_EXPORT const int PALETTE_IMAGEICON_HEIGHT;
 
-        /*! \brief size of the lookup tables used by JKQTFPimagePlot_array2image()
-        */
+        /*! \brief size of the lookup tables used by JKQTFPimagePlot_array2image() */
         static JKQTCOMMON_LIB_EXPORT const int LUTSIZE;
 
         /*! \brief loads all palettes defined in the given palette files \a filename into global_jkqtpimagetools_userluts

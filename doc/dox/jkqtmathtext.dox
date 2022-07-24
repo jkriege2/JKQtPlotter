@@ -13,17 +13,21 @@
 	.
 
   
-  \defgroup jkqtmathtext_render JKQTMathText Main (Render) Class
+  \defgroup jkqtmathtext_render Main (Render) Class (JKQTMathText)
   \ingroup jkqtmathtext
 
-  \defgroup jkqtmathtext_items JKQTMathText Render-Tree Items
+  \defgroup jkqtmathtext_items Render-Tree Items for JKQTMathText
   \ingroup jkqtmathtext
 
-  \defgroup jkqtmathtext_widgets JKQTMathText widgets
+  \defgroup jkqtmathtext_widgets Widgets using JKQTMathText
   \ingroup jkqtmathtext
 
-  \defgroup jkqtmathtext_tools JKQTMathText Tool Functions and Types
+  \defgroup jkqtmathtext_tools Tool Functions and Types for JKQTMathText
   \ingroup jkqtmathtext
   
+  
+  \defgroup jkqtmathtext_libfacilities Library Facilities for JKQTMathText
+  \ingroup jkqtmathtext
+
 
 */
