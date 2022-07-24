@@ -92,7 +92,7 @@ Changes, compared to  \ref page_whatsnew_V2019_11 "v2019.11" include:
   <li> fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/37">#37: CMake installs things into $PREFIX/doc/*.txt </a>, thanks to <a href="https://github.com/certik">user:certik</a></li>
   <li> fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/45">#45: Build error on mac jkqtfastplotter.cpp:342:28: Variable has incomplete type 'QPainterPath'</a>, thanks to <a href="https://github.com/abdedixit">user:abdedixit</a></li>
   <li> merged PR <a href="https://github.com/jkriege2/JKQtPlotter/pull/47">#47: Some minor build fixes</a>, thanks to <a href="https://github.com/patstew">user:patstew</a></li>
-  <li> fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/issues/48">#48: Cannot #include QPrintPreviewWidget</a>, thanks to <a href="https://github.com/schlenger">user:schlenger</a></li>
+  <li> fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/issues/48">#48: Cannot \#include QPrintPreviewWidget</a>, thanks to <a href="https://github.com/schlenger">user:schlenger</a></li>
   <li> fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/issues/49">#49: Incorrect tag in style .ini-files</a>, thanks to <a href="https://github.com/smistad">user:smistad</a></li>
   <li> fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/issues/50">#50: Double-Click Zoom Issue</a>, thanks to <a href="https://github.com/Delfinos">user:Delfinos</a></li>
   <li> fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/issues/52">#52: 'runtime_error': is not a member of 'std'</a>, thanks to <a href="https://github.com/gomgomi">user:gomgomi</a></li>
@@ -154,7 +154,7 @@ Changes, compared to  \ref page_whatsnew_V2018_08 "v2018.08" include:
   <li> update: massively improved (doxygen-generated) <a href="http://jkriege2.github.io/JKQtPlotter/index.html">Online-Documentation (http://jkriege2.github.io/JKQtPlotter/index.html)</a> (automatically generated after each commit using ravis CI) </li>
   <li> update: refactoring of the library's directory structure </li>
   <li> update: refactoring/renaming of API, including the function anming scheme and class names </li>
-  <li> changed: using static const variables instead of <code>#define</code> for fixed default values (e.g. JKQTPImageTools::LUTSIZE, JKQTPImageTools::PALETTE_ICON_WIDTH, JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, JKQTMathText::ABS_MIN_LINEWIDTH ...)</li>
+  <li> changed: using static const variables instead of <code>\#define</code> for fixed default values (e.g. JKQTPImageTools::LUTSIZE, JKQTPImageTools::PALETTE_ICON_WIDTH, JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, JKQTMathText::ABS_MIN_LINEWIDTH ...)</li>
   <li> Updates to JKQTPlotter: 
     <ul>
 	  <li> new: added JKQTPSingleColumnSymbolsGraph for single-column data, e.g. drawn as (random) scatter or bee-swarm or rug plots </li>

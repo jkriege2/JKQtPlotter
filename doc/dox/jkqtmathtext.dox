@@ -10,7 +10,13 @@
 
 	Examples for the usage of this class can be found here: 
 	  - \ref JKQTMathTextSimpleExample 
+	  - \ref JKQTMathTextTestApp 
 	.
+  
+  Example output:
+  \image html jkqtmathtext/jkqtmathtext_xits_all.png
+  \image html jkqtmathtext/jkqtmathtext_sqrt.png
+  \image html jkqtmathtext/jkqtmathtext_OldEnglish.png
 
   
   \defgroup jkqtmathtext_render Main (Render) Class (JKQTMathText)

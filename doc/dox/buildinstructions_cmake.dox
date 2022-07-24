@@ -1,0 +1,138 @@
+/*!
+
+
+\page page_buildinstructions_CMAKE Build using CMake
+
+\tableofcontents
+
+\section page_buildinstructions_CMAKE_RUN Running a Build with CMake
+
+The preferred way to build JKQTPlotter is using <a href="https://cmake.org/">CMake</a>. You can find a detailed explanation of CMake at https://cliutils.gitlab.io/modern-cmake/. The CMake-build is defined in `CMakeLists.txt` files, found in many of the directories of the code repository. Especially in the root directory and the two subdirectories <code> ./lib/  </code> and <code> ./examples/  </code> .
+
+You can build JKQTPlotter (and also the examples) by either opening the file <a href="https://github.com/jkriege2/JKQtPlotter/blob/master/CMakeLists.txt">CMakeLists.txt</a> in QTCreator (which has CMake integration), or by calling \c CMake by hand. How to do this depends on your local system und build environment. 
+
+
+\subsection page_buildinstructions_CMAKE_MAKEFILE Building with MinGW/GNU/... Makefiles
+
+You can use (MinGW) Makefiles by calling:
+
+\code{.sh}
+    $ mkdir build
+    $ cd build
+    $ cmake .. -G "MinGW Makefiles" "-DCMAKE_PREFIX_PATH=<path_to_your_qt_sources>"
+    $ cmake --build . --config "Debug"
+    $ cmake --build . --config "Debug" --target install
+\endcode
+
+\subsection page_buildinstructions_CMAKE_VSTUDIO Building with Visual Studio
+
+For Visual Studio it could look like this:
+
+\code{.sh}
+    $ mkdir build
+    $ cd build
+    $ cmake .. -G "Visual Studio 15 2017 Win64" "-DCMAKE_PREFIX_PATH=<path_to_your_qt_sources>"
+\endcode
+
+Where \c \<path_to_your_qt_sources\> could be e.g. \c C:/development/Qt5/5.12.0/msvc2017_64 . This call results in a Visual Studio solution \c build/JKQTPlotter.sln that you can load and compile from the Visual Studio IDE. Alternatively you can also build the solution directly calling:
+\code{.sh}
+    $ cmake --build . --config "Debug"
+\endcode
+Afterwards you can install the library by
+\code{.sh}
+    $ cmake --build . --config "Debug" --target install
+\endcode
+
+\section page_buildinstructions_CMAKE_CONFIG Configuring a Build with CMake
+
+The CMake build system offers several configuration variables that you may set/change to modify the outcome of the build:
+  - \c CMAKE_PREFIX_PATH : add the path to your Qt installatrion to this variable, so the \c find_package(Qt5...) commands find the libraries you want to use
+  - \c JKQtPlotter_BUILD_SHARED_LIBS : Build as shared library (default: \c ON )
+  - \c JKQtPlotter_BUILD_STATIC_LIBS : Build as static library (default: \c ON )
+  - \c JKQtPlotter_BUILD_INCLUDE_XITS_FONTS : Include XITS fonts as resources in library (default: \c ON )
+  - \c JKQtPlotter_BUILD_FORCE_NO_PRINTER_SUPPORT : switches off print-support (when set to \c ON ), even if the current platform supports it (default: \c OFF )
+  - \c JKQtPlotter_BUILD_DECORATE_LIBNAMES_WITH_BUILDTYPE : If set, the build-type is appended to the library name (default: \c ON )
+  - \c JKQtPlotter_BUILD_WITH_PRECOMPILED_HEADERS : If set, the build uses precompiled headers to speed up (a bit) (default: \c ON )
+  - \c JKQtPlotter_BUILD_EXAMPLES : Build examples (default: \c ON )
+  - \c CMAKE_INSTALL_PREFIX : Install directory for the library
+.
+
+
+
+
+\section page_buildinstructions_CMAKE_USAGE Using a built, generated with CMake
+
+After building and installing JKQTPlotter you have all files that you need inside the instal directory:
+  - \c \<INSTALLDIR\>/include  contains all required header files
+  - \c \<INSTALLDIR\>/bin  contains the shared libraries
+  - \c \<INSTALLDIR\>/lib  contains the link libraries
+  - \c \<INSTALLDIR\>/lib/cmake  contains files necessary for CMake's \c find_package() to work
+.
+
+You can find an example project that uses a complete cmake-build here: \ref JKQTCMakeLinkExample (online: <a href="https://github.com/jkriege2/JKQtPlotter/blob/master/examples/cmake_link_example">https://github.com/jkriege2/JKQtPlotter/blob/master/examples/cmake_link_example</a>).
+
+Here is the \c CMakeLists.txt from that directory:
+
+\code{.cmake}
+	# set minimum required CMake-Version
+	cmake_minimum_required(VERSION 3.10)
+
+	# set Project name
+	set(EXAMPLE_NAME simpletest)
+	set(EXENAME jkqtptest_${EXAMPLE_NAME})
+	project(${EXAMPLE_NAME} LANGUAGES CXX)
+
+	# some basic configurations
+	set(CMAKE_AUTOMOC ON)
+	set(CMAKE_INCLUDE_CURRENT_DIR ON)
+	set(CMAKE_CXX_STANDARD 11)
+	#set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+
+	# Configure project for usage of Qt5
+	find_package(Qt5 COMPONENTS Core Gui Widgets PrintSupport Svg Xml OpenGl REQUIRED)
+	# Configure project for usage of Qt6
+	#find_package(Qt6 COMPONENTS Core Gui Widgets PrintSupport Svg Xml OpenGl OpenGLWidgets REQUIRED)
+
+	# include JKQTPlotter
+	find_package(JKQTCommonLib REQUIRED)
+	find_package(JKQTMathTextLib REQUIRED)
+	find_package(JKQTPlotterLib REQUIRED)
+
+	# For Visual Studio, we need to set some additional compiler options
+	if(MSVC)
+		add_compile_options(/EHsc)
+		# To enable M_PI, M_E,...
+		add_definitions(/D_USE_MATH_DEFINES)
+		# To Prevent Errors with min() and max()
+		add_definitions(/DNOMINMAX)
+		# To fix error: C2338: va_start argument must not
+		# have reference type and must not be parenthesized
+		add_definitions(/D_CRT_NO_VA_START_VALIDATION)
+	endif()
+
+	# add the example executable 
+	add_executable(${EXENAME} WIN32 simpletest.cpp)
+	# ... link against Qt5 and JKQTPlotterLib
+	#    (you could use JKQTPlotterSharedLib if you don't want to link againast the 
+	#     static version, but against the shared/DLL version).
+	target_link_libraries(${EXENAME} Qt5::Core Qt5::Widgets Qt5::Gui Qt5::PrintSupport Qt5::Svg Qt5::Xml JKQTPlotterLib)
+
+	# Installation
+	install(TARGETS ${EXENAME} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+\endcode
+
+
+
+To build this example, you first need to make a subdirectory `build` and then call CMake form that subdirectory:
+\code{.sh}
+    $ mkdir build
+    $ cd build
+    $ cmake .. -G "<GENERATOR>" "-DCMAKE_PREFIX_PATH=<path_to_your_qt_sources> -DCMAKE_MODULE_PATH=<path_to_lib/cmake_dir_of_JKQTPLOTTER>"
+\endcode
+The you can use the generated makefiles (e.g. load them in an editor, or build them jsing \c make ). In the last line above, you need to specify two directories:
+  - \c \<path_to_your_qt_sources\>   points to you Qt installation
+  - \c \<path_to_lib/cmake_dir_of_JKQTPLOTTER\>  points to the directory containing the \c XYZ.cmake -files from the JKQTPlotter build. Typically this is \c  \<JKQTPLOTTER_INSTALL_DIR\>/lib/cmake  , where \c \<JKQTPLOTTER_INSTALL_DIR\> is the directory into which you installed JKQTPlotter.
+.
+
+
+*/
