@@ -163,6 +163,13 @@ void JKQTMathTextModifiedTextPropsInstructionNode::fillInstructions()
         instructions["color"]= i;
     }
     {
+        InstructionProperties i([](JKQTMathTextEnvironment& ev, const QStringList& parameters) {
+            ev.customFontName=parameters.value(0, "");
+            ev.font=MTECustomFont;
+        }, 1);
+        instructions["userfont"] = i;
+    }
+    {
         InstructionProperties i([](JKQTMathTextEnvironment& ev, const QStringList& /*parameters*/) {
             ev.italic=true; ev.insideMath=true;
         }, 0);
@@ -248,36 +255,60 @@ void JKQTMathTextModifiedTextPropsInstructionNode::fillInstructions()
             ev.font=JKQTMathTextEnvironmentFont::MTEcaligraphic;
             ev.italic=false;
         }, 0);
+        instructions["mathcal"]= i;
+    }
+    {
+        InstructionProperties i([](JKQTMathTextEnvironment& ev, const QStringList& /*parameters*/) {
+            ev.font=JKQTMathTextEnvironmentFont::MTEcaligraphic;
+        }, 0);
         instructions["cal"] = i;
         instructions["textcal"] = i;
-        instructions["mathcal"]= i;
+    }
+    {
+        InstructionProperties i([](JKQTMathTextEnvironment& ev, const QStringList& /*parameters*/) {
+            ev.font=JKQTMathTextEnvironmentFont::MTEcaligraphic;
+            ev.italic=false;
+            ev.bold=true;
+        }, 0);
+        instructions["mathbfcal"]= i;
     }
     {
         InstructionProperties i([](JKQTMathTextEnvironment& ev, const QStringList& /*parameters*/) {
             ev.font=JKQTMathTextEnvironmentFont::MTEcaligraphic;
             ev.bold=true;
         }, 0);
-        instructions["fcal"] = i;
+        instructions["bbfcal"] = i;
         instructions["textfcal"] = i;
-        instructions["mathfcal"]= i;
+    }
+    {
+        InstructionProperties i([](JKQTMathTextEnvironment& ev, const QStringList& /*parameters*/) {
+            ev.font=JKQTMathTextEnvironmentFont::MTEfraktur;
+        }, 0);
+        instructions["frak"] = i;
+        instructions["textfrak"] = i;
     }
     {
         InstructionProperties i([](JKQTMathTextEnvironment& ev, const QStringList& /*parameters*/) {
             ev.font=JKQTMathTextEnvironmentFont::MTEfraktur;
             ev.italic=false;
         }, 0);
-        instructions["frak"] = i;
-        instructions["textfrak"] = i;
         instructions["mathfrak"]= i;
     }
     {
         InstructionProperties i([](JKQTMathTextEnvironment& ev, const QStringList& /*parameters*/) {
             ev.font=JKQTMathTextEnvironmentFont::MTEfraktur;
             ev.bold=true;
+            ev.italic=false;
         }, 0);
-        instructions["ffrak"] = i;
-        instructions["textffrak"] = i;
-        instructions["mathffrak"]= i;
+        instructions["mathbffrak"]= i;
+    }
+    {
+        InstructionProperties i([](JKQTMathTextEnvironment& ev, const QStringList& /*parameters*/) {
+            ev.font=JKQTMathTextEnvironmentFont::MTEfraktur;
+            ev.bold=true;
+        }, 0);
+        instructions["bffrak"] = i;
+        instructions["textbffrak"] = i;
     }
     {
         InstructionProperties i([](JKQTMathTextEnvironment& ev, const QStringList& /*parameters*/) {
@@ -291,39 +322,70 @@ void JKQTMathTextModifiedTextPropsInstructionNode::fillInstructions()
     {
         InstructionProperties i([](JKQTMathTextEnvironment& ev, const QStringList& /*parameters*/) {
             ev.font=JKQTMathTextEnvironmentFont::MTEtypewriter;
-            ev.italic=false;
         }, 0);
         instructions["tt"] = i;
         instructions["texttt"] = i;
+    }
+    {
+        InstructionProperties i([](JKQTMathTextEnvironment& ev, const QStringList& /*parameters*/) {
+            ev.font=JKQTMathTextEnvironmentFont::MTEtypewriter;
+            ev.italic=false;
+        }, 0);
         instructions["mathtt"]= i;
+    }
+    {
+        InstructionProperties i([](JKQTMathTextEnvironment& ev, const QStringList& /*parameters*/) {
+            ev.font=JKQTMathTextEnvironmentFont::MTEtypewriter;
+            ev.bold=true;
+        }, 0);
+        instructions["bftt"] = i;
+        instructions["textbftt"] = i;
+    }
+    {
+        InstructionProperties i([](JKQTMathTextEnvironment& ev, const QStringList& /*parameters*/) {
+            ev.font=JKQTMathTextEnvironmentFont::MTEtypewriter;
+            ev.italic=false;
+            ev.bold=true;
+        }, 0);
+        instructions["mathbftt"]= i;
+    }
+    {
+        InstructionProperties i([](JKQTMathTextEnvironment& ev, const QStringList& /*parameters*/) {
+            ev.font=JKQTMathTextEnvironmentFont::MTEsans;
+        }, 0);
+        instructions["sf"] = i;
+        instructions["textsf"] = i;
     }
     {
         InstructionProperties i([](JKQTMathTextEnvironment& ev, const QStringList& /*parameters*/) {
             ev.font=JKQTMathTextEnvironmentFont::MTEsans;
             ev.italic=false;
         }, 0);
-        instructions["sf"] = i;
-        instructions["textsf"] = i;
-        instructions["mathsf"]= i;
+        instructions["mathsf"] = i;
     }
     {
         InstructionProperties i([](JKQTMathTextEnvironment& ev, const QStringList& /*parameters*/) {
             ev.font=JKQTMathTextEnvironmentFont::MTEsans;
             ev.italic=true;
         }, 0);
-        instructions["sfit"] = i;
-        instructions["textsfit"] = i;
-        instructions["mathsfit"]= i;
+        instructions["itsf"] = i;
+        instructions["textitsf"] = i;
+        instructions["mathitsf"]= i;
+    }
+    {
+        InstructionProperties i([](JKQTMathTextEnvironment& ev, const QStringList& /*parameters*/) {
+            ev.font=JKQTMathTextEnvironmentFont::MTEscript;
+        }, 0);
+        instructions["script"] = i;
+        instructions["scr"] = i;
+        instructions["textscript"] = i;
+        instructions["textscr"] = i;
     }
     {
         InstructionProperties i([](JKQTMathTextEnvironment& ev, const QStringList& /*parameters*/) {
             ev.font=JKQTMathTextEnvironmentFont::MTEscript;
             ev.italic=false;
         }, 0);
-        instructions["script"] = i;
-        instructions["scr"] = i;
-        instructions["textscript"] = i;
-        instructions["textscr"] = i;
         instructions["mathscript"] = i;
         instructions["mathscr"]= i;
     }
@@ -331,14 +393,20 @@ void JKQTMathTextModifiedTextPropsInstructionNode::fillInstructions()
         InstructionProperties i([](JKQTMathTextEnvironment& ev, const QStringList& /*parameters*/) {
             ev.font=JKQTMathTextEnvironmentFont::MTEscript;
             ev.bold=true;
+        }, 0);
+        instructions["bfscript"] = i;
+        instructions["bfscr"] = i;
+        instructions["textbfscript"] = i;
+        instructions["textbfscr"] = i;
+    }
+    {
+        InstructionProperties i([](JKQTMathTextEnvironment& ev, const QStringList& /*parameters*/) {
+            ev.font=JKQTMathTextEnvironmentFont::MTEscript;
+            ev.bold=true;
             ev.italic=false;
         }, 0);
-        instructions["fscript"] = i;
-        instructions["fscr"] = i;
-        instructions["textfscript"] = i;
-        instructions["textfscr"] = i;
-        instructions["mathfscript"] = i;
-        instructions["mathfscr"]= i;
+        instructions["mathbfscript"] = i;
+        instructions["mathbfscr"]= i;
     }
     {
         InstructionProperties i([](JKQTMathTextEnvironment& ev, const QStringList& /*parameters*/) {

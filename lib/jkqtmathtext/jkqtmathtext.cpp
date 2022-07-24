@@ -1806,6 +1806,8 @@ JKQTMathTextNode* JKQTMathText::parseInstruction(bool *_foundError, bool* getNew
 }
 
 QStringList JKQTMathText::parseStringParams(bool get, size_t Nparams, bool *foundError) {
+    const bool old_parsingMathEnvironment=parsingMathEnvironment;
+    auto reset_parsingMathEnvironment=JKQTPFinally([&]() { parsingMathEnvironment=old_parsingMathEnvironment; });
     if (*foundError) *foundError=false;
     if (Nparams<=0) return QStringList();
     else {
@@ -1813,24 +1815,21 @@ QStringList JKQTMathText::parseStringParams(bool get, size_t Nparams, bool *foun
         for (size_t n=0; n<Nparams; n++) {
             if (n>0 || (n==0 && get)) getToken();
             if (currentToken==MTTopenbrace) {
-                getToken();
-                if (currentToken==MTTtext) {
-                    params.append(currentTokenName);
-                    if (getToken()!=MTTclosebrace) {
+                bool ok=true;
+                QString thisparam="";
+                while (ok) {
+                    getToken();
+                    if (currentToken==MTTtext) {
+                        thisparam+=currentTokenName;
+                    } else if (currentToken==MTTwhitespace) {
+                        thisparam+=" ";
+                    } else if (currentToken==MTTclosebrace) {
+                        params.append(thisparam);
+                        ok=false;
+                    } else {
                         if (*foundError) *foundError=true;
                         return params;
                     }
-                } else if (currentToken==MTTwhitespace) {
-                    params.append(" ");
-                    if (getToken()!=MTTclosebrace) {
-                        if (*foundError) *foundError=true;
-                        return params;
-                    }
-                } else if (currentToken==MTTclosebrace) {
-                    params.append("");
-                } else {
-                    if (*foundError) *foundError=true;
-                    return params;
                 }
             } else {
                 if (*foundError) *foundError=true;

@@ -64,8 +64,9 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbTestset->addItem("math: like in label at bottom", "$\\left(\\left[\\sqrt{2\\pi\\cdot\\int_{-\\infty}^\\infty f(x)\\;\\mathrm{d}x}\\right]\\right)$");
     ui->cmbTestset->addItem("text: like in label at bottom)", "\\left(\\left[\\sqrt{2\\pi\\cdot\\int_{-\\infty}^\\infty f(x)\\;\\mathrm{d}x}\\right]\\right)");
     ui->cmbTestset->addItem("text 0", "text");
-    ui->cmbTestset->addItem("text 1", "text \\mathbf{bold}");
-    ui->cmbTestset->addItem("text 2", "text \\mathbf{bold}\\textcolor{red}{RED}");
+    ui->cmbTestset->addItem("text (bold)", "text \\mathbf{bold}");
+    ui->cmbTestset->addItem("textcolor", "text \\mathbf{bold}\\textcolor{red}{RED}");
+    ui->cmbTestset->addItem("userfont", "text, \\userfont{Arial}{Arial}, \\userfont{Comic Sans MS}{Comic Sans MS}");
     const auto mathDecoExample=[](const QString& deco)->QString { return "\\"+deco+"{x}\\"+deco+"{i}\\"+deco+"{X}\\"+deco+"{\\psi}\\"+deco+"{abc}"; };
     ui->cmbTestset->addItem("decoration: math", "$"+mathDecoExample("vec")+" -- "+mathDecoExample("grave")+" -- "+mathDecoExample("acute")+" -- "+mathDecoExample("dot")+" -- "+mathDecoExample("ddot")+" -- "+mathDecoExample("ocirc")+" -- "+mathDecoExample("overline")+" -- "+mathDecoExample("underline")+" -- "+mathDecoExample("hat")+" -- "+mathDecoExample("widehat")+" -- "+mathDecoExample("check")+" -- "+mathDecoExample("widecheck")+" -- "+mathDecoExample("breve")+" -- "+mathDecoExample("tilde")+" -- "+mathDecoExample("widetilde")+" -- "+mathDecoExample("uul")+" -- "+mathDecoExample("ool")+" -- "+mathDecoExample("bar")+" -- "+mathDecoExample("arrow")+" -- "+mathDecoExample("cancel")+" -- "+mathDecoExample("bcancel")+" -- "+mathDecoExample("xcancel")+" -- "+mathDecoExample("sout")+"$");
     ui->cmbTestset->addItem("decoration: text", "Text \\ul{underlined Text Equator} -- \\ol{overlined Text Equator} -- \\sout{striked out Text Equator} -- \\cancel{canceled out Text Equator} -- \\bcancel{b-canceled out Text Equator} -- \\xcancel{x-canceled out Text Equator}");
