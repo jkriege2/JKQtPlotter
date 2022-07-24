@@ -1708,6 +1708,16 @@ JKQTMathTextNode* JKQTMathText::parseInstruction(bool *_foundError, bool* getNew
         if (foundError){
             error_list.append(tr("error @ ch. %1: expected %3 arguments in '{...}' braces after '%2' command").arg(currentTokenID).arg(currentInstructionName).arg(Nparams+1));
         }
+    } else if (JKQTMathTextSimpleInstructionNode::supportsInstructionName(currentInstructionName)) {
+        const size_t Nparams=JKQTMathTextSimpleInstructionNode::countParametersOfInstruction(currentInstructionName);
+        bool foundError=false;
+        const QStringList params=parseStringParams(true, Nparams, &foundError);
+        if (!foundError) {
+            child=new JKQTMathTextSimpleInstructionNode(this, currentInstructionName, params);
+        }
+        if (foundError){
+            error_list.append(tr("error @ ch. %1: expected %3 arguments in '{...}' braces after '%2' command").arg(currentTokenID).arg(currentInstructionName).arg(Nparams));
+        }
     } else if (JKQTMathTextBoxInstructionNode::supportsInstructionName(currentInstructionName)) {
         const size_t Nparams=JKQTMathTextBoxInstructionNode::countParametersOfInstruction(currentInstructionName);
         bool foundError=false;

@@ -67,6 +67,7 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbTestset->addItem("text (bold)", "text \\mathbf{bold}");
     ui->cmbTestset->addItem("textcolor", "text \\mathbf{bold}\\textcolor{red}{RED}");
     ui->cmbTestset->addItem("userfont", "text, \\userfont{Arial}{Arial}, \\userfont{Comic Sans MS}{Comic Sans MS}");
+    ui->cmbTestset->addItem("unicode", "star: \\unicode{2605}, circonflex: \\unicode{109}");
     const auto mathDecoExample=[](const QString& deco)->QString { return "\\"+deco+"{x}\\"+deco+"{i}\\"+deco+"{X}\\"+deco+"{\\psi}\\"+deco+"{abc}"; };
     ui->cmbTestset->addItem("decoration: math", "$"+mathDecoExample("vec")+" -- "+mathDecoExample("grave")+" -- "+mathDecoExample("acute")+" -- "+mathDecoExample("dot")+" -- "+mathDecoExample("ddot")+" -- "+mathDecoExample("ocirc")+" -- "+mathDecoExample("overline")+" -- "+mathDecoExample("underline")+" -- "+mathDecoExample("hat")+" -- "+mathDecoExample("widehat")+" -- "+mathDecoExample("check")+" -- "+mathDecoExample("widecheck")+" -- "+mathDecoExample("breve")+" -- "+mathDecoExample("tilde")+" -- "+mathDecoExample("widetilde")+" -- "+mathDecoExample("uul")+" -- "+mathDecoExample("ool")+" -- "+mathDecoExample("bar")+" -- "+mathDecoExample("arrow")+" -- "+mathDecoExample("cancel")+" -- "+mathDecoExample("bcancel")+" -- "+mathDecoExample("xcancel")+" -- "+mathDecoExample("sout")+"$");
     ui->cmbTestset->addItem("decoration: text", "Text \\ul{underlined Text Equator} -- \\ol{overlined Text Equator} -- \\sout{striked out Text Equator} -- \\cancel{canceled out Text Equator} -- \\bcancel{b-canceled out Text Equator} -- \\xcancel{x-canceled out Text Equator}");
@@ -430,6 +431,7 @@ QTreeWidgetItem *TestForm::createTree(JKQTMathTextNode *node, QTreeWidgetItem* p
     JKQTMathTextListNode* lstN=dynamic_cast<JKQTMathTextListNode*>(node);
     JKQTMathTextModifiedTextPropsInstructionNode* inst1N=dynamic_cast<JKQTMathTextModifiedTextPropsInstructionNode*>(node);
     JKQTMathTextBoxInstructionNode* inst1B=dynamic_cast<JKQTMathTextBoxInstructionNode*>(node);
+    JKQTMathTextSimpleInstructionNode* instS=dynamic_cast<JKQTMathTextSimpleInstructionNode*>(node);
     JKQTMathTextSubscriptNode* subN=dynamic_cast<JKQTMathTextSubscriptNode*>(node);
     JKQTMathTextSuperscriptNode* superN=dynamic_cast<JKQTMathTextSuperscriptNode*>(node);
     JKQTMathTextBraceNode* braceN=dynamic_cast<JKQTMathTextBraceNode*>(node);
@@ -476,6 +478,8 @@ QTreeWidgetItem *TestForm::createTree(JKQTMathTextNode *node, QTreeWidgetItem* p
     } else if (subN)  {
         name=QString("MTsubscriptNode");
         if (subN->getChild()) ti->addChild(createTree(subN->getChild(), ti));
+    } else if (instS)  {
+        name=QString("SimpleInstructionNode: \'%1\' (subsuper=%2, params=%3)").arg(instS->getInstructionName()).arg(instS->isSubSuperscriptAboveBelowNode()).arg(instS->getParameters().join("/"));
     } else if (inst1N)  {
         name=QString("ModTxtPropsInstructionNode: \'%1\' (subsuper=%2, params=%3)").arg(inst1N->getInstructionName()).arg(inst1N->isSubSuperscriptAboveBelowNode()).arg(inst1N->getParameters().join("/"));
         if (inst1N->getChild()) ti->addChild(createTree(inst1N->getChild(), ti));

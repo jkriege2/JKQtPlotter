@@ -58,6 +58,136 @@ const QStringList &JKQTMathTextInstruction1Node::getParameters() const {
 
 
 
+
+JKQTMathTextSimpleInstructionNode::JKQTMathTextSimpleInstructionNode(JKQTMathText *_parent, const QString &_name, const QStringList &_parameters):
+    JKQTMathTextNode(_parent),
+    instructionName(_name),
+    parameters(_parameters)
+{
+    fillInstructions();
+
+}
+
+JKQTMathTextSimpleInstructionNode::~JKQTMathTextSimpleInstructionNode()
+{
+
+}
+
+QString JKQTMathTextSimpleInstructionNode::getTypeName() const
+{
+    return QLatin1String("JKQTMathTextSimpleInstructionNode(")+instructionName+")";
+}
+
+double JKQTMathTextSimpleInstructionNode::draw(QPainter &painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize *prevNodeSize)
+{
+    doDrawBoxes(painter, x, y, currentEv);
+    fillInstructions();
+    QFont f=currentEv.getFont(parentMathText);
+    f.setStyleStrategy(QFont::PreferDefault);
+    const QFontMetricsF fm(f);
+    const QString txt=executeInstruction();
+    const QRectF bb=fm.boundingRect(txt);
+
+    painter.setFont(f);
+    painter.drawText(x,y,txt);
+
+    return x+bb.width();
+}
+
+bool JKQTMathTextSimpleInstructionNode::toHtml(QString &html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv)
+{
+    fillInstructions();
+    const QString txt=executeInstruction();
+    html+=txt;
+    return true;
+}
+
+const QString &JKQTMathTextSimpleInstructionNode::getInstructionName() const
+{
+    return instructionName;
+}
+
+const QStringList &JKQTMathTextSimpleInstructionNode::getParameters() const
+{
+    return parameters;
+}
+
+bool JKQTMathTextSimpleInstructionNode::supportsInstructionName(const QString &instructionName)
+{
+    fillInstructions();
+    return instructions.contains(instructionName);
+}
+
+size_t JKQTMathTextSimpleInstructionNode::countParametersOfInstruction(const QString &instructionName)
+{
+    fillInstructions();
+    if (instructions.contains(instructionName)) return instructions[instructionName].NParams;
+    return 0;
+}
+
+void JKQTMathTextSimpleInstructionNode::getSizeInternal(QPainter &painter, JKQTMathTextEnvironment currentEv, double &width, double &baselineHeight, double &overallHeight, double &strikeoutPos, const JKQTMathTextNodeSize */*prevNodeSize*/)
+{
+    fillInstructions();
+    QFont f=currentEv.getFont(parentMathText);
+    f.setStyleStrategy(QFont::PreferDefault);
+    const QFontMetricsF fm(f);
+    const QString txt=executeInstruction();
+    const QRectF bb=fm.boundingRect(txt);
+    width=bb.width();
+    baselineHeight=bb.height()+bb.y();
+    overallHeight=bb.height();
+    strikeoutPos=fm.strikeOutPos();
+}
+
+QHash<QString, JKQTMathTextSimpleInstructionNode::InstructionProperties> JKQTMathTextSimpleInstructionNode::instructions;
+
+void JKQTMathTextSimpleInstructionNode::fillInstructions()
+{
+    {
+        InstructionProperties i([](const QStringList& parameters) -> QString {
+            bool ok=false;
+            const int code=parameters.value(0, "0").toInt(&ok, 16);
+            ok=ok&&(code>=0);
+            if (ok&&(code<=0xFFFF)) return QChar(code);
+            else if (ok&&(code>0xFFFF && code<0xFFFFFFFF)) {
+                const char16_t unicodeSmile[] = { char16_t((code&0xFFFF0000)>>16), char16_t(code&0xFFFF), 0 };
+                return QString::fromUtf16(unicodeSmile);
+            }
+            return QChar(0);
+        }, 1);
+        instructions["unicode"]= i;
+    }
+
+}
+
+QString JKQTMathTextSimpleInstructionNode::executeInstruction() const
+{
+    fillInstructions();
+    return instructions.value(getInstructionName(), InstructionProperties()).evaluator(getParameters());
+}
+
+JKQTMathTextSimpleInstructionNode::InstructionProperties::InstructionProperties():
+    NParams(0),
+    evaluator([](const QStringList&) { return QString(); })
+
+{
+
+}
+
+JKQTMathTextSimpleInstructionNode::InstructionProperties::InstructionProperties(const EvaluateInstructionFunctor &_evaluator, size_t _NParams):
+    NParams(_NParams),
+    evaluator(_evaluator)
+
+{
+
+}
+
+
+
+
+
+
+
 JKQTMathTextModifiedTextPropsInstructionNode::JKQTMathTextModifiedTextPropsInstructionNode(JKQTMathText* _parent, const QString& name, JKQTMathTextNode* child, const QStringList& parameters):
     JKQTMathTextInstruction1Node(_parent, name, child, parameters)
 {
