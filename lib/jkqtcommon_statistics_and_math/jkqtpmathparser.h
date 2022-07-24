@@ -1,7 +1,7 @@
 /*
     Copyright (c) 2008-2022 Jan W. Krieger (<jan@jkrieger.de>)
 
-    
+
 
     This software is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License (LGPL) as published by
@@ -39,8 +39,8 @@
 /*! \brief A simple function parser to parse (build memory tree representation) and
            evaluate simple mathematical expressions
     \ingroup jkqtptools_math_parser
-    
-    
+
+
  This class implements a simple function parser which can parse
  mathematical expressions like <code> z=a*3+2.34^2*sin(pi*sqrt(x))</code> .
  More than one expression can be separated by semicolon ';'. The result of
@@ -218,84 +218,19 @@
  */
 class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPMathParser
 {
-    protected:
-        void* data;
-
-        /** \brief the possible tokens that can be recognized by the tokenizer in JKQTPMathParser::getToken() 
-        *   \ingroup jkqtptools_math_parser_utils
-        */
-        enum jkmpTokenType {
-            END,                /*!< \brief end token */
-            PRINT,              /*!< \brief a semicolon ';' */
-            PARAMETER_DIV,      /*!< \brief a comma ',' between two function parameters */
-            STRING_DELIM,       /*!< \brief a string delimiter ' or " */
-            NAME,               /*!< \brief a name (consisting of characters) of a variable or function */
-            NUMBER,             /*!< \brief a number in scientific notation */
-            PLUS,               /*!< \brief a plus operator '+' */
-            MINUS,              /*!< \brief a minus operator '-' */
-            MUL,                /*!< \brief a multiplication operator '*' */
-            DIV,                /*!< \brief a division operator '/' */
-            MODULO,             /*!< \brief a modulo operator '%' */
-            ASSIGN,             /*!< \brief a variable assignment = */
-            LBRACKET,           /*!< \brief left brackets '(' */
-            RBRACKET,           /*!< \brief right brackets ')' */
-            POWER,              /*!< \brief a power operator '^' */
-            FACTORIAL_LOGIC_NOT, /*!< \brief a factorial operator or a logical NOT '!' */
-            LOGIC_NOT,          /*!< \brief a logical NOT '!' / 'not' */
-            LOGIC_AND,          /*!< \brief a logical AND operator '&&' / 'and' */
-            LOGIC_OR,           /*!< \brief a logical OR operator '||' / 'or' */
-            LOGIC_XOR,          /*!< \brief a logical XOR operator 'xor' */
-            LOGIC_NOR,          /*!< \brief a logical NOR operator 'nor' */
-            LOGIC_NAND,         /*!< \brief a logical NAND operator 'nand' */
-            LOGIC_TRUE,         /*!< \brief 'true' */
-            LOGIC_FALSE,        /*!< \brief  'false' */
-            COMP_EQUALT,        /*!< \brief equals operation '==' */
-            COMP_UNEQUAL,       /*!< \brief unequal operation '!=' */
-            COMP_GREATER,       /*!< \brief greater than operation '>' */
-            COMP_SMALLER,       /*!< \brief smaller than operation '<' */
-            COMP_GEQUAL,        /*!< \brief greater than or equal operation '>=' */
-            COMP_SEQUAL,        /*!< \brief smaller than or equal operation '<=' */
-        };
-
-
-
-        /** \brief internal names for logic operations
-        *   \ingroup jkqtptools_math_parser_utils */
-        enum {
-          jkmpLOPand='a',
-          jkmpLOPor='o',
-          jkmpLOPxor='x',
-          jkmpLOPnor='n',
-          jkmpLOPnand='A',
-          jkmpLOPnot='n'
-        };
-
-
-        /** \brief jkmpCOMPdefs internal names for compare operations 
-        *   \ingroup jkqtptools_math_parser_utils*/
-        enum {
-            jkmpCOMPequal='=',
-            jkmpCOMPnequal='!',
-            jkmpCOMPlesser='<',
-            jkmpCOMPgreater='>',
-            jkmpCOMPlesserequal='a',
-            jkmpCOMPgreaterequal='b'
-        };
-
-
     public:
 
-        /** \brief possible result types
-         *   \ingroup jkqtptools_math_parser_utils
-         */
+/** @name Abstract Syntax Tree / Memory Representation of Expressions */
+/**@{*/
+
+        /** \brief possible result types  */
         enum jkmpResultType {jkmpDouble,  /*!< \brief a floating-point number with double precision. This is also used to deal with integers */
                              jkmpString,  /*!< \brief a string of characters */
                              jkmpBool};   /*!< \brief a boolean value true|false */
 
 
 
-        /** \brief result of any expression  
-        *   \ingroup jkqtptools_math_parser_utils*/
+        /** \brief result of any expression*/
         struct JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT jkmpResult {
           jkmpResult();
 
@@ -314,9 +249,7 @@ class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPMathParser
 
 
         /** \brief This struct is for managing variables. Unlike jkmpResult this struct
-          * only contains pointers to the data
-        *   \ingroup jkqtptools_math_parser_utils
-          */
+          * only contains pointers to the data */
         struct JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT jkmpVariable {
           jkmpVariable();
           jkmpResultType type;     /*!< \brief type of the variable */
@@ -326,9 +259,7 @@ class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPMathParser
           bool *boolean;           /*!< \brief this points to the variable data if \c type==jkmpBool */
         };
 
-        /** \brief This struct is for managing temporary variables. It is generally like jkmpVariable.
-        *   \ingroup jkqtptools_math_parser_utils
-          */
+        /** \brief This struct is for managing temporary variables. It is generally like jkmpVariable. */
         struct JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT jkmpTempVariable {
           std::string name;       /*!< \brief name of the variable */
           jkmpResultType type;    /*!< \brief type of the variable */
@@ -375,11 +306,10 @@ class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPMathParser
 
 
 
-        
+
         /**
          * \brief This class is the abstract base class for nodes.
-         * All allowed node types must inherit from jkmpNode
-         * \ingroup jkqtptools_math_parser_Nodes
+         *        All allowed node types must inherit from jkmpNode
          */
         class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT jkmpNode {
           protected:
@@ -408,8 +338,7 @@ class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPMathParser
 
         /**
          * \brief This class represents a binary arithmetic operation:
-         *  add (+), subtract (-), multiply (*), divide (/), a to the power of b (a^b)
-         * \ingroup jkqtptools_math_parser_Nodes
+         *        add (+), subtract (-), multiply (*), divide (/), a to the power of b (a^b)
          */
         class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT jkmpBinaryArithmeticNode: public jkmpNode {
           private:
@@ -432,14 +361,21 @@ class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPMathParser
             virtual jkmpResult evaluate() override;
         };
 
-        /**
-         * \brief This class represents a binary boolean operation: and, or, xor, nor, nand
-         * \ingroup jkqtptools_math_parser_Nodes
-         */
+        /** \brief internal names for logic operations */
+        enum class jkmpLOP{
+          LOPand='a',
+          LOPor='o',
+          LOPxor='x',
+          LOPnor='n',
+          LOPnand='A'
+        };
+
+
+        /** \brief This class represents a binary boolean operation: and, or, xor, nor, nand */
         class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT jkmpBinaryBoolNode: public jkmpNode {
           private:
             jkmpNode* left, *right;
-            char operation;
+            jkmpLOP operation;
           public:
             /** \brief constructor for a jkmpBinaryBoolNode
              *  \param op the operation to be performed: (a)nd, (o)r, (x)or, (n)or, nand (A)
@@ -448,7 +384,7 @@ class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPMathParser
              *  \param p a pointer to a JKQTPMathParser object
              *  \param par a pointer to the parent node
              */
-            jkmpBinaryBoolNode(char op, jkmpNode* l, jkmpNode* r, JKQTPMathParser* p, jkmpNode* par);
+            jkmpBinaryBoolNode(jkmpLOP op, jkmpNode* l, jkmpNode* r, JKQTPMathParser* p, jkmpNode* par);
 
             /** \brief standard destructor, also destroy the children (recursively)  */
             virtual ~jkmpBinaryBoolNode() override;
@@ -457,14 +393,22 @@ class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPMathParser
             virtual jkmpResult evaluate() override;
         };
 
-        /**
-         * \brief This class represents a binary compare operation: !=, ==, >=, <=, >, <
-         * \ingroup jkqtptools_math_parser_Nodes
-         */
+
+        /** \brief jkmpCOMPdefs internal names for compare operations */
+        enum class jkmpCOMP {
+            equal='=',
+            nequal='!',
+            lesser='<',
+            greater='>',
+            lesserequal='a',
+            greaterequal='b'
+        };
+
+        /** \brief This class represents a binary compare operation: !=, ==, >=, <=, >, <    */
         class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT jkmpCompareNode: public jkmpNode {
           private:
             jkmpNode* left, *right;
-            char operation;
+            jkmpCOMP operation;
           public:
             /** \brief constructor for a jkmpCompareNode
              *  \param op the operation to be performed: != (!), == (=), >= (b), <= (a), (>), (<)
@@ -473,7 +417,7 @@ class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPMathParser
              *  \param p a pointer to a JKQTPMathParser object
              *  \param par a pointer to the parent node
              */
-            jkmpCompareNode(char op, jkmpNode* l, jkmpNode* r, JKQTPMathParser* p, jkmpNode* par);
+            jkmpCompareNode(jkmpCOMP op, jkmpNode* l, jkmpNode* r, JKQTPMathParser* p, jkmpNode* par);
 
             /** \brief standard destructor, also destroy the children (recursively)  */
             virtual ~jkmpCompareNode () override;
@@ -482,10 +426,7 @@ class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPMathParser
             virtual jkmpResult evaluate() override;
         };
 
-        /**
-         * \brief This class represents a unary operations: ! (bool negation), - (arithmetic negation)
-         * \ingroup jkqtptools_math_parser_Nodes
-         */
+        /** \brief This class represents a unary operations: ! (bool negation), - (arithmetic negation) */
         class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT jkmpUnaryNode: public jkmpNode {
           private:
             jkmpNode* child;
@@ -507,9 +448,7 @@ class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPMathParser
         };
 
         /**
-         * \brief This class represents a variable assignment (a = expression)
-         * \ingroup jkqtptools_math_parser_Nodes
-         */
+         * \brief This class represents a variable assignment (<code>a = expression</code>)  */
         class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT jkmpVariableAssignNode: public jkmpNode {
           private:
             jkmpNode* child;
@@ -531,10 +470,7 @@ class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPMathParser
             virtual jkmpResult evaluate() override;
         };
 
-        /**
-         * \brief This class represents a number, a string contant or a boolean contant (true/false)
-         * \ingroup jkqtptools_math_parser_Nodes
-         */
+        /** \brief This class represents a number, a string contant or a boolean contant (\c true / \c false ) */
         class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT jkmpConstantNode: public jkmpNode {
           private:
             jkmpResult data;
@@ -550,10 +486,7 @@ class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPMathParser
             virtual jkmpResult evaluate() override;
         };
 
-        /**
-         * \brief This class represents a variable.
-         * \ingroup jkqtptools_math_parser_Nodes
-         */
+        /** \brief This class represents a variable. */
         class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT jkmpVariableNode: public jkmpNode {
           private:
             std::string var;
@@ -569,9 +502,7 @@ class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPMathParser
             virtual jkmpResult evaluate() override;
         };
 
-        /**
-         * \brief This class represents an arbitrary function.
-         * \ingroup jkqtptools_math_parser_Nodes
+        /** \brief This class represents an arbitrary function.
          *
          * When initialized this class will get the function description that is
          * linked to the supplied function name from JKQTPMathParser object. This
@@ -604,7 +535,6 @@ class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPMathParser
 
         /**
          * \brief This class represents a list of jkmpNode.
-         * \ingroup jkqtptools_math_parser_Nodes
          *
          * when evaluating the result will be the result of the last node in the list.
          */
@@ -630,17 +560,23 @@ class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPMathParser
             int getCount();
         };
 
-        /*@}*/
+        /**@}*/
 
 
     public:
 
 
 
+/**@}*/
+
+
+    public:
+
+/** @name Error Handling */
+/**@{*/
 
 
         /** \brief error handling: exceptions of the type of this class will be thrown if an error occurs
-         *  \ingroup jkqtptools_math_parser_Errorhandling
          *
          * \attention If you do not want to use the exception handling which throws
          * jkmpException exceptions, but want to write your own error handling, you should write your own
@@ -668,31 +604,64 @@ class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPMathParser
                 virtual const char* what() const noexcept override;
         };
 
-        /** \brief type for a custom error handler. This an alternative error handling
-         *  \ingroup jkqtptools_math_parser_Errorhandling  */
+        /** \brief type for a custom error handler. This an alternative error handling  */
         typedef void (*jkmpexceptionf)(std::string);
 
 
-        /** \brief function that throws an exception or calls an error handler 
-         *  \ingroup jkqtptools_math_parser_Errorhandling */
+        /** \brief function that throws an exception or calls an error handler */
         void jkmpError(const std::string& st);
 
     private:
-        /** \brief if this is nullptr then an exception may be thrown otherwise this should point to an error handler that will be called.
-         *  \ingroup jkqtptools_math_parser_Errorhandling  */
+        /** \brief if this is nullptr then an exception may be thrown otherwise this should point to an error handler that will be called. */
         jkmpexceptionf jkmathparser_exception_function;
 
     public:
-        /** \brief activate error handling by use of an exception function
-         *  \ingroup jkqtptools_math_parser_Errorhandling  */
+        /** \brief activate error handling by use of an exception function  */
         void setException_function(jkmpexceptionf exception_function);
 
-        /** \brief deactivate error handling by use of an exception function
-         *  \ingroup jkqtptools_math_parser_Errorhandling  */
+        /** \brief deactivate error handling by use of an exception function */
         void resetException_function();
+/**@}*/
 
 
     protected:
+/** @name Tokenizer */
+/**@{*/
+        /** \brief the possible tokens that can be recognized by the tokenizer in JKQTPMathParser::getToken()  */
+        enum jkmpTokenType {
+            END,                /*!< \brief end token */
+            PRINT,              /*!< \brief a semicolon ';' */
+            PARAMETER_DIV,      /*!< \brief a comma ',' between two function parameters */
+            STRING_DELIM,       /*!< \brief a string delimiter ' or " */
+            NAME,               /*!< \brief a name (consisting of characters) of a variable or function */
+            NUMBER,             /*!< \brief a number in scientific notation */
+            PLUS,               /*!< \brief a plus operator '+' */
+            MINUS,              /*!< \brief a minus operator '-' */
+            MUL,                /*!< \brief a multiplication operator '*' */
+            DIV,                /*!< \brief a division operator '/' */
+            MODULO,             /*!< \brief a modulo operator '%' */
+            ASSIGN,             /*!< \brief a variable assignment = */
+            LBRACKET,           /*!< \brief left brackets '(' */
+            RBRACKET,           /*!< \brief right brackets ')' */
+            POWER,              /*!< \brief a power operator '^' */
+            FACTORIAL_LOGIC_NOT, /*!< \brief a factorial operator or a logical NOT '!' */
+            LOGIC_NOT,          /*!< \brief a logical NOT '!' / 'not' */
+            LOGIC_AND,          /*!< \brief a logical AND operator '&&' / 'and' */
+            LOGIC_OR,           /*!< \brief a logical OR operator '||' / 'or' */
+            LOGIC_XOR,          /*!< \brief a logical XOR operator 'xor' */
+            LOGIC_NOR,          /*!< \brief a logical NOR operator 'nor' */
+            LOGIC_NAND,         /*!< \brief a logical NAND operator 'nand' */
+            LOGIC_TRUE,         /*!< \brief 'true' */
+            LOGIC_FALSE,        /*!< \brief  'false' */
+            COMP_EQUALT,        /*!< \brief equals operation '==' */
+            COMP_UNEQUAL,       /*!< \brief unequal operation '!=' */
+            COMP_GREATER,       /*!< \brief greater than operation '>' */
+            COMP_SMALLER,       /*!< \brief smaller than operation '<' */
+            COMP_GEQUAL,        /*!< \brief greater than or equal operation '>=' */
+            COMP_SEQUAL,        /*!< \brief smaller than or equal operation '<=' */
+        };
+
+
         /** \brief return the given token as human-readable string */
         std::string tokentostring(jkmpTokenType token);
 
@@ -709,6 +678,26 @@ class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPMathParser
          * write it as doubled character. So <code>'Jan''s Test'</code> stands for <code>Jan's Test</code>.
          */
         std::string readDelim(char delimiter);
+
+        /** \brief the current token while parsing a string */
+        jkmpTokenType CurrentToken;
+
+        /** \brief the string value of the current token (when applicable) during the parsing step */
+        std::string StringValue;
+
+        /** \brief the string value of the current token (when applicable) during the parsing step */
+        double NumberValue;
+
+        /** \brief this stream is used to read in the program. An object is created and assigned
+         * (and destroyed) by the parse()-function */
+        std::istringstream* program;
+
+
+/**@}*/
+
+
+/** @name Parser */
+/**@{*/
 
         /** \brief recognizes an compExpression while parsing. If \a get ist \c true, this function first retrieves a new token by calling getToken() */
         jkmpNode* compExpression(bool get);
@@ -728,9 +717,7 @@ class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPMathParser
         /** \brief recognizes a primary while parsing. If \a get ist \c true, this function first retrieves a new token by calling getToken() */
         jkmpNode* primary(bool get);
 
-        /** \brief this stream is used to read in the program. An object is created and assigned
-         * (and destroyed) by the parse()-function */
-        std::istringstream* program;
+/**@}*/
 
         /** \brief vector containing all temporary variables */
         std::vector<jkmpTempVariable> tempvariables;
@@ -740,15 +727,6 @@ class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPMathParser
 
         /** \brief map to manage all currently rtegistered functions */
         std::map<std::string, jkmpFunctionDescriptor> functions;
-
-        /** \brief the current token while parsing a string */
-        jkmpTokenType CurrentToken;
-
-        /** \brief the string value of the current token (when applicable) during the parsing step */
-        std::string StringValue;
-
-        /** \brief the string value of the current token (when applicable) during the parsing step */
-        double NumberValue;
 
         /** \brief set the defining struct of the given variable */
         void setVariable(const std::string& name, jkmpResult value);
@@ -760,20 +738,21 @@ class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPMathParser
         void addTempVariable(const std::string& name, jkmpResult value);
 
     protected:
+        /** \brief storage for program argument cound, used by the standard functions \c cmdparam and \c argv \see setArgCV() and getArgCVParam() */
         int argc;
+        /** \brief storage for program arguments, used by the standard functions \c cmdparam and \c argv \see setArgCV() and getArgCVParam() */
         char **argv;
 
     public:
-        /** \brief class constructor */
+        /** \brief class constructor
+         *
+         *  \note This also registers all standatd functions and constants by calling     addStandardFunctions() and addStandardVariables()
+         */
         JKQTPMathParser();
 
         /** \brief class destructor */
         virtual ~JKQTPMathParser();
 
-        /** \copydoc data */ 
-        virtual void setData(void* __value);
-        /** \copydoc data */ 
-        virtual void* getData() const;
 
         /** \brief  register a new function
          * \param name name of the new function
@@ -865,7 +844,7 @@ class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPMathParser
         /** \brief  clears the list of internal functions*/
         void clearFunctions();
 
-        /** \brief  registers standard variables*/
+        /** \brief  registers standard variables  */
         void addStandardVariables();
 
         /** \brief  registers standard functions*/
@@ -883,10 +862,10 @@ class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPMathParser
         /** \brief returns all registered variables */
         std::vector<std::pair<std::string, jkmpVariable> > getVariables();
 
-        /** \brief store programs command-line arguments, so they are available in the parser */
+        /** \brief store programs command-line arguments, so they are available in the parser, used by the standard functions \c cmdparam and \c argv */
         void setArgCV(int argc, char **argv);
 
-        /** \brief return one of programs command-line arguments, or \a defaultResult if it is not present */
+        /** \brief return one of programs command-line arguments, or \a defaultResult if it is not present, used by the standard functions \c cmdparam and \c argv */
         std::string getArgCVParam(const std::string& name, const std::string& defaultResult);
 };
 
