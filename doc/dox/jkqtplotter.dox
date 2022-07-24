@@ -119,7 +119,7 @@ digraph
  // LATEX_PDF_SIZE
   bgcolor="transparent";
   edge [fontname="FreeSans",fontsize="12",labelfontname="FreeSans",labelfontsize="12"];
-  node [fontname="FreeSans",fontsize="12",shape=record];
+  node [fontname="FreeSans",fontsize="12"];
   rankdir="LR";
 
   {
