@@ -90,7 +90,6 @@ double JKQTMathTextSimpleInstructionNode::draw(QPainter &painter, double x, doub
 
     painter.setFont(f);
     painter.drawText(x,y,txt);
-
     return x+bb.width();
 }
 
@@ -134,7 +133,7 @@ void JKQTMathTextSimpleInstructionNode::getSizeInternal(QPainter &painter, JKQTM
     const QString txt=executeInstruction();
     const QRectF bb=fm.boundingRect(txt);
     width=bb.width();
-    baselineHeight=bb.height()+bb.y();
+    baselineHeight=-bb.y();
     overallHeight=bb.height();
     strikeoutPos=fm.strikeOutPos();
 }
@@ -146,18 +145,30 @@ void JKQTMathTextSimpleInstructionNode::fillInstructions()
     {
         InstructionProperties i([](const QStringList& parameters) -> QString {
             bool ok=false;
-            const int code=parameters.value(0, "0").toInt(&ok, 16);
+            qlonglong code=parameters.value(0, "0").toLongLong(&ok, 16);
             ok=ok&&(code>=0);
-            if (ok&&(code<=0xFFFF)) return QChar(code);
-            else if (ok&&(code>0xFFFF && code<0xFFFFFFFF)) {
-                const char16_t unicodeSmile[] = { char16_t((code&0xFFFF0000)>>16), char16_t(code&0xFFFF), 0 };
-                return QString::fromUtf16(unicodeSmile);
-            }
+            if (ok&&(code<=0xFFFF)) return QChar(static_cast<uint16_t>(code));
             return QChar(0);
         }, 1);
         instructions["unicode"]= i;
     }
-
+    {
+        InstructionProperties i([](const QStringList& parameters) -> QString {
+            bool ok=false;
+            qlonglong code=parameters.value(0, "0").toLongLong(&ok, 16);
+            ok=ok&&(code>=0);
+            if (ok) {
+                QByteArray bytes;
+                while (code!=0) {
+                    bytes.prepend(static_cast<char>(code&0xFF));
+                    code=code>>8;
+                }
+                return QString::fromUtf8(bytes);
+            }
+            return QChar(0);
+        }, 1);
+        instructions["utfeight"]= i;
+    }
 }
 
 QString JKQTMathTextSimpleInstructionNode::executeInstruction() const
