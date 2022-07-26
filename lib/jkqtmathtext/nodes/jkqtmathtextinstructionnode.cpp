@@ -147,10 +147,11 @@ void JKQTMathTextSimpleInstructionNode::fillInstructions()
             bool ok=false;
             qlonglong code=parameters.value(0, "0").toLongLong(&ok, 16);
             ok=ok&&(code>=0);
-            if (ok&&(code<=0xFFFF)) return QChar(static_cast<uint16_t>(code));
-            return QChar(0);
+            if (ok&&(code>=0)&&(code<=0xFFFFFFFF)) return QString::fromStdString(jkqtp_UnicodeToUTF8(static_cast<uint32_t>(code)));
+            else return QString();
         }, 1);
         instructions["unicode"]= i;
+        instructions["usym"]= i;
     }
     {
         InstructionProperties i([](const QStringList& parameters) -> QString {

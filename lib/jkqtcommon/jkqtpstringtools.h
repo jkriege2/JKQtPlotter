@@ -48,6 +48,12 @@ JKQTCOMMON_LIB_EXPORT QString jkqtp_QBrushStyle2String(Qt::BrushStyle style);
 JKQTCOMMON_LIB_EXPORT Qt::BrushStyle jkqtp_String2QBrushStyle(const QString& style);
 
 
+/** \brief converts a Unicode codepoint into a UTF8-sequence
+ * \ingroup jkqtptools_string
+ *
+ * \see https://stackoverflow.com/questions/19968705/unsigned-integer-as-utf-8-value
+ */
+JKQTCOMMON_LIB_EXPORT std::string jkqtp_UnicodeToUTF8(uint32_t codepoint);
 
 /** \brief convert a double to a string, using the loacle "C"
  * \ingroup jkqtptools_string

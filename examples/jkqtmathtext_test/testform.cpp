@@ -67,7 +67,8 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbTestset->addItem("text (bold)", "text \\mathbf{bold}");
     ui->cmbTestset->addItem("textcolor", "text \\mathbf{bold}\\textcolor{red}{RED}");
     ui->cmbTestset->addItem("userfont", "text, \\userfont{Arial}{Arial}, \\userfont{Comic Sans MS}{Comic Sans MS}");
-    ui->cmbTestset->addItem("unicode", "star: \\unicode{2605}, circonflex: \\unicode{109} emoticons on UTF-8: \\utfeight{F09F9881} \\utfeight{f09f98bb}");
+    ui->cmbTestset->addItem("unicode", "star: \\unicode{2605}, circonflex: \\unicode{109} emoticons: \\usym{1F440} \\usym{1F929}");
+    ui->cmbTestset->addItem("UTF8", "star: \\utfeight{e29885} emoticons \\utfeight{F09F9881} \\utfeight{f09f98bb}");
     const auto mathDecoExample=[](const QString& deco)->QString { return "\\"+deco+"{x}\\"+deco+"{i}\\"+deco+"{X}\\"+deco+"{\\psi}\\"+deco+"{abc}"; };
     ui->cmbTestset->addItem("decoration: math", "$"+mathDecoExample("vec")+" -- "+mathDecoExample("grave")+" -- "+mathDecoExample("acute")+" -- "+mathDecoExample("dot")+" -- "+mathDecoExample("ddot")+" -- "+mathDecoExample("ocirc")+" -- "+mathDecoExample("overline")+" -- "+mathDecoExample("underline")+" -- "+mathDecoExample("hat")+" -- "+mathDecoExample("widehat")+" -- "+mathDecoExample("check")+" -- "+mathDecoExample("widecheck")+" -- "+mathDecoExample("breve")+" -- "+mathDecoExample("tilde")+" -- "+mathDecoExample("widetilde")+" -- "+mathDecoExample("uul")+" -- "+mathDecoExample("ool")+" -- "+mathDecoExample("bar")+" -- "+mathDecoExample("arrow")+" -- "+mathDecoExample("cancel")+" -- "+mathDecoExample("bcancel")+" -- "+mathDecoExample("xcancel")+" -- "+mathDecoExample("sout")+"$");
     ui->cmbTestset->addItem("decoration: text", "Text \\ul{underlined Text Equator} -- \\ol{overlined Text Equator} -- \\sout{striked out Text Equator} -- \\cancel{canceled out Text Equator} -- \\bcancel{b-canceled out Text Equator} -- \\xcancel{x-canceled out Text Equator}");
