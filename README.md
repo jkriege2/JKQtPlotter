@@ -29,16 +29,16 @@ This software is licensed under the term of the [GNU Lesser General Public Licen
 ![EXAMPLES-Page](./screenshots/examplesbanner.png)
 
 ## Main Features
-- 2D Plotter widget class ([JKQTPlotter](http://jkriege2.github.io/JKQtPlotter/group__jkqtplotter.html)
+- 2D Plotter widget class [JKQTPlotter](http://jkriege2.github.io/JKQtPlotter/group__jkqtplotter.html):
   - high-quality plotting
   - no other dependencies than Qt >= 5.0 ([CImg](https://cimg.eu/) and [OpenCV](https://opencv.org/) are optional dependencies)
   - highly customizable axes/grids (linear/log, date/time, custom ticks ...)
   - [JKQTMathText:](http://jkriege2.github.io/JKQtPlotter/group__jkqtmathtext.html) integrated LaTeX parser (pure C++, no dependencies) to render mathematical equations in axis labels, ticks, ...
   - extensive user-interactions pre-programmed (several zooming modes, selecting regions, custom context menus, switch graph visibility, ...)
   - full print and export (PDF,PNG,...) support with preview and parametrization out-the-box
-  - highly customizable look and feel
+  - [highly customizable look and feel](http://jkriege2.github.io/JKQtPlotter/group__jkqtpplotter__styling.html)
   - supports the Qt layout system for graphs and allows to symchronize several graphs with each other
-- centralized data management in an internal datastore:
+- [centralized data management](http://jkriege2.github.io/JKQtPlotter/group__jkqtpdatastorage.html) in an internal datastore [JKQTPDatastore](http://jkriege2.github.io/JKQtPlotter/class_j_k_q_t_p_datastore.html):
   - data organized by columns, can also represent image data (ropw-major)
   - allows to reuse a column in several graphs
   - access via Qt's model view framework
@@ -46,21 +46,21 @@ This software is licensed under the term of the [GNU Lesser General Public Licen
   - complete with GUI (table view)
   - export capabilities (e.g. to CSV, SYLK, ...)
   - C++ standard iterator interface
-  - statistics library (basic statistics, boxplots, histograms, kernel density estimates, regression analysis, polynomial fitting)
-- large variety of graphs that can be added to a plot, e.g.:
-  - scatter-plots (also parametrized color/size/symbol by a third data-column)
-  - line graphs, step graphs, impulses
-  - filled curves
-  - barcharts (also stacked)
-  - extensive support for different styles of error indicators
-  - integrated mathematical function parser for function plots (with intelligent rendering algorithm)
-  - line/scatter graphs can also be based on C/C++ functions instead of data series (C++11 support!)
-  - statistical plots (e.g. boxplots)
-  - extensive library of image plots (inclusing different color-scale modes, RGBA-plots, overlays/masks)
-  - contour plots
-  - geometric forms/annotations
-  - can be easily extended by deriving a new graph from JKQTPPlotElement, JKQTPPlotAnnotationElement, JKQTPGeometricPlotElement, JKQTPGraph
-- optional: OpenCV, CImg interfaces
+  - [statistics library](http://jkriege2.github.io/JKQtPlotter/group__jkqtcommon__statistics__and__math.html) (basic statistics, boxplots, histograms, kernel density estimates, regression analysis, polynomial fitting)
+- large variety of [graphs](http://jkriege2.github.io/JKQtPlotter/group__jkqtplotter__graphsgroup.html) that can be added to a plot, e.g.:
+  - [scatter-plots](http://jkriege2.github.io/JKQtPlotter/group__jkqtplotter__linesymbolgraphs__param.html) (also parametrized color/size/symbol by a third data-column)
+  - [line graphs](http://jkriege2.github.io/JKQtPlotter/group__jkqtplotter__linesymbolgraphs__simple.html), [step graphs](http://jkriege2.github.io/JKQtPlotter/class_j_k_q_t_p_special_line_horizontal_graph.html), [impulses](http://jkriege2.github.io/JKQtPlotter/group__jkqtplotter__barssticks.html)
+  - [filled curves](http://jkriege2.github.io/JKQtPlotter/group__jkqtplotter__filledgraphs.html)
+  - [barcharts](http://jkriege2.github.io/JKQtPlotter/group__jkqtplotter__barssticks.html) (also stacked)
+  - extensive support for different [styles of error indicators](http://jkriege2.github.io/JKQtPlotter/group__jkqtplotter__basegraphserrors.html)
+  - [integrated mathematical function parser](http://jkriege2.github.io/JKQtPlotter/group__jkqtptools__math__parser.html) for [parsed function plots](http://jkriege2.github.io/JKQtPlotter/group__jkqtplotter__parsed_fgraphs.html) (with intelligent rendering algorithm)
+  - line/scatter graphs can also be [based on C/C++ functions](http://jkriege2.github.io/JKQtPlotter/group__jkqtplotter__functiongraphs.html) instead of data series (C++11 support!)
+  - [statistical plots)](http://jkriege2.github.io/JKQtPlotter/group__jkqtplotter__statgraphs.html) (e.g. boxplots, violinplots, ...)
+  - large variety of [image plots](http://jkriege2.github.io/JKQtPlotter/group__jkqtplotter__imagelots.html) (inclusing different color-scale modes, RGBA-plots, overlays/masks)
+  - [contour plots](http://jkriege2.github.io/JKQtPlotter/group__jkqtplotter__imagelots__contour.html)
+  - [geometric forms](http://jkriege2.github.io/JKQtPlotter/group__jkqtplotter__geoplots.html) / [annotations](http://jkriege2.github.io/JKQtPlotter/group__jkqtplotter__annotations.html)
+  - can be easily extended by deriving a new graph from [JKQTPPlotElement](http://jkriege2.github.io/JKQtPlotter/class_j_k_q_t_p_plot_element.html), [JKQTPPlotAnnotationElement](http://jkriege2.github.io/JKQtPlotter/class_j_k_q_t_p_plot_annotation_element.html), [JKQTPGeometricPlotElement](http://jkriege2.github.io/JKQtPlotter/class_j_k_q_t_p_geometric_plot_element.html), [JKQTPGraph](http://jkriege2.github.io/JKQtPlotter/class_j_k_q_t_p_graph.html)
+- optional: [OpenCV interface](http://jkriege2.github.io/JKQtPlotter/group__jkqtpinterfaceopencv.html), [CImg interfaces](http://jkriege2.github.io/JKQtPlotter/group__jkqtpinterfacecimg.html)
 - CMake-based build system
 - extensive set of [Examples/Tutorials](./examples/README.md)
 - extensive doxygen-generated [Documentation](http://jkriege2.github.io/JKQtPlotter/index.html)
