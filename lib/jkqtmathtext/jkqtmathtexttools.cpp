@@ -767,3 +767,45 @@ JKQTMathTextFontEncoding estimateJKQTMathTextFontEncoding(QFont font)
     if (fm.inFont(QChar(0x2208))) return JKQTMathTextFontEncoding::MTFEUnicode; // element
     return JKQTMathTextFontEncoding::MTFELatin1;
 }
+
+QString JKQTMathTextHorizontalAlignment2String(JKQTMathTextHorizontalAlignment type)
+{
+    switch(type) {
+        case MTHALeft: return "left";
+        case MTHARight: return "right";
+        default:
+        case MTHACentered: return "centered";
+    }
+}
+
+JKQTMathTextHorizontalAlignment String2JKQTMathTextHorizontalAlignment(QString tokenName)
+{
+    tokenName=tokenName.toLower().trimmed();
+    if (tokenName=="l" || tokenName=="left") return MTHALeft;
+    if (tokenName=="r" || tokenName=="right") return MTHARight;
+    if (tokenName=="c" || tokenName=="center" || tokenName=="centered") return MTHACentered;
+    return MTHACentered;
+}
+
+QString JKQTMathTextVerticalOrientation2String(JKQTMathTextVerticalOrientation mode)
+{
+    switch(mode) {
+        case MTVOTop: return "top";
+        case MTVOCentered: return "centered";
+        case MTVOLastLine: return "last_line";
+        case MTVOBottom: return "bottom";
+        default:
+        case MTVOFirstLine: return "first_line";
+    }
+}
+
+JKQTMathTextVerticalOrientation String2JKQTMathTextVerticalOrientation(QString tokenName)
+{
+    tokenName=tokenName.toLower().trimmed();
+    if (tokenName=="p" || tokenName=="first_line" || tokenName=="first-line" || tokenName=="firstline" || tokenName=="line1") return MTVOFirstLine;
+    if (tokenName=="last_line" || tokenName=="last-line" || tokenName=="lastline" || tokenName=="linen") return MTVOLastLine;
+    if (tokenName=="t" || tokenName=="top") return MTVOTop;
+    if (tokenName=="b" || tokenName=="bottom") return MTVOBottom;
+    if (tokenName=="c" || tokenName=="center" || tokenName=="centered") return MTVOCentered;
+    return MTVOCentered;
+}

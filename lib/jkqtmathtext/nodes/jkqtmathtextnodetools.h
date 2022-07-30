@@ -32,7 +32,7 @@ class JKQTMathTextNode; // forward
  *  \ingroup jkqtmathtext_items
  *
  *  Basically this takes does the following steps (recursively):
- *    - remove any JKQTMathTextListNode that has only one child
+ *    - remove any JKQTMathTextHorizontalListNode that has only one child
  *  .
  */
 JKQTMATHTEXT_LIB_EXPORT JKQTMathTextNode* simplifyJKQTMathTextNode(JKQTMathTextNode* node);

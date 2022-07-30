@@ -802,6 +802,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
             MTTnone, /*!< \brief no token */
             MTTtext, /*!< \brief a piece of general text */
             MTTinstruction, /*!< \brief an instruction, started by \c "\\", e.g. \c "\\textbf", ... */
+            MTTinstructionNewline,   /*!< \brief a newline instruction \c "\\\\" */
             MTTunderscore,  /*!< \brief the character \c "_" */
             MTThat,  /*!< \brief the character \c "^" */
             MTTdollar,  /*!< \brief the character \c "$" */
@@ -810,7 +811,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
             MTTopenbracket, /*!< \brief the character \c "[" */
             MTTclosebracket, /*!< \brief the character \c "]" */
             MTTwhitespace, /*!< \brief some whitespace */
-            MTTampersand  /*!< \brief the character \c "&" */
+            MTTampersand,  /*!< \brief the character \c "&" */
         };
 
         /** \brief tokenizer for the LaTeX parser */
@@ -831,6 +832,8 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
          *  \return the list of parameter strings with Nparam entries or an empty or partial list on error
          */
         QStringList parseStringParams(bool get, size_t Nparams, bool *foundError=nullptr);
+        /** \brief parses a string, i.e. a sequence of text and whitespaces. returns after any other token was found */
+        QString parseSingleString(bool get);
         /** \brief parses a single instruction (including it's parameters)
          *
          *  \param[out] _foundError will be set to \c true if an error occured (unexpected token) or \c false otherwise

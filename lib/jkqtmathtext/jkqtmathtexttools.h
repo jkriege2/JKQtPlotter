@@ -385,6 +385,52 @@ JKQTMATHTEXT_LIB_EXPORT QRectF JKQTMathTextGetTightBoundingRect(const QFont &fm,
 JKQTMATHTEXT_LIB_EXPORT QFont JKQTMathTextGetNonItalic(const QFont& f);
 
 
+/** \brief types of horizontal alignment
+ *  \ingroup jkqtmathtext_tools
+ *
+ *  \image html jkqtmathtext_horizontalalignment.png
+ *
+ *  \see JKQTMathTextVerticalOrientation2String(), String2JKQTMathTextVerticalOrientation(), JKQTMathTextVerticalListNode
+ */
+enum JKQTMathTextHorizontalAlignment {
+    MTHALeft,  /*!< \brief align left */
+    MTHACentered,  /*!< \brief align centered */
+    MTHARight,  /*!< \brief align right */
+};
+/** \brief convert a JKQTMathTextHorizontalAlignment into a string
+ *  \ingroup jkqtmathtext_tools
+ */
+JKQTMATHTEXT_LIB_EXPORT QString JKQTMathTextHorizontalAlignment2String(JKQTMathTextHorizontalAlignment type);
+/** \brief convert a string \a tokenName into a JKQTMathTextHorizontalAlignment
+ *  \ingroup jkqtmathtext_tools
+ */
+JKQTMATHTEXT_LIB_EXPORT JKQTMathTextHorizontalAlignment String2JKQTMathTextHorizontalAlignment(QString tokenName);
+
+/** \brief type of ffractions represented by JKQTMathTextFracNode
+ *  \ingroup jkqtmathtext_tools
+ *
+ *  \image html jkqtmathtext_verticalorientation.png
+ *
+ *  \see JKQTMathTextVerticalOrientation2String(), String2JKQTMathTextVerticalOrientation(), JKQTMathTextVerticalListNode
+ */
+enum JKQTMathTextVerticalOrientation {
+    MTVOTop,  /*!< \brief baseline of the whole block is at the top of the first */
+    MTVOFirstLine,  /*!< \brief baseline of the whole block is at the baseline of the first line */
+    MTVOCentered,  /*!< \brief baseline of the whole block is at the center of all lines */
+    MTVOLastLine,  /*!< \brief baseline of the whole block is at the baseline of the last line */
+    MTVOBottom,  /*!< \brief baseline of the whole block is at the bottom of the last line */
+};
+
+/** \brief convert a JKQTMathTextVerticalOrientation into a QString
+ *  \ingroup jkqtmathtext_tools
+ */
+JKQTMATHTEXT_LIB_EXPORT QString JKQTMathTextVerticalOrientation2String(JKQTMathTextVerticalOrientation mode);
+
+/** \brief returns the JKQTMathTextVerticalOrientation corresponding to \a instructionName
+ *  \ingroup jkqtmathtext_tools
+ */
+JKQTMATHTEXT_LIB_EXPORT JKQTMathTextVerticalOrientation String2JKQTMathTextVerticalOrientation(QString mode);
+
 #endif // JKQTMATHTEXTTOOLS_H
 
 

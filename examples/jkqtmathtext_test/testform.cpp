@@ -178,28 +178,22 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbTestset->addItem("text/math: sub-, superscript test", "text: r^{1234}_{321} r_{321}^{1234} -- math: $r^{1234}_{321} r_{321}^{1234} -- \\kappa^2 -- \\kappa_2 -- \\kappa_2^2$");
     ui->cmbTestset->addItem("text/math: super-, subscript test", "text: r^{123}_{4321} r_{4321}^{123} -- math: $r^{123}_{4321} r_{4321}^{123} -- \\kappa^2 -- \\kappa_2 -- \\kappa_2^2$");
     //ui->cmbTestset->addItem("", "");
-    ui->cmbTestset->addItem("math 1", "$f(x)=\\int_{-\\infty}^xe^{-t^2}\\;\\mathrm{d}t$");
-    ui->cmbTestset->addItem("math 2", "$\\sum_{i=1}^\\infty\\frac{-e^{i\\pi}}{2^n}$");
-    ui->cmbTestset->addItem("math 3", "$\\mbox{det} \\begin{pmatrix} 1 & x_1 & \\ldots & x_1^{n-1} \\\\ 1 & x_2 & \\ldots & x_2^{n-1} \\\\ \\vdots & \\vdots & \\ddots & \\vdots \\\\ 1 & x_n & \\ldots & x_n^{n-1} \\end{pmatrix} = \\prod_{1 \\leq i < j \\leq n} (x_j - x_i) $");
-    ui->cmbTestset->addItem("math: nestes sqrt", "$\\sqrt{1+\\sqrt{1+\\sqrt{1+\\sqrt{1+\\sqrt{1+\\sqrt{1+x}}}}}}$");
-    ui->cmbTestset->addItem("math: nestes cbrt", "$\\sqrt[3]{1+\\sqrt[3]{1+\\sqrt[3]{1+\\sqrt[3]{1+\\sqrt[3]{1+\\sqrt[3]{1+x}}}}}}$");
-    ui->cmbTestset->addItem("math: nestes sqrt, high contents", "$\\sqrt{\\frac{1}{2}+\\sqrt{\\frac{1}{2}+\\sqrt{\\frac{1}{2}+\\sqrt{\\frac{1}{2}+\\sqrt{\\frac{1}{2}+\\sqrt{\\frac{1}{2}+x}}}}}}$");
-    ui->cmbTestset->addItem("math 5 (frac+stackrel)", "$\\left(\\stackrel{p}{2}\\right)=x^2y^{p-2}-\\frac{1}{1-x}\\frac{1}{1-x^2}$");
-    ui->cmbTestset->addItem("math 6 (nested frac)", "$a_0+\\frac{1}{a_1+\\frac{1}{a_2+\\frac{1}{a_3+\\frac{1}{a_4}}}}$");
-    ui->cmbTestset->addItem("math 7 (partial derivatives)", "$\\left(\\frac{\\partial^2}{\\partial x^2}+\\frac{\\partial^2}{\\partial y^2}\\right)\\left|\\varphi(x+\\mathrm{i}y)\\right|^2=0$");
-    ui->cmbTestset->addItem("math 8 (powers of powers)", "$2^{2^{2^{x}}}$");
-    ui->cmbTestset->addItem("math 9 (integral)", "$\\iint_Df(x,y)\\;\\mathrm{d}x\\;\\mathrm{d}y$");
-    ui->cmbTestset->addItem("math 10 (overbrace+overbracket)", "$\\overbrace{x+x+...+x}{k\\ \\mathrm{times}}\\ \\ \\ \\overbracket{x+x+...+x}{k\\ \\mathrm{times}}$");
-    ui->cmbTestset->addItem("math 11 (underbrace+underbracket)", "$\\underbrace{x+x+...+x}{k\\ \\mathrm{times}}\\ \\ \\ \\underbracket{x+x+...+x}{k\\ \\mathrm{times}}$");
-    ui->cmbTestset->addItem("math 12 (under/overbrace+under/overbracket)", "$\\underbrace{\\overbrace{x+x+...+x}{k\\ \\mathrm{times}} \\overbrace{x+x+...+x}{k\\ \\mathrm{times}}}{2k\\ \\mathrm{times}}\\ \\ \\ \\underbracket{\\overbracket{x+x+...+x}{k\\ \\mathrm{times}} \\overbracket{x+x+...+x}{k\\ \\mathrm{times}}}{2k\\ \\mathrm{times}}$");
-    ui->cmbTestset->addItem("math 13", "$y_1''\\ \\ \\ y_2'''$");
-    ui->cmbTestset->addItem("math 14", "$f(x)=\\begin{cases} 1/3 & \\mathrm{if}\\ 0\\leq x\\leq1 \\\\ 2/3 & \\mathrm{if}\\ 3\\leq x\\leq4 \\\\0 & \\mathrm{elsewhere} \\end{cases}$");
-    ui->cmbTestset->addItem("math 15", "$\\Re(z) =\\frac{n\\pi \\dfrac{\\theta +\\psi}{2}}{\\left(\\dfrac{\\theta +\\psi}{2}\\right)^2 + \\left( \\dfrac{1}{2}\\log \\left\\lvert\\dfrac{B}{A}\\right\\rvert\\right)^2}.$");
-    ui->cmbTestset->addItem("math 16", "$\\sum_{m=1}^\\infty\\sum_{n=1}^\\infty\\frac{m^2\\,n}{3^m\\left(m\\,3^n+n\\,3^m\\right)}$");
-    ui->cmbTestset->addItem("math 17", "$\\phi_n(\\kappa) =\\frac{1}{4\\pi^2\\kappa^2} \\int_0^\\infty\\frac{\\sin(\\kappa R)}{\\kappa R}\\frac{\\partial}{\\partial R}\\left[R^2\\frac{\\partial D_n(R)}{\\partial R}\\right]\\,dR$");
-    ui->cmbTestset->addItem("math 18", "${}_pF_q(a_1,\\dots,a_p;c_1,\\dots,c_q;z)= \\sum_{n=0}^\\infty\\frac{(a_1)_n\\cdots(a_p)_n}{(c_1)_n\\cdots(c_q)_n}\\frac{z^n}{n!}$");
-    ui->cmbTestset->addItem("math 19 (overset)", "$X \\overset{=}{def} Y$\\ \\ \\ \\ \\ $X \\overset{=}{!} Y$\\ \\ \\ \\ \\ $X \\overset{\\rightarrow}{f} Y$\\ \\ \\ \\ \\ $\\frac{f(x+\\Delta x)-f(x)}{\\Delta x}\\overset{\\longrightarrow}{\\Delta x\\to 0}f'(x)$");
-    ui->cmbTestset->addItem("math 20 (underset)", "$X \\underset{=}{\\text{def (5)}} Y$\\ \\ \\ \\ \\ $X \\underset{\\rightarrow}{f} Y$\\ \\ \\ \\ \\ $\\frac{f(x+\\Delta x)-f(x)}{\\Delta x}\\underset{\\longrightarrow}{\\Delta x\\to 0}f'(x)$");
+    ui->cmbTestset->addItem("math: nested sqrt", "$\\sqrt{1+\\sqrt{1+\\sqrt{1+\\sqrt{1+\\sqrt{1+\\sqrt{1+x}}}}}}$");
+    ui->cmbTestset->addItem("math: nested cbrt", "$\\sqrt[3]{1+\\sqrt[3]{1+\\sqrt[3]{1+\\sqrt[3]{1+\\sqrt[3]{1+\\sqrt[3]{1+x}}}}}}$");
+    ui->cmbTestset->addItem("math: nested sqrt, high contents", "$\\sqrt{\\frac{1}{2}+\\sqrt{\\frac{1}{2}+\\sqrt{\\frac{1}{2}+\\sqrt{\\frac{1}{2}+\\sqrt{\\frac{1}{2}+\\sqrt{\\frac{1}{2}+x}}}}}}$");
+    ui->cmbTestset->addItem("math: frac+stackrel", "$\\left(\\stackrel{p}{2}\\right)=x^2y^{p-2}-\\frac{1}{1-x}\\frac{1}{1-x^2}$");
+    ui->cmbTestset->addItem("math: nested frac", "$a_0+\\frac{1}{a_1+\\frac{1}{a_2+\\frac{1}{a_3+\\frac{1}{a_4}}}}$");
+    ui->cmbTestset->addItem("math: partial derivatives", "$\\left(\\frac{\\partial^2}{\\partial x^2}+\\frac{\\partial^2}{\\partial y^2}\\right)\\left|\\varphi(x+\\mathrm{i}y)\\right|^2=0$");
+    ui->cmbTestset->addItem("math: powers of powers", "$2^{2^{2^{x}}}$");
+    ui->cmbTestset->addItem("math: double-integral", "$\\iint_Df(x,y)\\;\\mathrm{d}x\\;\\mathrm{d}y$");
+    ui->cmbTestset->addItem("math: overbrace+overbracket", "$\\overbrace{x+x+...+x}{k\\ \\mathrm{times}}\\ \\ \\ \\overbracket{x+x+...+x}{k\\ \\mathrm{times}}$");
+    ui->cmbTestset->addItem("math: underbrace+underbracket", "$\\underbrace{x+x+...+x}{k\\ \\mathrm{times}}\\ \\ \\ \\underbracket{x+x+...+x}{k\\ \\mathrm{times}}$");
+    ui->cmbTestset->addItem("math: under/overbrace+under/overbracket", "$\\underbrace{\\overbrace{x+x+...+x}{k\\ \\mathrm{times}} \\overbrace{x+x+...+x}{k\\ \\mathrm{times}}}{2k\\ \\mathrm{times}}\\ \\ \\ \\underbracket{\\overbracket{x+x+...+x}{k\\ \\mathrm{times}} \\overbracket{x+x+...+x}{k\\ \\mathrm{times}}}{2k\\ \\mathrm{times}}$");
+    ui->cmbTestset->addItem("math: apostrophy/prime derivatives", "$y_1'\\ y_2''\\ y_3'''\\ \\ \\ --\\ \\ \\ y_1^\\prime\\ y_2^\\dprime\\ y_3^\\trprime\\ \\ \\ --\\ \\ \\ y_1^\\prime\\ y_2^{\\prime\\prime}\\ y_3^{\\prime\\prime\\prime}$");
+    ui->cmbTestset->addItem("math: cases", "$f(x)=\\begin{cases} 1/3 & \\mathrm{if}\\ 0\\leq x\\leq1 \\\\ 2/3 & \\mathrm{if}\\ 3\\leq x\\leq4 \\\\0 & \\mathrm{elsewhere} \\end{cases}$");
+    ui->cmbTestset->addItem("math: overset", "$X \\overset{=}{def} Y$\\ \\ \\ \\ \\ $X \\overset{=}{!} Y$\\ \\ \\ \\ \\ $X \\overset{\\rightarrow}{f} Y$\\ \\ \\ \\ \\ $\\frac{f(x+\\Delta x)-f(x)}{\\Delta x}\\overset{\\longrightarrow}{\\Delta x\\to 0}f'(x)$");
+    ui->cmbTestset->addItem("math: underset", "$X \\underset{=}{\\text{def (5)}} Y$\\ \\ \\ \\ \\ $X \\underset{\\rightarrow}{f} Y$\\ \\ \\ \\ \\ $\\frac{f(x+\\Delta x)-f(x)}{\\Delta x}\\underset{\\longrightarrow}{\\Delta x\\to 0}f'(x)$");
+    ui->cmbTestset->addItem("math: substack", "substack: $\\substack{i=0\\\\\\sin(x)\\equiv\\pi\\\\a=a\\\\a=b}$\\ \\ \\ substack[l]: $\\substack[l]{i=0\\\\\\sin(x)\\equiv\\pi\\\\a=a\\\\a=b}$\\ \\ \\ lsubstack: $\\lsubstack{i=0\\\\\\sin(x)\\equiv\\pi\\\\a=a\\\\a=b}$\\ \\ \\ rsubstack: $\\rsubstack{i=0\\\\\\sin(x)\\equiv\\pi\\\\a=a\\\\a=b}$\\ \\ \\ comma: $\\sum\\limits_{0\\leq i\\leq 10, -5\\leq j\\leq100}f_{i,j}$\\ \\ \\ substack: $\\sum\\limits_\\substack{0\\leq i\\leq 10\\\\ -5\\leq j\\leq100}f_{i,j}$\\ \\ \\ rsubstack: $\\sum\\limits_\\rsubstack{0\\leq i\\leq 10\\\\ -5\\leq j\\leq100}f_{i,j}$");
     ui->cmbTestset->addItem("math: Jacobi Matrix and VarCov matrix", "$J_{ij}= \\left.\\frac{\\partial f(x,\\vec{p})}{\\partial p_i}\\right|_{\\vec{p},x=x_j}\\ \\ \\ \\ \\ \\mat{C}=\\left(\\mat{J}^\\mathrm{T}\\ J\\right)^{-1}\\ \\ \\ \\ \\ test: \\left|\\frac{\\partial f(x,\\vec{p})}{\\partial p_i}\\right|_{\\vec{p},x=x_j}^2$");
     ui->cmbTestset->addItem("math: operator test (textmode)", "x=0\\ \\ y>0\\ \\ x+y\\ \\ -1\\ \\ x-2\\ \\ x\\cdot y\\ \\ x\\geq 4\\ \\ x~4");
     ui->cmbTestset->addItem("math: operator test (mathmode)", "$x=0\\ \\ y>0\\ \\ x+y\\ \\ -1\\ \\ x-2\\ \\ x\\cdot y\\ \\ x\\geq 4\\ \\ x~4$");
@@ -229,6 +223,13 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbTestset->addItem("math: Fokker-Planck Equation", "$\\frac{\\partial}{\\partial t}P(y,t)=-\\frac{\\partial}{\\partial y}\\left[ A(y,t)P(y,t)\\right] +\\frac{\\Gamma}{2}\\frac{\\partial^2}{\\partial y^2}\\left[ P(y,t)\\right]$");
     ui->cmbTestset->addItem("math: Hamilton Equations of motion", "$\\mathcal{H}(\\mathbf{q},\\mathbf{p})=\\frac{\\mathbf{p}^2}{2\\,m}+V(\\mathbf{q})\\ \\ \\ \\text{and}\\ \\ \\ \\dot{q}_k =\\frac{p_k}{m}\\ ,\\ \\dot{p}_k = - \\frac{\\partial V}{\\partial q_k}$");
     ui->cmbTestset->addItem("math: Gaussian Distrubution", "$f(x | \\mu,\\sigma^2)=\\frac{1}{\\sqrt{2\\pi\\sigma^2}}\\operatorname{exp}\\left(-\\frac{(x-\\mu)^2}{2\\sigma^2}\\right)=\\frac{1}{\\sqrt{2\\pi\\sigma^2}} e^{-\\frac{(x-\\mu)^2}{2\\sigma^2}}\\quad -\\infty<x<\\infty$");
+    ui->cmbTestset->addItem("math 1", "$f(x)=\\int_{-\\infty}^xe^{-t^2}\\;\\mathrm{d}t$");
+    ui->cmbTestset->addItem("math 2", "$\\sum_{i=1}^\\infty\\frac{-e^{i\\pi}}{2^n}$");
+    ui->cmbTestset->addItem("math 3", "$\\mbox{det} \\begin{pmatrix} 1 & x_1 & \\ldots & x_1^{n-1} \\\\ 1 & x_2 & \\ldots & x_2^{n-1} \\\\ \\vdots & \\vdots & \\ddots & \\vdots \\\\ 1 & x_n & \\ldots & x_n^{n-1} \\end{pmatrix} = \\prod_{1 \\leq i < j \\leq n} (x_j - x_i) $");
+    ui->cmbTestset->addItem("math 4", "$\\Re(z) =\\frac{n\\pi \\dfrac{\\theta +\\psi}{2}}{\\left(\\dfrac{\\theta +\\psi}{2}\\right)^2 + \\left( \\dfrac{1}{2}\\log \\left\\lvert\\dfrac{B}{A}\\right\\rvert\\right)^2}.$");
+    ui->cmbTestset->addItem("math 5", "$\\sum_{m=1}^\\infty\\sum_{n=1}^\\infty\\frac{m^2\\,n}{3^m\\left(m\\,3^n+n\\,3^m\\right)}$");
+    ui->cmbTestset->addItem("math 6", "$\\phi_n(\\kappa) =\\frac{1}{4\\pi^2\\kappa^2} \\int_0^\\infty\\frac{\\sin(\\kappa R)}{\\kappa R}\\frac{\\partial}{\\partial R}\\left[R^2\\frac{\\partial D_n(R)}{\\partial R}\\right]\\,dR$");
+    ui->cmbTestset->addItem("math 7", "${}_pF_q(a_1,\\dots,a_p;c_1,\\dots,c_q;z)= \\sum_{n=0}^\\infty\\frac{(a_1)_n\\cdots(a_p)_n}{(c_1)_n\\cdots(c_q)_n}\\frac{z^n}{n!}$");
     ui->cmbTestset->addItem("User-Editable Text");
     //
     //ui->cmbTestset->addItem("", "$$");
@@ -429,7 +430,8 @@ QTreeWidgetItem *TestForm::createTree(JKQTMathTextNode *node, QTreeWidgetItem* p
     JKQTMathTextTextNode* txtN=dynamic_cast<JKQTMathTextTextNode*>(node);
     JKQTMathTextWhitespaceNode* spN=dynamic_cast<JKQTMathTextWhitespaceNode*>(node);
     JKQTMathTextSymbolNode* symN=dynamic_cast<JKQTMathTextSymbolNode*>(node);
-    JKQTMathTextListNode* lstN=dynamic_cast<JKQTMathTextListNode*>(node);
+    JKQTMathTextHorizontalListNode* lstN=dynamic_cast<JKQTMathTextHorizontalListNode*>(node);
+    JKQTMathTextVerticalListNode* lstNV=dynamic_cast<JKQTMathTextVerticalListNode*>(node);
     JKQTMathTextModifiedTextPropsInstructionNode* inst1N=dynamic_cast<JKQTMathTextModifiedTextPropsInstructionNode*>(node);
     JKQTMathTextBoxInstructionNode* inst1B=dynamic_cast<JKQTMathTextBoxInstructionNode*>(node);
     JKQTMathTextSimpleInstructionNode* instS=dynamic_cast<JKQTMathTextSimpleInstructionNode*>(node);
@@ -488,8 +490,14 @@ QTreeWidgetItem *TestForm::createTree(JKQTMathTextNode *node, QTreeWidgetItem* p
         name=QString("BoxInstructionNode: \'%1\' (subsuper=%2, params=%3)").arg(inst1B->getInstructionName()).arg(inst1B->isSubSuperscriptAboveBelowNode()).arg(inst1B->getParameters().join("/"));
         if (inst1B->getChild()) ti->addChild(createTree(inst1B->getChild(), ti));
     } else if (lstN)  {
-        name=QString("MTlistNode");
+        name=QString("HListNode");
         QList<JKQTMathTextNode*> list=lstN->getChildren();
+        for (int i=0; i<list.size(); i++) {
+            ti->addChild(createTree(list[i], ti));
+        }
+    } else if (lstNV)  {
+        name=QString("VListNode (align=%1, spacingFactor=%2x, spacingMode=%3, verticalOrientation=%4)").arg(JKQTMathTextHorizontalAlignment2String(lstNV->getAlignment())).arg(lstNV->getLineSpacingFactor()).arg(lstNV->SpacingMode2String(lstNV->getSpacingMode())).arg(JKQTMathTextVerticalOrientation2String(lstNV->getVerticalOrientation()));
+        QList<JKQTMathTextNode*> list=lstNV->getChildren();
         for (int i=0; i<list.size(); i++) {
             ti->addChild(createTree(list[i], ti));
         }

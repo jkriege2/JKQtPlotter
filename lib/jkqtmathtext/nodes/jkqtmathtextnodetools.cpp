@@ -27,7 +27,7 @@
 
 JKQTMathTextNode *simplifyJKQTMathTextNode(JKQTMathTextNode *node)
 {
-    JKQTMathTextListNode* nl=dynamic_cast<JKQTMathTextListNode*>(node);
+    JKQTMathTextHorizontalListNode* nl=dynamic_cast<JKQTMathTextHorizontalListNode*>(node);
     JKQTMathTextMultiChildNode* nmc=dynamic_cast<JKQTMathTextMultiChildNode*>(node);
     JKQTMathTextSingleChildNode* nsc=dynamic_cast<JKQTMathTextSingleChildNode*>(node);
     if (nl) {
