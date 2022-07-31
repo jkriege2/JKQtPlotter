@@ -158,7 +158,7 @@ class JKQTMathTextNode; // forward
       - \c \c \\left\\lfloor \c \\right\\rfloor : floor braces , \image html jkqtmathtext/jkqtmathtext_brace_floor.png
       - \c \\left~ \c \\right~ \c \\left\\lceil \c \\right\\rceil : ceil braces , \image html jkqtmathtext/jkqtmathtext_brace_ceil.png
       - \c \\left| \c \\right| : absolute value braces | |, \image html jkqtmathtext/jkqtmathtext_brace_oneline.png
-      - \code \left\| \right\| \endcode : norm braces || ||, \image html jkqtmathtext/jkqtmathtext_brace_dblline.png
+      - \c \\left\\| \c \\right\\| \endcode : norm braces || ||, \image html jkqtmathtext/jkqtmathtext_brace_dblline.png
       - You can use \c \\left. or \c \\right. to have only right or only left brace
     .
 
@@ -178,11 +178,17 @@ class JKQTMathTextNode; // forward
       - <code>$\\underset{main}{under}$</code> \image html jkqtmathtext/jkqtmathtext_brace_underset.png
     .
 
-    \subsection JKQTMathTextSuppoertedLaTeXMatrix Matrix/Array Type Instructions
+    \subsection JKQTMathTextSuppoertedLaTeXFrac Fraction Type Instructions
     Several Matrix/Array-typed LaTeX instructions are supported:
-      - <code>$\\frac{...}{...}$</code>, <code>$\\tfrac{...}{...}$</code> (70% smaller font), <code>$\\dfrac{...}{...}$</code> \image html jkqtmathtext/jkqtmathtext_brace_frac.png
+      - <code>$\\frac{...}{...}$</code> \image html jkqtmathtext/MTFMfrac.png
+      - <code>$\\tfrac{...}{...}$</code> (70% smaller font) \image html jkqtmathtext/MTFMtfrac.png
+      - <code>$\\dfrac{...}{...}$</code> \image html jkqtmathtext/MTFMdfrac.png
       - <code>$\\sfrac{...}{...}$</code> \image html jkqtmathtext/MTFMsfrac.png
       - <code>$\\stfrac{...}{...}$</code> (70% smaller font) \image html jkqtmathtext/MTFMstfrac.png
+   .
+
+    \subsection JKQTMathTextSuppoertedLaTeXMatrix Matrix/Array Type Instructions
+    Several Matrix/Array-typed LaTeX instructions are supported:
       - <code>$\\stackrel{...}{...}$ $\\binom{...}{...}$</code> \image html jkqtmathtext/jkqtmathtext_brace_stackrel.png
       - <code>$\\begin{cases} ... & ... \\\\ ... & ... \\end{cases}$</code> \image html jkqtmathtext/jkqtmathtext_brace_begincases.png
       - <code>$\\begin{array} a & b & ...\\\\ c & d & ...\\end{array}$</code> <code>$\\begin{matrix} a & b & ...\\\\ c & d & ...\\end{matrix}$</code> \image html jkqtmathtext/jkqtmathtext_array.png
@@ -191,6 +197,9 @@ class JKQTMathTextNode; // forward
       - <code>$\\begin{Bmatrix} a & b & ...\\\\ c & d & ...\\end{Bmatrix}$</code> \image html jkqtmathtext/jkqtmathtext_bbmatrix.png
       - <code>$\\begin{vmatrix} a & b & ...\\\\ c & d & ...\\end{vmatrix}$</code> \image html jkqtmathtext/jkqtmathtext_vmatrix.png
       - <code>$\\begin{Vmatrix} a & b & ...\\\\ c & d & ...\\end{Vmatrix}$</code> \image html jkqtmathtext/jkqtmathtext_vvmatrix.png
+      - <code>$\\substack[lrc]{...\\\\...}$</code> \image html jkqtmathtext/jkqtmathtext_substack.png
+      - <code>$\\lsubstack{...\\\\...}$</code> \image html jkqtmathtext/jkqtmathtext_lsubstack.png
+      - <code>$\\rsubstack{...\\\\...}$</code> \image html jkqtmathtext/jkqtmathtext_rsubstack.png
     .
 
     \section JKQTMathTextSuppoertedFonts Font Handling
