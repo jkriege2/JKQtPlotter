@@ -1534,6 +1534,17 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
                             vlist->addChild(parseLatexString(true, MTBTAny, envname));
                             first=false;
                         }
+                    } else if (envname=="framed" || envname=="shaded" || envname=="snugshade") {
+                        JKQTMathTextHorizontalAlignment alignment=MTHALeft;
+                        JKQTMathTextVerticalListNode* vlist = new JKQTMathTextVerticalListNode(this, alignment, 1.0, JKQTMathTextVerticalListNode::SMDefault, MTVOFirstLine );
+                        QStringList color;
+                        color<<jkqtp_QColor2String(Qt::lightGray);
+                        nl->addChild(new JKQTMathTextBoxInstructionNode(this, envname, vlist, color));
+                        bool first=true;
+                        while (first || currentToken==MTTinstructionNewline) {
+                            vlist->addChild(parseLatexString(true, MTBTAny, envname));
+                            first=false;
+                        }
                     } else {
                         error_list.append(tr("error @ ch. %1: unknown environment '%2'").arg(currentTokenID).arg(envname));
                     }

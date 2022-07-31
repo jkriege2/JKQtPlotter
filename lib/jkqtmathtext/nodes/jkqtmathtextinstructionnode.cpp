@@ -800,6 +800,16 @@ void JKQTMathTextBoxInstructionNode::fillInstructions()
     }
     {
         InstructionProperties i(InstructionProperties::NoModification,
+                                InstructionProperties::NoPen,
+                                [](JKQTMathTextEnvironment& /*ev*/, const QStringList& parameters, JKQTMathText* /*parent*/){
+                                    return QBrush(jkqtp_String2QColor(parameters.value(0, QColor(Qt::transparent).name())), Qt::SolidPattern);
+                                },
+                                0,
+                                /*Nparams=*/1);
+        instructions["snugshade"] = i;
+    }
+    {
+        InstructionProperties i(InstructionProperties::NoModification,
                                 [](JKQTMathTextEnvironment& ev, const QStringList& parameters, JKQTMathText* parent){
                                     QPen p=InstructionProperties::DefaultPen(ev, parameters, parent);
                                     p.setColor(jkqtp_String2QColor(parameters.value(0, p.color().name())));

@@ -202,12 +202,15 @@ class JKQTMathTextNode; // forward
       - <code>$\\rsubstack{...\\\\...}$</code> \image html jkqtmathtext/jkqtmathtext_rsubstack.png
     .
 
-    \subsection JKQTMathTextSuppoertedLaTeXTextAlignment Environments with Multi-line text
+    \subsection JKQTMathTextSuppoertedLaTeXTextAlignment Environments for Multi-line text
     Several environments are supported that allow to layout text with linebreaks and different alignemnts:
       - <code>$\\begin{document} ... \\\\ ... \\end{document}$</code> \image html jkqtmathtext/jkqtmathtext_beginflushleft.png
       - <code>$\\begin{flushleft} ... \\\\ ... \\end{flushleft}$</code> \image html jkqtmathtext/jkqtmathtext_beginflushleft.png
       - <code>$\\begin{flushright} ... \\\\ ... \\end{flushright}$</code> \image html jkqtmathtext/jkqtmathtext_beginflushright.png
       - <code>$\\begin{center} ... \\\\ ... \\end{center}$</code> \image html jkqtmathtext/jkqtmathtext_begincenter.png
+      - <code>$\\begin{framed} ... \\\\ ... \\end{framed}$</code> \image html jkqtmathtext/jkqtmathtext_beginframed.png
+      - <code>$\\begin{shaded} ... \\\\ ... \\end{shaded}$</code> \image html jkqtmathtext/jkqtmathtext_beginshaded.png
+      - <code>$\\begin{snugshade} ... \\\\ ... \\end{snugshade}$</code> \image html jkqtmathtext/jkqtmathtext_beginsnugshade.png
     .
 
     \section JKQTMathTextSuppoertedFonts Font Handling
