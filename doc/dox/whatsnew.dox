@@ -70,6 +70,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: added \c \\unicode{HEX} and \c \\utfeight{HEX} instruction to draw unicide characters by code</li>
     <li>NEW: JKQTMathTextVerticalListNode allows to typeset a vertical list of lines</li>
     <li>NEW: added \c \\substack[lcr]{...\\\\...} , \c \\lsubstack{...\\\\...} , \c \\rsubstack{...\\\\...} instructions</li>
+    <li>NEW: added support for flushleft/flushright/center-environments with linebreaks</li>
   </ul></li>
 </ul>
 

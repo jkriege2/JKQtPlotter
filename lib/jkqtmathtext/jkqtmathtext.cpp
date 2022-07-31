@@ -1491,8 +1491,9 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
                 if (nl->hasChildren()) nl->getLastChild()->setSubSuperscriptAboveBelowNode(false);
             } else if (currentInstructionName=="begin") {
                 if (getToken()==MTTopenbrace && getToken()==MTTtext) {
-                    QString envname=currentTokenName;
-                    while (currentToken!=MTTclosebrace) getToken(); // find closing brace '}' after '\\begin{name'
+                    const QString envname=currentTokenName;
+                    getToken();
+                    if (currentToken!=MTTclosebrace) error_list.append(tr("error @ ch. %1: didn't find '}' after environment start '\\begin{%2'").arg(currentTokenID).arg(envname)); // find closing brace '}' after '\\begin{name'
                     if (envname=="matrix" || envname=="array" || envname=="aligned" || envname=="align" || envname=="cases" || envname=="pmatrix"|| envname=="bmatrix"|| envname=="Bmatrix"|| envname=="vmatrix"|| envname=="Vmatrix") {
                         QVector< QVector<JKQTMathTextNode*> > items;
                         //int lines=0;
@@ -1522,6 +1523,17 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
                         else if (envname=="Vmatrix") nl->addChild(new JKQTMathTextBraceNode(this, MTBTDoubleLine, MTBTDoubleLine, new JKQTMathTextMatrixNode(this, items)));
                         else nl->addChild(new JKQTMathTextMatrixNode(this, items));
                         //std::cout<<"  creating matrix-node ... done!\n";
+                    } else if (envname=="center" || envname=="document" || envname=="flushleft" || envname=="flushright") {
+                        JKQTMathTextHorizontalAlignment alignment=MTHALeft;
+                        if (envname=="document") alignment=MTHALeft;
+                        else alignment=String2JKQTMathTextHorizontalAlignment(envname);
+                        JKQTMathTextVerticalListNode* vlist = new JKQTMathTextVerticalListNode(this, alignment, 1.0, JKQTMathTextVerticalListNode::SMDefault, MTVOFirstLine );
+                        nl->addChild(vlist);
+                        bool first=true;
+                        while (first || currentToken==MTTinstructionNewline) {
+                            vlist->addChild(parseLatexString(true, MTBTAny, envname));
+                            first=false;
+                        }
                     } else {
                         error_list.append(tr("error @ ch. %1: unknown environment '%2'").arg(currentTokenID).arg(envname));
                     }

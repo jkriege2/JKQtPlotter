@@ -781,8 +781,8 @@ QString JKQTMathTextHorizontalAlignment2String(JKQTMathTextHorizontalAlignment t
 JKQTMathTextHorizontalAlignment String2JKQTMathTextHorizontalAlignment(QString tokenName)
 {
     tokenName=tokenName.toLower().trimmed();
-    if (tokenName=="l" || tokenName=="left") return MTHALeft;
-    if (tokenName=="r" || tokenName=="right") return MTHARight;
+    if (tokenName=="l" || tokenName=="left" || tokenName=="flushleft") return MTHALeft;
+    if (tokenName=="r" || tokenName=="right" || tokenName=="flushright") return MTHARight;
     if (tokenName=="c" || tokenName=="center" || tokenName=="centered") return MTHACentered;
     return MTHACentered;
 }
