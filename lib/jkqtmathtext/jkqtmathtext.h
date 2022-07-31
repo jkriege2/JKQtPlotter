@@ -821,8 +821,8 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         enum tokenType {
             MTTnone, /*!< \brief no token */
             MTTtext, /*!< \brief a piece of general text */
-            MTTinstruction, /*!< \brief an instruction, started by \c "\\", e.g. \c "\\textbf", ... */
-            MTTinstructionNewline,   /*!< \brief a newline instruction \c "\\\\" */
+            MTTinstruction, /*!< \brief an instruction, started by \c "\", e.g. \c "\\textbf", ... */
+            MTTinstructionNewline,   /*!< \brief a newline instruction \c "\\" */
             MTTunderscore,  /*!< \brief the character \c "_" */
             MTThat,  /*!< \brief the character \c "^" */
             MTTdollar,  /*!< \brief the character \c "$" */
