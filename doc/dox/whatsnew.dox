@@ -73,6 +73,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: added support for flushleft/flushright/center-environments with linebreaks</li>
     <li>NEW: added support for framed/shaded/snugshade-environments with linebreaks and framed</li>
     <li>NEW: added support for -- and --- for en- and em-dashes</li>
+    <li>NEW: added support for \c \\char"HEX , \c \\char'OCTAL and \c \\charDECIMAL for inserting any uicode character code</li>
   </ul></li>
 </ul>
 

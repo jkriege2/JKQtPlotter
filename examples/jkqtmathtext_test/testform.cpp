@@ -68,6 +68,8 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbTestset->addItem("text (bold)", "text \\mathbf{bold}");
     ui->cmbTestset->addItem("textcolor", "text \\mathbf{bold}\\textcolor{red}{RED}");
     ui->cmbTestset->addItem("userfont", "text, \\userfont{Arial}{Arial}, \\userfont{Comic Sans MS}{Comic Sans MS}");
+    ui->cmbTestset->addItem("text: \\char", "A: \\char65, circonflex: \\char\"109 accent: \\char\'351");
+    ui->cmbTestset->addItem("math: \\char", "A: $\\char65$, circonflex: $\\char\"109$ accent: $\\char\'351");
     ui->cmbTestset->addItem("unicode", "star: \\unicode{2605}, circonflex: \\unicode{109} emoticons: \\usym{1F440} \\usym{1F929}");
     ui->cmbTestset->addItem("UTF8", "star: \\utfeight{e29885} emoticons \\utfeight{F09F9881} \\utfeight{f09f98bb}");
     const auto mathDecoExample=[](const QString& deco)->QString { return "\\"+deco+"{x}\\"+deco+"{i}\\"+deco+"{X}\\"+deco+"{\\psi}\\"+deco+"{abc}"; };

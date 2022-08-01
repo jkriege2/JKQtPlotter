@@ -70,8 +70,16 @@
 #include <string>
 #include <utility>
 #include <vector>
+#if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
+#include<QRegularExpression>
+#include<QRegularExpressionMatch>
+#else
+#include<QRegExp>
+#endif
+
 #include "jkqtcommon/jkqtpmathtools.h"
 #include "jkqtcommon/jkqtpcodestructuring.h"
 #include "jkqtcommon/jkqtpdebuggingtools.h"
+#include "jkqtcommon/jkqtpstringtools.h"
 
 #endif // jkqtcommon_precomp_h

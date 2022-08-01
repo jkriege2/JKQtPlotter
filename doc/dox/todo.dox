@@ -39,7 +39,6 @@ This page lists several todos and wishes for future version of JKQTPlotter
     <li></li>
   </ul></li>
   <li>JKQTMathText:<ul>
-    <li>add instruction for unicode-characters \\charDDDD,  \\char"XXXX ...</li>
     <li>check sub/superscript with italic text in math mode, possibly a correction is necessary</li>
     <li>explore where QFontMetricsF::horizontalAdvance() can be used (for Qt >=5.15)</li>
     <li>add support for \\bigl,\\bigr,\\Bigr,... commands for fixed-size but large paramtheses</li>

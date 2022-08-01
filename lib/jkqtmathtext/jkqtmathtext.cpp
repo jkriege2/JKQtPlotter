@@ -1301,7 +1301,8 @@ JKQTMathText::tokenType JKQTMathText::getToken() {
     if (c=='\\') {
         //----------------------------------------------------------
         // parsing accent instructions like \ss \"{a} ...
-        if (!parsingMathEnvironment){
+        const QString next5=parseString.mid(currentTokenID, 5);
+        if (!parsingMathEnvironment && next5!="\\char"){
             for (int len: accentLetters_LenBackslash) {
                 const QString acc=parseString.mid(currentTokenID, len);
                 if (acc.size()==len && accentLetters.contains(acc)) {
@@ -1343,6 +1344,47 @@ JKQTMathText::tokenType JKQTMathText::getToken() {
         if (currentTokenName.size()==0) error_list.append(tr("error @ ch. %1: parser encountered empty istruction").arg(currentTokenID));
         if (currentTokenName=="newline") return MTTinstructionNewline;
         if (currentTokenName=="linebreak") return MTTinstructionNewline;
+        if (currentTokenName=="char") {
+            QString num="";
+            currentTokenID++;
+            c=parseString[currentTokenID];
+            if (c=='"') {
+                // match '\char"HEXDIGITS'
+                currentTokenID++;
+                c=parseString[currentTokenID];
+                while ((currentTokenID<parseString.size()) && (c.isDigit() || QString("aAbBcCdDeEfF").contains(c))) {
+                    num+=c;
+                    currentTokenID++;
+                    c=parseString[currentTokenID];
+                }
+                if (currentTokenID<parseString.size()) currentTokenID--;
+                currentTokenName=QString::fromStdString(jkqtp_UnicodeToUTF8(num.toLongLong(nullptr, 16)));
+                return currentToken=MTTtext;
+            } else if (c=='`' || c=='\'') {
+                // match '\char"OCTALDIGITS'
+                currentTokenID++;
+                c=parseString[currentTokenID];
+                while ((currentTokenID<parseString.size()) && (QString("01234567").contains(c))) {
+                    num+=c;
+                    currentTokenID++;
+                    c=parseString[currentTokenID];
+                }
+                if (currentTokenID<parseString.size()) currentTokenID--;
+                currentTokenName=QString::fromStdString(jkqtp_UnicodeToUTF8(num.toLongLong(nullptr, 8)));
+                return currentToken=MTTtext;
+            } else if (c.isDigit()) {
+                // match '\charDECIMALDIGITS'
+                while ((currentTokenID<parseString.size()) && (c.isDigit())) {
+                    num+=c;
+                    currentTokenID++;
+                    c=parseString[currentTokenID];
+                }
+                if (currentTokenID<parseString.size()) currentTokenID--;
+                currentTokenName=QString::fromStdString(jkqtp_UnicodeToUTF8(num.toLongLong(nullptr, 10)));
+                return currentToken=MTTtext;
+            }
+
+        }
         return currentToken=MTTinstruction;
     //----------------------------------------------------------
     // check for $ character
