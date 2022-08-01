@@ -64,6 +64,8 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: added top-corner (\c \\ulcorner/\c \\urcorner ) and bottom-corner brackets (\c \\llcorner/\c \\lrcorner )</li>
     <li>NEW: added \c \\overbracket and \c \\underbracket</li>
     <li>NEW: added \c \\shaded{color}{...} </li>
+    <li>NEW: added \c \\dashbox{...} </li>
+    <li>NEW: added \c \\dottedbox{...} </li>
     <li>NEW: added \c \\acute{X}, \c \\grave{X}, \c \\acute{X}</li>
     <li>NEW: added functions to set the font-size in pixels (as alternative to the existing functions that set them in points), implements request <a href="https://github.com/jkriege2/JKQtPlotter/issues/76">#76</a> from <a href="https://github.com/igormironchik">user:igormironchik</a> </li>
     <li>NEW: added \c \\userfont{SystemFontName}{Text} instruction</li>

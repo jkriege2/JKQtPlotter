@@ -790,6 +790,33 @@ void JKQTMathTextBoxInstructionNode::fillInstructions()
     }
     {
         InstructionProperties i(InstructionProperties::NoModification,
+                                [](JKQTMathTextEnvironment& ev, const QStringList& parameters, JKQTMathText* parent){
+                                    QPen p=InstructionProperties::DefaultPen(ev, parameters, parent);
+                                    p.setStyle(Qt::DashLine);
+                                    return p;
+                                },
+                                InstructionProperties::NoBrush,
+                                InstructionProperties::DefaultPadding,
+                                /*Nparams=*/0);
+        instructions["dashbox"] = i;
+        instructions["dashedbox"] = i;
+        instructions["dbox"] = i;
+    }
+    {
+        InstructionProperties i(InstructionProperties::NoModification,
+                                [](JKQTMathTextEnvironment& ev, const QStringList& parameters, JKQTMathText* parent){
+                                    QPen p=InstructionProperties::DefaultPen(ev, parameters, parent);
+                                    p.setStyle(Qt::DotLine);
+                                    return p;
+                                },
+                                InstructionProperties::NoBrush,
+                                InstructionProperties::DefaultPadding,
+                                /*Nparams=*/0);
+        instructions["dottedbox"] = i;
+        instructions["dotbox"] = i;
+    }
+    {
+        InstructionProperties i(InstructionProperties::NoModification,
                                 InstructionProperties::NoPen,
                                 [](JKQTMathTextEnvironment& /*ev*/, const QStringList& parameters, JKQTMathText* /*parent*/){
                                     return QBrush(jkqtp_String2QColor(parameters.value(0, QColor(Qt::transparent).name())), Qt::SolidPattern);

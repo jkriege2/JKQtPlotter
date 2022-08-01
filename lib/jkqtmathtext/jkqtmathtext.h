@@ -127,6 +127,8 @@ class JKQTMathTextNode; // forward
       - \c \\doublebox{...} : draw text with a rounded box around it \image html jkqtmathtext/jkqtmathtext_doublebox.png
       - \c \\ovalbox{...} : draw text with a rounded box around it \image html jkqtmathtext/jkqtmathtext_ovalboxed.png
       - \c \\Ovalbox{...} : draw a thick oval box \image html jkqtmathtext/jkqtmathtext_oovalbox.png
+      - \c \\dashbox{...} , \c \\dbox{...} : draw a dashed box \image html jkqtmathtext/jkqtmathtext_dashbox.png
+      - \c \\dottedbox{...} : draw a dottted box \image html jkqtmathtext/jkqtmathtext_dottedbox.png
       - \c \\ovaldoublebox{...} : draw a double oval box \image html jkqtmathtext/jkqtmathtext_doubleovalbox.png
       - \c \\colorbox{bordercolor}{...} : draw a colored box \image html jkqtmathtext/jkqtmathtext_colorbox.png
       - \c \\shaded{backgroundcolor}{...} : draw a filled box \image html jkqtmathtext/jkqtmathtext_shaded.png
