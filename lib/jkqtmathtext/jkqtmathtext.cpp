@@ -1002,7 +1002,7 @@ JKQTMathText::tokenType JKQTMathText::getToken() {
     if (TokenCharacters.size()==0) {
         mathEnvironmentSpecialChars<<'(' << '[' << '|' << ')' << ']' << '+' << '-' << '*' << '/' << '<' << '>' << '=';
         mathEnvironmentSpecialEndChars<<'(' << '&' << '[' << '|' << ')' << ']' << '\\' << '$' << '{' << '}' << '_' << '^' << '+' << '-' << '/' << '*' << '=' << '<' << '>';
-        TokenCharacters<<'_'<<'^'<<'\\'<<'$'<<'&'<<'}'<<'{'<<'['<<']';
+        TokenCharacters<<'-'<<'_'<<'^'<<'\\'<<'$'<<'&'<<'}'<<'{'<<'['<<']';
         SingleCharInstructions<<'|'<<';'<<':'<<'!'<<','<<'_'<<'\\'<<'$'<<'%'<<'&'<<'#'<<'}'<<'{'<<' '<<'['<<']';
 
         auto fAddUml=[](const QString& cmd, const QChar& letter, const QChar& ch) {
@@ -1281,6 +1281,22 @@ JKQTMathText::tokenType JKQTMathText::getToken() {
     }
 
     //----------------------------------------------------------
+    // check for emdash "---" or endash "--"
+    if (c=='-' && !parsingMathEnvironment) {
+        if (parseString.mid(currentTokenID, 3)=="---") {
+            currentTokenID+=2;
+            currentTokenName="---";
+            return currentToken=MTTemdash;
+        } else if (parseString.mid(currentTokenID, 2)=="--") {
+            currentTokenID+=1;
+            currentTokenName="--";
+            return currentToken=MTTendash;
+        } else {
+            currentTokenName="-";
+            return currentToken=MTThyphen;
+        }
+    }
+    //----------------------------------------------------------
     // read an instruction name
     if (c=='\\') {
         //----------------------------------------------------------
@@ -1482,6 +1498,12 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
             break;
         } else if (currentToken==MTTwhitespace) {
             if (!parsingMathEnvironment) nl->addChild(new JKQTMathTextWhitespaceNode(this));
+        } else if (currentToken==MTTendash) {
+            nl->addChild(new JKQTMathTextSymbolNode(this, "endash"));
+        } else if (currentToken==MTTemdash) {
+            nl->addChild(new JKQTMathTextSymbolNode(this, "emdash"));
+        } else if (currentToken==MTThyphen) {
+            nl->addChild(new JKQTMathTextSymbolNode(this, "hyphen"));
         } else if (currentToken==MTTinstruction) {
             const QString currentInstructionName=currentTokenName;
             if (currentInstructionName=="\\") break; // break on linebrak character

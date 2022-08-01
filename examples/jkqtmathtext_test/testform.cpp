@@ -28,9 +28,10 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbTestset->addItem("text: fonts", "rm: \\textrm{"+testText+"}, sf: \\textsf{"+testText+"}, tt: \\texttt{"+testText+"}, cal: \\textcal{"+testText+"}, scr: \\textscr{"+testText+"}, bb: \\textbb{"+testText+"}, frak: \\textfrak{"+testText+"}, ");
     ui->cmbTestset->addItem("text: umlaute", umla);
     ui->cmbTestset->addItem("text: umlaute and fonts", "rm: \\textrm{"+testTextUmla+"}, sf: \\textsf{"+testTextUmla+"}, tt: \\texttt{"+testTextUmla+"}, cal: \\textcal{"+testTextUmla+"}, scr: \\textscr{"+testTextUmla+"}, bb: \\textbb{"+testTextUmla+"}, frak: \\textfrak{"+testTextUmla+"}, ");
+    ui->cmbTestset->addItem("text: dashes", "hyphen: - endash: -- emdash: --- \\ \\ \\ endash--within text\\ \\ \\ emdash---within text\\ \\ \\ enemdash-----within text\\ \\ \\ ememdash------within text");
     ui->cmbTestset->addItem("math: fonts", "base: $"+testText+"$, rm: $\\mathrm{"+testText+"}$, sf: $\\mathsf{"+testText+"}$, tt: $\\mathtt{"+testText+"}$, cal: $\\mathcal{"+testText+"}$, scr: $\\mathscr{"+testText+"}$, bb: $\\mathbb{"+testText+"}$, frak: $\\mathfrak{"+testText+"}$, ");
     ui->cmbTestset->addItem("math: umlaute", "$"+umla_math+"$");
-    ui->cmbTestset->addItem("math: umlaute and \\text{...}", "\\${\\backslash}text{...}\\$: $\\text{"+umla+"}\\ \\ \\ \\$...\\$: "+umla+"$");
+    ui->cmbTestset->addItem("math: umlaute and \\text{...}", "\\${\\backslash}text\\{...\\}\\$: $\\text{"+umla+"}\\ \\ \\ \\$...\\$: "+umla+"$");
     ui->cmbTestset->addItem("math: umlaute and fonts", "base: $"+testTextUmla_math+"$, rm: $\\mathrm{"+testTextUmla_math+"}$, sf: $\\mathsf{"+testTextUmla_math+"}$, tt: $\\mathtt{"+testTextUmla_math+"}$, cal: $\\mathcal{"+testTextUmla_math+"}$, scr: $\\mathscr{"+testTextUmla_math+"}$, bb: $\\mathbb{"+testTextUmla_math+"}$, frak: $\\mathfrak{"+testTextUmla_math+"}$, ");
     ui->cmbTestset->addItem("math: simple relations", "$a{\\leq}b$, $a{\\geq}b$, $a{\\equiv}b$, $a=b$, $a{\\neq}b$, $a<b$, $a>b$");
     const auto wsExample=[](const QStringList& spaces, const QString before, const QString& after)->QString {

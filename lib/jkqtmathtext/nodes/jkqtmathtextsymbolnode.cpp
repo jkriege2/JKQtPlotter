@@ -489,7 +489,8 @@ void JKQTMathTextSymbolNode::fillSymbolTables()
         symbols["blcorner"]=s; symbols["llcorner"]=s; }
     { auto s=UprightSymbolUnicode(QChar(0x231F));
         symbols["brcorner"]=s; symbols["lrcorner"]=s; }
-    symbols["bullet"]=UprightSymbolUnicode(QChar(0x2022)).addUprightHtml("&bull;").addUprightWinSymbol(QChar(0xB7));
+    { auto s=UprightSymbolUnicode(QChar(0x2022)).addUprightHtml("&bull;").addUprightWinSymbol(QChar(0xB7));
+        symbols["bullet"]=s; symbols["textbullet"]=s; }
     symbols["cdots"]=UnicodeSymbol(QChar(0x22EF)).addHtml("&middot;&middot;&middot;").addStd(QString(3, QChar(0xB7)));
     { auto s=UnicodeSymbol(QChar(0x2103)).addUprightStd("°C").addUprightHtml("&deg;C");
         symbols["celsius"]=s; symbols["degC"]=s; }
@@ -560,11 +561,21 @@ void JKQTMathTextSymbolNode::fillSymbolTables()
     symbols["sphericalangle"]=UprightSymbolUnicode(QChar(0x2222)).addHtml("&angsph;");
     symbols["star"]=UprightSymbolUnicode(QChar(0x22C6));
     symbols["tcohm"]=UnicodeSymbol(QChar(0x2126));
+    { auto s=UnicodeSymbol(QChar(0x2014), "&#11840;");
+        symbols["dblhyphen"]=s; symbols["textdblhyphen"]=s; symbols["textdblhyphenchar"]=s; }
+    { auto s=UnicodeSymbol(QChar(0x2014), "&mdash;");
+        symbols["---"]=s; symbols["textemdash"]=s; symbols["emdash"]=s; }
+    { auto s=UnicodeSymbol(QChar(0x2013), "&ndash;");
+        symbols["--"]=s; symbols["textendash"]=s; symbols["endash"]=s; }
+    { auto s=SimpleTextSymbol("-");
+        symbols["texthyphen"]=s; symbols["hyphen"]=s; }
     symbols["textbar"]=SimpleTextSymbol("|", "&VerticalLine;");
     { auto s=SimpleTextSymbol(QChar(0xB0), "&deg;");
         symbols["textdegree"]=s; symbols["degree"] = s; }
     symbols["textgreater"]=SimpleTextSymbol(">", "&gt;");
     symbols["textless"]=SimpleTextSymbol("<", "&lt;");
+    symbols["textquestiondown"]=SimpleTextSymbol(QChar(0xBF), "&iquest;");
+    symbols["textexclamdown"]=SimpleTextSymbol(QChar(0xA1), "&iexcl;");
     { auto s=UnicodeSymbol(QChar(0x231C));
         symbols["tlcorner"]=s; symbols["ulcorner"]=s; }
     symbols["trademark"]=UnicodeSymbol(QChar(0x2122)).addHtml("&trade;").addWinSymbol(QChar(0xD4)).addStd("(TM)");

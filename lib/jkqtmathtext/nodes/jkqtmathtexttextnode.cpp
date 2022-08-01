@@ -51,7 +51,7 @@ JKQTMathTextTextNode::JKQTMathTextTextNode(JKQTMathText* _parent, const QString&
     while (this->text.size()>1 && this->text[0].isSpace()) {
         this->text=this->text.right(this->text.size()-1);
     }
-    if (addWhitespace /*&& (this->text.size()>0)*/ && (!this->text[this->text.size()-1].isSpace())) this->text=this->text+" ";
+    if (addWhitespace && (this->text.size()>0) && (!this->text[this->text.size()-1].isSpace())) this->text=this->text+" ";
     //qDebug()<<"JKQTMathTextTextNode( text="<<text<<" addWhitespace="<<addWhitespace<<")   [=> this->text="<<this->text<<"]";
 }
 

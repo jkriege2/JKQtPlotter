@@ -143,6 +143,9 @@ class JKQTMathTextNode; // forward
                                           symbols may differ (there are not all symbols defined in the MS Windows Symbol
                                           font!). Best coverage should be given by Unicode font encoding with a good
                                           unicode font installed!<br>\image html jkqtmathtext/jkqtmathtext_symbols.png
+      - \c - : draw a hyphen \image html jkqtmathtext/jkqtmathtext_hyphen.png
+      - \c -- : draw an en-dash \image html jkqtmathtext/jkqtmathtext_endash.png
+      - \c --- : draw an em-dash \image html jkqtmathtext/jkqtmathtext_emdash.png
       - <code>\\vec{x} \\dot{x} \\ddot{x} \\overline{x} \\underline{x} \\hat{x} \\tilde{x} \\uul{x} \\ool{x} \\bar{x} \\arrow{x} \\widehat{x} \\widetilde{x} ...</code>: Decorations over/under symbols \image html jkqtmathtext/jkqtmathtext_mathdeco.png
       - <code>\\verb{don't parse this _aaa\\LaTeX} </code>: interpret enclosed text as verbose \image html jkqtmathtext/jkqtmathtext_verb.png
     .
@@ -832,6 +835,9 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
             MTTclosebracket, /*!< \brief the character \c "]" */
             MTTwhitespace, /*!< \brief some whitespace */
             MTTampersand,  /*!< \brief the character \c "&" */
+            MTThyphen,  /*!< \brief the single hyphen character \c "-" in text-mode \note MTTendash and MTTemdash take precedence over MTThypen  */
+            MTTendash,  /*!< \brief the en-dash character sequence \c "--" in text-mode */
+            MTTemdash,  /*!< \brief the em-dash character sequence \c "---" in text-mode */
         };
 
         /** \brief tokenizer for the LaTeX parser */
