@@ -92,7 +92,7 @@ JKQTMathText::JKQTMathText(QObject* parent):
     operatorsubsuper_extraspace_factor=0.5;
     intsubsuper_xcorrection_factor=0.25;
     intsubbesides_xcorrection_xfactor=0.33;
-    mathoperator_width_factor=1.5;
+    mathoperator_width_factor=1.3;
     bigmathoperator_font_factor=1.8;
 
     sqrt_width_Xfactor=0.8;
