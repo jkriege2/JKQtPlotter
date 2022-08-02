@@ -1,7 +1,7 @@
 /*
     Copyright (c) 2008-2022 Jan W. Krieger (<jan@jkrieger.de>)
 
-    
+
 
     This software is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License (LGPL) as published by
@@ -58,32 +58,88 @@ JKQTMathTextTextNode::JKQTMathTextTextNode(JKQTMathText* _parent, const QString&
 JKQTMathTextTextNode::~JKQTMathTextTextNode() = default;
 
 void JKQTMathTextTextNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* /*prevNodeSize*/) {
-    QFont f=currentEv.getFont(parentMathText);
-    if (currentEv.insideMath && (text=="(" || text=="[" || text=="|" || text=="]" || text==")" || text=="<" || text==">" ||
-                                 text==QString(QChar(0x2329)) || text==QString(QChar(0x232A)) || text==QString(QChar(0x2308)) ||
-                                 text==QString(QChar(0x2309)) || text==QString(QChar(0x230A)) || text==QString(QChar(0x230B)))) {
-            f.setItalic(false);
+    QStringList textpart;
+    QList<bool> fontForcedUpright;
+    QList<double> textpartXPos;
+    getSizeInternalAndData(painter, currentEv, width, baselineHeight, overallHeight, strikeoutPos,textpart, fontForcedUpright, textpartXPos);
+}
+
+void JKQTMathTextTextNode::getSizeInternalAndData(QPainter &painter, JKQTMathTextEnvironment currentEv, double &width, double &baselineHeight, double &overallHeight, double &strikeoutPos, QStringList &textpart, QList<bool> &fontForcedUpright, QList<double> &textpartXPos)
+{
+    textpart.clear();
+    fontForcedUpright.clear();
+    const QString txt=textTransform(text, currentEv, true);
+    if (currentEv.insideMath && currentEv.insideMathForceDigitsUpright) {
+        splitTextForMathMode(txt, textpart, fontForcedUpright);
+    } else {
+        textpart.append(text);
+        fontForcedUpright.append(false);
+    }
+
+
+    const QFont f=currentEv.getFont(parentMathText);
+    const QFont fnonItalic=JKQTMathTextGetNonItalic(f);
+    const QFontMetricsF fmNonItalic(fnonItalic, painter.device());
+    const QFontMetricsF fm(f, painter.device());
+
+    width=0;
+    double ascent=0;
+    double descent=0;
+    for (int i=0; i<textpart.size(); i++) {
+        const QRectF br=(fontForcedUpright[i]) ? fmNonItalic.boundingRect(textpart[i]) : fm.boundingRect(textpart[i]);
+        const QRectF tbr=(fontForcedUpright[i]) ? JKQTMathTextGetTightBoundingRect(fnonItalic, textpart[i], painter.device()) : JKQTMathTextGetTightBoundingRect(f, textpart[i], painter.device());
+        textpartXPos.append(width);
+        width+=br.width();
+        const double thisAscent=-tbr.top();
+        const double thisDescent=tbr.bottom();
+        ascent=qMax(ascent, thisAscent);
+        descent=qMax(descent, thisDescent);
+    }
+    overallHeight=(ascent+descent); //fm.height();
+    baselineHeight=ascent;
+    strikeoutPos=fm.strikeOutPos();
+}
+
+void JKQTMathTextTextNode::splitTextForMathMode(const QString &txt, QStringList &textpart, QList<bool> &fontForcedUpright)
+{
+    auto isForcedUprightChar=[](const QChar& c) {
+        return c.isDigit()
+                || c=='(' || c=='[' || c=='|' || c==']' || c==')' || c=='<' || c=='>'|| c=='{' || c=='}' || c=='|'
+                || c==QChar(0x2329) || c==QChar(0x232A) || c==QChar(0x2308) || c==QChar(0x2309) || c==QChar(0x230A) || c==QChar(0x230B);
+    };
+
+    textpart.clear();
+    fontForcedUpright.clear();
+    QString currentSection="";
+    bool currentSectionForcedUpright=false;
+    int i=0;
+    while (i<txt.size()) {
+        const QChar c=txt[i];
+        const bool CisForcedUprightChar=isForcedUprightChar(c);
+        const bool CisForcedUprightCharExt=CisForcedUprightChar||(c=='.')||(c==',');
+        if (currentSection.size()==0) {
+            // start new section
+            currentSectionForcedUpright=CisForcedUprightChar;
+            currentSection+=c;
+        } else {
+            // existing section
+            if (CisForcedUprightCharExt==currentSectionForcedUpright) {
+                // continue current section
+                currentSection+=c;
+            } else {
+                // start new section
+                textpart.append(currentSection);
+                fontForcedUpright.append(currentSectionForcedUpright);
+                currentSection=c;
+                currentSectionForcedUpright=CisForcedUprightChar;
+            }
         }
-    QString txt=textTransform(text, currentEv, true);
-    QFontMetricsF fm(f, painter.device());
-    QRectF br=fm.boundingRect(txt);
-    QRectF tbr=JKQTMathTextGetTightBoundingRect(f, txt, painter.device()); //fm.tightBoundingRect(txt);
-    if (txt=="|") {
-        br=fm.boundingRect("X");
-        tbr=QRectF(0,0,fm.boundingRect("X").width(), fm.ascent());//fm.boundingRect("X");
-        br.setWidth(0.7*br.width());
+        i++;
     }
-    width=br.width();//width(text);
-
-    if (txt.size()>0) {
-        if (txt[0].isSpace() /*&& br.width()<=0*/) width=width+fm.boundingRect("I").width();
-        if (txt.size()>1 && txt[txt.size()-1].isSpace() /*&& (fm.boundingRect("a ").width()==fm.boundingRect("a").width())*/) width=width+fm.boundingRect("I").width();
+    if (currentSection.size()>0) {
+        textpart.append(currentSection);
+        fontForcedUpright.append(currentSectionForcedUpright);
     }
-
-    //qDebug()<<"text: "<<text<<"   "<<tbr.height()<<tbr.top()<<tbr.bottom();
-    overallHeight=tbr.height()*1.1; //fm.height();
-    baselineHeight=1.1*(tbr.height()-(tbr.height()+tbr.top()));//fm.ascent();
-    strikeoutPos=fm.strikeOutPos()*1.1;
 }
 
 double JKQTMathTextTextNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* /*prevNodeSize*/) {
@@ -92,91 +148,40 @@ double JKQTMathTextTextNode::draw(QPainter& painter, double x, double y, JKQTMat
     double baselineHeight=0;
     double overallHeight=0;
     double sp=0;
-    getSize(painter, currentEv, width, baselineHeight, overallHeight, sp);
-
-    QString txt=textTransform(text, currentEv);
-
-    bool hasDigits=false;
-    bool onlyDigits=true;
-    for (int i=0; i<txt.size(); i++) {
-        if (txt[i].isDigit()) {
-            hasDigits=true;
-        }
-        if (!txt[i].isDigit() && !txt[i].isSpace()) {
-            onlyDigits=false;
-        }
-    }
+    QStringList textpart;
+    QList<bool> fontForcedUpright;
+    QList<double> textpartXPos;
+    getSizeInternalAndData(painter, currentEv, width, baselineHeight, overallHeight, sp, textpart, fontForcedUpright, textpartXPos);
 
 
-    QPen pold=painter.pen();
-    QFont fold=painter.font();
-    QFont f=currentEv.getFont(parentMathText);
-    if (currentEv.insideMath && (text=="(" || text=="[" || text=="|" || text=="]" || text==")" || text=="<" || text==">" ||
-                                 text==QString(QChar(0x2329)) || text==QString(QChar(0x232A)) || text==QString(QChar(0x2308)) ||
-                                 text==QString(QChar(0x2309)) || text==QString(QChar(0x230A)) || text==QString(QChar(0x230B)))) {
-        f.setItalic(false);
-    }
+    const QFont f=currentEv.getFont(parentMathText);
+    const QFont fnonItalic=JKQTMathTextGetNonItalic(f);
+    const QFontMetricsF fm(f, painter.device());
+    const QFontMetricsF fmNonItalic(fnonItalic, painter.device());
 
-
-    if (onlyDigits && currentEv.insideMath) {
-        f.setItalic(false);
-    }
-
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     painter.setFont(f);
 
     //qDebug()<<"JKQTMathTextTextNode: text="<<text<<" font="<<f;
 
-    QPen p=painter.pen();
-    p.setColor(currentEv.color);
+    const QPen p(currentEv.color, fm.lineWidth(), Qt::SolidLine);
     painter.setPen(p);
-    double dx=0;
-    QFontMetricsF fm(f, painter.device());
-    /*if (txt.size()>1 && txt[txt.size()-1].isSpace()) {
-        QFontMetricsF fm(f, painter.device());
-        //if ((fm.QFMF_WIDTH("a ")==fm.QFMF_WIDTH("a"))) dx=fm.boundingRect("I").QFMF_WIDTH();
-    }*/
 
-    if (!hasDigits || !f.italic()) {
+    auto drawString=[&](QPainter& painter, const QFont& f, double x, double y, const QString& txt)  {
         if (currentEv.font==MTEblackboard && parentMathText->isFontBlackboardSimulated()) {
             QPainterPath path;
-            path.addText(QPointF(x+dx, y), f, txt);
+            path.addText(QPointF(x, y), f, txt);
             painter.drawPath(path);
         } else {
-            painter.drawText(QPointF(x+dx, y), txt);//.simplified());
+            painter.setFont(f);
+            painter.drawText(QPointF(x, y), txt);
         }
-    } else {
-        int i=0;
-        double xx=x+dx;
-        QFont ff=f;
-        QFontMetricsF fmff(ff, painter.device());
-        ff.setItalic(false);
-        while (i<txt.size()) {
-            if (txt[i].isDigit()) {
-                if (currentEv.font==MTEblackboard && parentMathText->isFontBlackboardSimulated()) {
-                    QPainterPath path;
-                    path.addText(QPointF(xx, y), ff, QString(txt[i]));
-                    painter.drawPath(path);
-                } else {
-                    painter.setFont(ff);
-                    painter.drawText(QPointF(xx, y), QString(txt[i]));
-                }
-                xx=xx+fmff.boundingRect(txt[i]).width();
-            } else {
-                if (currentEv.font==MTEblackboard && parentMathText->isFontBlackboardSimulated()) {
-                    QPainterPath path;
-                    path.addText(QPointF(xx, y), f, QString(txt[i]));
-                    painter.drawPath(path);
-                } else {
-                    painter.setFont(f);
-                    painter.drawText(QPointF(xx, y), QString(txt[i]));
-                }
-                xx=xx+fm.boundingRect(txt[i]).width();
-            }
-            i++;
-        }
+    };
+
+    for (int i=0; i<textpart.size(); i++) {
+        if (fontForcedUpright[i]) drawString(painter, fnonItalic, x+textpartXPos[i], y, textpart[i]);
+        else drawString(painter, f, x+textpartXPos[i], y, textpart[i]);
     }
-    painter.setPen(pold);
-    painter.setFont(fold);
 
     return x+width;
 }
@@ -207,7 +212,6 @@ QString JKQTMathTextTextNode::textTransform(const QString &text, JKQTMathTextEnv
                 switch(c.unicode()) {
                     case '-': txt+=QString(QString(" ")+QChar(0x2212)); break;
                     case '+': txt+=QString(QString(" +")); break;
-                    case '/': txt+=QString(QString(" /")); break;
                     case '<': txt+=QString(QString(" <")); break;
                     case '>': txt+=QString(QString(" >")); break;
                     case '=': txt+=QString(QString(" =")); break;

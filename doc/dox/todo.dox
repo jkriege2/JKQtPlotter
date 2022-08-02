@@ -40,7 +40,6 @@ This page lists several todos and wishes for future version of JKQTPlotter
   </ul></li>
   <li>JKQTMathText:<ul>
     <li>check sub/superscript with italic text in math mode, possibly a correction is necessary</li>
-    <li>explore where QFontMetricsF::horizontalAdvance() can be used (for Qt >=5.15)</li>
     <li>add support for \\bigl,\\bigr,\\Bigr,... commands for fixed-size but large paramtheses</li>
     <li>explore options to make font-environment-modifying commands avails, like "{blacktext\\color{red}redtext}", today only commands like "\\textcolor{red}{redtext}" work</li>
     <li>maybe: add support for text with linebreaks by adding a JKQTMathTextVerticalListNode in addition to JKQTMathTextListNode</li>

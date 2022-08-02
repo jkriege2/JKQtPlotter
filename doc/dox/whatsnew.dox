@@ -52,6 +52,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>IMPROVED/NEW/breaking: refactored whitespace-processing node JKQTMathTextWhitespaceNode, now all major LaTeX whitespace commands are supported properly</li>
     <li>IMPROVED/NEW/breaking: refactored LaTeX parser in JKQTMathText</li>
     <li>REMOVED/breaking: \c \\v[a-zA-Z] and shorthand for \c \\vec{a-zA-Z} was removed, implementation of \c \\bbR,\c \\bbC,... changed</li>
+    <li>IMPROVED/REWORKED rendering of text in text- and math-mode. Now it is more consistent with the output of LaTeX itself</li>
     <li>NEW: now supports new decoration instructions: \c \\cancel, \c \\xcancel, \c \\bcancel, \c \\sout, \c \\ocirc, \c \\widetilde, \c \\widehat, \c \\breve</li>
     <li>NEW: reworked drawing of decorations: improved appearance and positioning!</li>
     <li>NEW: reworked code structure: broke up large, single CPP-files into several smaller files!</li>

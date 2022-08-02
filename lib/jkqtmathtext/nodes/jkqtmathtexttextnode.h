@@ -50,8 +50,12 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextTextNode: public JKQTMathTextNode {
     protected:
         /** \copydoc JKQTMathTextNode::getSizeInternal() */
         virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
+        /** \brief calculates the size of the node, much like JKQTMathTextNode::getSizeInternal(), but returns additional properties that can be reused for drawing */
+        void getSizeInternalAndData(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, QStringList& textpart, QList<bool>& fontForcedUpright, QList<double>& textpartXPos) ;
         /** \brief text-contents of the node */
         QString text;
+        /** \brief split text for Math-Mode into section with "normal" text and "forced upright" text */
+        static void splitTextForMathMode(const QString& txt, QStringList& textpart, QList<bool>& fontForcedUpright);
         /** \brief transforms the text before sizing/drawing (may e.g. exchange special letters for other unicode symbols etc.) */
         virtual QString textTransform(const QString& text, JKQTMathTextEnvironment currentEv, bool forSize=false);
 };

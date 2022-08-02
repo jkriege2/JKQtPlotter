@@ -26,6 +26,17 @@ TestForm::TestForm(QWidget *parent) :
     const QString umla_math="\\ddot{A}\\ddot{a}\\grave{A}\\grave{a}\\acute{A}\\acute{a}\\hat{A}\\hat{a}\\tilde{A}\\tilde{a}\\r{A}\\r{a}\\u{A}\\u{a}\\bar{A}\\bar{a}\\AA\\aa{\\AE}{\\ae}\\check{C}\\check{c}\\ddot{E}\\ddot{e}\\dot{e}\\L\\l\\ddot{O}\\ddot{o}\\grave{O}\\grave{o}\\acute{O}\\acute{o}\\hat{O}\\hat{o}\\tilde{O}\\tilde{o}\\O\\o{\\OE}{\\ae}\\check{S}\\check{s}\\ss\\ddot{U}\\ddot{u}\\grave{U}\\grave{u}\\acute{U}\\acute{u}\\hat{U}\\hat{u}\\tilde{U}\\tilde{u}";
     const QString testTextUmla_math="\\ddot{A}q{\\ddot{u}}\\ddot{{}a}t{\\oe}r00, 123-45+6.0\\%\\S";
     ui->cmbTestset->addItem("text: fonts", "rm: \\textrm{"+testText+"}, sf: \\textsf{"+testText+"}, tt: \\texttt{"+testText+"}, cal: \\textcal{"+testText+"}, scr: \\textscr{"+testText+"}, bb: \\textbb{"+testText+"}, frak: \\textfrak{"+testText+"}, ");
+    ui->cmbTestset->addItem("text/math: font comparison",
+                            "\\begin{matrix}\n"
+                            "  text: & abc123+d/e\\\\\n"
+                            "  textit: & \\textit{abc123+d/e}\\\\\n"
+                            "  textbf: & \\textbf{abc123+d/e}\\\\\n"
+                            "  math: & $abc123+d/e$\\\\\n"
+                            "  mathrm: & $\\mathrm{abc123+d/e}$\\\\\n"
+                            "  mathit: & $\\mathit{abc123+d/e}$\\\\\n"
+                            "  mathbf: & $\\mathbf{abc123+d/e}$\\\\\n"
+                            "  mathfrak: & $\\mathfrak{abc123+d/e}$\n"
+                            "\\end{matrix}");
     ui->cmbTestset->addItem("text: umlaute", umla);
     ui->cmbTestset->addItem("text: umlaute and fonts", "rm: \\textrm{"+testTextUmla+"}, sf: \\textsf{"+testTextUmla+"}, tt: \\texttt{"+testTextUmla+"}, cal: \\textcal{"+testTextUmla+"}, scr: \\textscr{"+testTextUmla+"}, bb: \\textbb{"+testTextUmla+"}, frak: \\textfrak{"+testTextUmla+"}, ");
     ui->cmbTestset->addItem("text: dashes", "hyphen: - endash: -- emdash: --- \\ \\ \\ endash--within text\\ \\ \\ emdash---within text\\ \\ \\ enemdash-----within text\\ \\ \\ ememdash------within text");
@@ -211,7 +222,6 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbTestset->addItem("mathboxed test", "$\\fbox{2^{2^{\\colorbox{red}{2^{x}}}}}$");
     ui->cmbTestset->addItem("axiom of power test", "$\\forall A \\, \\exists P \\, \\forall B \\, [B \\in P \\iff \\forall C \\, (C \\in B \\Rightarrow C \\in A)]$");
     ui->cmbTestset->addItem("math: De Morgan's law", "$\\neg(P\\land Q)\\iff(\\neg P)\\lor(\\neg Q)$ or $\\overline{\\bigcap_{i \\in I} A_{i}}\\equiv\\bigcup_{i \\in I} \\overline{A_{i}}$ or $\\overline{A \\cup B}\\equiv\\overline{A} \\cap \\overline{B}$");
-    ui->cmbTestset->addItem("math: quadratic formula", "$x=\\frac{-b \\pm \\sqrt{b^2-4ac}}{2a}$");
     ui->cmbTestset->addItem("math: combination", "$\\binom{n}{k} = \\frac{n(n-1)...(n-k+1)}{k(k-1)\\dots1}=\\frac{n!}{k!(n-k)!}$");
     ui->cmbTestset->addItem("math: Sophomore's dream 1", "$\\int_0^1 x^{-x}\\,dx = \\sum_{n=1}^\\infty n^{-n}(\\scriptstyle{= 1.29128599706266354040728259059560054149861936827\\dots)}$");
     ui->cmbTestset->addItem("math: Sophomore's dream 2", "$\\int_0^1 x^x   \\,dx = \\sum_{n=1}^\\infty (-1)^{n+1}n^{-n} = - \\sum_{n=1}^\\infty (-n)^{-n} (\\scriptstyle{= 0.78343051071213440705926438652697546940768199014\\dots})$");
@@ -232,6 +242,7 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbTestset->addItem("math: Fokker-Planck Equation", "$\\frac{\\partial}{\\partial t}P(y,t)=-\\frac{\\partial}{\\partial y}\\left[ A(y,t)P(y,t)\\right] +\\frac{\\Gamma}{2}\\frac{\\partial^2}{\\partial y^2}\\left[ P(y,t)\\right]$");
     ui->cmbTestset->addItem("math: Hamilton Equations of motion", "$\\mathcal{H}(\\mathbf{q},\\mathbf{p})=\\frac{\\mathbf{p}^2}{2\\,m}+V(\\mathbf{q})\\ \\ \\ \\text{and}\\ \\ \\ \\dot{q}_k =\\frac{p_k}{m}\\ ,\\ \\dot{p}_k = - \\frac{\\partial V}{\\partial q_k}$");
     ui->cmbTestset->addItem("math: Gaussian Distrubution", "$f(x | \\mu,\\sigma^2)=\\frac{1}{\\sqrt{2\\pi\\sigma^2}}\\operatorname{exp}\\left(-\\frac{(x-\\mu)^2}{2\\sigma^2}\\right)=\\frac{1}{\\sqrt{2\\pi\\sigma^2}} e^{-\\frac{(x-\\mu)^2}{2\\sigma^2}}\\quad -\\infty<x<\\infty$");
+    ui->cmbTestset->addItem("math: quadratic equation", "$x_{1/2} = \\frac{-b\\pm\\sqrt{b^2-4ac}}{2a}$");
     ui->cmbTestset->addItem("math 1", "$f(x)=\\int_{-\\infty}^xe^{-t^2}\\;\\mathrm{d}t$");
     ui->cmbTestset->addItem("math 2", "$\\sum_{i=1}^\\infty\\frac{-e^{i\\pi}}{2^n}$");
     ui->cmbTestset->addItem("math 3", "$\\mbox{det} \\begin{pmatrix} 1 & x_1 & \\ldots & x_1^{n-1} \\\\ 1 & x_2 & \\ldots & x_2^{n-1} \\\\ \\vdots & \\vdots & \\ddots & \\vdots \\\\ 1 & x_n & \\ldots & x_n^{n-1} \\end{pmatrix} = \\prod_{1 \\leq i < j \\leq n} (x_j - x_i) $");
@@ -457,12 +468,12 @@ QTreeWidgetItem *TestForm::createTree(JKQTMathTextNode *node, QTreeWidgetItem* p
     else ti=new QTreeWidgetItem(ui->tree);
 
     if (decoN) {
-        name=QString("MTdecoratedNode: mode='%1'").arg(JKQTMathTextDecoratedNode::DecorationType2String(decoN->getDecoration()));
+        name=QString("DecoratedNode: mode='%1'").arg(JKQTMathTextDecoratedNode::DecorationType2String(decoN->getDecoration()));
         if (decoN->getChild()) ti->addChild(createTree(decoN->getChild(), ti));
     } else if (matrixN)  {
         int l=matrixN->getLines();
         int c=matrixN->getColumns();
-        name=QString("MTmatrixNode: l*c=%1*%2").arg(l).arg(c);
+        name=QString("MatrixNode: l*c=%1*%2").arg(l).arg(c);
         QVector<QVector<JKQTMathTextNode*> > children=matrixN->getChildren();
         for (int y=0; y<l; y++) {
             for (int x=0; x<c; x++) {
@@ -474,48 +485,48 @@ QTreeWidgetItem *TestForm::createTree(JKQTMathTextNode *node, QTreeWidgetItem* p
             }
         }
     } else if (fracN)  {
-        name=QString("MTfracNode: mode='%1'").arg(JKQTMathTextFracNode::FracType2String(fracN->getMode()));
+        name=QString("FracNode: mode='%1'").arg(JKQTMathTextFracNode::FracType2String(fracN->getMode()));
         if (fracN->getChild1()) ti->addChild(createTree(fracN->getChild1(), ti));
         if (fracN->getChild2()) ti->addChild(createTree(fracN->getChild2(), ti));
     } else if (sqrtN)  {
-        name=QString("MTsqrtNode");
+        name=QString("SqrtNode");
         if (sqrtN->getChildDegree()) ti->addChild(createTree(sqrtN->getChildDegree(), ti));
         if (sqrtN->getChild()) ti->addChild(createTree(sqrtN->getChild(), ti));
     } else if (braceN)  {
-        name=QString("MTbraceNode: l='%1', r='%2'").arg(JKQTMathTextBraceType2String(braceN->getOpenbrace())).arg(JKQTMathTextBraceType2String(braceN->getClosebrace()));
+        name=QString("BraceNode: l='%1', r='%2'").arg(JKQTMathTextBraceType2String(braceN->getOpenbrace())).arg(JKQTMathTextBraceType2String(braceN->getClosebrace()));
         if (braceN->getChild()) ti->addChild(createTree(braceN->getChild(), ti));
     } else if (superN)  {
-        name=QString("MTsuperscriptNode");
+        name=QString("SuperscriptNode");
         if (superN->getChild()) ti->addChild(createTree(superN->getChild(), ti));
     } else if (subN)  {
-        name=QString("MTsubscriptNode");
+        name=QString("SubscriptNode");
         if (subN->getChild()) ti->addChild(createTree(subN->getChild(), ti));
     } else if (instS)  {
         name=QString("SimpleInstructionNode: \'%1\' (subsuper=%2, params=%3)").arg(instS->getInstructionName()).arg(instS->isSubSuperscriptAboveBelowNode()).arg(instS->getParameters().join("/"));
     } else if (inst1N)  {
-        name=QString("ModTxtPropsInstructionNode: \'%1\' (subsuper=%2, params=%3)").arg(inst1N->getInstructionName()).arg(inst1N->isSubSuperscriptAboveBelowNode()).arg(inst1N->getParameters().join("/"));
+        name=QString("ModifiedTextPropsInstructionNode: \'%1\' (subsuper=%2, params=%3)").arg(inst1N->getInstructionName()).arg(inst1N->isSubSuperscriptAboveBelowNode()).arg(inst1N->getParameters().join("/"));
         if (inst1N->getChild()) ti->addChild(createTree(inst1N->getChild(), ti));
     } else if (inst1B)  {
         name=QString("BoxInstructionNode: \'%1\' (subsuper=%2, params=%3)").arg(inst1B->getInstructionName()).arg(inst1B->isSubSuperscriptAboveBelowNode()).arg(inst1B->getParameters().join("/"));
         if (inst1B->getChild()) ti->addChild(createTree(inst1B->getChild(), ti));
     } else if (lstN)  {
-        name=QString("HListNode");
+        name=QString("HorizontalListNode");
         QList<JKQTMathTextNode*> list=lstN->getChildren();
         for (int i=0; i<list.size(); i++) {
             ti->addChild(createTree(list[i], ti));
         }
     } else if (lstNV)  {
-        name=QString("VListNode (align=%1, spacingFactor=%2x, spacingMode=%3, verticalOrientation=%4)").arg(JKQTMathTextHorizontalAlignment2String(lstNV->getAlignment())).arg(lstNV->getLineSpacingFactor()).arg(lstNV->SpacingMode2String(lstNV->getSpacingMode())).arg(JKQTMathTextVerticalOrientation2String(lstNV->getVerticalOrientation()));
+        name=QString("VerticalListNode (align=%1, spacingFactor=%2x, spacingMode=%3, verticalOrientation=%4)").arg(JKQTMathTextHorizontalAlignment2String(lstNV->getAlignment())).arg(lstNV->getLineSpacingFactor()).arg(lstNV->SpacingMode2String(lstNV->getSpacingMode())).arg(JKQTMathTextVerticalOrientation2String(lstNV->getVerticalOrientation()));
         QList<JKQTMathTextNode*> list=lstNV->getChildren();
         for (int i=0; i<list.size(); i++) {
             ti->addChild(createTree(list[i], ti));
         }
     } else if (symN)  {
-        name=QString("MTSymbolNode: \'%1\' (subsuper=%3)").arg(symN->getSymbolName()).arg(symN->isSubSuperscriptAboveBelowNode());
+        name=QString("SymbolNode: \'%1\' (subsuper=%3)").arg(symN->getSymbolName()).arg(symN->isSubSuperscriptAboveBelowNode());
     } else if (spN)  {
-        name=QString("MTWhitespaceNode :type=%1, count=%2").arg(spN->Type2String(spN->getWhitespaceType())).arg(spN->getWhitespaceCount());
+        name=QString("WhitespaceNode :type=%1, count=%2").arg(spN->Type2String(spN->getWhitespaceType())).arg(spN->getWhitespaceCount());
     } else if (txtN)  {
-        name=QString("MTTextNode: \'%1\'").arg(txtN->getText());
+        name=QString("TextNode: \'%1\'").arg(txtN->getText());
     } else {
         name=QString("unknown");
     }
