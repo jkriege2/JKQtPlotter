@@ -1,6 +1,6 @@
 /*!
 
-\defgroup jkqtmathtext JKQTMathText LaTeX-Renderer for Qt
+  \defgroup jkqtmathtext JKQTMathText LaTeX-Renderer for Qt
 
 	This group contains JKQTMathText, a self-contained LaTeX-renderer for Qt. It is used to renderer
 	labels in JKQTPlotter, but can be used independently. The class does not depend on any library, 
@@ -18,22 +18,45 @@
   \image html jkqtmathtext/jkqtmathtext_sqrt.png
   \image html jkqtmathtext/jkqtmathtext_OldEnglish.png
 
-  
-  \defgroup jkqtmathtext_render Main (Render) Class (JKQTMathText)
+  \defgroup jkqtmathtext_general General Information
   \ingroup jkqtmathtext
 
-  \defgroup jkqtmathtext_items Render-Tree Items for JKQTMathText
+  This group assembles general information around JKQTMathText. It explains the rendering model, lists the supported LaTeX-subset etc.
+
+  
+  \defgroup jkqtmathtext_render Math Renderer Class (JKQTMathText)
   \ingroup jkqtmathtext
+  
+  This group contains the main rendering class JKQTMathText, which is the central access point for the functionality of this library.
+  This class is a non-visual class that allows to parse a string and draw the resulting object tree (see \ref jkqtmathtext_items )
+  using a <a href="https://doc.qt.io/qt-6/qpainter.html">QPainter</a> onto any target supported by the Qt painter library.
+  
+  \note There are additional widget classes available in \ref jkqtmathtext_widgets 
 
   \defgroup jkqtmathtext_widgets Widgets using JKQTMathText
   \ingroup jkqtmathtext
 
-  \defgroup jkqtmathtext_tools Tool Functions and Types for JKQTMathText
+  This group contains widgets that use JKQTMathText in order to render math onto the screen.
+
+  \defgroup jkqtmathtext_interaltools Library-internal Types and Functions
   \ingroup jkqtmathtext
+  
+  This group contains all library-internal classes, types and functions. 
+  Normal users of the library do note have to have knowledge of these. They are important,
+  if you want to extend the functionality of the class.
+  
+  \defgroup jkqtmathtext_items Render-Tree Items for JKQTMathText
+  \ingroup jkqtmathtext_interaltools
+  
+  This group contains all classes that are used to build a memory-representation of the math to be rendered.
+  They form a tree in memory.
+
+  \defgroup jkqtmathtext_tools Tool Functions and Types for JKQTMathText
+  \ingroup jkqtmathtext_interaltools
   
   
   \defgroup jkqtmathtext_libfacilities Library Facilities for JKQTMathText
-  \ingroup jkqtmathtext
+  \ingroup jkqtmathtext_interaltools
 
 
 */

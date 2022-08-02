@@ -1,0 +1,42 @@
+/*!
+
+  \defgroup jkqtmathtext_renderingmodel JKQTMathText Rendering Model
+  \ingroup jkqtmathtext_general
+
+  JKQTMathText parses an (LaTeX) input string of mathematicalkmarkup and in a first step generates a memory representation of the it (cf. \ref jkqtmathtext_items ).
+  Then this memory representation is used to draw the represented math using the renndering API of <a href="https://doc.qt.io/qt-6/qpainter.html">QPainter</a>.
+  
+  As an example, we look at the following LaTeX markup, representing the solution to a quadratic equation:
+  
+  \code{.tex}
+    $x_{1/2} = \frac{-b\pm\sqrt{b^2-4ac}}{2a}$
+  \endcode
+  
+  LaTeX itself would render this as follows:
+  
+  \image html jkqtmathtext/jkqtmathtext_doc_quadraticeq_latex.png
+  
+  JKQTMathText produces this output:
+
+  \image html jkqtmathtext/jkqtmathtext_doc_quadraticeq.png
+
+  The memory representation of the expression above looks like this:
+  
+  \image html jkqtmathtext/jkqtmathtext_doc_quadraticeq_tree.png
+
+  \note  The memory representation is independent of the actual math markup language (e.g. LaTeX) which was initially parsed. 
+  But of course it is modelled, so the features of the supported markup languages are supported by the memory model.
+
+
+  You can see that each node corresponds to a box, if these are overlayed over the rendering:
+  
+  \image html jkqtmathtext/jkqtmathtext_doc_quadraticeq_boxes.png
+  
+  
+  The box, representing each node, is characterized by its width and height, as well as the ascent (or "baseline-height"):
+  
+  \image html jkqtmathtext_node_geo.png
+  
+   
+
+*/
