@@ -182,7 +182,7 @@ double JKQTMathTextTextNode::draw(QPainter& painter, double x, double y, JKQTMat
 }
 
 bool JKQTMathTextTextNode::toHtml(QString &html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) {
-    html=html+currentEv.toHtmlStart(defaultEv)+text+currentEv.toHtmlAfter(defaultEv);
+    html=html+currentEv.toHtmlStart(defaultEv, parentMathText)+text+currentEv.toHtmlAfter(defaultEv, parentMathText);
     return true;
 }
 

@@ -266,6 +266,12 @@ struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextEnvironment {
     bool strike;
     /** \brief is the text currently are we inside a math environment? */
     bool insideMath;
+    /** \brief if \a insideMath \c ==true and this is \c  true (the default), then digits are forced to be typeset in upright, otherwise they are typeset as defined by the other properties */
+    bool insideMathForceDigitsUpright;
+    /** \brief sets  insideMath \c =true and insideMathForceDigitsUpright \c =true */
+    void beginMathMode();
+    /** \brief sets  insideMath \c =false and insideMathForceDigitsUpright \c =true */
+    void endMathMode();
 
 
     /** \brief build a QFont object from the settings in this object */
@@ -277,13 +283,13 @@ struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextEnvironment {
      * \param defaultEv environment before applying the current object (to detect changes)
      * \see toHtmlAfter()
      */
-    QString toHtmlStart(JKQTMathTextEnvironment defaultEv) const;
+    QString toHtmlStart(JKQTMathTextEnvironment defaultEv, JKQTMathText *parentMathText) const;
     /** \brief generate a HTML postfix that formats the text in front of it according to the settings in this object
      *
      * \param defaultEv environment before applying the current object (to detect changes)
      * \see toHtmlAfter()
      */
-    QString toHtmlAfter(JKQTMathTextEnvironment defaultEv) const;
+    QString toHtmlAfter(JKQTMathTextEnvironment defaultEv, JKQTMathText *parentMathText) const;
 };
 
 /** \brief beschreibt die Größe eines Knotens

@@ -279,7 +279,7 @@ bool JKQTMathTextSymbolNode::toHtml(QString &html, JKQTMathTextEnvironment curre
     ev.fontSize=ev.fontSize*props.html.fontScalingFactor;
     if (has(props.globalFlags, ExtendWidthInMathmode)) s="&thinsp;"+s+"&thinsp;";
     if (has(props.globalFlags, MakeWhitespaceHalf)) s.replace(" ", "&thinsp;");
-    if (ok) html=html+ev.toHtmlStart(defaultEv)+s+ev.toHtmlAfter(defaultEv);
+    if (ok) html=html+ev.toHtmlStart(defaultEv, parentMathText)+s+ev.toHtmlAfter(defaultEv, parentMathText);
     return ok;
 }
 
@@ -359,6 +359,16 @@ JKQTMathTextSymbolNode::SymbolFullProps JKQTMathTextSymbolNode::MathOperatorSymb
 JKQTMathTextSymbolNode::SymbolFullProps JKQTMathTextSymbolNode::NarrowMathOperatorSymbolUnicode(const QString &unicode)
 {
     return SymbolFullProps(MTFEUnicode, SymbolProps(unicode, ItalicOff|BoldOff, 1.0, 0.0)).addGlobalFlags(SmallExtendWidthInMathmode|MakeWhitespaceHalf);
+}
+
+JKQTMathTextSymbolNode::SymbolFullProps JKQTMathTextSymbolNode::NarrowMathOperatorSymbolStd(const QString &symbol)
+{
+    return NarrowMathOperatorSymbolStd(symbol,symbol);
+}
+
+JKQTMathTextSymbolNode::SymbolFullProps JKQTMathTextSymbolNode::NarrowMathOperatorSymbolStd(const QString &symbol, const QString &symbolHTML)
+{
+    return SymbolFullProps(MTFEStandard, SymbolProps(symbol, ItalicOff|BoldOff, 1.0, 0.0)).addHtml(symbol, ItalicOff|BoldOff, 1.0, 0.0).addGlobalFlags(SmallExtendWidthInMathmode|MakeWhitespaceHalf);
 }
 
 JKQTMathTextSymbolNode::SymbolFullProps JKQTMathTextSymbolNode::GreekLetter_WinSymbol_Unicode_Html(const QString &letterWinSymbol, const QString &letterUnicode, const QString &html)
@@ -640,6 +650,7 @@ void JKQTMathTextSymbolNode::fillSymbolTables()
      **************************************************************************************/
     { auto s=MathOperatorSymbolUnicode(QChar(0x2217)).addMathOperatorStd("*").addMathOperatorHtml("*");
         symbols["*"]=s; symbols["ast"]=s; symbols["asterisk"]=s; }
+    symbols["/"]=NarrowMathOperatorSymbolStd("/");
     symbols["+"]=MathOperatorSymbolUnicode(QChar(0x2B)).addMathOperatorHtml("+").addMathOperatorStd("+");
     symbols["-"]=MathOperatorSymbolUnicode(QChar(0x2212)).addMathOperatorHtml("-").addMathOperatorStd("-");
     symbols["<"]=MathOperatorSymbol("<", "&lt;");

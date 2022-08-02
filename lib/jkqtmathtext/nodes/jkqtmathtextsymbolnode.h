@@ -275,8 +275,12 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSymbolNode: public JKQTMathTextNode {
         static SymbolFullProps UprightSymbolUnicode(const QString& symbol, const QString& html=QString());
         /** \brief constructs a SymbolProps for a math-operator symbol like \c \\pm ... in unicode-full-encoding, i.e. ItalicOff, BoldOff, ExtendWidthInMathmode */
         static SymbolFullProps MathOperatorSymbolUnicode(const QString& unicode);
-        /** \brief constructs a SymbolProps for a math-operator symbol like \c \\pm ... in unicode-full-encoding, i.e. ItalicOff, BoldOff, SmallExtendWidthInMathmode */
+        /** \brief constructs a SymbolProps for a narrow math-operator symbol like \c \\pm ... in unicode-full-encoding, i.e. ItalicOff, BoldOff, SmallExtendWidthInMathmode */
         static SymbolFullProps NarrowMathOperatorSymbolUnicode(const QString& unicode);
+        /** \brief constructs a SymbolProps for a narrow math-operator symbol like \c \\pm ... in unicode-full-encoding, i.e. ItalicOff, BoldOff, SmallExtendWidthInMathmode */
+        static SymbolFullProps NarrowMathOperatorSymbolStd(const QString& symbol);
+        /** \brief constructs a SymbolProps for a narrow math-operator symbol like \c \\pm ... in unicode-full-encoding, i.e. ItalicOff, BoldOff, SmallExtendWidthInMathmode */
+        static SymbolFullProps NarrowMathOperatorSymbolStd(const QString& symbol, const QString& symbolHTML);
 
 
         /** \brief symbols that can be generated in any standard-font */
