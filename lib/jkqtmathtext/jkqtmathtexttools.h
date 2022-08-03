@@ -169,7 +169,7 @@ JKQTMATHTEXT_LIB_EXPORT QString JKQTMathTextBraceType2String(JKQTMathTextBraceTy
 /** \brief convert a string \a tokenName describing a LaTeX Token or Instruction into an opening or closing JKQTMathTextBraceType
  *  \ingroup jkqtmathtext_tools
  */
-JKQTMATHTEXT_LIB_EXPORT JKQTMathTextBraceType TokenName2JKQTMathTextBraceType(const QString& tokenName);
+JKQTMATHTEXT_LIB_EXPORT JKQTMathTextBraceType TokenName2JKQTMathTextBraceType(const QString& tokenName, bool *isOpening=nullptr);
 /** \brief convert a string \a tokenName describing a LaTeX Instruction into an opening JKQTMathTextBraceType
  *  \ingroup jkqtmathtext_tools
  *

@@ -76,9 +76,9 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextWhitespaceNode: public JKQTMathTextNod
         virtual QString getTypeName() const override;
         /** \copydoc JKQTMathTextNode::toHtml() */
         virtual bool toHtml(QString& html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) override;
-        /** \brief copydoc WhitespaceProps::type */
+        /** \copydoc WhitespaceProps::type */
         Types getWhitespaceType() const;
-        /** \brief copydoc WhitespaceProps::count */
+        /** \copydoc WhitespaceProps::count */
         size_t getWhitespaceCount() const;
         /** \copydoc JKQTMathTextNode::draw() */
         virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
@@ -101,6 +101,53 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextWhitespaceNode: public JKQTMathTextNod
         static QHash<QString, WhitespaceProps> supportedInstructions;
         /** \brief initializes supportedInstructions */
         static void fillSupportedInstructions();
+};
+
+
+/** \brief subclass representing an empty bbox with defined width/height in the syntax tree
+ *  \ingroup jkqtmathtext_items
+ *
+ */
+class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextEmptyBoxNode: public JKQTMathTextNode {
+    public:
+        enum Units {
+            EBUem,  /*!< \brief 1em = width('M') */
+            EBUex,  /*!< \brief 1ex = xHeight */
+        };
+        /** \brief converts Types \a type into a string */
+        static QString Units2String(Units type);
+        /** \brief converts Types \a type into a string */
+        static Units String2Units(QString type);
+        /** \brief converts Types \a type into its width in pixels, based on \a currentEv and \a pd */
+        double Units2PixelWidth(double value, Units unit, JKQTMathTextEnvironment currentEv, QPaintDevice *pd) const;
+        /** \brief constructs a node */
+        explicit JKQTMathTextEmptyBoxNode(JKQTMathText* parent, double width_, Units widthUnit_, double height_, Units heightUnit_);
+        virtual ~JKQTMathTextEmptyBoxNode() override;
+        /** \copydoc JKQTMathTextNode::getTypeName() */
+        virtual QString getTypeName() const override;
+        /** \copydoc JKQTMathTextNode::toHtml() */
+        virtual bool toHtml(QString& html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) override;
+        /** \copydoc widthUnit */
+        Units getWidthUnit() const;
+        /** \copydoc width */
+        double getWidth() const;
+        /** \copydoc heightUnit */
+        Units getHeightUnit() const;
+        /** \copydoc height */
+        double getHeight() const;
+        /** \copydoc JKQTMathTextNode::draw() */
+        virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
+    protected:
+        /** \copydoc JKQTMathTextNode::getSizeInternal() */
+        virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
+        /** \brief width of the (empty) box, units of this value defined in widthUnit */
+        double width;
+        /** \biref units to interpret width */
+        Units widthUnit;
+        /** \brief height of the (empty) box, units of this value defined in heightUnit */
+        double height;
+        /** \biref units to interpret height */
+        Units heightUnit;
 };
 
 #endif // JKQTMATHTEXTWHITESPACENODE_H

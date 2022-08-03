@@ -358,18 +358,29 @@ QString JKQTMathTextBraceType2String(JKQTMathTextBraceType type) {
     return "???";
 }
 
-JKQTMathTextBraceType TokenName2JKQTMathTextBraceType(const QString &tokenName)
+JKQTMathTextBraceType TokenName2JKQTMathTextBraceType(const QString &tokenName, bool* isOpening)
 {
-    if (tokenName=="(" || tokenName==")") return MTBTParenthesis;
-    if (tokenName=="[" || tokenName=="]") return MTBTSquareBracket;
-    if (tokenName=="{" || tokenName=="}") return MTBTCurlyBracket;
-    if (tokenName=="|") return MTBTSingleLine;
-    if (tokenName=="||" || tokenName=="#") return MTBTDoubleLine;
-    if (tokenName=="<" || tokenName==">" || tokenName=="langle" || tokenName=="rangle") return MTBTAngleBracket;
-    if (tokenName=="_" || tokenName=="lfloor" || tokenName=="rfloor") return MTBTFloorBracket;
-    if (tokenName=="~" || tokenName=="lceil" || tokenName=="rceil") return MTBTCeilBracket;
-    if (tokenName=="ulcorner" || tokenName=="urcorner"||tokenName=="tlcorner" || tokenName=="trcorner") return MTBTTopCorner;
-    if (tokenName=="blcorner" || tokenName=="brcorner"||tokenName=="llcorner" || tokenName=="lrcorner") return MTBTBottomCorner;
+    if (tokenName=="(") { if (isOpening) *isOpening=true; return MTBTParenthesis; }
+    if (tokenName==")") { if (isOpening) *isOpening=false; return MTBTParenthesis; }
+    if (tokenName=="[") { if (isOpening) *isOpening=true; return MTBTSquareBracket; }
+    if (tokenName=="]") { if (isOpening) *isOpening=false; return MTBTSquareBracket; }
+    if (tokenName=="{") { if (isOpening) *isOpening=true; return MTBTCurlyBracket; }
+    if (tokenName=="}") { if (isOpening) *isOpening=false; return MTBTCurlyBracket; }
+    if (tokenName=="|") { if (isOpening) *isOpening=true; return MTBTSingleLine; }
+    if (tokenName=="||" || tokenName=="#") { if (isOpening) *isOpening=true; return MTBTDoubleLine; }
+
+    if (tokenName=="<" || tokenName=="langle") { if (isOpening) *isOpening=true; return MTBTAngleBracket; }
+    if (tokenName==">" || tokenName=="rangle") { if (isOpening) *isOpening=false; return MTBTAngleBracket; }
+    if (tokenName=="_" || tokenName=="lfloor") { if (isOpening) *isOpening=true; return MTBTFloorBracket; }
+    if (tokenName=="_" || tokenName=="rfloor") { if (isOpening) *isOpening=false; return MTBTFloorBracket; }
+    if (tokenName=="~" || tokenName=="lceil") { if (isOpening) *isOpening=true; return MTBTCeilBracket; }
+    if (tokenName=="~" || tokenName=="rceil") { if (isOpening) *isOpening=false; return MTBTCeilBracket; }
+    if (tokenName=="ulcorner" || tokenName=="tlcorner") { if (isOpening) *isOpening=true; return MTBTTopCorner; }
+    if (tokenName=="urcorner" || tokenName=="trcorner") { if (isOpening) *isOpening=false; return MTBTTopCorner; }
+    if (tokenName=="blcorner" || tokenName=="llcorner") { if (isOpening) *isOpening=true; return MTBTBottomCorner; }
+    if (tokenName=="brcorner" || tokenName=="lrcorner") { if (isOpening) *isOpening=false; return MTBTBottomCorner; }
+    if (isOpening) *isOpening=true;
+
     if (tokenName=="any") return MTBTAny;
     if (tokenName=="." || tokenName=="" || tokenName=="none") return MTBTNone;
     return MTBTUnknown;

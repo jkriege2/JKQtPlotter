@@ -591,6 +591,32 @@ void JKQTMathTextModifiedTextPropsInstructionNode::fillInstructions()
         }, 0);
         instructions["scriptscriptstyle"]= i;
     }
+
+
+    {
+        InstructionProperties i([](JKQTMathTextEnvironment& ev, const QStringList& /*parameters*/) {
+            ev.fontSize=ev.fontSize*1.2;
+        }, 0);
+        instructions["bigsize"]= i;
+    }
+    {
+        InstructionProperties i([](JKQTMathTextEnvironment& ev, const QStringList& /*parameters*/) {
+            ev.fontSize=ev.fontSize*1.85;
+        }, 0);
+        instructions["Bigsize"]= i;
+    }
+    {
+        InstructionProperties i([](JKQTMathTextEnvironment& ev, const QStringList& /*parameters*/) {
+            ev.fontSize=ev.fontSize*2.4;
+        }, 0);
+        instructions["biggsize"]= i;
+    }
+    {
+        InstructionProperties i([](JKQTMathTextEnvironment& ev, const QStringList& /*parameters*/) {
+            ev.fontSize=ev.fontSize*3.1;
+        }, 0);
+        instructions["Biggsize"]= i;
+    }
 }
 
 JKQTMathTextModifiedTextPropsInstructionNode::InstructionProperties::InstructionProperties():

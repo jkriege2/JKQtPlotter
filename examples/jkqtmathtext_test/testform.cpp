@@ -195,6 +195,7 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbTestset->addItem("text/math: brace test:  non-left/right top-corner", "text: \\ulcorner\\ulcorner\\ulcorner r^{123}\\urcorner\\urcorner\\urcorner -- math: $\\ulcorner\\ulcorner\\ulcorner r^{123}\\urcorner\\urcorner\\urcorner$");
     ui->cmbTestset->addItem("text/math: brace test:  non-left/right bottom-corner", "text: \\llcorner\\llcorner\\llcorner r^{123}\\lrcorner\\lrcorner\\lrcorner -- math: $\\llcorner\\llcorner\\llcorner r^{123}\\lrcorner\\lrcorner\\lrcorner$");
     ui->cmbTestset->addItem("text/math: brace test:  non-left/right { | }", "text: \\{r^{123}|r\\equiv 5\\} -- math: $\\{r^{123}|r\\equiv 5\\}$");
+    ui->cmbTestset->addItem("math: brace test:  bigl/Bigl/... mixed", "math: $\\Biggl\\langle\\biggl\\{\\Bigl[\\bigl(( r^{123})\\bigr)\\Bigr]\\biggr\\}\\Biggr\\rangle$");
     ui->cmbTestset->addItem("text/math: sub-, superscript test", "text: r^{1234}_{321} r_{321}^{1234} -- math: $r^{1234}_{321} r_{321}^{1234} -- \\kappa^2 -- \\kappa_2 -- \\kappa_2^2$");
     ui->cmbTestset->addItem("text/math: super-, subscript test", "text: r^{123}_{4321} r_{4321}^{123} -- math: $r^{123}_{4321} r_{4321}^{123} -- \\kappa^2 -- \\kappa_2 -- \\kappa_2^2$");
     //ui->cmbTestset->addItem("", "");
@@ -462,6 +463,7 @@ QTreeWidgetItem *TestForm::createTree(JKQTMathTextNode *node, QTreeWidgetItem* p
     JKQTMathTextFracNode* fracN=dynamic_cast<JKQTMathTextFracNode*>(node);
     JKQTMathTextMatrixNode* matrixN=dynamic_cast<JKQTMathTextMatrixNode*>(node);
     JKQTMathTextDecoratedNode* decoN=dynamic_cast<JKQTMathTextDecoratedNode*>(node);
+    JKQTMathTextEmptyBoxNode* emptyN=dynamic_cast<JKQTMathTextEmptyBoxNode*>(node);
 
     QTreeWidgetItem* ti=nullptr;
     if (parent) ti=new QTreeWidgetItem(parent);
@@ -527,6 +529,8 @@ QTreeWidgetItem *TestForm::createTree(JKQTMathTextNode *node, QTreeWidgetItem* p
         name=QString("WhitespaceNode :type=%1, count=%2").arg(spN->Type2String(spN->getWhitespaceType())).arg(spN->getWhitespaceCount());
     } else if (txtN)  {
         name=QString("TextNode: \'%1\'").arg(txtN->getText());
+    } else if (emptyN)  {
+        name=QString("EmptyBoxNode %1%2 x %3%4").arg(emptyN->getWidth()).arg(JKQTMathTextEmptyBoxNode::Units2String(emptyN->getWidthUnit())).arg(emptyN->getHeight()).arg(JKQTMathTextEmptyBoxNode::Units2String(emptyN->getHeightUnit()));
     } else {
         name=QString("unknown");
     }

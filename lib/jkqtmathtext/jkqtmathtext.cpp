@@ -1008,8 +1008,10 @@ JKQTMathText::tokenType JKQTMathText::getToken() {
         auto fAddUml=[](const QString& cmd, const QChar& letter, const QChar& ch) {
             QString i;
             if (cmd.size()>0 && !letter.isNull()) {
-                i="\\"+cmd+letter;
-                accentLetters[i]=ch; accentLetters_LenBackslash.insert(i.size());
+                if (cmd.size()==1 && !cmd[0].isLetter()) {
+                    i="\\"+cmd+letter;
+                    accentLetters[i]=ch; accentLetters_LenBackslash.insert(i.size());
+                }
                 i="{\\"+cmd+letter+"}";
                 accentLetters[i]=ch; accentLetters_LenCurly.insert(i.size());
                 i="\\"+cmd+"{"+letter+"}";
@@ -1490,6 +1492,11 @@ JKQTMathText::tokenType JKQTMathText::getToken() {
     return currentToken=MTTnone;
 }
 
+void JKQTMathText::giveBackToTokenizer(size_t count)
+{
+    currentTokenID-=count;
+}
+
 JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType quitOnClosingBrace, const QString& quitOnEnvironmentEnd, bool quitOnClosingBracket) {
     //std::cout<<"    entering parseLatexString()\n";
     JKQTMathTextHorizontalListNode* nl=new JKQTMathTextHorizontalListNode(this);
@@ -1499,7 +1506,7 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
     // initialize some static sets for easy and fast character lookup
     static QSet<QString> mathEnvironmentSpecialText;
     if (mathEnvironmentSpecialText.size()==0) {
-        mathEnvironmentSpecialText<<"+"<<"-"<<"="<<"*"<<"<"<<">"<<"|"<<"/";
+        mathEnvironmentSpecialText<<"+"<<"-"<<"="<<"*"<<"<"<<">";
     }
 
     bool getNew=true;
@@ -1769,6 +1776,28 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
 }
 
 JKQTMathTextNode* JKQTMathText::parseInstruction(bool *_foundError, bool* getNew) {
+    static QHash<QString,double> big_instructions_family;
+    if (big_instructions_family.size()==0) {
+        big_instructions_family["big"]=0.85;//1.2;
+        big_instructions_family["bigl"]=0.85;//1.2;
+        big_instructions_family["bigm"]=0.85;//1.2;
+        big_instructions_family["bigr"]=0.85;//1.2;
+
+        big_instructions_family["Big"]=1.15;//1.85;
+        big_instructions_family["Bigl"]=1.15;//1.85;
+        big_instructions_family["Bigm"]=1.15;//1.85;
+        big_instructions_family["Bigr"]=1.15;//1.85;
+
+        big_instructions_family["bigg"]=1.45;//2.4;
+        big_instructions_family["biggl"]=1.45;//2.4;
+        big_instructions_family["biggm"]=1.45;//2.4;
+        big_instructions_family["biggr"]=1.45;//2.4;
+
+        big_instructions_family["Bigg"]=1.75;//3.1;
+        big_instructions_family["Biggl"]=1.75;//3.1;
+        big_instructions_family["Biggm"]=1.75;//3.1;
+        big_instructions_family["Biggr"]=1.75;//3.1;
+    }
     if (currentToken!=MTTinstruction) {
         if (_foundError) *_foundError=true;
         if (getNew) *getNew=false;
@@ -1786,6 +1815,42 @@ JKQTMathTextNode* JKQTMathText::parseInstruction(bool *_foundError, bool* getNew
         child=new JKQTMathTextSymbolNode(this, currentInstructionName);
         if (JKQTMathTextSymbolNode::isSubSuperscriptBelowAboveSymbol(currentInstructionName) && parsingMathEnvironment) {
             child->setSubSuperscriptAboveBelowNode(true);
+        }
+        if (getNew) *getNew=true;
+    } else if (big_instructions_family.contains(currentInstructionName)) {
+        // after \big,\bigl... we expect a symbol-instruction or at least one character of text
+        while (getToken()==MTTwhitespace);// eat whitespace
+
+        JKQTMathTextBraceType bracetype=MTBTUnknown;
+        bool openbrace=true;
+        if (currentToken==MTTinstruction) {
+            bracetype=TokenName2JKQTMathTextBraceType(currentTokenName, &openbrace);
+        } else if (currentToken==MTTtext) {
+            const QString firstTokenChar(currentTokenName[0]);
+            bracetype=TokenName2JKQTMathTextBraceType(firstTokenChar, &openbrace);
+            if (bracetype!=MTBTUnknown) {
+                giveBackToTokenizer(currentTokenName.size()-1);
+            } else {
+                giveBackToTokenizer(currentTokenName.size());
+            }
+        } else if (currentToken==MTTopenbracket) {
+            bracetype=MTBTSquareBracket;
+            openbrace=true;
+        } else if (currentToken==MTTclosebracket) {
+            bracetype=MTBTSquareBracket;
+            openbrace=false;
+        } else {
+            error_list.append(tr("error @ ch. %1: expected symbol-encoding instruction or a character after '\\%2' command, but found token type %3").arg(currentTokenID).arg(currentInstructionName).arg(tokenType2String(currentToken)));
+        }
+        if (bracetype!=MTBTUnknown) {
+            JKQTMathTextEmptyBoxNode* sizeChild=new JKQTMathTextEmptyBoxNode(this, 0, JKQTMathTextEmptyBoxNode::EBUem, big_instructions_family[currentInstructionName], JKQTMathTextEmptyBoxNode::EBUem);
+            if (openbrace) {
+                child=new JKQTMathTextBraceNode(this, bracetype, MTBTNone, sizeChild);
+            } else {
+                child=new JKQTMathTextBraceNode(this, MTBTNone, bracetype, sizeChild);
+            }
+        } else {
+            error_list.append(tr("error @ ch. %1: expected symbol-encoding instruction or character after '\\%2' command").arg(currentTokenID).arg(currentInstructionName));
         }
         if (getNew) *getNew=true;
     } else if (JKQTMathTextModifiedTextPropsInstructionNode::supportsInstructionName(currentInstructionName)) {
@@ -2126,6 +2191,29 @@ void JKQTMathText::draw(QPainter& painter, unsigned int flags, QRectF rect, bool
 JKQTMathTextNode *JKQTMathText::getNodeTree() const {
     if (useUnparsed) return unparsedNode;
     return parsedNode;
+}
+
+QString JKQTMathText::tokenType2String(tokenType type)
+{
+    switch(type) {
+      case MTTnone: return "MTTnone";
+      case MTTtext: return "MTTtext";
+      case MTTinstruction: return "MTTinstruction";
+      case MTTinstructionNewline: return "MTTinstructionNewline";
+      case MTTunderscore: return "MTTunderscore";
+      case MTThat: return "MTThat";
+      case MTTdollar: return "MTTdollar";
+      case MTTopenbrace: return "MTTopenbrace";
+      case MTTclosebrace: return "MTTclosebrace";
+      case MTTopenbracket: return "MTTopenbracket";
+      case MTTclosebracket: return "MTTclosebracket";
+      case MTTwhitespace: return "MTTwhitespace";
+      case MTTampersand: return "MTTampersand";
+      case MTThyphen: return "MTThyphen";
+      case MTTendash: return "MTTendash";
+      case MTTemdash: return "MTTemdash";
+    }
+    return "???";
 }
 
 

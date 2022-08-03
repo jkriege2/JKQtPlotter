@@ -729,9 +729,13 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
             MTTendash,  /*!< \brief the en-dash character sequence \c "--" in text-mode */
             MTTemdash,  /*!< \brief the em-dash character sequence \c "---" in text-mode */
         };
+        /** \biref convert a tokenType into a string, e.g. for debugging output */
+        static QString tokenType2String(tokenType type);
 
         /** \brief tokenizer for the LaTeX parser */
         tokenType getToken();
+        /** \brief returns some characters to the Tokenizer */
+        void giveBackToTokenizer(size_t count);
         /** \brief parse a LaTeX string
          *
          *  \param get if \c true this calls getToken()

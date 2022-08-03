@@ -102,8 +102,9 @@ size_t JKQTMathTextWhitespaceNode::getWhitespaceCount() const
     return whitespace.count;
 }
 
-double JKQTMathTextWhitespaceNode::draw(QPainter &painter, double x, double /*y*/, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize *prevNodeSize)
+double JKQTMathTextWhitespaceNode::draw(QPainter &painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize *prevNodeSize)
 {
+    doDrawBoxes(painter, x,y,currentEv);
     double width=0, bh=0, oh=0, sp=0;
     getSize(painter, currentEv, width, bh, oh, sp, prevNodeSize);
     return x+width;
@@ -215,3 +216,101 @@ QString JKQTMathTextWhitespaceNode::Type2HTML(Types type)
     return " ";
 }
 
+
+QString JKQTMathTextEmptyBoxNode::Units2String(Units type)
+{
+    switch(type) {
+    case EBUem: return "em";
+    case EBUex: return "ex";
+    }
+    return "?";
+}
+
+JKQTMathTextEmptyBoxNode::Units JKQTMathTextEmptyBoxNode::String2Units(QString type)
+{
+    type=type.toLower().trimmed();
+    if (type=="ex") return EBUex;
+    if (type=="em") return EBUem;
+    return EBUem;
+}
+
+double JKQTMathTextEmptyBoxNode::Units2PixelWidth(double value, Units unit, JKQTMathTextEnvironment currentEv, QPaintDevice *pd) const
+{
+    const QFontMetricsF fm(currentEv.getFont(parentMathText), pd);
+    if (unit==EBUem) {
+#if (QT_VERSION>=QT_VERSION_CHECK(5, 15, 0))
+        const double em=fm.horizontalAdvance(QChar(0x2003));//currentEv.fontSize;
+#else
+        const double em=fm.width(QChar(0x2003));//currentEv.fontSize;
+#endif
+        return value*em;
+    } else if (unit==EBUex) {
+        const double ex=fm.xHeight();
+        return value*ex;
+    }
+    return 0;
+}
+
+JKQTMathTextEmptyBoxNode::JKQTMathTextEmptyBoxNode(JKQTMathText *parent, double width_, Units widthUnit_, double height_, Units heightUnit_):
+    JKQTMathTextNode(parent),
+    width(width_), widthUnit(widthUnit_),
+    height(height_),heightUnit(heightUnit_)
+{
+
+}
+
+JKQTMathTextEmptyBoxNode::~JKQTMathTextEmptyBoxNode()
+{
+
+}
+
+QString JKQTMathTextEmptyBoxNode::getTypeName() const
+{
+    return QString("JKQTMathTextEmptyBoxNode(%1%2 x %3%4)").arg(getWidth()).arg(JKQTMathTextEmptyBoxNode::Units2String(getWidthUnit())).arg(getHeight()).arg(JKQTMathTextEmptyBoxNode::Units2String(getHeightUnit()));
+}
+
+bool JKQTMathTextEmptyBoxNode::toHtml(QString &html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv)
+{
+    return true;
+}
+
+JKQTMathTextEmptyBoxNode::Units JKQTMathTextEmptyBoxNode::getWidthUnit() const
+{
+    return widthUnit;
+}
+
+double JKQTMathTextEmptyBoxNode::getWidth() const
+{
+    return width;
+}
+
+JKQTMathTextEmptyBoxNode::Units JKQTMathTextEmptyBoxNode::getHeightUnit() const
+{
+    return heightUnit;
+}
+
+double JKQTMathTextEmptyBoxNode::getHeight() const
+{
+    return height;
+}
+
+double JKQTMathTextEmptyBoxNode::draw(QPainter &painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize *prevNodeSize)
+{
+    doDrawBoxes(painter, x,y,currentEv);
+    double width=0, bh=0, oh=0, sp=0;
+    getSize(painter, currentEv, width, bh, oh, sp, prevNodeSize);
+    return x+width;
+}
+
+void JKQTMathTextEmptyBoxNode::getSizeInternal(QPainter &painter, JKQTMathTextEnvironment currentEv, double &width, double &baselineHeight, double &overallHeight, double &strikeoutPos, const JKQTMathTextNodeSize */*prevNodeSize*/)
+{
+    const QFontMetricsF fm(currentEv.getFont(parentMathText), painter.device());
+    width=Units2PixelWidth(width, widthUnit, currentEv, painter.device());
+    overallHeight=Units2PixelWidth(height, heightUnit, currentEv, painter.device());
+    if (height>0) {
+        baselineHeight=overallHeight;
+    } else {
+        baselineHeight=0;
+    }
+    strikeoutPos=fm.strikeOutPos();
+}
