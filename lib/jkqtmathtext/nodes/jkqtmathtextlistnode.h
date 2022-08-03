@@ -141,21 +141,13 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextVerticalListNode: public JKQTMathTextM
         virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
 
         /** \brief describes the layout of the whole node */
-        struct LayoutInfo {
+        struct LayoutInfo: public JKQTMathTextNodeSize {
             LayoutInfo();
             /** \brief drawing position for each line */
             QList<QPointF> X;
-            /** \brief width of whole block */
-            double width;
-            /** \brief baselineHeight of whole block */
-            double baselineHeight;
-            /** \brief overallHeight of whole block */
-            double overallHeight;
-            /** \brief strikeoutPos of whole block */
-            double strikeoutPos;
         };
         /** \brief calclates the layout of the whole block/node */
-        LayoutInfo calcLayout(QPainter& painter, JKQTMathTextEnvironment currentEv);
+        LayoutInfo calcLayout(QPainter& painter, JKQTMathTextEnvironment currentEv) const;
 
         /** \brief list of child nodes, each representing one line */
         QList<JKQTMathTextNode*> nodes;

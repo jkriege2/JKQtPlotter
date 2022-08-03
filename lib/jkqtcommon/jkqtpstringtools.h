@@ -244,6 +244,11 @@ JKQTCOMMON_LIB_EXPORT QString jkqtp_floattohtmlqstr(double data, int past_comma=
  */
 JKQTCOMMON_LIB_EXPORT std::string jkqtp_chartostr(char data);
 
+/** \brief replace all linebreaks by \c "\\n" , \c "\\r" ...
+ * \ingroup jkqtptools_string
+ */
+JKQTCOMMON_LIB_EXPORT QString jkqtp_backslashEscape(const QString& txt);
+
 
 /*! \brief convert a QList<QVariant> to a string
     \ingroup jkqtptools_string

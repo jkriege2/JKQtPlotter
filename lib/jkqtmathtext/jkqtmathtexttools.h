@@ -274,7 +274,7 @@ struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextEnvironment {
     void endMathMode();
 
 
-    /** \brief build a QFont object from the settings in this object */
+    /** \brief build a <a href="https://doc.qt.io/qt-5/qfont.html">QFont</a> object from the settings in this object */
     QFont getFont(JKQTMathText* parent) const;
     /** \brief return the encoding of the given Font */
     JKQTMathTextFontEncoding getFontEncoding(JKQTMathText *parent) const;
@@ -292,14 +292,18 @@ struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextEnvironment {
     QString toHtmlAfter(JKQTMathTextEnvironment defaultEv, JKQTMathText *parentMathText) const;
 };
 
-/** \brief beschreibt die Größe eines Knotens
+/** \brief beschreibt die Größe(n) eines Knotens
  *  \ingroup jkqtmathtext_tools
  */
 struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextNodeSize {
     JKQTMathTextNodeSize();
+    /** \brief width of whole block */
     double width;
+    /** \brief baselineHeight of whole block */
     double baselineHeight;
+    /** \brief overallHeight of whole block */
     double overallHeight;
+    /** \brief strikeoutPos of whole block */
     double strikeoutPos;
 };
 

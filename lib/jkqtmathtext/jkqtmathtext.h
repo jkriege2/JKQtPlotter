@@ -716,6 +716,10 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
             MTTtext, /*!< \brief a piece of general text */
             MTTinstruction, /*!< \brief an instruction, started by \c "\", e.g. \c "\\textbf", ... */
             MTTinstructionNewline,   /*!< \brief a newline instruction \c "\\" */
+            MTTinstructionVerbatim,  /*!< \brief a verbatim instruction, e.g. \c \\verb!verbatimtext! was found: currentTokenName will contain the text enclode by the verbatim delimiters */
+            MTTinstructionVerbatimVisibleSpace,  /*!< \brief a verbatim instruction that generates visible whitespaces, e.g. \c \\begin{verbatim}...\end{verbatim} was found: currentTokenName will contain the text enclode by the verbatim delimiters */
+            MTTinstructionBegin, /*!< \brief a \c '\\begin{...}' instruction, currentTokenName is the name of the environment */
+            MTTinstructionEnd, /*!< \brief a \c '\\end{...}' instruction, currentTokenName is the name of the environment */
             MTTunderscore,  /*!< \brief the character \c "_" */
             MTThat,  /*!< \brief the character \c "^" */
             MTTdollar,  /*!< \brief the character \c "$" */
@@ -728,6 +732,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
             MTThyphen,  /*!< \brief the single hyphen character \c "-" in text-mode \note MTTendash and MTTemdash take precedence over MTThypen  */
             MTTendash,  /*!< \brief the en-dash character sequence \c "--" in text-mode */
             MTTemdash,  /*!< \brief the em-dash character sequence \c "---" in text-mode */
+
         };
         /** \biref convert a tokenType into a string, e.g. for debugging output */
         static QString tokenType2String(tokenType type);
@@ -754,6 +759,13 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         QStringList parseStringParams(bool get, size_t Nparams, bool *foundError=nullptr);
         /** \brief parses a string, i.e. a sequence of text and whitespaces. returns after any other token was found */
         QString parseSingleString(bool get);
+        /** \brief read all text without tokenizing, until the sequence \a endsequence is found.
+         *
+         *  \param get if \c true the functions begins by reading a new character, otherwise the current character is used as first character
+         *  \param endsequence the sequence, ending the read
+         *  \return the read string, excluding the  \a endsequence
+         */
+        QString readUntil(bool get, const QString& endsequence);
         /** \brief parses a single instruction (including it's parameters)
          *
          *  \param[out] _foundError will be set to \c true if an error occured (unexpected token) or \c false otherwise

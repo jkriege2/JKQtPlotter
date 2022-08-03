@@ -617,7 +617,7 @@ void JKQTMathTextVerticalListNode::getSizeInternal(QPainter& painter, JKQTMathTe
     strikeoutPos=l.strikeoutPos;
 }
 
-JKQTMathTextVerticalListNode::LayoutInfo JKQTMathTextVerticalListNode::calcLayout(QPainter &painter, JKQTMathTextEnvironment currentEv)
+JKQTMathTextVerticalListNode::LayoutInfo JKQTMathTextVerticalListNode::calcLayout(QPainter &painter, JKQTMathTextEnvironment currentEv) const
 {
     LayoutInfo l;
     const QFontMetricsF fm(currentEv.getFont(parentMathText));
@@ -792,8 +792,5 @@ JKQTMathTextVerticalListNode::SpacingMode JKQTMathTextVerticalListNode::getSpaci
 }
 
 JKQTMathTextVerticalListNode::LayoutInfo::LayoutInfo():
-    width(0),
-    baselineHeight(0),
-    overallHeight(0),
-    strikeoutPos(0)
+    JKQTMathTextNodeSize(), X()
 {}

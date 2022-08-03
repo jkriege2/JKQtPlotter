@@ -864,3 +864,17 @@ std::string jkqtp_UnicodeToUTF8(uint32_t codepoint)
     }
     return out;
 }
+
+QString jkqtp_backslashEscape(const QString &txt)
+{
+    QString res;
+    for (const QChar c: txt) {
+        if (c=='\n') res+="\\n";
+        else if (c=='\r') res+="\\r";
+        else if (c=='\t') res+="\\t";
+        else if (c=='\\') res+="\\\\";
+        else if (c.unicode()<32) res+="\\x"+QString::number(c.unicode(), 16).toUpper();
+        else res+=c;
+    }
+    return res;
+}

@@ -2,6 +2,7 @@
 #include "ui_testform.h"
 #include <QDebug>
 #include <sstream>
+#include "jkqtcommon/jkqtpstringtools.h"
 #include "jkqtmathtext/nodes/jkqtmathtexttextnode.h"
 #include "jkqtmathtext/nodes/jkqtmathtextbracenode.h"
 #include "jkqtmathtext/nodes/jkqtmathtextdecoratednode.h"
@@ -86,6 +87,10 @@ TestForm::TestForm(QWidget *parent) :
     const auto mathDecoExample=[](const QString& deco)->QString { return "\\"+deco+"{x}\\"+deco+"{i}\\"+deco+"{X}\\"+deco+"{\\psi}\\"+deco+"{abc}"; };
     ui->cmbTestset->addItem("decoration: math", "$"+mathDecoExample("vec")+" -- "+mathDecoExample("grave")+" -- "+mathDecoExample("acute")+" -- "+mathDecoExample("dot")+" -- "+mathDecoExample("ddot")+" -- "+mathDecoExample("ocirc")+" -- "+mathDecoExample("overline")+" -- "+mathDecoExample("underline")+" -- "+mathDecoExample("hat")+" -- "+mathDecoExample("widehat")+" -- "+mathDecoExample("check")+" -- "+mathDecoExample("widecheck")+" -- "+mathDecoExample("breve")+" -- "+mathDecoExample("tilde")+" -- "+mathDecoExample("widetilde")+" -- "+mathDecoExample("uul")+" -- "+mathDecoExample("ool")+" -- "+mathDecoExample("bar")+" -- "+mathDecoExample("arrow")+" -- "+mathDecoExample("cancel")+" -- "+mathDecoExample("bcancel")+" -- "+mathDecoExample("xcancel")+" -- "+mathDecoExample("sout")+"$");
     ui->cmbTestset->addItem("decoration: text", "Text \\ul{underlined Text Equator} -- \\ol{overlined Text Equator} -- \\sout{striked out Text Equator} -- \\cancel{canceled out Text Equator} -- \\bcancel{b-canceled out Text Equator} -- \\xcancel{x-canceled out Text Equator}");
+    ui->cmbTestset->addItem("text: \\verb", "\\verb!\\LaTeX{} is not pares inside \\verb~..~! outside {\\backslash}verb");
+    ui->cmbTestset->addItem("text: \\begin{verbatim}", "outside\\begin{verbatim}\ninside \\LaTeX verbatim\n  2nd verbaimline\n\t3rd line\n\\end{verbatim}");
+    ui->cmbTestset->addItem("text: \\begin{verbatim*}", "outside\\begin{verbatim*}\ninside \\LaTeX verbatim\n  2nd verbaimline\n\t3rd line\n\\end{verbatim*}");
+    ui->cmbTestset->addItem("text: \\begin{lstlistings}", "outside\\begin{lstlisting}\nint main() {\n  printf(\"Hello World\\n\");\n}\n\\end{lstlisting}");
     ui->cmbTestset->addItem("text: flushleft", "\\begin{flushleft}text\\\\\\textbf{2^{nd} line of text}\\\\last \\textit{line!} $\\frac{1}{2}$\\end{flushleft}");
     ui->cmbTestset->addItem("text: flushright", "\\begin{flushright}text\\\\\\textbf{2^{nd} line of text}\\\\last \\textit{line!} $\\frac{1}{2}$\\end{flushright}");
     ui->cmbTestset->addItem("text: center", "\\begin{center}text\\\\\\textbf{2^{nd} line of text}\\\\last \\textit{line!} $\\frac{1}{2}$\\end{center}");
@@ -464,6 +469,7 @@ QTreeWidgetItem *TestForm::createTree(JKQTMathTextNode *node, QTreeWidgetItem* p
     JKQTMathTextMatrixNode* matrixN=dynamic_cast<JKQTMathTextMatrixNode*>(node);
     JKQTMathTextDecoratedNode* decoN=dynamic_cast<JKQTMathTextDecoratedNode*>(node);
     JKQTMathTextEmptyBoxNode* emptyN=dynamic_cast<JKQTMathTextEmptyBoxNode*>(node);
+    JKQTMathTextVerbatimNode* verbN=dynamic_cast<JKQTMathTextVerbatimNode*>(node);
 
     QTreeWidgetItem* ti=nullptr;
     if (parent) ti=new QTreeWidgetItem(parent);
@@ -523,6 +529,8 @@ QTreeWidgetItem *TestForm::createTree(JKQTMathTextNode *node, QTreeWidgetItem* p
         for (int i=0; i<list.size(); i++) {
             ti->addChild(createTree(list[i], ti));
         }
+    } else if (verbN)  {
+        name=QString("VerbatimTextNode (align=%1, spacingFactor=%2x, verticalOrientation=%3, text='%4')").arg(JKQTMathTextHorizontalAlignment2String(verbN->getAlignment())).arg(verbN->getLineSpacingFactor()).arg(JKQTMathTextVerticalOrientation2String(verbN->getVerticalOrientation())).arg(jkqtp_backslashEscape(verbN->getText()));
     } else if (symN)  {
         name=QString("SymbolNode: \'%1\' (subsuper=%3)").arg(symN->getSymbolName()).arg(symN->isSubSuperscriptAboveBelowNode());
     } else if (spN)  {

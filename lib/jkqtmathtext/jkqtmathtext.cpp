@@ -1344,9 +1344,9 @@ JKQTMathText::tokenType JKQTMathText::getToken() {
         }
         //std::cout<<"found instruction node '"<<currentTokenName.toStdString()<<"'\n";
         if (currentTokenName.size()==0) error_list.append(tr("error @ ch. %1: parser encountered empty istruction").arg(currentTokenID));
-        if (currentTokenName=="newline") return MTTinstructionNewline;
-        if (currentTokenName=="linebreak") return MTTinstructionNewline;
-        if (currentTokenName=="char") {
+        else if (currentTokenName=="newline") return MTTinstructionNewline;
+        else if (currentTokenName=="linebreak") return MTTinstructionNewline;
+        else if (currentTokenName=="char") {
             QString num="";
             currentTokenID++;
             c=parseString[currentTokenID];
@@ -1386,6 +1386,32 @@ JKQTMathText::tokenType JKQTMathText::getToken() {
                 return currentToken=MTTtext;
             }
 
+        } else if (currentTokenName.startsWith("verb")) {
+            if (currentTokenName.size()>4) currentTokenID-=(currentTokenName.size()-4);
+            currentTokenID++;
+            const QString verbEndChar=parseString.mid(currentTokenID, 1);
+            currentTokenName=readUntil(true, verbEndChar);
+            return currentToken=MTTinstructionVerbatim;
+        } else if (currentTokenName.startsWith("begin")) {
+            currentTokenID++;
+            if (parseString[currentTokenID]!='{') error_list.append(tr("error @ ch. %1: didn't find '{' after '\\begin'").arg(currentTokenID)); // find closing brace '}' after '\\begin{name');
+            currentTokenName=readUntil(true, "}");
+            if (currentTokenName=="verbatim") {
+                currentTokenName=readUntil(true, "\\end{verbatim}");
+                return currentToken=MTTinstructionVerbatim;
+            } else if (currentTokenName=="verbatim*") {
+                currentTokenName=readUntil(true, "\\end{verbatim*}");
+                return currentToken=MTTinstructionVerbatimVisibleSpace;
+            } else if (currentTokenName=="lstlisting") {
+                currentTokenName=readUntil(true, "\\end{lstlisting}");
+                return currentToken=MTTinstructionVerbatim;
+            }
+            return currentToken=MTTinstructionBegin;
+        } else if (currentTokenName.startsWith("end")) {
+            currentTokenID++;
+            if (parseString[currentTokenID]!='{') error_list.append(tr("error @ ch. %1: didn't find '{' after '\\end'").arg(currentTokenID)); // find closing brace '}' after '\\begin{name');
+            currentTokenName=readUntil(true, "}");
+            return currentToken=MTTinstructionEnd;
         }
         return currentToken=MTTinstruction;
     //----------------------------------------------------------
@@ -1560,84 +1586,6 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
                 if (nl->hasChildren()) nl->getLastChild()->setSubSuperscriptAboveBelowNode(true);
             } else  if (currentInstructionName=="nolimits") {
                 if (nl->hasChildren()) nl->getLastChild()->setSubSuperscriptAboveBelowNode(false);
-            } else if (currentInstructionName=="begin") {
-                if (getToken()==MTTopenbrace && getToken()==MTTtext) {
-                    const QString envname=currentTokenName;
-                    getToken();
-                    if (currentToken!=MTTclosebrace) error_list.append(tr("error @ ch. %1: didn't find '}' after environment start '\\begin{%2'").arg(currentTokenID).arg(envname)); // find closing brace '}' after '\\begin{name'
-                    if (envname=="matrix" || envname=="array" || envname=="aligned" || envname=="align" || envname=="cases" || envname=="pmatrix"|| envname=="bmatrix"|| envname=="Bmatrix"|| envname=="vmatrix"|| envname=="Vmatrix") {
-                        QVector< QVector<JKQTMathTextNode*> > items;
-                        //int lines=0;
-                        //int cols=0;
-                        bool first=true;
-                        QVector<JKQTMathTextNode*> line;
-                        //std::cout<<"found \\begin{matrix}\n";
-                        while (first || currentToken==MTTampersand || currentToken==MTTinstructionNewline) {
-                            JKQTMathTextNode* it=parseLatexString(true, MTBTAny, envname);
-                            if (currentToken==MTTampersand) {
-                                //std::cout<<"  appending item\n";
-                                line.append(it);
-                            } else {
-                                line.append(it);
-                                //std::cout<<"  appending item and line with "<<line.size()<<" items.\n";
-                                items.append(line);
-                                line.clear();
-                            }
-                            first=false;
-                        }
-                        //std::cout<<"  creating matrix-node with "<<items.size()<<" items.\n";
-                        if (envname=="pmatrix") nl->addChild(new JKQTMathTextBraceNode(this, MTBTParenthesis, MTBTParenthesis, new JKQTMathTextMatrixNode(this, items)));
-                        else if (envname=="cases") nl->addChild(new JKQTMathTextBraceNode(this, MTBTCurlyBracket, MTBTNone, new JKQTMathTextMatrixNode(this, items)));
-                        else if (envname=="bmatrix") nl->addChild(new JKQTMathTextBraceNode(this, MTBTSquareBracket, MTBTSquareBracket, new JKQTMathTextMatrixNode(this, items)));
-                        else if (envname=="Bmatrix") nl->addChild(new JKQTMathTextBraceNode(this, MTBTCurlyBracket, MTBTCurlyBracket, new JKQTMathTextMatrixNode(this, items)));
-                        else if (envname=="vmatrix") nl->addChild(new JKQTMathTextBraceNode(this, MTBTSingleLine, MTBTSingleLine, new JKQTMathTextMatrixNode(this, items)));
-                        else if (envname=="Vmatrix") nl->addChild(new JKQTMathTextBraceNode(this, MTBTDoubleLine, MTBTDoubleLine, new JKQTMathTextMatrixNode(this, items)));
-                        else nl->addChild(new JKQTMathTextMatrixNode(this, items));
-                        //std::cout<<"  creating matrix-node ... done!\n";
-                    } else if (envname=="center" || envname=="document" || envname=="flushleft" || envname=="flushright") {
-                        JKQTMathTextHorizontalAlignment alignment=MTHALeft;
-                        if (envname=="document") alignment=MTHALeft;
-                        else alignment=String2JKQTMathTextHorizontalAlignment(envname);
-                        JKQTMathTextVerticalListNode* vlist = new JKQTMathTextVerticalListNode(this, alignment, 1.0, JKQTMathTextVerticalListNode::SMDefault, MTVOFirstLine );
-                        nl->addChild(vlist);
-                        bool first=true;
-                        while (first || currentToken==MTTinstructionNewline) {
-                            vlist->addChild(parseLatexString(true, MTBTAny, envname));
-                            first=false;
-                        }
-                    } else if (envname=="framed" || envname=="shaded" || envname=="snugshade") {
-                        JKQTMathTextHorizontalAlignment alignment=MTHALeft;
-                        JKQTMathTextVerticalListNode* vlist = new JKQTMathTextVerticalListNode(this, alignment, 1.0, JKQTMathTextVerticalListNode::SMDefault, MTVOFirstLine );
-                        QStringList color;
-                        color<<jkqtp_QColor2String(Qt::lightGray);
-                        nl->addChild(new JKQTMathTextBoxInstructionNode(this, envname, vlist, color));
-                        bool first=true;
-                        while (first || currentToken==MTTinstructionNewline) {
-                            vlist->addChild(parseLatexString(true, MTBTAny, envname));
-                            first=false;
-                        }
-                    } else {
-                        error_list.append(tr("error @ ch. %1: unknown environment '%2'").arg(currentTokenID).arg(envname));
-                    }
-                } else { // find next '}'
-                    error_list.append(tr("error @ ch. %1: text after '\\begin{' expected!").arg(currentTokenID));
-                    while (currentToken!=MTTclosebrace) getToken();
-                    getNew=true;
-                }
-            } else if (currentInstructionName=="end") {
-                if (getToken()==MTTopenbrace && getToken()==MTTtext) {
-                    QString envname=currentTokenName;
-                    while (currentToken!=MTTclosebrace) getToken(); // find closing brace '}' after '\\begin{name'
-                    if (envname==quitOnEnvironmentEnd) {
-                        break;
-                    } else {
-                        error_list.append(tr("error @ ch. %1: '\\end{%2}' widthout preceding '\\begin{%3}'").arg(currentTokenID).arg(envname).arg(envname));
-                    }
-                } else { // find next '}'
-                    error_list.append(tr("error @ ch. %1: text after '\\begin{' expected!").arg(currentTokenID));
-                    while (currentToken!=MTTclosebrace) getToken();
-                    getNew=true;
-                }
             } else if (currentInstructionName=="right") {
                 getToken();
                 if (currentToken==MTTtext) {
@@ -1755,6 +1703,74 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
             break;
         } else if (currentToken==MTTopenbracket) {
             nl->addChild(new JKQTMathTextTextNode(this, "[", false));
+        } else if (currentToken==MTTinstructionVerbatim) {
+            nl->addChild(new JKQTMathTextVerbatimNode(this, currentTokenName, false));
+        } else if (currentToken==MTTinstructionVerbatimVisibleSpace) {
+            nl->addChild(new JKQTMathTextVerbatimNode(this, currentTokenName, true));
+
+        } else if (currentToken==MTTinstructionBegin) {
+            const QString envname=currentTokenName;
+            if (envname=="matrix" || envname=="array" || envname=="aligned" || envname=="align" || envname=="cases" || envname=="pmatrix"|| envname=="bmatrix"|| envname=="Bmatrix"|| envname=="vmatrix"|| envname=="Vmatrix") {
+                QVector< QVector<JKQTMathTextNode*> > items;
+                //int lines=0;
+                //int cols=0;
+                bool first=true;
+                QVector<JKQTMathTextNode*> line;
+                //std::cout<<"found \\begin{matrix}\n";
+                while (first || currentToken==MTTampersand || currentToken==MTTinstructionNewline) {
+                    JKQTMathTextNode* it=parseLatexString(true, MTBTAny, envname);
+                    if (currentToken==MTTampersand) {
+                        //std::cout<<"  appending item\n";
+                        line.append(it);
+                    } else {
+                        line.append(it);
+                        //std::cout<<"  appending item and line with "<<line.size()<<" items.\n";
+                        items.append(line);
+                        line.clear();
+                    }
+                    first=false;
+                }
+                //std::cout<<"  creating matrix-node with "<<items.size()<<" items.\n";
+                if (envname=="pmatrix") nl->addChild(new JKQTMathTextBraceNode(this, MTBTParenthesis, MTBTParenthesis, new JKQTMathTextMatrixNode(this, items)));
+                else if (envname=="cases") nl->addChild(new JKQTMathTextBraceNode(this, MTBTCurlyBracket, MTBTNone, new JKQTMathTextMatrixNode(this, items)));
+                else if (envname=="bmatrix") nl->addChild(new JKQTMathTextBraceNode(this, MTBTSquareBracket, MTBTSquareBracket, new JKQTMathTextMatrixNode(this, items)));
+                else if (envname=="Bmatrix") nl->addChild(new JKQTMathTextBraceNode(this, MTBTCurlyBracket, MTBTCurlyBracket, new JKQTMathTextMatrixNode(this, items)));
+                else if (envname=="vmatrix") nl->addChild(new JKQTMathTextBraceNode(this, MTBTSingleLine, MTBTSingleLine, new JKQTMathTextMatrixNode(this, items)));
+                else if (envname=="Vmatrix") nl->addChild(new JKQTMathTextBraceNode(this, MTBTDoubleLine, MTBTDoubleLine, new JKQTMathTextMatrixNode(this, items)));
+                else nl->addChild(new JKQTMathTextMatrixNode(this, items));
+                //std::cout<<"  creating matrix-node ... done!\n";
+            } else if (envname=="center" || envname=="document" || envname=="flushleft" || envname=="flushright") {
+                JKQTMathTextHorizontalAlignment alignment=MTHALeft;
+                if (envname=="document") alignment=MTHALeft;
+                else alignment=String2JKQTMathTextHorizontalAlignment(envname);
+                JKQTMathTextVerticalListNode* vlist = new JKQTMathTextVerticalListNode(this, alignment, 1.0, JKQTMathTextVerticalListNode::SMDefault, MTVOFirstLine );
+                nl->addChild(vlist);
+                bool first=true;
+                while (first || currentToken==MTTinstructionNewline) {
+                    vlist->addChild(parseLatexString(true, MTBTAny, envname));
+                    first=false;
+                }
+            } else if (envname=="framed" || envname=="shaded" || envname=="snugshade") {
+                JKQTMathTextHorizontalAlignment alignment=MTHALeft;
+                JKQTMathTextVerticalListNode* vlist = new JKQTMathTextVerticalListNode(this, alignment, 1.0, JKQTMathTextVerticalListNode::SMDefault, MTVOFirstLine );
+                QStringList color;
+                color<<jkqtp_QColor2String(Qt::lightGray);
+                nl->addChild(new JKQTMathTextBoxInstructionNode(this, envname, vlist, color));
+                bool first=true;
+                while (first || currentToken==MTTinstructionNewline) {
+                    vlist->addChild(parseLatexString(true, MTBTAny, envname));
+                    first=false;
+                }
+            } else {
+                error_list.append(tr("error @ ch. %1: unknown environment '%2'").arg(currentTokenID).arg(envname));
+            }
+        } else if (currentToken==MTTinstructionEnd) {
+            QString envname=currentTokenName;
+            if (envname==quitOnEnvironmentEnd) {
+                break;
+            } else {
+                error_list.append(tr("error @ ch. %1: '\\end{%2}' widthout preceding '\\begin{%3}'").arg(currentTokenID).arg(envname).arg(envname));
+            }
         } else if (currentToken==MTTclosebracket) {
             if (quitOnClosingBracket) break;
             else nl->addChild(new JKQTMathTextTextNode(this, "]", false));
@@ -2057,6 +2073,21 @@ QString JKQTMathText::parseSingleString(bool get) {
     return thisparam;
 }
 
+QString JKQTMathText::readUntil(bool get, const QString &endsequence)
+{
+    if (get) currentTokenID++;
+    QString seq;
+    while (currentTokenID<parseString.size() && !seq.endsWith(endsequence)) {
+        seq+=parseString[currentTokenID];
+        currentTokenID++;
+    }
+    currentTokenID--;
+    if (seq.endsWith(endsequence)) {
+        seq=seq.left(seq.size()-endsequence.size());
+    }
+    return seq;
+}
+
 
 JKQTMathTextNode *JKQTMathText::getParsedNode() const {
     return this->parsedNode;
@@ -2083,7 +2114,7 @@ bool JKQTMathText::parse(const QString& text, bool addSpaceBeforeAndAfter){
     parsingMathEnvironment=false;
     error_list.clear();
     parsedNode=parseLatexString(true);
-    unparsedNode=new MTplainTextNode(this, text, false);
+    unparsedNode=new JKQTMathTextVerbatimNode(this, text);
     return (parsedNode!=nullptr);
 }
 
@@ -2212,6 +2243,10 @@ QString JKQTMathText::tokenType2String(tokenType type)
       case MTThyphen: return "MTThyphen";
       case MTTendash: return "MTTendash";
       case MTTemdash: return "MTTemdash";
+      case MTTinstructionVerbatim: return "MTTinstructionVerbatim";
+      case MTTinstructionVerbatimVisibleSpace: return "MTTinstructionVerbatimVisibleSpace";
+      case MTTinstructionBegin: return "MTTinstructionBegin";
+      case MTTinstructionEnd: return "MTTinstructionEnd";
     }
     return "???";
 }
