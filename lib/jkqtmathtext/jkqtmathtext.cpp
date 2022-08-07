@@ -1628,7 +1628,7 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
                         if (bracetype==MTBTNone) {
                             currentTokenName=currentTokenName.right(currentTokenName.size()-1);
                             JKQTMathTextNode* cn=parseLatexString(currentTokenName.size()<=0, MTBTAny);
-                            nl->addChild(new JKQTMathTextBraceNode(this, MTBTNone, bracetype, cn));
+                            nl->addChild(new JKQTMathTextBraceNode(this, MTBTNone, lastRightBraceType, cn));
                         } else if (isPrintableJKQTMathTextBraceType(bracetype)) {
                             currentTokenName=currentTokenName.right(currentTokenName.size()-1); // we already used the first character from the text token!
                             JKQTMathTextNode* c=parseLatexString(currentTokenName.size()<=0, bracetype);
