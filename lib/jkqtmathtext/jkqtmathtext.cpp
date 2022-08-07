@@ -1398,7 +1398,7 @@ JKQTMathText::tokenType JKQTMathText::getToken() {
             const QString verbEndChar=parseString.mid(currentTokenID, 1);
             currentTokenName=readUntil(true, verbEndChar);
             return currentToken=MTTinstructionVerbatim;
-        } else if (currentTokenName.startsWith("begin")) {
+        } else if (currentTokenName=="begin") {
             currentTokenID++;
             if (parseString[currentTokenID]!='{') error_list.append(tr("error @ ch. %1: didn't find '{' after '\\begin'").arg(currentTokenID)); // find closing brace '}' after '\\begin{name');
             currentTokenName=readUntil(true, "}");
@@ -1413,9 +1413,9 @@ JKQTMathText::tokenType JKQTMathText::getToken() {
                 return currentToken=MTTinstructionVerbatim;
             }
             return currentToken=MTTinstructionBegin;
-        } else if (currentTokenName.startsWith("end")) {
+        } else if (currentTokenName=="end") {
             currentTokenID++;
-            if (parseString[currentTokenID]!='{') error_list.append(tr("error @ ch. %1: didn't find '{' after '\\end'").arg(currentTokenID)); // find closing brace '}' after '\\begin{name');
+            if (currentTokenID>=parseString.size() || parseString[currentTokenID]!='{') error_list.append(tr("error @ ch. %1: didn't find '{' after '\\end'").arg(currentTokenID)); // find closing brace '}' after '\\begin{name');
             currentTokenName=readUntil(true, "}");
             return currentToken=MTTinstructionEnd;
         }

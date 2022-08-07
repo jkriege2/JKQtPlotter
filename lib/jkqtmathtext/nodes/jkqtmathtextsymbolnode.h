@@ -83,6 +83,8 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSymbolNode: public JKQTMathTextNode {
         void getSymbolSize(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, double& subSuperXCorrection, double& subBesidesXCorrection, const JKQTMathTextNodeSize* prevNodeSize=nullptr);
         /** \brief checks whether the given symbol name can be prepresented by this type of node */
         static bool hasSymbol(const QString& symbolName);
+        /** \brief return a list of all defined symbols */
+        static QStringList getSymbols();
         /** \brief checks whether the given symbol name can be prepresented by this type of node */
         static bool isSubSuperscriptBelowAboveSymbol(const QString& symbolName);
     protected:

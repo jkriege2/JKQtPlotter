@@ -21,6 +21,7 @@
 #endif
 #include "jkqtmathtext/jkqtmathtextlabel.h"
 #include "jkqtcommon/jkqtpstringtools.h"
+#include "jkqtmathtext/nodes/jkqtmathtextsymbolnode.h"
 #include <iostream>
 
 void processFont(const QString font, QStringList& fonts, QString& mathFont)
@@ -64,6 +65,8 @@ int main(int argc, char* argv[])
     parser.addOption(inputfileOption);
     QCommandLineOption outputDirectoryOption("outputdir", "write results into this directory.", "outputdir", app.applicationDirPath());
     parser.addOption(outputDirectoryOption);
+    QCommandLineOption listsymbolsOption("listsymbols", "list all symbols in the given output file and generate images.", "listsymbols", "");
+    parser.addOption(listsymbolsOption);
     QCommandLineOption drawBoxesOption("drawboxes", "draw boxes.");
     parser.addOption(drawBoxesOption);
     QCommandLineOption verboseOption("verbose", "verbose output.");
@@ -111,15 +114,40 @@ int main(int argc, char* argv[])
     const QDir outputDir(parser.value(outputDirectoryOption));
     const QString outputFilename_cmdline=outputDir.absoluteFilePath(args.value(1, "output.png"));
     const QString inputfile=parser.value(inputfileOption);
+    const QString listsymbols=parser.value(listsymbolsOption);
     const bool verbose = parser.isSet(verboseOption);
 
     QStringList latex, outputFilename;
     QList<QMap<QString,QString>> cmdoptions;
-    if (inputfile.size()<=0) {
-        latex.append(latex_cmdline);
-        outputFilename.append(outputFilename_cmdline);
-        cmdoptions.append(QMap<QString,QString>());
-    } else {
+    if (listsymbols.size()>0) {
+        //std::cout<<"LISTSYMBOLS: "<<outputDir.absoluteFilePath(listsymbols).toStdString()<<"\n";
+        QFile fileListF(outputDir.absoluteFilePath(listsymbols));
+        if (fileListF.open(QFile::WriteOnly|QFile::Text)) {
+            QTextStream fileList(&fileListF);
+            int i=1;
+            fileList<<"/*!\n"
+                      "   \\defgroup jkqtmathtext_supportedlatexsymbols Supported LaTeX-Symbols\n"
+                      "   \\ingroup jkqtmathtext_general\n\n";
+            fileList<<"   <table>\n";
+            fileList<<"     <tr>\n";
+            for (const QString& symbol: JKQTMathTextSymbolNode::getSymbols()) {
+                if (symbol.size()>0 && symbol[0].isLetter()) {
+                    latex.append("\\"+symbol);
+                    outputFilename.append("jkqtmathtext_symbols_"+symbol+".png");
+                    cmdoptions.append(QMap<QString,QString>());
+                    //std::cout<<"  - "<<latex.last().toStdString()<<": "<<outputFilename.last().toStdString()<<"\n";
+                    fileList<<"       <td><code>\\\\"<<symbol<<"</code>:\n       <td> \\image html jkqtmathtext/symbols/"<<outputFilename.last()<<"\n";
+                    if (i%3==0) {
+                        fileList<<"     </tr>\n     <tr>\n";
+                    }
+                    i++;
+                }
+            }
+            fileList<<"     </tr>";
+            fileList<<"   </table>\n";
+            fileList<<"*/\n";
+        }
+    } else if (inputfile.size()>0){
         QFile f(inputfile);
         if (f.open(QFile::ReadOnly|QFile::Text)) {
             QString currentOutFile="";
@@ -182,13 +210,18 @@ int main(int argc, char* argv[])
             }
         }
 
+    } else {
+        latex.append(latex_cmdline);
+        outputFilename.append(outputFilename_cmdline);
+        cmdoptions.append(QMap<QString,QString>());
     }
 
     if (verbose) {
         std::cout
             <<"===========================================================\n"
             <<"= jkqtmathtext_render: ";
-        if (inputfile.size()>0) std::cout<<"FILE-MODE ("<<inputfile.toStdString()<<")\n";
+        if (inputfile.size()>0) std::cout<<"FILE-MODE (read from "<<inputfile.toStdString()<<")\n";
+        else if (listsymbols.size()>0)  std::cout<<"LIST-SYMBOLS-MODE (store to "<<listsymbols.toStdString()<<")\n";
         else std::cout<<"COMMAND-LINE-MODE\n";
         std::cout<<"\n"
             <<"===========================================================\n";

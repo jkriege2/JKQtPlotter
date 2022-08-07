@@ -306,6 +306,12 @@ bool JKQTMathTextSymbolNode::hasSymbol(const QString &symbolName)
     return symbols.contains(symbolName);
 }
 
+QStringList JKQTMathTextSymbolNode::getSymbols()
+{
+    fillSymbolTables();
+    return symbols.keys();
+}
+
 bool JKQTMathTextSymbolNode::isSubSuperscriptBelowAboveSymbol(const QString &symbolName)
 {
     fillSymbolTables();
@@ -462,6 +468,7 @@ void JKQTMathTextSymbolNode::fillSymbolTables()
     symbols["|"]=SimpleUprightTextSymbol("||", "&Vert;").addUprightUnicode(QChar(0x2016));
     symbols["}"]=SimpleUprightTextSymbol("}");
     symbols["AC"]=UprightSymbolUnicode(QChar(0x223F)).addUprightHtml("&acd;").addUprightStd("~");
+    symbols["circonflex"]=SimpleTextSymbol("^");
     symbols["aa"]=SimpleTextSymbol(QChar(0xE5));
     symbols["ae"]=SimpleTextSymbol(QChar(0xE6));
     symbols["AE"]=SimpleTextSymbol(QChar(0xC6));

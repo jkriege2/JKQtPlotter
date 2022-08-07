@@ -175,6 +175,9 @@ class JKQTMathTextNode; // forward
         <br>using "Courier New": \image html jkqtmathtext/jkqtmathtext_couriernew.png
         <br>using "Comic Sans MS": \image html jkqtmathtext/jkqtmathtext_comicsans.png
         <br>using "Old English Text": \image html jkqtmathtext/jkqtmathtext_OldEnglish.png
+        <br>using "Computer Modern": \image html jkqtmathtext/jkqtmathtext_computermodern.png
+        <br>using "Fira": \image html jkqtmathtext/jkqtmathtext_fira.png
+        <br>using "MS Segoe UI": \image html jkqtmathtext/jkqtmathtext_mssegoeui.png
     .
 
     Math-mode is activated by enclosing your equation in \c $...$ or \c \\[...\\] . This mode is optimized for mathematical equations. Here is an example of the difference:
@@ -362,13 +365,16 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         void setFontCaligraphic(const QString & fontName, JKQTMathTextFontEncoding encoding=JKQTMathTextFontEncoding::MTFEStandard);
         /** \brief retrieves the font to be used for text in the logical font MTEcaligraphic   */
         QString getFontCaligraphic() const;
-        /** \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEblackboard   */
+        /** \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEblackboard \see setFontBlackboardSimulated()
+         *
+         *
+         */
         void setFontBlackboard(const QString & fontName, JKQTMathTextFontEncoding encoding=JKQTMathTextFontEncoding::MTFEStandard);
-        /** \brief blackboard font is simulated by using roman with outlines only  */
+        /** \copydoc blackboardSimulated  */
         void setFontBlackboardSimulated(bool doSimulate);
-        /** \brief is blackboard font simulated by using roman with outlines only  */
+        /** \copydoc blackboardSimulated \see setFontBlackboardSimulated()  */
         bool isFontBlackboardSimulated() const;
-        /** \brief retrieves the font to be used for text in the logical font MTEblackboard   */
+        /** \brief retrieves the font to be used for text in the logical font MTEblackboard \see setFontBlackboardSimulated()  */
         QString getFontBlackboard() const;
         /** \brief set the font \a fontName and it's encoding \a encoding to be used for symbols in the logical font \a font   */
         void setFallbackFontSymbols(const QString & fontName, JKQTMathTextFontEncoding encoding=JKQTMathTextFontEncoding::MTFEStandard);
@@ -626,7 +632,16 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
 
         /** \brief stores information about the different fonts used by LaTeX markup */
         QHash<JKQTMathTextEnvironmentFont, JKQTMathTextFontDefinition> fontDefinitions;
-        /** \brief if enabled, the blackboard-characters are simulated by using font outlines only */
+        /** \brief if enabled, the blackboard-characters are simulated by using font outlines only
+         *
+         *  A possible choice for a blackboard font (Castellar) looks like this:
+         *    \image html jkqtmathtext/jkqtmathtext_bb.png
+         *  If such a font is not available, you can set this property blackboardSimulated
+         *  to \c true and chose a font, like e.g. Arial to output blackboard-letters as:
+         *    \image html jkqtmathtext/jkqtmathtext_bb_sim.png
+         *
+         *  \see setFontBlackboard() setFontBlackboardSimulated()
+         */
         bool blackboardSimulated;
 
 
