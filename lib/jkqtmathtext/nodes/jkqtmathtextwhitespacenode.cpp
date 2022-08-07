@@ -236,17 +236,23 @@ JKQTMathTextEmptyBoxNode::Units JKQTMathTextEmptyBoxNode::String2Units(QString t
 
 double JKQTMathTextEmptyBoxNode::Units2PixelWidth(double value, Units unit, JKQTMathTextEnvironment currentEv, QPaintDevice *pd) const
 {
-    const QFontMetricsF fm(currentEv.getFont(parentMathText), pd);
+    QFont f=currentEv.getFont(parentMathText);
+    f.setStyleStrategy(QFont::PreferDefault);
+    const QFontMetricsF fm(f, pd);
     if (unit==EBUem) {
 #if (QT_VERSION>=QT_VERSION_CHECK(5, 15, 0))
         const double em=fm.horizontalAdvance(QChar(0x2003));//currentEv.fontSize;
 #else
         const double em=fm.width(QChar(0x2003));//currentEv.fontSize;
 #endif
+        //qDebug()<<"em="<<em<<"pix";
         return value*em;
     } else if (unit==EBUex) {
         const double ex=fm.xHeight();
+        //qDebug()<<"ex="<<ex<<"pix";
         return value*ex;
+    } else {
+        //qDebug()<<"JKQTMathTextEmptyBoxNode::Units2PixelWidth(): UNKOWN UNIT";
     }
     return 0;
 }
@@ -297,15 +303,14 @@ double JKQTMathTextEmptyBoxNode::getHeight() const
 double JKQTMathTextEmptyBoxNode::draw(QPainter &painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize *prevNodeSize)
 {
     doDrawBoxes(painter, x,y,currentEv);
-    double width=0, bh=0, oh=0, sp=0;
-    getSize(painter, currentEv, width, bh, oh, sp, prevNodeSize);
-    return x+width;
+    const auto s=getSize(painter, currentEv);
+    return x+s.width;
 }
 
 void JKQTMathTextEmptyBoxNode::getSizeInternal(QPainter &painter, JKQTMathTextEnvironment currentEv, double &width, double &baselineHeight, double &overallHeight, double &strikeoutPos, const JKQTMathTextNodeSize */*prevNodeSize*/)
 {
     const QFontMetricsF fm(currentEv.getFont(parentMathText), painter.device());
-    width=Units2PixelWidth(width, widthUnit, currentEv, painter.device());
+    width=Units2PixelWidth(this->width, widthUnit, currentEv, painter.device());
     overallHeight=Units2PixelWidth(height, heightUnit, currentEv, painter.device());
     if (height>0) {
         baselineHeight=overallHeight;
