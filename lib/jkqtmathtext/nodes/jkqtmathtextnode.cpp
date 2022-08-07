@@ -361,3 +361,10 @@ void JKQTMathTextMultiChildNode::setDrawBoxes(bool draw)
     }
 
 }
+
+JKQTMathTextNodeSize JKQTMathTextNode::getSize(QPainter &painter, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize *prevNodeSize)
+{
+    JKQTMathTextNodeSize s;
+    getSize(painter, currentEv, s.width, s.baselineHeight, s.overallHeight, s.strikeoutPos, prevNodeSize);
+    return s;
+}
