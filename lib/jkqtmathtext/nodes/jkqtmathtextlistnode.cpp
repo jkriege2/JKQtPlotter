@@ -96,7 +96,7 @@ void JKQTMathTextHorizontalListNode::getSizeInternal(QPainter& painter, JKQTMath
         if (nodeI_SuperScript) {
             if (i+1<nodes.size()) { // is there one mor node behind?
                 if (dynamic_cast<JKQTMathTextSubscriptNode*>(nodes[i+1])) { // is this subscript?
-                    double w1, w2, oh, bh, sp;
+                    double w1=0, w2=0, oh=0, bh=0, sp=0;
                     nodes[i]->getSize(painter, currentEv, w1, bh, oh, sp, prevNodeSizePtrForSuperscript);
 
                     if (bh>baselineHeight) {
@@ -131,7 +131,7 @@ void JKQTMathTextHorizontalListNode::getSizeInternal(QPainter& painter, JKQTMath
         } else if (nodeI_SubScript) {
             if (i+1<nodes.size()) { // is there one mor node behind?
                 if (dynamic_cast<JKQTMathTextSuperscriptNode*>(nodes[i+1])) { // is this subscript?
-                    double w1, w2, oh, bh, sp;
+                    double w1=0, w2=0, oh=0, bh=0, sp=0;
                     nodes[i]->getSize(painter, currentEv, w1, bh, oh, sp, prevNodeSizePtrForSubscript);
                     if (bh>baselineHeight) {
                         overallHeight=overallHeight+bh-baselineHeight;
@@ -162,7 +162,7 @@ void JKQTMathTextHorizontalListNode::getSizeInternal(QPainter& painter, JKQTMath
                     //qDebug()<<"### subsupop: sub+super1   overallHeight="<<overallHeight<<" baselineHeight="<<baselineHeight;
                 }
             } else {
-                double w1, oh, bh, sp;
+                double w1=0, oh=0, bh=0, sp=0;
                 nodes[i]->getSize(painter, currentEv, w1, bh, oh, sp, prevNodeSizePtrForSubscript);
                 if (bh>baselineHeight) {
                     overallHeight=overallHeight+bh-baselineHeight;
@@ -300,7 +300,7 @@ void JKQTMathTextHorizontalListNode::getSizeInternal(QPainter& painter, JKQTMath
         }
 
         if (i<nodes.size() && doDraw) {
-            double w, oh, bh, sp;
+            double w=0, oh=0, bh=0, sp=0;
             if (nodeI_SubScript) nodes[i]->getSize(painter, currentEv, w, bh, oh, sp, prevNodeSizePtrForSubscript);
             else if (nodeI_SuperScript) nodes[i]->getSize(painter, currentEv, w, bh, oh, sp, prevNodeSizePtrForSuperscript);
             else nodes[i]->getSize(painter, currentEv, w, bh, oh, sp, nullptr);
