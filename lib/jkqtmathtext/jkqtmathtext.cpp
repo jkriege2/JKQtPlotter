@@ -1374,7 +1374,8 @@ JKQTMathText::tokenType JKQTMathText::getToken() {
                 while ((currentTokenID<parseString.size()) && (QString("01234567").contains(c))) {
                     num+=c;
                     currentTokenID++;
-                    c=parseString[currentTokenID];
+                    if (currentTokenID<parseString.size()) c=parseString[currentTokenID];
+                    else c=QChar();
                 }
                 if (currentTokenID<parseString.size()) currentTokenID--;
                 currentTokenName=QString::fromStdString(jkqtp_UnicodeToUTF8(num.toLongLong(nullptr, 8)));
