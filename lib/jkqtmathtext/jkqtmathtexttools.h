@@ -41,6 +41,7 @@
 #include <QLabel>
 #include <QHash>
 #include <QPainterPath>
+#include <QtMath>
 
 class JKQTMathText; // forward
 
@@ -156,8 +157,8 @@ enum JKQTMathTextBraceType {
     MTBTFloorBracket,  /*!< \brief floor brackets \image html jkqtmathtext/jkqtmathtext_brace_floor.png */
     MTBTDoubleLine,  /*!< \brief double-line brackets (norm ||...||) \image html jkqtmathtext/jkqtmathtext_brace_dblline.png */
     MTBTSingleLine,  /*!< \brief single-line brackets (abs |...|) \image html jkqtmathtext/jkqtmathtext_brace_oneline.png */
-    MTBTTopCorner,  /*!< \brief top-corner brackets  \image html jkqtmathtext/jkqtmathtext_brace_topcorner.png */
-    MTBTBottomCorner,  /*!< \brief bottom-corner brackets  \image html jkqtmathtext/jkqtmathtext_brace_bottomcorner.png */
+    MTBTTopCorner,  /*!< \brief top-corner brackets  \image html jkqtmathtext/jkqtmathtext_brace_ulcorner.png */
+    MTBTBottomCorner,  /*!< \brief bottom-corner brackets  \image html jkqtmathtext/jkqtmathtext_brace_llcorner.png */
     MTBTNone,  /*!< \brief no bracket */
     MTBTAny,  /*!< \brief any bracket, used by JKQTMathText::parseLatexString() */
     MTBTUnknown  /*!< \brief an unknown tokenName presented to TokenName2JKQTMathTextBraceType() */
@@ -281,12 +282,16 @@ struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextEnvironment {
     /** \brief generate a HTML prefix that formats the text after it according to the settings in this object
      *
      * \param defaultEv environment before applying the current object (to detect changes)
+     * \param parentMathText the JKQTMathText object currently in use (used to e.g. look up font names)
+     *
      * \see toHtmlAfter()
      */
     QString toHtmlStart(JKQTMathTextEnvironment defaultEv, JKQTMathText *parentMathText) const;
     /** \brief generate a HTML postfix that formats the text in front of it according to the settings in this object
      *
      * \param defaultEv environment before applying the current object (to detect changes)
+     * \param parentMathText the JKQTMathText object currently in use (used to e.g. look up font names)
+     *
      * \see toHtmlAfter()
      */
     QString toHtmlAfter(JKQTMathTextEnvironment defaultEv, JKQTMathText *parentMathText) const;
@@ -305,6 +310,12 @@ struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextNodeSize {
     double overallHeight;
     /** \brief strikeoutPos of whole block */
     double strikeoutPos;
+    /** \brief calculate the descent */
+    inline double getDescent() const { return overallHeight-baselineHeight; }
+    /** \brief calculate the overall size in floating-point precision */
+    inline QSizeF getSize() const { return QSizeF(width, overallHeight); }
+    /** \brief calculate the overall size in floating-point precision */
+    inline QSize getIntSize() const { return QSize(qCeil(width), qCeil(overallHeight)); }
 };
 
 /** \brief summarizes all information available on a font for a specific MTenvironmentFont
@@ -335,7 +346,7 @@ struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextFontDefinition {
  *  \param lineWidthShrinkFactor the width of the tips is lineWidth reduced by this factor
  *  \param lineWidthGrowFactor the width of the horizontal bars is increased by this factor from lineWidth
  */
-JKQTMATHTEXT_LIB_EXPORT QPainterPath JKQTMathTextMakeHBracePath(double x, double ybrace, double width, double bw, double lineWidth, double cubicshrink=0.5, double cubiccontrolfac=0.3, double lineWidthShrinkFactor=0.3, double lineWidthGrowFactor=0.9);
+JKQTMATHTEXT_LIB_EXPORT QPainterPath JKQTMathTextMakeHBracePath(double x, double ybrace, double width, double bw, double lineWidth, double cubicshrink=0.5, double cubiccontrolfac=0.3, double lineWidthShrinkFactor=0.6, double lineWidthGrowFactor=0.9);
 
 
 /** \brief create a QPainterPath for drawing horizontal arrows
