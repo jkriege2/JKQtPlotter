@@ -80,6 +80,8 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: added support for \c \\char\"HEX , \c \\char\'OCTAL and \c \\charDECIMAL for inserting any uicode character code</li>
     <li>NEW: added support for \\bigl,\\bigr,\\Bigr,... commands for fixed-size but enlarged paramtheses</li>
     <li>NEW: added support for \\begin{verbatim}...\\end{verbatim}, \\begin{verbatim*}...\\end{verbatim*}</li>
+    <li>NEW: additional method JKQTMathtext::getSizeDetail() that returns all size-properties as a convenient struct, also added matching varinat JKQTMathTextNode::getSize() </li>
+    <li>NEW: additional method JKQTMathtext::drawIntoPixmap(), JKQTMathtext::drawIntoPicture(), JKQTMathtext::drawIntoImage() which returns a QPixmap, QPicture and QImage respectively that contains the render result of the currently parsed markup</li>
   </ul></li>
 </ul>
 

@@ -54,8 +54,55 @@ class JKQTMathTextNode; // forward
     \see See \ref jkqtmathtext_supportedlatex for a description of the supported LaTeX subset
          and \ref jkqtmathtext_renderingmodel for a description of the rendering model.
     
+
     \section JKQTMathTextUsage Usage
-    \subsection JKQTMathTextUsageDirect Direct Usage
+
+    \subsection JKQTMathTextUsageDirect Drawing Functions
+    The class provides different variants of the drawing function draw() that paints using an
+    externlly provided <a href="https://doc.qt.io/qt-6/qpainter.html">QPainter</a>. These variants
+    either paint into a QRect, or starting from a single location (x,y).
+
+    The QRect-variants can align the render result inside the rectangle, whereas the
+    location-variants draw from a position that is on the left-hand side of the output's baseline:
+
+    \image html jkqtmathtext/jkqtmathtext_node_geo.png
+
+
+
+    \subsection JKQTMathTextUsageConvenience Convenience Functions
+
+    Alternatively you can use these methods to directly generate a QPixmap or QPicture:
+      - drawIntoPixmap()
+      - drawIntoImage()
+      - drawIntoPicture()
+    .
+
+
+    \subsection JKQTMathTextSizing Determining the size of an equation
+
+    In addition there are also functions that allow to calculate the size of the equation,
+    before drawing it (just like the functions in <a href="http://doc.qt.io/qt-6/qfontmetrics.html">QFontMetrics</a>
+    or <a href="http://doc.qt.io/qt-6/qfontmetricsf.html">QFontMetricsF</a>):
+      - getSizeDetail()
+      - getSize()
+      - getAscent(), getDescent()
+    .
+
+
+    \subsection JKQTMathTextUsageQLabel Usage within a QLabel class JKQTMathTextLabel
+
+    Finally, there is also a QLabel-derived class JKQTMathTextLabel which can be used for drawing a LaTeX string onto a Qt form.
+
+    \see JKQTMathTextLabel
+
+
+    \subsection JKQTMathTextErrorHandling Error Handling
+
+    The class is designed to be as robust as possible and will still return some output, even if the equation contains some errors.
+    Nevertheless, several errors are detected while parsing. You can get a list of error messages using getErrorList() after calling parse().
+    Also parse() will return \c false if an error occured while parsing.
+
+    \subsection JKQTMathTextUsageExample Example Code
     This small piece of C++ code may serve as an example of the usage and capabilities of the class:
     \code
     // create a JKQTMathText object.
@@ -68,46 +115,44 @@ class JKQTMathTextNode; // forward
     // parse some LaTeX code (the Schroedinger's equation)
     mathText.parse("$\\left[-\\frac{\\hbar^2}{2m}\\frac{\\partial^2}{\\partial x^2}+V(x)\\right]\\Psi(x)=\\mathrm{i}\\hbar\\frac{\\partial}{\\partial t}\\Psi(x)$");
 
+    // draw the result into a QPixmap
+    QPixmap result=mathText.drawIntoPixmap();
+    \endcode
+
+    Alternatively you can also use this class with a <a href="https://doc.qt.io/qt-6/qpainter.html">QPainter</a>:
+
+    \code
     // use the draw() methods to draw the equation using a QPainter (here onto a QPixmap)
     QPainter painter;
-    QPixmap pix(600,400);
-    painter.begin(&pix);
+
+    // first we determine the size of the render output:
+    const JKQTMathTextNodeSize size=getSizeDetail(painter);
+
+    // now we can us that size information to render:
     mathText.draw(painter, Qt::AlignCenter, QRectF(0,0,pix.width(), pix.height()), false);
-    painter.end();
     \endcode
-    
-    \subsection JKQTMathTextSizing Determining the size of an equation
-    
-    In addition there are also functions that allow to calculate the size of the equation, before drawing it (just like the functions in <a href="http://doc.qt.io/qt-5/qfontmetrics.html">QFontMetrics</a> and  <a href="http://doc.qt.io/qt-5/qfontmetricsf.html">QFontMetricsF</a>):
-      - getSizeDetail()
-      - getSize()
-      - getAscent(), getDescent()
-    .
-    
-    \subsection JKQTMathTextErrorHandling Error Handling
-    
-    The class is designed to be as robust as possible and will still return some output, even if the equation contains some errors.
-    Nevertheless, several errors are detected while parsing. You can get a list of error messages using getErrorList() after calling parse().
-    Also parse() will return \c false if an error occured while parsing.
+
+
+
+
+    \section JKQTMathTextToHTML Convert to HTML
+
+    The method toHtml() may be used to get a HTML representation of the LaTeX string, if possible (only for simple LaTeX equations!). Whether
+    the transformation was possible is returned as a call by value argument!
 
     
-    \subsection JKQTMathTextUsageQLabel Usage within a QLabel class JKQTMathTextLabel
-    
-    Finally, there is also a QLabel-derived class JKQTMathTextLabel which can be used for drawing a LaTeX string onto a Qt form.
-    
-    \see JKQTMathTextLabel
-
-    
-    \section JKQTMathTextExamples Examples
+    \section JKQTMathTextExamples Example Projects
 
     Examples for the usage of this class can be found here: 
       - \ref JKQTMathTextSimpleExample
+      - \ref JKQTMathTextRenderCmdLineTool
       - \ref JKQTMathTextTestApp
     .
 
 
-    \section JKQTMathTextSuppoertedFonts Font Handling
-    
+    \section JKQTMathTextInternalDetails Implementation Details
+    \subsection JKQTMathTextSuppoertedFonts Font Handling
+
     Several fonts are defined as properties to the class:
       - A "roman" (MTEroman / MTEmathRoman) font used as the standard font ( setFontRoman() and for use in math mode setFontMathRoman() )
       - A "sans-serif" (MTEsans / MTEmathSans) font which may be activated with \c \\sf ... ( setFontSans() and for use in math mode setFontMathSans()  )
@@ -142,13 +187,7 @@ class JKQTMathTextNode; // forward
       - if the character is not found, it is looked for in the fallback fonts MTEFallbackSymbols
       - as a last resort, some symbols can be created otherwise, so if neither of the two options above
         contain the required symbol, the symbol might be synthesized otherwise, or a rectangle with the size of "X" is drawn instead
-    
-
-    \section JKQTMathTextToHTML Convert to HTML
-    
-    The method toHtml() may be used to get a HTML representation of the LaTeX string, if possible (only for simple LaTeX equations!). Whether
-    the transformation was possible is returned as a call by value argument!
-
+    .
 
  */
 class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
@@ -176,6 +215,8 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         double getAscent(QPainter& painter);
         /** \brief return the detailes sizes of the text */
         void getSizeDetail(QPainter& painter, double& width, double& ascent, double& descent, double& strikeoutPos);
+        /** \brief return the detailes sizes of the text */
+        JKQTMathTextNodeSize getSizeDetail(QPainter& painter);
         /** \brief draw a representation to the  object at the specified position \a x , \a y
          *
          *  \param painter the <a href="http://doc.qt.io/qt-5/qpainter.html">QPainter</a> to use for drawing
@@ -202,12 +243,40 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
          *  \param painter the <a href="http://doc.qt.io/qt-5/qpainter.html">QPainter</a> to use for drawing
          *  \param rect rectangle to draw the text/expression into (see sketch below)
          *  \param flags alignment within \a rect (see below), use e.g. <tt>Qt::AlignHCenter | Qt::AlignVCenter</tt> to center the expression inside \a rect
+         *               The flags (dark-red is the rectangle \a rect) are interpreted in the following way:
+         *               \image html jkqtmathtext/jkqtmathtext_draw_flags.png
          *  \param drawBoxes if \c true boxes defining the size of each node are drawn, example output: \image html jkqtmathtext/jkqtmathtext_drawboxes.png
          *
-         *  These options are interpreted for \a flags (dark-red is the rectangle \a rect):
-         *  \image html jkqtmathtext/jkqtmathtext_draw_flags.png
+         *
+         *
+         *  \see drawIntoPixmap(), drawIntoPicture(), getSize(), getSizeDetail()
          */
         void draw(QPainter& painter, unsigned int flags, QRectF rect, bool drawBoxes=false);
+
+        /** \brief render the last  parse result into a <a href="https://doc.qt.io/qt-6/qpixmap.html">QPixmap</a>
+         *
+         *  \param drawBoxes if \c true boxes defining the size of each node are drawn, example output: \image html jkqtmathtext/jkqtmathtext_drawboxes.png
+         *  \param backgroundColor fill color for the returnes QPixmap
+         *  \param sizeincrease margin around the tight size of the rendering result for the returned QPixmap
+         *  \param devicePixelRatio the devicePixelRatio of the returned QPixmap
+         */
+        QPixmap drawIntoPixmap(bool drawBoxes=false, QColor backgroundColor=QColor(Qt::white), int sizeincrease=0, qreal devicePixelRatio=1.0);
+
+        /** \brief render the last  parse result into a <a href="https://doc.qt.io/qt-6/qimage.html">QImage</a>
+         *
+         *  \param drawBoxes if \c true boxes defining the size of each node are drawn, example output: \image html jkqtmathtext/jkqtmathtext_drawboxes.png
+         *  \param backgroundColor fill color for the returnes QPixmap
+         *  \param sizeincrease margin around the tight size of the rendering result for the returned QPixmap
+         *  \param devicePixelRatio the devicePixelRatio of the returned QImage
+         *  \param resolution_dpi resolution in dots/inch
+         */
+        QImage drawIntoImage(bool drawBoxes=false, QColor backgroundColor=QColor(Qt::white), int sizeincrease=0, qreal devicePixelRatio=1.0, unsigned int resolution_dpi=96);
+
+        /** \brief render the last  parse result into a <a href="https://doc.qt.io/qt-6/qpicture.html">QPicture</a>
+         *
+         *  \param drawBoxes if \c true boxes defining the size of each node are drawn, example output: \image html jkqtmathtext/jkqtmathtext_drawboxes.png
+         */
+        QPicture drawIntoPicture(bool drawBoxes=false);
 
 
         /** \brief convert LaTeX to HTML. returns \c ok=true on success and \c ok=false else. */
@@ -533,6 +602,8 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         bool isUsingUnparsed() const;
         /** \copydoc error_list */
         QStringList getErrorList() const;
+        /** \brief returns \c true when errors were registered in the system \see error_list */
+        bool hadErrors() const;
         /** \copydoc error_list */
         void addToErrorList(const  QString& error);
 
@@ -697,14 +768,23 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         double sqrt_width_Xfactor;
         /** \brief height-increase of the sqrt-symbol, as factor of the child's height */
         double sqrt_height_factor;
-        /** \brief a list that will be filled with error messages while parsing, if any error occur */
+        /** \brief a list that will be filled with error messages while parsing, if any error occur
+         *
+         *  This list of errors is (mostly) filled during a call to parse(). During rendering (e.g. with draw() )
+         *  only very few errors will be detected, as most errors are caused by wrong markup.
+         *
+         *  A call to parse() also clears this list.
+         *
+         *  \see getErrorList(), hadErrors() and addToErrorList()
+         *
+          */
         QStringList error_list;
 
         /** \brief the result of parsing the last string supplied to the object via parse() */
         JKQTMathTextNode* parsedNode;
         /** \brief a tree containing the unparsed text as a single node */
         JKQTMathTextNode* unparsedNode;
-        /** \brief if true, the unparsedNode is drawn */
+        /** \brief if true, the unparsedNode is drawn \see unparsedNode */
         bool useUnparsed;
 
         /** \brief returns the syntax tree of JKQTMathTextNode's that was created by the last parse call */
@@ -717,7 +797,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
             MTTinstruction, /*!< \brief an instruction, started by \c "\", e.g. \c "\\textbf", ... */
             MTTinstructionNewline,   /*!< \brief a newline instruction \c "\\" */
             MTTinstructionVerbatim,  /*!< \brief a verbatim instruction, e.g. \c \\verb!verbatimtext! was found: currentTokenName will contain the text enclode by the verbatim delimiters */
-            MTTinstructionVerbatimVisibleSpace,  /*!< \brief a verbatim instruction that generates visible whitespaces, e.g. \c \\begin{verbatim}...\end{verbatim} was found: currentTokenName will contain the text enclode by the verbatim delimiters */
+            MTTinstructionVerbatimVisibleSpace,  /*!< \brief a verbatim instruction that generates visible whitespaces, e.g. \c \\begin{verbatim}...\\end{verbatim} was found: currentTokenName will contain the text enclode by the verbatim delimiters */
             MTTinstructionBegin, /*!< \brief a \c '\\begin{...}' instruction, currentTokenName is the name of the environment */
             MTTinstructionEnd, /*!< \brief a \c '\\end{...}' instruction, currentTokenName is the name of the environment */
             MTTunderscore,  /*!< \brief the character \c "_" */
@@ -734,7 +814,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
             MTTemdash,  /*!< \brief the em-dash character sequence \c "---" in text-mode */
 
         };
-        /** \biref convert a tokenType into a string, e.g. for debugging output */
+        /** \brief convert a tokenType into a string, e.g. for debugging output */
         static QString tokenType2String(tokenType type);
 
         /** \brief tokenizer for the LaTeX parser */

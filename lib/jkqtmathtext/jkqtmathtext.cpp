@@ -979,6 +979,11 @@ QStringList JKQTMathText::getErrorList() const {
     return this->error_list;
 }
 
+bool JKQTMathText::hadErrors() const
+{
+    return error_list.size()>0;
+}
+
 void JKQTMathText::addToErrorList(const QString &error)
 {
     error_list.append(error);
@@ -2141,23 +2146,25 @@ double JKQTMathText::getAscent(QPainter& painter) {
 }
 
 void JKQTMathText::getSizeDetail(QPainter& painter, double& width, double& ascent, double& descent, double& strikeoutPos) {
-    width=0;
-    ascent=0;
-    descent=0;
-    strikeoutPos=0;
+    JKQTMathTextNodeSize s=getSizeDetail(painter);
+    width=s.width;
+    ascent=s.baselineHeight;
+    descent=s.getDescent();
+    strikeoutPos=s.strikeoutPos;
+}
+
+JKQTMathTextNodeSize JKQTMathText::getSizeDetail(QPainter &painter)
+{
+    JKQTMathTextNodeSize s;
     if (getNodeTree()!=nullptr) {
         JKQTMathTextEnvironment ev;
         ev.color=fontColor;
         ev.fontSize=fontSize;
         ev.fontSizeUnit=fontSizeUnits;
 
-        double overallHeight=0;        
-        getNodeTree()->getSize(painter, ev, width, ascent, overallHeight, strikeoutPos);
-        descent=overallHeight-ascent;
-        ascent=ascent*1.1;
-        descent=qMax(ascent*0.1, descent*1.1);
-        strikeoutPos=strikeoutPos*1.1;
+        s=getNodeTree()->getSize(painter, ev);
     }
+    return s;
 }
 
 void JKQTMathText::draw(QPainter &painter, QPointF x, bool drawBoxes)
@@ -2216,6 +2223,110 @@ void JKQTMathText::draw(QPainter& painter, unsigned int flags, QRectF rect, bool
         getNodeTree()->draw(painter, x, y, ev);
         painter.setPen(pp);
     }
+}
+
+QPixmap JKQTMathText::drawIntoPixmap(bool drawBoxes, QColor backgroundColor, int sizeincrease, qreal devicePixelRatio)
+{
+    // 1. generate dummy QPixmap that is needed to use a QPainter
+    //    we need the dummy, because we first need to determine the size of the render output
+    //    for which we need a QPainter.
+    QPixmap pix(1,1);
+    pix.setDevicePixelRatio(devicePixelRatio);
+    {
+        QPainter painter;
+
+        // 2. now we determine the size and additional parameters,
+        //    such as the ascent(or "baseline height")
+        painter.begin(&pix);
+        painter.setRenderHint(QPainter::Antialiasing);
+        painter.setRenderHint(QPainter::TextAntialiasing);
+        painter.setRenderHint(QPainter::SmoothPixmapTransform);
+        const JKQTMathTextNodeSize size=getSizeDetail(painter);
+        const QSize pixsize=size.getIntSize()+QSize(2*sizeincrease,2*sizeincrease);
+        painter.end();
+
+        // 3. finally we can generate a QPixmap with the appropriate
+        //    size to contain the full rendering. We fill it with the
+        //    color white and finally paint the math markup/LaTeX string
+        pix=QPixmap(pixsize);
+        pix.setDevicePixelRatio(devicePixelRatio);
+        pix.fill(backgroundColor);
+        painter.begin(&pix);
+        painter.setRenderHint(QPainter::Antialiasing);
+        painter.setRenderHint(QPainter::TextAntialiasing);
+        painter.setRenderHint(QPainter::SmoothPixmapTransform);
+        draw(painter, Qt::AlignVCenter|Qt::AlignHCenter, QRect(QPoint(0,0),pixsize), drawBoxes);
+        painter.end();
+    }
+    return pix;
+}
+
+QImage JKQTMathText::drawIntoImage(bool drawBoxes, QColor backgroundColor, int sizeincrease, qreal devicePixelRatio, unsigned int resolution_dpi)
+{
+    // 1. generate dummy QPixmap that is needed to use a QPainter
+    //    we need the dummy, because we first need to determine the size of the render output
+    //    for which we need a QPainter.
+    QImage img(1,1,QImage::Format_ARGB32);
+    img.setDevicePixelRatio(devicePixelRatio);
+    img.setDotsPerMeterX(resolution_dpi*(10000/254));
+    img.setDotsPerMeterY(resolution_dpi*(10000/254));
+    {
+        QPainter painter;
+
+        // 2. now we determine the size and additional parameters,
+        //    such as the ascent(or "baseline height")
+        painter.begin(&img);
+        painter.setRenderHint(QPainter::Antialiasing);
+        painter.setRenderHint(QPainter::TextAntialiasing);
+        painter.setRenderHint(QPainter::SmoothPixmapTransform);
+        const JKQTMathTextNodeSize size=getSizeDetail(painter);
+        const QSize pixsize=size.getIntSize()+QSize(2*sizeincrease,2*sizeincrease);
+        painter.end();
+
+        // 3. finally we can generate a QPixmap with the appropriate
+        //    size to contain the full rendering. We fill it with the
+        //    color white and finally paint the math markup/LaTeX string
+        img=QImage(pixsize,QImage::Format_ARGB32);
+        img.setDevicePixelRatio(devicePixelRatio);
+        img.fill(backgroundColor);
+        painter.begin(&img);
+        painter.setRenderHint(QPainter::Antialiasing);
+        painter.setRenderHint(QPainter::TextAntialiasing);
+        painter.setRenderHint(QPainter::SmoothPixmapTransform);
+        draw(painter, Qt::AlignVCenter|Qt::AlignHCenter, QRect(QPoint(0,0),pixsize), drawBoxes);
+        painter.end();
+    }
+    return img;
+}
+QPicture JKQTMathText::drawIntoPicture(bool drawBoxes)
+{
+    // 1. generate dummy QPixmap that is needed to use a QPainter
+    //    we need the dummy, because we first need to determine the size of the render output
+    //    for which we need a QPainter.
+    QPicture pic;
+    {
+        QPainter painter;
+
+        // 2. now we determine the size and additional parameters,
+        //    such as the ascent(or "baseline height")
+        painter.begin(&pic);
+        painter.setRenderHint(QPainter::Antialiasing);
+        painter.setRenderHint(QPainter::TextAntialiasing);
+        painter.setRenderHint(QPainter::SmoothPixmapTransform);
+        const JKQTMathTextNodeSize size=getSizeDetail(painter);
+        painter.end();
+
+        // 3. finally we can generate a QPixmap with the appropriate
+        //    size to contain the full rendering. We fill it with the
+        //    color white and finally paint the math markup/LaTeX string
+        painter.begin(&pic);
+        painter.setRenderHint(QPainter::Antialiasing);
+        painter.setRenderHint(QPainter::TextAntialiasing);
+        painter.setRenderHint(QPainter::SmoothPixmapTransform);
+        draw(painter, 0, size.baselineHeight, drawBoxes);
+        painter.end();
+    }
+    return pic;
 }
 
 

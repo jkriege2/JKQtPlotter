@@ -315,7 +315,7 @@ struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextNodeSize {
     /** \brief calculate the overall size in floating-point precision */
     inline QSizeF getSize() const { return QSizeF(width, overallHeight); }
     /** \brief calculate the overall size in floating-point precision */
-    inline QSize getIntSize() const { return QSize(qCeil(width), qCeil(overallHeight)); }
+    inline QSize getIntSize() const { return QSize(qCeil(width+1.0), qCeil(overallHeight+1.0)); }
 };
 
 /** \brief summarizes all information available on a font for a specific MTenvironmentFont
