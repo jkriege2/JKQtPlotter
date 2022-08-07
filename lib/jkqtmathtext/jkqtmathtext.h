@@ -36,6 +36,9 @@
 #include <QWidget>
 #include <QLabel>
 #include <QHash>
+#include <QPicture>
+#include <QImage>
+#include <QPixmap>
 
 
 

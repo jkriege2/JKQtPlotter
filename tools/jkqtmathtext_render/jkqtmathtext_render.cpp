@@ -13,6 +13,7 @@
 #include <QElapsedTimer>
 #include <QFile>
 #include <QDir>
+#include <QTextStream>
 #if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
 #include<QRegularExpression>
 #include<QRegularExpressionMatch>
@@ -130,10 +131,17 @@ int main(int argc, char* argv[])
                       "   \\ingroup jkqtmathtext_general\n\n";
             fileList<<"   <table>\n";
             fileList<<"     <tr>\n";
-            for (const QString& symbol: JKQTMathTextSymbolNode::getSymbols()) {
+            QStringList symbols=JKQTMathTextSymbolNode::getSymbols();
+            symbols.sort(Qt::CaseInsensitive);
+            for (const QString& symbol: symbols) {
                 if (symbol.size()>0 && symbol[0].isLetter()) {
+                    QString symbol_lower;
+                    for (const QChar& ch: symbol) {
+                        if (ch.isUpper()) symbol_lower+=QString(2, ch).toLower();
+                        else symbol_lower+=ch;
+                    }
                     latex.append("\\"+symbol);
-                    outputFilename.append("jkqtmathtext_symbols_"+symbol+".png");
+                    outputFilename.append("jkqtmathtext_symbols_"+symbol_lower+".png");
                     cmdoptions.append(QMap<QString,QString>());
                     //std::cout<<"  - "<<latex.last().toStdString()<<": "<<outputFilename.last().toStdString()<<"\n";
                     fileList<<"       <td><code>\\\\"<<symbol<<"</code>:\n       <td> \\image html jkqtmathtext/symbols/"<<outputFilename.last()<<"\n";
