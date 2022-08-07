@@ -877,7 +877,8 @@ WARN_LOGFILE           =
 INPUT                  = . \
                          ./doc/dox/ \
                          ./lib \
-                         ./examples
+                         ./examples \
+                         ./tools
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding. Doxygen uses
@@ -906,9 +907,7 @@ INPUT_ENCODING         = UTF-8
 # comment), *.py, *.pyw, *.f90, *.f95, *.f03, *.f08, *.f18, *.f, *.for, *.vhd,
 # *.vhdl, *.ucf, *.qsf and *.ice.
 
-FILE_PATTERNS          = *.d \
-                         *.java \
-                         *.ii \
+FILE_PATTERNS          = *.ii \
                          *.ixx \
                          *.ipp \
                          *.i++ \
@@ -920,18 +919,8 @@ FILE_PATTERNS          = *.d \
                          *.h++ \
                          *.idl \
                          *.odl \
-                         *.cs \
-                         *.php \
-                         *.php3 \
                          *.inc \
-                         *.m \
-                         *.mm \
                          *.dox \
-                         *.py \
-                         *.f90 \
-                         *.f \
-                         *.vhd \
-                         *.vhdl \
                          *.md
 
 # The RECURSIVE tag can be used to specify whether or not subdirectories should
@@ -993,7 +982,9 @@ EXCLUDE_PATTERNS       = */build-* \
                          */html/* \
                          *examples/*.cpp \
                          *examples/*.h \
-                         */doc/html/*
+                         */doc/html/* \
+                         *tools/*.cpp \
+                         *tools/*.h
 
 # The EXCLUDE_SYMBOLS tag can be used to specify one or more symbol names
 # (namespaces, classes, functions, etc.) that should be excluded from the
@@ -1010,7 +1001,8 @@ EXCLUDE_SYMBOLS        =
 # that contain example code fragments that are included (see the \include
 # command).
 
-EXAMPLE_PATH           = ./examples/
+EXAMPLE_PATH           = ./examples/ \
+                         ./tools/
 
 # If the value of the EXAMPLE_PATH tag contains directories, you can use the
 # EXAMPLE_PATTERNS tag to specify one or more wildcard pattern (like *.cpp and

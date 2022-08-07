@@ -122,7 +122,7 @@
       - \c \\left| \c \\right| : absolute value braces | |, \image html jkqtmathtext/jkqtmathtext_bracejkqtmathtext_brace_ucorner_oneline.png
       - \c \\left\\| \c \\right\\| \endcode : norm braces || ||, \image html jkqtmathtext/jkqtmathtext_brace_dblline.png
       - \c \\left\\llcorner \c \\right\\lrcorner : lower corner braces , \image html jkqtmathtext/jkqtmathtext_brace_lcorner.png
-      - \c \\left\\ulcorner \c \\right\\urcorner : upper corner braces , \image html jkqtmathtext/.png
+      - \c \\left\\ulcorner \c \\right\\urcorner : upper corner braces , \image html jkqtmathtext/jkqtmathtext_brace_ucorner.png
       - You can use \c \\left. or \c \\right. to have only right or only left brace
     .
     
@@ -143,12 +143,12 @@
 
     \subsection JKQTMathTextSuppoertedLaTeXUnderOver Undersetting, Oversetting, Underbraces, Overbraces ...
     There are also instructions that allow to under/overset braces, arrows, ...:
-      - <code>$\\underbrace{x+x+...+x}{k\\ \\mathrm{times}}$</code> \image html jkqtmathtext/jkqtmathtext_brace_underbrace.png
-      - <code>$\\overbrace{x+x+...+x}{k\\ \\mathrm{times}}$</code> \image html jkqtmathtext/jkqtmathtext_brace_overbrace.png
+      - <code>$\\underbrace{x+x+...+x}{k\\ \\mathrm{times}}$</code> \image html jkqtmathtext/MTFMunderbrace.png
+      - <code>$\\overbrace{x+x+...+x}{k\\ \\mathrm{times}}$</code> \image html jkqtmathtext/MTFMoverbrace.png
       - <code>$\\underbracket{x+x+...+x}{k\\ \\mathrm{times}}$</code> \image html jkqtmathtext/MTFMunderbracket.png
       - <code>$\\overbracket{x+x+...+x}{k\\ \\mathrm{times}}$</code> \image html jkqtmathtext/MTFMoverbracket.png
-      - <code>$\\overset{main}{over}$</code> \image html jkqtmathtext/jkqtmathtext_brace_overset.png
-      - <code>$\\underset{main}{under}$</code> \image html jkqtmathtext/jkqtmathtext_brace_underset.png
+      - <code>$\\overset{main}{over}$</code> \image html jkqtmathtext/MTFMoverset.png
+      - <code>$\\underset{main}{under}$</code> \image html jkqtmathtext/MTFMunderset.png
     .
 
     \subsection JKQTMathTextSuppoertedLaTeXFrac Fraction Type Instructions

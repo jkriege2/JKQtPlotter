@@ -41,8 +41,6 @@ This page lists several todos and wishes for future version of JKQTPlotter
   <li>JKQTMathText:<ul>
     <li>check sub/superscript with italic text in math mode, possibly a correction is necessary</li>
     <li>explore options to make font-environment-modifying commands avails, like "{blacktext\\color{red}redtext}", today only commands like "\\textcolor{red}{redtext}" work</li>
-    <li>maybe: add support for text with linebreaks by adding a JKQTMathTextVerticalListNode in addition to JKQTMathTextListNode</li>
-    <li>maybe: add tool programs to auto-generate some example images</li>
     <li>improve support for array-environment with limited support for formatting string like l|r|c and maybe add support for \\hline command, possibly also \\cellcolor etz.</li>
     <li></li>
   </ul></li>

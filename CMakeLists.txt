@@ -48,5 +48,11 @@ if(JKQtPlotter_BUILD_EXAMPLES)
     add_subdirectory(examples)
 endif()
 
+if(JKQtPlotter_BUILD_TOOLS)
+    add_subdirectory(tools)
+endif()
+
+add_subdirectory(doc)
+
 
 

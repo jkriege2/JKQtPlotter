@@ -10,6 +10,7 @@
 
 	Examples for the usage of this class can be found here: 
 	  - \ref JKQTMathTextSimpleExample 
+    - \ref JKQTMathTextRenderCmdLineTool
 	  - \ref JKQTMathTextTestApp 
 	.
   

@@ -5,7 +5,9 @@ This section assembles some simple examples of usage.
 You can find more (complex) examples for the classes in this repository in the subfolder "test". 
 All test-projects are Qt-projects that use qmake to build. You can load them into QtCreator easily.
 
-\section jkqtp_extut Overview of Examples&Tutorials
+\tableofcontents
+
+\section jkqtp_extut_jkqtplotter Examples&Tutorials for JKQTPlotter
 
 \subsection jkqtp_extut_plotstyles Different Plot Data Styles
 
@@ -219,24 +221,7 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
     <td> \subpage JKQTPlotterMandelbrot
     <td> Allows to zoom into the Mandelbrot Set, using the different Zooming methods of JKQTPlotter
 </table>
-	
-	
-	
-\subsection jkqtp_extut_specialfeatures  Tools and Special Features
 
-<table>
-<tr><th> Screenshot    <th> Description   <th> Notes  
-<tr><td> \image html jkqtmathtext_simpletest_small.png
-    <td> \subpage JKQTMathTextSimpleExample 
-	<td> JKQTMathText<br>render LaTeX markup (Schrödinger's equation)
-<tr><td> \image html jkqtmathtext_testapp_small.png
-    <td> \subpage JKQTMathTextTestApp 
-	<td> JKQTMathText<br>render LaTeX markup
-<tr><td> \image html jkqtfastplotter_test_small.png
-    <td> \subpage JKQTFastPlotterTest 
-	<td> JKQTFastPlotter
-</table>
-	
 	
 \subsection jkqtp_extut_cmake_build CMake Build System
 
@@ -245,6 +230,45 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 <tr><td> \image html jkqtplotter_cmakelink_small.png
     <td> \subpage JKQTCMakeLinkExample
 	<td> explains how to link against JKQTPlotter with CMake
+</table>	
+	
+	
+\section jkqtp_extut_jkqtmathtext  Examples for JKQTMathText
+
+<table>
+<tr><th> Screenshot    <th> Description   <th> Notes  
+<tr><td> \image html jkqtmathtext_simpletest_small.png
+    <td> \subpage JKQTMathTextSimpleExample 
+	<td> JKQTMathText<br>render LaTeX markup (Schrödinger's equation)
+<tr><td> \image html jkqtmathtext_render_small.png
+    <td> \subpage JKQTMathTextRenderCmdLineTool 
+	<td> JKQTMathText<br>command-line utility
+<tr><td> \image html jkqtmathtext_testapp_small.png
+    <td> \subpage JKQTMathTextTestApp 
+	<td> JKQTMathText<br>render LaTeX markup
 </table>
+	
+	
+\section jkqtp_extut_jkqtfastplotter Examples for JKQTFastPlotter
+
+<table>
+<tr><th> Screenshot    <th> Description   <th> Notes  
+<tr><td> \image html jkqtfastplotter_test_small.png
+    <td> \subpage JKQTFastPlotterTest 
+	<td> JKQTFastPlotter
+</table>
+
+
+
+
+\section jkqtp_extut_tools  Tool Programs
+
+<table>
+<tr><th> Screenshot    <th> Name   <th> Notes/Description  
+<tr><td> \image html jkqtmathtext_render_small.png
+    <td> \subpage JKQTMathTextRenderCmdLineTool 
+	<td> uses JKQTMathText to render LaTeX Markup into an image file
+</table>
+	
 
 */
