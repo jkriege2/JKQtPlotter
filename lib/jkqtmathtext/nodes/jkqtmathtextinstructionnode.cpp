@@ -357,6 +357,8 @@ void JKQTMathTextModifiedTextPropsInstructionNode::fillInstructions()
             ev.strike=true;
         }, 0);
         instructions["strike"]= i;
+        instructions["st"]= i;
+        instructions["sout"]= i;
     }
     {
         InstructionProperties i([](JKQTMathTextEnvironment& ev, const QStringList& /*parameters*/) {
