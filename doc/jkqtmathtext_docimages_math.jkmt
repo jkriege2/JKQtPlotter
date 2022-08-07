@@ -1,0 +1,35 @@
+---
+jkqtmathtext_cbrt.png
+$\cbrt{1+\cbrt{1+\cbrt{1+\cbrt{1+\cbrt{1+x}}$
+---
+jkqtmathtext_sqrt.png
+$\sqrt{1+\sqrt{1+\sqrt{1+\sqrt{1+\sqrt{1+x}}\ \ \ \ \ \sqrt[3.1415]{x^2+\pi y^2}$
+---
+jkqtmathtext_supersub.png
+$r^{123}r^\frac{1}{2}\ \ \ \ \ r_{123}r_\frac{1}{2}\ \ \ \ \ a_\text{text}^2a_\text{text}^\frac{1}{2}a^\text{text}_\frac{1}{2}$
+---
+jkqtmathtext_specialsubsuper.png
+$\lim\limits_{x\rightarrow\infty}\sum\limits_{n=1}^\infty\prod\limits_{n=1}^\infty\bigvee\limits_{n=1}^\infty\bigcup\limits_{n=1}^\infty$
+---
+jkqtmathtext_doc_quadraticeq.png
+$x_{1/2]=\frac{-b\pm\sqrt{b^2-4ac}}{2a}$
+---
+jkqtmathtext_doc_quadraticeq_boxes.png
+--showboxes
+$x_{1/2]=\frac{-b\pm\sqrt{b^2-4ac}}{2a}$
+---
+jkqtmathtext_lsubstack.png
+{\backslash}lsubstack: $\sum\limits_\lsubstack{0\leq i\leq10\\-5\leq j\leq1000}f_{i,j}$
+---
+jkqtmathtext_rsubstack.png
+{\backslash}rsubstack: $\sum\limits_\rsubstack{0\leq i\leq10\\-5\leq j\leq1000}f_{i,j}$
+---
+jkqtmathtext_substack.png
+{\backslash}substack: $\sum\limits_\substack{0\leq i\leq10\\-5\leq j\leq1000}f_{i,j}$
+---
+jkqtmathtext_mathmode_and_textmode.png
+\begin{array}text: & abc123+d/e\\ math: & $abc123+d/e$\end{array}
+---
+jkqtmathtext_mathoperator_width_factor.png
+--showboxes
+\begin{array}Math: $a=b$ & text: a=b\\\textcolor{blue}{extra space}&\textcolor{blue}{normal spacing}\end{array}

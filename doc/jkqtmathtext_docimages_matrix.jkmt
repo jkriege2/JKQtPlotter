@@ -1,0 +1,21 @@
+---
+jkqtmathtext_array.png
+$\begin{array}a&b&...\\ c&d&...\end{array}$
+---
+jkqtmathtext_bmatrix.png
+$\begin{bmatrix}a&b&...\\ c&d&...\end{bmatrix}$
+---
+jkqtmathtext_bbmatrix.png
+$\begin{Bmatrix}a&b&...\\ c&d&...\end{Bmatrix}$
+---
+jkqtmathtext_pmatrix.png
+$\begin{pmatrix}a&b&...\\ c&d&...\end{pmatrix}$
+---
+jkqtmathtext_vmatrix.png
+$\begin{vmatrix}a&b&...\\ c&d&...\end{vmatrix}$
+---
+jkqtmathtext_vvmatrix.png
+$\begin{Vmatrix}a&b&...\\ c&d&...\end{Vmatrix}$
+---
+jkqtmathtext_brace_begincases.png
+$f(x)=\begin{cases}\sfrac{1}{2} & \text{if} 0\leq x\leq 1 \\ \sfrac{2}{3} & \text{if} 3\leq x\leq 4 \\ 0 & \text{elsewhere} \end{cases}$

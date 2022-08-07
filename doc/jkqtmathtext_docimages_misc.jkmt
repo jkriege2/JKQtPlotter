@@ -1,0 +1,25 @@
+---
+jkqtmathtext_verb.png
+\verb!\LaTeX{} is not pares inside \verb~..~! outside {\backslash}verb
+---
+jkqtmathtext_verbatim.png
+outside\begin{verbatim}
+inside \LaTeX verbatim
+	 2nd verbaimline
+	3rd line
+\end{verbatim}
+---
+jkqtmathtext_lstlisting.png
+outside\begin{lstlisting}
+int main() {
+	printf("Hello World\n");
+}
+\end{lstlisting}
+---
+jkqtmathtext_verbatimast.png
+outside\begin{verbatim*}
+inside \LaTeX verbatim
+	2nd verbaimline
+	3rd line
+\end{verbatim*}
+	

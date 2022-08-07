@@ -1,0 +1,39 @@
+---
+jkqtmathtext_brace_stackrel.png
+$x=\left(\stackrel{1}{2}\right)$
+---
+MTFMdfrac.png
+$x=\dfrac{a}{b}+\dfrac{g}{a}+\dfrac{a^2}{b^2}+\dfrac{a^2}{b^\frac{1}{2}}$
+---
+MTFMfrac.png
+$x=\frac{a}{b}+\frac{g}{a}+\frac{a^2}{b^2}+\frac{a^2}{b^\frac{1}{2}}$
+---
+MTFMsfrac.png
+$x=\sfrac{1}{2},\sfrac{3}{4}$
+---
+MTFMstfrac.png
+$x=\stfrac{1}{2},\stfrac{3}{4}$
+---
+MTFMstackrel.png
+$x=\stackrel{a}{b}+\stackrel{g}{a}+\stackrel{a^2}{b^2}+\stackrel{a^2}{b^\stackrel{1}{2}}$
+---
+MTFMtfrac.png
+$x=\tfrac{a}{b}+\tfrac{g}{a}+\tfrac{a^2}{b^2}+\tfrac{a^2}{b^\tfrac{1}{2}}$
+---
+MTFMoverbracket.png
+$f(x)=\overbracket{x+x+\ldots+x}{k\ \text{times}}$
+---
+MTFMunderbracket.png
+$f(x)=\underbracket{x+x+\ldots+x}{k\ \text{times}}$
+---
+MTFMoverbrace.png
+$f(x)=\overbrace{x+x+\ldots+x}{k\ \text{times}}$
+---
+MTFMunderbrace.png
+$f(x)=\underbrace{x+x+\ldots+x}{k\ \text{times}}$
+---
+MTFMoverset.png
+$X\overset{=}{\text{def}}Y\ \ \ \ X\overset{=}{!}Y\ \ \ \ \ \frac{\Delta f}{\Delta x}\overset{\Delta x\rightarrow0}{\rightarrow}f^\prime$
+---
+MTFMunderset.png
+$X\underset{=}{\text{def (5)}}Y\ \ \ \ X\underset{\Rightarrow}{f}Y\ \ \ \ \ \frac{\Delta f}{\Delta x}\underset{\rightarrow}{\Delta x\rightarrow0}f^\prime$

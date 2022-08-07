@@ -1,0 +1,51 @@
+---
+jkqtmathtext_brace_array.png
+$\left\langle\begin{array}a&b&...\\ c&d&...\end{array}\right\rangle$
+---
+jkqtmathtext_brace_bbig.png
+$\Bigl[\Bigl(r^{123}\Bigr)\Bigr]$
+---
+jkqtmathtext_brace_bbigg.png
+$\Biggl\{\Biggl(r^{123}\Biggr)\Biggr\}$
+---
+jkqtmathtext_brace_big.png
+$\bigl\{\bigl(r^{123}\bigr)\bigr\}$
+---
+jkqtmathtext_brace_bigg.png
+$\biggl\{\biggl(r^{123}\biggr)\biggr\}$
+---
+jkqtmathtext_brace_bigfamily.png
+$\Biggl\langle\biggl\{\Bigl[\big(r^{123}\bigr)\Bigr]\biggr\}\Biggr\rangle$
+---
+jkqtmathtext_brace_lcorner.png
+$\left\llcorner a\cdot x^2\right\lrcorner$
+---
+jkqtmathtext_brace_ucorner.png
+$\left\ulcorner a\cdot x^2\right\urcorner$
+---
+jkqtmathtext_brace_ceil.png
+$\left\lceil a\cdot x^2\right\rceil$
+---
+jkqtmathtext_brace_floor.png
+$\left\lfloor a\cdot x^2\right\rfloor$
+---
+jkqtmathtext_brace_curly.png
+$\left\{ a\cdot x^2\right\}$
+---
+jkqtmathtext_brace_round.png
+$\left( a\cdot x^2\right)$
+---
+jkqtmathtext_brace_dblline.png
+$\left\| a\cdot x^2\right\|$
+---
+jkqtmathtext_brace_oneline.png
+$\left| a\cdot x^2\right|$
+---
+jkqtmathtext_brace_rect.png
+$\left[ a\cdot x^2\right]$
+---
+jkqtmathtext_brace_tri.png
+$\left\langle a\cdot x^2\right\rangle$
+---
+jkqtmathtext_brace_dot.png
+{\backslash}left.{\backslash}right): $\left. a\cdot x^2\right)$\ \ \ \ \ {\backslash}left({\backslash}right.: $\left( a\cdot x^2\right.$

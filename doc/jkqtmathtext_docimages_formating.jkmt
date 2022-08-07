@@ -1,0 +1,77 @@
+---
+jkqtmathtext_bold.png
+{\backslash}textbf: \textbf{bold text}
+---
+jkqtmathtext_italic.png
+{\backslash}textit: \textit{italic text}
+---
+jkqtmathtext_sc.png
+{\backslash}textsc: \textsc{SmallCaps text}
+---
+jkqtmathtext_tt.png
+{\backslash}texttt: \textsc{Typewriter text}
+---
+jkqtmathtext_cal.png
+{\backslash}textcal: \textcal{Caligraphic text}\ \ \ \ \ {\backslash}mathcal: $\mathcal{L}=T-V$
+---
+jkqtmathtext_frak.png
+{\backslash}textfrak: \textfrak{Fraktur text}\ \ \ \ \ {\backslash}mathfrak: $\mathfrak{L}=T-V$
+---
+jkqtmathtext_script.png
+{\backslash}textscript: \textscript{Script text}\ \ \ \ \ {\backslash}mathscript: $\mathscript{L}=T-V$
+---
+jkqtmathtext_bb.png
+{\backslash}mathbb: $x\in\mathbb{R}, z\in\mathbb{C}$\ \ \ \ \ {\backslash}textbb: \textbb{Blackboard text}
+---
+jkqtmathtext_bb_sim.png
+--fontblackboardsimulated=XITS Math
+{\backslash}mathbb: $x\in\mathbb{R}, z\in\mathbb{C}$\ \ \ \ \ {\backslash}textbb: \textbb{Blackboard text}
+---
+jkqtmathtext_ol.png
+{\backslash}ol: \ol{overlined text}
+---
+jkqtmathtext_ool.png
+{\backslash}ool: \ool{double-overlined text}
+---
+jkqtmathtext_ul.png
+{\backslash}ul: \ul{underlined text}
+---
+jkqtmathtext_uul.png
+{\backslash}uul: \uul{double-underlined text}
+---
+jkqtmathtext_colored.png
+{\backslash}textcolor\{COLOR\}: \textcolor{red}{red} and \textcolor{blue}{BLUE} text}
+---
+jkqtmathtext_fonts.png
+{\backslash}textrm: \textrm{Roman} {\backslash}textsf: \textsf{Sans} {\backslash}texttt: \texttt{Typewriter} {\backslash}textscript: \textscript{Script}
+---
+jkqtmathtext_userfont.png
+default, \userfont{Arial}{Arial}, \userfont{Comic Sans MS}{Comic Sans MS}
+---
+MTDcancel.png
+{\backslash}cancel: \cancel{canceled text}
+---
+MTDbcancel.png
+{\backslash}bcancel: \bcancel{back-canceled text}
+---
+MTDstrike.png
+{\backslash}strike: \strike{strike-out text}
+---
+MTDxcancel.png
+{\backslash}xcancel: \xcancel{X-canceled text}
+---
+jkqtmathtext_begincenter.png
+{\backslash}begin\{center\}: \begin{center}text\\ \textbf{2^{nd} line of text}\\last \textit{line} $\frac{1}{2}$\end{center}
+---
+jkqtmathtext_beginflushleft.png
+{\backslash}begin\{flushleft\}: \begin{flushleft}text\\ \textbf{2^{nd} line of text}\\last \textit{line} $\frac{1}{2}$\end{flushleft}
+---
+jkqtmathtext_beginflushright.png
+{\backslash}begin\{flushright\}: \begin{flushright}text\\ \textbf{2^{nd} line of text}\\last \textit{line} $\frac{1}{2}$\end{flushright}
+---
+schreq_mathmode.png
+Schrödinger's equation: $\left[-\frac{\hbar^2}{2m}\frac{\partial^2}{\partial x^2}+V\right]\Psi(x)=\mathrm{i}\hbar\frac{\partial}{\partial t}\Psi(x)$
+---
+schreq_normalmode.png
+Schrödinger's equation: \left[-\frac{\hbar^2}{2m}\frac{\partial^2}{\partial x^2}+V\right]\Psi(x)=\mathrm{i}\hbar\frac{\partial}{\partial t}\Psi(x)
+

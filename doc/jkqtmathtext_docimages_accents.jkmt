@@ -1,0 +1,75 @@
+---
+MTDacute.png
+$\acute{x}\acute{i}\acute{X}\acute{\psi}\acute{abc}$
+---
+MTDarrow.png
+$\arrow{x}\arrow{i}\arrow{X}\arrow{\psi}\arrow{abc}$
+---
+MTDbar.png
+$\bar{x}\bar{i}\bar{X}\bar{\psi}\bar{abc}$
+---
+MTDcheck.png
+$\check{x}\check{i}\check{X}\check{\psi}\check{abc}$
+---
+MTDbreve.png
+$\breve{x}\breve{i}\breve{X}\breve{\psi}\breve{abc}$
+---
+MTDddot.png
+$\ddot{x}\ddot{i}\ddot{X}\ddot{\psi}\ddot{abc}$
+---
+MTDdot.png
+$\dot{x}\dot{i}\dot{X}\dot{\psi}\dot{abc}$
+---
+MTDdoubleoverline.png
+$\ooline{x}\ooline{i}\ooline{X}\ooline{\psi}\ooline{abc}$
+---
+MTDdoubleunderline.png
+$\uuline{x}\uuline{i}\uuline{X}\uuline{\psi}\uuline{abc}$
+---
+MTDgrave.png
+$\grave{x}\grave{i}\grave{X}\grave{\psi}\grave{abc}$
+---
+MTDhat.png
+$\hat{x}\hat{i}\hat{X}\hat{\psi}\hat{abc}$
+---
+MTDocirc.png
+$\ocirc{x}\ocirc{i}\ocirc{X}\ocirc{\psi}\ocirc{abc}$
+---
+MTDoverline.png
+$\overline{x}\overline{i}\overline{X}\overline{\psi}\overline{abc}$
+---
+MTDtilde.png
+$\tilde{x}\tilde{i}\tilde{X}\tilde{\psi}\tilde{abc}$
+---
+MTDunderline.png
+$\underline{x}\underline{i}\underline{X}\underline{\psi}\underline{abc}$
+---
+MTDvec.png
+$\vec{x}\vec{i}\vec{X}\vec{\psi}\vec{abc}$
+---
+MTDwidecheck.png
+$\widecheck{x}\widecheck{i}\widecheck{X}\widecheck{\psi}\widecheck{abc}$
+---
+MTDwidehat.png
+$\widehat{x}\widehat{i}\widehat{X}\widehat{\psi}\widehat{abc}$
+---
+MTDwidetilde.png
+$\widetilde{x}\widetilde{i}\widetilde{X}\widetilde{\psi}\widetilde{abc}$
+---
+jkqtmathtext_mathdeco.png
+$\vec{x} \dot{x} \ddot{x} \overline{x} \underline{x} \hat{x} \tilde{x} \uul{x} \ool{x} \bar{x} \arrow{x} \widehat{x} \widetilde{x} ...$
+---
+jkqtmathtext_textaccents.png
+\begin{array}
+{\backslash}"A: & \"A\"a & {\backslash}`A: & \`A\`a \\
+{\backslash}'A: & \'A\'a &{\backslash}{\circonflex}A: & \^A\^a \\
+{\backslash}{\sim}A: & \~A\~a &{\backslash}r\{A\}: & \r{A}\r{a} \\
+{\backslash}u\{A\}: & \u{A}\u{a} &{\backslash}=A: & \=A\=a \\
+{\backslash}v\{C\}: & \v{C}\v{c} &{\backslash}.e: & \.e \\
+{\backslash}AA{\backslash}aa & \AA\aa & {\backslash}OE{\backslash}oe & {\OE}{\oe} \\
+{\backslash}L{\backslash}l & \L\l & {\backslash}AE{\backslash}ae & {\AE}{\ae} \\
+{\backslash}ss & \ss & & 
+\end{array}
+---
+jkqtmathtext_mathaccents.png
+$\ddot{A}\ddot{a}\grave{A}\grave{a}\acute{A}\acute{a}\hat{A}\hat{a}\tilde{A}\tilde{a}\bar{A}\bar{a}\AA\aa{\AE}{\ae}\check{C}\check{c}\ddot{E}\ddot{e}\dot{e}\L\l\ddot{O}\ddot{o}\grave{O}\grave{o}\acute{O}\acute{o}\hat{O}\hat{o}\tilde{O}\tilde{o}\O\o{\OE}{\ae}\check{S}\check{s}\ss\ddot{U}\ddot{u}\grave{U}\grave{u}\acute{U}\acute{u}\hat{U}\hat{u}\tilde{U}\tilde{u}$

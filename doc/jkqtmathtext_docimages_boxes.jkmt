@@ -1,0 +1,39 @@
+---
+jkqtmathtext_boxed.png
+{\backslash}boxed: \boxed{boxed text}
+---
+jkqtmathtext_ovalboxed.png
+{\backslash}ovalbox: \ovalbox{boxed text}
+---
+jkqtmathtext_doubleovalbox.png
+{\backslash}ovaldoublebox: \ovaldoublebox{boxed text}
+---
+jkqtmathtext_doublebox.png
+{\backslash}doublebox: \doublebox{boxed text}
+---
+jkqtmathtext_oovalbox.png
+{\backslash}Ovalbox: \Ovalbox{boxed text}
+---
+jkqtmathtext_dashbox.png
+{\backslash}dashbox: \dashbox{boxed text}
+---
+jkqtmathtext_dottedbox.png
+{\backslash}dottedbox: \dottedbox{boxed text}
+---
+jkqtmathtext_colorbox.png
+{\backslash}colorbox\{red\}: \colorbox{red}{boxed text}
+---
+jkqtmathtext_fcolorbox.png
+{\backslash}fcolorbox\{red\}\{yellow\}: \fcolorbox{red}{yellow}{boxed text}
+---
+jkqtmathtext_shaded.png
+{\backslash}shaded\{yellow\}: \shaded{yellow}{boxed text}
+---
+jkqtmathtext_beginshaded.png
+{\backslash}begin\{shaded\}: \begin{shaded}boxed text\\ 2^{nd} line\end{shaded}
+---
+jkqtmathtext_beginsnugshade.png
+{\backslash}begin\{snugshade\}: \begin{snugshade}boxed text\\ 2^{nd} line\end{snugshade}
+---
+jkqtmathtext_beginframed.png
+{\backslash}begin\{framed\}: \begin{framed}boxed text\\ 2^{nd} line\end{framed}

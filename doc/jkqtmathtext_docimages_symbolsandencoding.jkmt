@@ -1,0 +1,25 @@
+---
+jkqtmathtext_emdash.png
+emdash: ---
+---
+jkqtmathtext_endash.png
+endash: --
+---
+jkqtmathtext_hyphen.png
+hyphen: -
+---
+jkqtmathtext_greek.png
+$\alpha\beta\gamma\xi\chi\nu\Gamma\Delta\Omega$
+---
+jkqtmathtext_char.png
+A: \char65, circonflex: \char"109 accent: \char'351
+---
+jkqtmathtext_unicode.png
+star: \unicode{2605}, circonflex: \unicode{109} emoticons: \usym{1F440} \usym{1F929}
+---
+jkqtmathtext_utf8.png
+star: \utfeight{e29885} emoticons \utfeight{F09F9881} \utfeight{f09f98bb}
+---
+jkqtmathtext_symbols.png
+\ {\backslash}sum: $\sum$ {\backslash}prod: $\prod$ {\backslash}int: $\int$ {\backslash}ll: $\ll$\ {\backslash}gg: $\gg$\ {\backslash}leq: $\leq$\ {\backslash}geq: $\geq$\ {\backslash}pm: $\pm$\ {\backslash}mp: $\mp$ ...
+  
