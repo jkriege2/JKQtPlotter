@@ -62,7 +62,7 @@ void JKQTMathTextTextBaseNode::drawString(QPainter &painter, const JKQTMathTextE
 void JKQTMathTextTextBaseNode::drawString(QPainter &painter, const JKQTMathTextEnvironment &currentEv, const QFont &f, double x, double y, const QString &txt) const
 {
     const QFontMetricsF fm(f, painter.device());
-    const QPen p(currentEv.color, fm.lineWidth(), Qt::SolidLine);
+    const QPen p(currentEv.color, fm.lineWidth()/2.0, Qt::SolidLine);
     painter.setPen(p);
     if (currentEv.font==MTEblackboard && parentMathText->isFontBlackboardSimulated()) {
         QPainterPath path;
