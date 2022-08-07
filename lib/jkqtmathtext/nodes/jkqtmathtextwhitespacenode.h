@@ -142,11 +142,11 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextEmptyBoxNode: public JKQTMathTextNode 
         virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
         /** \brief width of the (empty) box, units of this value defined in widthUnit */
         double width;
-        /** \biref units to interpret width */
+        /** \brief units to interpret width */
         Units widthUnit;
         /** \brief height of the (empty) box, units of this value defined in heightUnit */
         double height;
-        /** \biref units to interpret height */
+        /** \brief units to interpret height */
         Units heightUnit;
 };
 
