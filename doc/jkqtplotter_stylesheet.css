@@ -118,6 +118,10 @@ div.image {
 	padding: 4px;
 	text-align: left;
 	margin-left: 32pt;
+  border-style: double;
+  border-color: #dce1ee;
+  border-radius: 3pt;
+  width: min-content;
 }
 
 div.caption {
