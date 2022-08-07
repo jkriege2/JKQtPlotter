@@ -217,7 +217,8 @@ double JKQTMathTextSymbolNode::draw(QPainter& painter, double x, double y, JKQTM
     const double yShift=symprops.yShiftFactor*tbr.height();
     const double xShift=(width-tbr.width())/2.0;
     const QPointF x0(x+xShift-tbr.x(), y+yShift);
-    const double italic_xcorrection=tbr.width()-tbrNonItalic.width();
+    double italic_xcorrection=fabs(tbr.width()-tbrNonItalic.width());
+    if (fabs(italic_xcorrection)<1e-6) italic_xcorrection=double(fm.boundingRect(' ').width())*parentMathText->getItalicCorrectionFactor();
 
     //qDebug()<<"SYMB::draw(): symbolName="<<symbolName<<" font="<<f<<" sym="<<sym<<" yShiftFactor="<<symprops.yShiftFactor;
 
@@ -232,8 +233,8 @@ double JKQTMathTextSymbolNode::draw(QPainter& painter, double x, double y, JKQTM
             //qDebug()<<"  -> DrawLeftHBar or DrawRightHBar";
             painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
             painter.setPen(QPen(currentEv.color, fm.lineWidth()));
-            const double ybar=-(fm.xHeight()+fm.ascent())/2.0;
-            const double deltaybar=(fm.ascent()-fm.xHeight())*0.25;
+            const double ybar=-fm.xHeight()*1.1;
+            const double deltaybar=fm.xHeight()*0.2;
             const double barwidth=tbrNonItalic.width()/2.0;
             const double xbarstart=(has(symflags, DrawLeftHBar))?italic_xcorrection:(tbr.width()-barwidth);
             painter.drawLine(xbarstart, ybar, xbarstart+barwidth, ybar-deltaybar);
