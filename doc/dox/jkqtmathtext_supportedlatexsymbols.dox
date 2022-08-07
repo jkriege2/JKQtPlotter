@@ -22,16 +22,16 @@
      <tr>
        <td><code>\\AE</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_aaee.png
-       <td><code>\\alef</code>:
-       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_alef.png
        <td><code>\\Alef</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_aalef.png
+       <td><code>\\alef</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_alef.png
      </tr>
      <tr>
-       <td><code>\\Aleph</code>:
-       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_aaleph.png
        <td><code>\\aleph</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_aleph.png
+       <td><code>\\Aleph</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_aaleph.png
        <td><code>\\alpha</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_alpha.png
      </tr>
@@ -102,10 +102,10 @@
      <tr>
        <td><code>\\benzenr</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_benzenr.png
-       <td><code>\\Bet</code>:
-       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_bbet.png
        <td><code>\\bet</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_bet.png
+       <td><code>\\Bet</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_bbet.png
      </tr>
      <tr>
        <td><code>\\beta</code>:
@@ -198,16 +198,16 @@
      <tr>
        <td><code>\\dagger</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_dagger.png
-       <td><code>\\dalet</code>:
-       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_dalet.png
        <td><code>\\Dalet</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_ddalet.png
+       <td><code>\\dalet</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_dalet.png
      </tr>
      <tr>
-       <td><code>\\Daleth</code>:
-       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_ddaleth.png
        <td><code>\\daleth</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_daleth.png
+       <td><code>\\Daleth</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_ddaleth.png
        <td><code>\\dblhyphen</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_dblhyphen.png
      </tr>
@@ -236,10 +236,10 @@
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_degree.png
      </tr>
      <tr>
-       <td><code>\\Delta</code>:
-       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_ddelta.png
        <td><code>\\delta</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_delta.png
+       <td><code>\\Delta</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_ddelta.png
        <td><code>\\det</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_det.png
      </tr>
@@ -256,12 +256,12 @@
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_dollar.png
        <td><code>\\dots</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_dots.png
-       <td><code>\\Downarrow</code>:
-       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_ddownarrow.png
-     </tr>
-     <tr>
        <td><code>\\downarrow</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_downarrow.png
+     </tr>
+     <tr>
+       <td><code>\\Downarrow</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_ddownarrow.png
        <td><code>\\downharpoonleft</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_downharpoonleft.png
        <td><code>\\downharpoonright</code>:
@@ -342,10 +342,10 @@
      <tr>
        <td><code>\\gg</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_gg.png
-       <td><code>\\gimel</code>:
-       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_gimel.png
        <td><code>\\Gimel</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_ggimel.png
+       <td><code>\\gimel</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_gimel.png
      </tr>
      <tr>
        <td><code>\\glq</code>:
@@ -406,10 +406,10 @@
      <tr>
        <td><code>\\ker</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_ker.png
-       <td><code>\\L</code>:
-       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_ll.png
        <td><code>\\l</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_l.png
+       <td><code>\\L</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_ll.png
      </tr>
      <tr>
        <td><code>\\lambda</code>:
@@ -448,12 +448,12 @@
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_leftharpoondown.png
        <td><code>\\leftharpoonup</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_leftharpoonup.png
-       <td><code>\\leftrightarrow</code>:
-       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_leftrightarrow.png
-     </tr>
-     <tr>
        <td><code>\\Leftrightarrow</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_lleftrightarrow.png
+     </tr>
+     <tr>
+       <td><code>\\leftrightarrow</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_leftrightarrow.png
        <td><code>\\leftrightharpoon</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_leftrightharpoon.png
        <td><code>\\leq</code>:
@@ -568,24 +568,24 @@
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_nu.png
        <td><code>\\nwarrow</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_nwarrow.png
-       <td><code>\\O</code>:
-       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_oo.png
-     </tr>
-     <tr>
        <td><code>\\o</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_o.png
-       <td><code>\\odot</code>:
-       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_odot.png
-       <td><code>\\oe</code>:
-       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_oe.png
      </tr>
      <tr>
+       <td><code>\\O</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_oo.png
+       <td><code>\\odot</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_odot.png
        <td><code>\\OE</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_ooee.png
-       <td><code>\\ohm</code>:
-       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_ohm.png
+     </tr>
+     <tr>
+       <td><code>\\oe</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_oe.png
        <td><code>\\Ohm</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_oohm.png
+       <td><code>\\ohm</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_ohm.png
      </tr>
      <tr>
        <td><code>\\oiiint</code>:
@@ -596,10 +596,10 @@
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_oint.png
      </tr>
      <tr>
-       <td><code>\\omega</code>:
-       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_omega.png
        <td><code>\\Omega</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_oomega.png
+       <td><code>\\omega</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_omega.png
        <td><code>\\ominus</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_ominus.png
      </tr>
@@ -656,12 +656,12 @@
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_prod.png
        <td><code>\\propto</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_propto.png
-       <td><code>\\Psi</code>:
-       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_ppsi.png
-     </tr>
-     <tr>
        <td><code>\\psi</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_psi.png
+     </tr>
+     <tr>
+       <td><code>\\Psi</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_ppsi.png
        <td><code>\\rangle</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_rangle.png
        <td><code>\\rceil</code>:
@@ -812,10 +812,10 @@
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_textdegree.png
      </tr>
      <tr>
-       <td><code>\\textDelta</code>:
-       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_textddelta.png
        <td><code>\\textdelta</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_textdelta.png
+       <td><code>\\textDelta</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_textddelta.png
        <td><code>\\textemdash</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_textemdash.png
      </tr>
@@ -830,10 +830,10 @@
      <tr>
        <td><code>\\textexclamdown</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_textexclamdown.png
-       <td><code>\\textGamma</code>:
-       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_textggamma.png
        <td><code>\\textgamma</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_textgamma.png
+       <td><code>\\textGamma</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_textggamma.png
      </tr>
      <tr>
        <td><code>\\textgreater</code>:
@@ -846,10 +846,10 @@
      <tr>
        <td><code>\\textkappa</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_textkappa.png
-       <td><code>\\textLambda</code>:
-       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_textllambda.png
        <td><code>\\textlambda</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_textlambda.png
+       <td><code>\\textLambda</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_textllambda.png
      </tr>
      <tr>
        <td><code>\\textless</code>:
@@ -864,22 +864,22 @@
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_textomega.png
        <td><code>\\textOmega</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_textoomega.png
-       <td><code>\\textphi</code>:
-       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_textphi.png
-     </tr>
-     <tr>
        <td><code>\\textPhi</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_textpphi.png
-       <td><code>\\textpi</code>:
-       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_textpi.png
-       <td><code>\\textPi</code>:
-       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_textppi.png
      </tr>
      <tr>
-       <td><code>\\textpsi</code>:
-       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_textpsi.png
+       <td><code>\\textphi</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_textphi.png
+       <td><code>\\textPi</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_textppi.png
+       <td><code>\\textpi</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_textpi.png
+     </tr>
+     <tr>
        <td><code>\\textPsi</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_textppsi.png
+       <td><code>\\textpsi</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_textpsi.png
        <td><code>\\textquestiondown</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_textquestiondown.png
      </tr>
@@ -888,20 +888,20 @@
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_textregistered.png
        <td><code>\\textrho</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_textrho.png
-       <td><code>\\textsigma</code>:
-       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_textsigma.png
-     </tr>
-     <tr>
        <td><code>\\textSigma</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_textssigma.png
-       <td><code>\\texttau</code>:
-       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_texttau.png
-       <td><code>\\textTheta</code>:
-       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_textttheta.png
      </tr>
      <tr>
+       <td><code>\\textsigma</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_textsigma.png
+       <td><code>\\texttau</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_texttau.png
        <td><code>\\texttheta</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_texttheta.png
+     </tr>
+     <tr>
+       <td><code>\\textTheta</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_textttheta.png
        <td><code>\\textUpsilon</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_textuupsilon.png
        <td><code>\\textupsilon</code>:
@@ -924,20 +924,20 @@
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_textvartheta.png
      </tr>
      <tr>
-       <td><code>\\textxi</code>:
-       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_textxi.png
        <td><code>\\textXi</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_textxxi.png
+       <td><code>\\textxi</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_textxi.png
        <td><code>\\textzeta</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_textzeta.png
      </tr>
      <tr>
        <td><code>\\therefore</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_therefore.png
-       <td><code>\\Theta</code>:
-       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_ttheta.png
        <td><code>\\theta</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_theta.png
+       <td><code>\\Theta</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_ttheta.png
      </tr>
      <tr>
        <td><code>\\times</code>:
@@ -980,16 +980,16 @@
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_upchi.png
      </tr>
      <tr>
-       <td><code>\\updelta</code>:
-       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_updelta.png
        <td><code>\\upDelta</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_upddelta.png
-       <td><code>\\Updownarrow</code>:
-       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_uupdownarrow.png
-     </tr>
-     <tr>
+       <td><code>\\updelta</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_updelta.png
        <td><code>\\updownarrow</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_updownarrow.png
+     </tr>
+     <tr>
+       <td><code>\\Updownarrow</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_uupdownarrow.png
        <td><code>\\upepsilon</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_upepsilon.png
        <td><code>\\upeta</code>:
@@ -1022,22 +1022,22 @@
      <tr>
        <td><code>\\upnu</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_upnu.png
-       <td><code>\\upOmega</code>:
-       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_upoomega.png
        <td><code>\\upomega</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_upomega.png
+       <td><code>\\upOmega</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_upoomega.png
      </tr>
      <tr>
-       <td><code>\\upphi</code>:
-       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_upphi.png
        <td><code>\\upPhi</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_uppphi.png
-       <td><code>\\uppi</code>:
-       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_uppi.png
-     </tr>
-     <tr>
+       <td><code>\\upphi</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_upphi.png
        <td><code>\\upPi</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_upppi.png
+     </tr>
+     <tr>
+       <td><code>\\uppi</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_uppi.png
        <td><code>\\upPsi</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_upppsi.png
        <td><code>\\uppsi</code>:
@@ -1052,24 +1052,24 @@
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_upsigma.png
      </tr>
      <tr>
-       <td><code>\\Upsilon</code>:
-       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_uupsilon.png
        <td><code>\\upsilon</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_upsilon.png
+       <td><code>\\Upsilon</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_uupsilon.png
        <td><code>\\uptau</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_uptau.png
      </tr>
      <tr>
-       <td><code>\\uptheta</code>:
-       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_uptheta.png
        <td><code>\\upTheta</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_upttheta.png
-       <td><code>\\upupsilon</code>:
-       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_upupsilon.png
-     </tr>
-     <tr>
+       <td><code>\\uptheta</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_uptheta.png
        <td><code>\\upUpsilon</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_upuupsilon.png
+     </tr>
+     <tr>
+       <td><code>\\upupsilon</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_upupsilon.png
        <td><code>\\upvarepsilon</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_upvarepsilon.png
        <td><code>\\upvarphi</code>:
@@ -1086,10 +1086,10 @@
      <tr>
        <td><code>\\upvartheta</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_upvartheta.png
-       <td><code>\\upxi</code>:
-       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_upxi.png
        <td><code>\\upXi</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_upxxi.png
+       <td><code>\\upxi</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_upxi.png
      </tr>
      <tr>
        <td><code>\\upzeta</code>:
@@ -1132,10 +1132,10 @@
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_wedge.png
      </tr>
      <tr>
-       <td><code>\\xi</code>:
-       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_xi.png
        <td><code>\\Xi</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_xxi.png
+       <td><code>\\xi</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_xi.png
        <td><code>\\yen</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_yen.png
      </tr>
