@@ -2173,56 +2173,46 @@ void JKQTMathText::draw(QPainter &painter, QPointF x, bool drawBoxes)
     draw(painter, x.x(), x.y(), drawBoxes);
 }
 
-void JKQTMathText::draw(QPainter& painter, double x, double y, bool drawBoxes){
+double JKQTMathText::draw(QPainter& painter, double x, double y, bool drawBoxes){
     if (getNodeTree()!=nullptr) {
+        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
         JKQTMathTextEnvironment ev;
         ev.color=fontColor;
         ev.fontSize=fontSize;
         ev.fontSizeUnit=fontSizeUnits;
-        QPen pp=painter.pen();
-        QPen p=pp;
-        p.setStyle(Qt::SolidLine);
-        painter.setPen(p);
         getNodeTree()->setDrawBoxes(drawBoxes);
-        painter.setPen(p);
-        getNodeTree()->draw(painter, x, y, ev);
-        painter.setPen(pp);
+        const double xend=getNodeTree()->draw(painter, x, y, ev);
+        return xend;
     }
+    return x;
 }
 
 void JKQTMathText::draw(QPainter& painter, unsigned int flags, QRectF rect, bool drawBoxes) {
     if (getNodeTree()!=nullptr) {
-        QPen pp=painter.pen();
-        QPen p=pp;
-        p.setStyle(Qt::SolidLine);
-        painter.setPen(p);
+        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+
         JKQTMathTextEnvironment ev;
         ev.color=fontColor;
         ev.fontSize=fontSize;
         ev.fontSizeUnit=fontSizeUnits;
         getNodeTree()->setDrawBoxes(drawBoxes);
-        painter.setPen(p);
 
-        double width=0;
-        double baselineHeight=0;
-        double overallHeight=0, strikeoutPos=0;
-        getNodeTree()->getSize(painter, ev, width, baselineHeight, overallHeight, strikeoutPos);
+        const JKQTMathTextNodeSize size= getSizeDetail(painter);
 
         // align left top
         double x=rect.left();
-        double y=rect.top()+baselineHeight;
+        double y=rect.top()+size.baselineHeight;
 
         // care for horizontal align
-        if ((flags & Qt::AlignRight) != 0) x=x+rect.width()-width;
-        else if ((flags & Qt::AlignHCenter) != 0) x=x+(rect.width()-width)/2.0;
+        if ((flags & Qt::AlignRight) != 0) x=x+rect.width()-size.width;
+        else if ((flags & Qt::AlignHCenter) != 0) x=x+(rect.width()-size.width)/2.0;
 
         // care for vertical align
-        if ((flags & Qt::AlignBottom) != 0) y=y+rect.height()-overallHeight;
-        else if ((flags & Qt::AlignVCenter) != 0) y=y+(rect.height()-overallHeight)/2.0;
+        if ((flags & Qt::AlignBottom) != 0) y=y+rect.height()-size.overallHeight;
+        else if ((flags & Qt::AlignVCenter) != 0) y=y+(rect.height()-size.overallHeight)/2.0;
 
         // finally draw
-        getNodeTree()->draw(painter, x, y, ev);
-        painter.setPen(pp);
+        const double xend=getNodeTree()->draw(painter, x, y, ev);
     }
 }
 
@@ -2287,8 +2277,10 @@ QImage JKQTMathText::drawIntoImage(bool drawBoxes, QColor backgroundColor, int s
         // 3. finally we can generate a QPixmap with the appropriate
         //    size to contain the full rendering. We fill it with the
         //    color white and finally paint the math markup/LaTeX string
-        img=QImage(pixsize,QImage::Format_ARGB32);
+        img=QImage(pixsize*devicePixelRatio,QImage::Format_ARGB32);
         img.setDevicePixelRatio(devicePixelRatio);
+        img.setDotsPerMeterX(resolution_dpi*(10000/254));
+        img.setDotsPerMeterY(resolution_dpi*(10000/254));
         img.fill(backgroundColor);
         painter.begin(&img);
         painter.setRenderHint(QPainter::Antialiasing);
@@ -2299,6 +2291,7 @@ QImage JKQTMathText::drawIntoImage(bool drawBoxes, QColor backgroundColor, int s
     }
     return img;
 }
+
 QPicture JKQTMathText::drawIntoPicture(bool drawBoxes)
 {
     // 1. generate dummy QPixmap that is needed to use a QPainter

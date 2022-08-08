@@ -243,7 +243,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
          *  Here is an illustration of the geometry of the drawn text/expression:
          *  \image html jkqtmathtext/jkqtmathtext_node_geo.png
          */
-        void draw(QPainter& painter, double x, double y, bool drawBoxes=false);
+        double draw(QPainter& painter, double x, double y, bool drawBoxes=false);
         /** \brief draw into a rectangle \a rect with alignment defined in \a flags (see below)
          *
          *  \param painter the <a href="http://doc.qt.io/qt-5/qpainter.html">QPainter</a> to use for drawing
