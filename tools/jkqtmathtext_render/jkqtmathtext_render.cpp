@@ -14,6 +14,7 @@
 #include <QFile>
 #include <QDir>
 #include <QTextStream>
+#include <algorithm>
 #if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
 #include<QRegularExpression>
 #include<QRegularExpressionMatch>
@@ -132,6 +133,7 @@ int main(int argc, char* argv[])
             fileList<<"   <table>\n";
             fileList<<"     <tr>\n";
             QStringList symbols=JKQTMathTextSymbolNode::getSymbols();
+            std::sort(symbols.begin(), symbols.end(), [](const QString& a, const QString& b) { const QString al=a.toLower(); const QString bl=b.toLower(); if (al==bl) { return a<b; } else return al<bl; });
             symbols.sort(Qt::CaseInsensitive);
             for (const QString& symbol: symbols) {
                 if (symbol.size()>0 && symbol[0].isLetter()) {

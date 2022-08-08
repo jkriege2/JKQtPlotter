@@ -16,6 +16,7 @@ if(JKQtPlotter_BUILD_TOOLS)
         jkqtmathtext_docimages_misc.jkmt
         jkqtmathtext_docimages_specialfonts.jkmt
         jkqtmathtext_docimages_symbolsandencoding.jkmt
+        jkqtmathtext_docimages_spaces.jkmt
     )
 
 
