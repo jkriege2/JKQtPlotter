@@ -181,6 +181,8 @@ class JKQTMathTextNode; // forward
         <br>using "Computer Modern": \image html jkqtmathtext/jkqtmathtext_computermodern.png
         <br>using "Fira": \image html jkqtmathtext/jkqtmathtext_fira.png
         <br>using "MS Segoe UI": \image html jkqtmathtext/jkqtmathtext_mssegoeui.png
+        <br>using "DejaVu Sans": \image html jkqtmathtext/jkqtmathtext_DejaVuSans.png
+        <br>using "DejaVu Serif": \image html jkqtmathtext/jkqtmathtext_DejaVuSerif.png
     .
 
     Math-mode is activated by enclosing your equation in \c $...$ or \c \\[...\\] . This mode is optimized for mathematical equations. Here is an example of the difference:
