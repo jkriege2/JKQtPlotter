@@ -33,7 +33,7 @@ MTFMunderbrace.png
 $f(x)=\underbrace{x+x+\ldots+x}{k\ \text{times}}$
 ---
 MTFMoverset.png
-$X\overset{=}{\text{def}}Y\ \ \ \ X\overset{=}{!}Y\ \ \ \ \ \frac{\Delta f}{\Delta x}\overset{\Delta x\rightarrow0}{\rightarrow}f^\prime$
+$X\overset{=}{\text{def}}Y\ \ \ \ X\overset{=}{!}Y\ \ \ \ \ \frac{\Delta f}{\Delta x}\overset{\rightarrow}{\Delta x\rightarrow0}f^\prime$
 ---
 MTFMunderset.png
 $X\underset{=}{\text{def (5)}}Y\ \ \ \ X\underset{\Rightarrow}{f}Y\ \ \ \ \ \frac{\Delta f}{\Delta x}\underset{\rightarrow}{\Delta x\rightarrow0}f^\prime$

@@ -1,9 +1,9 @@
 ---
 jkqtmathtext_cbrt.png
-$\cbrt{1+\cbrt{1+\cbrt{1+\cbrt{1+\cbrt{1+x}}$
+$\cbrt{1+\cbrt{1+\cbrt{1+\cbrt{1+\cbrt{1+x}}}}}\ \ \ \ \ \sqrt[3.1415]{x^2+\pi y^2}$
 ---
 jkqtmathtext_sqrt.png
-$\sqrt{1+\sqrt{1+\sqrt{1+\sqrt{1+\sqrt{1+x}}\ \ \ \ \ \sqrt[3.1415]{x^2+\pi y^2}$
+$\sqrt{1+\sqrt{1+\sqrt{1+\sqrt{1+\sqrt{1+x}}}}}$
 ---
 jkqtmathtext_supersub.png
 $r^{123}r^\frac{1}{2}\ \ \ \ \ r_{123}r_\frac{1}{2}\ \ \ \ \ a_\text{text}^2a_\text{text}^\frac{1}{2}a^\text{text}_\frac{1}{2}$

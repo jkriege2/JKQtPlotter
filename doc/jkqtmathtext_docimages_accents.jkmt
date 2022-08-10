@@ -68,7 +68,7 @@ jkqtmathtext_textaccents.png
 {\backslash}v\{C\}: & \v{C}\v{c} &{\backslash}.e: & \.e \\
 {\backslash}AA{\backslash}aa & \AA\aa & {\backslash}OE{\backslash}oe & {\OE}{\oe} \\
 {\backslash}L{\backslash}l & \L\l & {\backslash}AE{\backslash}ae & {\AE}{\ae} \\
-{\backslash}ss & \ss & & 
+{\backslash}ss & \ss & {\backslash}O{\backslash}o & \O\o 
 \end{array}
 ---
 jkqtmathtext_mathaccents.png
