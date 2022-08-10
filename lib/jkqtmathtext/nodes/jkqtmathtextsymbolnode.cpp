@@ -516,8 +516,8 @@ void JKQTMathTextSymbolNode::fillSymbolTables()
     symbols["checkmark"]=UprightSymbolStd(QChar(0x2713)).addUprightHtml("&check;");
     symbols["circ"]=UprightSymbolStd(QChar(0x2218)).addUprightHtml("&SmallCircle;").addStd("o", ItalicOff,0.7, -0.25);
     symbols["co"]=UprightSymbolUnicode(QChar(0x2105));
-    { auto s=SimpleTextSymbol(QChar(0xA5), "&copy;");
-        symbols["copyright"]=s; symbols["textcopyright"]=s; }
+    { auto s=SimpleTextSymbol(QChar(0xA9), "&copy;");
+        symbols["copyright"]=s; symbols["textcopyright"]=s; symbols["circledC"]=s; }
     { auto s=UprightSymbolUnicode(QChar(0x2020)).addUprightHtml("&dagger;");
         symbols["dagger"]=s; symbols["dag"]=s; symbols["textdagger"]=s; }
     { auto s=UprightSymbolUnicode(QChar(0x2021)).addUprightHtml("&ddagger;");
@@ -571,7 +571,7 @@ void JKQTMathTextSymbolNode::fillSymbolTables()
     symbols["prime"]=UnicodeSymbol(QChar(0x2032)).addHtml("&prime;").addStd("'");
     symbols["rangle"]=UprightSymbolUnicode(QChar(0x232A)).addWinSymbol(QChar(0xF1));
     symbols["rceil"]=UprightSymbolUnicode(QChar(0x2309)).addHtml("&RightCeiling;").addWinSymbol(QChar(0xF9));
-    { auto s=SimpleTextSymbol(QChar(0xAA), "&reg;");
+    { auto s=SimpleTextSymbol(QChar(0xAE), "&reg;");
         symbols["registered"]=s; symbols["textregistered"]=s; symbols["circledR"]=s; }
     symbols["rfloor"]=UprightSymbolUnicode(QChar(0x230B)).addHtml("&RightFloor;").addWinSymbol(QChar(0xFB));
     symbols["rightangle"]=UprightSymbolUnicode(QChar(0x221F)).addHtml("&angrt;");
