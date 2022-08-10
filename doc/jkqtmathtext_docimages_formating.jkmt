@@ -21,11 +21,24 @@ jkqtmathtext_script.png
 {\backslash}textscript: \textscript{Script text}\ \ \ \ \ {\backslash}mathscript: $\mathscript{L}=T-V$
 ---
 jkqtmathtext_bb.png
-{\backslash}mathbb: $x\in\mathbb{R}, z\in\mathbb{C}$\ \ \ \ \ {\backslash}textbb: \textbb{Blackboard text}
+--fontblackboard=Arial --fontblackboardmode=default
+{\backslash}mathbb: $x\in\mathbb{R}, z\in\mathbb{C}, \mathbb{1, \pi}$\ \ \ \ \ {\backslash}textbb: \textbb{Blackboard text! 123 \pi \"A\"o}
 ---
-jkqtmathtext_bb_sim.png
---fontblackboardsimulated=XITS Math
-{\backslash}mathbb: $x\in\mathbb{R}, z\in\mathbb{C}$\ \ \ \ \ {\backslash}textbb: \textbb{Blackboard text}
+jkqtmathtext_bb_font_directly.png
+--fontblackboardmode=font_directly
+{\backslash}mathbb: $x\in\mathbb{R}, z\in\mathbb{C}, \mathbb{1, \pi}$\ \ \ \ \ {\backslash}textbb: \textbb{Blackboard text! 123 \pi \"A\"o}
+---
+jkqtmathtext_bb_simulate.png
+--fontblackboard=Arial --fontblackboardmode=simulate
+{\backslash}mathbb: $x\in\mathbb{R}, z\in\mathbb{C}, \mathbb{1, \pi}$\ \ \ \ \ {\backslash}textbb: \textbb{Blackboard text! 123 \pi \"A\"o}
+---
+jkqtmathtext_bb_unicode_or_font_directly.png
+--fontblackboardmode=unicode_or_font_directly
+{\backslash}mathbb: $x\in\mathbb{R}, z\in\mathbb{C}, \mathbb{1, \pi}$\ \ \ \ \ {\backslash}textbb: \textbb{Blackboard text! 123 \pi \"A\"o}
+---
+jkqtmathtext_bb_unicode_or_simulate.png
+--fontblackboard=Arial --fontblackboardmode=unicode_or_simulate
+{\backslash}mathbb: $x\in\mathbb{R}, z\in\mathbb{C}, \mathbb{1, \pi}$\ \ \ \ \ {\backslash}textbb: \textbb{Blackboard text! 123 \pi \"A\"o}
 ---
 jkqtmathtext_ol.png
 {\backslash}ol: \ol{overlined text}

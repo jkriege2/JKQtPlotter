@@ -69,7 +69,7 @@ int main(int argc, char* argv[])
     parser.addOption(outputDirectoryOption);
     QCommandLineOption listsymbolsOption("listsymbols", "list all symbols in the given output file and generate images.", "listsymbols", "");
     parser.addOption(listsymbolsOption);
-    QCommandLineOption drawBoxesOption("drawboxes", "draw boxes.");
+    QCommandLineOption drawBoxesOption(QStringList()<<"drawboxes"<<"showboxes", "draw boxes.");
     parser.addOption(drawBoxesOption);
     QCommandLineOption verboseOption("verbose", "verbose output.");
     parser.addOption(verboseOption);
@@ -77,8 +77,6 @@ int main(int argc, char* argv[])
     parser.addOption(fontOption);
     QCommandLineOption fontsizeOption("fontsize", "font size.", "fontsize", "12");
     parser.addOption(fontsizeOption);
-    QCommandLineOption fontBlackboardSimOption("fontblackboardsimulated", "set the blackboard font and activate simulated-mode.", "fontblackboardsimulated", "");
-    parser.addOption(fontBlackboardSimOption);
     QCommandLineOption fontRomanOption("fontroman", "set the text-mode roman font to use.", "fontroman", "");
     parser.addOption(fontRomanOption);
     QCommandLineOption fontSansOption("fontsans", "set the text-mode sans font to use.", "fontsans", "");
@@ -101,6 +99,8 @@ int main(int argc, char* argv[])
     parser.addOption(fontcaligraphicOption);
     QCommandLineOption fontblackboardOption("fontblackboard", "set the blackboard font to use.", "fontblackboard", "");
     parser.addOption(fontblackboardOption);
+    QCommandLineOption fontblackboardmodeOption("fontblackboardmode", "set the usage mode for the blackboard font.", "fontblackboardmode", "default");
+    parser.addOption(fontblackboardmodeOption);
     QCommandLineOption textcolorOption("textcolor", "set the color of the text.", "textcolor", "black");
     parser.addOption(textcolorOption);
     QCommandLineOption sizeincreaseOption("sizeincrease", "additional pixels around output.", "sizeincrease", "2");
@@ -260,7 +260,6 @@ int main(int argc, char* argv[])
         int resolution_dpi = parser.value(resolutionOption).toInt();
         QColor backgroundColor = jkqtp_String2QColor(parser.value(backgroundOption));
         QColor textColor = jkqtp_String2QColor(parser.value(textcolorOption));
-        QString fontBlackboardSim = parser.value(fontBlackboardSimOption);
         QString fontBlackboard=parser.value(fontblackboardOption);
         QString fontRoman=parser.value(fontRomanOption);
         QString fontSans=parser.value(fontSansOption);
@@ -272,15 +271,15 @@ int main(int argc, char* argv[])
         QString fontScript=parser.value(fontScriptOption);
         QString fontFraktur=parser.value(fontFrakturOption);
         QString fontCaligraphic=parser.value(fontcaligraphicOption);
+        JKQTMathTextBlackboradDrawingMode fontBlackboardMode=String2JKQTMathTextBlackboradDrawingMode(parser.value(fontblackboardmodeOption));
 
         if (cmdoptions[i].size()>0) {
             for (const QString& key: cmdoptions[i].keys()) {
-                if (key=="drawboxes") drawBoxes=true;
+                if (key=="drawboxes" || key=="showboxes") drawBoxes=true;
                 else if (key=="fontsize") fontsize=cmdoptions[i].value(key).toDouble();
                 else if (key=="sizeincrease") sizeincrease=cmdoptions[i].value(key).toInt();
                 else if (key=="background") backgroundColor=jkqtp_String2QColor(cmdoptions[i].value(key));
                 else if (key=="textcolor") textColor=jkqtp_String2QColor(cmdoptions[i].value(key));
-                else if (key=="fontblackboardsimulated") fontBlackboardSim=cmdoptions[i].value(key);
                 else if (key=="fontblackboard") fontBlackboard=cmdoptions[i].value(key);
                 else if (key=="font") processFont(cmdoptions[i].value(key), fonts, mathFont);
                 else if (key=="fontroman") fontRoman=cmdoptions[i].value(key);
@@ -293,6 +292,10 @@ int main(int argc, char* argv[])
                 else if (key=="fontscript") fontScript=cmdoptions[i].value(key);
                 else if (key=="fontcaligraphic") fontCaligraphic=cmdoptions[i].value(key);
                 else if (key=="fontfraktur") fontFraktur=cmdoptions[i].value(key);
+                else if (key=="fontblackboardmode") fontBlackboardMode=String2JKQTMathTextBlackboradDrawingMode(cmdoptions[i].value(key));
+                else {
+                    std::cerr<<"unknown command-line option --"<<key.toStdString()<<" in inputfile\n";
+                }
             }
         }
 
@@ -328,14 +331,10 @@ int main(int argc, char* argv[])
         if (fontFallbackSymbol.size()>0) mathText.setFallbackFontSymbols(fontFallbackSymbol, MTFEUnicode);
         if (fontFallbackSymbol_symbolencoding.size()>0) mathText.setFallbackFontSymbols(fontFallbackSymbol_symbolencoding, MTFEWinSymbol);
 
-        if (fontBlackboardSim.size()>0) {
-            mathText.setFontBlackboard(fontBlackboardSim, MTFEUnicode);
-            mathText.setFontBlackboardSimulated(true);
-        }
         if (fontBlackboard.size()>0) {
             mathText.setFontBlackboard(fontBlackboard, MTFEUnicode);
-            mathText.setFontBlackboardSimulated(false);
         }
+        mathText.setFontBlackboradMode(fontBlackboardMode);
         mathText.setFontSize(fontsize);
         mathText.setFontColor(textColor);
 

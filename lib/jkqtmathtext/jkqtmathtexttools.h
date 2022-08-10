@@ -139,6 +139,31 @@ enum JKQTMathTextFontEncoding {
 JKQTMATHTEXT_LIB_EXPORT JKQTMathTextFontEncoding estimateJKQTMathTextFontEncoding(QFont font);
 
 
+/** \brief used to specify how blackboard-fonts are drawn
+ *  \ingroup jkqtmathtext_tools
+ *
+ *  \see JKQTMathTextBlackboradDrawingMode2String(), String2JKQTMathTextBlackboradDrawingMode()
+*/
+enum JKQTMathTextBlackboradDrawingMode {
+    MTBBDMfontDirectly=0,      /*!< \brief draw using the font specified by JKQTMathText::setFontBlackboard() \image html jkqtmathtext/jkqtmathtext_bb_font_directly.png */
+    MTBBDMsimulate,      /*!< \brief simulate a blackboard font (i.e. draw the characters' outline only), based on the font specified by JKQTMathText::setFontBlackboard() (e.g. Arial or another sans-serif font is a good choice) \image html jkqtmathtext/jkqtmathtext_bb_simulate.png */
+    MTBBDMunicodeCharactersOrFontDirectly,  /*!< \brief use the currently set font and look for special unicode-characters in it, uses the fallbackSymbolFont as fallback, use MTBBDMfontDirectly for characters that are not available \image html jkqtmathtext/jkqtmathtext_bb_unicode_or_font_directly.png */
+    MTBBDMunicodeCharactersOrSimulate,  /*!< \brief use the currently set font and look for special unicode-characters in it, uses the fallbackSymbolFont as fallback, use MTBBDMsimulate for characters that are not available \image html jkqtmathtext/jkqtmathtext_bb_unicode_or_simulate.png  */
+    MTBBDMdefault=MTBBDMunicodeCharactersOrFontDirectly /*!< \brief default drawing mode, same as MTBBDMunicodeCharactersOrFontDirectly */
+};
+
+/** \brief this converts a JKQTMathTextBlackboradDrawingMode into a string
+ *  \ingroup jkqtmathtext_tools
+ *  \see String2JKQTMathTextBlackboradDrawingMode(), JKQTMathTextBlackboradDrawingMode
+*/
+JKQTMATHTEXT_LIB_EXPORT QString JKQTMathTextBlackboradDrawingMode2String(JKQTMathTextBlackboradDrawingMode mode);
+/** \brief this converts a QString into a JKQTMathTextBlackboradDrawingMode
+ *  \ingroup jkqtmathtext_tools
+ *  \see JKQTMathTextBlackboradDrawingMode2String(), JKQTMathTextBlackboradDrawingMode
+*/
+JKQTMATHTEXT_LIB_EXPORT JKQTMathTextBlackboradDrawingMode String2JKQTMathTextBlackboradDrawingMode(QString mode);
+
+
 
 /** \brief convert MTfontEncoding to a string
  *  \ingroup jkqtmathtext_tools
@@ -277,6 +302,10 @@ struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextEnvironment {
 
     /** \brief build a <a href="https://doc.qt.io/qt-5/qfont.html">QFont</a> object from the settings in this object */
     QFont getFont(JKQTMathText* parent) const;
+    /** \brief return a copy of this object with the font exchanged for \a font */
+    JKQTMathTextEnvironment exchangedFontFor(JKQTMathTextEnvironmentFont font) const;
+    /** \brief return a copy of this object with the font exchanged for the matching roman font */
+    JKQTMathTextEnvironment exchangedFontForRoman() const;
     /** \brief return the encoding of the given Font */
     JKQTMathTextFontEncoding getFontEncoding(JKQTMathText *parent) const;
     /** \brief generate a HTML prefix that formats the text after it according to the settings in this object
@@ -364,6 +393,14 @@ JKQTMATHTEXT_LIB_EXPORT QPainterPath JKQTMathTextMakeArrow(double x, double y, d
  */
 JKQTMATHTEXT_LIB_EXPORT QPainterPath JKQTMathTextMakeDArrow(double x, double y, double width, double arrowW, bool left=false, bool right=true);
 
+/** \brief draw a given \a txt in the font \a f using additional informaion (but not currentEv::getFont() ) from \a currentEv at (\a x , \a y ) using the given \a painter
+ *
+ *  This function implements drawing of synthesized fonts, e.g. MTEblackboard when JKQTMathText::isFontBlackboardSimulated() is \c true .
+ *
+ *  example output:
+ *    \image html jkqtmathtext/jkqtmathtext_bb_unicode_or_simulate.png
+ */
+JKQTMATHTEXT_LIB_EXPORT void JKQTMathTextDrawStringSimBlackboard(QPainter& painter, const QFont& f, const QColor &color, double x, double y, const QString& txt);
 
 struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextTBRData {
     explicit JKQTMathTextTBRData(const QFont& f, const QString& text, QPaintDevice *pd);

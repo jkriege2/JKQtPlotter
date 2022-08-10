@@ -283,7 +283,7 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbEncodingBlackboard->setCurrentIndex(static_cast<int>(mt.getFontEncodingBlackboard()));
     ui->cmbUnicodeSymbol->setCurrentFont(QFont(mt.getFallbackFontSymbols()));
     ui->cmbEncodingSymbol->setCurrentIndex(static_cast<int>(mt.getFontEncodingFallbackFontSymbols()));
-    ui->chkSimulateBlackboard->setChecked(mt.isFontBlackboardSimulated());
+    ui->cmdBlackboradMode->setCurrentText(JKQTMathTextBlackboradDrawingMode2String(mt.getFontBlackboradMode()));
 
 
 
@@ -297,7 +297,7 @@ TestForm::TestForm(QWidget *parent) :
     connect(ui->chkBigBox, SIGNAL(toggled(bool)), this, SLOT(updateMath()));
     connect(ui->chkAntiAlias, SIGNAL(toggled(bool)), this, SLOT(updateMath()));
     connect(ui->chkAntiAliasText, SIGNAL(toggled(bool)), this, SLOT(updateMath()));
-    connect(ui->chkSimulateBlackboard, SIGNAL(toggled(bool)), this, SLOT(updateMath()));
+    connect(ui->cmdBlackboradMode, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
     connect(ui->cmbLastAlign, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
     connect(ui->cmbFont, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
     connect(ui->cmbScript, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
@@ -446,7 +446,7 @@ QString TestForm::getFonts(const JKQTMathText& mt) const
     str<<"Script: "<<mt.getFontScript().toStdString()<<", "<<JKQTMathTextFontEncoding2String(mt.getFontEncodingScript()).toStdString()<<"\n";
     str<<"Typewriter: "<<mt.getFontTypewriter().toStdString()<<", "<<JKQTMathTextFontEncoding2String(mt.getFontEncodingTypewriter()).toStdString()<<"\n";
     str<<"Caligraphic: "<<mt.getFontCaligraphic().toStdString()<<", "<<JKQTMathTextFontEncoding2String(mt.getFontEncodingCaligraphic()).toStdString()<<"\n";
-    str<<"Blackboard: "<<mt.getFontBlackboard().toStdString()<<", "<<JKQTMathTextFontEncoding2String(mt.getFontEncodingBlackboard()).toStdString()<<", isSimulated="<<mt.isFontBlackboardSimulated();
+    str<<"Blackboard: "<<mt.getFontBlackboard().toStdString()<<", "<<JKQTMathTextFontEncoding2String(mt.getFontEncodingBlackboard()).toStdString()<<", mode="<<JKQTMathTextBlackboradDrawingMode2String(mt.getFontBlackboradMode()).toStdString()<<"\n";
     return str.str().c_str();
 }
 
@@ -644,7 +644,7 @@ void TestForm::updateMath()
         mt.useXITS(false);
     }
 
-    mt.setFontBlackboardSimulated(ui->chkSimulateBlackboard->isChecked());
+    mt.setFontBlackboradMode(String2JKQTMathTextBlackboradDrawingMode(ui->cmdBlackboradMode->currentText()));
 
     if (ui->cmbFont->currentIndex()==1) qDebug()<<"useXITS: "<<mt.useXITS();
     else if (ui->cmbFont->currentIndex()==2) qDebug()<<"useSTIX: "<<mt.useSTIX();

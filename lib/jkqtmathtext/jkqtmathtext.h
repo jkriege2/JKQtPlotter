@@ -373,11 +373,12 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
          *
          */
         void setFontBlackboard(const QString & fontName, JKQTMathTextFontEncoding encoding=JKQTMathTextFontEncoding::MTFEStandard);
-        /** \copydoc blackboardSimulated  */
-        void setFontBlackboardSimulated(bool doSimulate);
-        /** \copydoc blackboardSimulated \see setFontBlackboardSimulated()  */
-        bool isFontBlackboardSimulated() const;
-        /** \brief retrieves the font to be used for text in the logical font MTEblackboard \see setFontBlackboardSimulated()  */
+        /** \copydoc blackboradFontMode */
+        JKQTMathTextBlackboradDrawingMode getFontBlackboradMode() const;
+        /** \copydoc blackboradFontMode */
+        void setFontBlackboradMode(JKQTMathTextBlackboradDrawingMode mode);
+
+        /** \brief retrieves the font to be used for text in the logical font MTEblackboard \see blackboradFontMode  */
         QString getFontBlackboard() const;
         /** \brief set the font \a fontName and it's encoding \a encoding to be used for symbols in the logical font \a font   */
         void setFallbackFontSymbols(const QString & fontName, JKQTMathTextFontEncoding encoding=JKQTMathTextFontEncoding::MTFEStandard);
@@ -635,17 +636,26 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
 
         /** \brief stores information about the different fonts used by LaTeX markup */
         QHash<JKQTMathTextEnvironmentFont, JKQTMathTextFontDefinition> fontDefinitions;
-        /** \brief if enabled, the blackboard-characters are simulated by using font outlines only
+
+        /** \brief specifies how to draw blackboard font characters (i.e. \c \\mathbb{N} )
          *
-         *  A possible choice for a blackboard font (Castellar) looks like this:
-         *    \image html jkqtmathtext/jkqtmathtext_bb.png
-         *  If such a font is not available, you can set this property blackboardSimulated
-         *  to \c true and chose a font, like e.g. Arial to output blackboard-letters as:
-         *    \image html jkqtmathtext/jkqtmathtext_bb_sim.png
+         *  Blackboard fonts are not widely available on target systems (viable fonts are e.g.
+         *  <code>"Double Stroke", "CloisterOpenFace BT", "GoudyHandtooled BT", "Castellar", "MathJax_AMS", "Castellar Standard", "MathJax_AMS Standard", "Colonna MT"</code>).
+         *  But the most important blackboard characters are usually available in the higher unicode
+         *  codepoints of Fonts specialized for math (e.g. XIST, STIX, ASANA).
          *
-         *  \see setFontBlackboard() setFontBlackboardSimulated()
+         *  Therefore JKQTMathText supports using these characters, or simulating a blackboard font in
+         *  addition to using one of the fonts above. You can set that by setting
+         *  JKQTMathText::setFontBlackboradMode() with one of the options from JKQTMathTextBlackboradDrawingMode:
+         *    - MTBBDMfontDirectly: use a blackboard font specified by JKQTMathText::setFontBlackboard() \image html jkqtmathtext/jkqtmathtext_bb_font_directly.png using \c JKQTMathText::setFontBlackboard("Castellar")
+         *    - MTBBDMsimulate: \image html jkqtmathtext/jkqtmathtext_bb_simulate.png using \c JKQTMathText::setFontBlackboard("Arial")
+         *    - MTBBDMunicodeCharactersOrFontDirectly: \image html jkqtmathtext/jkqtmathtext_bb_unicode_or_font_directly.png using \c JKQTMathText::setFontBlackboard("Castellar")
+         *    - MTBBDMunicodeCharactersOrSimulate: \image html jkqtmathtext/jkqtmathtext_bb_unicode_or_simulate.png using \c JKQTMathText::setFontBlackboard("Arial")
+         *  .
+         *
+         *  \see setFontBlackboard() setBlackboardFontMode()
          */
-        bool blackboardSimulated;
+        JKQTMathTextBlackboradDrawingMode blackboradFontMode;
 
 
         /** \brief resizing factor for braces in math mode */

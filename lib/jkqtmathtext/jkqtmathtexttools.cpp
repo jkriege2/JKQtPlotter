@@ -548,6 +548,19 @@ QFont JKQTMathTextEnvironment::getFont(JKQTMathText* parent) const {
     return f;
 }
 
+JKQTMathTextEnvironment JKQTMathTextEnvironment::exchangedFontForRoman() const
+{
+    if (insideMath) return exchangedFontFor(MTEmathRoman);
+    else return exchangedFontFor(MTEroman);
+}
+
+JKQTMathTextEnvironment JKQTMathTextEnvironment::exchangedFontFor(JKQTMathTextEnvironmentFont font) const
+{
+    JKQTMathTextEnvironment newEnv=*this;
+    newEnv.font=font;
+    return newEnv;
+}
+
 QString JKQTMathTextEnvironment::toHtmlStart(JKQTMathTextEnvironment defaultEv, JKQTMathText* parentMathText) const {
     QString s;
     if (fontSizeUnit==POINTS) s=s+"font-size: "+QLocale::c().toString(fontSize)+"pt; ";
@@ -844,4 +857,38 @@ JKQTMathTextVerticalOrientation String2JKQTMathTextVerticalOrientation(QString t
     if (tokenName=="b" || tokenName=="bottom") return MTVOBottom;
     if (tokenName=="c" || tokenName=="center" || tokenName=="centered") return MTVOCentered;
     return MTVOCentered;
+}
+
+QString JKQTMathTextBlackboradDrawingMode2String(JKQTMathTextBlackboradDrawingMode mode)
+{
+    switch(mode) {
+        case MTBBDMfontDirectly: return "font_directly";
+        case MTBBDMsimulate: return "simulate";
+        case MTBBDMunicodeCharactersOrFontDirectly: return "unicode_or_font_directly";
+        case MTBBDMunicodeCharactersOrSimulate: return "unicode_or_simulate";
+    }
+    return "font_directly";
+}
+
+
+JKQTMathTextBlackboradDrawingMode String2JKQTMathTextBlackboradDrawingMode(QString mode)
+{
+    mode=mode.toLower().simplified().trimmed();
+    if (mode=="font_directly" || mode=="font" || mode=="directly") return MTBBDMfontDirectly;
+    if (mode=="simulate") return MTBBDMsimulate;
+    if (mode=="unicode_or_font_directly" || mode=="unicode_or_font" || mode=="unicode_or_directly") return MTBBDMunicodeCharactersOrFontDirectly;
+    if (mode=="unicode_or_simulate") return MTBBDMunicodeCharactersOrSimulate;
+    if (mode=="default") return MTBBDMdefault;
+    return MTBBDMdefault;
+}
+
+void JKQTMathTextDrawStringSimBlackboard(QPainter &painter, const QFont &f, const QColor& color, double x, double y, const QString &txt)
+{
+    const QFontMetricsF fm(f, painter.device());
+    const QPen p(color, fm.lineWidth()/4.0, Qt::SolidLine);
+    painter.setPen(p);
+    QPainterPath path;
+    path.addText(QPointF(x, y), f, txt);
+    path.addText(QPointF(x+fm.lineWidth()/2.0, y), f, txt);
+    painter.drawPath(path);
 }

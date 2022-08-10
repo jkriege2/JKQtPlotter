@@ -54,26 +54,8 @@ QString JKQTMathTextTextBaseNode::getText() const
     return text;
 }
 
-void JKQTMathTextTextBaseNode::drawString(QPainter &painter, const JKQTMathTextEnvironment &currentEv, double x, double y, const QString &txt) const {
-    const QFont f=currentEv.getFont(parentMathText);
-    drawString(painter, currentEv, f, x, y, txt);
-}
 
-void JKQTMathTextTextBaseNode::drawString(QPainter &painter, const JKQTMathTextEnvironment &currentEv, const QFont &f, double x, double y, const QString &txt) const
-{
-    const QFontMetricsF fm(f, painter.device());
-    const QPen p(currentEv.color, fm.lineWidth()/2.0, Qt::SolidLine);
-    painter.setPen(p);
-    if (currentEv.font==MTEblackboard && parentMathText->isFontBlackboardSimulated()) {
-        QPainterPath path;
-        path.addText(QPointF(x, y), f, txt);
-        path.addText(QPointF(x+fm.lineWidth()/2.0, y), f, txt);
-        painter.drawPath(path);
-    } else {
-        painter.setFont(f);
-        painter.drawText(QPointF(x, y), txt);
-    }
-}
+
 
 QString JKQTMathTextTextBaseNode::textTransform(const QString &text, const JKQTMathTextEnvironment &/*currentEv*/) const
 {
@@ -91,10 +73,34 @@ bool JKQTMathTextTextBaseNode::toHtml(QString &html, JKQTMathTextEnvironment cur
 
 
 
+QHash<QChar, uint32_t> JKQTMathTextTextNode::blackboardUnicodeTable=QHash<QChar, uint32_t>();
+
+void JKQTMathTextTextNode::fillStaticTables() {
+    if (blackboardUnicodeTable.size()>0) return;
+
+    blackboardUnicodeTable['C']=0x2102;
+    blackboardUnicodeTable['H']=0x210D;
+    blackboardUnicodeTable['N']=0x2115;
+    blackboardUnicodeTable['P']=0x2119;
+    blackboardUnicodeTable['Q']=0x211A;
+    blackboardUnicodeTable['R']=0x211D;
+    blackboardUnicodeTable['Z']=0x2124;
+
+    for (const QChar ch: QString("ABDEFGIJKLMOSTUVWXYZ")) {
+        blackboardUnicodeTable[ch]=0x1D538+(ch.unicode()-QChar('A').unicode());
+    }
+    for (const QChar ch: QString("abcdefghijklmnopqrstuvwxyz")) {
+        blackboardUnicodeTable[ch]=0x1D552+(ch.unicode()-QChar('a').unicode());
+    }
+    for (const QChar ch: QString("0123456789")) {
+        blackboardUnicodeTable[ch]=0x1D7D8+(ch.unicode()-QChar('0').unicode());
+    }
+}
 
 JKQTMathTextTextNode::JKQTMathTextTextNode(JKQTMathText* _parent, const QString& textIn, bool addWhitespace, bool stripInnerWhitepace):
     JKQTMathTextTextBaseNode(_parent, "")
 {
+    fillStaticTables();
     QString textTransformed=textIn;
 
     if (stripInnerWhitepace) {
@@ -117,28 +123,26 @@ JKQTMathTextTextNode::~JKQTMathTextTextNode() = default;
 
 void JKQTMathTextTextNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* /*prevNodeSize*/) {
     QStringList textpart;
-    QList<bool> fontForcedUpright;
+    QList<FontMode> fontMode;
     QList<double> textpartXPos;
-    getSizeInternalAndData(painter, currentEv, width, baselineHeight, overallHeight, strikeoutPos,textpart, fontForcedUpright, textpartXPos);
+    getSizeInternalAndData(painter, currentEv, width, baselineHeight, overallHeight, strikeoutPos,textpart, fontMode, textpartXPos);
 }
 
-void JKQTMathTextTextNode::getSizeInternalAndData(QPainter &painter, JKQTMathTextEnvironment currentEv, double &width, double &baselineHeight, double &overallHeight, double &strikeoutPos, QStringList &textpart, QList<bool> &fontForcedUpright, QList<double> &textpartXPos)
+void JKQTMathTextTextNode::getSizeInternalAndData(QPainter &painter, JKQTMathTextEnvironment currentEv, double &width, double &baselineHeight, double &overallHeight, double &strikeoutPos, QStringList &textpart, QList<FontMode> &fontMode, QList<double> &textpartXPos)
 {
     textpart.clear();
-    fontForcedUpright.clear();
+    fontMode.clear();
     const QString txt=textTransform(text, currentEv);
-    if (currentEv.insideMath && currentEv.insideMathForceDigitsUpright) {
-        splitTextForMathMode(txt, textpart, fontForcedUpright);
-    } else {
-        textpart.append(text);
-        fontForcedUpright.append(false);
-    }
-
+    splitTextForLayout(painter, currentEv, txt, textpart, fontMode);
 
     const QFont f=currentEv.getFont(parentMathText);
-    const QFont fnonItalic=JKQTMathTextGetNonItalic(f);
-    const QFontMetricsF fmNonItalic(fnonItalic, painter.device());
+    const QFont fUpright=JKQTMathTextGetNonItalic(f);
+    const QFont fFallbackSym=currentEv.exchangedFontFor(MTEFallbackSymbols).getFont(parentMathText);
+    const QFont fRoman=currentEv.exchangedFontForRoman().getFont(parentMathText);
+    const QFontMetricsF fmUpright(fUpright, painter.device());
     const QFontMetricsF fm(f, painter.device());
+    const QFontMetricsF fmFallbackSym(fFallbackSym, painter.device());
+    const QFontMetricsF fmRoman(fRoman, painter.device());
 #if (QT_VERSION>=QT_VERSION_CHECK(5, 15, 0))
     const double sp=fm.horizontalAdvance(' ');
 #else
@@ -148,8 +152,26 @@ void JKQTMathTextTextNode::getSizeInternalAndData(QPainter &painter, JKQTMathTex
     double ascent=0;
     double descent=0;
     for (int i=0; i<textpart.size(); i++) {
-        const QRectF br=(fontForcedUpright[i]) ? fmNonItalic.boundingRect(textpart[i]) : fm.boundingRect(textpart[i]);
-        const QRectF tbr=(fontForcedUpright[i]) ? JKQTMathTextGetTightBoundingRect(fnonItalic, textpart[i], painter.device()) : JKQTMathTextGetTightBoundingRect(f, textpart[i], painter.device());
+        QRectF br, tbr;
+        switch(fontMode[i]) {
+            case FMasDefined:
+            case FMasDefinedOutline:
+                br=fm.boundingRect(textpart[i]);
+                tbr=JKQTMathTextGetTightBoundingRect(f, textpart[i], painter.device());
+                break;
+            case FMasDefinedForceUpright:
+                br=fmUpright.boundingRect(textpart[i]);
+                tbr=JKQTMathTextGetTightBoundingRect(fUpright, textpart[i], painter.device());
+                break;
+            case FMroman:
+                br=fmRoman.boundingRect(textpart[i]);
+                tbr=JKQTMathTextGetTightBoundingRect(fRoman, textpart[i], painter.device());
+                break;
+            case FMfallbackSymbol:
+                br=fmFallbackSym.boundingRect(textpart[i]);
+                tbr=JKQTMathTextGetTightBoundingRect(fFallbackSym, textpart[i], painter.device());
+                break;
+        }
         textpartXPos.append(width);
         width+=br.width();
         if (textpart[i].size()>0 && textpart[i].at(textpart[i].size()-1).isSpace()) {
@@ -166,7 +188,7 @@ void JKQTMathTextTextNode::getSizeInternalAndData(QPainter &painter, JKQTMathTex
     strikeoutPos=fm.strikeOutPos();
 }
 
-void JKQTMathTextTextNode::splitTextForMathMode(const QString &txt, QStringList &textpart, QList<bool> &fontForcedUpright)
+void JKQTMathTextTextNode::splitTextForLayout(QPainter &painter, JKQTMathTextEnvironment currentEv, const QString &txt, QStringList &textpart, QList<FontMode> &fontMode) const
 {
     auto isForcedUprightChar=[](const QChar& c) {
         return c.isDigit()
@@ -174,37 +196,82 @@ void JKQTMathTextTextNode::splitTextForMathMode(const QString &txt, QStringList 
                 || c==QChar(0x2329) || c==QChar(0x232A) || c==QChar(0x2308) || c==QChar(0x2309) || c==QChar(0x230A) || c==QChar(0x230B);
     };
 
+    //const QFont f=currentEv.getFont(parentMathText);
+    //const QFont fUpright=JKQTMathTextGetNonItalic(f);
+    const QFont fFallbackSym=currentEv.exchangedFontFor(MTEFallbackSymbols).getFont(parentMathText);
+    const QFont fRoman=currentEv.exchangedFontForRoman().getFont(parentMathText);
+    //const QFontMetricsF fm(f, painter.device());
+    //const QFontMetricsF fmUpright(fUpright, painter.device());
+    const QFontMetricsF fmFallbackSym(fFallbackSym, painter.device());
+    const QFontMetricsF fmRoman(fRoman, painter.device());
+    const JKQTMathTextBlackboradDrawingMode bbMode=parentMathText->getFontBlackboradMode();
+
     textpart.clear();
-    fontForcedUpright.clear();
+    fontMode.clear();
     QString currentSection="";
-    bool currentSectionForcedUpright=false;
+    FontMode currentSectionFontMode=FMasDefined;
     int i=0;
     while (i<txt.size()) {
         const QChar c=txt[i];
+        QString cs=c;
+        FontMode CFontMode=FMasDefined;
         const bool CisForcedUprightChar=isForcedUprightChar(c);
         const bool CisForcedUprightCharExt=CisForcedUprightChar||(c=='.')||(c==',');
+        if (currentEv.insideMath && currentEv.insideMathForceDigitsUpright && (currentEv.font==MTEroman || currentEv.font==MTEmathRoman)) {
+            if (currentSection.size()==0) {
+                if (CisForcedUprightChar) {
+                    CFontMode=FMasDefinedForceUpright;
+                }
+            } else {
+                if (CisForcedUprightCharExt) {
+                    CFontMode=FMasDefinedForceUpright;
+                }
+            }
+        } else if (currentEv.font==MTEblackboard) {
+            if (bbMode==MTBBDMfontDirectly) {
+                CFontMode=FMasDefined;
+            } else if (bbMode==MTBBDMsimulate) {
+                CFontMode=FMasDefinedOutline;
+            } else if (bbMode==MTBBDMunicodeCharactersOrSimulate || bbMode==MTBBDMunicodeCharactersOrFontDirectly) {
+                if (blackboardUnicodeTable.contains(c) && fmRoman.inFontUcs4(blackboardUnicodeTable[c])) {
+                    cs=jkqtp_UnicodeToUTF8Q(blackboardUnicodeTable[c]);
+                    CFontMode=FMroman;
+                } else if (blackboardUnicodeTable.contains(c) && fmFallbackSym.inFontUcs4(blackboardUnicodeTable[c])) {
+                    cs=jkqtp_UnicodeToUTF8Q(blackboardUnicodeTable[c]);
+                    CFontMode=FMfallbackSymbol;
+                } else {
+                    if (bbMode==MTBBDMunicodeCharactersOrSimulate) {
+                        CFontMode=FMasDefinedOutline;
+                    } else if (bbMode==MTBBDMunicodeCharactersOrFontDirectly) {
+                        CFontMode=FMasDefined;
+                    }
+                }
+            }
+        }
+
         if (currentSection.size()==0) {
             // start new section
-            currentSectionForcedUpright=CisForcedUprightChar;
-            currentSection+=c;
+            currentSectionFontMode=CFontMode;
+            currentSection+=cs;
         } else {
             // existing section
-            if (CisForcedUprightCharExt==currentSectionForcedUpright) {
+            if (CFontMode==currentSectionFontMode) {
                 // continue current section
-                currentSection+=c;
+                currentSection+=cs;
             } else {
                 // start new section
                 textpart.append(currentSection);
-                fontForcedUpright.append(currentSectionForcedUpright);
-                currentSection=c;
-                currentSectionForcedUpright=CisForcedUprightChar;
+                fontMode.append(currentSectionFontMode);
+                currentSection=cs;
+                currentSectionFontMode=CFontMode;
             }
         }
+
         i++;
     }
     if (currentSection.size()>0) {
         textpart.append(currentSection);
-        fontForcedUpright.append(currentSectionForcedUpright);
+        fontMode.append(currentSectionFontMode);
     }
 }
 
@@ -215,25 +282,49 @@ double JKQTMathTextTextNode::draw(QPainter& painter, double x, double y, JKQTMat
     double overallHeight=0;
     double sp=0;
     QStringList textpart;
-    QList<bool> fontForcedUpright;
     QList<double> textpartXPos;
-    getSizeInternalAndData(painter, currentEv, width, baselineHeight, overallHeight, sp, textpart, fontForcedUpright, textpartXPos);
+    QList<FontMode> fontMode;
+    getSizeInternalAndData(painter, currentEv, width, baselineHeight, overallHeight, sp, textpart, fontMode, textpartXPos);
 
 
     const QFont f=currentEv.getFont(parentMathText);
-    const QFont fnonItalic=JKQTMathTextGetNonItalic(f);
+    const QFont fUpright=JKQTMathTextGetNonItalic(f);
+    const QFont fFallbackSym=currentEv.exchangedFontFor(MTEFallbackSymbols).getFont(parentMathText);
+    const QFont fRoman=currentEv.exchangedFontForRoman().getFont(parentMathText);
     const QFontMetricsF fm(f, painter.device());
-    const QFontMetricsF fmNonItalic(fnonItalic, painter.device());
+    const QFontMetricsF fmUpright(fUpright, painter.device());
+    const QFontMetricsF fmFallbackSym(fFallbackSym, painter.device());
+    const QFontMetricsF fmRoman(fRoman, painter.device());
 
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     painter.setFont(f);
+    painter.setPen(currentEv.color);
 
     //qDebug()<<"JKQTMathTextTextNode: text="<<text<<" font="<<f;
 
 
     for (int i=0; i<textpart.size(); i++) {
-        if (fontForcedUpright[i]) drawString(painter, currentEv, fnonItalic, x+textpartXPos[i], y, textpart[i]);
-        else drawString(painter, currentEv, f, x+textpartXPos[i], y, textpart[i]);
+        switch(fontMode[i]) {
+            case FMasDefined:
+                painter.setFont(f);
+                painter.drawText(QPointF(x+textpartXPos[i], y), textpart[i]);
+                break;
+            case FMasDefinedOutline:
+                JKQTMathTextDrawStringSimBlackboard(painter, f, currentEv.color, x+textpartXPos[i], y, textpart[i]);
+                break;
+            case FMasDefinedForceUpright:
+                painter.setFont(fUpright);
+                painter.drawText(QPointF(x+textpartXPos[i], y), textpart[i]);
+                break;
+            case FMroman:
+                painter.setFont(fRoman);
+                painter.drawText(QPointF(x+textpartXPos[i], y), textpart[i]);
+                break;
+            case FMfallbackSymbol:
+                painter.setFont(fFallbackSym);
+                painter.drawText(QPointF(x+textpartXPos[i], y), textpart[i]);
+                break;
+        }
     }
 
     return x+width;
@@ -282,6 +373,11 @@ QString JKQTMathTextTextNode::textTransform(const QString &text, const JKQTMathT
 
 
 
+
+
+
+
+
 JKQTMathTextVerbatimNode::JKQTMathTextVerbatimNode(JKQTMathText *_parent, const QString& _text, bool visibleWhitespace_, JKQTMathTextHorizontalAlignment _alignment, double _linespacingFactor, JKQTMathTextVerticalOrientation _verticalOrientation):
     JKQTMathTextTextBaseNode(_parent, _text),
     alignment(_alignment),
@@ -326,8 +422,9 @@ double JKQTMathTextVerbatimNode::draw(QPainter &painter, double x, double y, JKQ
     f.setStyleStrategy(QFont::PreferDefault);
     f.setFixedPitch(true);
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+    painter.setFont(f);
     for (int i=0; i<l.lines.size(); i++) {
-        drawString(painter, currentEv, f, x+l.X.at(i).x(), y+l.X.at(i).y(), l.lines.at(i));
+        painter.drawText(QPointF(x+l.X.at(i).x(), y+l.X.at(i).y()), l.lines.at(i));
     }
     return x+l.width;
 }

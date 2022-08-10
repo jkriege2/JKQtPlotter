@@ -465,13 +465,6 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="2">
-      <widget class="QCheckBox" name="chkSimulateBlackboard">
-       <property name="text">
-        <string>simulate blackboard</string>
-       </property>
-      </widget>
-     </item>
      <item row="0" column="7">
       <widget class="QLabel" name="label_19">
        <property name="text">
@@ -526,6 +519,38 @@
        <property name="text">
         <string>fallback-symbol:</string>
        </property>
+      </widget>
+     </item>
+     <item row="3" column="2">
+      <widget class="QComboBox" name="cmdBlackboradMode">
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <item>
+        <property name="text">
+         <string>unicode_or_font_directly</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>unicode_or_simulate</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>font_directly</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>simulate</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>default</string>
+        </property>
+       </item>
       </widget>
      </item>
     </layout>

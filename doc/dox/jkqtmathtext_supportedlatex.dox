@@ -34,7 +34,12 @@
       - \c \\textfrak{...} \c \\mathfrak{...} :  draw the contained text in fraktur font face \image html jkqtmathtext/jkqtmathtext_frak.png 
       - \c \\textscript{...} \c \\mathscript{...} :  draw the contained text in script font face \image html jkqtmathtext/jkqtmathtext_script.png 
       - \c \\textbb{...} \c \\mathbb{...} :  draw the contained text in blackboard font face \image html jkqtmathtext/jkqtmathtext_bb.png 
-        The class JKQTMathText also supports simulating blackboard fonts, if they are not available as an actual font on the system. Then the example would look like this: \image html jkqtmathtext/jkqtmathtext_bb_sim.png 
+        Blackboard fonts are not widely available on target systems (viable fonts are e.g. <code>"Double Stroke", "CloisterOpenFace BT", "GoudyHandtooled BT", "Castellar", "MathJax_AMS", "Castellar Standard", "MathJax_AMS Standard", "Colonna MT"</code>). But the most important blackboard characters are usually available in the higher unicode codepoints of Fonts specialized for math (e.g. XIST, STIX, ASANA). Therefore JKQTMathText supports using these characters, or simulating a blackboard font in addition to using one of the fonts above. You can set that by setting JKQTMathText::setFontBlackboradMode() with one of the options from JKQTMathTextBlackboradDrawingMode:
+          - MTBBDMfontDirectly: use a blackboard font specified by JKQTMathText::setFontBlackboard() \image html jkqtmathtext/jkqtmathtext_bb_font_directly.png using \c JKQTMathText::setFontBlackboard("Castellar")
+          - MTBBDMsimulate: \image html jkqtmathtext/jkqtmathtext_bb_simulate.png using \c JKQTMathText::setFontBlackboard("Arial")
+          - MTBBDMunicodeCharactersOrFontDirectly: \image html jkqtmathtext/jkqtmathtext_bb_unicode_or_font_directly.png using \c JKQTMathText::setFontBlackboard("Castellar")
+          - MTBBDMunicodeCharactersOrSimulate: \image html jkqtmathtext/jkqtmathtext_bb_unicode_or_simulate.png using \c JKQTMathText::setFontBlackboard("Arial")
+        .
       - \c \\script{...} \c \\textscript{...} \c \\mathscript{...} :  draw the contained text in a script font face \image html jkqtmathtext/jkqtmathtext_fonts.png
       - \c \\sc{...} : draw the text in small caps \image html jkqtmathtext/jkqtmathtext_sc.png
       - \c \\ul{...} \c \\underline{...} \c \\underlined{...} : draw the text with underlining \image html jkqtmathtext/jkqtmathtext_ul.png

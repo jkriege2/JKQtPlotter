@@ -99,7 +99,7 @@ JKQTMathText::JKQTMathText(QObject* parent):
     sqrt_height_factor=1.2;
     sqrt_smallfont_factor=0.57;
 
-    blackboardSimulated=true;
+    blackboradFontMode=MTBBDMdefault;
 
 
     static QString serifFont="serif";
@@ -166,8 +166,10 @@ JKQTMathText::JKQTMathText(QObject* parent):
     setFontCaligraphic(decorativeFont, estimateJKQTMathTextFontEncoding(decorativeFont));
     if (blackboardFont!="blackboard") {
         setFontBlackboard(blackboardFont, estimateJKQTMathTextFontEncoding(blackboardFont));
+        setFontBlackboradMode(MTBBDMunicodeCharactersOrFontDirectly);
     } else {
-        setFontBlackboardSimulated(blackboardFont=="blackboard");
+        setFontBlackboard(sansFont, estimateJKQTMathTextFontEncoding(sansFont));
+        setFontBlackboradMode(MTBBDMunicodeCharactersOrSimulate);
     }
     setFontScript(scriptFont, estimateJKQTMathTextFontEncoding(scriptFont));
     setFontFraktur(fracturFont, estimateJKQTMathTextFontEncoding(fracturFont));
@@ -638,20 +640,19 @@ JKQTMathTextFontEncoding JKQTMathText::getFontEncodingMathRoman() const
 
 void JKQTMathText::setFontBlackboard(const QString &__value, JKQTMathTextFontEncoding encoding)
 {
-    blackboardSimulated=false;
     auto f=getReplacementFont(__value, __value, encoding);
     fontDefinitions[MTEblackboard].fontName = f.first;
     fontDefinitions[MTEblackboard].fontEncoding = f.second;
 }
 
-void JKQTMathText::setFontBlackboardSimulated(bool doSimulate)
+JKQTMathTextBlackboradDrawingMode JKQTMathText::getFontBlackboradMode() const
 {
-    blackboardSimulated=doSimulate;
+    return blackboradFontMode;
 }
 
-bool JKQTMathText::isFontBlackboardSimulated() const
+void JKQTMathText::setFontBlackboradMode(JKQTMathTextBlackboradDrawingMode mode)
 {
-    return blackboardSimulated;
+    blackboradFontMode=mode;
 }
 
 QString JKQTMathText::getFontBlackboard() const

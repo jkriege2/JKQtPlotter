@@ -52,16 +52,6 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextTextBaseNode: public JKQTMathTextNode 
     protected:
         /** \brief text-contents of the node */
         QString text;
-        /** \brief draw a given \a txt in the font defined by \a currentEv at (\a x , \a y ) using the given \a painter
-         *
-         *  This function implements drawing of synthesized fonts, e.g. MTEblackboard when JKQTMathText::isFontBlackboardSimulated() is \c true .
-         */
-        void drawString(QPainter& painter, const JKQTMathTextEnvironment& currentEv, double x, double y, const QString& txt) const;
-        /** \brief draw a given \a txt in the font \a f using additional informaion (but not currentEv::getFont() ) from \a currentEv at (\a x , \a y ) using the given \a painter
-         *
-         *  This function implements drawing of synthesized fonts, e.g. MTEblackboard when JKQTMathText::isFontBlackboardSimulated() is \c true .
-         */
-        void drawString(QPainter& painter, const JKQTMathTextEnvironment &currentEv, const QFont& f, double x, double y, const QString& txt) const;
         /** \brief transforms the \a text before sizing/drawing (may e.g. exchange special letters for other unicode symbols etc.) */
         virtual QString textTransform(const QString& text, const JKQTMathTextEnvironment& currentEv) const;
 };
@@ -79,13 +69,32 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextTextNode: public JKQTMathTextTextBaseN
         /** \copydoc JKQTMathTextNode::getTypeName() */
         virtual QString getTypeName() const override ;
     protected:
+        /** \brief defines how a character shold be drawn, used by splitTextForLayout */
+        enum FontMode {
+            FMasDefined,
+            FMasDefinedForceUpright,
+            FMasDefinedOutline,
+            FMroman,
+            FMfallbackSymbol
+        };
         /** \copydoc JKQTMathTextNode::getSizeInternal() */
         virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
         /** \brief calculates the size of the node, much like JKQTMathTextNode::getSizeInternal(), but returns additional properties that can be reused for drawing */
-        void getSizeInternalAndData(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, QStringList& textpart, QList<bool>& fontForcedUpright, QList<double>& textpartXPos) ;
-        /** \brief split text for Math-Mode into section with "normal" text and "forced upright" text */
-        static void splitTextForMathMode(const QString& txt, QStringList& textpart, QList<bool>& fontForcedUpright);
-        /** \brief transforms the \a text before sizing/drawing (may e.g. exchange special letters for other unicode symbols etc.) */
+        void getSizeInternalAndData(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, QStringList& textpart, QList<FontMode>& fontMode, QList<double>& textpartXPos) ;
+        /** \brief split text for Math-Modelayout into sections, where each section has a defined way of output
+         *
+         *  \param painter the QPainter to use for sizing/drawing
+         *  \param currentEv the environment that defines the formatting of the text
+         *  \param txt the text to split up
+         *  \param[out] textpart the input \A txt split up into sections
+         *  \param[out] fontMode formating of each section in \a textpart
+         */
+        void splitTextForLayout(QPainter &painter, JKQTMathTextEnvironment currentEv, const QString& txt, QStringList& textpart, QList<FontMode>& fontMode) const;
+        /** \brief translation table for blackboard-font characters from "normal" Latin-1 encoding to unicode-encoding of blackboards */
+        static QHash<QChar, uint32_t> blackboardUnicodeTable;
+        /** \brief fill static data */
+        static void fillStaticTables();
+        /** \copydoc JKQTMathTextTextBaseNode::textTransform() */
         virtual QString textTransform(const QString& text, const JKQTMathTextEnvironment& currentEv) const override;
 };
 

@@ -55,6 +55,11 @@ JKQTCOMMON_LIB_EXPORT Qt::BrushStyle jkqtp_String2QBrushStyle(const QString& sty
  */
 JKQTCOMMON_LIB_EXPORT std::string jkqtp_UnicodeToUTF8(uint32_t codepoint);
 
+/** \copydoc jkqtp_UnicodeToUTF8() */
+inline QString jkqtp_UnicodeToUTF8Q(uint32_t codepoint) {
+    return QString::fromStdString(jkqtp_UnicodeToUTF8(codepoint));
+}
+
 /** \brief convert a double to a string, using the loacle "C"
  * \ingroup jkqtptools_string
  */

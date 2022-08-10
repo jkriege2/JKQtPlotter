@@ -68,7 +68,7 @@ The tool supports these command-line options:
     - `--fontmathroman=FONT`: set the math-mode roman font 
     - `--fontmathsans=FONT`: set the math-mode sans font 
     - `--fontblackboard=FONT`: use the given font as blackboard-font and de-activate the simulate-feature 
-    - `--fontblackboardsimulated=FONT`: use the given font as blackboard-font and activate the simulate-feature 
+    - `--fontblackboardmode=default|font_directly|simulate|unicode_or_font_directly|unicode_or_simulate`: use the given drawing mode for blackboard fonts
     - `--fonttypewriter=FONT`: set the typewriter font 
     - `--fontscript=FONT`: set the script font 
     - `--fontcaligraphic=FONT`: set the caligraphic font 
