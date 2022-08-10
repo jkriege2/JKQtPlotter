@@ -142,7 +142,7 @@ int main(int argc, char* argv[])
                         if (ch.isUpper()) symbol_lower+=QString(2, ch).toLower();
                         else symbol_lower+=ch;
                     }
-                    latex.append("\\"+symbol);
+                    latex.append("\\"+symbol+"\\vphantom{Iq}");
                     outputFilename.append("jkqtmathtext_symbols_"+symbol_lower+".png");
                     cmdoptions.append(QMap<QString,QString>());
                     //std::cout<<"  - "<<latex.last().toStdString()<<": "<<outputFilename.last().toStdString()<<"\n";
