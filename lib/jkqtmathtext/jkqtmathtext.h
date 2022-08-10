@@ -370,7 +370,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         void setFontCaligraphic(const QString & fontName, JKQTMathTextFontEncoding encoding=JKQTMathTextFontEncoding::MTFEStandard);
         /** \brief retrieves the font to be used for text in the logical font MTEcaligraphic   */
         QString getFontCaligraphic() const;
-        /** \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEblackboard \see setFontBlackboardSimulated()
+        /** \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEblackboard \see setFontBlackboardMode()
          *
          *
          */

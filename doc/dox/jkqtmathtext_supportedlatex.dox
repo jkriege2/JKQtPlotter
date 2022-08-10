@@ -115,55 +115,55 @@
 
     <table>
       <tr>
-        <td>"<code>\\ </code>"
+        <td>\c \\   (backslash+whitespace)
         <td>thicker whitespace (1/3em)
         <td>\image html jkqtmathtext/jkqtmathtext_whitespace_thicker.png
       <tr>
-        <td>"<code>\\enspace</code>"
+        <td>\c \\enspace
         <td>1en whitespace
         <td>\image html jkqtmathtext/jkqtmathtext_whitespace_enspace.png
       <tr>
-        <td>"<code>\\emspace</code>" / "<code>\\quad</code>"
+        <td>\c \\emspace / \c \\quad
         <td>quad (1em) whitespace
         <td>\image html jkqtmathtext/jkqtmathtext_whitespace_emspace.png
       <tr>
-        <td>"<code>\\qquad</code>"
+        <td>\c \\qquad
         <td>qquad (2em) whitespace
         <td>\image html jkqtmathtext/jkqtmathtext_whitespace_qquad.png
       <tr>
-        <td>"<code>\\,</code>" / "<code>\\thinspace</code>"
+        <td>\c \\, / \c \\thinspace
         <td>thin whitespace
         <td>\image html jkqtmathtext/jkqtmathtext_whitespace_thinspace.png
       <tr>
-        <td>"<code>\\:</code>" / "<code>\\medspace</code>"
+        <td>\c \\: / \c \\medspace
         <td>medium whitespace
         <td>\image html jkqtmathtext/jkqtmathtext_whitespace_medspace.png
       <tr>
-        <td>"<code>\\;</code>" / "<code>\\thickspace</code>"
+        <td>\c \\; / \c \\thickspace
         <td>thick whitespace
         <td>\image html jkqtmathtext/jkqtmathtext_whitespace_thickspace.png
       <tr>
-        <td>"<code>\\!</code>" / "<code>\\negthinspace</code>"
+        <td>\c \\! / \c \\negthinspace
         <td>negative thin whitespace
         <td>\image html jkqtmathtext/jkqtmathtext_whitespace_negthinspace.png
       <tr>
-        <td>"<code>\\negmedspace</code>"
+        <td>\c \\negmedspace
         <td>negative medium whitespace
         <td>\image html jkqtmathtext/jkqtmathtext_whitespace_negmedspace.png
       <tr>
-        <td>"<code>\\negthickspace</code>"
+        <td>\c \\negthickspace
         <td>negative thick whitespace
         <td>\image html jkqtmathtext/jkqtmathtext_whitespace_negthickspace.png
       <tr>
-        <td>"<code>\\phantom{XXX}</code>"
+        <td>\c \\phantom{XXX}
         <td>whitespace with the width and height of <code>XXX</code> (may contain LaTeX instructions)
         <td>\image html jkqtmathtext/jkqtmathtext_whitespace_phantom.png
       <tr>
-        <td>"<code>\\vphantom{XXX}</code>"
+        <td>\c \\vphantom{XXX}
         <td>whitespace with the height of <code>XXX</code> (may contain LaTeX instructions) and width 0
         <td>\image html jkqtmathtext/jkqtmathtext_whitespace_vphantom.png
       <tr>
-        <td>"<code>\\hphantom{XXX}</code>"
+        <td>\c \\hphantom{XXX}
         <td>whitespace with the width of <code>XXX</code> (may contain LaTeX instructions) and height 0
         <td>\image html jkqtmathtext/jkqtmathtext_whitespace_hphantom.png
     </table>
