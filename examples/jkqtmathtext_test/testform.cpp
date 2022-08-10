@@ -470,6 +470,7 @@ QTreeWidgetItem *TestForm::createTree(JKQTMathTextNode *node, QTreeWidgetItem* p
     JKQTMathTextDecoratedNode* decoN=dynamic_cast<JKQTMathTextDecoratedNode*>(node);
     JKQTMathTextEmptyBoxNode* emptyN=dynamic_cast<JKQTMathTextEmptyBoxNode*>(node);
     JKQTMathTextVerbatimNode* verbN=dynamic_cast<JKQTMathTextVerbatimNode*>(node);
+    JKQTMathTextPhantomNode* phanN=dynamic_cast<JKQTMathTextPhantomNode*>(node);
 
     QTreeWidgetItem* ti=nullptr;
     if (parent) ti=new QTreeWidgetItem(parent);
@@ -499,6 +500,9 @@ QTreeWidgetItem *TestForm::createTree(JKQTMathTextNode *node, QTreeWidgetItem* p
     } else if (sqrtN)  {
         name=QString("SqrtNode");
         if (sqrtN->getChildDegree()) ti->addChild(createTree(sqrtN->getChildDegree(), ti));
+        if (sqrtN->getChild()) ti->addChild(createTree(sqrtN->getChild(), ti));
+    } else if (phanN)  {
+        name=QString("PhantomNode: mode=%1").arg(phanN->getInstructionName());
         if (sqrtN->getChild()) ti->addChild(createTree(sqrtN->getChild(), ti));
     } else if (braceN)  {
         name=QString("BraceNode: l='%1', r='%2'").arg(JKQTMathTextBraceType2String(braceN->getOpenbrace())).arg(JKQTMathTextBraceType2String(braceN->getClosebrace()));
