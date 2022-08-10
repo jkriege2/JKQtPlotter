@@ -12,11 +12,11 @@ jkqtmathtext_specialsubsuper.png
 $\lim\limits_{x\rightarrow\infty}\sum\limits_{n=1}^\infty\prod\limits_{n=1}^\infty\bigvee\limits_{n=1}^\infty\bigcup\limits_{n=1}^\infty$
 ---
 jkqtmathtext_doc_quadraticeq.png
-$x_{1/2]=\frac{-b\pm\sqrt{b^2-4ac}}{2a}$
+$x_{1/2}=\frac{-b\pm\sqrt{b^2-4ac}}{2a}$
 ---
 jkqtmathtext_doc_quadraticeq_boxes.png
 --showboxes
-$x_{1/2]=\frac{-b\pm\sqrt{b^2-4ac}}{2a}$
+$x_{1/2}=\frac{-b\pm\sqrt{b^2-4ac}}{2a}$
 ---
 jkqtmathtext_lsubstack.png
 {\backslash}lsubstack: $\sum\limits_\lsubstack{0\leq i\leq10\\-5\leq j\leq1000}f_{i,j}$
