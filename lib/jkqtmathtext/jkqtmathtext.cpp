@@ -1922,6 +1922,13 @@ JKQTMathTextNode* JKQTMathText::parseInstruction(bool *_foundError, bool* getNew
         if (foundError){
             error_list.append(tr("error @ ch. %1: expected %3 arguments in '{...}' braces after '%2' command").arg(currentTokenID).arg(currentInstructionName).arg(Nparams+1));
         }
+    } else if (JKQTMathTextPhantomNode::supportsInstructionName(currentInstructionName)) {
+        if (getNew) *getNew=true;
+        if (getToken()==MTTopenbrace) {
+            child=new JKQTMathTextPhantomNode(this, currentInstructionName, parseLatexString(true));
+        } else {
+            error_list.append(tr("error @ ch. %1: expected one argument in '{...}' braces after '%2' command").arg(currentTokenID).arg(currentInstructionName));
+        }
     } else if (currentInstructionName=="substack" || currentInstructionName=="rsubstack" || currentInstructionName=="lsubstack") {
         getToken();
         JKQTMathTextHorizontalAlignment alignment=MTHACentered;

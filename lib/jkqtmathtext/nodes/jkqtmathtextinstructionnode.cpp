@@ -888,6 +888,14 @@ void JKQTMathTextBoxInstructionNode::fillInstructions()
     }
     {
         InstructionProperties i(InstructionProperties::NoModification,
+                                InstructionProperties::DefaultPen,
+                                InstructionProperties::NoBrush,
+                                0,
+                                /*Nparams=*/0);
+        instructions["snugbox"] = i;
+    }
+    {
+        InstructionProperties i(InstructionProperties::NoModification,
                                 [](JKQTMathTextEnvironment& ev, const QStringList& parameters, JKQTMathText* parent){
                                     QPen p=InstructionProperties::DefaultPen(ev, parameters, parent);
                                     p.setColor(jkqtp_String2QColor(parameters.value(0, p.color().name())));

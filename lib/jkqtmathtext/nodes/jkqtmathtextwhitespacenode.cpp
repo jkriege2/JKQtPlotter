@@ -319,3 +319,97 @@ void JKQTMathTextEmptyBoxNode::getSizeInternal(QPainter &painter, JKQTMathTextEn
     }
     strikeoutPos=fm.strikeOutPos();
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+QString JKQTMathTextPhantomNode::Mode2Instruction(Mode mode)
+{
+    switch(mode) {
+    case FMwidthAndHeight: return "phantom";
+    case FMwidth: return "hphantom";
+    case FMheight: return "vphantom";
+    }
+
+    return "phantom";
+}
+
+JKQTMathTextPhantomNode::JKQTMathTextPhantomNode(JKQTMathText *parent, const QString &mode, JKQTMathTextNode *child):
+    JKQTMathTextInstruction1Node(parent, mode, child)
+{
+    fillInstructions();
+}
+
+JKQTMathTextPhantomNode::JKQTMathTextPhantomNode(JKQTMathText* _parent, Mode mode, JKQTMathTextNode* child):
+    JKQTMathTextInstruction1Node(_parent, Mode2Instruction(mode), child)
+{
+    fillInstructions();
+}
+
+JKQTMathTextPhantomNode::~JKQTMathTextPhantomNode() {
+}
+
+
+QString JKQTMathTextPhantomNode::getTypeName() const
+{
+    return QLatin1String("JKQTMathTextPhantomNode(")+instructionName+")";
+}
+
+void JKQTMathTextPhantomNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* /*prevNodeSize*/) {
+    fillInstructions();
+    JKQTMathTextEnvironment ev=currentEv;
+
+    getChild()->getSize(painter, ev, width, baselineHeight, overallHeight, strikeoutPos);
+
+    switch(instructions[getInstructionName()]) {
+        case FMwidth:
+            overallHeight=0;
+            baselineHeight=0;
+            strikeoutPos=0;
+            break;
+        case FMwidthAndHeight:
+            break;
+        case FMheight:
+            width=0;
+            break;
+    }
+}
+
+double JKQTMathTextPhantomNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* /*prevNodeSize*/) {
+    doDrawBoxes(painter, x, y, currentEv);
+    JKQTMathTextEnvironment ev=currentEv;
+
+    const JKQTMathTextNodeSize s=getSize(painter, currentEv);
+    return x+s.width;
+}
+
+bool JKQTMathTextPhantomNode::toHtml(QString &html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) {
+    JKQTMathTextEnvironment ev=currentEv;
+    fillInstructions();
+    return "&nbsp;";
+}
+
+bool JKQTMathTextPhantomNode::supportsInstructionName(const QString &instructionName)
+{
+    fillInstructions();
+    return instructions.contains(instructionName);
+}
+
+QHash<QString, JKQTMathTextPhantomNode::Mode> JKQTMathTextPhantomNode::instructions;
+
+void JKQTMathTextPhantomNode::fillInstructions()
+{
+    instructions["phantom"] = FMwidthAndHeight;
+    instructions["hphantom"] = FMwidth;
+    instructions["vphantom"] = FMheight;
+}
+

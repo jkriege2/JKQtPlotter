@@ -26,6 +26,7 @@
 #include "jkqtmathtext/jkqtmathtext_imexport.h"
 #include "jkqtmathtext/jkqtmathtexttools.h"
 #include "jkqtmathtext/nodes/jkqtmathtextnode.h"
+#include "jkqtmathtext/nodes/jkqtmathtextinstructionnode.h"
 #include <QPainter>
 
 class JKQTMathText; // forward
@@ -150,6 +151,48 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextEmptyBoxNode: public JKQTMathTextNode 
         Units heightUnit;
 };
 
+
+
+
+/** \brief generates whitespace with the size of the contained node
+ *  \ingroup jkqtmathtext_items
+ */
+class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextPhantomNode: public JKQTMathTextInstruction1Node {
+    public:
+        /** \brief type of the phantom instrcution */
+        enum Mode {
+            FMwidthAndHeight, /*!< \brief implementes \c \\phantom{CHILD} which is whitespace in the width and height of \c CHILD */
+            FMwidth, /*!< \brief implementes \c \\hphantom{CHILD} which is whitespace in the width of \c CHILD and height 0. */
+            FMheight /*!< \brief implementes \c \\vphantom{CHILD} which is whitespace in the height of \c CHILD and width  0. */
+        };
+        /** \bbrief convert a Mode into a LaTeX instruction name */
+        static QString Mode2Instruction(Mode mode);
+        explicit JKQTMathTextPhantomNode(JKQTMathText* parent, const QString& mode, JKQTMathTextNode* child);
+        explicit JKQTMathTextPhantomNode(JKQTMathText* parent, Mode mode, JKQTMathTextNode* child);
+        virtual ~JKQTMathTextPhantomNode() override;
+        /** \copydoc JKQTMathTextNode::getTypeName() */
+        virtual QString getTypeName() const override;
+        /** \copydoc JKQTMathTextNode::draw() */
+        virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
+        /** \copydoc JKQTMathTextNode::toHtml() */
+        virtual bool toHtml(QString& html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) override;
+
+        /** \brief returns true, if the given \a instructionName can be represented by this node
+         *  \see instructions
+         */
+        static bool supportsInstructionName(const QString& instructionName);
+
+    protected:
+        /** \copydoc JKQTMathTextNode::getSizeInternal() */
+        virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
+        /** \brief fills instructions
+         *
+         *  \note this is the customization point for new instructions!
+         */
+        static void fillInstructions();
+        /** \brief defines all implemented instructions in this node */
+        static QHash<QString, Mode> instructions;
+};
 #endif // JKQTMATHTEXTWHITESPACENODE_H
 
 

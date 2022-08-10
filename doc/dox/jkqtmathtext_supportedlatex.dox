@@ -60,6 +60,7 @@
 
     These instructions draw boxes in various ways:
       - \c \\boxed{...} : draw text with a box around it \image html jkqtmathtext/jkqtmathtext_boxed.png
+      - \c \\snugbox{...} : draw text with a snug box around it \image html jkqtmathtext/jkqtmathtext_snugbox.png
       - \c \\doublebox{...} : draw text with a rounded box around it \image html jkqtmathtext/jkqtmathtext_doublebox.png
       - \c \\ovalbox{...} : draw text with a rounded box around it \image html jkqtmathtext/jkqtmathtext_ovalboxed.png
       - \c \\Ovalbox{...} : draw a thick oval box \image html jkqtmathtext/jkqtmathtext_oovalbox.png
@@ -68,6 +69,7 @@
       - \c \\ovaldoublebox{...} : draw a double oval box \image html jkqtmathtext/jkqtmathtext_doubleovalbox.png
       - \c \\colorbox{bordercolor}{...} : draw a colored box \image html jkqtmathtext/jkqtmathtext_colorbox.png
       - \c \\shaded{backgroundcolor}{...} : draw a filled box \image html jkqtmathtext/jkqtmathtext_shaded.png
+      - \c \\snugshade{...} : draw text with a snug shade around it \image html jkqtmathtext/jkqtmathtext_snugshade.png
       - \c \\fcolorbox{bordercolor}{backgroundcolor}{...} : draw a colored, filled box \image html jkqtmathtext/jkqtmathtext_fcolorbox.png
       - \c \\colorbox{color}{...} : draw a colored box around text \image html jkqtmathtext/jkqtmathtext_colorbox.png
     .
@@ -152,6 +154,18 @@
         <td>"<code>\\negthickspace</code>"
         <td>negative thick whitespace
         <td>\image html jkqtmathtext/jkqtmathtext_whitespace_negthickspace.png
+      <tr>
+        <td>"<code>\\phantom{XXX}</code>"
+        <td>whitespace with the width and height of <code>XXX</code> (may contain LaTeX instructions)
+        <td>\image html jkqtmathtext/jkqtmathtext_whitespace_phantom.png
+      <tr>
+        <td>"<code>\\vphantom{XXX}</code>"
+        <td>whitespace with the height of <code>XXX</code> (may contain LaTeX instructions) and width 0
+        <td>\image html jkqtmathtext/jkqtmathtext_whitespace_vphantom.png
+      <tr>
+        <td>"<code>\\hphantom{XXX}</code>"
+        <td>whitespace with the width of <code>XXX</code> (may contain LaTeX instructions) and height 0
+        <td>\image html jkqtmathtext/jkqtmathtext_whitespace_hphantom.png
     </table>
 
     

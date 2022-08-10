@@ -3,7 +3,7 @@ jkqtmathtext_whitespace_thicker.png
 \rightarrow\ \leftarrow
 ---
 jkqtmathtext_whitespace_enspace.png
-\rightarrow\enspace^\leftarrow
+\rightarrow\enspace\leftarrow
 ---
 jkqtmathtext_whitespace_emspace.png
 \rightarrow\emspace\leftarrow
@@ -28,3 +28,12 @@ jkqtmathtext_whitespace_negmedspace.png
 ---
 jkqtmathtext_whitespace_negthickspace.png
 \rightarrow\negthickspace\leftarrow
+---
+jkqtmathtext_whitespace_phantom.png
+\begin{flushleft}\rightarrow\snugbox{\snugshade{yellow}{\phantom{XXX}}}\leftarrow\\\rightarrow\snugbox{\snugshade{yellow}{XXX}}\leftarrow\end{flushleft}
+---
+jkqtmathtext_whitespace_vphantom.png
+\begin{flushleft}\rightarrow\snugbox{\snugshade{yellow}{\vphantom{XXq}}}\leftarrow\\\rightarrow\snugbox{\snugshade{yellow}{XXq}}\leftarrow\end{flushleft}
+---
+jkqtmathtext_whitespace_hphantom.png
+\begin{flushleft}\rightarrow\snugbox{\snugshade{yellow}{\hphantom{XXX}}}\leftarrow\\\rightarrow\snugbox{\snugshade{yellow}{XXX}}\leftarrow\end{flushleft}

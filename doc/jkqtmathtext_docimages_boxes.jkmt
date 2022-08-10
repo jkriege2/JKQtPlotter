@@ -2,6 +2,9 @@
 jkqtmathtext_boxed.png
 {\backslash}boxed: \boxed{boxed text}
 ---
+jkqtmathtext_snugbox.png
+{\backslash}snugbox: \snugbox{boxed text}
+---
 jkqtmathtext_ovalboxed.png
 {\backslash}ovalbox: \ovalbox{boxed text}
 ---
@@ -28,6 +31,9 @@ jkqtmathtext_fcolorbox.png
 ---
 jkqtmathtext_shaded.png
 {\backslash}shaded\{yellow\}: \shaded{yellow}{boxed text}
+---
+jkqtmathtext_snugshade.png
+{\backslash}snugshade\{yellow\}: \snugshade{yellow}{boxed text}
 ---
 jkqtmathtext_beginshaded.png
 {\backslash}begin\{shaded\}: \begin{shaded}boxed text\\ 2^{nd} line\end{shaded}
