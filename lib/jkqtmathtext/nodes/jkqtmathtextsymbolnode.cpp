@@ -378,9 +378,14 @@ JKQTMathTextSymbolNode::SymbolFullProps JKQTMathTextSymbolNode::NarrowMathOperat
     return SymbolFullProps(MTFEStandard, SymbolProps(symbol, ItalicOff|BoldOff, 1.0, 0.0)).addHtml(symbol, ItalicOff|BoldOff, 1.0, 0.0).addGlobalFlags(SmallExtendWidthInMathmode|MakeWhitespaceHalf);
 }
 
-JKQTMathTextSymbolNode::SymbolFullProps JKQTMathTextSymbolNode::GreekLetter_WinSymbol_Unicode_Html(const QString &letterWinSymbol, const QString &letterUnicode, const QString &html)
+JKQTMathTextSymbolNode::SymbolFullProps JKQTMathTextSymbolNode::MathGreekLetter_WinSymbol_Unicode_Html(const QString &letterWinSymbol, const QString &letterUnicode, const QString &html)
 {
-    return SymbolFullProps(MTFEUnicode, SymbolProps(letterUnicode), MTFEWinSymbol, SymbolProps(letterWinSymbol), html);
+    return SymbolFullProps(MTFEUnicode, SymbolProps(letterUnicode, ItalicOn), MTFEWinSymbol, SymbolProps(letterWinSymbol, ItalicOn), html);
+}
+
+JKQTMathTextSymbolNode::SymbolFullProps JKQTMathTextSymbolNode::AsOutsiudeGreekLetter_WinSymbol_Unicode_Html(const QString &letterWinSymbol, const QString &letterUnicode, const QString &html)
+{
+    return SymbolFullProps(MTFEUnicode, SymbolProps(letterUnicode, AsOutside), MTFEWinSymbol, SymbolProps(letterWinSymbol, AsOutside), html);
 }
 
 JKQTMathTextSymbolNode::SymbolFullProps JKQTMathTextSymbolNode::UprightGreekLetter_WinSymbol_Unicode_Html(const QString &letterWinSymbol, const QString &letterUnicode, const QString &html)
@@ -390,8 +395,8 @@ JKQTMathTextSymbolNode::SymbolFullProps JKQTMathTextSymbolNode::UprightGreekLett
 
 void JKQTMathTextSymbolNode::addGreekLetterVariants_WinSymbol_Unicode_Html(const QString &baseInstructionName, const QString &letterWinSymbol, const QString &letterUnicode, const QString &html)
 {
-    symbols[baseInstructionName]=GreekLetter_WinSymbol_Unicode_Html(letterWinSymbol, letterUnicode, html);
-    symbols["text"+baseInstructionName]=GreekLetter_WinSymbol_Unicode_Html(letterWinSymbol, letterUnicode, html);
+    symbols[baseInstructionName]=MathGreekLetter_WinSymbol_Unicode_Html(letterWinSymbol, letterUnicode, html);
+    symbols["text"+baseInstructionName]=AsOutsiudeGreekLetter_WinSymbol_Unicode_Html(letterWinSymbol, letterUnicode, html);
     symbols["up"+baseInstructionName]=UprightGreekLetter_WinSymbol_Unicode_Html(letterWinSymbol, letterUnicode, html);
 }
 
@@ -818,12 +823,12 @@ void JKQTMathTextSymbolNode::fillSymbolTables()
     addGreekLetterVariants_WinSymbol_Unicode_Html("varsigma", "V", QChar(0x3C2),"&varsigma;");
     addGreekLetterVariants_WinSymbol_Unicode_Html("tau", "t", QChar(0x3C4),"&tau;");
     addGreekLetterVariants_WinSymbol_Unicode_Html("upsilon", "u", QChar(0x3C5),"&upsilon;");
-    addGreekLetterVariants_WinSymbol_Unicode_Html("phi", "f", QChar(0x3D5),"&straightphi;");
-    addGreekLetterVariants_WinSymbol_Unicode_Html("varphi", "j", QChar(0x3C6),"&phi;");
+    addGreekLetterVariants_WinSymbol_Unicode_Html("phi", "f", QChar(0x3C5),"&straightphi;");
+    addGreekLetterVariants_WinSymbol_Unicode_Html("varphi", "j", QChar(0x3D6),"&phi;");
     addGreekLetterVariants_WinSymbol_Unicode_Html("chi", "c", QChar(0x3C7),"&chi;");
     addGreekLetterVariants_WinSymbol_Unicode_Html("psi", "y", QChar(0x3C8),"&psi;");
     addGreekLetterVariants_WinSymbol_Unicode_Html("omega", "w", QChar(0x3C9),"&omega;");
-    addGreekLetterVariants_WinSymbol_Unicode_Html("Gamma", "G", QChar(0x3A9),"&Gamma;");
+    addGreekLetterVariants_WinSymbol_Unicode_Html("Gamma", "G", QChar(0x3A3),"&Gamma;");
     addGreekLetterVariants_WinSymbol_Unicode_Html("Delta", "D", QChar(0x394),"&Delta;");
     addGreekLetterVariants_WinSymbol_Unicode_Html("Theta", "Q", QChar(0x398),"&Theta;");
     addGreekLetterVariants_WinSymbol_Unicode_Html("Lambda", "L", QChar(0x39B),"&Lambda;");

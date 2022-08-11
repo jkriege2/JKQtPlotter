@@ -257,10 +257,12 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSymbolNode: public JKQTMathTextNode {
         static SymbolFullProps MathOperatorText(const QString& op);
         /** \brief constructs a SymbolProps with explicit HTML for a math-operator like \c \\sin ..., i.e. ItalicOff, BoldOff, HeightIsAscent, ExtendWidthInMathmode */
         static SymbolFullProps MathOperatorText(const QString& op, const QString& ophtml);
-        /** \brief constructs a SymbolProps for a greek letter with the symbol in unicode-encoding \a letterUnicode and in WinSymbol-encoding letterWinWsymbol */
-        static SymbolFullProps GreekLetter_WinSymbol_Unicode_Html(const QString& letterWinSymbol, const QString& letterUnicode, const QString& html);
+        /** \brief constructs a SymbolProps for an italic greek letter with the symbol in unicode-encoding \a letterUnicode and in WinSymbol-encoding letterWinWsymbol */
+        static SymbolFullProps MathGreekLetter_WinSymbol_Unicode_Html(const QString& letterWinSymbol, const QString& letterUnicode, const QString& html);
         /** \brief constructs a SymbolProps for an upright greek letter with the symbol in unicode-encoding \a letterUnicode and in WinSymbol-encoding letterWinWsymbol */
         static SymbolFullProps UprightGreekLetter_WinSymbol_Unicode_Html(const QString& letterWinSymbol, const QString& letterUnicode, const QString& html);
+        /** \brief constructs a SymbolProps for a greek letter with the format from outside with the symbol in unicode-encoding \a letterUnicode and in WinSymbol-encoding letterWinWsymbol */
+        static SymbolFullProps AsOutsiudeGreekLetter_WinSymbol_Unicode_Html(const QString& letterWinSymbol, const QString& letterUnicode, const QString& html);
         /** \brief insert GreekLetter_WinSymbol_Unicode_Html() as \a baseInstructionName and UprightGreekLetter_WinSymbol_Unicode_Html and "up"+\a letterWinSymbol into symbols */
         static void addGreekLetterVariants_WinSymbol_Unicode_Html(const QString& baseInstructionName, const QString& letterWinSymbol, const QString& letterUnicode, const QString& html);
         /** \brief constructs a SymbolProps for a symbol with encoding in Standard-fonts a */

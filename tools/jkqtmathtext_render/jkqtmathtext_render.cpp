@@ -126,26 +126,106 @@ int main(int argc, char* argv[])
         QFile fileListF(outputDir.absoluteFilePath(listsymbols));
         if (fileListF.open(QFile::WriteOnly|QFile::Text)) {
             QTextStream fileList(&fileListF);
+            QStringList symbols=JKQTMathTextSymbolNode::getSymbols();
+            std::sort(symbols.begin(), symbols.end(), [](const QString& a, const QString& b) { const QString al=a.toLower(); const QString bl=b.toLower(); if (al==bl) { return a<b; } else return al<bl; });
+            static QStringList greekLetterNames=QStringList()<<"alpha"<<"beta"<<"gamma"<<"delta"<<"epsilon"<<"zeta"<<"eta"<<"theta"<<"iota"<<"kappa"<<"lambda"<<"mu"<<"nu"<<"xi"<<"pi"<<"rho"<<"sigma"<<"tau"<<"upsilon"<<"phi"<<"chi"<<"psi"<<"omega";
+            static QStringList arrowNames=QStringList()<<"arrow"<<"harpoon"<<"mapsto";
             int i=1;
             fileList<<"/*!\n"
                       "   \\defgroup jkqtmathtext_supportedlatexsymbols Supported LaTeX-Symbols\n"
                       "   \\ingroup jkqtmathtext_general\n\n";
+            fileList<<"   The following table lists all greek letters and their variants available in JKQTMathParser. They are defined in the node-class JKQTMathTextSymbolNode:\n";
             fileList<<"   <table>\n";
             fileList<<"     <tr>\n";
-            QStringList symbols=JKQTMathTextSymbolNode::getSymbols();
-            std::sort(symbols.begin(), symbols.end(), [](const QString& a, const QString& b) { const QString al=a.toLower(); const QString bl=b.toLower(); if (al==bl) { return a<b; } else return al<bl; });
-            symbols.sort(Qt::CaseInsensitive);
+            for (const QString& gletter: greekLetterNames) {
+                QString code="";
+                for (const QString& symbol: symbols) {
+                    if (symbol.size()>0 && (symbol.toLower()==gletter || symbol.toLower()=="var"+gletter) && symbol[0].isLetter()) {
+                        code+="\\"+symbol+"\\;";
+                    }
+                }
+                for (const QString& symbol: symbols) {
+                    if (symbol.size()>0 && (symbol.toLower()=="up"+gletter || symbol.toLower()=="upvar"+gletter) && symbol[0].isLetter()) {
+                        code+="\\"+symbol+"\\;";
+                    }
+                }
+                QString symbol_lower;
+                for (const QChar& ch: gletter) {
+                    if (ch.isUpper()) symbol_lower+=QString(2, ch).toLower();
+                    else symbol_lower+=ch;
+                }
+                latex.append(code+"\\vphantom{Iq}");
+                outputFilename.append("jkqtmathtext_greek_"+symbol_lower+".png");
+                cmdoptions.append(QMap<QString,QString>());
+                //std::cout<<"  - "<<latex.last().toStdString()<<": "<<outputFilename.last().toStdString()<<"\n";
+                code=code.replace("\\;", "");
+                code=code.replace("\\", "\\\\");
+                fileList<<"       <td><code>"<<code<<"</code>:\n       <td> \\image html jkqtmathtext/symbols/"<<outputFilename.last()<<"\n";
+                if (i%2==0) {
+                    fileList<<"     </tr>\n     <tr>\n";
+                }
+                i++;
+            }
+            fileList<<"     </tr>";
+            fileList<<"   </table>\n\n\n";
+
+
+            fileList<<"   The following table lists all arrow-typed symbols available in JKQTMathParser. They are defined in the node-class JKQTMathTextSymbolNode:\n";
+            fileList<<"   <table>\n";
+            fileList<<"     <tr>\n";
+            for (const QString& arrow: arrowNames) {
+                QString code="";
+                for (const QString& symbol: symbols) {
+                    if (symbol.size()>0 && symbol.toLower().contains(arrow) && symbol[0].isLetter()) {
+                        QString symbol_lower;
+                        for (const QChar& ch: symbol) {
+                            if (ch.isUpper()) symbol_lower+=QString(2, ch).toLower();
+                            else symbol_lower+=ch;
+                        }
+                        latex.append("\\"+symbol+"\\vphantom{Iq}");
+                        outputFilename.append("jkqtmathtext_symbols_"+symbol_lower+".png");
+                        cmdoptions.append(QMap<QString,QString>());
+                        fileList<<"       <td><code>\\\\"<<symbol<<"</code>:\n       <td> \\image html jkqtmathtext/symbols/"<<outputFilename.last()<<"\n";
+                        if (i%3==0) {
+                            fileList<<"     </tr>\n     <tr>\n";
+                        }
+                        i++;
+                    }
+                }
+            }
+            fileList<<"     </tr>";
+            fileList<<"   </table>\n\n\n";
+
+
+            fileList<<"   The following table lists all other symbols that are available in JKQTMathParser. They are defined in the node-class JKQTMathTextSymbolNode:\n";
+            fileList<<"   <table>\n";
+            fileList<<"     <tr>\n";
+            i=1;
             for (const QString& symbol: symbols) {
-                if (symbol.size()>0 && symbol[0].isLetter()) {
+                bool alreadythere=false;
+                for (const QString& gletter: greekLetterNames) {
+                    if (symbol.toLower().endsWith(gletter)) {
+                        alreadythere=true;
+                    }
+                }
+                for (const QString& gletter: arrowNames) {
+                    if (symbol.toLower().contains(gletter)) {
+                        alreadythere=true;
+                    }
+                }
+                if (!alreadythere && symbol.size()>0 && symbol[0].isLetter()) {
                     QString symbol_lower;
                     for (const QChar& ch: symbol) {
                         if (ch.isUpper()) symbol_lower+=QString(2, ch).toLower();
                         else symbol_lower+=ch;
                     }
-                    latex.append("\\"+symbol+"\\vphantom{Iq}");
-                    outputFilename.append("jkqtmathtext_symbols_"+symbol_lower+".png");
-                    cmdoptions.append(QMap<QString,QString>());
-                    //std::cout<<"  - "<<latex.last().toStdString()<<": "<<outputFilename.last().toStdString()<<"\n";
+                    const QString code="\\"+symbol+"\\vphantom{Iq}";
+                    const QString filename="jkqtmathtext_symbols_"+symbol_lower+".png";
+                    if (!latex.contains(code) || !outputFilename.contains(filename)) {
+                        latex.append(code);
+                        outputFilename.append(filename);
+                        cmdoptions.append(QMap<QString,QString>());
+                    }
                     fileList<<"       <td><code>\\\\"<<symbol<<"</code>:\n       <td> \\image html jkqtmathtext/symbols/"<<outputFilename.last()<<"\n";
                     if (i%3==0) {
                         fileList<<"     </tr>\n     <tr>\n";
@@ -154,8 +234,7 @@ int main(int argc, char* argv[])
                 }
             }
             fileList<<"     </tr>";
-            fileList<<"   </table>\n";
-            fileList<<"*/\n";
+            fileList<<"   </table>\n";            fileList<<"*/\n";
         }
     } else if (inputfile.size()>0){
         QFile f(inputfile);
