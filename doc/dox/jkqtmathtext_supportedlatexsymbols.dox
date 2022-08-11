@@ -254,26 +254,20 @@
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_liminf.png
        <td><code>\\limsup</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_limsup.png
-       <td><code>\\max</code>:
-       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_max.png
-     </tr>
-     <tr>
-       <td><code>\\min</code>:
-       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_min.png
        <td><code>\\oiiint</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_oiiint.png
-       <td><code>\\oiint</code>:
-       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_oiint.png
      </tr>
      <tr>
+       <td><code>\\oiint</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_oiint.png
        <td><code>\\oint</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_oint.png
        <td><code>\\prod</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_prod.png
-       <td><code>\\sum</code>:
-       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_sum.png
      </tr>
      <tr>
+       <td><code>\\sum</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_sum.png
      </tr>   </table>
 
 
@@ -337,32 +331,38 @@
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_log.png
      </tr>
      <tr>
+       <td><code>\\max</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_max.png
        <td><code>\\median</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_median.png
+       <td><code>\\min</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_min.png
+     </tr>
+     <tr>
        <td><code>\\mod</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_mod.png
        <td><code>\\Pr</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_ppr.png
-     </tr>
-     <tr>
        <td><code>\\sec</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_sec.png
+     </tr>
+     <tr>
        <td><code>\\sgn</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_sgn.png
        <td><code>\\sign</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_sign.png
-     </tr>
-     <tr>
        <td><code>\\sin</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_sin.png
+     </tr>
+     <tr>
        <td><code>\\sinh</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_sinh.png
        <td><code>\\tan</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_tan.png
-     </tr>
-     <tr>
        <td><code>\\tanh</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_tanh.png
+     </tr>
+     <tr>
      </tr>   </table>
 
 

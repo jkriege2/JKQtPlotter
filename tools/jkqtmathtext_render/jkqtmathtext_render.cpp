@@ -268,16 +268,7 @@ int main(int argc, char* argv[])
                             if (ch.isUpper()) symbol_lower+=QString(2, ch).toLower();
                             else symbol_lower+=ch;
                         }
-                        static QSet<QString> specialSymbols=QSet<QString>()<<"lim"<<"liminf"<<"limsup"<<"arg"<<"argmin"<<"argmax";
-                        if (JKQTMathTextSymbolNode::getSymbolLength(symbol)>1 && !specialSymbols.contains(symbol)) {
-                            latex.append("$\\"+symbol+"(\\cdot)$\\vphantom{Iq}");
-                        } else {
-                            if (JKQTMathTextSymbolNode::getSymbolLength(symbol)>1) {
-                                latex.append("$\\"+symbol+"\\limits_{x\\rightarrow\\infty}f(x)$\\vphantom{Iq}");
-                            } else {
-                                latex.append("$\\"+symbol+"\\limits_{x=0}^\\infty$\\vphantom{Iq}f(x)");
-                            }
-                        }
+                        latex.append("$\\"+symbol+"(\\cdot)$\\vphantom{Iq}");
                         outputFilename.append("jkqtmathtext_symbols_"+symbol_lower+".png");
                         cmdoptions.append(QMap<QString,QString>());
                         fileList<<"       <td><code>\\\\"<<symbol<<"</code>:\n       <td> \\image html jkqtmathtext/symbols/"<<outputFilename.last()<<"\n";

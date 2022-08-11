@@ -671,9 +671,9 @@ void JKQTMathTextSymbolNode::fillSymbolTables()
     symbols["limsup"] = MathOperatorText("lim sup", "lim&thinsp;sup").addGlobalFlags(SubSuperscriptBelowAboveSymbol);
     symbols["ln"] = MathOperatorText("ln");
     symbols["log"] = MathOperatorText("log");
-    symbols["max"] = MathOperatorText("max").addGlobalFlags(SubSuperscriptBelowAboveSymbol);
+    symbols["max"] = MathOperatorText("max");
     symbols["median"] = MathOperatorText("median");
-    symbols["min"] = MathOperatorText("min").addGlobalFlags(SubSuperscriptBelowAboveSymbol);
+    symbols["min"] = MathOperatorText("min");
     symbols["mod"] = MathOperatorText("mod");
     symbols["sec"] = MathOperatorText("sec");
     symbols["sgn"] = MathOperatorText("sgn");
