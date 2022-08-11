@@ -42,8 +42,10 @@
         .
       - \c \\script{...} \c \\textscript{...} \c \\mathscript{...} :  draw the contained text in a script font face \image html jkqtmathtext/jkqtmathtext_fonts.png
       - \c \\sc{...} : draw the text in small caps \image html jkqtmathtext/jkqtmathtext_sc.png
-      - \c \\ul{...} \c \\underline{...} \c \\underlined{...} : draw the text with underlining \image html jkqtmathtext/jkqtmathtext_ul.png
+      - \c \\ul{...} , \c \\underline{...} , \c \\uline{...} \c \\underlined{...} : draw the text with underlining \image html jkqtmathtext/jkqtmathtext_ul.png
       - \c \\uul{...} : draw the text with double-underlining \image html jkqtmathtext/jkqtmathtext_uul.png
+      - \c \\dashuline{...} : draw the text with dashed underlining \image html jkqtmathtext/jkqtmathtext_dashuline.png
+      - \c \\dotuline{...} : draw the text with dotted underlining \image html jkqtmathtext/jkqtmathtext_dotuline.png
       - \c \\ol{...} \c \\overline{...} \c \\overlined{...} : draw the text with overlining \image html jkqtmathtext/jkqtmathtext_ol.png
       - \c \\ool{...} : draw the text with double-overlining \image html jkqtmathtext/jkqtmathtext_ool.png
       - \c \\tt{...} \c \\texttt{...} \c \\mathtt{...} : draw text in typewriter font \image html jkqtmathtext/jkqtmathtext_fonts.png

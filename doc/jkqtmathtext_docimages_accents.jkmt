@@ -56,6 +56,30 @@ $\widehat{x}\widehat{i}\widehat{X}\widehat{\psi}\widehat{abc}$
 MTDwidetilde.png
 $\widetilde{x}\widetilde{i}\widetilde{X}\widetilde{\psi}\widetilde{abc}$
 ---
+MTDoverleftarrow.png
+$\overleftarrow{x}\overleftarrow{i}\overleftarrow{X}\overleftarrow{\psi}\overleftarrow{abc}$
+---
+MTDoverrightarrow.png
+$\overrightarrow{x}\overrightarrow{i}\overrightarrow{X}\overrightarrow{\psi}\overrightarrow{abc}$
+---
+MTDoverleftrightarrow.png
+$\overleftrightarrow{x}\overleftrightarrow{i}\overleftrightarrow{X}\overleftrightarrow{\psi}\overleftrightarrow{abc}$
+---
+MTDunderleftarrow.png
+$\underleftarrow{x}\underleftarrow{i}\underleftarrow{X}\underleftarrow{\psi}\underleftarrow{abc}$
+---
+MTDunderrightarrow.png
+$\underrightarrow{x}\underrightarrow{i}\underrightarrow{X}\underrightarrow{\psi}\underrightarrow{abc}$
+---
+MTDunderleftrightarrow.png
+$\underleftrightarrow{x}\underleftrightarrow{i}\underleftrightarrow{X}\underleftrightarrow{\psi}\underleftrightarrow{abc}$
+---
+MTDunderlineDashed.png
+\dashuline{dashed underlined}, math: $\dashuline{abc}$
+---
+MTDunderlineDotted.png
+\dotuline{dotted underlined}, math: $\dotuline{abc}$
+---
 jkqtmathtext_mathdeco.png
 $\vec{x}\ \dot{x}\ \ddot{x}\ \overline{x}\ \underline{x}\ \hat{x}\ \tilde{x}\ \uul{x}\ \ool{x}\ \bar{x}\ \arrow{x}\ \widehat{x}\ \widetilde{x}\ ...$
 ---
@@ -83,4 +107,8 @@ jkqtmathtext_mathaccents.png
 {\backslash}uul\{A\}: & $\uul{A}\uul{a}$ & {\backslash}ool\{A\}: & $\ool{A}\ool{a}$ \\
 {\backslash}ocirc\{A\}: & $\ocirc{A}\ocirc{a}$ & {\backslash}breve\{A\}: & $\breve{A}\breve{a}$ \\
 {\backslash}arrow\{A\}: & $\arrow{A}\arrow{a} & & \\
+{\backslash}overleftarrow\{A\}: & $\overleftarrow{A}\overleftarrow{a} & {\backslash}overrightarrow\{A\}: & $\overrightarrow{A}\overrightarrow{a} \\
+{\backslash}overleftrightarrow\{A\}: & $\overleftrightarrow{A}\overleftrightarrow{a} &  &\\
+{\backslash}underleftarrow\{A\}: & $\underleftarrow{A}\underleftarrow{a} & {\backslash}underrightarrow\{A\}: & $\underrightarrow{A}\underrightarrow{a} \\
+{\backslash}underleftrightarrow\{A\}: & $\underleftrightarrow{A}\underleftrightarrow{a} &  &\\
 \end{array}

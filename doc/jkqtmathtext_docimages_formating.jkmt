@@ -43,6 +43,12 @@ jkqtmathtext_bb_unicode_or_simulate.png
 jkqtmathtext_ol.png
 {\backslash}ol: \ol{overlined text}
 ---
+jkqtmathtext_dashuline.png
+{\backslash}dashuline: \dashuline{underlined text}
+---
+jkqtmathtext_dotuline.png
+{\backslash}dotuline: \dotuline{underlined text}
+---
 jkqtmathtext_ool.png
 {\backslash}ool: \ool{double-overlined text}
 ---
