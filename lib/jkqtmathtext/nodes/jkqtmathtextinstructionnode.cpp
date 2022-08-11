@@ -341,7 +341,6 @@ void JKQTMathTextModifiedTextPropsInstructionNode::fillInstructions()
             ev.underlined=true;
         }, 0);
         instructions["ul"] = i;
-        instructions["underline"] = i;
         instructions["underlined"]= i;
     }
     {
@@ -349,7 +348,6 @@ void JKQTMathTextModifiedTextPropsInstructionNode::fillInstructions()
             ev.overline=true;
         }, 0);
         instructions["ol"] = i;
-        instructions["overline"] = i;
         instructions["overlined"]= i;
     }
     {
