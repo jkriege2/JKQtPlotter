@@ -126,27 +126,37 @@ int main(int argc, char* argv[])
         QFile fileListF(outputDir.absoluteFilePath(listsymbols));
         if (fileListF.open(QFile::WriteOnly|QFile::Text)) {
             QTextStream fileList(&fileListF);
-            QStringList symbols=JKQTMathTextSymbolNode::getSymbols();
-            std::sort(symbols.begin(), symbols.end(), [](const QString& a, const QString& b) { const QString al=a.toLower(); const QString bl=b.toLower(); if (al==bl) { return a<b; } else return al<bl; });
+            QStringList symbolsAll=JKQTMathTextSymbolNode::getSymbols();
+            QSet<QString> symbolsRemaining(symbolsAll.begin(), symbolsAll.end());
+            std::sort(symbolsAll.begin(), symbolsAll.end(), [](const QString& a, const QString& b) { const QString al=a.toLower(); const QString bl=b.toLower(); if (al==bl) { return a<b; } else return al<bl; });
             static QStringList greekLetterNames=QStringList()<<"alpha"<<"beta"<<"gamma"<<"delta"<<"epsilon"<<"zeta"<<"eta"<<"theta"<<"iota"<<"kappa"<<"lambda"<<"mu"<<"nu"<<"xi"<<"pi"<<"rho"<<"sigma"<<"tau"<<"upsilon"<<"phi"<<"chi"<<"psi"<<"omega";
             static QStringList arrowNames=QStringList()<<"arrow"<<"harpoon"<<"mapsto";
             int i=1;
             fileList<<"/*!\n"
                       "   \\defgroup jkqtmathtext_supportedlatexsymbols Supported LaTeX-Symbols\n"
-                      "   \\ingroup jkqtmathtext_general\n\n";
+                      "   \\ingroup jkqtmathtext_general\n\n\\tableofcontents\n\n";
+            fileList<<"   \\section jkqtmathtext_supportedlatexsymbols_greek Greek Letters\n";
             fileList<<"   The following table lists all greek letters and their variants available in JKQTMathParser. They are defined in the node-class JKQTMathTextSymbolNode:\n";
             fileList<<"   <table>\n";
             fileList<<"     <tr>\n";
             for (const QString& gletter: greekLetterNames) {
                 QString code="";
-                for (const QString& symbol: symbols) {
+                for (const QString& symbol: symbolsAll) {
                     if (symbol.size()>0 && (symbol.toLower()==gletter || symbol.toLower()=="var"+gletter) && symbol[0].isLetter()) {
                         code+="\\"+symbol+"\\;";
+                        symbolsRemaining.remove(symbol);
                     }
                 }
-                for (const QString& symbol: symbols) {
+                for (const QString& symbol: symbolsAll) {
                     if (symbol.size()>0 && (symbol.toLower()=="up"+gletter || symbol.toLower()=="upvar"+gletter) && symbol[0].isLetter()) {
                         code+="\\"+symbol+"\\;";
+                        symbolsRemaining.remove(symbol);
+                    }
+                }
+                for (const QString& symbol: symbolsAll) {
+                    if (symbol.size()>0 && (symbol.toLower()=="text"+gletter || symbol.toLower()=="textvar"+gletter) && symbol[0].isLetter()) {
+                        code+="\\"+symbol+"\\;";
+                        symbolsRemaining.remove(symbol);
                     }
                 }
                 QString symbol_lower;
@@ -158,25 +168,33 @@ int main(int argc, char* argv[])
                 outputFilename.append("jkqtmathtext_greek_"+symbol_lower+".png");
                 cmdoptions.append(QMap<QString,QString>());
                 //std::cout<<"  - "<<latex.last().toStdString()<<": "<<outputFilename.last().toStdString()<<"\n";
-                code=code.replace("\\;", "");
+                code=code.replace("\\;", " ");
                 code=code.replace("\\", "\\\\");
                 fileList<<"       <td><code>"<<code<<"</code>:\n       <td> \\image html jkqtmathtext/symbols/"<<outputFilename.last()<<"\n";
-                if (i%2==0) {
+                //if (i%2==0) {
                     fileList<<"     </tr>\n     <tr>\n";
-                }
+                //}
                 i++;
             }
             fileList<<"     </tr>";
             fileList<<"   </table>\n\n\n";
 
 
+            fileList<<"   \\section jkqtmathtext_supportedlatexsymbols_arrows Arrows\n";
             fileList<<"   The following table lists all arrow-typed symbols available in JKQTMathParser. They are defined in the node-class JKQTMathTextSymbolNode:\n";
             fileList<<"   <table>\n";
             fileList<<"     <tr>\n";
+            i=1;
+            std::sort(symbolsAll.begin(), symbolsAll.end(), [](const QString& a, const QString& b) {  if (a.contains("harpoon") && !b.contains("harpoon")) return false;
+                                                                                                else if (a.isLower() && b.isUpper()) return true;
+                                                                                                else if (a.isUpper() && b.isLower()) return false;
+                                                                                                else return a<b;
+                                                                                             });
             for (const QString& arrow: arrowNames) {
                 QString code="";
-                for (const QString& symbol: symbols) {
+                for (const QString& symbol: symbolsAll) {
                     if (symbol.size()>0 && symbol.toLower().contains(arrow) && symbol[0].isLetter()) {
+                        symbolsRemaining.remove(symbol);
                         QString symbol_lower;
                         for (const QChar& ch: symbol) {
                             if (ch.isUpper()) symbol_lower+=QString(2, ch).toLower();
@@ -196,24 +214,85 @@ int main(int argc, char* argv[])
             fileList<<"     </tr>";
             fileList<<"   </table>\n\n\n";
 
+            std::sort(symbolsAll.begin(), symbolsAll.end(), [](const QString& a, const QString& b) { const QString al=a.toLower(); const QString bl=b.toLower(); if (al==bl) { return a<b; } else return al<bl; });
+            fileList<<"   \\section jkqtmathtext_supportedlatexsymbols_bigmathop Big Math Operators\n";
+            fileList<<"   The following table lists all math-operator symbols like \\c \\\\sum,\\\\int,\\\\lim... that allow to over/underset sub-/superscript using \\c \\\\limits (and \\c \\\\nolimits ) available in JKQTMathParser. They are defined in the node-class JKQTMathTextSymbolNode:\n";
+            fileList<<"   <table>\n";
+            fileList<<"     <tr>\n";
+            i=1;
+            {
+                QString code="";
+                for (const QString& symbol: symbolsAll) {
+                    if (symbol.size()>0 && JKQTMathTextSymbolNode::isSubSuperscriptBelowAboveSymbol(symbol) && symbol[0].isLetter()) {
+                        symbolsRemaining.remove(symbol);
+                        QString symbol_lower;
+                        for (const QChar& ch: symbol) {
+                            if (ch.isUpper()) symbol_lower+=QString(2, ch).toLower();
+                            else symbol_lower+=ch;
+                        }
+                        latex.append("$\\"+symbol+"\\limits_{x=0}^\\infty$\\vphantom{Iq}");
+                        outputFilename.append("jkqtmathtext_symbols_"+symbol_lower+".png");
+                        cmdoptions.append(QMap<QString,QString>());
+                        fileList<<"       <td><code>\\\\"<<symbol<<"</code>:\n       <td> \\image html jkqtmathtext/symbols/"<<outputFilename.last()<<"\n";
+                        if (i%3==0) {
+                            fileList<<"     </tr>\n     <tr>\n";
+                        }
+                        i++;
+                    }
+                }
+            }
+            fileList<<"     </tr>";
+            fileList<<"   </table>\n\n\n";
 
+
+            fileList<<"   \\section jkqtmathtext_supportedlatexsymbols_mathop Other Math Operators\n";
+            fileList<<"   The following table lists all remaining math-operator symbols like available in JKQTMathParser. They are defined in the node-class JKQTMathTextSymbolNode:\n";
+            fileList<<"   <table>\n";
+            fileList<<"     <tr>\n";
+            i=1;
+            {
+                QString code="";
+                for (const QString& symbol: symbolsAll) {
+                    if (symbol.size()>0 && JKQTMathTextSymbolNode::isSubSuperscriptBelowAboveSymbol(symbol) && symbol[0].isLetter()) {
+                        symbolsRemaining.remove(symbol);
+                        QString symbol_lower;
+                        for (const QChar& ch: symbol) {
+                            if (ch.isUpper()) symbol_lower+=QString(2, ch).toLower();
+                            else symbol_lower+=ch;
+                        }
+                        static QSet<QString> specialSymbols=QSet<QString>()<<"lim"<<"liminf"<<"limsup"<<"arg"<<"argmin"<<"argmax";
+                        if (JKQTMathTextSymbolNode::getSymbolLength(symbol)>1 && !specialSymbols.contains(symbol)) {
+                            latex.append("$\\"+symbol+"(\\cdot)$\\vphantom{Iq}");
+                        } else {
+                            if (JKQTMathTextSymbolNode::getSymbolLength(symbol)>1) {
+                                latex.append("$\\"+symbol+"\\limits_{x\\rightarrow\\infty}f(x)$\\vphantom{Iq}");
+                            } else {
+                                latex.append("$\\"+symbol+"\\limits_{x=0}^\\infty$\\vphantom{Iq}f(x)");
+                            }
+                        }
+                        outputFilename.append("jkqtmathtext_symbols_"+symbol_lower+".png");
+                        cmdoptions.append(QMap<QString,QString>());
+                        fileList<<"       <td><code>\\\\"<<symbol<<"</code>:\n       <td> \\image html jkqtmathtext/symbols/"<<outputFilename.last()<<"\n";
+                        if (i%3==0) {
+                            fileList<<"     </tr>\n     <tr>\n";
+                        }
+                        i++;
+                    }
+                }
+            }
+            fileList<<"     </tr>";
+            fileList<<"   </table>\n\n\n";
+
+
+            fileList<<"   \\section jkqtmathtext_supportedlatexsymbols_other Other Symbols\n";
             fileList<<"   The following table lists all other symbols that are available in JKQTMathParser. They are defined in the node-class JKQTMathTextSymbolNode:\n";
             fileList<<"   <table>\n";
             fileList<<"     <tr>\n";
             i=1;
-            for (const QString& symbol: symbols) {
-                bool alreadythere=false;
-                for (const QString& gletter: greekLetterNames) {
-                    if (symbol.toLower().endsWith(gletter)) {
-                        alreadythere=true;
-                    }
-                }
-                for (const QString& gletter: arrowNames) {
-                    if (symbol.toLower().contains(gletter)) {
-                        alreadythere=true;
-                    }
-                }
-                if (!alreadythere && symbol.size()>0 && symbol[0].isLetter()) {
+            QStringList symbolsRemainingL=QStringList(symbolsRemaining.begin(), symbolsRemaining.end());
+            std::sort(symbolsRemainingL.begin(), symbolsRemainingL.end(), [](const QString& a, const QString& b) { const QString al=a.toLower(); const QString bl=b.toLower(); if (al==bl) { return a<b; } else return al<bl; });
+            for (const QString& symbol: symbolsRemainingL) {
+                if (symbol.size()>0 && symbol[0].isLetter()) {
                     QString symbol_lower;
                     for (const QChar& ch: symbol) {
                         if (ch.isUpper()) symbol_lower+=QString(2, ch).toLower();
