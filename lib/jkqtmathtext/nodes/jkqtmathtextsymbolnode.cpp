@@ -334,7 +334,7 @@ int JKQTMathTextSymbolNode::getSymbolLength(const QString &symbolName)
 {
     fillSymbolTables();
     if (symbols.contains(symbolName)) {
-        return symbols[symbolName].props.value(MTFEStandard, symbols[symbolName].props.value(MTFEUnicode, SymbolProps())).symbol.size();
+        return symbols[symbolName].props.value(MTFEUnicode, symbols[symbolName].props.value(MTFEStandard, SymbolProps())).symbol.size();
     }
     return 0;
 }
