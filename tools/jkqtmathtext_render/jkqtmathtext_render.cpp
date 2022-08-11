@@ -127,7 +127,8 @@ int main(int argc, char* argv[])
         if (fileListF.open(QFile::WriteOnly|QFile::Text)) {
             QTextStream fileList(&fileListF);
             QStringList symbolsAll=JKQTMathTextSymbolNode::getSymbols();
-            QSet<QString> symbolsRemaining(symbolsAll.begin(), symbolsAll.end());
+            QSet<QString> symbolsRemaining;
+            for (const QString& s: symbolsAll) symbolsRemaining.insert(s);
             std::sort(symbolsAll.begin(), symbolsAll.end(), [](const QString& a, const QString& b) { const QString al=a.toLower(); const QString bl=b.toLower(); if (al==bl) { return a<b; } else return al<bl; });
             static QStringList greekLetterNames=QStringList()<<"alpha"<<"beta"<<"gamma"<<"delta"<<"epsilon"<<"zeta"<<"eta"<<"theta"<<"iota"<<"kappa"<<"lambda"<<"mu"<<"nu"<<"xi"<<"pi"<<"rho"<<"sigma"<<"tau"<<"upsilon"<<"phi"<<"chi"<<"psi"<<"omega";
             static QStringList arrowNames=QStringList()<<"arrow"<<"harpoon"<<"mapsto";
@@ -221,7 +222,6 @@ int main(int argc, char* argv[])
             fileList<<"     <tr>\n";
             i=1;
             {
-                QString code="";
                 for (const QString& symbol: symbolsAll) {
                     if (symbol.size()>0 && JKQTMathTextSymbolNode::isSubSuperscriptBelowAboveSymbol(symbol) && symbol[0].isLetter()) {
                         symbolsRemaining.remove(symbol);
@@ -230,7 +230,16 @@ int main(int argc, char* argv[])
                             if (ch.isUpper()) symbol_lower+=QString(2, ch).toLower();
                             else symbol_lower+=ch;
                         }
-                        latex.append("$\\"+symbol+"\\limits_{x=0}^\\infty$\\vphantom{Iq}");
+                        static QSet<QString> specialSymbols=QSet<QString>()<<"lim"<<"liminf"<<"limsup"<<"arg"<<"argmin"<<"argmax";
+                        if (JKQTMathTextSymbolNode::getSymbolLength(symbol)>1 && !specialSymbols.contains(symbol)) {
+                            latex.append("$\\"+symbol+"(\\cdot)$\\vphantom{Iq}");
+                        } else {
+                            if (JKQTMathTextSymbolNode::getSymbolLength(symbol)>1) {
+                                latex.append("$\\"+symbol+"\\limits_{x\\rightarrow\\infty}f(x)$\\vphantom{Iq}");
+                            } else {
+                                latex.append("$\\"+symbol+"\\limits_{x=0}^\\infty$\\vphantom{Iq}f(x)");
+                            }
+                        }
                         outputFilename.append("jkqtmathtext_symbols_"+symbol_lower+".png");
                         cmdoptions.append(QMap<QString,QString>());
                         fileList<<"       <td><code>\\\\"<<symbol<<"</code>:\n       <td> \\image html jkqtmathtext/symbols/"<<outputFilename.last()<<"\n";
@@ -245,15 +254,14 @@ int main(int argc, char* argv[])
             fileList<<"   </table>\n\n\n";
 
 
-            fileList<<"   \\section jkqtmathtext_supportedlatexsymbols_mathop Other Math Operators\n";
+            fileList<<"   \\section jkqtmathtext_supportedlatexsymbols_mathspecialfunctions Math Special Functions\n";
             fileList<<"   The following table lists all remaining math-operator symbols like available in JKQTMathParser. They are defined in the node-class JKQTMathTextSymbolNode:\n";
             fileList<<"   <table>\n";
             fileList<<"     <tr>\n";
             i=1;
             {
-                QString code="";
                 for (const QString& symbol: symbolsAll) {
-                    if (symbol.size()>0 && JKQTMathTextSymbolNode::isSubSuperscriptBelowAboveSymbol(symbol) && symbol[0].isLetter()) {
+                    if (symbol.size()>0 && symbolsRemaining.contains(symbol) && JKQTMathTextSymbolNode::isExtendedWidthSymbol(symbol) && JKQTMathTextSymbolNode::getSymbolLength(symbol)>1 && symbol[0].isLetter()) {
                         symbolsRemaining.remove(symbol);
                         QString symbol_lower;
                         for (const QChar& ch: symbol) {
@@ -289,7 +297,9 @@ int main(int argc, char* argv[])
             fileList<<"   <table>\n";
             fileList<<"     <tr>\n";
             i=1;
-            QStringList symbolsRemainingL=QStringList(symbolsRemaining.begin(), symbolsRemaining.end());
+            QStringList symbolsRemainingL;
+            for (const QString& s: symbolsRemaining) symbolsRemainingL.append(s);
+
             std::sort(symbolsRemainingL.begin(), symbolsRemainingL.end(), [](const QString& a, const QString& b) { const QString al=a.toLower(); const QString bl=b.toLower(); if (al==bl) { return a<b; } else return al<bl; });
             for (const QString& symbol: symbolsRemainingL) {
                 if (symbol.size()>0 && symbol[0].isLetter()) {
