@@ -749,6 +749,12 @@ void JKQTMathTextSymbolNode::fillSymbolTables()
     symbols["in"]=MathOperatorSymbolUnicode(QChar(0x2208)).addMathOperatorHtml("&isin;").addMathOperatorWinSymbol(QChar(0xCE));
     symbols["int"]=NarrowMathOperatorSymbolUnicode(QChar(0x222B)).addGlobalFlags(IntLikeSymbolCorrection | SubSuperscriptBelowAboveSymbol).addMathOperatorHtml("&int;").addMathOperatorWinSymbol(QChar(0xF2), 1.8, 0.1);
     symbols["leftarrow"]=UprightSymbolUnicode(QChar(0x2190)).addUprightHtml("&larr;").addUprightWinSymbol(QChar(0xAC));
+    symbols["longleftarrow"]=UprightSymbolUnicode(QChar(0x27F5)).addUprightHtml("&longleftarrow;");
+    symbols["longrightarrow"]=UprightSymbolUnicode(QChar(0x27F6)).addUprightHtml("&longrightarrow;");
+    symbols["longleftrightarrow"]=UprightSymbolUnicode(QChar(0x27F7)).addUprightHtml("&longleftrightarrow;");
+    symbols["Longleftarrow"]=UprightSymbolUnicode(QChar(0x27F8)).addUprightHtml("&DoubleLongLeftArrow;");
+    symbols["Longrightarrow"]=UprightSymbolUnicode(QChar(0x27F9)).addUprightHtml("&DoubleLongRightArrow;");
+    symbols["Longleftrightarrow"]=UprightSymbolUnicode(QChar(0x27FA)).addUprightHtml("&Longleftrightarrow;");
     symbols["leftharpoondown"]=UprightSymbolUnicode(QChar(0x21BD)).addUprightHtml("&leftharpoondown;");
     symbols["leftharpoonup"]=UprightSymbolUnicode(QChar(0x21BC)).addUprightHtml("&LeftVector;");
     symbols["leftrightarrow"]=UprightSymbolUnicode(QChar(0x2194)).addUprightHtml("&harr;").addUprightWinSymbol(QChar(0xAB));

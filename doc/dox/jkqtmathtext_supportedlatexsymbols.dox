@@ -115,6 +115,14 @@
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_leftrightarrow.png
      </tr>
      <tr>
+       <td><code>\\longleftarrow</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_longleftarrow.png
+       <td><code>\\longleftrightarrow</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_longleftrightarrow.png
+       <td><code>\\longrightarrow</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_longrightarrow.png
+     </tr>
+     <tr>
        <td><code>\\nearrow</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_nearrow.png
        <td><code>\\nwarrow</code>:
@@ -141,6 +149,14 @@
      <tr>
        <td><code>\\Leftrightarrow</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_lleftrightarrow.png
+       <td><code>\\Longleftarrow</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_llongleftarrow.png
+       <td><code>\\Longleftrightarrow</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_llongleftrightarrow.png
+     </tr>
+     <tr>
+       <td><code>\\Longrightarrow</code>:
+       <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_llongrightarrow.png
        <td><code>\\Rightarrow</code>:
        <td> \image html jkqtmathtext/symbols/jkqtmathtext_symbols_rrightarrow.png
        <td><code>\\Uparrow</code>:
