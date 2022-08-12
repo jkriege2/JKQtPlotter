@@ -557,7 +557,7 @@ void JKQTMathTextHorizontalListNode::deleteChild(int i)
 {
     if (i>=0 && i<nodes.size()) {
         delete nodes[i];
-        nodes.remove(i);
+        nodes.removeAt(i);
     }
 }
 
@@ -760,7 +760,7 @@ void JKQTMathTextVerticalListNode::deleteChild(int i)
 {
     if (i>=0 && i<nodes.size()) {
         delete nodes[i];
-        nodes.remove(i);
+        nodes.removeAt(i);
     }
 }
 void JKQTMathTextVerticalListNode::clearChildren(bool deleteChildren)
