@@ -186,7 +186,7 @@
     
     \section JKQTMathTextSuppoertedLaTeXTabular Tabular Environments
     
-    \see Additional matrix-environments are listed in \ref
+    \see Additional matrix-environments are listed in \ref JKQTMathTextSuppoertedLaTeXMatrix
 
     For text-mode tables, the \c tabular -environment is supported:
       - <code>$\\begin{tabular}{COLSPEC} a & b & ...\\\\ c & d & ...\\end{tabular}$</code> 
