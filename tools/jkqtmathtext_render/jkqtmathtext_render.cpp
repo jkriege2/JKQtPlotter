@@ -237,7 +237,7 @@ int main(int argc, char* argv[])
                             if (JKQTMathTextSymbolNode::getSymbolLength(symbol)>1) {
                                 latex.append("$\\"+symbol+"\\limits_{x\\rightarrow\\infty}f(x)$\\vphantom{Iq}");
                             } else {
-                                latex.append("$\\"+symbol+"\\limits_{x=0}^\\infty$\\vphantom{Iq}f(x)");
+                                latex.append("$\\"+symbol+"\\limits_{x=0}^\\infty f(x)$\\vphantom{Iq}");
                             }
                         }
                         outputFilename.append("jkqtmathtext_symbols_"+symbol_lower+".png");

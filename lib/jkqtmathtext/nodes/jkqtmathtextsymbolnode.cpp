@@ -76,11 +76,11 @@ void JKQTMathTextSymbolNode::getSymbolSizeInternal(QPainter &painter, JKQTMathTe
     if (currentEv.insideMath) {
         width=qMax(br.width(), mintbr.width());
         if (has(globalFlags, SmallExtendWidthInMathmode)) {
-            if (!symprops.getSymbolSingleChar().isNull()) width=width*(1.0+(parentMathText->getMathoperatorWidthFactor()-1.0)/2.0);
-            else width=width+mintbr.width();
+            if (!symprops.getSymbolSingleChar().isNull()) width=width*(1.0+(parentMathText->getMathoperatorWidthFactor()-1.0)/5.0);
+            else width=width+mintbr.width()*0.15;
         } else if (has(globalFlags, ExtendWidthInMathmode)) {
             if (!symprops.getSymbolSingleChar().isNull()) width=width*parentMathText->getMathoperatorWidthFactor();
-            else width=width+mintbr.width();
+            else width=width+mintbr.width()*0.5;
         }
     } else {
         width=br.width();
