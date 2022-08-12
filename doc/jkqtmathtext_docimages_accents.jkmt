@@ -84,7 +84,7 @@ jkqtmathtext_mathdeco.png
 $\vec{x}\ \dot{x}\ \ddot{x}\ \overline{x}\ \underline{x}\ \hat{x}\ \tilde{x}\ \uul{x}\ \ool{x}\ \bar{x}\ \arrow{x}\ \widehat{x}\ \widetilde{x}\ ...$
 ---
 jkqtmathtext_textaccents.png
-\begin{array}
+\begin{array}{llll}
 {\backslash}"A: & \"A\"a & {\backslash}`A: & \`A\`a \\
 {\backslash}'A: & \'A\'a &{\backslash}{\circonflex}A: & \^A\^a \\
 {\backslash}{\sim}A: & \~A\~a &{\backslash}r\{A\}: & \r{A}\r{a} \\
@@ -96,7 +96,7 @@ jkqtmathtext_textaccents.png
 \end{array}
 ---
 jkqtmathtext_mathaccents.png
-\begin{array}
+\begin{array}{llll}
 {\backslash}dot\{A\}: & $\dot{A}\dot{a}$ & {\backslash}ddot\{A\}: & $\ddot{A}\ddot{a}$ \\
 {\backslash}grave\{A\}: & $\grave{A}\grave{a}$ & {\backslash}acute\{A\}: & $\acute{A}\acute{a}$ \\
 {\backslash}acute\{A\}: & $\acute{A}\acute{a}$ & {\backslash}tilde\{A\}: & $\tilde{A}\tilde{a}$ \\

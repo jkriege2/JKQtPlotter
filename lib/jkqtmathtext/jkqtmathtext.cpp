@@ -99,6 +99,14 @@ JKQTMathText::JKQTMathText(QObject* parent):
     sqrt_height_factor=1.2;
     sqrt_smallfont_factor=0.57;
 
+    matrix_linewidth_thin_factor=0.4;
+    matrix_linewidth_heavy_factor=1.5;
+    matrix_line_separation_factor=2.0;
+    matrix_xSeparation_factor=0.5;
+    matrix_ySeparation_factor=0.5;
+    matrix_xPadding_factor=0.5;
+    matrix_yPadding_factor=0.5;
+
     blackboradFontMode=MTBBDMdefault;
 
 
@@ -231,6 +239,13 @@ void JKQTMathText::loadSettings(const QSettings& settings, const QString& group)
     bigmathoperator_font_factor=settings.value(group+"bigmathoperator_font_factor", bigmathoperator_font_factor).toDouble();
     frac_nested_factor=settings.value(group+"frac_nested_factor", frac_nested_factor).toDouble();
 
+    matrix_linewidth_thin_factor=settings.value(group+"matrix_linewidth_thin_factor", matrix_linewidth_thin_factor).toDouble();
+    matrix_linewidth_heavy_factor=settings.value(group+"matrix_linewidth_heavy_factor", matrix_linewidth_heavy_factor).toDouble();
+    matrix_line_separation_factor=settings.value(group+"matrix_line_separation_factor", matrix_line_separation_factor).toDouble();
+    matrix_xSeparation_factor=settings.value(group+"matrix_xSeparation_factor", matrix_xSeparation_factor).toDouble();
+    matrix_ySeparation_factor=settings.value(group+"matrix_ySeparation_factor", matrix_ySeparation_factor).toDouble();
+    matrix_xPadding_factor=settings.value(group+"matrix_xPadding_factor", matrix_xPadding_factor).toDouble();
+    matrix_yPadding_factor=settings.value(group+"matrix_yPadding_factor", matrix_yPadding_factor).toDouble();
 
     if (settings.value(group+"use_stix_fonts", false).toBool()) useSTIX();
     if (settings.value(group+"use_xits_fonts", false).toBool()) useXITS();
@@ -272,6 +287,13 @@ void JKQTMathText::saveSettings(QSettings& settings, const QString& group) const
     settings.setValue(group+ "sqrt_smallfont_factor", sqrt_smallfont_factor);
     settings.setValue(group+ "bigmathoperator_font_factor", bigmathoperator_font_factor);
     settings.setValue(group+ "frac_nested_factor", frac_nested_factor);
+    settings.setValue(group+ "matrix_linewidth_thin_factor", matrix_linewidth_thin_factor);
+    settings.setValue(group+ "matrix_linewidth_heavy_factor", matrix_linewidth_heavy_factor);
+    settings.setValue(group+ "matrix_line_separation_factor", matrix_line_separation_factor);
+    settings.setValue(group+ "matrix_xSeparation_factor", matrix_xSeparation_factor);
+    settings.setValue(group+ "matrix_ySeparation_factor", matrix_ySeparation_factor);
+    settings.setValue(group+ "matrix_xPadding_factor", matrix_xPadding_factor);
+    settings.setValue(group+ "matrix_yPadding_factor", matrix_yPadding_factor);
 }
 
 bool JKQTMathText::useSTIX(bool mathModeOnly) {
@@ -966,6 +988,76 @@ double JKQTMathText::getSqrtSmallFontFactor() const
     return sqrt_smallfont_factor;
 }
 
+double JKQTMathText::getMatrixLinewidthThinFactor()
+{
+    return matrix_linewidth_thin_factor;
+}
+
+void JKQTMathText::setMatrixLinewidthThinFactor(double factor)
+{
+    matrix_linewidth_thin_factor=factor;
+}
+
+double JKQTMathText::getMatrixLinewidthHeavyFactor()
+{
+    return matrix_linewidth_heavy_factor;
+}
+
+void JKQTMathText::setMatrixLinewidthHeavyFactor(double factor)
+{
+    matrix_linewidth_heavy_factor=factor;
+}
+
+double JKQTMathText::getMatrixLineSeparationFactor()
+{
+    return matrix_line_separation_factor;
+}
+
+void JKQTMathText::setMatrixLineSeparationFactor(double factor)
+{
+    matrix_line_separation_factor=factor;
+}
+
+double JKQTMathText::getMatrixXSeparationFactor()
+{
+    return matrix_xSeparation_factor;
+}
+
+void JKQTMathText::setMatrixXSeparationFactor(double factor)
+{
+    matrix_xSeparation_factor=factor;
+}
+
+double JKQTMathText::getMatrixYSeparationFactor()
+{
+    return matrix_ySeparation_factor;
+}
+
+void JKQTMathText::setMatrixYSeparationFactor(double factor)
+{
+    matrix_ySeparation_factor=factor;
+}
+
+double JKQTMathText::getMatrixXPaddingFactor()
+{
+    return matrix_xPadding_factor;
+}
+
+void JKQTMathText::setMatrixXPaddingFactor(double factor)
+{
+    matrix_xPadding_factor=factor;
+}
+
+double JKQTMathText::getMatrixYPaddingFactor()
+{
+    return matrix_yPadding_factor;
+}
+
+void JKQTMathText::setMatrixYPaddingFactor(double factor)
+{
+    matrix_yPadding_factor=factor;
+}
+
 void JKQTMathText::setUseUnparsed(bool __value)
 {
     this->useUnparsed = __value;
@@ -1531,6 +1623,7 @@ void JKQTMathText::giveBackToTokenizer(size_t count)
 }
 
 JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType quitOnClosingBrace, const QString& quitOnEnvironmentEnd, bool quitOnClosingBracket) {
+    QMap<QString,size_t> countLine;
     //std::cout<<"    entering parseLatexString()\n";
     JKQTMathTextHorizontalListNode* nl=new JKQTMathTextHorizontalListNode(this);
     if (get) getToken();
@@ -1593,6 +1686,12 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
                 if (nl->hasChildren()) nl->getLastChild()->setSubSuperscriptAboveBelowNode(true);
             } else  if (currentInstructionName=="nolimits") {
                 if (nl->hasChildren()) nl->getLastChild()->setSubSuperscriptAboveBelowNode(false);
+            } else  if (currentInstructionName=="hline" || currentInstructionName=="midrule") {
+                countLine["hline"]=countLine.value("hline",0)+1;
+            } else  if (currentInstructionName=="hdashline") {
+                countLine["hdashline"]=countLine.value("hdashline",0)+1;
+            } else  if (currentInstructionName=="toprule" || currentInstructionName=="bottomrule") {
+                countLine["heavyline"]=countLine.value("heavyline",0)+1;
             } else if (currentInstructionName=="right") {
                 getToken();
                 if (currentToken==MTTtext) {
@@ -1717,34 +1816,89 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
 
         } else if (currentToken==MTTinstructionBegin) {
             const QString envname=currentTokenName;
-            if (envname=="matrix" || envname=="array" || envname=="aligned" || envname=="align" || envname=="cases" || envname=="pmatrix"|| envname=="bmatrix"|| envname=="Bmatrix"|| envname=="vmatrix"|| envname=="Vmatrix") {
+            if (envname=="matrix" || envname=="array" || envname=="aligned" || envname=="align" || envname=="cases" || envname=="pmatrix"|| envname=="bmatrix"|| envname=="Bmatrix"|| envname=="vmatrix"|| envname=="Vmatrix" || envname=="tabular") {
+                QString colspec="";
+                if (envname=="tabular" || envname=="array") {
+                    if (getToken()==MTTopenbrace) {
+                        colspec=readUntil(true, "}");
+                    } else {
+                        error_list.append(tr("error @ ch. %1: expected {COLUMNSPEC} after '\\begin{%2}'").arg(currentTokenID).arg(envname));
+                    }
+                }
+                JKQTMathTextMatrixNode* matrixNode=new JKQTMathTextMatrixNode(this, colspec);
                 QVector< QVector<JKQTMathTextNode*> > items;
                 //int lines=0;
                 //int cols=0;
                 bool first=true;
+                bool firstLine=true;
                 QVector<JKQTMathTextNode*> line;
+                size_t colCount=0;
                 //std::cout<<"found \\begin{matrix}\n";
                 while (first || currentToken==MTTampersand || currentToken==MTTinstructionNewline) {
-                    JKQTMathTextNode* it=parseLatexString(true, MTBTAny, envname);
+                    while (getToken()==MTTwhitespace) ; // eat whitespace
+                    JKQTMathTextNode* it=simplifyAndTrimJKQTMathTextNode(parseLatexString(false, MTBTAny, envname));
+                    if (firstLine) {
+                        if (lastLineCount.value("hline",0)==1) {
+                            matrixNode->setTopLine(JKQTMathTextMatrixNode::LTline);
+                        } else if (lastLineCount.value("hline",0)>1) {
+                            matrixNode->setTopLine(JKQTMathTextMatrixNode::LTdoubleline);
+                        } else if (lastLineCount.value("heavyline",0)>0) {
+                            matrixNode->setTopLine(JKQTMathTextMatrixNode::LTheavyline);
+                        } else if (lastLineCount.value("hdashline",0)==1) {
+                            matrixNode->setTopLine(JKQTMathTextMatrixNode::LTdashed);
+                        } else if (lastLineCount.value("hdashline",0)>1) {
+                            matrixNode->setTopLine(JKQTMathTextMatrixNode::LTdoubleDashed);
+                        }
+                    } else {
+                        if (lastLineCount.value("hline",0)==1) {
+                            matrixNode->setRowBottomLine(items.size()-1, JKQTMathTextMatrixNode::LTline);
+                        } else if (lastLineCount.value("hline",0)>1) {
+                            matrixNode->setRowBottomLine(items.size()-1, JKQTMathTextMatrixNode::LTdoubleline);
+                        } else if (lastLineCount.value("heavyline",0)>0) {
+                            matrixNode->setRowBottomLine(items.size()-1, JKQTMathTextMatrixNode::LTheavyline);
+                        } else if (lastLineCount.value("hdashline",0)==1) {
+                            matrixNode->setRowBottomLine(items.size()-1, JKQTMathTextMatrixNode::LTdashed);
+                        } else if (lastLineCount.value("hdashline",0)>1) {
+                            matrixNode->setRowBottomLine(items.size()-1, JKQTMathTextMatrixNode::LTdoubleDashed);
+                        }
+                    }
                     if (currentToken==MTTampersand) {
                         //std::cout<<"  appending item\n";
                         line.append(it);
                     } else {
-                        line.append(it);
                         //std::cout<<"  appending item and line with "<<line.size()<<" items.\n";
-                        items.append(line);
+                        if (currentToken==MTTinstructionEnd) {
+                            JKQTMathTextMultiChildNode* mnc=dynamic_cast<JKQTMathTextMultiChildNode*>(it);
+                            if (mnc && mnc->childCount()>0) {
+                                line.append(it);
+                            } else {
+                                line.append(it);
+                            }
+                        } else {
+                            line.append(it);
+                        }
+                        if (currentToken==MTTinstructionNewline || line.size()>0) {
+                            colCount=qMax(colCount, static_cast<size_t>(line.size()));
+                            if (line.size()==0 || (line.size()>1 && line.size()==colCount)) {
+                                items.append(line);
+                            } else if (line.size()>1 && line.size()!=colCount) {
+                                error_list.append(tr("error @ ch. %1: wrong number of entries widthin '\\begin{%2}...\\end{%2}'").arg(currentTokenID).arg(envname));
+                            }
+                        }
                         line.clear();
+                        firstLine=false;
                     }
                     first=false;
                 }
                 //std::cout<<"  creating matrix-node with "<<items.size()<<" items.\n";
-                if (envname=="pmatrix") nl->addChild(new JKQTMathTextBraceNode(this, MTBTParenthesis, MTBTParenthesis, new JKQTMathTextMatrixNode(this, items)));
-                else if (envname=="cases") nl->addChild(new JKQTMathTextBraceNode(this, MTBTCurlyBracket, MTBTNone, new JKQTMathTextMatrixNode(this, items)));
-                else if (envname=="bmatrix") nl->addChild(new JKQTMathTextBraceNode(this, MTBTSquareBracket, MTBTSquareBracket, new JKQTMathTextMatrixNode(this, items)));
-                else if (envname=="Bmatrix") nl->addChild(new JKQTMathTextBraceNode(this, MTBTCurlyBracket, MTBTCurlyBracket, new JKQTMathTextMatrixNode(this, items)));
-                else if (envname=="vmatrix") nl->addChild(new JKQTMathTextBraceNode(this, MTBTSingleLine, MTBTSingleLine, new JKQTMathTextMatrixNode(this, items)));
-                else if (envname=="Vmatrix") nl->addChild(new JKQTMathTextBraceNode(this, MTBTDoubleLine, MTBTDoubleLine, new JKQTMathTextMatrixNode(this, items)));
-                else nl->addChild(new JKQTMathTextMatrixNode(this, items));
+                matrixNode->setChildren(items);
+                if (envname=="pmatrix") nl->addChild(new JKQTMathTextBraceNode(this, MTBTParenthesis, MTBTParenthesis, matrixNode));
+                else if (envname=="cases") nl->addChild(new JKQTMathTextBraceNode(this, MTBTCurlyBracket, MTBTNone, matrixNode));
+                else if (envname=="bmatrix") nl->addChild(new JKQTMathTextBraceNode(this, MTBTSquareBracket, MTBTSquareBracket, matrixNode));
+                else if (envname=="Bmatrix") nl->addChild(new JKQTMathTextBraceNode(this, MTBTCurlyBracket, MTBTCurlyBracket, matrixNode));
+                else if (envname=="vmatrix") nl->addChild(new JKQTMathTextBraceNode(this, MTBTSingleLine, MTBTSingleLine, matrixNode));
+                else if (envname=="Vmatrix") nl->addChild(new JKQTMathTextBraceNode(this, MTBTDoubleLine, MTBTDoubleLine, matrixNode));
+                else nl->addChild(matrixNode);
                 //std::cout<<"  creating matrix-node ... done!\n";
             } else if (envname=="center" || envname=="document" || envname=="flushleft" || envname=="flushright") {
                 JKQTMathTextHorizontalAlignment alignment=MTHALeft;
@@ -1795,6 +1949,8 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
         if (getNew) getToken();
     }
     //std::cout<<"    leaving parseLatexString()\n";
+    lastLineCount=countLine;
+
     return simplifyJKQTMathTextNode(nl);
 }
 
@@ -2126,6 +2282,8 @@ bool JKQTMathText::parse(const QString& text, bool addSpaceBeforeAndAfter){
     currentToken=MTTnone;
     currentTokenName="";
     parsingMathEnvironment=false;
+    lastLineCount.clear();
+
     error_list.clear();
     parsedNode=parseLatexString(true);
     unparsedNode=new JKQTMathTextVerbatimNode(this, text);

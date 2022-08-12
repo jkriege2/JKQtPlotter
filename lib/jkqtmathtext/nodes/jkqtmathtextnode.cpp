@@ -285,6 +285,18 @@ void JKQTMathTextDualChildNode::clearChildren(bool deleteChildren)
     if (deleteChildren&&c2) delete c2;
 }
 
+void JKQTMathTextDualChildNode::deleteChild(int i)
+{
+    if (child1&&i==0) {
+        delete child1;
+        child1=nullptr;
+    }
+    if (child2&&i==1) {
+        delete child2;
+        child2=nullptr;
+    }
+}
+
 JKQTMathTextMultiChildNode::JKQTMathTextMultiChildNode(JKQTMathText *parentMathText):
     JKQTMathTextNode(parentMathText)
 {

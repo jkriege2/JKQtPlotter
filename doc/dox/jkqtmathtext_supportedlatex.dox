@@ -184,12 +184,56 @@
     .
     
     
+    \section JKQTMathTextSuppoertedLaTeXTabular Tabular Environments
+    
+    \see Additional matrix-environments are listed in \ref
+
+    For text-mode tables, the \c tabular -environment is supported:
+      - <code>$\\begin{tabular}{COLSPEC} a & b & ...\\\\ c & d & ...\\end{tabular}$</code> 
+        \c COLSPEC is a LaTeX column specifier, i.e. a sequence composed of these parts:
+          - \c l : left-aligned column
+          - \c c : centered column
+          - \c r : right-aligned column
+          - \c | : single line
+          - \c || : double line
+          - \c : : single dashed line
+          - \c :: : double dashed line
+        .
+     .
+     In all these environments, you can use the following instructions to draw lines above/below a row in the matrix:
+       - \c \\hline or \c \\midrule: a single line     
+       - \c \\hline\\hline : a double line     
+       - \c \\toprule or \c \\bottomrule : a heavy line
+       - \c \\hdashline : a single dashed line
+       - \c \\hdashline\\hdashline : a double dashed line
+     .
+     
+     Here is an example:
+     \code
+      \begin{tabular}{:l|cr||}
+        \hdashline 
+        a1--- & b1--- & c1---\\ 
+        a2- & b2- & c2-\\
+        \hline 
+        a3 & b3 & c3\\
+        \hline\hline 
+        a4 & b4 & c4\\
+        \bottomrule
+      \end{tabular}
+     \endcode
+     
+     \image html  jkqtmathtext/jkqtmathtext_tabular.png
+
+    
     \section JKQTMathTextSuppoertedLaTeXMathSupport Supported Mathematical Constructs
 
     \subsection JKQTMathTextSuppoertedLaTeXSubSuper Sub- and Superscript
     The standard LaTeX sub-/superscript instructions (i.e. \c text_{sub} or \c text^{super} ) are supported:
-         - \c ^{...} \c _{...} : display the contents of braces in superscript/subscript \image html jkqtmathtext/jkqtmathtext_supersub.png
+      - \c ^{...} \c _{...} : display the contents of braces in superscript/subscript \image html jkqtmathtext/jkqtmathtext_supersub.png
         <br>Special subscript/superscript typesetting applies, when the sub/super follows \c \\sum \c \\Prod ...: \image html jkqtmathtext/jkqtmathtext_specialsubsuper.png
+      - <code>$\\substack[lrc]{...\\\\...}$</code> allows to e.g. subset several lines below a \c \\sum using \c \\sum\\limits_\\substack{a<5\\\\b<100}: \image html jkqtmathtext/jkqtmathtext_substack.png
+      - \c \\limits , \c \\nolimits : Several special symbols, like \c \\sum , \c \\lim , ... cause sub-/superscripts to be positioned below/above the symbol, not besides it. This behaviour can be altered by using \c \\limits and \c \\nolimits : \image html jkqtmathtext/jkqtmathtext_limits.png
+      
     .
  
     \subsection JKQTMathTextSuppoertedLaTeXBraces Braces/Parantheses ...
@@ -235,28 +279,48 @@
     .
 
     \subsection JKQTMathTextSuppoertedLaTeXFrac Fraction Type Instructions
-    Several Matrix/Array-typed LaTeX instructions are supported:
+    Several fraction-typed LaTeX instructions are supported:
       - <code>$\\frac{...}{...}$</code> \image html jkqtmathtext/MTFMfrac.png
       - <code>$\\tfrac{...}{...}$</code> (70% smaller font) \image html jkqtmathtext/MTFMtfrac.png
       - <code>$\\dfrac{...}{...}$</code> \image html jkqtmathtext/MTFMdfrac.png
       - <code>$\\sfrac{...}{...}$</code> \image html jkqtmathtext/MTFMsfrac.png
       - <code>$\\stfrac{...}{...}$</code> (70% smaller font) \image html jkqtmathtext/MTFMstfrac.png
+      - <code>$\\stackrel{...}{...}$ $\\binom{...}{...}$</code> \image html jkqtmathtext/jkqtmathtext_brace_stackrel.png
    .
 
     \subsection JKQTMathTextSuppoertedLaTeXMatrix Matrix/Array Type Instructions
-    Several Matrix/Array-typed LaTeX instructions are supported:
+    Simple instructions are:
       - <code>$\\stackrel{...}{...}$ $\\binom{...}{...}$</code> \image html jkqtmathtext/jkqtmathtext_brace_stackrel.png
+    .
+
+    Several Matrix/Array-typed LaTeX instructions are supported:
       - <code>$\\begin{cases} ... & ... \\\\ ... & ... \\end{cases}$</code> \image html jkqtmathtext/jkqtmathtext_brace_begincases.png
-      - <code>$\\begin{array} a & b & ...\\\\ c & d & ...\\end{array}$</code> <code>$\\begin{matrix} a & b & ...\\\\ c & d & ...\\end{matrix}$</code> \image html jkqtmathtext/jkqtmathtext_array.png
+      - <code>$\\begin{matrix} a & b & ...\\\\ c & d & ...\\end{matrix}$</code> \image html jkqtmathtext/jkqtmathtext_matrix.png
       - <code>$\\begin{pmatrix} a & b & ...\\\\ c & d & ...\\end{pmatrix}$</code> \image html jkqtmathtext/jkqtmathtext_pmatrix.png
       - <code>$\\begin{bmatrix} a & b & ...\\\\ c & d & ...\\end{bmatrix}$</code> \image html jkqtmathtext/jkqtmathtext_bmatrix.png
       - <code>$\\begin{Bmatrix} a & b & ...\\\\ c & d & ...\\end{Bmatrix}$</code> \image html jkqtmathtext/jkqtmathtext_bbmatrix.png
       - <code>$\\begin{vmatrix} a & b & ...\\\\ c & d & ...\\end{vmatrix}$</code> \image html jkqtmathtext/jkqtmathtext_vmatrix.png
       - <code>$\\begin{Vmatrix} a & b & ...\\\\ c & d & ...\\end{Vmatrix}$</code> \image html jkqtmathtext/jkqtmathtext_vvmatrix.png
-      - <code>$\\substack[lrc]{...\\\\...}$</code> \image html jkqtmathtext/jkqtmathtext_substack.png
       - <code>$\\lsubstack{...\\\\...}$</code> \image html jkqtmathtext/jkqtmathtext_lsubstack.png
       - <code>$\\rsubstack{...\\\\...}$</code> \image html jkqtmathtext/jkqtmathtext_rsubstack.png
-    .
+      - <code>$\\begin{array}{COLSPEC} a & b & ...\\\\ c & d & ...\\end{array}$</code> \image html  jkqtmathtext/jkqtmathtext_array.png
+        \c COLSPEC is a LaTeX column specifier, i.e. a sequence composed of these parts:
+          - \c l : left-aligned column
+          - \c c : centered column
+          - \c r : right-aligned column
+          - \c | : single line
+          - \c || : double line
+          - \c : : single dashed line
+          - \c :: : double dashed line
+        .
+     .
+     In all these environments, you can use the following instructions to draw lines above/below a row in the matrix:
+       - \c \\hline or \c \\midrule: a single line     
+       - \c \\hline\\hline : a double line     
+       - \c \\toprule or \c \\bottomrule : a heavy line
+       - \c \\hdashline : a single dashed line
+       - \c \\hdashline\\hdashline : a double dashed line
+     .
 
     
     

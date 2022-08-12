@@ -21,6 +21,8 @@
 
 #include "jkqtmathtext/nodes/jkqtmathtextnodetools.h"
 #include "jkqtmathtext/nodes/jkqtmathtextlistnode.h"
+#include "jkqtmathtext/nodes/jkqtmathtextwhitespacenode.h"
+#include "jkqtmathtext/nodes/jkqtmathtexttextnode.h"
 #include "jkqtmathtext/jkqtmathtexttools.h"
 #include "jkqtmathtext/jkqtmathtext.h"
 #include <QDebug>
@@ -64,4 +66,43 @@ JKQTMathTextNode *simplifyJKQTMathTextNode(JKQTMathTextNode *node)
         return nsc;
     }
     return node;
+}
+
+JKQTMathTextNode *simplifyAndTrimJKQTMathTextNode(JKQTMathTextNode *node)
+{
+    auto cleanText=[](JKQTMathTextNode* t) {
+        JKQTMathTextMultiChildNode* nmc=dynamic_cast<JKQTMathTextMultiChildNode*>(t);
+        JKQTMathTextNode* tt0=(nmc&&nmc->childCount()>0)?nmc->getFirstChild():t;
+        JKQTMathTextNode* tt1=(nmc&&nmc->childCount()>0)?nmc->getLastChild():t;
+        JKQTMathTextTextNode* txt0=dynamic_cast<JKQTMathTextTextNode*>(tt0);
+        if (txt0) {
+            txt0->removeLeadingWhitespace();
+        }
+        JKQTMathTextTextNode* txt1=dynamic_cast<JKQTMathTextTextNode*>(tt1);
+        if (txt1) {
+            txt1->removeTrailingWhitespace();
+        }
+    };
+    JKQTMathTextNode* t=node;
+    for (int iter=0; iter<3; iter++) {
+        t=simplifyJKQTMathTextNode(t);
+        JKQTMathTextMultiChildNode* nmc=dynamic_cast<JKQTMathTextMultiChildNode*>(t);
+        if (nmc && nmc->childCount()>0) {
+            bool done=false;
+            cleanText(nmc);
+            while (!done && nmc->childCount()>0) {
+                JKQTMathTextWhitespaceNode* ws0=dynamic_cast<JKQTMathTextWhitespaceNode*>(nmc->getFirstChild());
+                JKQTMathTextWhitespaceNode* ws1=dynamic_cast<JKQTMathTextWhitespaceNode*>(nmc->getLastChild());
+                if (ws0 && ws0->getWhitespaceType()==JKQTMathTextWhitespaceNode::WSTNormal) {
+                    nmc->deleteChild(0);
+                } else if (ws1 && ws1->getWhitespaceType()==JKQTMathTextWhitespaceNode::WSTNormal) {
+                    nmc->deleteChild(nmc->childCount()-1);
+                } else {
+                    done=true;
+                }
+            }
+        }
+        cleanText(t);
+    }
+    return t;
 }

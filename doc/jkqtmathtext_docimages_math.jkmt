@@ -28,8 +28,11 @@ jkqtmathtext_substack.png
 {\backslash}substack: $\sum\limits_\substack{0\leq i\leq10\\-5\leq j\leq1000}f_{i,j}$
 ---
 jkqtmathtext_mathmode_and_textmode.png
-\begin{array}text: & abc123+d/e\\ math: & $abc123+d/e$\end{array}
+\begin{matrix}text: & abc123+d/e\\ math: & $abc123+d/e$\end{matrix}
 ---
 jkqtmathtext_mathoperator_width_factor.png
 --showboxes
-\begin{array}Math: $a=b$ & text: a=b\\\textcolor{blue}{extra space}&\textcolor{blue}{normal spacing}\end{array}
+\begin{matrix}Math: $a=b$ & text: a=b\\\textcolor{blue}{extra space}&\textcolor{blue}{normal spacing}\end{matrix}
+---
+jkqtmathtext_limits.png
+no specifier: $\sum_{i=0}^\infty k_i^2\ \ \lim_{x\rightarrow0}f(x)\ \ \nabla_{x}f(x)$ \ \ \ \ \ {\backslash}limits: $\sum\limits_{i=0}^\infty k_i^2\ \ \lim\limits_{x\rightarrow0}f(x)\ \ \nabla\limits_{x}f(x)$ \ \ \ \ \ {\backslash}nolimits: $\sum\nolimits_{i=0}^\infty k_i^2\ \ \lim\nolimits_{x\rightarrow0}f(x)\ \ \nabla\nolimits_{x}f(x)$ 

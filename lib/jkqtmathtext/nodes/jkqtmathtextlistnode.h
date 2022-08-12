@@ -60,6 +60,8 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextHorizontalListNode: public JKQTMathTex
         virtual int childCount() const override;
         /** \copydoc JKQTMathTextMultiChildNode::clearChildren() */
         virtual void clearChildren(bool deleteChildren=true) override;
+        /** \copydoc JKQTMathTextMultiChildNode::deleteChild() */
+        virtual void deleteChild(int i) override;
         /** \copydoc JKQTMathTextMultiChildNode::getChild() */
         virtual JKQTMathTextNode* getChild(int i) override;
         /** \copydoc JKQTMathTextMultiChildNode::getChild() */
@@ -122,6 +124,8 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextVerticalListNode: public JKQTMathTextM
         virtual int childCount() const override;
         /** \copydoc JKQTMathTextMultiChildNode::clearChildren() */
         virtual void clearChildren(bool deleteChildren=true) override;
+        /** \copydoc JKQTMathTextMultiChildNode::deleteChild() */
+        virtual void deleteChild(int i) override;
         /** \copydoc JKQTMathTextMultiChildNode::getChild() */
         virtual JKQTMathTextNode* getChild(int i) override;
         /** \copydoc JKQTMathTextMultiChildNode::getChild() */

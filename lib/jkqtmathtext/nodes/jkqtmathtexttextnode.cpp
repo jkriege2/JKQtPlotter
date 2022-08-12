@@ -337,6 +337,16 @@ QString JKQTMathTextTextNode::getTypeName() const
     return QLatin1String("JKQTMathTextTextNode(")+text+")";
 }
 
+void JKQTMathTextTextNode::removeTrailingWhitespace()
+{
+    while (text.size()>0 && text[text.size()-1].isSpace()) text=text.left(text.size()-1);
+}
+
+void JKQTMathTextTextNode::removeLeadingWhitespace()
+{
+    while (text.size()>0 && text[0].isSpace()) text=text.right(text.size()-1);
+}
+
 QString JKQTMathTextTextNode::textTransform(const QString &text, const JKQTMathTextEnvironment &currentEv) const
 {
     QString txt=text;

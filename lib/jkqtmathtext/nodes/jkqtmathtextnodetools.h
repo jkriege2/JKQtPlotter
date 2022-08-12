@@ -37,6 +37,13 @@ class JKQTMathTextNode; // forward
  */
 JKQTMATHTEXT_LIB_EXPORT JKQTMathTextNode* simplifyJKQTMathTextNode(JKQTMathTextNode* node);
 
+/** \brief calls simplifyJKQTMathTextNode(). In addition it tries to clear whitespace at the start and end of the tree
+ *  \ingroup jkqtmathtext_items
+ *
+ *  \see simplifyJKQTMathTextNode()
+ */
+JKQTMATHTEXT_LIB_EXPORT JKQTMathTextNode* simplifyAndTrimJKQTMathTextNode(JKQTMathTextNode* node);
+
 #endif // JKQTMATHTEXTNODETOOLS_H
 
 

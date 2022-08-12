@@ -1,7 +1,4 @@
 ---
-jkqtmathtext_brace_array.png
-$\left\langle\begin{array}a&b&...\\ c&d&...\end{array}\right\rangle$
----
 jkqtmathtext_brace_bbig.png
 $\Bigl[\Bigl(r^{123}\Bigr)\Bigr]$
 ---

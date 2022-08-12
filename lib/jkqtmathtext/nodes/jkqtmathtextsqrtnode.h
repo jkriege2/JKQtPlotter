@@ -70,6 +70,8 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSqrtNode: public JKQTMathTextMultiChil
         virtual int childCount() const override;
         /** \copydoc JKQTMathTextMultiChildNode::getChild() */
         virtual void clearChildren(bool deleteChildren=true) override;
+        /** \copydoc JKQTMathTextMultiChildNode::deleteChild() */
+        virtual void deleteChild(int i) override;
 
     protected:
         /** \copydoc JKQTMathTextNode::getSizeInternal() */

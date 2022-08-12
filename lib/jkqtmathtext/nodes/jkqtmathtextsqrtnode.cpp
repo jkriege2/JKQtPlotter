@@ -227,3 +227,15 @@ void JKQTMathTextSqrtNode::clearChildren(bool deleteChildren)
     }
 }
 
+void JKQTMathTextSqrtNode::deleteChild(int i)
+{
+    if (child && i==0) {
+        delete child;
+        child=nullptr;
+    }
+    if (childDegree && i==1) {
+        delete childDegree;
+        childDegree=nullptr;
+    }
+}
+

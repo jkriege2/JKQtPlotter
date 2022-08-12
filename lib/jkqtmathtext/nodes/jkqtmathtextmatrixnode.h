@@ -32,13 +32,39 @@ class JKQTMathText; // forward
 // JKQTMATHTEXT_LIB_EXPORT
 
 
-/** \brief subclass representing a \\begin{matrix} node
+/** \brief subclass representing a \c \\begin{matrix} , \c \\begin{tabular} , \c \\begin{array} , ... node
  *  \ingroup jkqtmathtext_items
+ *
+ *  Definition of the matrix geometry
+ *  \image html jkqtmathtext/jkqtmathtext_matrix_geometry.png
+ *
+ *
+ *  Two examples:
+ *  \image html jkqtmathtext/jkqtmathtext_tabular.png
+ *
+ *  \image html jkqtmathtext/jkqtmathtext_array.png
   */
 class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextMatrixNode: public JKQTMathTextNode {
     public:
-        JKQTMathTextMatrixNode(JKQTMathText* parent, QVector<QVector<JKQTMathTextNode*> > children);
+        /** \brief types of lines */
+        enum LineType {
+            LTnone, /*!< \brief noline */
+            LTline, /*!< \brief single line */
+            LTdoubleline, /*!< \brief double line */
+            LTheavyline, /*!< \brief heavier/thick line */
+            LTdashed, /*!< \brief single dashed line */
+            LTdoubleDashed, /*!< \brief double dashed line */
+            LTdefault=LTnone
+        };
+        JKQTMathTextMatrixNode(JKQTMathText* parent, const QVector<QVector<JKQTMathTextNode*> >& children, const QString& columnSpec=QString());
+        JKQTMathTextMatrixNode(JKQTMathText* parent, const QString& columnSpec=QString());
         virtual ~JKQTMathTextMatrixNode() override;
+        /** \brief sets the child nodes  */
+        void setChildren(const QVector<QVector<JKQTMathTextNode*> >& children);
+        /** \copydoc horizontalLineBottomRow */
+        void setRowBottomLine(int col, LineType line);
+        /** \copydoc horizontalLineTop */
+        void setTopLine(LineType line);
         /** \copydoc JKQTMathTextNode::getTypeName() */
         virtual QString getTypeName() const override;
         /** \copydoc JKQTMathTextNode::draw() */
@@ -52,16 +78,63 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextMatrixNode: public JKQTMathTextNode {
         /** \copydoc lines */ 
         int getLines() const;
     protected:
+        /** \brief describes the layout of the whole node */
+        struct LayoutInfo: public JKQTMathTextNodeSize {
+            LayoutInfo();
+            /** \brief widths of the columns */
+            QVector<double> colwidth;
+            /** \brief widths of the cells */
+            QVector<QVector<double> > cellwidth;
+            inline double& getCellwidth(int line, int col) {
+                return cellwidth[line].operator[](col);
+            }
+            inline const double& getCellwidth(int line, int col) const {
+                return cellwidth[line].operator[](col);
+            }
+            /** \brief heights of the rows */
+            QVector<double> rowheight;
+            /** \brief ascents of the rows */
+            QVector<double> rowascent;
+            double leftPadding;
+            double rightPadding;
+            double topPadding;
+            double bottomPadding;
+
+        };
+        /** \brief calclates the layout of the whole block/node
+         *
+         *  \note This function does NOT call transformEnvironment();
+         *        it has to be called before calling this!
+         */
+        LayoutInfo calcLayout(QPainter& painter, const JKQTMathTextEnvironment& currentEv) const;
         /** \copydoc JKQTMathTextNode::getSizeInternal() */
         virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
         /** \copydoc JKQTMathTextNode::setDrawBoxes() */
         virtual void setDrawBoxes(bool draw) override;
         /** \brief child nodes making up the matrix, vector of rows */
         QVector<QVector<JKQTMathTextNode*> > children;
+        /** \brief alignment of the columns */
+        QVector<JKQTMathTextHorizontalAlignment> columnAlignment;
+        /** \brief lines to the right of each column */
+        QMap<int,LineType> verticalLineRHSColumn;
+        /** \brief line at the left of the table */
+        LineType verticalLineLeft;
+        /** \brief lines to the bottom of each row */
+        QMap<int,LineType> horizontalLineBottomRow;
+        /** \brief line at the top of the table */
+        LineType horizontalLineTop;
+
         /** \brief number of columns in the matrix */
         int columns;
         /** \brief number of rows in the matrix */
         int lines;
+
+        /** \brief draw a vertical line starting at pixel position (\a x, \a y ) with length \a height, using linetype \a lt, width \a linewidth and \a color */
+        static void drawVLine(QPainter& painter, double x, double y, double height, LineType lt, double linewidth, double linewidthHeavy, QColor color, double doublelineseparation);
+        /** \brief draw a horizontal line starting at pixel position (\a x, \a y ) with length \a width, using linetype \a lt, width \a linewidth and \a color */
+        static void drawHLine(QPainter& painter, double x, double y, double width, LineType lt, double linewidth, double linewidthHeavy, QColor color, double doublelineseparation);
+        /** \brief parses a column specifier */
+        void parseColumnSpec(const QString& columnspec);
 };
 
 #endif // JKQTMATHTEXTMATRIXNODE_H

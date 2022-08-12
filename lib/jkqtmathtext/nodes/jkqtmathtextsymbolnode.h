@@ -289,6 +289,10 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSymbolNode: public JKQTMathTextNode {
         static SymbolFullProps NarrowMathOperatorSymbolStd(const QString& symbol);
         /** \brief constructs a SymbolProps for a narrow math-operator symbol like \c \\pm ... in unicode-full-encoding, i.e. ItalicOff, BoldOff, SmallExtendWidthInMathmode */
         static SymbolFullProps NarrowMathOperatorSymbolStd(const QString& symbol, const QString& symbolHTML);
+        /** \brief constructs a SymbolProps for a narrow math-operator like \c \\sin ..., i.e. ItalicOff, BoldOff, HeightIsAscent, ExtendWidthInMathmode */
+        static SymbolFullProps NarrowMathOperatorText(const QString& op);
+        /** \brief constructs a SymbolProps with explicit HTML for a narrow math-operator like \c \\sin ..., i.e. ItalicOff, BoldOff, HeightIsAscent, ExtendWidthInMathmode */
+        static SymbolFullProps NarrowMathOperatorText(const QString& op, const QString& ophtml);
 
 
         /** \brief symbols that can be generated in any standard-font */

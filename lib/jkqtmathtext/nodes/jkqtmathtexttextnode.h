@@ -68,6 +68,10 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextTextNode: public JKQTMathTextTextBaseN
         virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
         /** \copydoc JKQTMathTextNode::getTypeName() */
         virtual QString getTypeName() const override ;
+        /** \brief remove trailing whitespace, is used by simplifyJKQTMathTextNode() */
+        void removeTrailingWhitespace();
+        /** \brief remove leading whitespace, is used by simplifyJKQTMathTextNode()  */
+        void removeLeadingWhitespace();
     protected:
         /** \brief defines how a character shold be drawn, used by splitTextForLayout */
         enum FontMode {

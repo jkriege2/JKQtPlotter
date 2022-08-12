@@ -1,6 +1,6 @@
 ---
-jkqtmathtext_array.png
-$\begin{array}a&b&...\\ c&d&...\end{array}$
+jkqtmathtext_matrix.png
+$\mat{M}_1=\begin{matrix}a&b&...\\ c&d&...\end{matrix}\ \ \ \ \ \ \mat{M}_2=\left\langle\begin{matrix}a&b&...\\ c&d&...\end{matrix}\right\rangle$
 ---
 jkqtmathtext_bmatrix.png
 $\begin{bmatrix}a&b&...\\ c&d&...\end{bmatrix}$
@@ -18,4 +18,30 @@ jkqtmathtext_vvmatrix.png
 $\begin{Vmatrix}a&b&...\\ c&d&...\end{Vmatrix}$
 ---
 jkqtmathtext_brace_begincases.png
-$f(x)=\begin{cases}\sfrac{1}{2} & \text{if} 0\leq x\leq 1 \\ \sfrac{2}{3} & \text{if} 3\leq x\leq 4 \\ 0 & \text{elsewhere} \end{cases}$
+$f(x)=\begin{cases}\sfrac{1}{2} & \text{if}\ 0\leq x\leq 1 \\ \sfrac{2}{3} & \text{if}\ 3\leq x\leq 4 \\ 0 & \text{elsewhere} \end{cases}$
+---
+jkqtmathtext_tabular.png
+\begin{tabular}{:l|cr||}
+  \hdashline 
+  a1--- & b1--- & c1---\\ 
+  a2- & b2- & c2-\\
+  \hline 
+  a3 & b3 & c3\\
+  \hline\hline 
+  a4 & b4 & c4\\
+  \bottomrule
+\end{tabular}
+---
+jkqtmathtext_array.png
+$\mat{M}_\cdot=\begin{array}{l:ll}
+  \alpha & a & \ldots \\
+  \hdashline
+  \beta & b & \ldots \\
+  \vdots & \vdots & \ddots \\
+\end{array}
+\ \ \ \ \ \mat{M}_{()}=\left(\begin{array}{l:ll}
+  \alpha & a & \ldots \\
+  \hdashline
+  \beta & b & \ldots \\
+  \vdots & \vdots & \ddots \\
+\end{array}\right)$

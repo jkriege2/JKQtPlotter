@@ -232,6 +232,8 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextMultiChildNode: public JKQTMathTextNod
 
         /** \brief clear all children, deleting them if \a deleteChildren==true */
         virtual void clearChildren(bool deleteChildren=true) =0;
+        /** \brief delete the i-th child */
+        virtual void deleteChild(int i) =0;
 
         /** \copydoc JKQTMathTextNode::setDrawBoxes() */
         virtual void setDrawBoxes(bool draw) override;
@@ -266,6 +268,9 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextDualChildNode: public JKQTMathTextMult
         virtual int childCount() const override;
         /** \copydoc JKQTMathTextMultiChildNode::getChild() */
         virtual void clearChildren(bool deleteChildren=true) override;
+        /** \copydoc JKQTMathTextMultiChildNode::deleteChild() */
+        virtual void deleteChild(int i) override;
+
 
     protected:
         /** \brief first child node of this node */

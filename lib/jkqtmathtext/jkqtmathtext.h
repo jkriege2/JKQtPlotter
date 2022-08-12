@@ -606,6 +606,35 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         /** \copydoc sqrt_smallfont_factor */
         double getSqrtSmallFontFactor() const;
 
+        /** \copydoc matrix_linewidth_thin_factor */
+        double getMatrixLinewidthThinFactor();
+        /** \copydoc matrix_linewidth_thin_factor */
+        void setMatrixLinewidthThinFactor(double factor);
+        /** \copydoc matrix_linewidth_heavy_factor */
+        double getMatrixLinewidthHeavyFactor();
+        /** \copydoc matrix_linewidth_heavy_factor */
+        void setMatrixLinewidthHeavyFactor(double factor);
+        /** \copydoc matrix_line_separation_factor */
+        double getMatrixLineSeparationFactor();
+        /** \copydoc matrix_line_separation_factor */
+        void setMatrixLineSeparationFactor(double factor);
+        /** \copydoc matrix_xSeparation_factor */
+        double getMatrixXSeparationFactor();
+        /** \copydoc matrix_xSeparation_factor */
+        void setMatrixXSeparationFactor(double factor);
+        /** \copydoc matrix_ySeparation_factor */
+        double getMatrixYSeparationFactor();
+        /** \copydoc matrix_ySeparation_factor */
+        void setMatrixYSeparationFactor(double factor);
+        /** \copydoc matrix_xPadding_factor */
+        double getMatrixXPaddingFactor();
+        /** \copydoc matrix_xPadding_factor */
+        void setMatrixXPaddingFactor(double factor);
+        /** \copydoc matrix_yPadding_factor */
+        double getMatrixYPaddingFactor();
+        /** \copydoc matrix_yPadding_factor */
+        void setMatrixYPaddingFactor(double factor);
+
 
 
         /** \copydoc useUnparsed */ 
@@ -798,6 +827,43 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         double sqrt_width_Xfactor;
         /** \brief height-increase of the sqrt-symbol, as factor of the child's height */
         double sqrt_height_factor;
+
+        /** \brief width of thin table lines, this factor is multiplied with the current \c font.linewidth()
+         *
+         *  \image html jkqtmathtext/jkqtmathtext_matrix_geometry.png
+         */
+        double matrix_linewidth_thin_factor;
+        /** \brief width of heavy table lines, this factor is multiplied with the current \c font.linewidth()
+         *
+         *  \image html jkqtmathtext/jkqtmathtext_matrix_geometry.png
+         */
+        double matrix_linewidth_heavy_factor;
+        /** \brief separation of double-lines in tables, this factor is multiplied with the \c font.linewidth()
+         *
+         *  \image html jkqtmathtext/jkqtmathtext_matrix_geometry.png
+         */
+        double matrix_line_separation_factor;
+        /** \brief x-separation of  two columns, this factor is multiplied with the \c font.width("x")
+         *
+         *  \image html jkqtmathtext/jkqtmathtext_matrix_geometry.png
+         */
+        double matrix_xSeparation_factor;
+        /** \brief y-separation of  two columns, this factor is multiplied with the \c font.width("x")
+         *
+         *  \image html jkqtmathtext/jkqtmathtext_matrix_geometry.png
+         */
+        double matrix_ySeparation_factor;
+        /** \brief x-padding of  two columns, this factor is multiplied with the \c font.width("x")
+         *
+         *  \image html jkqtmathtext/jkqtmathtext_matrix_geometry.png
+         */
+        double matrix_xPadding_factor;
+        /** \brief y-padding of  two columns, this factor is multiplied with the \c font.width("x")
+         *
+         *  \image html jkqtmathtext/jkqtmathtext_matrix_geometry.png
+         */
+        double matrix_yPadding_factor;
+
         /** \brief a list that will be filled with error messages while parsing, if any error occur
          *
          *  This list of errors is (mostly) filled during a call to parse(). During rendering (e.g. with draw() )
@@ -891,6 +957,8 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         tokenType currentToken;
         /** \brief the JKQTMathTextBraceType associated with the last \c \\right command the parser encountered */
         JKQTMathTextBraceType lastRightBraceType;
+        /**  \brief returns the number of \c \\hline , \c \\hdashline , ... commands in the last parseLatexString() call */
+        QMap<QString,size_t> lastLineCount;
         /** \brief used by the tokenizer. Name of the current token, id applicable */
         QString currentTokenName;
         /** \brief used by the tokenizer. Points to the currently read character in parseString */
