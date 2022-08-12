@@ -53,7 +53,7 @@ void JKQTMathTextSuperscriptNode::getSizeInternal(QPainter& painter, JKQTMathTex
     double cStrikeoutPos=0, cWidth=0, cBaselineHeight=0, cOverallHeight=0;
     getChild()->getSize(painter, ev, cWidth, cBaselineHeight, cOverallHeight, cStrikeoutPos);
     const double childDescent=cOverallHeight-cBaselineHeight;
-    double shiftToChildBottom=parentMathText->getSuperShiftFactor()*tbr_of_letterM.height();
+    double shiftToChildBottom=parentMathText->getSuperShiftFactor()*fm.xHeight();
 
     if (prevNodeSize!=nullptr) {
         const double modifiedShift=prevNodeSize->baselineHeight-childDescent-parentMathText->getSpecialSuperShiftFactor()*cBaselineHeight-childDescent;
@@ -78,7 +78,7 @@ double JKQTMathTextSuperscriptNode::draw(QPainter& painter, double x, double y, 
     const QFontMetricsF fm(currentEv.getFont(parentMathText), painter.device());
     QRectF tbr_of_letterM=JKQTMathTextGetTightBoundingRect(currentEv.getFont(parentMathText), "M", painter.device());
     const double childDescent=cOverallHeight-cBaselineHeight;
-    double shiftToChildBottom=parentMathText->getSuperShiftFactor()*tbr_of_letterM.height();
+    double shiftToChildBottom=parentMathText->getSuperShiftFactor()*fm.xHeight();
 
     if (prevNodeSize!=nullptr) {
         const double modifiedShift=prevNodeSize->baselineHeight-childDescent-parentMathText->getSpecialSuperShiftFactor()*cBaselineHeight-childDescent;
@@ -130,7 +130,7 @@ void JKQTMathTextSubscriptNode::getSizeInternal(QPainter& painter, JKQTMathTextE
     double cWidth=0, cBaselineHeight=0, cOverallHeight=0, cStrikeoutPos=0;
     getChild()->getSize(painter, ev, cWidth, cBaselineHeight, cOverallHeight, cStrikeoutPos);
     //const double childDescent=cOverallHeight-cBaselineHeight;
-    double shift_to_childBaseline=cBaselineHeight-parentMathText->getSubShiftFactor()*tbr_of_letterM.height();
+    double shift_to_childBaseline=cBaselineHeight-parentMathText->getSubShiftFactor()*fm.xHeight();
 
     if (prevNodeSize!=nullptr) {
         //qDebug()<<"oldshift="<<shift<<", prevNodeSize->overallHeight="<<prevNodeSize->overallHeight<<", prevNodeSize->baselineHeight="<<prevNodeSize->baselineHeight;
@@ -157,7 +157,7 @@ double JKQTMathTextSubscriptNode::draw(QPainter& painter, double x, double y, JK
 
     double cWidth=0, cBaselineHeight=0, cOverallHeight=0, cStrikeoutPos=0;
     getChild()->getSize(painter, ev, cWidth, cBaselineHeight, cOverallHeight, cStrikeoutPos);
-    double shift_to_childBaseline=cBaselineHeight-parentMathText->getSubShiftFactor()*tbr_of_letterM.height();
+    double shift_to_childBaseline=cBaselineHeight-parentMathText->getSubShiftFactor()*fm.xHeight();
 
     if (prevNodeSize!=nullptr) {
         //qDebug()<<"oldshift="<<shift<<", prevNodeSize->overallHeight="<<prevNodeSize->overallHeight<<", prevNodeSize->baselineHeight="<<prevNodeSize->baselineHeight;

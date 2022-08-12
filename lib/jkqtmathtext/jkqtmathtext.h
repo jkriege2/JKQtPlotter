@@ -755,14 +755,12 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
          *
          */
         double bigmathoperator_font_factor;
-        /** \brief relative shift of text in superscript to normal text:
-         *         0= baseline kept, 1: baseline shifted to top of normal text
+        /** \brief relative shift of text in superscript to normal text, factor is multiplied by \c font.xHeight()
          *
          *  \image html jkqtmathtext_superscriptnode_getSizeInternal.png
          */
         double super_shift_factor;
-        /** \brief relative shift of text in subscript to normal text:
-         *         0= baseline kept, 1: baseline shifted to bottom of normal text
+        /** \brief relative shift of text in subscript to normal text, factor is multiplied by \c font.xHeight()
          *
          *  \image html jkqtmathtext_subscriptnode_getSizeInternal.png
          */

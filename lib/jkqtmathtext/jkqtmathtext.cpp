@@ -68,7 +68,7 @@ JKQTMathText::JKQTMathText(QObject* parent):
     brace_shrink_factor=0.45;
     brace_y_shift_factor=0.7;//-1;
 
-    subsuper_size_factor=0.7;
+    subsuper_size_factor=0.65;
     subsuper_mode_selection_by_size_factor=1.01;
     sub_shift_factor=0.4;
     super_shift_factor=0.7;

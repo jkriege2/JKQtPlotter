@@ -149,11 +149,27 @@ void JKQTMathTextFracNode::getSizeInternal(QPainter& painter, JKQTMathTextEnviro
         ev2.fontSize=ev2.fontSize*getFracScalingFactor()*0.7;
     }
 
+    const QFontMetricsF fmev1(ev1.getFont(parentMathText), painter.device());
+    const QRectF AeTBR1=fmev1.tightBoundingRect("A");
+    const double asc1=AeTBR1.height();
+    const QFontMetricsF fmev2(ev2.getFont(parentMathText), painter.device());
+    const QRectF AeTBR2=fmev2.tightBoundingRect("A");
+    const double asc2=AeTBR2.height();
 
     double width1=0, baselineHeight1=0, overallHeight1=0, strikeoutPos1=0;
     double width2=0, baselineHeight2=0, overallHeight2=0, strikeoutPos2=0;
     child1->getSize(painter, ev1, width1, baselineHeight1, overallHeight1, strikeoutPos1);
     child2->getSize(painter, ev2, width2, baselineHeight2, overallHeight2, strikeoutPos2);
+    if (asc1>baselineHeight1) {
+        const double oldDescent=overallHeight1-baselineHeight1;
+        baselineHeight1=asc1;
+        overallHeight1=baselineHeight1+oldDescent;
+    }
+    if (asc2>baselineHeight2) {
+        const double oldDescent=overallHeight2-baselineHeight2;
+        baselineHeight2=asc2;
+        overallHeight2=baselineHeight2+oldDescent;
+    }
     const double descent1=overallHeight1-baselineHeight1;
 
 
@@ -176,7 +192,7 @@ void JKQTMathTextFracNode::getSizeInternal(QPainter& painter, JKQTMathTextEnviro
         const double top_ascent=line_ascent;
         const double newascent=overallHeight1+top_ascent;
         const double newdescent=qMax(overallHeight2-baselineHeight2, qheight-xheight);
-        width=width1+width2+xwidth/2.0;
+        width=width1+width2+xwidth*0.666;
         strikeoutPos=line_ascent;
 
         overallHeight=newascent+newdescent;
@@ -253,10 +269,27 @@ double JKQTMathTextFracNode::draw(QPainter& painter, double x, double y, JKQTMat
     }
 
 
+    const QFontMetricsF fmev1(ev1.getFont(parentMathText), painter.device());
+    const QRectF AeTBR1=fmev1.tightBoundingRect("A");
+    const double asc1=AeTBR1.height();
+    const QFontMetricsF fmev2(ev2.getFont(parentMathText), painter.device());
+    const QRectF AeTBR2=fmev2.tightBoundingRect("A");
+    const double asc2=AeTBR2.height();
+
     double width1=0, baselineHeight1=0, overallHeight1=0;//, strikeoutPos1=0;
     double width2=0, baselineHeight2=0, overallHeight2=0, strikeoutPos=0;
     child1->getSize(painter, ev1, width1, baselineHeight1, overallHeight1, strikeoutPos);
     child2->getSize(painter, ev2, width2, baselineHeight2, overallHeight2, strikeoutPos);
+    if (asc1>baselineHeight1) {
+        const double oldDescent=overallHeight1-baselineHeight1;
+        baselineHeight1=asc1;
+        overallHeight1=baselineHeight1+oldDescent;
+    }
+    if (asc2>baselineHeight2) {
+        const double oldDescent=overallHeight2-baselineHeight2;
+        baselineHeight2=asc2;
+        overallHeight2=baselineHeight2+oldDescent;
+    }
     const double ascent1=baselineHeight1;
     const double descent1=overallHeight1-baselineHeight1;
     const double ascent2=baselineHeight2;
@@ -286,7 +319,7 @@ double JKQTMathTextFracNode::draw(QPainter& painter, double x, double y, JKQTMat
         child1->draw(painter, x+(maxWidth-width1)/2.0, yline-xheight*(parentMathText->getFracShiftFactor())-descent1, ev1);
         child2->draw(painter, x+(maxWidth-width2)/2.0, yline+xheight*(parentMathText->getFracShiftFactor())+ascent2, ev2);
     } else if (mode==JKQTMathTextFracNode::MTFMstfrac || mode==JKQTMathTextFracNode::MTFMsfrac) {
-        deltaWidth=xwidth/2.0;
+        deltaWidth=xwidth*0.666;
         child1->draw(painter, x, yline, ev1);
         child2->draw(painter, x+width1+deltaWidth, y, ev2);
         const QLineF l(x+width1+deltaWidth, y-Mheight, x+width1, y+(qheight-xheight));
