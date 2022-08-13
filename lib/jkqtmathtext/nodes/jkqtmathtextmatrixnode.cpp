@@ -39,7 +39,7 @@
 
 
 JKQTMathTextMatrixNode::JKQTMathTextMatrixNode(JKQTMathText* _parent, const QVector<QVector<JKQTMathTextNode *> > &children, const QString &columnSpec):
-    JKQTMathTextNode(_parent),
+    JKQTMathTextMultiChildNode(_parent),
     verticalLineRHSColumn(),
     verticalLineLeft(LTnone),
     horizontalLineBottomRow(),
@@ -52,7 +52,7 @@ JKQTMathTextMatrixNode::JKQTMathTextMatrixNode(JKQTMathText* _parent, const QVec
 }
 
 JKQTMathTextMatrixNode::JKQTMathTextMatrixNode(JKQTMathText *_parent, const QString &columnSpec):
-    JKQTMathTextNode(_parent),
+    JKQTMathTextMultiChildNode(_parent),
     verticalLineRHSColumn(),
     verticalLineLeft(LTnone),
     horizontalLineBottomRow(),
@@ -64,12 +64,7 @@ JKQTMathTextMatrixNode::JKQTMathTextMatrixNode(JKQTMathText *_parent, const QStr
 }
 
 JKQTMathTextMatrixNode::~JKQTMathTextMatrixNode() {
-    for (int i=0; i<children.size(); i++) {
-        for (int j=0; j<children[i].size(); j++) {
-            delete children[i].at(j);
-        }
-    }
-    children.clear();
+    clearChildrenImpl(true);
 }
 
 void JKQTMathTextMatrixNode::setChildren(const QVector<QVector<JKQTMathTextNode *> > &children)
@@ -108,7 +103,7 @@ bool JKQTMathTextMatrixNode::toHtml(QString &/*html*/, JKQTMathTextEnvironment /
     return false;
 }
 
-QVector<QVector<JKQTMathTextNode *> > JKQTMathTextMatrixNode::getChildren() const {
+QVector<QVector<JKQTMathTextNode *> > JKQTMathTextMatrixNode::getChildrenMatrix() const {
     return this->children;
 }
 
@@ -118,6 +113,106 @@ int JKQTMathTextMatrixNode::getColumns() const {
 
 int JKQTMathTextMatrixNode::getLines() const {
     return this->lines;
+}
+
+QList<JKQTMathTextNode *> JKQTMathTextMatrixNode::getChildren()
+{
+    QList<JKQTMathTextNode *> l;
+    for (int i=0; i<children.size(); i++) {
+        for (int j=0; j<children[i].size(); j++) {
+            l<<children[i].at(j);
+        }
+    }
+    return l;
+}
+
+int JKQTMathTextMatrixNode::childCount() const
+{
+    int s=0;
+    for (int i=0; i<children.size(); i++) {
+        s+=children[i].size();
+    }
+    return s;
+}
+
+void JKQTMathTextMatrixNode::clearChildren(bool deleteChildren)
+{
+    clearChildrenImpl(deleteChildren);
+}
+
+
+void JKQTMathTextMatrixNode::clearChildrenImpl(bool deleteChildren)
+{
+    for (int i=0; i<children.size(); i++) {
+        for (int j=0; j<children[i].size(); j++) {
+            if (deleteChildren) delete children[i].at(j);
+        }
+    }
+    children.clear();
+}
+
+
+
+void JKQTMathTextMatrixNode::deleteChild(int nn)
+{
+    int n=0;
+    for (int i=0; i<children.size(); i++) {
+        for (int j=0; j<children[i].size(); j++) {
+            if (n==nn) {
+                delete children[i].operator[](j);
+                children[i].operator[](j)=new JKQTMathTextNoopNode(parentMathText);
+                children[i].operator[](j)->setParentNode(this);
+                return ;
+            }
+            n++;
+        }
+    }
+    return ;
+}
+
+JKQTMathTextNode *JKQTMathTextMatrixNode::getChild(int nn)
+{
+    int n=0;
+    for (int i=0; i<children.size(); i++) {
+        for (int j=0; j<children[i].size(); j++) {
+            if (n==nn) {
+                return children[i].at(j);
+            }
+            n++;
+        }
+    }
+    return nullptr;
+}
+
+const JKQTMathTextNode *JKQTMathTextMatrixNode::getChild(int nn) const
+{
+    int n=0;
+    for (int i=0; i<children.size(); i++) {
+        for (int j=0; j<children[i].size(); j++) {
+            if (n==nn) {
+                return children[i].at(j);
+            }
+            n++;
+        }
+    }
+    return nullptr;
+}
+
+JKQTMathTextNode *JKQTMathTextMatrixNode::replaceChild(int nn, JKQTMathTextNode *newChild)
+{
+    int n=0;
+    for (int i=0; i<children.size(); i++) {
+        for (int j=0; j<children[i].size(); j++) {
+            if (n==nn) {
+                JKQTMathTextNode* old= children[i].at(j);
+                children[i].operator[](j)=newChild;
+                return old;
+            }
+            n++;
+        }
+    }
+    return nullptr;
+
 }
 
 

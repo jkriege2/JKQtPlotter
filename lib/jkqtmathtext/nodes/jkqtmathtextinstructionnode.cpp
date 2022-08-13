@@ -203,6 +203,7 @@ JKQTMathTextSimpleInstructionNode::InstructionProperties::InstructionProperties(
 JKQTMathTextModifiedTextPropsInstructionNode::JKQTMathTextModifiedTextPropsInstructionNode(JKQTMathText* _parent, const QString& name, JKQTMathTextNode* child, const QStringList& parameters):
     JKQTMathTextInstruction1Node(_parent, name, child, parameters)
 {
+    fillInstructions();
 }
 
 JKQTMathTextModifiedTextPropsInstructionNode::~JKQTMathTextModifiedTextPropsInstructionNode() {
@@ -215,6 +216,7 @@ QString JKQTMathTextModifiedTextPropsInstructionNode::getTypeName() const
 }
 
 void JKQTMathTextModifiedTextPropsInstructionNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* /*prevNodeSize*/) {
+    fillInstructions();
     JKQTMathTextEnvironment ev=currentEv;
 
     executeInstruction(ev);
@@ -223,11 +225,12 @@ void JKQTMathTextModifiedTextPropsInstructionNode::getSizeInternal(QPainter& pai
 }
 
 double JKQTMathTextModifiedTextPropsInstructionNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* /*prevNodeSize*/) {
+    fillInstructions();
     doDrawBoxes(painter, x, y, currentEv);
     JKQTMathTextEnvironment ev=currentEv;
 
     executeInstruction(ev);
-
+    //std::cout<<"  MODNODE: "<<getInstructionName().toStdString()<<" ev.mathMode="<<ev.insideMath<<", ev.forceUpright="<<ev.insideMathForceDigitsUpright<<"\n";
     return getChild()->draw(painter, x, y, ev);
 }
 
@@ -266,6 +269,7 @@ void JKQTMathTextModifiedTextPropsInstructionNode::modifyInMathEnvironment(const
 
 void JKQTMathTextModifiedTextPropsInstructionNode::executeInstruction(JKQTMathTextEnvironment &ev) const
 {
+    fillInstructions();
     instructions.value(getInstructionName(), InstructionProperties()).modifier(ev, getParameters());
 }
 
@@ -649,6 +653,7 @@ JKQTMathTextModifiedTextPropsInstructionNode::InstructionProperties::Instruction
 JKQTMathTextBoxInstructionNode::JKQTMathTextBoxInstructionNode(JKQTMathText* _parent, const QString& name, JKQTMathTextNode* child, const QStringList& parameters):
     JKQTMathTextInstruction1Node(_parent, name, child, parameters)
 {
+    fillInstructions();
 }
 
 JKQTMathTextBoxInstructionNode::~JKQTMathTextBoxInstructionNode() {

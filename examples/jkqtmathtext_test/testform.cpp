@@ -486,7 +486,7 @@ QTreeWidgetItem *TestForm::createTree(JKQTMathTextNode *node, QTreeWidgetItem* p
         int l=matrixN->getLines();
         int c=matrixN->getColumns();
         name=QString("MatrixNode: l*c=%1*%2").arg(l).arg(c);
-        QVector<QVector<JKQTMathTextNode*> > children=matrixN->getChildren();
+        QVector<QVector<JKQTMathTextNode*> > children=matrixN->getChildrenMatrix();
         for (int y=0; y<l; y++) {
             for (int x=0; x<c; x++) {
                 if (children[y].at(x)!=nullptr) {

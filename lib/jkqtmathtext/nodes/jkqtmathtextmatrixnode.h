@@ -44,7 +44,7 @@ class JKQTMathText; // forward
  *
  *  \image html jkqtmathtext/jkqtmathtext_array.png
   */
-class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextMatrixNode: public JKQTMathTextNode {
+class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextMatrixNode: public JKQTMathTextMultiChildNode {
     public:
         /** \brief types of lines */
         enum LineType {
@@ -72,11 +72,25 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextMatrixNode: public JKQTMathTextNode {
         /** \copydoc JKQTMathTextNode::toHtml() */
         virtual bool toHtml(QString& html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) override;
         /** \brief returns the child nodes  */
-        QVector<QVector<JKQTMathTextNode*> > getChildren() const;
+        QVector<QVector<JKQTMathTextNode*> > getChildrenMatrix() const;
         /** \copydoc columns */ 
         int getColumns() const;
         /** \copydoc lines */ 
         int getLines() const;
+        /** \copydoc JKQTMathTextMultiChildNode::getChildren() */
+        virtual QList<JKQTMathTextNode*> getChildren() override;
+        /** \copydoc JKQTMathTextMultiChildNode::childCount() */
+        virtual int childCount() const override;
+        /** \copydoc JKQTMathTextMultiChildNode::clearChildren() */
+        virtual void clearChildren(bool deleteChildren=true) override;
+        /** \copydoc JKQTMathTextMultiChildNode::deleteChild() */
+        virtual void deleteChild(int i) override;
+        /** \copydoc JKQTMathTextMultiChildNode::getChild() */
+        virtual JKQTMathTextNode* getChild(int i) override;
+        /** \copydoc JKQTMathTextMultiChildNode::getChild() */
+        virtual const JKQTMathTextNode* getChild(int i) const override;
+        /** \copydoc JKQTMathTextMultiChildNode::getChild() */
+        virtual JKQTMathTextNode* replaceChild(int i, JKQTMathTextNode* newChild) override;
     protected:
         /** \brief describes the layout of the whole node */
         struct LayoutInfo: public JKQTMathTextNodeSize {
@@ -135,6 +149,8 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextMatrixNode: public JKQTMathTextNode {
         static void drawHLine(QPainter& painter, double x, double y, double width, LineType lt, double linewidth, double linewidthHeavy, QColor color, double doublelineseparation);
         /** \brief parses a column specifier */
         void parseColumnSpec(const QString& columnspec);
+        /** \copydoc JKQTMathTextMultiChildNode::clearChildren() */
+        void clearChildrenImpl(bool deleteChildren);
 };
 
 #endif // JKQTMATHTEXTMATRIXNODE_H

@@ -302,8 +302,9 @@ double JKQTMathTextTextNode::draw(QPainter& painter, double x, double y, JKQTMat
 
     //qDebug()<<"JKQTMathTextTextNode: text="<<text<<" font="<<f;
 
-
+    //std::cout<<"  TEXT: currentEv.mathMode="<<currentEv.insideMath<<", currentEv.forceUpright="<<currentEv.insideMathForceDigitsUpright<<"\n";
     for (int i=0; i<textpart.size(); i++) {
+        //std::cout<<"  TEXT: mode="<<fontMode[i]<<", text='"<<textpart[i].toStdString()<<"'\n";
         switch(fontMode[i]) {
             case FMasDefined:
                 painter.setFont(f);

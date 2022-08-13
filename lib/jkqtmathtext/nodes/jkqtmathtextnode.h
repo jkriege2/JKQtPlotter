@@ -279,4 +279,26 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextDualChildNode: public JKQTMathTextMult
         JKQTMathTextNode* child2;
 };
 
+
+
+
+/** \brief subclass representing a node that outputs nothing
+ *  \ingroup jkqtmathtext_items
+ *
+ */
+class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextNoopNode: public JKQTMathTextNode {
+    public:
+        explicit JKQTMathTextNoopNode(JKQTMathText* parent);
+        virtual ~JKQTMathTextNoopNode() override;
+        /** \copydoc JKQTMathTextNode::getTypeName() */
+        virtual QString getTypeName() const override;
+        /** \copydoc JKQTMathTextNode::toHtml() */
+        virtual bool toHtml(QString& html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) override;
+        /** \copydoc JKQTMathTextNode::draw() */
+        virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
+    protected:
+        /** \copydoc JKQTMathTextNode::getSizeInternal() */
+        virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
+
+};
 #endif // JKQTMATHTEXTNODE_H

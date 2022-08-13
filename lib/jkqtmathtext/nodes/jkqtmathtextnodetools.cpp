@@ -30,26 +30,27 @@
 JKQTMathTextNode *simplifyJKQTMathTextNode(JKQTMathTextNode *node)
 {
     JKQTMathTextHorizontalListNode* nl=dynamic_cast<JKQTMathTextHorizontalListNode*>(node);
+    JKQTMathTextVerticalListNode* vl=dynamic_cast<JKQTMathTextVerticalListNode*>(node);
     JKQTMathTextMultiChildNode* nmc=dynamic_cast<JKQTMathTextMultiChildNode*>(node);
     JKQTMathTextSingleChildNode* nsc=dynamic_cast<JKQTMathTextSingleChildNode*>(node);
-    if (nl) {
-        if (nl->childCount()==1) {
+    if ((nl || vl) && nmc) {
+        if (nmc->childCount()==1) {
             // if there was only a single node: simplify the syntax tree, by removing the outer list node
-            JKQTMathTextNode* ret= simplifyJKQTMathTextNode(nl->getChild(0));
-            nl->clearChildren(false);
+            JKQTMathTextNode* ret= simplifyJKQTMathTextNode(nmc->getChild(0));
+            nmc->clearChildren(false);
             ret->setParentNode(nullptr);
-            delete nl;
+            delete nmc;
             return ret;
-        } else if (nl->childCount()>1) {
+        } else if (nmc->childCount()>1) {
             // if there are several child nodes, apply this method recursively
-            for (int i=0; i<nl->childCount(); i++) {
-                JKQTMathTextNode* c=nl->getChild(i);
+            for (int i=0; i<nmc->childCount(); i++) {
+                JKQTMathTextNode* c=nmc->getChild(i);
                 JKQTMathTextNode* newc= simplifyJKQTMathTextNode(c);
-                if (c!=newc) nl->replaceAndDeleteChild(i, newc);
+                if (c!=newc) nmc->replaceAndDeleteChild(i, newc);
             }
-            return nl;
+            return nmc;
         }
-        return nl;
+        return nmc;
     } else if (nmc) {
         // apply this method recursively to any children
         for (int i=0; i<nmc->childCount(); i++) {
@@ -105,4 +106,33 @@ JKQTMathTextNode *simplifyAndTrimJKQTMathTextNode(JKQTMathTextNode *node)
         cleanText(t);
     }
     return t;
+}
+
+
+namespace JKQTMathText_private {
+    QString JKQTMathTextNodeTree2String(JKQTMathTextNode *root, int level)
+    {
+        QString tree;
+        JKQTMathTextMultiChildNode* nmc=dynamic_cast<JKQTMathTextMultiChildNode*>(root);
+        JKQTMathTextSingleChildNode* nsc=dynamic_cast<JKQTMathTextSingleChildNode*>(root);
+        if (level>=1) {
+            for (int i=0; i<level-1; i++) tree+="|  ";
+        }
+        if (level>0) tree+="+--";
+        tree+=root->getTypeName()+"\n";
+        if (nmc) {
+            for (int i=0; i<nmc->childCount(); i++) {
+                tree+=JKQTMathTextNodeTree2String(nmc->getChild(i), level+1);
+            }
+        } else if (nsc) {
+            tree+=JKQTMathTextNodeTree2String(nsc->getChild(), level+1);
+        }
+
+        return tree;
+    }
+}
+
+QString JKQTMathTextNodeTree2String(JKQTMathTextNode *root)
+{
+    return JKQTMathText_private::JKQTMathTextNodeTree2String(root, 0);
 }

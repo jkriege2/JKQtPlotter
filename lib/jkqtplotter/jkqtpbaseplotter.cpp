@@ -1738,7 +1738,6 @@ bool JKQTBasePlotter::printpreviewNew(QPaintDevice* paintDevice, bool setAbsolut
     plotterStyle.widgetBackgroundBrush=bc;
     paintMagnification=oldP;
 
-    mathText.setUseUnparsed(false);
 
     return res;
 
@@ -3744,7 +3743,6 @@ void JKQTBasePlotter::saveImage(const QString& filename, bool displayPreview) {
                 QFile::copy(fn, tempFM);
             }
 
-            mathText.setUseUnparsed(!jkqtpPaintDeviceAdapters[adapterID]->useLatexParser());
 
             gridPrintingCalc();
             QPaintDevice* paintDevice=jkqtpPaintDeviceAdapters[adapterID]->createPaintdevice(fn, jkqtp_roundTo<int>(gridPrintingSize.width()), jkqtp_roundTo<int>(gridPrintingSize.height()));
@@ -5103,11 +5101,6 @@ JKQTBasePlotter::textSizeData::textSizeData():
 
 
 
-
-bool JKQTPPaintDeviceAdapter::useLatexParser() const
-{
-    return true;
-}
 
 QPaintDevice *JKQTPPaintDeviceAdapter::createPaintdeviceMM(const QString &filename, double widthMM, double heightMM) const
 {

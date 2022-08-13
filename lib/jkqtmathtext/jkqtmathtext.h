@@ -25,6 +25,7 @@
 #ifndef JKQTMATHTEXT_H
 #define JKQTMATHTEXT_H
 
+#include <QFlags>
 #include <QObject>
 #include <QSettings>
 #include <QPainter>
@@ -214,16 +215,28 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         void loadSettings(const QSettings& settings, const QString& group=QString("mathtext/"));
         /** \brief store the object settings to the given QSettings object with the given name prefix */
         void saveSettings(QSettings& settings, const QString& group=QString("mathtext/")) const;
+        /** \brief options for parse() */
+        enum ParseOption {
+            AddSpaceBeforeAndAfter = 0x01, /*!< \brief If set, a little bit of space is added before and after the text. */
+            StartWithMathMode = 0x02, /*!< \brief if set, the parser assumes the LaTeX string is in math-mode (as if surrounded by \c $ ) */
+            AllowLinebreaks = 0x04, /*!< \brief If set, linebreak (i.e. \c \\ or \c \\newline )  are allowed, otherwise a single line wihtout such linebreak commands is expected */
+            DefaultParseOptions=AllowLinebreaks,
+        };
+        Q_DECLARE_FLAGS(ParseOptions, ParseOption)
+        Q_FLAG(ParseOptions)
         /** \brief parse the given LaTeX string.
          *
-         *  \param addSpaceBeforeAndAfter If \ctrue a little bit of space is added before and after the text.
-         *  \param allowLinebreaks If \c true , linebreak (i.e. \c \\ or \c \\newline )  are allowed, otherwise a single line wihtout such linebreak commands is expected
+         *  \param options Options for parsing, \see ParseOptions
+         *  \param allowLinebreaks
          *
          *  \returns \c true on success.
          */
-        bool parse(const QString &text, bool addSpaceBeforeAndAfter=false, bool allowLinebreaks=true);
-        /** \brief get the size of the drawn representation. returns an invalid size if no text has been parsed. */
+        bool parse(const QString &text, ParseOptions options=DefaultParseOptions);
+
+        /** \brief get the size of the drawn representation. returns \c QSizeF(0,0) if no text has been parsed. */
         QSizeF getSize(QPainter& painter);
+        /** \brief get the rounded (using ceil) to an integer size of the drawn representation. returns \c QSize(0,0) if no text has been parsed. */
+        QSize getIntSize(QPainter& painter);
         /** \brief return the descent, i.e. the distance from the baseline to the lowest part of the representation */
         double getDescent(QPainter& painter);
         /** \brief return the ascentt, i.e. the distance from the baseline to the highest part of the representation */
@@ -643,11 +656,6 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         void setMatrixYPaddingFactor(double factor);
 
 
-
-        /** \copydoc useUnparsed */ 
-        void setUseUnparsed(bool __value);
-        /** \copydoc useUnparsed */ 
-        bool isUsingUnparsed() const;
         /** \copydoc error_list */
         QStringList getErrorList() const;
         /** \brief returns \c true when errors were registered in the system \see error_list */
@@ -883,10 +891,6 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
 
         /** \brief the result of parsing the last string supplied to the object via parse() */
         JKQTMathTextNode* parsedNode;
-        /** \brief a tree containing the unparsed text as a single node */
-        JKQTMathTextNode* unparsedNode;
-        /** \brief if true, the unparsedNode is drawn \see unparsedNode */
-        bool useUnparsed;
 
         /** \brief returns the syntax tree of JKQTMathTextNode's that was created by the last parse call */
         JKQTMathTextNode* getNodeTree() const;

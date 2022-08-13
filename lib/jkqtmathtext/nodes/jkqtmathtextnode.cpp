@@ -380,3 +380,37 @@ JKQTMathTextNodeSize JKQTMathTextNode::getSize(QPainter &painter, JKQTMathTextEn
     getSize(painter, currentEv, s.width, s.baselineHeight, s.overallHeight, s.strikeoutPos, prevNodeSize);
     return s;
 }
+
+JKQTMathTextNoopNode::JKQTMathTextNoopNode(JKQTMathText *parent):
+    JKQTMathTextNode(parent)
+{
+
+}
+
+JKQTMathTextNoopNode::~JKQTMathTextNoopNode()
+{
+
+}
+
+QString JKQTMathTextNoopNode::getTypeName() const
+{
+    return "MTNoopNode";
+}
+
+bool JKQTMathTextNoopNode::toHtml(QString &html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv)
+{
+    return true;
+}
+
+double JKQTMathTextNoopNode::draw(QPainter &painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize *prevNodeSize)
+{
+    return x;
+}
+
+void JKQTMathTextNoopNode::getSizeInternal(QPainter &painter, JKQTMathTextEnvironment currentEv, double &width, double &baselineHeight, double &overallHeight, double &strikeoutPos, const JKQTMathTextNodeSize *prevNodeSize)
+{
+    width=0;
+    baselineHeight=0;
+    overallHeight=0;
+    strikeoutPos=0;
+}

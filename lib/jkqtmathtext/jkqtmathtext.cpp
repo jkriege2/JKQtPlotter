@@ -185,10 +185,8 @@ JKQTMathText::JKQTMathText(QObject* parent):
     //qDebug()<<"set fonts: "<<std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now()-t0).count()/1000.0<<"ms"; t0=std::chrono::high_resolution_clock::now();
     useXITS();
     //qDebug()<<"useXITS: "<<std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now()-t0).count()/1000.0<<"ms"; t0=std::chrono::high_resolution_clock::now();
-    useUnparsed=false;
 
     parsedNode=nullptr;
-    unparsedNode=nullptr;
 
     currentToken=MTTnone;
     currentTokenName="";
@@ -200,8 +198,6 @@ JKQTMathText::JKQTMathText(QObject* parent):
 JKQTMathText::~JKQTMathText() {
     if (parsedNode!=nullptr) delete parsedNode;
     parsedNode=nullptr;
-    if (unparsedNode!=nullptr) delete unparsedNode;
-    unparsedNode=nullptr;
 }
 
 void JKQTMathText::loadSettings(const QSettings& settings, const QString& group){
@@ -1056,16 +1052,6 @@ double JKQTMathText::getMatrixYPaddingFactor()
 void JKQTMathText::setMatrixYPaddingFactor(double factor)
 {
     matrix_yPadding_factor=factor;
-}
-
-void JKQTMathText::setUseUnparsed(bool __value)
-{
-    this->useUnparsed = __value;
-}
-
-bool JKQTMathText::isUsingUnparsed() const
-{
-    return this->useUnparsed;
 }
 
 QStringList JKQTMathText::getErrorList() const {
@@ -2288,15 +2274,15 @@ JKQTMathTextNode *JKQTMathText::getParsedNode() const {
 
 
 
-bool JKQTMathText::parse(const QString& text, bool addSpaceBeforeAndAfter, bool allowLinebreaks){
-    QString ntext;
-    if (addSpaceBeforeAndAfter) ntext=QString("\\;")+text+QString("\\;");
-    else ntext=text;
+bool JKQTMathText::parse(const QString& text, ParseOptions options){
+    QString ntext=text;
+    if (options.testFlag(StartWithMathMode)) ntext=QString("$")+ntext+QString("$");
+    if (options.testFlag(AddSpaceBeforeAndAfter)) ntext=QString("\\;")+ntext+QString("\\;");
     if (parsedNode && parseString==ntext) return true;
 
 
     if (parsedNode!=nullptr) delete parsedNode;
-    if (unparsedNode!=nullptr) delete unparsedNode;
+    //std::cout<<"JKQTMathText::parse('"<<ntext.toStdString()<<"', options="<<std::hex<<static_cast<int>(options)<<")\n";
     parseString=ntext;
 
     currentTokenID=-1;
@@ -2306,35 +2292,41 @@ bool JKQTMathText::parse(const QString& text, bool addSpaceBeforeAndAfter, bool 
     lastLineCount.clear();
 
     error_list.clear();
-    if (allowLinebreaks) {
+    if (options.testFlag(AllowLinebreaks)) {
         parsedNode=parseMultilineLatexString(true, QString(""), MTHALeft, 1.0, MTSMDefaultSpacing, MTVOFirstLine);
     } else {
         parsedNode=parseLatexString(true);
     }
-    unparsedNode=new JKQTMathTextVerbatimNode(this, text);
+    parsedNode=simplifyJKQTMathTextNode(parsedNode);
     return (parsedNode!=nullptr);
 }
 
 
 QSizeF JKQTMathText::getSize(QPainter& painter){
     if (getNodeTree()!=nullptr) {
-        double w=0, a=0, d=0, s=0;
-        getSizeDetail(painter, w, a, d, s);
-        return QSizeF(w, a+d);
+        const JKQTMathTextNodeSize s=getSizeDetail(painter);
+        return s.getSize();
     }
     return QSizeF(0,0);
 }
 
+QSize JKQTMathText::getIntSize(QPainter &painter)
+{
+    if (getNodeTree()!=nullptr) {
+        const JKQTMathTextNodeSize s=getSizeDetail(painter);
+        return s.getIntSize();
+    }
+    return QSize(0,0);
+}
+
 double JKQTMathText::getDescent(QPainter& painter) {
-    double w=0, a=0, d=0, s=0;
-    getSizeDetail(painter, w, a, d, s);
-    return d;
+    const JKQTMathTextNodeSize s=getSizeDetail(painter);
+    return s.getDescent();
 }
 
 double JKQTMathText::getAscent(QPainter& painter) {
-    double w=0, a=0, d=0, s=0;
-    getSizeDetail(painter, w, a, d, s);
-    return a;
+    const JKQTMathTextNodeSize s=getSizeDetail(painter);
+    return s.baselineHeight;
 }
 
 void JKQTMathText::getSizeDetail(QPainter& painter, double& width, double& ascent, double& descent, double& strikeoutPos) {
@@ -2516,7 +2508,6 @@ QPicture JKQTMathText::drawIntoPicture(bool drawBoxes)
 
 
 JKQTMathTextNode *JKQTMathText::getNodeTree() const {
-    if (useUnparsed) return unparsedNode;
     return parsedNode;
 }
 

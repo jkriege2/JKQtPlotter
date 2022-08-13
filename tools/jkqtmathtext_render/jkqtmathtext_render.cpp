@@ -24,6 +24,7 @@
 #include "jkqtmathtext/jkqtmathtextlabel.h"
 #include "jkqtcommon/jkqtpstringtools.h"
 #include "jkqtmathtext/nodes/jkqtmathtextsymbolnode.h"
+#include "jkqtmathtext/nodes/jkqtmathtextnodetools.h"
 #include <iostream>
 
 void processFont(const QString font, QStringList& fonts, QString& mathFont)
@@ -510,13 +511,17 @@ int main(int argc, char* argv[])
                     <<latex[i].toStdString()<<"\n"
                     <<"-----------------------------------------------------------\n"
                     <<mathText.getErrorList().join("\n").toStdString()<<"\n"
-                    <<"-----------------------------------------------------------\n"
+                   <<"-----------------------------------------------------------\n"
+                   <<"RENDERTREE:\n"<<JKQTMathTextNodeTree2String(mathText.getParsedNode()).toStdString()
+                   <<"-----------------------------------------------------------\n"
                     ;
         } else if (verbose) {
             std::cout<<"parsing LaTeX: OK\n"
                     <<"parsing duration: "<<durParseMS<<"ms\n"
                     <<"-----------------------------------------------------------\n"
                     <<latex[i].toStdString()<<"\n"
+                    <<"-----------------------------------------------------------\n"
+                    <<"RENDERTREE:\n"<<JKQTMathTextNodeTree2String(mathText.getParsedNode()).toStdString()
                     <<"-----------------------------------------------------------\n";
         }
 
