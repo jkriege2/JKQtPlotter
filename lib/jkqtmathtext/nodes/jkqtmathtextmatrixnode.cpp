@@ -318,8 +318,9 @@ JKQTMathTextMatrixNode::LayoutInfo JKQTMathTextMatrixNode::calcLayout(QPainter &
     const QFontMetricsF fm(currentEv.getFont(parentMathText), painter.device());
     JKQTMathTextEnvironment ev1=currentEv;
 
-    const double xheight=fm.strikeOutPos();
+    const double strikepos=fm.strikeOutPos();
     const double xwidth=fm.boundingRect("x").width();
+    const double lw=fm.lineWidth()*1.5;
     const double XPadding=parentMathText->getMatrixXPaddingFactor()*xwidth;
     const double YPadding=parentMathText->getMatrixYPaddingFactor()*xwidth;
     const double XSeparation=parentMathText->getMatrixXSeparationFactor()*xwidth;
@@ -329,10 +330,10 @@ JKQTMathTextMatrixNode::LayoutInfo JKQTMathTextMatrixNode::calcLayout(QPainter &
     l.rowheight.resize(lines);
     l.rowascent.resize(lines);
     l.cellwidth.resize(lines);
-    l.leftPadding=(verticalLineLeft==LTnone)?0:XPadding;
-    l.rightPadding=(verticalLineRHSColumn.value(columns-1,LTnone)==LTnone)?0:XPadding;
-    l.topPadding=(horizontalLineTop==LTnone)?0:YPadding;
-    l.bottomPadding=(horizontalLineBottomRow.value(lines-1,LTnone)==LTnone)?0:YPadding;
+    l.leftPadding=(verticalLineLeft==LTnone)?lw:XPadding;
+    l.rightPadding=(verticalLineRHSColumn.value(columns-1,LTnone)==LTnone)?lw:XPadding;
+    l.topPadding=(horizontalLineTop==LTnone)?lw:YPadding;
+    l.bottomPadding=(horizontalLineBottomRow.value(lines-1,LTnone)==LTnone)?lw:YPadding;
     for (int ll=0; ll<lines; ll++) l.cellwidth[ll]=QVector<double>(columns, 0.0);
     QVector<double> rowdescent;
     rowdescent.resize(lines);
@@ -355,8 +356,8 @@ JKQTMathTextMatrixNode::LayoutInfo JKQTMathTextMatrixNode::calcLayout(QPainter &
     l.width=(columns-1)*XSeparation+l.leftPadding+l.rightPadding;
     for (int i=0; i<columns; i++) l.width=l.width+l.colwidth[i];
     for (int i=0; i<lines; i++) l.overallHeight=l.overallHeight+l.rowheight[i];
-    l.baselineHeight=l.overallHeight/2.0+xheight;
-    l.strikeoutPos=xheight;
+    l.baselineHeight=l.overallHeight/2.0+strikepos;
+    l.strikeoutPos=strikepos;
 
     return l;
 }
@@ -377,10 +378,7 @@ double JKQTMathTextMatrixNode::draw(QPainter& painter, double x, double y, JKQTM
 
     const  LayoutInfo l=calcLayout(painter, currentEv);
 
-    const double xheight=fm.strikeOutPos();
     const double xwidth=fm.boundingRect("x").width();
-    //const double XPadding=parentMathText->getMatrixXPaddingFactor()*xwidth;
-    //const double YPadding=parentMathText->getMatrixYPaddingFactor()*xwidth;
     const double XSeparation=parentMathText->getMatrixXSeparationFactor()*xwidth;
     const double YSeparation=parentMathText->getMatrixYSeparationFactor()*xwidth;
     const double yTop=y-l.baselineHeight+l.topPadding;

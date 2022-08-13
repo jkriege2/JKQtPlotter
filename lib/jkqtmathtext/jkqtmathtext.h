@@ -560,10 +560,6 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         void setSpecialSubShiftFactor(double __value);
         /** \copydoc special_sub_shift_factor */
         double getSpecialSubShiftFactor() const;
-        /** \copydoc brace_shrink_factor */
-        void setBraceShrinkFactor(double __value);
-        /** \copydoc brace_shrink_factor */ 
-        double getBraceShrinkFactor() const;
         /** \copydoc underbrace_factor */ 
         void setUnderbraceFactor(double __value);
         /** \copydoc underbrace_factor */ 
@@ -704,10 +700,8 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         JKQTMathTextBlackboradDrawingMode blackboradFontMode;
 
 
-        /** \brief resizing factor for braces in math mode */
+        /** \brief for \c \\left / \c \\right braces: The brace is this factor higher than the child block it surrounds */
         double brace_factor;
-        /** \brief shrinking the width of braces in math mode 0: reduce to 0 pixel width, 1: leave unchanged*/
-        double brace_shrink_factor;
         /** \brief resizing factor for font size in sub-/superscript */
         double subsuper_size_factor;
         /** \brief this factor is used to determine how to typeset sub-/superscript.

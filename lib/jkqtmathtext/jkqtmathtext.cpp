@@ -65,7 +65,6 @@ JKQTMathText::JKQTMathText(QObject* parent):
     fontColor=QColor("black");
     italic_correction_factor=0.4;
     brace_factor=1.04;
-    brace_shrink_factor=0.45;
     brace_y_shift_factor=0.7;//-1;
 
     subsuper_size_factor=0.65;
@@ -205,7 +204,6 @@ void JKQTMathText::loadSettings(const QSettings& settings, const QString& group)
     fontSizeUnits=JKQTMathTextEnvironment::String2FontSizeUnit(settings.value(group+"font_size_units", JKQTMathTextEnvironment::FontSizeUnit2String(fontSizeUnits)).toString());
     fontColor=jkqtp_String2QColor(settings.value(group+"font_color", jkqtp_QColor2String(fontColor)).toString());
     brace_factor=settings.value(group+"brace_factor", brace_factor).toDouble();
-    brace_shrink_factor=settings.value(group+"brace_shrink_factor", brace_shrink_factor).toDouble();
     subsuper_size_factor=settings.value(group+"subsuper_size_factor", subsuper_size_factor).toDouble();
     subsuper_mode_selection_by_size_factor=settings.value(group+"subsuper_mode_selection_by_size_factor", subsuper_mode_selection_by_size_factor).toDouble();
     italic_correction_factor=settings.value(group+"italic_correction_factor", italic_correction_factor).toDouble();
@@ -254,7 +252,6 @@ void JKQTMathText::saveSettings(QSettings& settings, const QString& group) const
     settings.setValue(group+"font_size_units", JKQTMathTextEnvironment::FontSizeUnit2String(fontSizeUnits));
     settings.setValue(group+"font_color", jkqtp_QColor2String(fontColor));
     settings.setValue(group+ "brace_factor", brace_factor);
-    settings.setValue(group+ "brace_shrink_factor", brace_shrink_factor);
     settings.setValue(group+ "subsuper_size_factor", subsuper_size_factor);
     settings.setValue(group+ "subsuper_mode_selection_by_size_factor", subsuper_mode_selection_by_size_factor);
     settings.setValue(group+ "italic_correction_factor", italic_correction_factor);
@@ -832,16 +829,6 @@ void JKQTMathText::setSpecialSubShiftFactor(double __value)
 double JKQTMathText::getSpecialSubShiftFactor() const
 {
     return special_sub_shift_factor;
-}
-
-void JKQTMathText::setBraceShrinkFactor(double __value)
-{
-    this->brace_shrink_factor = __value;
-}
-
-double JKQTMathText::getBraceShrinkFactor() const
-{
-    return this->brace_shrink_factor;
 }
 
 void JKQTMathText::setUnderbraceFactor(double __value)

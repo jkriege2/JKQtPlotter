@@ -46,6 +46,7 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbTestset->addItem("math: umlaute", "$"+umla_math+"$");
     ui->cmbTestset->addItem("math: umlaute and \\text{...}", "\\${\\backslash}text\\{...\\}\\$: $\\text{"+umla+"}\\ \\ \\ \\$...\\$: "+umla+"$");
     ui->cmbTestset->addItem("math: umlaute and fonts", "base: $"+testTextUmla_math+"$, rm: $\\mathrm{"+testTextUmla_math+"}$, sf: $\\mathsf{"+testTextUmla_math+"}$, tt: $\\mathtt{"+testTextUmla_math+"}$, cal: $\\mathcal{"+testTextUmla_math+"}$, scr: $\\mathscr{"+testTextUmla_math+"}$, bb: $\\mathbb{"+testTextUmla_math+"}$, frak: $\\mathfrak{"+testTextUmla_math+"}$, ");
+    ui->cmbTestset->addItem("math: sin", "$f(\\omega)=\\sin\\left(\\pi\\cdot\\omega\\right)\\neq\\cos\\bigl(\\pi\\cdot\\omega\\bigr)+2$");
     ui->cmbTestset->addItem("math: simple relations", "$a{\\leq}b$, $a{\\geq}b$, $a{\\equiv}b$, $a=b$, $a{\\neq}b$, $a<b$, $a>b$");
     const auto wsExample=[](const QStringList& spaces, const QString before, const QString& after)->QString {
         QString s;
