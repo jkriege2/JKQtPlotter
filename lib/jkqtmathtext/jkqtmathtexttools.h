@@ -469,7 +469,7 @@ JKQTMATHTEXT_LIB_EXPORT JKQTMathTextHorizontalAlignment String2JKQTMathTextHoriz
  *
  *  \image html jkqtmathtext_verticalorientation.png
  *
- *  \see JKQTMathTextVerticalOrientation2String(), String2JKQTMathTextVerticalOrientation(), JKQTMathTextVerticalListNode
+ *  \see JKQTMathTextVerticalOrientation2String(), String2JKQTMathTextVerticalOrientation(), JKQTMathTextVerticalListNode, JKQTMathTextVerbatimNode
  */
 enum JKQTMathTextVerticalOrientation {
     MTVOTop,  /*!< \brief baseline of the whole block is at the top of the first */
@@ -481,13 +481,42 @@ enum JKQTMathTextVerticalOrientation {
 
 /** \brief convert a JKQTMathTextVerticalOrientation into a QString
  *  \ingroup jkqtmathtext_tools
+ *
+ *  \see JKQTMathTextVerticalOrientation2String(), String2JKQTMathTextVerticalOrientation(), JKQTMathTextVerticalListNode, JKQTMathTextVerbatimNode
  */
 JKQTMATHTEXT_LIB_EXPORT QString JKQTMathTextVerticalOrientation2String(JKQTMathTextVerticalOrientation mode);
 
 /** \brief returns the JKQTMathTextVerticalOrientation corresponding to \a instructionName
  *  \ingroup jkqtmathtext_tools
+ *
+ *  \see JKQTMathTextVerticalOrientation2String(), String2JKQTMathTextVerticalOrientation(), JKQTMathTextVerticalListNode, JKQTMathTextVerbatimNode
  */
 JKQTMATHTEXT_LIB_EXPORT JKQTMathTextVerticalOrientation String2JKQTMathTextVerticalOrientation(QString mode);
+
+
+/** \brief defines, how lines are beeing spaced by the node
+ *  \ingroup jkqtmathtext_tool
+ *
+ *  \image html jkqtmathtext_verticallist.png
+ *
+ *  \see JKQTMathTextLineSpacingMode2String(), String2JKQTMathTextLineSpacingMode(), JKQTMathTextVerticalListNode
+ */
+enum JKQTMathTextLineSpacingMode {
+    MTSMDefaultSpacing, /*!< space the lines with equilibrated spacing, i.e. the baselines are at least \c QFontMetricsF::lineSpacing()*JKQTMathTextVerticalListNode::lineSpacingFactor apart, but even more, if the height of the text bloxk is larger than the the font's ascent+descent */
+    MTSMMinimalSpacing /*!< space the lines as tight as possible, i.e. each line is separated by \c QFontMetricsF::leading()*JKQTMathTextVerticalListNode::lineSpacingFactor from the next line. This is a s compact as possible */
+};
+/** \brief convert a SpacingMode to a String
+ *  \ingroup jkqtmathtext_tools
+ *
+ *  \see JKQTMathTextLineSpacingMode2String(), String2JKQTMathTextLineSpacingMode(), JKQTMathTextVerticalListNode
+ */
+JKQTMATHTEXT_LIB_EXPORT QString JKQTMathTextLineSpacingMode2String(JKQTMathTextLineSpacingMode mode);
+/** \brief convert a String to a SpacingMode
+ *  \ingroup jkqtmathtext_tools
+ *
+ *  \see JKQTMathTextLineSpacingMode2String(), String2JKQTMathTextLineSpacingMode(), JKQTMathTextVerticalListNode
+ */
+JKQTMATHTEXT_LIB_EXPORT JKQTMathTextLineSpacingMode String2JKQTMathTextLineSpacingMode(QString mode);
 
 #endif // JKQTMATHTEXTTOOLS_H
 

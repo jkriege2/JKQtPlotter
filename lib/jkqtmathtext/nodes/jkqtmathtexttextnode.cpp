@@ -388,12 +388,13 @@ QString JKQTMathTextTextNode::textTransform(const QString &text, const JKQTMathT
 
 
 
-JKQTMathTextVerbatimNode::JKQTMathTextVerbatimNode(JKQTMathText *_parent, const QString& _text, bool visibleWhitespace_, JKQTMathTextHorizontalAlignment _alignment, double _linespacingFactor, JKQTMathTextVerticalOrientation _verticalOrientation):
+JKQTMathTextVerbatimNode::JKQTMathTextVerbatimNode(JKQTMathText *_parent, const QString& _text, bool visibleWhitespace_, JKQTMathTextHorizontalAlignment _alignment, double _linespacingFactor, JKQTMathTextVerticalOrientation _verticalOrientation, size_t tabSize_):
     JKQTMathTextTextBaseNode(_parent, _text),
     alignment(_alignment),
     lineSpacingFactor(_linespacingFactor),
     verticalOrientation(_verticalOrientation),
-    visibleWhitespace(visibleWhitespace_)
+    visibleWhitespace(visibleWhitespace_),
+    tabSize(tabSize_)
 {
 
 }
@@ -421,6 +422,11 @@ double JKQTMathTextVerbatimNode::getLineSpacingFactor() const
 bool JKQTMathTextVerbatimNode::getVisibleWhitespace() const
 {
     return visibleWhitespace;
+}
+
+size_t JKQTMathTextVerbatimNode::getTabSize() const
+{
+    return tabSize;
 }
 
 double JKQTMathTextVerbatimNode::draw(QPainter &painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize *prevNodeSize)
@@ -560,9 +566,9 @@ QString JKQTMathTextVerbatimNode::textTransform(const QString &text, const JKQTM
     if (!fm.inFont(spRep[0])) {
         spRep=QChar(0x2423);
     }
-    QString tabRep=QString(4,QChar(0x2192));
+    QString tabRep=QString(tabSize,QChar(0x2192));
     if (!fm.inFont(tabRep[0])) {
-        spRep=QString(4,QChar(0xAC));
+        spRep=QString(tabSize,QChar(0xAC));
     }
 
     QString res=JKQTMathTextTextBaseNode::textTransform(text, currentEv);
@@ -571,6 +577,9 @@ QString JKQTMathTextVerbatimNode::textTransform(const QString &text, const JKQTM
     if (visibleWhitespace) {
         res.replace(' ', spRep);
         res.replace('\t', tabRep);
+        return res;
+    } else {
+        res.replace('\t', QString(tabSize, ' '));
         return res;
     }
     return res;

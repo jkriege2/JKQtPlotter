@@ -580,24 +580,7 @@ JKQTMathTextNode *JKQTMathTextHorizontalListNode::replaceChild(int i, JKQTMathTe
 }
 
 
-QString JKQTMathTextVerticalListNode::SpacingMode2String(SpacingMode mode)
-{
-    switch(mode) {
-        case SMMinimal: return "minimal";
-        default:
-        case SMDefault: return "default";
-    }
-}
-
-JKQTMathTextVerticalListNode::SpacingMode JKQTMathTextVerticalListNode::String2SpacingMode(QString tokenName)
-{
-    tokenName=tokenName.toLower().trimmed();
-    if (tokenName=="default") return SMDefault;
-    if (tokenName=="minimal" || tokenName=="min" || tokenName=="minimum") return SMMinimal;
-    return SMDefault;
-}
-
-JKQTMathTextVerticalListNode::JKQTMathTextVerticalListNode(JKQTMathText *_parent, JKQTMathTextHorizontalAlignment _alignment, double _linespacingFactor, SpacingMode spacingMode_, JKQTMathTextVerticalOrientation _verticalOrientation):
+JKQTMathTextVerticalListNode::JKQTMathTextVerticalListNode(JKQTMathText *_parent, JKQTMathTextHorizontalAlignment _alignment, double _linespacingFactor, JKQTMathTextLineSpacingMode spacingMode_, JKQTMathTextVerticalOrientation _verticalOrientation):
     JKQTMathTextMultiChildNode(_parent),
     alignment(_alignment),
     lineSpacingFactor(_linespacingFactor),
@@ -652,9 +635,9 @@ JKQTMathTextVerticalListNode::LayoutInfo JKQTMathTextVerticalListNode::calcLayou
             heightSum=locBaselineHeight;
         } else if (i>0) {
             double deltaLine=0;
-            if (spacingMode==SMMinimal) {
+            if (spacingMode==MTSMMinimalSpacing) {
                 deltaLine=descents.last()+lineLeading+locBaselineHeight;
-            } else if (spacingMode==SMDefault) {
+            } else if (spacingMode==MTSMDefaultSpacing) {
                 deltaLine=qMax(linespacing, descents.last()+lineLeading+locBaselineHeight);
             }
             heightSum=heightSum+deltaLine;
@@ -801,9 +784,29 @@ double JKQTMathTextVerticalListNode::getLineSpacingFactor() const
     return lineSpacingFactor;
 }
 
-JKQTMathTextVerticalListNode::SpacingMode JKQTMathTextVerticalListNode::getSpacingMode() const
+JKQTMathTextLineSpacingMode JKQTMathTextVerticalListNode::getSpacingMode() const
 {
     return spacingMode;
+}
+
+void JKQTMathTextVerticalListNode::setAlignment(JKQTMathTextHorizontalAlignment value)
+{
+    alignment=value;
+}
+
+void JKQTMathTextVerticalListNode::setVerticalOrientation(JKQTMathTextVerticalOrientation value)
+{
+    verticalOrientation=value;
+}
+
+void JKQTMathTextVerticalListNode::setLineSpacingFactor(double value)
+{
+    lineSpacingFactor=value;
+}
+
+void JKQTMathTextVerticalListNode::setSpacingMode(JKQTMathTextLineSpacingMode value)
+{
+    spacingMode=value;
 }
 
 JKQTMathTextVerticalListNode::LayoutInfo::LayoutInfo():

@@ -43,6 +43,7 @@
 
 
 class JKQTMathTextNode; // forward
+class JKQTMathTextVerticalListNode; // forward
 
 /*! \brief this class parses a LaTeX string and can then draw the contained text/equation onto a <a href="http://doc.qt.io/qt-5/qpainter.html">QPainter</a>
     \ingroup jkqtmathtext_render
@@ -213,8 +214,14 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         void loadSettings(const QSettings& settings, const QString& group=QString("mathtext/"));
         /** \brief store the object settings to the given QSettings object with the given name prefix */
         void saveSettings(QSettings& settings, const QString& group=QString("mathtext/")) const;
-        /** \brief parse the given enhanced string. If \c addSpaceBeforeAndAfter==true a little bit of space is added before and after the text. Returns \c true on success. */
-        bool parse(const QString &text, bool addSpaceBeforeAndAfter=false);
+        /** \brief parse the given LaTeX string.
+         *
+         *  \param addSpaceBeforeAndAfter If \ctrue a little bit of space is added before and after the text.
+         *  \param allowLinebreaks If \c true , linebreak (i.e. \c \\ or \c \\newline )  are allowed, otherwise a single line wihtout such linebreak commands is expected
+         *
+         *  \returns \c true on success.
+         */
+        bool parse(const QString &text, bool addSpaceBeforeAndAfter=false, bool allowLinebreaks=true);
         /** \brief get the size of the drawn representation. returns an invalid size if no text has been parsed. */
         QSizeF getSize(QPainter& painter);
         /** \brief return the descent, i.e. the distance from the baseline to the lowest part of the representation */
@@ -923,6 +930,18 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
          *  \param quitOnClosingBracket if \c true, quits on encountering a MTTclosebracket token
          */
         JKQTMathTextNode* parseLatexString(bool get, JKQTMathTextBraceType quitOnClosingBrace=JKQTMathTextBraceType::MTBTAny, const QString& quitOnEnvironmentEnd=QString(""), bool quitOnClosingBracket=false);
+        /** \brief parse a LaTeX string with linebreaks
+         *
+         *  \param get if \c true this calls getToken()
+         *  \param quitOnEnvironmentEnd wuit if \c \\end{quitOnEnvironmentEnd} is found
+         *  \param _alignment horizontal alignment of the JKQTMathTextVerticalListNode \see JKQTMathTextVerticalListNode::alignment and JKQTMathTextHorizontalAlignment
+         *  \param _linespacingFactor line spacing factor of the lines \see JKQTMathTextVerticalListNode::linespacingFactor
+         *  \param spacingMode_ spacing mode/algorithm for the lines \see JKQTMathTextLineSpacingMode and JKQTMathTextLineSpacingMode
+         *  \param _verticalOrientation vertical orientation of the block of all lines, see JKQTMathTextVerticalListNode::verticalOrientation and JKQTMathTextVerticalOrientation
+         *
+         *  \returns JKQTMathTextVerticalListNode with the lines as children
+         */
+        JKQTMathTextVerticalListNode *parseMultilineLatexString(bool get, const QString& quitOnEnvironmentEnd=QString(""), JKQTMathTextHorizontalAlignment _alignment=MTHALeft, double _linespacingFactor=1.0, JKQTMathTextLineSpacingMode spacingMode_=MTSMDefaultSpacing, JKQTMathTextVerticalOrientation _verticalOrientation=MTVOFirstLine);
         /** \brief parses a list of string-arguments, i.e. \c {p1}{p2}{...}
          *
          *  \param get call getToken() at the start, otherwise it is expected that currentToken==MTTopenbrace
@@ -937,9 +956,10 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
          *
          *  \param get if \c true the functions begins by reading a new character, otherwise the current character is used as first character
          *  \param endsequence the sequence, ending the read
+         *  \param removeFirstlineWhitespace if \c true the returned string does not contain the first whitespace-line and a possible trailing whitespace line
          *  \return the read string, excluding the  \a endsequence
          */
-        QString readUntil(bool get, const QString& endsequence);
+        QString readUntil(bool get, const QString& endsequence, bool removeFirstlineWhitespace=false);
         /** \brief parses a single instruction (including it's parameters)
          *
          *  \param[out] _foundError will be set to \c true if an error occured (unexpected token) or \c false otherwise

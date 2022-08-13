@@ -55,14 +55,20 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>IMPROVED/REWORKED rendering of text in text- and math-mode. Now it is more consistent with the output of LaTeX itself</li>
     <li>IMPROVED/REWORKED rendering of blackboard font: now several different rendering modes can be selected using JKQTMathText::setFontBlackboradMode()</li>
     <li>BREAKING/REWORKED: The \\verb!...!-command now works the same as in LaTeX</li>
-    <li>NEW: now supports new decoration instructions: \c \\cancel, \c \\xcancel, \c \\bcancel, \c \\sout, \c \\ocirc, \c \\widetilde, \c \\widehat, \c \\breve</li>
+    <li>NEW: JKQTMathTextVerticalListNode allows to typeset a vertical list of lines</li>
+    <li>NEW: JKQTMathText::parse() by default allows linebreaks in the LaTeX string to be parsed. This can be switched off by a parameter</li>
+    <li>NEW: added functions to set the font-size in pixels (as alternative to the existing functions that set them in points), implements request <a href="https://github.com/jkriege2/JKQtPlotter/issues/76">#76</a> from <a href="https://github.com/igormironchik">user:igormironchik</a> </li>
     <li>NEW: reworked drawing of decorations: improved appearance and positioning!</li>
+    <li>NEW: additional method JKQTMathtext::getSizeDetail() that returns all size-properties as a convenient struct, also added matching varinat JKQTMathTextNode::getSize() </li>
+    <li>NEW: additional method JKQTMathtext::drawIntoPixmap(), JKQTMathtext::drawIntoPicture(), JKQTMathtext::drawIntoImage() which returns a QPixmap, QPicture and QImage respectively that contains the render result of the currently parsed markup</li>
+    <li>NEW: array/tabular-environments have limited support for formatting string like \c l|r|c and for \c \\hline , \c \\hdashline , \c \\toprule , \c \\midrule , \c \\bottomrule</li>
     <li>NEW: reworked code structure: broke up large, single CPP-files into several smaller files!</li>
     <li>NEW: reworked node class tree: inserted base-class nodes for single-child, dual-child!</li>
     <li>NEW: improved frac-rendering: font-scaling takes nesting-level into account, overall-rendering, sizes, if a brace surrounds a frac, the heights are equal above and below to center the brace , ...</li>
     <li>NEW: shows strikeoutPos when drawing Debug-Boxes</li>
     <li>NEW: LaTeX-Parser understands optional instruction parameters in [...] now</li>
     <li>NEW: LaTeX-Parser simplifies parse-tree to increase speed of execution</li>
+    <li>NEW: added new decoration instructions: \c \\cancel, \c \\xcancel, \c \\bcancel, \c \\sout, \c \\ocirc, \c \\widetilde, \c \\widehat, \c \\breve</li>
     <li>NEW: \c \\limits and \c \\nolimits works as in LaTeX now (before it was simply removed and the functionality implemented for a fixed list of symbols)</li>
     <li>NEW: added top-corner (\c \\ulcorner/\c \\urcorner ) and bottom-corner brackets (\c \\llcorner/\c \\lrcorner )</li>
     <li>NEW: added \c \\overbracket and \c \\underbracket</li>
@@ -74,10 +80,8 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: added \c \\acute{X}, \c \\grave{X}, \c \\acute{X}</li>
     <li>NEW: added \c \\dashuline{X}, \c \\dotuline{X}</li>
     <li>NEW: added \c \\underleftarrow{X}, \c \\underrightarrow{X}, \c \\underleftrightarrow{X}, \c \\overleftarrow{X}, \c \\overrightarrow{X}, \c \\overleftrightarrow{X}</li>
-    <li>NEW: added functions to set the font-size in pixels (as alternative to the existing functions that set them in points), implements request <a href="https://github.com/jkriege2/JKQtPlotter/issues/76">#76</a> from <a href="https://github.com/igormironchik">user:igormironchik</a> </li>
     <li>NEW: added \c \\userfont{SystemFontName}{Text} instruction</li>
     <li>NEW: added \c \\unicode{HEX} and \c \\utfeight{HEX} instruction to draw unicide characters by code</li>
-    <li>NEW: JKQTMathTextVerticalListNode allows to typeset a vertical list of lines</li>
     <li>NEW: added \c \\substack[lcr]{...\\\\...} , \c \\lsubstack{...\\\\...} , \c \\rsubstack{...\\\\...} instructions</li>
     <li>NEW: added \c \\phantom{xXy} , \c \\vphantom{xXy} and \c \\hphantom{xXy} instructions for whitespaces with the size of \c xXy </li>
     <li>NEW: added support for flushleft/flushright/center-environments with linebreaks</li>
@@ -86,10 +90,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: added support for \c \\char\"HEX , \c \\char\'OCTAL and \c \\charDECIMAL for inserting any uicode character code</li>
     <li>NEW: added support for \\bigl,\\bigr,\\Bigr,... commands for fixed-size but enlarged paramtheses</li>
     <li>NEW: added support for \\begin{verbatim}...\\end{verbatim}, \\begin{verbatim*}...\\end{verbatim*}</li>
-    <li>NEW: additional method JKQTMathtext::getSizeDetail() that returns all size-properties as a convenient struct, also added matching varinat JKQTMathTextNode::getSize() </li>
-    <li>NEW: additional method JKQTMathtext::drawIntoPixmap(), JKQTMathtext::drawIntoPicture(), JKQTMathtext::drawIntoImage() which returns a QPixmap, QPicture and QImage respectively that contains the render result of the currently parsed markup</li>
     <li>NEW: added command line tool \ref JKQTMathTextRenderCmdLineTool that renders LaTeX into images, using it to generate the documentation images for JKQTMathText</li>
-    <li>NEW: array/tabular-environments have limited support for formatting string like \c l|r|c and for \c \\hline , \c \\hdashline , \c \\toprule , \c \\midrule , \c \\bottomrule</li>
   </ul></li>
 </ul>
 

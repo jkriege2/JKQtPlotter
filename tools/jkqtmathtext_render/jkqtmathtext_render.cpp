@@ -325,8 +325,10 @@ int main(int argc, char* argv[])
             bool isFile=true;
             bool beforeLatex=true;
             while (!f.atEnd()) {
-                const QString line=f.readLine().trimmed();
-                const QString line_simple=line.simplified();
+                QString line=f.readLine();
+                while (line.endsWith('\n') || line.endsWith('\r') || line.endsWith(QChar(0x0))) line=line.left(line.size()-1);
+                const QString line_trimmed=line.trimmed();
+                const QString line_simple=line_trimmed.simplified();
                 if (line_simple=="---" || line_simple=="###") {
                     if (currentOutFile.size()>0) {
                         outputFilename.append(currentOutFile);
@@ -339,11 +341,11 @@ int main(int argc, char* argv[])
                         currentOptions.clear();
                     }
                 } else if (isFile) {
-                    currentOutFile=line;
+                    currentOutFile=line_trimmed;
                     isFile=false;
                 } else if (beforeLatex) {
-                    if (line.startsWith("--")) {
-                        QStringList commands=line.right(line.size()-2).split("--");
+                    if (line_trimmed.startsWith("--")) {
+                        QStringList commands=line_trimmed.right(line_trimmed.size()-2).split("--");
                         for (QString cmd: commands) {
                             cmd=cmd.trimmed();
                             QString cmdn="", param="";
@@ -532,7 +534,7 @@ int main(int argc, char* argv[])
         const QString outname=outputDir.absoluteFilePath(outputFilename[i]);
         if (QFileInfo::exists(outname)) QFile::remove(outname);
         if (!pix.save(outname)) {
-            std::cerr<<"ERROR storing to "<<outname.toStdString()<<"\n";
+            std::cerr<<"ERROR storing to "<<outname.toStdString()<<", fileExists="<<std::boolalpha<<QFileInfo::exists(outname)<<" permissions=0x"<<std::hex<<QFileInfo(outname).permissions()<<"\n";
         } else {
             if (verbose) std::cout<<"stored to "<<outname.toStdString()<<"\n"
                                   <<"     size "<<static_cast<double>(QFileInfo(outname).size())/1024.0<<"kBytes\n";

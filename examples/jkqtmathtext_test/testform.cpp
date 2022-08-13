@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <sstream>
 #include "jkqtcommon/jkqtpstringtools.h"
+#include "jkqtmathtext/jkqtmathtext.h"
 #include "jkqtmathtext/nodes/jkqtmathtexttextnode.h"
 #include "jkqtmathtext/nodes/jkqtmathtextbracenode.h"
 #include "jkqtmathtext/nodes/jkqtmathtextdecoratednode.h"
@@ -26,7 +27,7 @@ TestForm::TestForm(QWidget *parent) :
     const QString testTextUmla="\\\"Aq{\\\"u}\\\"{a}t{\\oe}r00, 123-45+6.0\\%\\S";
     const QString umla_math="\\ddot{A}\\ddot{a}\\grave{A}\\grave{a}\\acute{A}\\acute{a}\\hat{A}\\hat{a}\\tilde{A}\\tilde{a}\\r{A}\\r{a}\\u{A}\\u{a}\\bar{A}\\bar{a}\\AA\\aa{\\AE}{\\ae}\\check{C}\\check{c}\\ddot{E}\\ddot{e}\\dot{e}\\L\\l\\ddot{O}\\ddot{o}\\grave{O}\\grave{o}\\acute{O}\\acute{o}\\hat{O}\\hat{o}\\tilde{O}\\tilde{o}\\O\\o{\\OE}{\\ae}\\check{S}\\check{s}\\ss\\ddot{U}\\ddot{u}\\grave{U}\\grave{u}\\acute{U}\\acute{u}\\hat{U}\\hat{u}\\tilde{U}\\tilde{u}";
     const QString testTextUmla_math="\\ddot{A}q{\\ddot{u}}\\ddot{{}a}t{\\oe}r00, 123-45+6.0\\%\\S";
-    ui->cmbTestset->addItem("text: fonts", "rm: \\textrm{"+testText+"}, sf: \\textsf{"+testText+"}, tt: \\texttt{"+testText+"}, cal: \\textcal{"+testText+"}, scr: \\textscr{"+testText+"}, bb: \\textbb{"+testText+"}, frak: \\textfrak{"+testText+"}, ");
+    ui->cmbTestset->addItem("text: fonts", "rm: \\textrm{"+testText+"},\\\\sf: \\textsf{"+testText+"},\\\\tt: \\texttt{"+testText+"},\\\\cal: \\textcal{"+testText+"},\\\\scr: \\textscr{"+testText+"},\\\\bb: \\textbb{"+testText+"},\\\\frak: \\textfrak{"+testText+"}");
     ui->cmbTestset->addItem("text/math: font comparison",
                             "\\begin{matrix}\n"
                             "  text: & abc123+d/e\\\\\n"
@@ -530,7 +531,7 @@ QTreeWidgetItem *TestForm::createTree(JKQTMathTextNode *node, QTreeWidgetItem* p
             ti->addChild(createTree(list[i], ti));
         }
     } else if (lstNV)  {
-        name=QString("VerticalListNode (align=%1, spacingFactor=%2x, spacingMode=%3, verticalOrientation=%4)").arg(JKQTMathTextHorizontalAlignment2String(lstNV->getAlignment())).arg(lstNV->getLineSpacingFactor()).arg(lstNV->SpacingMode2String(lstNV->getSpacingMode())).arg(JKQTMathTextVerticalOrientation2String(lstNV->getVerticalOrientation()));
+        name=QString("VerticalListNode (align=%1, spacingFactor=%2x, spacingMode=%3, verticalOrientation=%4)").arg(JKQTMathTextHorizontalAlignment2String(lstNV->getAlignment())).arg(lstNV->getLineSpacingFactor()).arg(JKQTMathTextLineSpacingMode2String(lstNV->getSpacingMode())).arg(JKQTMathTextVerticalOrientation2String(lstNV->getVerticalOrientation()));
         QList<JKQTMathTextNode*> list=lstNV->getChildren();
         for (int i=0; i<list.size(); i++) {
             ti->addChild(createTree(list[i], ti));

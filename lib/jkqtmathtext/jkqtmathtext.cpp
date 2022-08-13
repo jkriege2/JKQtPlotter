@@ -1496,13 +1496,13 @@ JKQTMathText::tokenType JKQTMathText::getToken() {
             if (parseString[currentTokenID]!='{') error_list.append(tr("error @ ch. %1: didn't find '{' after '\\begin'").arg(currentTokenID)); // find closing brace '}' after '\\begin{name');
             currentTokenName=readUntil(true, "}");
             if (currentTokenName=="verbatim") {
-                currentTokenName=readUntil(true, "\\end{verbatim}");
+                currentTokenName=readUntil(true, "\\end{verbatim}", true);
                 return currentToken=MTTinstructionVerbatim;
             } else if (currentTokenName=="verbatim*") {
-                currentTokenName=readUntil(true, "\\end{verbatim*}");
+                currentTokenName=readUntil(true, "\\end{verbatim*}", true);
                 return currentToken=MTTinstructionVerbatimVisibleSpace;
             } else if (currentTokenName=="lstlisting") {
-                currentTokenName=readUntil(true, "\\end{lstlisting}");
+                currentTokenName=readUntil(true, "\\end{lstlisting}", true);
                 return currentToken=MTTinstructionVerbatim;
             }
             return currentToken=MTTinstructionBegin;
@@ -1904,24 +1904,14 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
                 JKQTMathTextHorizontalAlignment alignment=MTHALeft;
                 if (envname=="document") alignment=MTHALeft;
                 else alignment=String2JKQTMathTextHorizontalAlignment(envname);
-                JKQTMathTextVerticalListNode* vlist = new JKQTMathTextVerticalListNode(this, alignment, 1.0, JKQTMathTextVerticalListNode::SMDefault, MTVOFirstLine );
-                nl->addChild(vlist);
-                bool first=true;
-                while (first || currentToken==MTTinstructionNewline) {
-                    vlist->addChild(parseLatexString(true, MTBTAny, envname));
-                    first=false;
-                }
+                nl->addChild(parseMultilineLatexString(true, envname, alignment, 1.0, MTSMDefaultSpacing, MTVOFirstLine));
+
             } else if (envname=="framed" || envname=="shaded" || envname=="snugshade") {
                 JKQTMathTextHorizontalAlignment alignment=MTHALeft;
-                JKQTMathTextVerticalListNode* vlist = new JKQTMathTextVerticalListNode(this, alignment, 1.0, JKQTMathTextVerticalListNode::SMDefault, MTVOFirstLine );
+                JKQTMathTextVerticalListNode* vlist = parseMultilineLatexString(true, envname, alignment, 1.0, MTSMDefaultSpacing, MTVOFirstLine);
                 QStringList color;
                 color<<jkqtp_QColor2String(Qt::lightGray);
                 nl->addChild(new JKQTMathTextBoxInstructionNode(this, envname, vlist, color));
-                bool first=true;
-                while (first || currentToken==MTTinstructionNewline) {
-                    vlist->addChild(parseLatexString(true, MTBTAny, envname));
-                    first=false;
-                }
             } else {
                 error_list.append(tr("error @ ch. %1: unknown environment '%2'").arg(currentTokenID).arg(envname));
             }
@@ -1952,6 +1942,18 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
     lastLineCount=countLine;
 
     return simplifyJKQTMathTextNode(nl);
+}
+
+JKQTMathTextVerticalListNode *JKQTMathText::parseMultilineLatexString(bool get, const QString &quitOnEnvironmentEnd, JKQTMathTextHorizontalAlignment _alignment, double _linespacingFactor, JKQTMathTextLineSpacingMode spacingMode_, JKQTMathTextVerticalOrientation _verticalOrientation)
+{
+    JKQTMathTextVerticalListNode* vlist = new JKQTMathTextVerticalListNode(this, _alignment, _linespacingFactor, spacingMode_, _verticalOrientation );
+    bool first=true;
+    while (first || currentToken==MTTinstructionNewline) {
+        vlist->addChild(simplifyAndTrimJKQTMathTextNode(parseLatexString(true, MTBTAny, quitOnEnvironmentEnd)));
+        first=false;
+    }
+    return vlist;
+
 }
 
 JKQTMathTextNode* JKQTMathText::parseInstruction(bool *_foundError, bool* getNew) {
@@ -2099,13 +2101,7 @@ JKQTMathTextNode* JKQTMathText::parseInstruction(bool *_foundError, bool* getNew
             getToken();
         }
         if (currentToken==MTTopenbrace) {
-            JKQTMathTextVerticalListNode* vlist = new JKQTMathTextVerticalListNode(this, alignment, 1.0, JKQTMathTextVerticalListNode::SMMinimal, MTVOFirstLine );
-            child=vlist;
-            bool first=true;
-            while (first || currentToken==MTTinstructionNewline) {
-                vlist->addChild(parseLatexString(true));
-                first=false;
-            }
+            child=parseMultilineLatexString(true, "", alignment, 1.0, MTSMMinimalSpacing, MTVOFirstLine);
             if (currentToken!=MTTclosebrace) error_list.append(tr("error @ ch. %1: didn't find closing brace '}' after '%2' command").arg(currentTokenID).arg(currentInstructionName).arg(1));
         } else {
             error_list.append(tr("error @ ch. %1: expected one argument in '{...}' braces after '%2' command").arg(currentTokenID).arg(currentInstructionName).arg(1));
@@ -2243,7 +2239,7 @@ QString JKQTMathText::parseSingleString(bool get) {
     return thisparam;
 }
 
-QString JKQTMathText::readUntil(bool get, const QString &endsequence)
+QString JKQTMathText::readUntil(bool get, const QString &endsequence, bool removeFirstlineWhitespace)
 {
     if (get) currentTokenID++;
     QString seq;
@@ -2255,6 +2251,31 @@ QString JKQTMathText::readUntil(bool get, const QString &endsequence)
     if (seq.endsWith(endsequence)) {
         seq=seq.left(seq.size()-endsequence.size());
     }
+    if (removeFirstlineWhitespace) {
+        QStringList sl=seq.split('\n');
+        if (sl.size()>0) {
+            bool allWS=true;
+            for (const QChar& ch: sl.first()) {
+                if (!ch.isSpace()) {
+                    allWS=false;
+                    break;
+                }
+            }
+            if (allWS) sl.removeFirst();
+        }
+        if (sl.size()>0) {
+            bool allWS=true;
+            for (const QChar& ch: sl.last()) {
+                if (!ch.isSpace()) {
+                    allWS=false;
+                    break;
+                }
+            }
+            if (allWS) sl.removeLast();
+        }
+        seq=sl.join("\n");
+    }
+
     return seq;
 }
 
@@ -2267,7 +2288,7 @@ JKQTMathTextNode *JKQTMathText::getParsedNode() const {
 
 
 
-bool JKQTMathText::parse(const QString& text, bool addSpaceBeforeAndAfter){
+bool JKQTMathText::parse(const QString& text, bool addSpaceBeforeAndAfter, bool allowLinebreaks){
     QString ntext;
     if (addSpaceBeforeAndAfter) ntext=QString("\\;")+text+QString("\\;");
     else ntext=text;
@@ -2285,7 +2306,11 @@ bool JKQTMathText::parse(const QString& text, bool addSpaceBeforeAndAfter){
     lastLineCount.clear();
 
     error_list.clear();
-    parsedNode=parseLatexString(true);
+    if (allowLinebreaks) {
+        parsedNode=parseMultilineLatexString(true, QString(""), MTHALeft, 1.0, MTSMDefaultSpacing, MTVOFirstLine);
+    } else {
+        parsedNode=parseLatexString(true);
+    }
     unparsedNode=new JKQTMathTextVerbatimNode(this, text);
     return (parsedNode!=nullptr);
 }

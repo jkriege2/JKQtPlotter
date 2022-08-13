@@ -95,20 +95,8 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextHorizontalListNode: public JKQTMathTex
  */
 class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextVerticalListNode: public JKQTMathTextMultiChildNode {
     public:
-        /** \brief defines, how lines are beeing spaced by the node
-         *
-         *  \image html jkqtmathtext_verticallist.png
-         */
-        enum SpacingMode {
-            SMDefault, /*!< space the lines with equilibrated spacing, i.e. the baselines are at least \c QFontMetricsF::lineSpacing()*JKQTMathTextVerticalListNode::lineSpacingFactor apart, but even more, if the height of the text bloxk is larger than the the font's ascent+descent */
-            SMMinimal /*!< space the lines as tight as possible, i.e. each line is separated by \c QFontMetricsF::leading()*JKQTMathTextVerticalListNode::lineSpacingFactor from the next line. This is a s compact as possible */
-        };
-        /** \brief convert a SpacingMode to a String */
-        static QString SpacingMode2String(SpacingMode mode);
-        /** \brief convert a String to a SpacingMode */
-        static SpacingMode String2SpacingMode(QString mode);
 
-        explicit JKQTMathTextVerticalListNode(JKQTMathText* parent, JKQTMathTextHorizontalAlignment _alignment=MTHACentered, double _linespacingFactor=1.0, SpacingMode spacingMode_=SMDefault, JKQTMathTextVerticalOrientation _verticalOrientation=MTVOFirstLine);
+        explicit JKQTMathTextVerticalListNode(JKQTMathText* parent, JKQTMathTextHorizontalAlignment _alignment=MTHACentered, double _linespacingFactor=1.0, JKQTMathTextLineSpacingMode spacingMode_=MTSMDefaultSpacing, JKQTMathTextVerticalOrientation _verticalOrientation=MTVOFirstLine);
         virtual ~JKQTMathTextVerticalListNode() override;
         /** \copydoc JKQTMathTextNode::getTypeName() */
         virtual QString getTypeName() const override;
@@ -139,7 +127,15 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextVerticalListNode: public JKQTMathTextM
         /** \copydoc lineSpacingFactor */
         double getLineSpacingFactor() const;
         /** \copydoc spacingMode */
-        SpacingMode getSpacingMode() const;
+        JKQTMathTextLineSpacingMode getSpacingMode() const;
+        /** \copydoc alignment */
+        void setAlignment(JKQTMathTextHorizontalAlignment value) ;
+        /** \copydoc verticalOrientation */
+        void setVerticalOrientation(JKQTMathTextVerticalOrientation value) ;
+        /** \copydoc lineSpacingFactor */
+        void setLineSpacingFactor(double value);
+        /** \copydoc spacingMode */
+        void setSpacingMode(JKQTMathTextLineSpacingMode value) ;
     protected:
         /** \copydoc JKQTMathTextNode::getSizeInternal() */
         virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
@@ -173,7 +169,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextVerticalListNode: public JKQTMathTextM
          */
         JKQTMathTextVerticalOrientation verticalOrientation;
         /** \brief defines how the layout algorithm (see calcLayout() ) lays out the single lines */
-        SpacingMode spacingMode;
+        JKQTMathTextLineSpacingMode spacingMode;
 
 
 

@@ -892,3 +892,21 @@ void JKQTMathTextDrawStringSimBlackboard(QPainter &painter, const QFont &f, cons
     path.addText(QPointF(x+fm.lineWidth()/2.0, y), f, txt);
     painter.drawPath(path);
 }
+
+
+QString JKQTMathTextLineSpacingMode2String(JKQTMathTextLineSpacingMode mode)
+{
+    switch(mode) {
+        case MTSMMinimalSpacing: return "minimal";
+        default:
+        case MTSMDefaultSpacing: return "default";
+    }
+}
+
+JKQTMathTextLineSpacingMode String2JKQTMathTextLineSpacingMode(QString tokenName)
+{
+    tokenName=tokenName.toLower().trimmed();
+    if (tokenName=="default") return MTSMDefaultSpacing;
+    if (tokenName=="minimal" || tokenName=="min" || tokenName=="minimum") return MTSMMinimalSpacing;
+    return MTSMDefaultSpacing;
+}

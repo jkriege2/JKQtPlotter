@@ -116,7 +116,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextTextNode: public JKQTMathTextTextBaseN
  */
 class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextVerbatimNode: public JKQTMathTextTextBaseNode {
     public:
-        explicit JKQTMathTextVerbatimNode(JKQTMathText* parent, const QString& text, bool visibleWhitespace=false, JKQTMathTextHorizontalAlignment _alignment=MTHALeft, double _linespacingFactor=1.0, JKQTMathTextVerticalOrientation _verticalOrientation=MTVOFirstLine);
+        explicit JKQTMathTextVerbatimNode(JKQTMathText* parent, const QString& text, bool visibleWhitespace=false, JKQTMathTextHorizontalAlignment _alignment=MTHALeft, double _linespacingFactor=1.0, JKQTMathTextVerticalOrientation _verticalOrientation=MTVOFirstLine, size_t tabSize_=4);
         /** \copydoc JKQTMathTextNode::getTypeName() */
         virtual QString getTypeName() const override;
         /** \copydoc alignment */
@@ -127,6 +127,8 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextVerbatimNode: public JKQTMathTextTextB
         double getLineSpacingFactor() const;
         /** \copydoc visibleWhitespace */
         bool getVisibleWhitespace() const;
+        /** \copydoc tabSize */
+        size_t getTabSize() const;
         /** \copydoc JKQTMathTextNode::draw() */
         virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
         /** \copydoc JKQTMathTextNode::toHtml() */
@@ -151,6 +153,8 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextVerbatimNode: public JKQTMathTextTextB
         JKQTMathTextVerticalOrientation verticalOrientation;
         /** \brief when \c true, whitespaces are displayed with a visible character */
         bool visibleWhitespace;
+        /** \brief number of whitespaces, each tab character stands for */
+        size_t tabSize;
 
         /** \copydoc JKQTMathTextNode::getSizeInternal() */
         virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
