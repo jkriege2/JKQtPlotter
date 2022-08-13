@@ -474,6 +474,7 @@ QTreeWidgetItem *TestForm::createTree(JKQTMathTextNode *node, QTreeWidgetItem* p
     JKQTMathTextEmptyBoxNode* emptyN=dynamic_cast<JKQTMathTextEmptyBoxNode*>(node);
     JKQTMathTextVerbatimNode* verbN=dynamic_cast<JKQTMathTextVerbatimNode*>(node);
     JKQTMathTextPhantomNode* phanN=dynamic_cast<JKQTMathTextPhantomNode*>(node);
+    JKQTMathTextNoopNode* noopN=dynamic_cast<JKQTMathTextNoopNode*>(node);
 
     QTreeWidgetItem* ti=nullptr;
     if (parent) ti=new QTreeWidgetItem(parent);
@@ -546,22 +547,14 @@ QTreeWidgetItem *TestForm::createTree(JKQTMathTextNode *node, QTreeWidgetItem* p
         name=QString("TextNode: \'%1\'").arg(txtN->getText());
     } else if (emptyN)  {
         name=QString("EmptyBoxNode %1%2 x %3%4").arg(emptyN->getWidth()).arg(JKQTMathTextEmptyBoxNode::Units2String(emptyN->getWidthUnit())).arg(emptyN->getHeight()).arg(JKQTMathTextEmptyBoxNode::Units2String(emptyN->getHeightUnit()));
+    } else if  (noopN) {
+        name="NoopNode";
     } else {
-        name=QString("unknown");
+        name=node->getTypeName();
     }
 
     ti->setText(0,name);
 
-    /*
-    QString space="";
-    QTreeWidgetItem* p=ti->parent();
-    while (p) {
-        space+="  ";
-        p=p->parent();
-    }
-
-    qDebug()<<space<<"createTree()";
-    */
 
     return ti;
 }
