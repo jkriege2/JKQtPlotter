@@ -75,11 +75,11 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextTextNode: public JKQTMathTextTextBaseN
     protected:
         /** \brief defines how a character shold be drawn, used by splitTextForLayout */
         enum FontMode {
-            FMasDefined,
-            FMasDefinedForceUpright,
-            FMasDefinedOutline,
-            FMroman,
-            FMfallbackSymbol
+            FMasDefined,    /*!< \brief use current font */
+            FMasDefinedForceUpright,   /*!< \brief  use current font, but force it upright (e.g. for digits in math mode) */
+            FMasDefinedOutline,   /*!< \brief use current font and draw as outline, e.g. used for simulating  blackboard fonts  */
+            FMroman,   /*!< \brief use JKQTMathText::getFontRoman() */
+            FMfallbackSymbol,   /*!< \brief use JKQTMathText::getFallbackFontSymbols() */
         };
         /** \copydoc JKQTMathTextNode::getSizeInternal() */
         virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
