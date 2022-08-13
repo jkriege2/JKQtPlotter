@@ -87,7 +87,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPPaintDeviceAdapter {
         virtual double getPrintSizeXInMM() const =0;
         virtual double getPrintSizeYInMM() const =0;
         virtual bool isPrinter() const=0;
-        virtual bool useLatexParser() const;
         /** \brief create a paint device with a given size in pt */
         virtual QPaintDevice* createPaintdevice(const QString& filename, int widthPix, int heightPix) const=0;
         /** \brief create a paint device with a given size in millimeters ... the default implementation call createPaintdevice(), assuming the standard logical resolution of the desktop!!!) */

@@ -48,10 +48,12 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>IMPROVED: rendering of sqrt</li>
     <li>IMPROVED: rendering and size calculation of decorations</li>
     <li>IMPROVED: tokenizing and parsing of text in text-mode: now a lot of accents with commands like \c \\\"a, \c \\'e and variants (e.g. \c {\\\"a}, \c \\\"{a}, ...) are supported now</li>
-    <li>IMPROVED/breaking: refactored symbol node JKQTMathTextSymbolNode and changed font-lookup!</li>
-    <li>IMPROVED/NEW/breaking: refactored whitespace-processing node JKQTMathTextWhitespaceNode, now all major LaTeX whitespace commands are supported properly</li>
-    <li>IMPROVED/NEW/breaking: refactored LaTeX parser in JKQTMathText</li>
-    <li>REMOVED/breaking: \c \\v[a-zA-Z] and shorthand for \c \\vec{a-zA-Z} was removed, implementation of \c \\bbR,\c \\bbC,... changed</li>
+    <li>IMPROVED/BREAKING: refactored symbol node JKQTMathTextSymbolNode and changed font-lookup!</li>
+    <li>IMPROVED/NEW/BREAKING: refactored whitespace-processing node JKQTMathTextWhitespaceNode, now all major LaTeX whitespace commands are supported properly</li>
+    <li>IMPROVED/NEW/BREAKING: refactored LaTeX parser in JKQTMathText</li>
+    <li>REMOVED/BREAKING: \c \\v[a-zA-Z] and shorthand for \c \\vec{a-zA-Z} was removed, implementation of \c \\bbR,\c \\bbC,... changed</li>
+    <li>MODIFIED/BREAKING: new options interface for JKQTMathText::parse()</li>
+    <li>EMOVED/BREAKING: removed JKQTMathtext::unparsedNode</li>
     <li>IMPROVED/REWORKED rendering of text in text- and math-mode. Now it is more consistent with the output of LaTeX itself</li>
     <li>IMPROVED/REWORKED rendering of blackboard font: now several different rendering modes can be selected using JKQTMathText::setFontBlackboradMode()</li>
     <li>BREAKING/REWORKED: The \\verb!...!-command now works the same as in LaTeX</li>
@@ -123,25 +125,25 @@ Changes, compared to  \ref page_whatsnew_V2019_11 "v2019.11" include:
   <li> fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/issues/52">#52: 'runtime_error': is not a member of 'std'</a>, thanks to <a href="https://github.com/gomgomi">user:gomgomi</a></li>
   <li> fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/issues/56">#56: Logscale zoom multiple zeros? </a>, thanks to <a href="https://github.com/sufuk">user:sufuk</a></li>
   <li> merged PR <a href="https://github.com/jkriege2/JKQtPlotter/pull/51">#51: Bug: JKMathParser exception return local variable </a>, thanks to <a href="https://github.com/StephanOostveen">user:StephanOostveen</a></li>
-  <li>renamed/breaking change: renamed JKQTPPlotObject->JKQTPGeometricPlotElement and added new base class JKQTPPlotAnnotationElement</li>
-  <li>renamed/breaking change: renamed JKQTPColorPaletteStyleAndToolsMixin::setPalette() -> JKQTPColorPaletteStyleAndToolsMixin::setColorPalette()</li>
-  <li>removed/breaking change: removed the usage of some deprecated functions and objects (e.g. QMatrix)</li>
-  <li>removed/breaking change: removed the overlay elements (derived from JKQTPOverlayElement), which were not very well set up and are more confusing than useful.</li>
-  <li>improved/breaking change: geometric objects now use an adaptive drawing algorithm to represent curves (before e.g. ellipses were always separated into a fixed number of line-segments)</li>
-  <li>improved/breaking change: geometric elements constructor: removed all styling properties, added setStyle()-functions to replace them. This is necessary to better work with the extended Styling system</li>
+  <li>renamed/BREAKING change: renamed JKQTPPlotObject->JKQTPGeometricPlotElement and added new base class JKQTPPlotAnnotationElement</li>
+  <li>renamed/BREAKING change: renamed JKQTPColorPaletteStyleAndToolsMixin::setPalette() -> JKQTPColorPaletteStyleAndToolsMixin::setColorPalette()</li>
+  <li>removed/BREAKING change: removed the usage of some deprecated functions and objects (e.g. QMatrix)</li>
+  <li>removed/BREAKING change: removed the overlay elements (derived from JKQTPOverlayElement), which were not very well set up and are more confusing than useful.</li>
+  <li>improved/BREAKING change: geometric objects now use an adaptive drawing algorithm to represent curves (before e.g. ellipses were always separated into a fixed number of line-segments)</li>
+  <li>improved/BREAKING change: geometric elements constructor: removed all styling properties, added setStyle()-functions to replace them. This is necessary to better work with the extended Styling system</li>
   <li>improved: constructors and access functions for several geometric objects (e.g. more constructors, additional functions to retrieve parameters in diferent forms, iterators for polygons, ...)</li>
-  <li>improved/breaking change: reworked class hierarchy of parsed function plots and declared several setters as slots.</li>
-  <li>improved/breaking change: reworked class hierarchy of bar & impulse charts.</li>
-  <li>improved/breaking change: reworked class hierarchy of range charts.</li>
-  <li>improved/breaking change: reworked class hierarchy of special line (step) graphs.</li>
-  <li>improved/breaking change: reworked class hierarchy of filled line graphs.</li>
-  <li>improved/breaking change: reworked class hierarchy of range plot elements (JKQTPVerticalRange and JKQTPHorizontalRange).</li>
-  <li>improved/breaking change: reworked class hierarchy of boxplots.</li>
-  <li>improved/breaking change: reworked class hierarchy of violin plots.</li>
-  <li>improved/breaking change: extended styling system for graphs.</li>
-  <li>improved/breaking change: reworked graph Base-Classes (promoted several setters to slots, added Q_PROPERTY- and Q_ENUM-declarations...)</li>
-  <li>improved/breaking change: made more functions and function parameters const</li>
-  <li>improved/breaking change: image plots now manage CONST-data, not plain pointer arrays... This is OK, since the raw data is never owned nor modified by the plot, only referenced!.</li>
+  <li>improved/BREAKING change: reworked class hierarchy of parsed function plots and declared several setters as slots.</li>
+  <li>improved/BREAKING change: reworked class hierarchy of bar & impulse charts.</li>
+  <li>improved/BREAKING change: reworked class hierarchy of range charts.</li>
+  <li>improved/BREAKING change: reworked class hierarchy of special line (step) graphs.</li>
+  <li>improved/BREAKING change: reworked class hierarchy of filled line graphs.</li>
+  <li>improved/BREAKING change: reworked class hierarchy of range plot elements (JKQTPVerticalRange and JKQTPHorizontalRange).</li>
+  <li>improved/BREAKING change: reworked class hierarchy of boxplots.</li>
+  <li>improved/BREAKING change: reworked class hierarchy of violin plots.</li>
+  <li>improved/BREAKING change: extended styling system for graphs.</li>
+  <li>improved/BREAKING change: reworked graph Base-Classes (promoted several setters to slots, added Q_PROPERTY- and Q_ENUM-declarations...)</li>
+  <li>improved/BREAKING change: made more functions and function parameters const</li>
+  <li>improved/BREAKING change: image plots now manage CONST-data, not plain pointer arrays... This is OK, since the raw data is never owned nor modified by the plot, only referenced!.</li>
   <li>bugfixed/improved: aspect ratio handling in JKQTPlotter.</li>
   <li>new: switching to semantic versioning ... starting with v4.0.0</li>
   <li>new: Compatibility with Qt 5.15 and Qt6</li>
