@@ -36,3 +36,35 @@ jkqtmathtext_mathoperator_width_factor.png
 ---
 jkqtmathtext_limits.png
 no specifier: $\sum_{i=0}^\infty k_i^2\ \ \lim_{x\rightarrow0}f(x)\ \ \nabla_{x}f(x)$ \ \ \ \ \ {\backslash}limits: $\sum\limits_{i=0}^\infty k_i^2\ \ \lim\limits_{x\rightarrow0}f(x)\ \ \nabla\limits_{x}f(x)$ \ \ \ \ \ {\backslash}nolimits: $\sum\nolimits_{i=0}^\infty k_i^2\ \ \lim\nolimits_{x\rightarrow0}f(x)\ \ \nabla\nolimits_{x}f(x)$ 
+---
+jkqtmathtext_doc_subsupershift_integral.png
+--fontsoze=30
+sub-/superscript:\\
+\begin{tabular}{c:c|c:c}
+shifted  & subs. shifted & unshifted & unshifted\\\hdashline
+$\int\limits_{\textcolor{blue}{\leftarrow}}^{\textcolor{blue}{\rightarrow}}$ & $\int\nolimits_{\textcolor{blue}{\leftarrow}}^{\textcolor{red}{^0}}$ & $\sum\limits_\textcolor{red}{0}^\textcolor{red}{0}$ & $\sum\nolimits_\textcolor{red}{0}^\textcolor{red}{0}$
+\end{tabular}
+---
+jkqtmathtext_doc_subsupershift_integral_boxes.png
+--drawboxes --fontsoze=30
+sub-/superscript:\\
+\begin{tabular}{c:c|c:c}
+shifted  & subs. shifted & unshifted & unshifted\\\hdashline
+$\int\limits_{\textcolor{blue}{\leftarrow}}^{\textcolor{blue}{\rightarrow}}$ & $\int\nolimits_{\textcolor{blue}{\leftarrow}}^{\textcolor{red}{^0}}$ & $\sum\limits_\textcolor{red}{0}^\textcolor{red}{0}$ & $\sum\nolimits_\textcolor{red}{0}^\textcolor{red}{0}$
+\end{tabular}
+---
+jkqtmathtext_doc_subsuper_italiccorrection.png
+--fontsoze=30
+sub-/superscript:\\
+\begin{tabular}{c|c}
+italic-correction  &  no correction\\\hdashline
+$x_\textcolor{blue}{\leftarrow}^\textcolor{red}{0}$ & $\mathrm{M}_\textcolor{red}{0}^\textcolor{red}{0}$
+\end{tabular}
+---
+jkqtmathtext_doc_subsuper_italiccorrection_boxes.png
+--drawboxes --fontsoze=30
+sub-/superscript:\\
+\begin{tabular}{c|c}
+italic-correction  &  no correction\\\hdashline
+$x_\textcolor{blue}{\leftarrow}^\textcolor{red}{0}$ & $\mathrm{M}_\textcolor{red}{0}^\textcolor{red}{0}$
+\end{tabular}

@@ -83,7 +83,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextFracNode: public JKQTMathTextDualChild
         /** \copydoc JKQTMathTextNode::getTypeName() */
         virtual QString getTypeName() const override;
         /** \copydoc JKQTMathTextNode::draw() */
-        virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
+        virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) override;
         /** \copydoc JKQTMathTextNode::toHtml() */
         virtual bool toHtml(QString& html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) override;
         /** \copydoc mode */ 
@@ -94,7 +94,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextFracNode: public JKQTMathTextDualChild
         /** \brief fills instructions */
         static void fillInstructions();
         /** \copydoc JKQTMathTextNode::getSizeInternal() */
-        virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
+        virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) override;
         /** \brief actual display type of fraction object */
         JKQTMathTextFracNode::FracType mode;
         /** \brief returns the nesting level of the node (of same type of \a sameType \c ==true) */

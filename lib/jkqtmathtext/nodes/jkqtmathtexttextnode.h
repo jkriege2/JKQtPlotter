@@ -65,7 +65,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextTextNode: public JKQTMathTextTextBaseN
         explicit JKQTMathTextTextNode(JKQTMathText* parent, const QString& text, bool addWhitespace, bool stripInnerWhitepace=false);
         virtual ~JKQTMathTextTextNode() override;
         /** \copydoc JKQTMathTextNode::draw() */
-        virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
+        virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) override;
         /** \copydoc JKQTMathTextNode::getTypeName() */
         virtual QString getTypeName() const override ;
         /** \brief remove trailing whitespace, is used by simplifyJKQTMathTextNode() */
@@ -82,7 +82,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextTextNode: public JKQTMathTextTextBaseN
             FMfallbackSymbol,   /*!< \brief use JKQTMathText::getFallbackFontSymbols() */
         };
         /** \copydoc JKQTMathTextNode::getSizeInternal() */
-        virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
+        virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) override;
         /** \brief calculates the size of the node, much like JKQTMathTextNode::getSizeInternal(), but returns additional properties that can be reused for drawing */
         void getSizeInternalAndData(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, QStringList& textpart, QList<FontMode>& fontMode, QList<double>& textpartXPos) ;
         /** \brief split text for Math-Modelayout into sections, where each section has a defined way of output
@@ -130,7 +130,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextVerbatimNode: public JKQTMathTextTextB
         /** \copydoc tabSize */
         size_t getTabSize() const;
         /** \copydoc JKQTMathTextNode::draw() */
-        virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
+        virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) override;
         /** \copydoc JKQTMathTextNode::toHtml() */
         virtual bool toHtml(QString& html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) override;
     protected:
@@ -157,7 +157,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextVerbatimNode: public JKQTMathTextTextB
         size_t tabSize;
 
         /** \copydoc JKQTMathTextNode::getSizeInternal() */
-        virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
+        virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) override;
         /** \brief sets all necessary settings in \a currentEv for drawing this node */
         virtual void transformEnvironment(JKQTMathTextEnvironment& currentEv) const;
 

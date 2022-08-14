@@ -362,7 +362,7 @@ JKQTMathTextMatrixNode::LayoutInfo JKQTMathTextMatrixNode::calcLayout(QPainter &
     return l;
 }
 
-void JKQTMathTextMatrixNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* /*prevNodeSize*/) {
+void JKQTMathTextMatrixNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
     const  LayoutInfo l=calcLayout(painter, currentEv);
     width=l.width;
     overallHeight=l.overallHeight;
@@ -370,7 +370,7 @@ void JKQTMathTextMatrixNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvi
     strikeoutPos=l.strikeoutPos;
 }
 
-double JKQTMathTextMatrixNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* /*prevNodeSize*/) {
+double JKQTMathTextMatrixNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) {
     doDrawBoxes(painter, x, y, currentEv);
 
     const QFontMetricsF fm(currentEv.getFont(parentMathText), painter.device());

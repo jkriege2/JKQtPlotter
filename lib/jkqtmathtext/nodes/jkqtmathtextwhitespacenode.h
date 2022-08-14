@@ -82,13 +82,15 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextWhitespaceNode: public JKQTMathTextNod
         /** \copydoc WhitespaceProps::count */
         size_t getWhitespaceCount() const;
         /** \copydoc JKQTMathTextNode::draw() */
-        virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
+        virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) override;
     protected:
         /** \copydoc JKQTMathTextNode::getSizeInternal() */
-        virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
+        virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) override;
         /** \brief describes a whitespace */
         struct WhitespaceProps {
             WhitespaceProps(Types type=WSTNormal, size_t count=1);
+            WhitespaceProps(const WhitespaceProps& other);
+            WhitespaceProps& operator=(const WhitespaceProps& other);
             /** \brief type of the whitespace represented by this node */
             Types type;
             /** \brief number of whitespaces of the given type, represented by this node (default: 1) */
@@ -137,10 +139,10 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextEmptyBoxNode: public JKQTMathTextNode 
         /** \copydoc height */
         double getHeight() const;
         /** \copydoc JKQTMathTextNode::draw() */
-        virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
+        virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) override;
     protected:
         /** \copydoc JKQTMathTextNode::getSizeInternal() */
-        virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
+        virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) override;
         /** \brief width of the (empty) box, units of this value defined in widthUnit */
         double width;
         /** \brief units to interpret width */
@@ -173,7 +175,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextPhantomNode: public JKQTMathTextInstru
         /** \copydoc JKQTMathTextNode::getTypeName() */
         virtual QString getTypeName() const override;
         /** \copydoc JKQTMathTextNode::draw() */
-        virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
+        virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) override;
         /** \copydoc JKQTMathTextNode::toHtml() */
         virtual bool toHtml(QString& html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) override;
 
@@ -184,7 +186,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextPhantomNode: public JKQTMathTextInstru
 
     protected:
         /** \copydoc JKQTMathTextNode::getSizeInternal() */
-        virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
+        virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) override;
         /** \brief fills instructions
          *
          *  \note this is the customization point for new instructions!

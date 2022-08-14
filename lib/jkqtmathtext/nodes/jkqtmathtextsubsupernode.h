@@ -41,15 +41,38 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSubscriptNode: public JKQTMathTextSing
 public:
     explicit JKQTMathTextSubscriptNode(JKQTMathText* parent, JKQTMathTextNode* child);
     virtual ~JKQTMathTextSubscriptNode() override;
+    /** \brief like draw(), i.e. draws the node, but allows to draw the subscript with special placement rules after large blocks (e.g. braces), when \a prevNodeSizeForSpecialPlacement is not \c nullptr
+     *
+     * \param painter QPainter to use
+     * \param x x-position, where the drawing starts [Pixel]
+     * \param y Y-position of the baseline, where the drawing starts [Pixel]
+     * \param currentEv JKQTMathTextEnvironment object describing the current drawing environment/settings
+     * \param[in] prevNodeSizeForSpecialPlacement optional parameter, describing the size of the previous node (on the left). This may be used for layout of some nodes (e.g. sub/super to move correctly next to large parantheses ...)
+     *
+     * \return the x position which to use for the next part of the text
+     */
+    double drawWithSpecialPlacement(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* prevNodeSizeForSpecialPlacement);
     /** \copydoc JKQTMathTextNode::draw() */
-    virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
+    virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) override;
     /** \copydoc JKQTMathTextNode::getTypeName() */
     virtual QString getTypeName() const override;                /** \brief returns the child node  */
     /** \copydoc JKQTMathTextNode::toHtml() */
     virtual bool toHtml(QString& html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) override;
+    /** \brief like getSize(), i.e. determine the size of the node, but cares for subscript with special placement rules after large blocks (e.g. braces), when \a prevNodeSizeForSpecialPlacement is not \c nullptr
+     *
+     * \param painter painter to use for determining the size
+     * \param currentEv current environment object
+     * \param[out] width width of the block/node
+     * \param[out] baselineHeight distance from the bottom of the block/node-box to the baseline
+     * \param[out] overallHeight overall height (bottom to top) of the node, the ascent is \c overallHeight-baselineHeight
+     * \param[out] strikeoutPos position of the strikeout-line
+     * \param[in] prevNodeSizeForSpecialPlacement optional parameter, describing the size of the previous node (on the left). This may be used for layout of some nodes (e.g. sub/super to move correctly next to large parantheses ...)
+     *
+     */
+    void getSizeWithSpecialPlacement(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSizeForSpecialPlacement);
 protected:
     /** \copydoc JKQTMathTextNode::getSizeInternal() */
-    virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
+    virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) override;
 };
 
 /** \brief subclass representing an superscript node with exactly one argument in the syntax tree
@@ -63,15 +86,38 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSuperscriptNode: public JKQTMathTextSi
 public:
     explicit JKQTMathTextSuperscriptNode(JKQTMathText* parent, JKQTMathTextNode* child);
     virtual ~JKQTMathTextSuperscriptNode() override;
+    /** \brief like draw(), but allows to draw the superscript with special placement rules after large blocks (e.g. braces), when \a prevNodeSizeForSpecialPlacement is not \c nullptr
+     *
+     * \param painter QPainter to use
+     * \param x x-position, where the drawing starts [Pixel]
+     * \param y Y-position of the baseline, where the drawing starts [Pixel]
+     * \param currentEv JKQTMathTextEnvironment object describing the current drawing environment/settings
+     * \param[in] prevNodeSizeForSpecialPlacement optional parameter, describing the size of the previous node (on the left). This may be used for layout of some nodes (e.g. sub/super to move correctly next to large parantheses ...)
+     *
+     * \return the x position which to use for the next part of the text
+     */
+    double drawWithSpecialPlacement(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* prevNodeSizeForSpecialPlacement);
     /** \copydoc JKQTMathTextNode::draw() */
-    virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
+    virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) override;
     /** \copydoc JKQTMathTextNode::getTypeName() */
     virtual QString getTypeName() const override;
     /** \copydoc JKQTMathTextNode::toHtml() */
     virtual bool toHtml(QString& html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) override;
+    /** \brief like getSize(), i.e. determine the size of the node, but cares for superscript with special placement rules after large blocks (e.g. braces), when \a prevNodeSizeForSpecialPlacement is not \c nullptr
+     *
+     * \param painter painter to use for determining the size
+     * \param currentEv current environment object
+     * \param[out] width width of the block/node
+     * \param[out] baselineHeight distance from the bottom of the block/node-box to the baseline
+     * \param[out] overallHeight overall height (bottom to top) of the node, the ascent is \c overallHeight-baselineHeight
+     * \param[out] strikeoutPos position of the strikeout-line
+     * \param[in] prevNodeSizeForSpecialPlacement optional parameter, describing the size of the previous node (on the left). This may be used for layout of some nodes (e.g. sub/super to move correctly next to large parantheses ...)
+     *
+     */
+    void getSizeWithSpecialPlacement(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSizeForSpecialPlacement) ;
 protected:
     /** \copydoc JKQTMathTextNode::getSizeInternal() */
-    virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
+    virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) override;
 };
 
 #endif // JKQTMATHTEXTSUBSUPERSCRIPTNODE_H

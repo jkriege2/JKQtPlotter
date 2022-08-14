@@ -50,10 +50,10 @@ JKQTMathTextNode::JKQTMathTextNode(JKQTMathText *_parent):
 JKQTMathTextNode::~JKQTMathTextNode()
 = default;
 
-void JKQTMathTextNode::getSize(QPainter &painter, JKQTMathTextEnvironment currentEv, double &width, double &baselineHeight, double &overallHeight, double &strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize)
+void JKQTMathTextNode::getSize(QPainter &painter, JKQTMathTextEnvironment currentEv, double &width, double &baselineHeight, double &overallHeight, double &strikeoutPos)
 {
     double w=width, b=baselineHeight, o=overallHeight, s=strikeoutPos;
-    getSizeInternal(painter, currentEv, w, b, o, s, prevNodeSize);
+    getSizeInternal(painter, currentEv, w, b, o, s);
 
     if (w<1e5) width=w;
     if (b<1e5) baselineHeight=b;
@@ -374,10 +374,10 @@ void JKQTMathTextMultiChildNode::setDrawBoxes(bool draw)
 
 }
 
-JKQTMathTextNodeSize JKQTMathTextNode::getSize(QPainter &painter, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize *prevNodeSize)
+JKQTMathTextNodeSize JKQTMathTextNode::getSize(QPainter &painter, JKQTMathTextEnvironment currentEv)
 {
     JKQTMathTextNodeSize s;
-    getSize(painter, currentEv, s.width, s.baselineHeight, s.overallHeight, s.strikeoutPos, prevNodeSize);
+    getSize(painter, currentEv, s.width, s.baselineHeight, s.overallHeight, s.strikeoutPos);
     return s;
 }
 
@@ -402,12 +402,12 @@ bool JKQTMathTextNoopNode::toHtml(QString &html, JKQTMathTextEnvironment current
     return true;
 }
 
-double JKQTMathTextNoopNode::draw(QPainter &painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize *prevNodeSize)
+double JKQTMathTextNoopNode::draw(QPainter &painter, double x, double y, JKQTMathTextEnvironment currentEv)
 {
     return x;
 }
 
-void JKQTMathTextNoopNode::getSizeInternal(QPainter &painter, JKQTMathTextEnvironment currentEv, double &width, double &baselineHeight, double &overallHeight, double &strikeoutPos, const JKQTMathTextNodeSize *prevNodeSize)
+void JKQTMathTextNoopNode::getSizeInternal(QPainter &painter, JKQTMathTextEnvironment currentEv, double &width, double &baselineHeight, double &overallHeight, double &strikeoutPos)
 {
     width=0;
     baselineHeight=0;

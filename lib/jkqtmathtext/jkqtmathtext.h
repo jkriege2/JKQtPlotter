@@ -721,7 +721,13 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
          *  by \c \\sum,\\int,... .
          */
         double subsuper_mode_selection_by_size_factor;
-        /** \brief fraction of a whitespace by which to shift a sub-/superscript left/right when the previous text is italic */
+        /** \brief fraction of a whitespace by which to shift a sub-/superscript left/right when the previous text is italic
+         *
+         *  \image html jkqtmathtext/jkqtmathtext_doc_subsuper_italiccorrection.png
+         *
+         *  \image html jkqtmathtext/jkqtmathtext_doc_subsuper_italiccorrection_boxes.png
+         *
+         */
         double italic_correction_factor;
         /** \brief like subsuper_size_factor, but for operators (\c \\sum , \c \\int , ...) where the text is placed above/below the symbol */
         double operatorsubsuper_size_factor;
@@ -737,6 +743,10 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         double operatorsubsuper_extraspace_factor;
         /** \brief for integrals (\c \\int , \c \\oint , ...) the sub-/superscripts above/below the symbol have to be shifted a bit to the left/right to accomodate the shape of the operator symbol (i.e. some free space at the top-left and bottom-right)
          *
+         *  \image html jkqtmathtext/jkqtmathtext_doc_subsupershift_integral.png
+         *
+         *  \image html jkqtmathtext/jkqtmathtext_doc_subsupershift_integral_boxes.png
+         *
          *  This factor is multiplied by the symbol width: xshift=intsubsuper_xcorrection_factor*symbolWidth
          *  Then the subscript below is placed at centerx(symbol)-xshift and the superscript at centerx(symbol)+shiftx.
          *  This is also used to correct a subset next to the symbol by shifting it to rightx(symbol)-xshift.
@@ -745,6 +755,10 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
          */
         double intsubsuper_xcorrection_factor;
         /** \brief for integrals (\c \\int , \c \\oint , ...) the subscripts besides the symbol have to be shifted to the left a bit to the left to accomodate the shape of the operator symbol (i.e. some free space at the bottom-right)
+         *
+         *  \image html jkqtmathtext/jkqtmathtext_doc_subsupershift_integral.png
+         *
+         *  \image html jkqtmathtext/jkqtmathtext_doc_subsupershift_integral_boxes.png
          *
          *  This factor is multiplied by the width of an x: xshift=intsubbesides_xcorrection_xfactor*xWidth
          *  Then the subscript besides the symbol is shifted by xshift to the left

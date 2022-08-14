@@ -121,7 +121,7 @@ JKQTMathTextTextNode::JKQTMathTextTextNode(JKQTMathText* _parent, const QString&
 
 JKQTMathTextTextNode::~JKQTMathTextTextNode() = default;
 
-void JKQTMathTextTextNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* /*prevNodeSize*/) {
+void JKQTMathTextTextNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
     QStringList textpart;
     QList<FontMode> fontMode;
     QList<double> textpartXPos;
@@ -275,7 +275,7 @@ void JKQTMathTextTextNode::splitTextForLayout(QPainter &painter, JKQTMathTextEnv
     }
 }
 
-double JKQTMathTextTextNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* /*prevNodeSize*/) {
+double JKQTMathTextTextNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) {
     doDrawBoxes(painter, x, y, currentEv);
     double width=0;
     double baselineHeight=0;
@@ -430,7 +430,7 @@ size_t JKQTMathTextVerbatimNode::getTabSize() const
     return tabSize;
 }
 
-double JKQTMathTextVerbatimNode::draw(QPainter &painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize *prevNodeSize)
+double JKQTMathTextVerbatimNode::draw(QPainter &painter, double x, double y, JKQTMathTextEnvironment currentEv)
 {
     doDrawBoxes(painter, x, y, currentEv);
     transformEnvironment(currentEv);
@@ -468,7 +468,7 @@ bool JKQTMathTextVerbatimNode::toHtml(QString &html, JKQTMathTextEnvironment cur
     return true;
 }
 
-void JKQTMathTextVerbatimNode::getSizeInternal(QPainter &painter, JKQTMathTextEnvironment currentEv, double &width, double &baselineHeight, double &overallHeight, double &strikeoutPos, const JKQTMathTextNodeSize *prevNodeSize)
+void JKQTMathTextVerbatimNode::getSizeInternal(QPainter &painter, JKQTMathTextEnvironment currentEv, double &width, double &baselineHeight, double &overallHeight, double &strikeoutPos)
 {
     transformEnvironment(currentEv);
     const  LayoutInfo l=calcLayout(painter, currentEv);

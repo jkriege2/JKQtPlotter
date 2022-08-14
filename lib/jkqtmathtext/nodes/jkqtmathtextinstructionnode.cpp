@@ -78,7 +78,7 @@ QString JKQTMathTextSimpleInstructionNode::getTypeName() const
     return QLatin1String("JKQTMathTextSimpleInstructionNode(")+instructionName+")";
 }
 
-double JKQTMathTextSimpleInstructionNode::draw(QPainter &painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize *prevNodeSize)
+double JKQTMathTextSimpleInstructionNode::draw(QPainter &painter, double x, double y, JKQTMathTextEnvironment currentEv)
 {
     doDrawBoxes(painter, x, y, currentEv);
     fillInstructions();
@@ -124,7 +124,7 @@ size_t JKQTMathTextSimpleInstructionNode::countParametersOfInstruction(const QSt
     return 0;
 }
 
-void JKQTMathTextSimpleInstructionNode::getSizeInternal(QPainter &painter, JKQTMathTextEnvironment currentEv, double &width, double &baselineHeight, double &overallHeight, double &strikeoutPos, const JKQTMathTextNodeSize */*prevNodeSize*/)
+void JKQTMathTextSimpleInstructionNode::getSizeInternal(QPainter &painter, JKQTMathTextEnvironment currentEv, double &width, double &baselineHeight, double &overallHeight, double &strikeoutPos)
 {
     fillInstructions();
     QFont f=currentEv.getFont(parentMathText);
@@ -215,7 +215,7 @@ QString JKQTMathTextModifiedTextPropsInstructionNode::getTypeName() const
     return QLatin1String("JKQTMathTextModifiedTextPropsInstructionNode(")+instructionName+")";
 }
 
-void JKQTMathTextModifiedTextPropsInstructionNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* /*prevNodeSize*/) {
+void JKQTMathTextModifiedTextPropsInstructionNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
     fillInstructions();
     JKQTMathTextEnvironment ev=currentEv;
 
@@ -224,7 +224,7 @@ void JKQTMathTextModifiedTextPropsInstructionNode::getSizeInternal(QPainter& pai
     getChild()->getSize(painter, ev, width, baselineHeight, overallHeight, strikeoutPos);
 }
 
-double JKQTMathTextModifiedTextPropsInstructionNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* /*prevNodeSize*/) {
+double JKQTMathTextModifiedTextPropsInstructionNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) {
     fillInstructions();
     doDrawBoxes(painter, x, y, currentEv);
     JKQTMathTextEnvironment ev=currentEv;
@@ -665,7 +665,7 @@ QString JKQTMathTextBoxInstructionNode::getTypeName() const
     return QLatin1String("JKQTMathTextBoxInstructionNode(")+instructionName+")";
 }
 
-void JKQTMathTextBoxInstructionNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* /*prevNodeSize*/) {
+void JKQTMathTextBoxInstructionNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
     JKQTMathTextEnvironment ev=currentEv;
 
     const auto& inst=instructions.value(getInstructionName());
@@ -682,7 +682,7 @@ void JKQTMathTextBoxInstructionNode::getSizeInternal(QPainter& painter, JKQTMath
     overallHeight=overallHeight+2.0*(padding+lw/2.0);
 }
 
-double JKQTMathTextBoxInstructionNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* /*prevNodeSize*/) {
+double JKQTMathTextBoxInstructionNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) {
     doDrawBoxes(painter, x, y, currentEv);
     JKQTMathTextEnvironment ev=currentEv;
 

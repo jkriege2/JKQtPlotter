@@ -62,25 +62,33 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSymbolNode: public JKQTMathTextNode {
         /** \copydoc JKQTMathTextNode::getTypeName() */
         virtual QString getTypeName() const override;
         /** \copydoc JKQTMathTextNode::draw() */
-        virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
+        virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) override;
         /** \copydoc JKQTMathTextNode::toHtml() */
         virtual bool toHtml(QString& html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) override;
         /** \copydoc symbolName */ 
         QString getSymbolName() const;
+        /** \brief return type for getSymbolSize(), extends JKQTMathTextNodeSize with information about x-correction for sub- and superscript */
+        struct NodeSize : JKQTMathTextNodeSize {
+            NodeSize();
+            /** \brief x-correction as described for JKQTMathParser::intsubsuper_xcorrection_factor for placing sub-/superscript below/above the symbol, e.g. for integral signs, where the subscript is slightly shifted to the left (from center) and the superscript slightly to the right */
+            double subSuperXCorrection;
+            /** \brief x-correction as described for JKQTMathParser::intsubbesides_xcorrection_xfactor for placing sub-/superscript besides the symbol */
+            double subBesidesXCorrection;
+
+            NodeSize& operator=(const JKQTMathTextNodeSize& other);
+            NodeSize& operator=(const NodeSize& other);
+            NodeSize(const JKQTMathTextNodeSize& other);
+            NodeSize(const NodeSize& other);
+        };
+
         /** \brief determine the size of the node, calls getSizeInternal() implementation of the actual type \see getSizeInternal()
          *
          * \param painter painter to use for determining the size
          * \param currentEv current environment object
-         * \param[out] width width of the block/node
-         * \param[out] baselineHeight distance from the bottom of the block/node-box to the baseline
-         * \param[out] overallHeight overall height (bottom to top) of the node, the ascent is \c overallHeight-baselineHeight
-         * \param[out] strikeoutPos position of the strikeout-line
-         * \param[out] subSuperXCorrection x-correction as described for JKQTMathParser::intsubsuper_xcorrection_factor for placing sub-/superscript below/above the symbol
-         * \param[out] subBesidesXCorrection x-correction as described for JKQTMathParser::intsubbesides_xcorrection_xfactor for placing sub-/superscript below/above the symbol
-         * \param[in] prevNodeSize optional parameter, describing the size of the previous node (on the left). This may be used for layout of some nodes (e.g. sub/super to move correctly next to large parantheses ...)
          *
+         * \return all important size properties, packed into a NodeSize struct
          */
-        void getSymbolSize(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, double& subSuperXCorrection, double& subBesidesXCorrection, const JKQTMathTextNodeSize* prevNodeSize=nullptr);
+        NodeSize getSymbolSize(QPainter& painter, JKQTMathTextEnvironment currentEv);
         /** \brief checks whether the given symbol name can be prepresented by this type of node */
         static bool hasSymbol(const QString& symbolName);
         /** \brief return a list of all defined symbols */
@@ -93,9 +101,9 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSymbolNode: public JKQTMathTextNode {
         static int getSymbolLength(const QString& symbolName);
     protected:
         /** \copydoc JKQTMathTextNode::getSizeInternal() */
-        virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
+        virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) override;
         /** \copydoc JKQTMathTextSymbolNode::getSymbolSize() */
-        virtual void getSymbolSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, double& subSuperXCorrection, double& subBesidesXCorrection, const JKQTMathTextNodeSize* prevNodeSize=nullptr) ;
+        virtual void getSymbolSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, double& subSuperXCorrection, double& subBesidesXCorrection) ;
 
 
         /** \brief this string will be sent to the drawText method with properly set fonts */

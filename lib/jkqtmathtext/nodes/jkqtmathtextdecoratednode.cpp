@@ -129,7 +129,7 @@ JKQTMathTextDecoratedNode::JKQTMathTextDecoratedNode(JKQTMathText* _parent, Deco
 JKQTMathTextDecoratedNode::~JKQTMathTextDecoratedNode() {
 }
 
-void JKQTMathTextDecoratedNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* /*prevNodeSize*/) {
+void JKQTMathTextDecoratedNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
     JKQTMathTextEnvironment ev=currentEv;
     double cwidth=0, cbaselineHeight=0, coverallHeight=0, cstrikeoutPos=0;
     getChild()->getSize(painter, ev, cwidth, cbaselineHeight, coverallHeight, cstrikeoutPos);
@@ -224,7 +224,7 @@ void JKQTMathTextDecoratedNode::fillInstructions()
 
 }
 
-double JKQTMathTextDecoratedNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* /*prevNodeSize*/) {
+double JKQTMathTextDecoratedNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) {
     doDrawBoxes(painter, x, y, currentEv);
     JKQTMathTextEnvironment ev=currentEv;
     double cwidth=0, cbaselineHeight=0, coverallHeight=0, cstrikeoutPos=0;

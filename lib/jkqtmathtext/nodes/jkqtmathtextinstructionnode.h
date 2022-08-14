@@ -70,7 +70,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSimpleInstructionNode: public JKQTMath
         /** \copydoc JKQTMathTextNode::getTypeName() */
         virtual QString getTypeName() const override;
         /** \copydoc JKQTMathTextNode::draw() */
-        virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
+        virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) override;
         /** \copydoc JKQTMathTextNode::toHtml() */
         virtual bool toHtml(QString& html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) override;
         /** \copydoc instructionName */
@@ -89,7 +89,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSimpleInstructionNode: public JKQTMath
 
     protected:
         /** \copydoc JKQTMathTextNode::getSizeInternal() */
-        virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
+        virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) override;
         /** \brief defines the implementation of an instruction represented by JKQTMathTextModifiedTextPropsInstructionNode */
         struct InstructionProperties {
             /** \brief this functor implements the instruction */
@@ -131,7 +131,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextModifiedTextPropsInstructionNode: publ
         /** \copydoc JKQTMathTextNode::getTypeName() */
         virtual QString getTypeName() const override;
         /** \copydoc JKQTMathTextNode::draw() */
-        virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
+        virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) override;
         /** \copydoc JKQTMathTextNode::toHtml() */
         virtual bool toHtml(QString& html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) override;
 
@@ -150,7 +150,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextModifiedTextPropsInstructionNode: publ
 
     protected:
         /** \copydoc JKQTMathTextNode::getSizeInternal() */
-        virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
+        virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) override;
         /** \brief defines the implementation of an instruction represented by JKQTMathTextModifiedTextPropsInstructionNode */
         struct InstructionProperties {
             /** \brief this functor implements the instruction */
@@ -188,7 +188,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextBoxInstructionNode: public JKQTMathTex
         /** \copydoc JKQTMathTextNode::getTypeName() */
         virtual QString getTypeName() const override;
         /** \copydoc JKQTMathTextNode::draw() */
-        virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
+        virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) override;
         /** \copydoc JKQTMathTextNode::toHtml() */
         virtual bool toHtml(QString& html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) override;
 
@@ -210,7 +210,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextBoxInstructionNode: public JKQTMathTex
         static void modifyInMathEnvironment(const QString& instructionName, bool& insideMath, const QStringList &params=QStringList());
     protected:
         /** \copydoc JKQTMathTextNode::getSizeInternal() */
-        virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
+        virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) override;
         /** \brief set all properties in \a ev, as appropriate for the represented instruction */
         bool setupMTenvironment(JKQTMathTextEnvironment &ev) const;
 

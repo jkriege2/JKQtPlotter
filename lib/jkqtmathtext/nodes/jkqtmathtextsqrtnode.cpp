@@ -50,7 +50,7 @@ JKQTMathTextSqrtNode::~JKQTMathTextSqrtNode() {
     childDegree=nullptr;
 }
 
-void JKQTMathTextSqrtNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* /*prevNodeSize*/) {
+void JKQTMathTextSqrtNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
     const QFontMetricsF fm(currentEv.getFont(parentMathText), painter.device());
     JKQTMathTextEnvironment evSmall=currentEv;
     evSmall.fontSize=currentEv.fontSize*parentMathText->getSqrtSmallFontFactor();
@@ -73,7 +73,7 @@ void JKQTMathTextSqrtNode::getSizeInternal(QPainter& painter, JKQTMathTextEnviro
     }
 }
 
-double JKQTMathTextSqrtNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* /*prevNodeSize*/) {
+double JKQTMathTextSqrtNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) {
     doDrawBoxes(painter, x, y, currentEv);
 
     const QFont f=currentEv.getFont(parentMathText);

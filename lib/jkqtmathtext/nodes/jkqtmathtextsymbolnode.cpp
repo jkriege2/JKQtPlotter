@@ -51,12 +51,12 @@ QString JKQTMathTextSymbolNode::getTypeName() const
 }
 
 
-void JKQTMathTextSymbolNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize) {
+void JKQTMathTextSymbolNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
     double dummy1, dummy2;
-    getSymbolSizeInternal(painter, currentEv, width, baselineHeight, overallHeight, strikeoutPos, dummy1, dummy2, prevNodeSize);
+    getSymbolSizeInternal(painter, currentEv, width, baselineHeight, overallHeight, strikeoutPos, dummy1, dummy2);
 }
 
-void JKQTMathTextSymbolNode::getSymbolSizeInternal(QPainter &painter, JKQTMathTextEnvironment currentEv, double &width, double &baselineHeight, double &overallHeight, double &strikeoutPos, double &subSuperXCorrection, double &subBesidesXCorrection, const JKQTMathTextNodeSize */*prevNodeSize*/)
+void JKQTMathTextSymbolNode::getSymbolSizeInternal(QPainter &painter, JKQTMathTextEnvironment currentEv, double &width, double &baselineHeight, double &overallHeight, double &strikeoutPos, double &subSuperXCorrection, double &subBesidesXCorrection)
 {
     const auto fullProps=symbols.value(symbolName, SymbolFullProps());
     const GlobalSymbolFlags globalFlags=fullProps.globalFlags;
@@ -193,7 +193,7 @@ void JKQTMathTextSymbolNode::drawText(QPainter &p, const QString &text, GlobalSy
 }
 
 
-double JKQTMathTextSymbolNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* /*prevNodeSize*/) {
+double JKQTMathTextSymbolNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) {
     doDrawBoxes(painter, x, y, currentEv);
     double width=0;
     double baselineHeight=0;
@@ -288,16 +288,11 @@ QString JKQTMathTextSymbolNode::getSymbolName() const {
     return this->symbolName;
 }
 
-void JKQTMathTextSymbolNode::getSymbolSize(QPainter &painter, JKQTMathTextEnvironment currentEv, double &width, double &baselineHeight, double &overallHeight, double &strikeoutPos, double &subSuperXCorrection, double &subBesidesXCorrection, const JKQTMathTextNodeSize *prevNodeSize)
+JKQTMathTextSymbolNode::NodeSize JKQTMathTextSymbolNode::getSymbolSize(QPainter &painter, JKQTMathTextEnvironment currentEv)
 {
-    double w=width, b=baselineHeight, o=overallHeight, s=strikeoutPos;
-    getSymbolSizeInternal(painter, currentEv, w, b, o, s, subSuperXCorrection, subBesidesXCorrection, prevNodeSize);
-
-    if (w<1e5) width=w;
-    if (b<1e5) baselineHeight=b;
-    if (o<1e5) overallHeight=o;
-    if (s<1e5) strikeoutPos=s;
-
+    NodeSize s;
+    getSymbolSizeInternal(painter, currentEv, s.width, s.baselineHeight, s.overallHeight, s.strikeoutPos, s.subSuperXCorrection, s.subBesidesXCorrection);
+    return s;
 }
 
 bool JKQTMathTextSymbolNode::hasSymbol(const QString &symbolName)
@@ -1210,4 +1205,40 @@ QPair<QFont, JKQTMathTextSymbolNode::SymbolProps> JKQTMathTextSymbolNode::Symbol
     if (has(outProps.flags, BoldOn)) outFont.setBold(true);
     if (has(outProps.flags, BoldOff)) outFont.setBold(false);
     return QPair<QFont, SymbolProps>(outFont, outProps);
+}
+
+JKQTMathTextSymbolNode::NodeSize::NodeSize():
+    JKQTMathTextNodeSize(),
+    subSuperXCorrection(0.0),
+    subBesidesXCorrection(0.0)
+{
+
+}
+
+JKQTMathTextSymbolNode::NodeSize &JKQTMathTextSymbolNode::NodeSize::operator=(const JKQTMathTextNodeSize &other)
+{
+    subSuperXCorrection=0;
+    subBesidesXCorrection=0;
+    JKQTMathTextNodeSize::operator=(other);
+    return *this;
+}
+
+JKQTMathTextSymbolNode::NodeSize &JKQTMathTextSymbolNode::NodeSize::operator=(const NodeSize &other)
+{
+    subSuperXCorrection=other.subSuperXCorrection;
+    subBesidesXCorrection=other.subBesidesXCorrection;
+    JKQTMathTextNodeSize::operator=(other);
+    return *this;
+}
+
+JKQTMathTextSymbolNode::NodeSize::NodeSize(const JKQTMathTextNodeSize &other):
+    NodeSize()
+{
+    operator=(other);
+}
+
+JKQTMathTextSymbolNode::NodeSize::NodeSize(const NodeSize &other):
+    NodeSize()
+{
+    operator=(other);
 }

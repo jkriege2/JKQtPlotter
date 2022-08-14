@@ -48,18 +48,18 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextNode {
          * \param[out] baselineHeight distance from the bottom of the block/node-box to the baseline
          * \param[out] overallHeight overall height (bottom to top) of the node, the ascent is \c overallHeight-baselineHeight
          * \param[out] strikeoutPos position of the strikeout-line
-         * \param[in] prevNodeSize optional parameter, describing the size of the previous node (on the left). This may be used for layout of some nodes (e.g. sub/super to move correctly next to large parantheses ...)
          *
          */
-        void getSize(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr);
+        void getSize(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos);
         /** \brief determine the size of the node, calls getSizeInternal() implementation of the actual type \see getSizeInternal()
          *
          * \param painter painter to use for determining the size
          * \param currentEv current environment object
-         * \param[in] prevNodeSize optional parameter, describing the size of the previous node (on the left). This may be used for layout of some nodes (e.g. sub/super to move correctly next to large parantheses ...)
+         *
+         * \return all important box size parameters packed as JKQTMathTextNodeSize
          *
          */
-        JKQTMathTextNodeSize getSize(QPainter& painter, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* prevNodeSize=nullptr);
+        JKQTMathTextNodeSize getSize(QPainter& painter, JKQTMathTextEnvironment currentEv);
         /** \brief calculates the x-size-difference between the given (probably) italic (width externally calculated: \a width_potentiallyitalic, \a ev_potentiallyitalic) and the non-italic version of \a child */
         double getNonItalicXCorretion(QPainter &painter, double width_potentiallyitalic, const JKQTMathTextEnvironment &ev_potentiallyitalic, JKQTMathTextNode* child) const;
         /** \brief draw the contents at the designated position
@@ -68,10 +68,10 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextNode {
          * \param x x-position, where the drawing starts [Pixel]
          * \param y Y-position of the baseline, where the drawing starts [Pixel]
          * \param currentEv JKQTMathTextEnvironment object describing the current drawing environment/settings
-         * \param[in] prevNodeSize optional parameter, describing the size of the previous node (on the left). This may be used for layout of some nodes (e.g. sub/super to move correctly next to large parantheses ...)
+         *
          * \return the x position which to use for the next part of the text
          */
-        virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* prevNodeSize=nullptr)=0;
+        virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv)=0;
         /** \brief convert node to HTML and returns \c true on success
          * \param[out] html new HTML code is APPENDED to this string
          * \param currentEv JKQTMathTextEnvironment object describing the current drawing environment/settings
@@ -106,10 +106,9 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextNode {
          * \param[out] baselineHeight distance from the bottom of the block/node-box to the baseline
          * \param[out] overallHeight overall height (bottom to top) of the node, the ascent is \c overallHeight-baselineHeight
          * \param[out] strikeoutPos position of the strikeout-line
-         * \param[in] prevNodeSize optional parameter, describing the size of the previous node (on the left). This may be used for layout of some nodes (e.g. sub/super to move correctly next to large parantheses ...)
          *
          */
-        virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr)=0;
+        virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos)=0;
 
         /** \brief parent JKQTMathText object (required for several drawing operations */
         JKQTMathText* parentMathText;
@@ -295,10 +294,10 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextNoopNode: public JKQTMathTextNode {
         /** \copydoc JKQTMathTextNode::toHtml() */
         virtual bool toHtml(QString& html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) override;
         /** \copydoc JKQTMathTextNode::draw() */
-        virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
+        virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) override;
     protected:
         /** \copydoc JKQTMathTextNode::getSizeInternal() */
-        virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* prevNodeSize=nullptr) override;
+        virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) override;
 
 };
 #endif // JKQTMATHTEXTNODE_H

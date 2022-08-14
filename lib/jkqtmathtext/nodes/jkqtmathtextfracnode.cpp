@@ -123,7 +123,7 @@ QString JKQTMathTextFracNode::getTypeName() const
     return "MTfracNode";
 }
 
-void JKQTMathTextFracNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const JKQTMathTextNodeSize* /*prevNodeSize*/) {
+void JKQTMathTextFracNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
     const QFont f=currentEv.getFont(parentMathText);
     const QFontMetricsF fm(f, painter.device());
     JKQTMathTextEnvironment ev1=currentEv;
@@ -240,7 +240,7 @@ double JKQTMathTextFracNode::getFracScalingFactor() const
     return parentMathText->getFracFactor();
 }
 
-double JKQTMathTextFracNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* /*prevNodeSize*/) {
+double JKQTMathTextFracNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) {
     doDrawBoxes(painter, x, y, currentEv);
     const QFont f=currentEv.getFont(parentMathText);
     const QFontMetricsF fm(f, painter.device());

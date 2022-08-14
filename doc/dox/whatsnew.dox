@@ -57,6 +57,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>IMPROVED/REWORKED rendering of text in text- and math-mode. Now it is more consistent with the output of LaTeX itself</li>
     <li>IMPROVED/REWORKED rendering of blackboard font: now several different rendering modes can be selected using JKQTMathText::setFontBlackboradMode()</li>
     <li>BREAKING/REWORKED: The \\verb!...!-command now works the same as in LaTeX</li>
+    <li>BREAKING/CLEANUP: cleanup: Removed Parameter prevNodeSize from JKQTMathTextNode::draw() and JKQTMathTextNode::getSize()/JKQTMathTextNode::getSizeInternal(), since it is only really necessary for JKQTMathTextSubscriptNode and JKQTMathTextSuperscriptNode</li>
     <li>NEW: JKQTMathTextVerticalListNode allows to typeset a vertical list of lines</li>
     <li>NEW: JKQTMathText::parse() by default allows linebreaks in the LaTeX string to be parsed. This can be switched off by a parameter</li>
     <li>NEW: added functions to set the font-size in pixels (as alternative to the existing functions that set them in points), implements request <a href="https://github.com/jkriege2/JKQtPlotter/issues/76">#76</a> from <a href="https://github.com/igormironchik">user:igormironchik</a> </li>
