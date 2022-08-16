@@ -301,7 +301,7 @@ struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextEnvironment {
 
 
     /** \brief build a <a href="https://doc.qt.io/qt-5/qfont.html">QFont</a> object from the settings in this object */
-    QFont getFont(JKQTMathText* parent) const;
+    QFont getFont(const JKQTMathText *parent) const;
     /** \brief return a copy of this object with the font exchanged for \a font */
     JKQTMathTextEnvironment exchangedFontFor(JKQTMathTextEnvironmentFont font) const;
     /** \brief return a copy of this object with the font exchanged for the matching roman font */

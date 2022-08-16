@@ -509,7 +509,7 @@ JKQTMathTextFontEncoding JKQTMathTextEnvironment::getFontEncoding(JKQTMathText* 
     return MTFEStandard;
 }
 
-QFont JKQTMathTextEnvironment::getFont(JKQTMathText* parent) const {
+QFont JKQTMathTextEnvironment::getFont(const JKQTMathText* parent) const {
     QFont f;
     switch (font) {
         case MTEsans: if (insideMath) {

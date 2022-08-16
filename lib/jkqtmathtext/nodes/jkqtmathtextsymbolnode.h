@@ -62,9 +62,9 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSymbolNode: public JKQTMathTextNode {
         /** \copydoc JKQTMathTextNode::getTypeName() */
         virtual QString getTypeName() const override;
         /** \copydoc JKQTMathTextNode::draw() */
-        virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) override;
+        virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) const override;
         /** \copydoc JKQTMathTextNode::toHtml() */
-        virtual bool toHtml(QString& html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) override;
+        virtual bool toHtml(QString& html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) const override;
         /** \copydoc symbolName */ 
         QString getSymbolName() const;
         /** \brief return type for getSymbolSize(), extends JKQTMathTextNodeSize with information about x-correction for sub- and superscript */
@@ -88,7 +88,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSymbolNode: public JKQTMathTextNode {
          *
          * \return all important size properties, packed into a NodeSize struct
          */
-        NodeSize getSymbolSize(QPainter& painter, JKQTMathTextEnvironment currentEv);
+        NodeSize getSymbolSize(QPainter& painter, JKQTMathTextEnvironment currentEv) const;
         /** \brief checks whether the given symbol name can be prepresented by this type of node */
         static bool hasSymbol(const QString& symbolName);
         /** \brief return a list of all defined symbols */
@@ -101,9 +101,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSymbolNode: public JKQTMathTextNode {
         static int getSymbolLength(const QString& symbolName);
     protected:
         /** \copydoc JKQTMathTextNode::getSizeInternal() */
-        virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) override;
-        /** \copydoc JKQTMathTextSymbolNode::getSymbolSize() */
-        virtual void getSymbolSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, double& subSuperXCorrection, double& subBesidesXCorrection) ;
+        virtual JKQTMathTextNodeSize getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv) const override;
 
 
         /** \brief this string will be sent to the drawText method with properly set fonts */

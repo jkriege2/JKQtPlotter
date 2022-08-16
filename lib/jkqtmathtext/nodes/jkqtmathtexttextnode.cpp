@@ -63,7 +63,7 @@ QString JKQTMathTextTextBaseNode::textTransform(const QString &text, const JKQTM
 }
 
 
-bool JKQTMathTextTextBaseNode::toHtml(QString &html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) {
+bool JKQTMathTextTextBaseNode::toHtml(QString &html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) const {
     html=html
             +currentEv.toHtmlStart(defaultEv, parentMathText)
             +textTransform(text, currentEv).toHtmlEscaped()
@@ -121,19 +121,16 @@ JKQTMathTextTextNode::JKQTMathTextTextNode(JKQTMathText* _parent, const QString&
 
 JKQTMathTextTextNode::~JKQTMathTextTextNode() = default;
 
-void JKQTMathTextTextNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
-    QStringList textpart;
-    QList<FontMode> fontMode;
-    QList<double> textpartXPos;
-    getSizeInternalAndData(painter, currentEv, width, baselineHeight, overallHeight, strikeoutPos,textpart, fontMode, textpartXPos);
+JKQTMathTextNodeSize JKQTMathTextTextNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv) const {
+    return calcLayout(painter, currentEv);
 }
 
-void JKQTMathTextTextNode::getSizeInternalAndData(QPainter &painter, JKQTMathTextEnvironment currentEv, double &width, double &baselineHeight, double &overallHeight, double &strikeoutPos, QStringList &textpart, QList<FontMode> &fontMode, QList<double> &textpartXPos)
+JKQTMathTextTextNode::LayoutInfo JKQTMathTextTextNode::calcLayout(QPainter &painter, JKQTMathTextEnvironment currentEv) const
 {
-    textpart.clear();
-    fontMode.clear();
+    LayoutInfo l;
+
     const QString txt=textTransform(text, currentEv);
-    splitTextForLayout(painter, currentEv, txt, textpart, fontMode);
+    splitTextForLayout(painter, currentEv, txt, l.textpart, l.fontMode);
 
     const QFont f=currentEv.getFont(parentMathText);
     const QFont fUpright=JKQTMathTextGetNonItalic(f);
@@ -148,44 +145,45 @@ void JKQTMathTextTextNode::getSizeInternalAndData(QPainter &painter, JKQTMathTex
 #else
     const double sp=fm.width(' ');
 #endif
-    width=0;
+    l.width=0;
     double ascent=0;
     double descent=0;
-    for (int i=0; i<textpart.size(); i++) {
+    for (int i=0; i<l.textpart.size(); i++) {
         QRectF br, tbr;
-        switch(fontMode[i]) {
+        switch(l.fontMode[i]) {
             case FMasDefined:
             case FMasDefinedOutline:
-                br=fm.boundingRect(textpart[i]);
-                tbr=JKQTMathTextGetTightBoundingRect(f, textpart[i], painter.device());
+                br=fm.boundingRect(l.textpart[i]);
+                tbr=JKQTMathTextGetTightBoundingRect(f, l.textpart[i], painter.device());
                 break;
             case FMasDefinedForceUpright:
-                br=fmUpright.boundingRect(textpart[i]);
-                tbr=JKQTMathTextGetTightBoundingRect(fUpright, textpart[i], painter.device());
+                br=fmUpright.boundingRect(l.textpart[i]);
+                tbr=JKQTMathTextGetTightBoundingRect(fUpright, l.textpart[i], painter.device());
                 break;
             case FMroman:
-                br=fmRoman.boundingRect(textpart[i]);
-                tbr=JKQTMathTextGetTightBoundingRect(fRoman, textpart[i], painter.device());
+                br=fmRoman.boundingRect(l.textpart[i]);
+                tbr=JKQTMathTextGetTightBoundingRect(fRoman, l.textpart[i], painter.device());
                 break;
             case FMfallbackSymbol:
-                br=fmFallbackSym.boundingRect(textpart[i]);
-                tbr=JKQTMathTextGetTightBoundingRect(fFallbackSym, textpart[i], painter.device());
+                br=fmFallbackSym.boundingRect(l.textpart[i]);
+                tbr=JKQTMathTextGetTightBoundingRect(fFallbackSym, l.textpart[i], painter.device());
                 break;
         }
-        textpartXPos.append(width);
-        width+=br.width();
-        if (textpart[i].size()>0 && textpart[i].at(textpart[i].size()-1).isSpace()) {
+        l.textpartXPos.append(l.width);
+        l.width+=br.width();
+        if (l.textpart[i].size()>0 && l.textpart[i].at(l.textpart[i].size()-1).isSpace()) {
             // this correction is necessary, because it seems that QFontMetricsF::boundingRect() ignores trailing spaces
-            width+=sp;
+            l.width+=sp;
         }
         const double thisAscent=-tbr.top();
         const double thisDescent=tbr.bottom();
         ascent=qMax(ascent, thisAscent);
         descent=qMax(descent, thisDescent);
     }
-    overallHeight=(ascent+descent); //fm.height();
-    baselineHeight=ascent;
-    strikeoutPos=fm.strikeOutPos();
+    l.overallHeight=(ascent+descent); //fm.height();
+    l.baselineHeight=ascent;
+    l.strikeoutPos=fm.strikeOutPos();
+    return l;
 }
 
 void JKQTMathTextTextNode::splitTextForLayout(QPainter &painter, JKQTMathTextEnvironment currentEv, const QString &txt, QStringList &textpart, QList<FontMode> &fontMode) const
@@ -275,16 +273,9 @@ void JKQTMathTextTextNode::splitTextForLayout(QPainter &painter, JKQTMathTextEnv
     }
 }
 
-double JKQTMathTextTextNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) {
-    doDrawBoxes(painter, x, y, currentEv);
-    double width=0;
-    double baselineHeight=0;
-    double overallHeight=0;
-    double sp=0;
-    QStringList textpart;
-    QList<double> textpartXPos;
-    QList<FontMode> fontMode;
-    getSizeInternalAndData(painter, currentEv, width, baselineHeight, overallHeight, sp, textpart, fontMode, textpartXPos);
+double JKQTMathTextTextNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) const {
+    const LayoutInfo l=calcLayout(painter, currentEv);
+    doDrawBoxes(painter, x, y, l);
 
 
     const QFont f=currentEv.getFont(parentMathText);
@@ -303,32 +294,32 @@ double JKQTMathTextTextNode::draw(QPainter& painter, double x, double y, JKQTMat
     //qDebug()<<"JKQTMathTextTextNode: text="<<text<<" font="<<f;
 
     //std::cout<<"  TEXT: currentEv.mathMode="<<currentEv.insideMath<<", currentEv.forceUpright="<<currentEv.insideMathForceDigitsUpright<<"\n";
-    for (int i=0; i<textpart.size(); i++) {
+    for (int i=0; i<l.textpart.size(); i++) {
         //std::cout<<"  TEXT: mode="<<fontMode[i]<<", text='"<<textpart[i].toStdString()<<"'\n";
-        switch(fontMode[i]) {
+        switch(l.fontMode[i]) {
             case FMasDefined:
                 painter.setFont(f);
-                painter.drawText(QPointF(x+textpartXPos[i], y), textpart[i]);
+                painter.drawText(QPointF(x+l.textpartXPos[i], y), l.textpart[i]);
                 break;
             case FMasDefinedOutline:
-                JKQTMathTextDrawStringSimBlackboard(painter, f, currentEv.color, x+textpartXPos[i], y, textpart[i]);
+                JKQTMathTextDrawStringSimBlackboard(painter, f, currentEv.color, x+l.textpartXPos[i], y, l.textpart[i]);
                 break;
             case FMasDefinedForceUpright:
                 painter.setFont(fUpright);
-                painter.drawText(QPointF(x+textpartXPos[i], y), textpart[i]);
+                painter.drawText(QPointF(x+l.textpartXPos[i], y), l.textpart[i]);
                 break;
             case FMroman:
                 painter.setFont(fRoman);
-                painter.drawText(QPointF(x+textpartXPos[i], y), textpart[i]);
+                painter.drawText(QPointF(x+l.textpartXPos[i], y), l.textpart[i]);
                 break;
             case FMfallbackSymbol:
                 painter.setFont(fFallbackSym);
-                painter.drawText(QPointF(x+textpartXPos[i], y), textpart[i]);
+                painter.drawText(QPointF(x+l.textpartXPos[i], y), l.textpart[i]);
                 break;
         }
     }
 
-    return x+width;
+    return x+l.width;
 }
 
 
@@ -430,11 +421,11 @@ size_t JKQTMathTextVerbatimNode::getTabSize() const
     return tabSize;
 }
 
-double JKQTMathTextVerbatimNode::draw(QPainter &painter, double x, double y, JKQTMathTextEnvironment currentEv)
+double JKQTMathTextVerbatimNode::draw(QPainter &painter, double x, double y, JKQTMathTextEnvironment currentEv) const
 {
-    doDrawBoxes(painter, x, y, currentEv);
     transformEnvironment(currentEv);
     const LayoutInfo l=calcLayout(painter, currentEv);
+    doDrawBoxes(painter, x, y, l);
     QFont f=currentEv.getFont(parentMathText);
     f.setStyleStrategy(QFont::PreferDefault);
     f.setFixedPitch(true);
@@ -446,7 +437,7 @@ double JKQTMathTextVerbatimNode::draw(QPainter &painter, double x, double y, JKQ
     return x+l.width;
 }
 
-bool JKQTMathTextVerbatimNode::toHtml(QString &html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv)
+bool JKQTMathTextVerbatimNode::toHtml(QString &html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) const
 {
     transformEnvironment(currentEv);
     const bool isMultiLine=text.count('\n')>0;
@@ -468,14 +459,10 @@ bool JKQTMathTextVerbatimNode::toHtml(QString &html, JKQTMathTextEnvironment cur
     return true;
 }
 
-void JKQTMathTextVerbatimNode::getSizeInternal(QPainter &painter, JKQTMathTextEnvironment currentEv, double &width, double &baselineHeight, double &overallHeight, double &strikeoutPos)
+JKQTMathTextNodeSize JKQTMathTextVerbatimNode::getSizeInternal(QPainter &painter, JKQTMathTextEnvironment currentEv) const
 {
     transformEnvironment(currentEv);
-    const  LayoutInfo l=calcLayout(painter, currentEv);
-    width=l.width;
-    overallHeight=l.overallHeight;
-    baselineHeight=l.baselineHeight;
-    strikeoutPos=l.strikeoutPos;
+    return calcLayout(painter, currentEv);
 }
 
 void JKQTMathTextVerbatimNode::transformEnvironment(JKQTMathTextEnvironment &currentEv) const
@@ -591,4 +578,39 @@ JKQTMathTextVerbatimNode::LayoutInfo::LayoutInfo():
     JKQTMathTextNodeSize(), lines(), X()
 {
 
+}
+
+JKQTMathTextTextNode::LayoutInfo::LayoutInfo():
+    JKQTMathTextNodeSize(),
+    textpart(), fontMode(), textpartXPos()
+{
+
+}
+
+JKQTMathTextTextNode::LayoutInfo::LayoutInfo(const LayoutInfo &other):
+    LayoutInfo()
+{
+    operator=(other);
+}
+
+JKQTMathTextTextNode::LayoutInfo::LayoutInfo(const JKQTMathTextNodeSize &other):
+    LayoutInfo()
+{
+    operator=(other);
+}
+
+JKQTMathTextTextNode::LayoutInfo &JKQTMathTextTextNode::LayoutInfo::operator=(const LayoutInfo &other) {
+    JKQTMathTextNodeSize::operator=(other);
+    textpart=other.textpart;
+    fontMode=other.fontMode;
+    textpartXPos=other.textpartXPos;
+    return *this;
+}
+
+JKQTMathTextTextNode::LayoutInfo &JKQTMathTextTextNode::LayoutInfo::operator=(const JKQTMathTextNodeSize &other) {
+    JKQTMathTextNodeSize::operator=(other);
+    textpart.clear();
+    fontMode.clear();
+    textpartXPos.clear();
+    return *this;
 }

@@ -129,28 +129,28 @@ JKQTMathTextDecoratedNode::JKQTMathTextDecoratedNode(JKQTMathText* _parent, Deco
 JKQTMathTextDecoratedNode::~JKQTMathTextDecoratedNode() {
 }
 
-void JKQTMathTextDecoratedNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
+JKQTMathTextNodeSize JKQTMathTextDecoratedNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv) const {
+	JKQTMathTextNodeSize s;
     JKQTMathTextEnvironment ev=currentEv;
-    double cwidth=0, cbaselineHeight=0, coverallHeight=0, cstrikeoutPos=0;
-    getChild()->getSize(painter, ev, cwidth, cbaselineHeight, coverallHeight, cstrikeoutPos);
-    const double cDescent=coverallHeight-cbaselineHeight;
+    JKQTMathTextNodeSize cs=getChild()->getSize(painter, ev);
+    const double cDescent=cs.getDescent();
     const QFont font=ev.getFont(parentMathText);
     const QFontMetricsF fm(font, painter.device());
     const double decoSeparation=parentMathText->getDecorationSeparationFactor()*fm.ascent();
     const double deco_height=parentMathText->getDecorationHeightFactor()*fm.ascent();
-    const double deco_ypos=cbaselineHeight+decoSeparation;
+    const double deco_ypos=cs.baselineHeight+decoSeparation;
     const double decoAboveAscent_ypos=fm.ascent()+decoSeparation;
     const double decobelow_ypos=cDescent+decoSeparation;
-    const double italic_xcorrection=getNonItalicXCorretion(painter, cwidth, ev, getChild());
+    const double italic_xcorrection=getNonItalicXCorretion(painter, cs.width, ev, getChild());
     const double deco_miniwidth=((decoration==MTDtilde||decoration==MTDbreve)?fm.boundingRect("~").width():fm.boundingRect("^").width())-italic_xcorrection;
     const double linewidth=qMax(parentMathText->ABS_MIN_LINEWIDTH, fm.lineWidth());
 
 
 
-    double descent=coverallHeight-cbaselineHeight;
-    double ascent=cbaselineHeight;
+    double descent=cs.getDescent();
+    double ascent=cs.baselineHeight;
     if (decoration==MTDbar) {
-        ascent=std::max<double>(baselineHeight+decoSeparation, decoAboveAscent_ypos)+linewidth/2.0;
+        ascent=std::max<double>(cs.baselineHeight+decoSeparation, decoAboveAscent_ypos)+linewidth/2.0;
     } else if (decoration==MTDunderline || decoration==MTDunderlineDashed || decoration==MTDunderlineDotted) {
         descent=std::max<double>(decobelow_ypos, cDescent)+linewidth/2.0;
     } else if (decoration==MTDdoubleunderline) {
@@ -160,10 +160,11 @@ void JKQTMathTextDecoratedNode::getSizeInternal(QPainter& painter, JKQTMathTextE
     } else {
         ascent=deco_ypos+deco_height;
     }
-    overallHeight=ascent+descent;
-    baselineHeight=ascent;
-    strikeoutPos=cstrikeoutPos;
-    width=std::max<double>(deco_miniwidth,cwidth);
+    s.overallHeight=ascent+descent;
+    s.baselineHeight=ascent;
+    s.strikeoutPos=cs.strikeoutPos;
+    s.width=std::max<double>(deco_miniwidth,cs.width);
+    return s;
 }
 
 QHash<QString, JKQTMathTextDecoratedNode::DecorationType> JKQTMathTextDecoratedNode::instructions;
@@ -224,12 +225,11 @@ void JKQTMathTextDecoratedNode::fillInstructions()
 
 }
 
-double JKQTMathTextDecoratedNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) {
+double JKQTMathTextDecoratedNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) const {
     doDrawBoxes(painter, x, y, currentEv);
     JKQTMathTextEnvironment ev=currentEv;
-    double cwidth=0, cbaselineHeight=0, coverallHeight=0, cstrikeoutPos=0;
-    getChild()->getSize(painter, ev, cwidth, cbaselineHeight, coverallHeight, cstrikeoutPos);
-    const double cDescent=coverallHeight-cbaselineHeight;
+    auto cs=getChild()->getSize(painter, ev);
+    const double cDescent=cs.overallHeight-cs.baselineHeight;
     const QFont font=ev.getFont(parentMathText);
     const QFontMetricsF fm(font, painter.device());
     const double width_X=fm.boundingRect("X").width();
@@ -240,24 +240,24 @@ double JKQTMathTextDecoratedNode::draw(QPainter& painter, double x, double y, JK
     const double linewidthArrow=linewidth*0.65;
     const double deco_height=parentMathText->getDecorationHeightFactor()*fm.ascent();
     const double decoAboveAscent_ypos=y-fm.ascent()-decoSeparation;
-    const double strike_ypos=y-cbaselineHeight/2.0;
+    const double strike_ypos=y-cs.baselineHeight/2.0;
     const double decobelow_ypos=y+cDescent+decoSeparation;
-    const double italic_xcorrection=getNonItalicXCorretion(painter, cwidth, ev, getChild());
+    const double italic_xcorrection=getNonItalicXCorretion(painter, cs.width, ev, getChild());
     const double deco_xoffset=parentMathText->getDecorationWidthReductionXFactor()*width_X/2.0;
-    const double deco_width=std::max<double>(width_x*0.5,cwidth-2.0*deco_xoffset-italic_xcorrection);
+    const double deco_width=std::max<double>(width_x*0.5,cs.width-2.0*deco_xoffset-italic_xcorrection);
     const double deco_vecwidth=width_x*0.18;
     const double deco_vecheight=deco_height*0.25;
     const double deco_accentwidth=deco_height/4.0;
     const double deco_miniwidth=((decoration==MTDtilde||decoration==MTDbreve)?fm.boundingRect("j").width():fm.boundingRect("^").width())-italic_xcorrection;
-    const double decotop_xcenter=x+italic_xcorrection+(cwidth-italic_xcorrection)/2.0;
+    const double decotop_xcenter=x+italic_xcorrection+(cs.width-italic_xcorrection)/2.0;
     const double decotop_xstart=decotop_xcenter-deco_width/2.0+linewidth/2.0;
     const double decotop_xend=decotop_xcenter+deco_width/2.0-linewidth/2.0;
     const double decobot_xstart=x+linewidth/2.0;
-    const double decobot_xend=x+cwidth-italic_xcorrection-linewidth/2.0;
+    const double decobot_xend=x+cs.width-italic_xcorrection-linewidth/2.0;
     //const double decobot_xcenter=(decobot_xstart+decobot_xend)/2.0;
-    const double deco_ytopbot=y-cbaselineHeight-decoSeparation-linewidth/2.0;
-    const double deco_ytoptop=y-cbaselineHeight-decoSeparation-deco_height+linewidth/2.0;
-    const double deco_ytopcenter=y-cbaselineHeight-decoSeparation-deco_height/2.0;
+    const double deco_ytopbot=y-cs.baselineHeight-decoSeparation-linewidth/2.0;
+    const double deco_ytoptop=y-cs.baselineHeight-decoSeparation-deco_height+linewidth/2.0;
+    const double deco_ytopcenter=y-cs.baselineHeight-decoSeparation-deco_height/2.0;
 
 
 
@@ -529,7 +529,7 @@ double JKQTMathTextDecoratedNode::draw(QPainter& painter, double x, double y, JK
     return xnew;
 }
 
-bool JKQTMathTextDecoratedNode::toHtml(QString &/*html*/, JKQTMathTextEnvironment /*currentEv*/, JKQTMathTextEnvironment /*defaultEv*/) {
+bool JKQTMathTextDecoratedNode::toHtml(QString &/*html*/, JKQTMathTextEnvironment /*currentEv*/, JKQTMathTextEnvironment /*defaultEv*/) const {
     //QString f;
     //JKQTMathTextEnvironment ev=currentEv;
 

@@ -98,7 +98,7 @@ QString JKQTMathTextMatrixNode::getTypeName() const
 }
 
 
-bool JKQTMathTextMatrixNode::toHtml(QString &/*html*/, JKQTMathTextEnvironment /*currentEv*/, JKQTMathTextEnvironment /*defaultEv*/)
+bool JKQTMathTextMatrixNode::toHtml(QString &/*html*/, JKQTMathTextEnvironment /*currentEv*/, JKQTMathTextEnvironment /*defaultEv*/) const
 {
     return false;
 }
@@ -362,21 +362,17 @@ JKQTMathTextMatrixNode::LayoutInfo JKQTMathTextMatrixNode::calcLayout(QPainter &
     return l;
 }
 
-void JKQTMathTextMatrixNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
-    const  LayoutInfo l=calcLayout(painter, currentEv);
-    width=l.width;
-    overallHeight=l.overallHeight;
-    baselineHeight=l.baselineHeight;
-    strikeoutPos=l.strikeoutPos;
+JKQTMathTextNodeSize JKQTMathTextMatrixNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv) const {
+    return calcLayout(painter, currentEv);
 }
 
-double JKQTMathTextMatrixNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) {
-    doDrawBoxes(painter, x, y, currentEv);
+double JKQTMathTextMatrixNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) const {
 
     const QFontMetricsF fm(currentEv.getFont(parentMathText), painter.device());
     JKQTMathTextEnvironment ev1=currentEv;
 
     const  LayoutInfo l=calcLayout(painter, currentEv);
+    doDrawBoxes(painter, x, y, l);
 
     const double xwidth=fm.boundingRect("x").width();
     const double XSeparation=parentMathText->getMatrixXSeparationFactor()*xwidth;

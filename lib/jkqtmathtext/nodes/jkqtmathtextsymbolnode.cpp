@@ -51,63 +51,8 @@ QString JKQTMathTextSymbolNode::getTypeName() const
 }
 
 
-void JKQTMathTextSymbolNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
-    double dummy1, dummy2;
-    getSymbolSizeInternal(painter, currentEv, width, baselineHeight, overallHeight, strikeoutPos, dummy1, dummy2);
-}
-
-void JKQTMathTextSymbolNode::getSymbolSizeInternal(QPainter &painter, JKQTMathTextEnvironment currentEv, double &width, double &baselineHeight, double &overallHeight, double &strikeoutPos, double &subSuperXCorrection, double &subBesidesXCorrection)
-{
-    const auto fullProps=symbols.value(symbolName, SymbolFullProps());
-    const GlobalSymbolFlags globalFlags=fullProps.globalFlags;
-    const auto drawProps=fullProps.getDrawingData(currentEv, parentMathText);
-    const QFont f=drawProps.first;
-    const QFontMetricsF fm(f);
-    const JKQTMathTextSymbolNode::SymbolProps symprops=drawProps.second;
-    const SymbolFlags symflags=symprops.flags;
-    const QString sym=symprops.symbol;
-    const QRectF tbr=getTightBoundingRect(fm, sym, globalFlags);
-    const QRectF br=getBoundingRect(fm, sym, globalFlags);
-    const QRectF tbrNoSymbol=JKQTMathTextGetTightBoundingRect(f, "X", painter.device());
-    const QRectF mintbr=JKQTMathTextGetTightBoundingRect(f, "(", painter.device());
-    //const double yShift=symprops.yShiftFactor*tbr.height();
-
-
-    if (currentEv.insideMath) {
-        width=qMax(br.width(), mintbr.width());
-        if (has(globalFlags, SmallExtendWidthInMathmode)) {
-            if (!symprops.getSymbolSingleChar().isNull()) width=width*(1.0+(parentMathText->getMathoperatorWidthFactor()-1.0)/5.0);
-            else width=width+mintbr.width()*0.15;
-        } else if (has(globalFlags, ExtendWidthInMathmode)) {
-            if (!symprops.getSymbolSingleChar().isNull()) width=width*parentMathText->getMathoperatorWidthFactor();
-            else width=width+mintbr.width()*0.5;
-        }
-    } else {
-        width=br.width();
-    }
-    if (!sym.isEmpty()) {
-        overallHeight=tbr.height();
-        baselineHeight=tbr.height()-tbr.bottom();
-    } else {
-        overallHeight=tbrNoSymbol.height();
-        baselineHeight=tbrNoSymbol.height()-tbrNoSymbol.bottom();
-        width=tbrNoSymbol.width();
-    }
-    const double oldDescent=overallHeight-baselineHeight;
-
-    if (has(symflags, HeightIsAscent)) {
-        baselineHeight=fm.ascent();
-        overallHeight=baselineHeight+oldDescent;
-    }
-    if (has(symflags, RotateSymbol90)) {
-        width=qMax(overallHeight, width);
-    }
-    strikeoutPos=fm.strikeOutPos();
-
-    if (has(globalFlags, IntLikeSymbolCorrection)) {
-        subSuperXCorrection=parentMathText->getIntSubSuperXCorrectionFactor()*tbr.width();
-        subBesidesXCorrection=parentMathText->getIntSubBesidesXCorrectionXFactor()*JKQTMathTextGetTightBoundingRect(f, "X", painter.device()).width();
-    }
+JKQTMathTextNodeSize JKQTMathTextSymbolNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv) const {
+    return getSymbolSize(painter, currentEv);
 }
 
 QRectF JKQTMathTextSymbolNode::getBoundingRect(const QFontMetricsF &fm, const QString &text, GlobalSymbolFlags globalFlags)
@@ -193,12 +138,9 @@ void JKQTMathTextSymbolNode::drawText(QPainter &p, const QString &text, GlobalSy
 }
 
 
-double JKQTMathTextSymbolNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) {
-    doDrawBoxes(painter, x, y, currentEv);
-    double width=0;
-    double baselineHeight=0;
-    double overallHeight=0, strikeoutPos=0;
-    getSize(painter, currentEv, width, baselineHeight, overallHeight, strikeoutPos);
+double JKQTMathTextSymbolNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) const {
+    const NodeSize s=getSymbolSize(painter, currentEv);
+    doDrawBoxes(painter, x, y, s);
 
     const auto fullProps=symbols.value(symbolName, SymbolFullProps());
     const GlobalSymbolFlags globalFlags=fullProps.globalFlags;
@@ -215,7 +157,7 @@ double JKQTMathTextSymbolNode::draw(QPainter& painter, double x, double y, JKQTM
     //const QRectF br=getBoundingRect(fm, sym, globalFlags);
     const QRectF tbrNoSymbol=JKQTMathTextGetTightBoundingRect(f, "X", painter.device());
     const double yShift=symprops.yShiftFactor*tbr.height();
-    const double xShift=(width-tbr.width())/2.0;
+    const double xShift=(s.width-tbr.width())/2.0;
     const QPointF x0(x+xShift-tbr.x(), y+yShift);
     double italic_xcorrection=fabs(tbr.width()-tbrNonItalic.width());
     if (fabs(italic_xcorrection)<1e-6) italic_xcorrection=double(fm.boundingRect(' ').width())*parentMathText->getItalicCorrectionFactor();
@@ -250,11 +192,11 @@ double JKQTMathTextSymbolNode::draw(QPainter& painter, double x, double y, JKQTM
         }
         if (has(symflags, DrawSlash)) {
             //qDebug()<<"  -> DrawSlash";
-            painter.drawText(QPointF((width-fm.boundingRect('/').width())/2.0,0),"/");
+            painter.drawText(QPointF((s.width-fm.boundingRect('/').width())/2.0,0),"/");
         }
         if (has(symflags, DrawBackSlash)) {
             //qDebug()<<"  -> DrawBackSlash";
-            painter.drawText(QPointF((width-fm.boundingRect('\\').width())/2.0,0),"\\");
+            painter.drawText(QPointF((s.width-fm.boundingRect('\\').width())/2.0,0),"\\");
         }
         /*painter.save();
         painter.setPen(QPen(QColor("red"), 0.5, Qt::DotLine));
@@ -269,10 +211,10 @@ double JKQTMathTextSymbolNode::draw(QPainter& painter, double x, double y, JKQTM
         painter.drawRect(QRectF(x0.x(), x0.y()-tbrNoSymbol.height(), tbrNoSymbol.width(), tbrNoSymbol.height()));
     }
 
-    return x+width;
+    return x+s.width;
 }
 
-bool JKQTMathTextSymbolNode::toHtml(QString &html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) {
+bool JKQTMathTextSymbolNode::toHtml(QString &html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) const {
     bool ok=true;
     const auto props=symbols.value(symbolName, SymbolFullProps());
     QString s=props.html.symbol;
@@ -288,10 +230,60 @@ QString JKQTMathTextSymbolNode::getSymbolName() const {
     return this->symbolName;
 }
 
-JKQTMathTextSymbolNode::NodeSize JKQTMathTextSymbolNode::getSymbolSize(QPainter &painter, JKQTMathTextEnvironment currentEv)
+JKQTMathTextSymbolNode::NodeSize JKQTMathTextSymbolNode::getSymbolSize(QPainter &painter, JKQTMathTextEnvironment currentEv) const
 {
     NodeSize s;
-    getSymbolSizeInternal(painter, currentEv, s.width, s.baselineHeight, s.overallHeight, s.strikeoutPos, s.subSuperXCorrection, s.subBesidesXCorrection);
+
+    const auto fullProps=symbols.value(symbolName, SymbolFullProps());
+    const GlobalSymbolFlags globalFlags=fullProps.globalFlags;
+    const auto drawProps=fullProps.getDrawingData(currentEv, parentMathText);
+    const QFont f=drawProps.first;
+    const QFontMetricsF fm(f);
+    const JKQTMathTextSymbolNode::SymbolProps symprops=drawProps.second;
+    const SymbolFlags symflags=symprops.flags;
+    const QString sym=symprops.symbol;
+    const QRectF tbr=getTightBoundingRect(fm, sym, globalFlags);
+    const QRectF br=getBoundingRect(fm, sym, globalFlags);
+    const QRectF tbrNoSymbol=JKQTMathTextGetTightBoundingRect(f, "X", painter.device());
+    const QRectF mintbr=JKQTMathTextGetTightBoundingRect(f, "(", painter.device());
+    //const double yShift=symprops.yShiftFactor*tbr.height();
+
+    if (currentEv.insideMath) {
+        s.width=qMax(br.width(), mintbr.width());
+        if (has(globalFlags, SmallExtendWidthInMathmode)) {
+            if (!symprops.getSymbolSingleChar().isNull()) s.width=s.width*(1.0+(parentMathText->getMathoperatorWidthFactor()-1.0)/5.0);
+            else s.width=s.width+mintbr.width()*0.15;
+        } else if (has(globalFlags, ExtendWidthInMathmode)) {
+            if (!symprops.getSymbolSingleChar().isNull()) s.width=s.width*parentMathText->getMathoperatorWidthFactor();
+            else s.width=s.width+mintbr.width()*0.5;
+        }
+    } else {
+        s.width=br.width();
+    }
+    if (!sym.isEmpty()) {
+        s.overallHeight=tbr.height();
+        s.baselineHeight=tbr.height()-tbr.bottom();
+    } else {
+        s.overallHeight=tbrNoSymbol.height();
+        s.baselineHeight=tbrNoSymbol.height()-tbrNoSymbol.bottom();
+        s.width=tbrNoSymbol.width();
+    }
+    const double oldDescent=s.overallHeight-s.baselineHeight;
+
+    if (has(symflags, HeightIsAscent)) {
+        s.baselineHeight=fm.ascent();
+        s.overallHeight=s.baselineHeight+oldDescent;
+    }
+    if (has(symflags, RotateSymbol90)) {
+        s.width=qMax(s.overallHeight, s.width);
+    }
+    s.strikeoutPos=fm.strikeOutPos();
+
+    if (has(globalFlags, IntLikeSymbolCorrection)) {
+        s.subSuperXCorrection=parentMathText->getIntSubSuperXCorrectionFactor()*tbr.width();
+        s.subBesidesXCorrection=parentMathText->getIntSubBesidesXCorrectionXFactor()*JKQTMathTextGetTightBoundingRect(f, "X", painter.device()).width();
+    }
+
     return s;
 }
 

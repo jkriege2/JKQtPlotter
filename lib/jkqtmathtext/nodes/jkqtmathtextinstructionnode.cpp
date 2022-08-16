@@ -78,7 +78,7 @@ QString JKQTMathTextSimpleInstructionNode::getTypeName() const
     return QLatin1String("JKQTMathTextSimpleInstructionNode(")+instructionName+")";
 }
 
-double JKQTMathTextSimpleInstructionNode::draw(QPainter &painter, double x, double y, JKQTMathTextEnvironment currentEv)
+double JKQTMathTextSimpleInstructionNode::draw(QPainter &painter, double x, double y, JKQTMathTextEnvironment currentEv) const
 {
     doDrawBoxes(painter, x, y, currentEv);
     fillInstructions();
@@ -93,7 +93,7 @@ double JKQTMathTextSimpleInstructionNode::draw(QPainter &painter, double x, doub
     return x+bb.width();
 }
 
-bool JKQTMathTextSimpleInstructionNode::toHtml(QString &html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv)
+bool JKQTMathTextSimpleInstructionNode::toHtml(QString &html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) const
 {
     fillInstructions();
     const QString txt=executeInstruction();
@@ -124,7 +124,7 @@ size_t JKQTMathTextSimpleInstructionNode::countParametersOfInstruction(const QSt
     return 0;
 }
 
-void JKQTMathTextSimpleInstructionNode::getSizeInternal(QPainter &painter, JKQTMathTextEnvironment currentEv, double &width, double &baselineHeight, double &overallHeight, double &strikeoutPos)
+JKQTMathTextNodeSize JKQTMathTextSimpleInstructionNode::getSizeInternal(QPainter &painter, JKQTMathTextEnvironment currentEv) const
 {
     fillInstructions();
     QFont f=currentEv.getFont(parentMathText);
@@ -132,10 +132,12 @@ void JKQTMathTextSimpleInstructionNode::getSizeInternal(QPainter &painter, JKQTM
     const QFontMetricsF fm(f);
     const QString txt=executeInstruction();
     const QRectF bb=fm.boundingRect(txt);
-    width=bb.width();
-    baselineHeight=-bb.y();
-    overallHeight=bb.height();
-    strikeoutPos=fm.strikeOutPos();
+    JKQTMathTextNodeSize s;
+    s.width=bb.width();
+    s.baselineHeight=-bb.y();
+    s.overallHeight=bb.height();
+    s.strikeoutPos=fm.strikeOutPos();
+    return s;
 }
 
 QHash<QString, JKQTMathTextSimpleInstructionNode::InstructionProperties> JKQTMathTextSimpleInstructionNode::instructions;
@@ -215,16 +217,16 @@ QString JKQTMathTextModifiedTextPropsInstructionNode::getTypeName() const
     return QLatin1String("JKQTMathTextModifiedTextPropsInstructionNode(")+instructionName+")";
 }
 
-void JKQTMathTextModifiedTextPropsInstructionNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
+JKQTMathTextNodeSize JKQTMathTextModifiedTextPropsInstructionNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv) const {
     fillInstructions();
     JKQTMathTextEnvironment ev=currentEv;
 
     executeInstruction(ev);
 
-    getChild()->getSize(painter, ev, width, baselineHeight, overallHeight, strikeoutPos);
+    return getChild()->getSize(painter, ev);
 }
 
-double JKQTMathTextModifiedTextPropsInstructionNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) {
+double JKQTMathTextModifiedTextPropsInstructionNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) const {
     fillInstructions();
     doDrawBoxes(painter, x, y, currentEv);
     JKQTMathTextEnvironment ev=currentEv;
@@ -234,7 +236,7 @@ double JKQTMathTextModifiedTextPropsInstructionNode::draw(QPainter& painter, dou
     return getChild()->draw(painter, x, y, ev);
 }
 
-bool JKQTMathTextModifiedTextPropsInstructionNode::toHtml(QString &html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) {
+bool JKQTMathTextModifiedTextPropsInstructionNode::toHtml(QString &html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) const {
     JKQTMathTextEnvironment ev=currentEv;
     fillInstructions();
     executeInstruction(ev);
@@ -665,7 +667,7 @@ QString JKQTMathTextBoxInstructionNode::getTypeName() const
     return QLatin1String("JKQTMathTextBoxInstructionNode(")+instructionName+")";
 }
 
-void JKQTMathTextBoxInstructionNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
+JKQTMathTextNodeSize JKQTMathTextBoxInstructionNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv) const {
     JKQTMathTextEnvironment ev=currentEv;
 
     const auto& inst=instructions.value(getInstructionName());
@@ -676,13 +678,16 @@ void JKQTMathTextBoxInstructionNode::getSizeInternal(QPainter& painter, JKQTMath
     const double lw=p.widthF();
     const double padding=inst.paddingFactor*fmNonItalic.tightBoundingRect("x").width();
 
-    getChild()->getSize(painter, ev, width, baselineHeight, overallHeight, strikeoutPos);
-    width=width+2.0*(padding+lw/2.0);
-    baselineHeight=baselineHeight+padding+lw/2.0;
-    overallHeight=overallHeight+2.0*(padding+lw/2.0);
+    const JKQTMathTextNodeSize cs=getChild()->getSize(painter, ev);
+    JKQTMathTextNodeSize s;
+    s.width=cs.width+2.0*(padding+lw/2.0);
+    s.baselineHeight=cs.baselineHeight+padding+lw/2.0;
+    s.overallHeight=cs.overallHeight+2.0*(padding+lw/2.0);
+    s.strikeoutPos=cs.strikeoutPos;
+    return s;
 }
 
-double JKQTMathTextBoxInstructionNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) {
+double JKQTMathTextBoxInstructionNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) const {
     doDrawBoxes(painter, x, y, currentEv);
     JKQTMathTextEnvironment ev=currentEv;
 
@@ -694,21 +699,20 @@ double JKQTMathTextBoxInstructionNode::draw(QPainter& painter, double x, double 
     const double lw=p.widthF();
     const double padding=inst.paddingFactor*fmNonItalic.tightBoundingRect("x").width();
     const double rr=inst.roundingFactor*fmNonItalic.tightBoundingRect("x").width();
-    double width=0, baselineHeight=0, overallHeight=0, strikeoutPos=0;
-    getChild()->getSize(painter, ev, width, baselineHeight, overallHeight, strikeoutPos);
+    const JKQTMathTextNodeSize cs=getChild()->getSize(painter, ev);
 
     {
         painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
         painter.setBrush(b);
         painter.setPen(p);
-        const QRectF rect(x+lw/2.0, y-baselineHeight-padding-lw/2.0, width+2.0*padding, overallHeight+2.0*padding);
+        const QRectF rect(x+lw/2.0, y-cs.baselineHeight-padding-lw/2.0, cs.width+2.0*padding, cs.overallHeight+2.0*padding);
         if (rr>0) painter.drawRoundedRect(rect, rr, rr, Qt::AbsoluteSize);
         else painter.drawRect(rect);
         if (inst.doubleLine) {
             painter.setBrush(Qt::NoBrush);
             QPen p2=p;
             p2.setWidthF(p.widthF()*0.6);
-            const QRectF recti(x+lw*2.5, y-baselineHeight-lw/2.0-padding+2.0*lw, width+2.0*padding-4.0*lw, overallHeight+2.0*padding-4.0*lw);
+            const QRectF recti(x+lw*2.5, y-cs.baselineHeight-lw/2.0-padding+2.0*lw, cs.width+2.0*padding-4.0*lw, cs.overallHeight+2.0*padding-4.0*lw);
             if (rr>0) painter.drawRoundedRect(recti, rr, rr, Qt::AbsoluteSize);
             else painter.drawRect(recti);
         }
@@ -719,7 +723,7 @@ double JKQTMathTextBoxInstructionNode::draw(QPainter& painter, double x, double 
     return xnew+padding+lw/2.0;
 }
 
-bool JKQTMathTextBoxInstructionNode::toHtml(QString &html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) {
+bool JKQTMathTextBoxInstructionNode::toHtml(QString &html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) const {
     JKQTMathTextEnvironment ev=currentEv;
     fillInstructions();
     const auto& inst=instructions.value(getInstructionName());

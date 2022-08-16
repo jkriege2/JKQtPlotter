@@ -68,9 +68,9 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextMatrixNode: public JKQTMathTextMultiCh
         /** \copydoc JKQTMathTextNode::getTypeName() */
         virtual QString getTypeName() const override;
         /** \copydoc JKQTMathTextNode::draw() */
-        virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) override;
+        virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) const override;
         /** \copydoc JKQTMathTextNode::toHtml() */
-        virtual bool toHtml(QString& html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) override;
+        virtual bool toHtml(QString& html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) const override;
         /** \brief returns the child nodes  */
         QVector<QVector<JKQTMathTextNode*> > getChildrenMatrix() const;
         /** \copydoc columns */ 
@@ -122,7 +122,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextMatrixNode: public JKQTMathTextMultiCh
          */
         LayoutInfo calcLayout(QPainter& painter, const JKQTMathTextEnvironment& currentEv) const;
         /** \copydoc JKQTMathTextNode::getSizeInternal() */
-        virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) override;
+        virtual JKQTMathTextNodeSize getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv) const override;
         /** \copydoc JKQTMathTextNode::setDrawBoxes() */
         virtual void setDrawBoxes(bool draw) override;
         /** \brief child nodes making up the matrix, vector of rows */

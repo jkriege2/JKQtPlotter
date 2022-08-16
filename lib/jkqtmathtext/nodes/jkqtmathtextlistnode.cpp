@@ -52,11 +52,8 @@ QString JKQTMathTextHorizontalListNode::getTypeName() const
     return "MTHorizontalListNode";
 }
 
-void JKQTMathTextHorizontalListNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
-    width=0;
-    overallHeight=0;
-    baselineHeight=0;
-    strikeoutPos=0;
+JKQTMathTextNodeSize JKQTMathTextHorizontalListNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv) const {
+    JKQTMathTextNodeSize outSize;
     const QFontMetricsF fm(currentEv.getFont(parentMathText));
     const double subsupershift=fm.xHeight()*parentMathText->getOperatorsubsuperDistanceFactor();
     const double subsuperextrawidth=fm.boundingRect('x').width()*parentMathText->getOperatorsubsuperExtraSpaceFactor();
@@ -95,32 +92,31 @@ void JKQTMathTextHorizontalListNode::getSizeInternal(QPainter& painter, JKQTMath
             if (i+1<nodes.size()) { // is there one mor node behind?
                 JKQTMathTextSubscriptNode* nodeISucc_SubScript=dynamic_cast<JKQTMathTextSubscriptNode*>(nodes[i+1]);
                 if (nodeISucc_SubScript) { // is this subscript?
-                    double w1=0, w2=0, oh=0, bh=0, sp=0;
-                    nodeI_SuperScript->getSizeWithSpecialPlacement(painter, currentEv, w1, bh, oh, sp, prevNodeSizePtrForSuperscript);
+                    const JKQTMathTextNodeSize ns=nodeI_SuperScript->getSizeWithSpecialPlacement(painter, currentEv, prevNodeSizePtrForSuperscript);
 
-                    if (bh>baselineHeight) {
-                        overallHeight=overallHeight+bh-baselineHeight;
-                        baselineHeight=bh;
-                        strikeoutPos=sp;
+                    if (ns.baselineHeight>outSize.baselineHeight) {
+                        outSize.overallHeight=outSize.overallHeight+ns.baselineHeight-outSize.baselineHeight;
+                        outSize.baselineHeight=ns.baselineHeight;
+                        outSize.strikeoutPos=ns.strikeoutPos;
                     }
-                    if (baselineHeight+oh-bh>overallHeight) {
-                        overallHeight=baselineHeight+oh-bh;
-                        strikeoutPos=sp;
+                    if (outSize.baselineHeight+ns.getDescent()>outSize.overallHeight) {
+                        outSize.overallHeight=outSize.baselineHeight+ns.getDescent();
+                        outSize.strikeoutPos=ns.strikeoutPos;
                     }
 
                     i++;
-                    nodeISucc_SubScript->getSizeWithSpecialPlacement(painter, currentEv, w2, bh, oh, sp, prevNodeSizePtrForSubscript);
+                    const JKQTMathTextNodeSize ns2=nodeISucc_SubScript->getSizeWithSpecialPlacement(painter, currentEv, prevNodeSizePtrForSubscript);
                     //qDebug()<<"super_sub:   sub: "<<nodes[i]->getTypeName()<<"  w2="<<w2<<" bh"<<bh<<" oh="<<oh<<" sp="<<sp;
-                    if (bh>baselineHeight) {
-                        overallHeight=overallHeight+bh-baselineHeight;
-                        baselineHeight=bh;
-                        strikeoutPos=sp;
+                    if (ns2.baselineHeight>outSize.baselineHeight) {
+                        outSize.overallHeight=outSize.overallHeight+ns2.baselineHeight-outSize.baselineHeight;
+                        outSize.baselineHeight=ns2.baselineHeight;
+                        outSize.strikeoutPos=ns2.strikeoutPos;
                     }
-                    if (baselineHeight+oh-bh>overallHeight) {
-                        overallHeight=baselineHeight+oh-bh;
-                        strikeoutPos=sp;
+                    if (outSize.baselineHeight+ns2.getDescent()>outSize.overallHeight) {
+                        outSize.overallHeight=outSize.baselineHeight+ns2.getDescent();
+                        outSize.strikeoutPos=ns2.strikeoutPos;
                     }
-                    xnew+=qMax(w1+spaceWidth, w2+prevNodeSize.subBesidesXCorrection);
+                    xnew+=qMax(ns.width+spaceWidth, ns2.width+prevNodeSize.subBesidesXCorrection);
 
                     doDraw=false;
                     //qDebug()<<"### super+sub";
@@ -131,30 +127,29 @@ void JKQTMathTextHorizontalListNode::getSizeInternal(QPainter& painter, JKQTMath
             if (i+1<nodes.size()) { // is there one mor node behind?
                 JKQTMathTextSuperscriptNode* nodeISucc_SuperScript=dynamic_cast<JKQTMathTextSuperscriptNode*>(nodes[i+1]);
                 if (nodeISucc_SuperScript) { // is this subscript?
-                    double w1=0, w2=0, oh=0, bh=0, sp=0;
-                    nodeI_SubScript->getSizeWithSpecialPlacement(painter, currentEv, w1, bh, oh, sp, prevNodeSizePtrForSubscript);
-                    if (bh>baselineHeight) {
-                        overallHeight=overallHeight+bh-baselineHeight;
-                        baselineHeight=bh;
-                        strikeoutPos=sp;
+                    const JKQTMathTextNodeSize ns=nodeI_SubScript->getSizeWithSpecialPlacement(painter, currentEv, prevNodeSizePtrForSubscript);
+                    if (ns.baselineHeight>outSize.baselineHeight) {
+                        outSize.overallHeight=outSize.overallHeight+ns.baselineHeight-outSize.baselineHeight;
+                        outSize.baselineHeight=ns.baselineHeight;
+                        outSize.strikeoutPos=ns.strikeoutPos;
                     }
-                    if (baselineHeight+oh-bh>overallHeight) {
-                        overallHeight=baselineHeight+oh-bh;
-                        strikeoutPos=sp;
+                    if (outSize.baselineHeight+ns.overallHeight-ns.baselineHeight>outSize.overallHeight) {
+                        outSize.overallHeight=outSize.baselineHeight+ns.overallHeight-ns.baselineHeight;
+                        outSize.strikeoutPos=ns.strikeoutPos;
                     }
 
                     i++;
-                    nodeISucc_SuperScript->getSizeWithSpecialPlacement(painter, currentEv, w2, bh, oh, sp, prevNodeSizePtrForSuperscript);
-                    if (bh>baselineHeight) {
-                        overallHeight=overallHeight+bh-baselineHeight;
-                        baselineHeight=bh;
-                        strikeoutPos=sp;
+                    const JKQTMathTextNodeSize ns2=nodeISucc_SuperScript->getSizeWithSpecialPlacement(painter, currentEv, prevNodeSizePtrForSuperscript);
+                    if (ns2.baselineHeight>outSize.baselineHeight) {
+                        outSize.overallHeight=outSize.overallHeight+ns2.baselineHeight-outSize.baselineHeight;
+                        outSize.baselineHeight=ns2.baselineHeight;
+                        outSize.strikeoutPos=ns2.strikeoutPos;
                     }
-                    if (baselineHeight+oh-bh>overallHeight) {
-                        overallHeight=baselineHeight+oh-bh;
-                        strikeoutPos=sp;
+                    if (outSize.baselineHeight+ns2.overallHeight-ns2.baselineHeight>outSize.overallHeight) {
+                        outSize.overallHeight=outSize.baselineHeight+ns2.overallHeight-ns2.baselineHeight;
+                        outSize.strikeoutPos=ns2.strikeoutPos;
                     }
-                    xnew+=qMax(w1+prevNodeSize.subBesidesXCorrection, w2+spaceWidth);
+                    xnew+=qMax(ns.width+prevNodeSize.subBesidesXCorrection, ns2.width+spaceWidth);
 
 
                     doDraw=false;
@@ -162,18 +157,17 @@ void JKQTMathTextHorizontalListNode::getSizeInternal(QPainter& painter, JKQTMath
                     //qDebug()<<"### subsupop: sub+super1   overallHeight="<<overallHeight<<" baselineHeight="<<baselineHeight;
                 }
             } else {
-                double w1=0, oh=0, bh=0, sp=0;
-                nodes[i]->getSize(painter, currentEv, w1, bh, oh, sp);
-                if (bh>baselineHeight) {
-                    overallHeight=overallHeight+bh-baselineHeight;
-                    baselineHeight=bh;
-                    strikeoutPos=sp;
+                const JKQTMathTextNodeSize ns=nodes[i]->getSize(painter, currentEv);
+                if (ns.baselineHeight>outSize.baselineHeight) {
+                    outSize.overallHeight=outSize.overallHeight+ns.baselineHeight-outSize.baselineHeight;
+                    outSize.baselineHeight=ns.baselineHeight;
+                    outSize.strikeoutPos=ns.strikeoutPos;
                 }
-                if (baselineHeight+oh-bh>overallHeight) {
-                    overallHeight=baselineHeight+oh-bh;
-                    strikeoutPos=sp;
+                if (outSize.baselineHeight+ns.getDescent()>outSize.overallHeight) {
+                    outSize.overallHeight=outSize.baselineHeight+ns.getDescent();
+                    outSize.strikeoutPos=ns.strikeoutPos;
                 }
-                xnew+=w1-prevNodeSize.subBesidesXCorrection;
+                xnew+=ns.width-prevNodeSize.subBesidesXCorrection;
                 doDraw=false;
 
             }
@@ -197,31 +191,27 @@ void JKQTMathTextHorizontalListNode::getSizeInternal(QPainter& painter, JKQTMath
                     if (!supn) supn=supn2;
                     JKQTMathTextEnvironment ev=currentEv;
                     ev.fontSize=ev.fontSize*parentMathText->getOperatorsubsuperSizeFactor();
-                    double w1=0, wsub=0, wsup=0;
-                    double oh1=0, ohsub=0, ohsup=0;
-                    double bh1=0, bhsub=0, bhsup=0;
-                    double sp1=0, spsub=0, spsup=0;
-                    nodes[i]->getSize(painter, currentEv, w1, bh1, oh1, sp1);
-                    //qDebug()<<"sub_super:   node: "<<nodes[i]->getTypeName()<<"  w1="<<w1<<" bh"<<bh1<<" oh="<<oh1<<" sp="<<sp1;
-                    subn->getChild()->getSize(painter, ev, wsub, bhsub, ohsub, spsub);
+                    const JKQTMathTextNodeSize ns=nodes[i]->getSize(painter, currentEv);
+                    //qDebug()<<"sub_super:   node: "<<nodes[i]->getTypeName()<<"  ns.width="<<ns.width<<" bh"<<ns.baselineHeight<<" oh="<<ns.overallHeight<<" sp="<<ns.strikeoutPos;
+                    const JKQTMathTextNodeSize sub=subn->getChild()->getSize(painter, ev);
                     //qDebug()<<"sub_super:   node: "<<subn->getTypeName()<<"  w2="<<w2<<" bh2"<<bh2<<" oh2="<<oh2<<" sp2="<<sp2;
-                    supn->getChild()->getSize(painter, ev, wsup, bhsup, ohsup, spsup);
+                    const JKQTMathTextNodeSize sup=supn->getChild()->getSize(painter, ev);
                     //qDebug()<<"sub_super:   node: "<<supn->getTypeName()<<"  w3="<<w3<<" bh3"<<bh3<<" oh3="<<oh3<<" sp3="<<sp3;
-                    const double descent1=oh1-bh1;
-                    //double d1=oh1-bh1;
+                    const double descent1=ns.overallHeight-ns.baselineHeight;
+                    //double d1=ns.overallHeight-ns.baselineHeight;
                     //double d2=oh2-bh2;
                     //double d3=oh3-bh3;
-                    const double neww=qMax(qMax(w1, wsub+prevNodeSize.subSuperXCorrection), wsup+prevNodeSize.subSuperXCorrection)+subsuperextrawidth;
-                    const double newBaselineHeight=bh1+ohsup+subsupershift;
-                    if (newBaselineHeight>baselineHeight) {
-                        const double extraBaselineHeight=newBaselineHeight-baselineHeight;
-                        baselineHeight=newBaselineHeight;
-                        overallHeight=overallHeight+extraBaselineHeight;
+                    const double neww=qMax(qMax(ns.width, sub.width+prevNodeSize.subSuperXCorrection), sup.width+prevNodeSize.subSuperXCorrection)+subsuperextrawidth;
+                    const double newBaselineHeight=ns.baselineHeight+sup.overallHeight+subsupershift;
+                    if (newBaselineHeight>outSize.baselineHeight) {
+                        const double extraBaselineHeight=newBaselineHeight-outSize.baselineHeight;
+                        outSize.baselineHeight=newBaselineHeight;
+                        outSize.overallHeight=outSize.overallHeight+extraBaselineHeight;
                     }
-                    const double newDescent=descent1+ohsub+subsupershift;
-                    if (newDescent>overallHeight-baselineHeight) {
-                        const double extraDescent=newDescent-(overallHeight-baselineHeight);
-                        overallHeight=overallHeight+extraDescent;
+                    const double newDescent=descent1+sub.overallHeight+subsupershift;
+                    if (newDescent>outSize.overallHeight-outSize.baselineHeight) {
+                        const double extraDescent=newDescent-(outSize.overallHeight-outSize.baselineHeight);
+                        outSize.overallHeight=outSize.overallHeight+extraDescent;
                     }
 
                     i++;
@@ -233,10 +223,6 @@ void JKQTMathTextHorizontalListNode::getSizeInternal(QPainter& painter, JKQTMath
                 } else if (subn) { // is this subscript?
                     JKQTMathTextEnvironment ev=currentEv;
                     ev.fontSize=ev.fontSize*parentMathText->getOperatorsubsuperSizeFactor();
-                    double wsub=0;
-                    double ohsub=0;
-                    double bhsub=0;
-                    double spsub=0;//, sp3=0;
                     JKQTMathTextSymbolNode* symbN=dynamic_cast<JKQTMathTextSymbolNode*>(nodes[i]);
                     JKQTMathTextSymbolNode::NodeSize nodeSize;
                     if (symbN) {
@@ -244,21 +230,21 @@ void JKQTMathTextHorizontalListNode::getSizeInternal(QPainter& painter, JKQTMath
                     } else {
                         nodeSize=nodes[i]->getSize(painter, currentEv);
                     }
-                    subn->getChild()->getSize(painter, ev, wsub, bhsub, ohsub, spsub);
+                    const  JKQTMathTextNodeSize sub=subn->getChild()->getSize(painter, ev);
                     const double descent1=nodeSize.getDescent();
-                    //double d1=oh1-bh1;
+                    //double d1=ns.overallHeight-ns.baselineHeight;
                     //double d2=oh2-bh2;
 
-                    const double newDescent=descent1+ohsub+subsupershift;
-                    if (newDescent>overallHeight-baselineHeight) {
-                        const double extraDescent=newDescent-(overallHeight-baselineHeight);
-                        overallHeight=overallHeight+extraDescent;
+                    const double newDescent=descent1+sub.overallHeight+subsupershift;
+                    if (newDescent>outSize.overallHeight-outSize.baselineHeight) {
+                        const double extraDescent=newDescent-(outSize.overallHeight-outSize.baselineHeight);
+                        outSize.overallHeight=outSize.overallHeight+extraDescent;
                     }
-                    if (nodeSize.baselineHeight>baselineHeight) {
-                        overallHeight=overallHeight+(nodeSize.baselineHeight-baselineHeight);
-                        baselineHeight=nodeSize.baselineHeight;
+                    if (nodeSize.baselineHeight>outSize.baselineHeight) {
+                        outSize.overallHeight=outSize.overallHeight+(nodeSize.baselineHeight-outSize.baselineHeight);
+                        outSize.baselineHeight=nodeSize.baselineHeight;
                     }
-                    const double neww=qMax(nodeSize.width, wsub+nodeSize.subSuperXCorrection)+subsuperextrawidth;
+                    const double neww=qMax(nodeSize.width, sub.width+nodeSize.subSuperXCorrection)+subsuperextrawidth;
                     i++;
                     doDraw=false;
                     xnew+=neww;
@@ -266,10 +252,6 @@ void JKQTMathTextHorizontalListNode::getSizeInternal(QPainter& painter, JKQTMath
                 } else if (supn) { // is this superscript?
                     JKQTMathTextEnvironment ev=currentEv;
                     ev.fontSize=ev.fontSize*parentMathText->getOperatorsubsuperSizeFactor();
-                    double wsup=0;
-                    double ohsup=0;
-                    double bhsup=0;
-                    double spsup=0;//, sp3=0;
                     JKQTMathTextSymbolNode::NodeSize nodeSize;
                     JKQTMathTextSymbolNode* symbN=dynamic_cast<JKQTMathTextSymbolNode*>(nodes[i]);
                     if (symbN) {
@@ -278,21 +260,21 @@ void JKQTMathTextHorizontalListNode::getSizeInternal(QPainter& painter, JKQTMath
                         nodeSize=nodes[i]->getSize(painter, currentEv);
                     }
                     const double descent1=nodeSize.getDescent();
-                    supn->getChild()->getSize(painter, ev, wsup, bhsup, ohsup, spsup);
-                    //double d1=oh1-bh1;
+                    const JKQTMathTextNodeSize sup=supn->getChild()->getSize(painter, ev);
+                    //double d1=ns.overallHeight-ns.baselineHeight;
                     //double d2=oh2-bh2;
 
-                    const double newBaselineHeight=nodeSize.baselineHeight+ohsup+subsupershift;
-                    if (newBaselineHeight>baselineHeight) {
-                        const double extraBaselineHeight=newBaselineHeight-baselineHeight;
-                        baselineHeight=newBaselineHeight;
-                        overallHeight=overallHeight+extraBaselineHeight;
+                    const double newBaselineHeight=nodeSize.baselineHeight+sup.overallHeight+subsupershift;
+                    if (newBaselineHeight>outSize.baselineHeight) {
+                        const double extraBaselineHeight=newBaselineHeight-outSize.baselineHeight;
+                        outSize.baselineHeight=newBaselineHeight;
+                        outSize.overallHeight=outSize.overallHeight+extraBaselineHeight;
                     }
-                    if (descent1>overallHeight-baselineHeight) {
-                        overallHeight=baselineHeight+descent1;
+                    if (descent1>outSize.overallHeight-outSize.baselineHeight) {
+                        outSize.overallHeight=outSize.baselineHeight+descent1;
                     }
 
-                    const double neww=qMax(nodeSize.width, wsup+nodeSize.subSuperXCorrection)+subsuperextrawidth;
+                    const double neww=qMax(nodeSize.width, sup.width+nodeSize.subSuperXCorrection)+subsuperextrawidth;
                     i++;
                     doDraw=false;
                     xnew+=neww;
@@ -302,33 +284,35 @@ void JKQTMathTextHorizontalListNode::getSizeInternal(QPainter& painter, JKQTMath
         }
 
         if (i<nodes.size() && doDraw) {
-            double w=0, oh=0, bh=0, sp=0;
-            if (nodeI_SubScript) nodeI_SubScript->getSizeWithSpecialPlacement(painter, currentEv, w, bh, oh, sp, prevNodeSizePtrForSubscript);
-            else if (nodeI_SuperScript) nodeI_SuperScript->getSizeWithSpecialPlacement(painter, currentEv, w, bh, oh, sp, prevNodeSizePtrForSuperscript);
-            else nodes[i]->getSize(painter, currentEv, w, bh, oh, sp);
-            const double cDescent=oh-bh;
+            JKQTMathTextNodeSize ns;
+            if (nodeI_SubScript) ns=nodeI_SubScript->getSizeWithSpecialPlacement(painter, currentEv, prevNodeSizePtrForSubscript);
+            else if (nodeI_SuperScript) ns=nodeI_SuperScript->getSizeWithSpecialPlacement(painter, currentEv, prevNodeSizePtrForSuperscript);
+            else ns=nodes[i]->getSize(painter, currentEv);
+            const double cDescent=ns.getDescent();
 
-            //qDebug()<<"### else:  bh="<<bh<<" baselineHeight="<<baselineHeight<<"   oh="<<oh<<" overallHeight="<<overallHeight;
-            if (bh>baselineHeight) {
-                overallHeight=overallHeight-baselineHeight+bh;
-                baselineHeight=bh;
-                strikeoutPos=sp;
+            //qDebug()<<"### else:  ns.baselineHeight="<<ns.baselineHeight<<" baselineHeight="<<baselineHeight<<"   oh="<<oh<<" overallHeight="<<overallHeight;
+            if (ns.baselineHeight>outSize.baselineHeight) {
+                outSize.overallHeight=outSize.overallHeight-outSize.baselineHeight+ns.baselineHeight;
+                outSize.baselineHeight=ns.baselineHeight;
+                outSize.strikeoutPos=ns.strikeoutPos;
             }
-            if (baselineHeight+cDescent>overallHeight) {
-                overallHeight=baselineHeight+cDescent;
-                strikeoutPos=sp;
+            if (outSize.baselineHeight+cDescent>outSize.overallHeight) {
+                outSize.overallHeight=outSize.baselineHeight+cDescent;
+                outSize.strikeoutPos=ns.strikeoutPos;
             }
             //qDebug()<<"### subsupop: else   overallHeight="<<overallHeight<<" baselineHeight="<<baselineHeight;
 
-            xnew+=w;
+            xnew+=ns.width;
             //qDebug()<<i<<xnew;
         }
          //wasBrace=dynamic_cast<JKQTMathTextBraceNode*>(nodes[i]);
     }
-    width=xnew;
+    outSize.width=xnew;
+
+    return outSize;
 }
 
-double JKQTMathTextHorizontalListNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) {
+double JKQTMathTextHorizontalListNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) const {
     doDrawBoxes(painter, x, y, currentEv);
     double ynew=y;
     double xnew=x;
@@ -373,13 +357,13 @@ double JKQTMathTextHorizontalListNode::draw(QPainter& painter, double x, double 
 
                     //painter.setPen(QPen("red"));
                     //painter.drawEllipse(xnew-4,ynew+shift-(ccOverallHeight-ccBaselineHeight)-4,8,8);
-                    double xnew1=nodeI_SuperScript->drawWithSpecialPlacement(painter, xnew, ynew, currentEv, prevNodeSizePtrForSuperscript);
+                    const double xnewidth=nodeI_SuperScript->drawWithSpecialPlacement(painter, xnew, ynew, currentEv, prevNodeSizePtrForSuperscript);
                     i++;
                     //painter.setPen(QPen("magenta"));
                     //painter.drawEllipse(xnew-4,ynew-4,8,8);
-                    double xnew2=nodeISucc_SubScript->drawWithSpecialPlacement(painter, xnew-prevNodeSize.subSuperXCorrection, ynew, currentEv, prevNodeSizePtrForSubscript);
+                    const double xnew2=nodeISucc_SubScript->drawWithSpecialPlacement(painter, xnew-prevNodeSize.subSuperXCorrection, ynew, currentEv, prevNodeSizePtrForSubscript);
                     //i++;
-                    xnew=qMax(xnew1, xnew2);
+                    xnew=qMax(xnewidth, xnew2);
                     doDraw=false;
                 }
             }
@@ -389,13 +373,13 @@ double JKQTMathTextHorizontalListNode::draw(QPainter& painter, double x, double 
                 if (nodeISucc_SuperScript) { // is this subscript?
                     //painter.setPen(QPen("red"));
                     //painter.drawEllipse(xnew-4,ynew+shift-(ccOverallHeight-ccBaselineHeight)-4,8,8);
-                    double xnew1=nodeI_SubScript->drawWithSpecialPlacement(painter, xnew-prevNodeSize.subSuperXCorrection, ynew, currentEv, prevNodeSizePtrForSubscript);
+                    double xnewidth=nodeI_SubScript->drawWithSpecialPlacement(painter, xnew-prevNodeSize.subSuperXCorrection, ynew, currentEv, prevNodeSizePtrForSubscript);
                     i++;
                     //painter.setPen(QPen("magenta"));
                     //painter.drawEllipse(xnew-4,ynew-4,8,8);
                     double xnew2=nodeISucc_SuperScript->drawWithSpecialPlacement(painter, xnew, ynew, currentEv, prevNodeSizePtrForSuperscript);
                     //i++;
-                    xnew=qMax(xnew1, xnew2);
+                    xnew=qMax(xnewidth, xnew2);
                     doDraw=false;
                 }
             } else {
@@ -423,9 +407,6 @@ double JKQTMathTextHorizontalListNode::draw(QPainter& painter, double x, double 
                     if (!supn) supn=supn2;
                     JKQTMathTextEnvironment ev=currentEv;
                     ev.fontSize=ev.fontSize*parentMathText->getOperatorsubsuperSizeFactor();
-                    double wsub=0, wsup=0;
-                    double ohsub=0, ohsup=0;
-                    double bhsub=0, bhsup=0, spsub, spsup, sp;
                     JKQTMathTextSymbolNode::NodeSize nodeSize;
                     JKQTMathTextSymbolNode* symbN=dynamic_cast<JKQTMathTextSymbolNode*>(nodes[i]);
                     if (symbN) {
@@ -435,29 +416,26 @@ double JKQTMathTextHorizontalListNode::draw(QPainter& painter, double x, double 
                     }
 
 
-                    subn->getChild()->getSize(painter, ev, wsub, bhsub, ohsub, spsub);
-                    supn->getChild()->getSize(painter, ev, wsup, bhsup, ohsup, spsup);
+                    const JKQTMathTextNodeSize sub=subn->getChild()->getSize(painter, ev);
+                    const JKQTMathTextNodeSize sup=supn->getChild()->getSize(painter, ev);
                     const double descent1=nodeSize.getDescent();
                     //double d2=oh2-bh2;
-                    const double descent3=ohsup-bhsup;
+                    const double descent3=sup.getDescent();
 
-                    const double neww=qMax(qMax(nodeSize.width, wsub), wsup)+subsuperextrawidth;
-                    //double xnew1=
+                    const double neww=qMax(qMax(nodeSize.width, sub.width), sup.width)+subsuperextrawidth;
+                    //double xnewidth=
                     const double xn1=nodes[i]->draw(painter, xnew+(neww-nodeSize.width)/2.0, ynew, currentEv);
                     i++;
                     //double xnew2=
-                    const double xnsub=subn->getChild()->draw(painter, xnew+(neww-wsub)/2.0-nodeSize.subSuperXCorrection, ynew+bhsub+descent1+subsupershift, ev);
+                    const double xnsub=subn->getChild()->draw(painter, xnew+(neww-sub.width)/2.0-nodeSize.subSuperXCorrection, ynew+sub.baselineHeight+descent1+subsupershift, ev);
                     i++;
                     //double xnew3=
-                    const double xnsup=supn->getChild()->draw(painter, xnew+(neww-wsup)/2.0+nodeSize.subSuperXCorrection, ynew-nodeSize.baselineHeight-descent3-subsupershift, ev);
+                    const double xnsup=supn->getChild()->draw(painter, xnew+(neww-sup.width)/2.0+nodeSize.subSuperXCorrection, ynew-nodeSize.baselineHeight-descent3-subsupershift, ev);
                     doDraw=false;
                     xnew=qMax(qMax(xn1, xnsub), xnsup)+subsuperextrawidth/2.0;
                 } else if (subn) { // is this subscript and no following superscript?
                     JKQTMathTextEnvironment ev=currentEv;
                     ev.fontSize=ev.fontSize*parentMathText->getOperatorsubsuperSizeFactor();
-                    double wsub=0;
-                    double ohsub=0;
-                    double bhsub=0, sp=0, spsub=0;
                     JKQTMathTextSymbolNode::NodeSize nodeSize;
                     JKQTMathTextSymbolNode* symbN=dynamic_cast<JKQTMathTextSymbolNode*>(nodes[i]);
                     if (symbN) {
@@ -465,25 +443,22 @@ double JKQTMathTextHorizontalListNode::draw(QPainter& painter, double x, double 
                     } else {
                         nodeSize=nodes[i]->getSize(painter, currentEv);
                     }
-                    subn->getChild()->getSize(painter, ev, wsub, bhsub, ohsub, spsub);
+                    const JKQTMathTextNodeSize sub=subn->getChild()->getSize(painter, ev);
                     const double descent1=nodeSize.getDescent();
                     //double d2=oh2-bh2;
 
-                    const double neww=qMax(nodeSize.width, wsub)+subsuperextrawidth;
-                    //double xnew1=
+                    const double neww=qMax(nodeSize.width, sub.width)+subsuperextrawidth;
+                    //double xnewidth=
                     const double xn1=nodes[i]->draw(painter, xnew+(neww-nodeSize.width)/2.0, ynew, currentEv);
                     i++;
                     //double xnew2=
-                    const double xnsub=subn->getChild()->draw(painter, xnew+(neww-wsub)/2.0-nodeSize.subSuperXCorrection, ynew+bhsub+descent1+subsupershift, ev)+subsupershift;
+                    const double xnsub=subn->getChild()->draw(painter, xnew+(neww-sub.width)/2.0-nodeSize.subSuperXCorrection, ynew+sub.baselineHeight+descent1+subsupershift, ev)+subsupershift;
                     doDraw=false;
                     //xnew+=w;
                     xnew=qMax(xnsub, xn1)+subsuperextrawidth/2.0;
                 } else if (supn) { // is this superscript and no following subscript?
                     JKQTMathTextEnvironment ev=currentEv;
                     ev.fontSize=ev.fontSize*parentMathText->getOperatorsubsuperSizeFactor();
-                    double wsup=0;
-                    double ohsup=0;
-                    double bhsup=0, sp, spsup;
                     JKQTMathTextSymbolNode::NodeSize nodeSize;
                     JKQTMathTextSymbolNode* symbN=dynamic_cast<JKQTMathTextSymbolNode*>(nodes[i]);
                     if (symbN) {
@@ -491,17 +466,17 @@ double JKQTMathTextHorizontalListNode::draw(QPainter& painter, double x, double 
                     } else {
                         nodeSize=nodes[i]->getSize(painter, currentEv);
                     }
-                    supn->getChild()->getSize(painter, ev, wsup, bhsup, ohsup, spsup);
-                    //double d1=oh1-bh1;
+                    const JKQTMathTextNodeSize sup=supn->getChild()->getSize(painter, ev);
+                    //double d1=ns.overallHeight-ns.baselineHeight;
                     //double d2=oh2-bh2;
-                    const double descent3=ohsup-bhsup;
+                    const double descent3=sup.getDescent();
 
-                    const double neww=qMax(nodeSize.width, wsup)+subsuperextrawidth;
-                    //double xnew1=
+                    const double neww=qMax(nodeSize.width, sup.width)+subsuperextrawidth;
+                    //double xnewidth=
                     const double xn1=nodes[i]->draw(painter, xnew+(neww-nodeSize.width)/2.0, ynew, currentEv);
                     i++;
                     //double xnew3=
-                    const double xnsup=supn->getChild()->draw(painter, xnew+(neww-wsup)/2.0+nodeSize.subSuperXCorrection, ynew-nodeSize.baselineHeight-descent3-subsupershift, ev);
+                    const double xnsup=supn->getChild()->draw(painter, xnew+(neww-sup.width)/2.0+nodeSize.subSuperXCorrection, ynew-nodeSize.baselineHeight-descent3-subsupershift, ev);
                     doDraw=false;
                     xnew=qMax(xn1, xnsup)+subsuperextrawidth/2.0;
                 }
@@ -522,7 +497,7 @@ void JKQTMathTextHorizontalListNode::addChild(JKQTMathTextNode *n) {
     nodes.append(n);
 }
 
-bool JKQTMathTextHorizontalListNode::toHtml(QString &html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) {
+bool JKQTMathTextHorizontalListNode::toHtml(QString &html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) const {
     bool ok=true;
     for (int i=0; i<nodes.size(); i++) {
         QString h="";
@@ -605,12 +580,8 @@ QString JKQTMathTextVerticalListNode::getTypeName() const
     return "MTVerticalListNode";
 }
 
-void JKQTMathTextVerticalListNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
-    const  LayoutInfo l=calcLayout(painter, currentEv);
-    width=l.width;
-    overallHeight=l.overallHeight;
-    baselineHeight=l.baselineHeight;
-    strikeoutPos=l.strikeoutPos;
+JKQTMathTextNodeSize JKQTMathTextVerticalListNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv) const {
+    return calcLayout(painter, currentEv);
 }
 
 JKQTMathTextVerticalListNode::LayoutInfo JKQTMathTextVerticalListNode::calcLayout(QPainter &painter, JKQTMathTextEnvironment currentEv) const
@@ -633,27 +604,26 @@ JKQTMathTextVerticalListNode::LayoutInfo JKQTMathTextVerticalListNode::calcLayou
     QList<double> ysFromFirstLine; // y-position of each line, where the first line is always at y=0 (i.e. ysFromFirstLine[0]==0)
     double y=0;
     for (int i=0; i<nodes.size(); i++) {
-        double locWidth=0, locOverallHeight=0, locBaselineHeight=0, locStrikeoutPos=0;
-        nodes[i]->getSize(painter, currentEv, locWidth, locBaselineHeight, locOverallHeight, locStrikeoutPos);
+        const JKQTMathTextNodeSize loc=nodes[i]->getSize(painter, currentEv);
 
         if (i==0) {
-            heightSum=locBaselineHeight;
+            heightSum=loc.baselineHeight;
         } else if (i>0) {
             double deltaLine=0;
             if (spacingMode==MTSMMinimalSpacing) {
-                deltaLine=descents.last()+lineLeading+locBaselineHeight;
+                deltaLine=descents.last()+lineLeading+loc.baselineHeight;
             } else if (spacingMode==MTSMDefaultSpacing) {
-                deltaLine=qMax(linespacing, descents.last()+lineLeading+locBaselineHeight);
+                deltaLine=qMax(linespacing, descents.last()+lineLeading+loc.baselineHeight);
             }
             heightSum=heightSum+deltaLine;
             y=y+deltaLine;
         }
-        widths<<locWidth;
-        l.width=qMax(l.width, locWidth);
-        heights<<locOverallHeight;
-        ascents<<locBaselineHeight;
-        descents<<(locOverallHeight-locBaselineHeight);
-        strikeouts<<locStrikeoutPos;
+        widths<<loc.width;
+        l.width=qMax(l.width, loc.width);
+        heights<<loc.overallHeight;
+        ascents<<loc.baselineHeight;
+        descents<<(loc.overallHeight-loc.baselineHeight);
+        strikeouts<<loc.strikeoutPos;
         ysFromFirstLine<<y;
     }
     heightSum+=descents.last();
@@ -690,7 +660,7 @@ JKQTMathTextVerticalListNode::LayoutInfo JKQTMathTextVerticalListNode::calcLayou
     return l;
 }
 
-double JKQTMathTextVerticalListNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) {
+double JKQTMathTextVerticalListNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) const {
     doDrawBoxes(painter, x, y, currentEv);
     const LayoutInfo l=calcLayout(painter, currentEv);
     for (int i=0; i<nodes.size(); i++) {
@@ -704,7 +674,7 @@ void JKQTMathTextVerticalListNode::addChild(JKQTMathTextNode *n) {
     nodes.append(n);
 }
 
-bool JKQTMathTextVerticalListNode::toHtml(QString &html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) {
+bool JKQTMathTextVerticalListNode::toHtml(QString &html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) const {
     bool ok=true;
     if (alignment==MTHALeft) {
         html+="<div align=\"left\">";
@@ -817,3 +787,33 @@ void JKQTMathTextVerticalListNode::setSpacingMode(JKQTMathTextLineSpacingMode va
 JKQTMathTextVerticalListNode::LayoutInfo::LayoutInfo():
     JKQTMathTextNodeSize(), X()
 {}
+
+
+
+JKQTMathTextVerticalListNode::LayoutInfo::LayoutInfo(const JKQTMathTextNodeSize &other):
+    JKQTMathTextNodeSize(other),
+    X()
+{
+
+}
+
+JKQTMathTextVerticalListNode::LayoutInfo &JKQTMathTextVerticalListNode::LayoutInfo::operator=(const JKQTMathTextNodeSize &other)
+{
+    JKQTMathTextNodeSize::operator=(other);
+    X.clear();
+    return *this;
+}
+
+JKQTMathTextVerticalListNode::LayoutInfo &JKQTMathTextVerticalListNode::LayoutInfo::operator=(const LayoutInfo &other)
+{
+    JKQTMathTextNodeSize::operator=(dynamic_cast<const JKQTMathTextNodeSize&>(other));
+    X=other.X;
+    return *this;
+}
+
+JKQTMathTextVerticalListNode::LayoutInfo::LayoutInfo(const LayoutInfo &other):
+    JKQTMathTextNodeSize(dynamic_cast<const JKQTMathTextNodeSize&>(other)),
+    X(other.X)
+{
+
+}

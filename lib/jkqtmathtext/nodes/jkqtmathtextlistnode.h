@@ -49,9 +49,9 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextHorizontalListNode: public JKQTMathTex
         /** \copydoc JKQTMathTextNode::getTypeName() */
         virtual QString getTypeName() const override;
         /** \copydoc JKQTMathTextNode::draw() */
-        virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) override;
+        virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) const override;
         /** \copydoc JKQTMathTextNode::toHtml() */
-        virtual bool toHtml(QString& html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) override;
+        virtual bool toHtml(QString& html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) const override;
         /** \brief add a child node */
         void addChild(JKQTMathTextNode* n);
         /** \copydoc JKQTMathTextMultiChildNode::getChildren() */
@@ -70,7 +70,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextHorizontalListNode: public JKQTMathTex
         virtual JKQTMathTextNode* replaceChild(int i, JKQTMathTextNode* newChild) override;
     protected:
         /** \copydoc JKQTMathTextNode::getSizeInternal() */
-        virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) override;
+        virtual JKQTMathTextNodeSize getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv) const override;
         QList<JKQTMathTextNode*> nodes;
     private:
         /** \brief  internal implementation of clearChildren() that is non-virtual, so can be used in the destructor */
@@ -101,9 +101,9 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextVerticalListNode: public JKQTMathTextM
         /** \copydoc JKQTMathTextNode::getTypeName() */
         virtual QString getTypeName() const override;
         /** \copydoc JKQTMathTextNode::draw() */
-        virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) override;
+        virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) const override;
         /** \copydoc JKQTMathTextNode::toHtml() */
-        virtual bool toHtml(QString& html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) override;
+        virtual bool toHtml(QString& html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) const override;
         /** \brief add a child node */
         void addChild(JKQTMathTextNode* n);
         /** \copydoc JKQTMathTextMultiChildNode::getChildren() */
@@ -138,11 +138,15 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextVerticalListNode: public JKQTMathTextM
         void setSpacingMode(JKQTMathTextLineSpacingMode value) ;
     protected:
         /** \copydoc JKQTMathTextNode::getSizeInternal() */
-        virtual void getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) override;
+        virtual JKQTMathTextNodeSize getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv) const override;
 
         /** \brief describes the layout of the whole node */
         struct LayoutInfo: public JKQTMathTextNodeSize {
             LayoutInfo();
+            LayoutInfo(const LayoutInfo& other);
+            LayoutInfo(const JKQTMathTextNodeSize& other);
+            LayoutInfo& operator=(const LayoutInfo& other);
+            LayoutInfo& operator=(const JKQTMathTextNodeSize& other);
             /** \brief drawing position for each line */
             QList<QPointF> X;
         };
