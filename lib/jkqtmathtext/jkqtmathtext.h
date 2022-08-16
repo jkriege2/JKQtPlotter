@@ -233,7 +233,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
          */
         bool parse(const QString &text, ParseOptions options=DefaultParseOptions);
 
-        /** \brief get the size of the drawn representation. returns \c QSizeF(0,0) if no text has been parsed. */
+        /** \brief get the size of the drawn representation. returns an invalid size if no text has been parsed. */
         QSizeF getSize(QPainter& painter);
         /** \brief get the rounded (using ceil) to an integer size of the drawn representation. returns \c QSize(0,0) if no text has been parsed. */
         QSize getIntSize(QPainter& painter);

@@ -2262,14 +2262,14 @@ JKQTMathTextNode *JKQTMathText::getParsedNode() const {
 
 
 bool JKQTMathText::parse(const QString& text, ParseOptions options){
-    QString ntext=text;
-    if (options.testFlag(StartWithMathMode)) ntext=QString("$")+ntext+QString("$");
-    if (options.testFlag(AddSpaceBeforeAndAfter)) ntext=QString("\\;")+ntext+QString("\\;");
+    QString ntext;
+    if (options.testFlag(StartWithMathMode)) ntext=QString("$")+text+QString("$");
+    if (options.testFlag(AddSpaceBeforeAndAfter)) ntext=QString("\\;")+text+QString("\\;");
+    else ntext=text;
     if (parsedNode && parseString==ntext) return true;
 
 
     if (parsedNode!=nullptr) delete parsedNode;
-    //std::cout<<"JKQTMathText::parse('"<<ntext.toStdString()<<"', options="<<std::hex<<static_cast<int>(options)<<")\n";
     parseString=ntext;
 
     currentTokenID=-1;
