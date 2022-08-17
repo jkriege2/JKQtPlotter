@@ -39,7 +39,6 @@ This page lists several todos and wishes for future version of JKQTPlotter
     <li></li>
   </ul></li>
   <li>JKQTMathText:<ul>
-    <li>check sub/superscript with italic text in math mode, possibly a correction is necessary</li>
     <li>explore options to make font-environment-modifying commands avails, like "{blacktext\\color{red}redtext}", today only commands like "\\textcolor{red}{redtext}" work</li>
     <li></li>
   </ul></li>
