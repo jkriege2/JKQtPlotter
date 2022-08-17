@@ -84,30 +84,30 @@ jkqtmathtext_mathdeco.png
 $\vec{x}\ \dot{x}\ \ddot{x}\ \overline{x}\ \underline{x}\ \hat{x}\ \tilde{x}\ \uul{x}\ \ool{x}\ \bar{x}\ \arrow{x}\ \widehat{x}\ \widetilde{x}\ ...$
 ---
 jkqtmathtext_textaccents.png
-\begin{array}{llll}
-{\backslash}"A: & \"A\"a & {\backslash}`A: & \`A\`a \\
-{\backslash}'A: & \'A\'a &{\backslash}{\circonflex}A: & \^A\^a \\
-{\backslash}{\sim}A: & \~A\~a &{\backslash}r\{A\}: & \r{A}\r{a} \\
-{\backslash}u\{A\}: & \u{A}\u{a} &{\backslash}=A: & \=A\=a \\
-{\backslash}v\{C\}: & \v{C}\v{c} &{\backslash}.e: & \.e \\
-{\backslash}AA{\backslash}aa & \AA\aa & {\backslash}OE{\backslash}oe & {\OE}{\oe} \\
-{\backslash}L{\backslash}l & \L\l & {\backslash}AE{\backslash}ae & {\AE}{\ae} \\
-{\backslash}ss & \ss & {\backslash}O{\backslash}o & \O\o 
+\begin{array}{lll|lll}
+{\backslash}"A: & \"A\"a &\ \ \ &\ \ \ &  {\backslash}`A: & \`A\`a \\
+{\backslash}'A: & \'A\'a &&&{\backslash}{\circonflex}A: & \^A\^a \\
+{\backslash}{\sim}A: & \~A\~a &&&{\backslash}r\{A\}: & \r{A}\r{a} \\
+{\backslash}u\{A\}: & \u{A}\u{a} &&&{\backslash}=A: & \=A\=a \\
+{\backslash}v\{C\}: & \v{C}\v{c} &&&{\backslash}.e: & \.e \\
+{\backslash}AA{\backslash}aa\ \  & \AA\aa &&& {\backslash}OE{\backslash}oe\ \  & {\OE}{\oe} \\
+{\backslash}L{\backslash}l & \L\l &&& {\backslash}AE{\backslash}ae & {\AE}{\ae} \\
+{\backslash}ss & \ss &&& {\backslash}O{\backslash}o & \O\o 
 \end{array}
 ---
 jkqtmathtext_mathaccents.png
-\begin{array}{llll}
-{\backslash}dot\{A\}: & $\dot{A}\dot{a}$ & {\backslash}ddot\{A\}: & $\ddot{A}\ddot{a}$ \\
-{\backslash}grave\{A\}: & $\grave{A}\grave{a}$ & {\backslash}acute\{A\}: & $\acute{A}\acute{a}$ \\
-{\backslash}acute\{A\}: & $\acute{A}\acute{a}$ & {\backslash}tilde\{A\}: & $\tilde{A}\tilde{a}$ \\
-{\backslash}bar\{A\}: & $\bar{A}\bar{a}$ & {\backslash}check\{A\}: & $\check{A}\check{a}$ \\
-{\backslash}widetilde\{Aa\}: & $\widetilde{Aa}$ & {\backslash}widehat\{Aa\}: & $\widehat{Aa}$ \\
-{\backslash}widecheck\{Aa\}: & $\widecheck{Aa}$ & {\backslash}vec\{A\}: & $\vec{A}\vec{a}$ \\
-{\backslash}underline\{A\}: & $\underline{A}\underline{a}$ & {\backslash}overline\{A\}: & $\overline{A}\overline{a}$ \\
-{\backslash}uul\{A\}: & $\uul{A}\uul{a}$ & {\backslash}ool\{A\}: & $\ool{A}\ool{a}$ \\
-{\backslash}ocirc\{A\}: & $\ocirc{A}\ocirc{a}$ & {\backslash}breve\{A\}: & $\breve{A}\breve{a}$ \\
-{\backslash}arrow\{A\}: & $\arrow{A}\arrow{a}$ & {\backslash}overrightarrow\{A\}: & $\overrightarrow{A}\overrightarrow{a}$  \\
-{\backslash}overleftarrow\{A\}: & $\overleftarrow{A}\overleftarrow{a}$ & {\backslash}overleftrightarrow\{A\}: & $\overleftrightarrow{A}\overleftrightarrow{a}$ \\
-{\backslash}underleftarrow\{A\}: & $\underleftarrow{A}\underleftarrow{a}$ & {\backslash}underrightarrow\{A\}: & $\underrightarrow{A}\underrightarrow{a}$ \\
-{\backslash}underleftrightarrow\{A\}: & $\underleftrightarrow{A}\underleftrightarrow{a}$ &  &\\
+\begin{array}{lll|lll}
+{\backslash}dot\{A\}: & $\dot{A}\dot{a}$ &\ \ \ &\ \ \ & {\backslash}ddot\{A\}: & $\ddot{A}\ddot{a}$ \\
+{\backslash}grave\{A\}: & $\grave{A}\grave{a}$ &&& {\backslash}acute\{A\}: & $\acute{A}\acute{a}$ \\
+{\backslash}acute\{A\}: & $\acute{A}\acute{a}$ &&& {\backslash}tilde\{A\}: & $\tilde{A}\tilde{a}$ \\
+{\backslash}bar\{A\}: & $\bar{A}\bar{a}$ &&& {\backslash}check\{A\}: & $\check{A}\check{a}$ \\
+{\backslash}widetilde\{Aa\}: & $\widetilde{Aa}$ &&& {\backslash}widehat\{Aa\}: & $\widehat{Aa}$ \\
+{\backslash}widecheck\{Aa\}: & $\widecheck{Aa}$ &&& {\backslash}vec\{A\}: & $\vec{A}\vec{a}$ \\
+{\backslash}underline\{A\}: & $\underline{A}\underline{a}$ &&& {\backslash}overline\{A\}: & $\overline{A}\overline{a}$ \\
+{\backslash}uul\{A\}: & $\uul{A}\uul{a}$ &&& {\backslash}ool\{A\}: & $\ool{A}\ool{a}$ \\
+{\backslash}ocirc\{A\}: & $\ocirc{A}\ocirc{a}$ &&& {\backslash}breve\{A\}: & $\breve{A}\breve{a}$ \\
+{\backslash}arrow\{A\}: & $\arrow{A}\arrow{a}$ &&& {\backslash}overrightarrow\{A\}: & $\overrightarrow{A}\overrightarrow{a}$  \\
+{\backslash}overleftarrow\{A\}: & $\overleftarrow{A}\overleftarrow{a}$ &&& {\backslash}overleftrightarrow\{A\}:\ \  & $\overleftrightarrow{A}\overleftrightarrow{a}$ \\
+{\backslash}underleftarrow\{A\}: & $\underleftarrow{A}\underleftarrow{a}$ &&& {\backslash}underrightarrow\{A\}: & $\underrightarrow{A}\underrightarrow{a}$ \\
+{\backslash}underleftrightarrow\{A\}:\ \  & $\underleftrightarrow{A}\underleftrightarrow{a}$ &  &&&\\
 \end{array}

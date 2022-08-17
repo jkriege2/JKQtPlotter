@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.16)
 if(JKQtPlotter_BUILD_TOOLS)
 
     # custom target that generates the images for the JKQTMathText documentation
-    set(JKQTMathText_GenerateDocImages_DefaultOptions --resolution=96 --fontsize=20 --fontmathroman=XITS --background=white --sizeincrease=5)
+    set(JKQTMathText_GenerateDocImages_DefaultOptions --resolution=96 --fontsize=15 --fontmathroman=XITS --background=white --sizeincrease=5)
     set(JKQTMathText_GenerateDocImages_StdInputFiles
         jkqtmathtext_docimages_accents.jkmt
         jkqtmathtext_docimages_boxes.jkmt
