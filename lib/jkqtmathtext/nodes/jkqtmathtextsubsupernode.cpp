@@ -64,7 +64,6 @@ JKQTMathTextNodeSize JKQTMathTextSuperscriptNode::getSizeWithSpecialPlacement(QP
     s.width=cs.width;
     if (prevNodeSizeForSpecialPlacement!=nullptr) s.strikeoutPos=prevNodeSizeForSpecialPlacement->strikeoutPos;
     else s.strikeoutPos=fm.strikeOutPos();
-    if (currentEv.italic && prevNodeSizeForSpecialPlacement==nullptr) s.width=s.width+double(fm.boundingRect(' ').width())*parentMathText->getItalicCorrectionFactor();
     return s;
 }
 
@@ -91,7 +90,6 @@ double JKQTMathTextSuperscriptNode::drawWithSpecialPlacement(QPainter& painter, 
     }
 
     double xx=x;
-    if (currentEv.italic && prevNodeSizeForSpecialPlacement==nullptr) xx=xx+double(fm.boundingRect(' ').width())*parentMathText->getItalicCorrectionFactor();
 
     return getChild()->draw(painter, xx, y-(shiftToChildBottom+childDescent), ev);//+0.5*fm.boundingRect("A").width();
 }
@@ -137,7 +135,6 @@ JKQTMathTextNodeSize JKQTMathTextSubscriptNode::getSizeWithSpecialPlacement(QPai
     ev.fontSize=ev.fontSize*parentMathText->getSubsuperSizeFactor();
     const QFontMetricsF fm(ev.getFont(parentMathText), painter.device());
     //const QRectF tbr_of_letterM=JKQTMathTextGetTightBoundingRect(currentEv.getFont(parentMathText), "M", painter.device());
-    const double italic_xshift=qMax(0.0,-fm.rightBearing('x'));// double(fm.boundingRect('x').width())*parentMathText->getItalicCorrectionFactor();
 
     const JKQTMathTextNodeSize cs=getChild()->getSize(painter, ev);
     //const double childDescent=cs.overallHeight-cs.baselineHeight;
@@ -156,7 +153,6 @@ JKQTMathTextNodeSize JKQTMathTextSubscriptNode::getSizeWithSpecialPlacement(QPai
     if (prevNodeSizeForSpecialPlacement!=nullptr) s.strikeoutPos=prevNodeSizeForSpecialPlacement->strikeoutPos;
     else s.strikeoutPos=fm.strikeOutPos();
     s.width=cs.width;
-    if (currentEv.italic && prevNodeSizeForSpecialPlacement==nullptr) s.width=s.width-italic_xshift;
     return s;
 }
 
@@ -174,7 +170,6 @@ double JKQTMathTextSubscriptNode::drawWithSpecialPlacement(QPainter& painter, do
 
     const JKQTMathTextNodeSize cs=getChild()->getSize(painter, ev);
     double shift_to_childBaseline=cs.baselineHeight-parentMathText->getSubShiftFactor()*fm.xHeight();
-    const double italic_xshift=qMax(0.0,-fm.rightBearing('x'));// double(fm.boundingRect('x').width())*parentMathText->getItalicCorrectionFactor();
 
     if (prevNodeSizeForSpecialPlacement!=nullptr) {
         //qDebug()<<"oldshift="<<shift<<", prevNodeSize->overallHeight="<<prevNodeSize->overallHeight<<", prevNodeSize->baselineHeight="<<prevNodeSize->baselineHeight;
@@ -187,10 +182,6 @@ double JKQTMathTextSubscriptNode::drawWithSpecialPlacement(QPainter& painter, do
     //qDebug()<<"baselineHeight="<<baselineHeight<<", overallHeight="<<overallHeight<<", strikeoutPos="<<strikeoutPos;
     //qDebug()<<"shift="<<shift<<", yshift="<<yshift;
     double xx=x;
-    if (currentEv.italic && prevNodeSizeForSpecialPlacement==nullptr) {
-        //std::cout<<"italic_xshift="<<italic_xshift<<"\n";
-        xx=xx-italic_xshift;
-    }
     return getChild()->draw(painter, xx, y+shift_to_childBaseline, ev);//+0.5*fm.boundingRect("A").width();
 }
 

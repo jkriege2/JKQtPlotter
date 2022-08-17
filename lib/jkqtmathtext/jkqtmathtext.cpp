@@ -63,7 +63,6 @@ JKQTMathText::JKQTMathText(QObject* parent):
     fontSize=10;
     fontSizeUnits=JKQTMathTextEnvironment::POINTS;
     fontColor=QColor("black");
-    italic_correction_factor=0.4;
     brace_factor=1.04;
     brace_y_shift_factor=0.7;//-1;
 
@@ -87,7 +86,7 @@ JKQTMathText::JKQTMathText(QObject* parent):
     decoration_separation_factor=0.1;
 
     operatorsubsuper_size_factor=0.65;
-    operatorsubsuper_distance_factor=0.25;
+    operatorsubsuper_distance_factor=0.35;
     operatorsubsuper_extraspace_factor=0.5;
     intsubsuper_xcorrection_factor=0.25;
     intsubbesides_xcorrection_xfactor=0.33;
@@ -206,7 +205,6 @@ void JKQTMathText::loadSettings(const QSettings& settings, const QString& group)
     brace_factor=settings.value(group+"brace_factor", brace_factor).toDouble();
     subsuper_size_factor=settings.value(group+"subsuper_size_factor", subsuper_size_factor).toDouble();
     subsuper_mode_selection_by_size_factor=settings.value(group+"subsuper_mode_selection_by_size_factor", subsuper_mode_selection_by_size_factor).toDouble();
-    italic_correction_factor=settings.value(group+"italic_correction_factor", italic_correction_factor).toDouble();
     super_shift_factor=settings.value(group+"super_shift_factor", super_shift_factor).toDouble();
     sub_shift_factor=settings.value(group+"sub_shift_factor", sub_shift_factor).toDouble();
     special_super_shift_factor=settings.value(group+"special_super_shift_factor", special_super_shift_factor).toDouble();
@@ -254,7 +252,6 @@ void JKQTMathText::saveSettings(QSettings& settings, const QString& group) const
     settings.setValue(group+ "brace_factor", brace_factor);
     settings.setValue(group+ "subsuper_size_factor", subsuper_size_factor);
     settings.setValue(group+ "subsuper_mode_selection_by_size_factor", subsuper_mode_selection_by_size_factor);
-    settings.setValue(group+ "italic_correction_factor", italic_correction_factor);
     settings.setValue(group+ "sub_shift_factor", sub_shift_factor);
     settings.setValue(group+ "super_shift_factor", super_shift_factor);
     settings.setValue(group+ "special_sub_shift_factor", special_sub_shift_factor);
@@ -709,16 +706,6 @@ void JKQTMathText::setSubsuperModeSelectionBySizeFactor(double __value)
 double JKQTMathText::getSubsuperModeSelectionBySizeFactor() const
 {
     return subsuper_mode_selection_by_size_factor;
-}
-
-void JKQTMathText::setItalicCorrectionFactor(double __value)
-{
-    this->italic_correction_factor = __value;
-}
-
-double JKQTMathText::getItalicCorrectionFactor() const
-{
-    return this->italic_correction_factor;
 }
 
 void JKQTMathText::setOperatorsubsuperSizeFactor(double __value)

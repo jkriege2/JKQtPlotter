@@ -339,6 +339,15 @@ struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextNodeSize {
     double overallHeight;
     /** \brief strikeoutPos of whole block */
     double strikeoutPos;
+    /** \brief x-correction (<0 = move to the left) for subscripts, i.e. approximately at the height of the baseline
+     *
+     *  \image html jkqtmathtext/jkqtmathtext_doc_subsuper_italiccorrection.png
+     *
+     *  \image html jkqtmathtext/jkqtmathtext_doc_subsuper_italiccorrection_boxes.png
+     */
+    double baselineXCorrection;
+    /** \brief x-correction (>0 = move to the right) for superscripts, i.e. approximately at the top  of the box */
+    double topXCorrection;
     /** \brief calculate the descent */
     inline double getDescent() const { return overallHeight-baselineHeight; }
     /** \brief calculate the overall size in floating-point precision */

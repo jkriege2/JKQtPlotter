@@ -164,6 +164,7 @@ JKQTMathTextNodeSize JKQTMathTextDecoratedNode::getSizeInternal(QPainter& painte
     s.baselineHeight=ascent;
     s.strikeoutPos=cs.strikeoutPos;
     s.width=std::max<double>(deco_miniwidth,cs.width);
+    s.baselineXCorrection=cs.baselineXCorrection;
     return s;
 }
 

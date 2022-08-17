@@ -149,12 +149,15 @@ JKQTMathTextTextNode::LayoutInfo JKQTMathTextTextNode::calcLayout(QPainter &pain
     double ascent=0;
     double descent=0;
     for (int i=0; i<l.textpart.size(); i++) {
+        l.baselineXCorrection=0;
+        l.topXCorrection=0;
         QRectF br, tbr;
         switch(l.fontMode[i]) {
             case FMasDefined:
             case FMasDefinedOutline:
                 br=fm.boundingRect(l.textpart[i]);
                 tbr=JKQTMathTextGetTightBoundingRect(f, l.textpart[i], painter.device());
+                if (f.italic() && l.textpart[i].size()>0) l.baselineXCorrection=fm.rightBearing(l.textpart[i].operator[](l.textpart[i].size()-1));
                 break;
             case FMasDefinedForceUpright:
                 br=fmUpright.boundingRect(l.textpart[i]);
@@ -163,10 +166,12 @@ JKQTMathTextTextNode::LayoutInfo JKQTMathTextTextNode::calcLayout(QPainter &pain
             case FMroman:
                 br=fmRoman.boundingRect(l.textpart[i]);
                 tbr=JKQTMathTextGetTightBoundingRect(fRoman, l.textpart[i], painter.device());
+                if (fRoman.italic() && l.textpart[i].size()>0) l.baselineXCorrection=fmRoman.rightBearing(l.textpart[i].operator[](l.textpart[i].size()-1));
                 break;
             case FMfallbackSymbol:
                 br=fmFallbackSym.boundingRect(l.textpart[i]);
                 tbr=JKQTMathTextGetTightBoundingRect(fFallbackSym, l.textpart[i], painter.device());
+                if (fFallbackSym.italic() && l.textpart[i].size()>0) l.baselineXCorrection=fmFallbackSym.rightBearing(l.textpart[i].operator[](l.textpart[i].size()-1));
                 break;
         }
         l.textpartXPos.append(l.width);

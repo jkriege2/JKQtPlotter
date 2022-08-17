@@ -71,9 +71,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSymbolNode: public JKQTMathTextNode {
         struct NodeSize : JKQTMathTextNodeSize {
             NodeSize();
             /** \brief x-correction as described for JKQTMathParser::intsubsuper_xcorrection_factor for placing sub-/superscript below/above the symbol, e.g. for integral signs, where the subscript is slightly shifted to the left (from center) and the superscript slightly to the right */
-            double subSuperXCorrection;
-            /** \brief x-correction as described for JKQTMathParser::intsubbesides_xcorrection_xfactor for placing sub-/superscript besides the symbol */
-            double subBesidesXCorrection;
+            double subSuperAboveBelowXCorrection;
 
             NodeSize& operator=(const JKQTMathTextNodeSize& other);
             NodeSize& operator=(const NodeSize& other);
@@ -144,6 +142,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSymbolNode: public JKQTMathTextNode {
             MakeWhitespaceHalf= 1 << 2,    /*!< \brief symbol uses whitespaces in its text (SymbolProps::symbol). These should be typeset as half-spaces */
             IntLikeSymbolCorrection= 1 << 3, /*!< \brief symbols, like \c \\int,\\iint,... require a correction in x-direction for subsequent sub-/superscripts ... this flag marks such symbols */
             SubSuperscriptBelowAboveSymbol= 1 << 4, /*!< \brief symbols, like \c \\int,\\iint,... if appearing in math-mode cause typesetting following sub-/superscripts below/above the symbol, not besides it. */
+            SubscriptCorrection= 1 << 5, /*!< \brief symbols, like \c \\nabla,... require a subscript correction in x-direction for subsequent subscripts ... this flag marks such symbols */
         };
 
         friend inline GlobalSymbolFlags operator~ (GlobalSymbolFlags a) { return (GlobalSymbolFlags)~static_cast<uint64_t>(a); }

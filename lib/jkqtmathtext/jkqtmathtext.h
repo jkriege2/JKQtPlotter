@@ -512,10 +512,6 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         void setSubsuperModeSelectionBySizeFactor(double __value);
         /** \copydoc subsuper_mode_selection_by_size_factor */
         double getSubsuperModeSelectionBySizeFactor() const;
-        /** \copydoc italic_correction_factor */
-        void setItalicCorrectionFactor(double __value);
-        /** \copydoc italic_correction_factor */ 
-        double getItalicCorrectionFactor() const;
         /** \copydoc operatorsubsuper_size_factor */ 
         void setOperatorsubsuperSizeFactor(double __value);
         /** \copydoc operatorsubsuper_size_factor */ 
@@ -721,14 +717,6 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
          *  by \c \\sum,\\int,... .
          */
         double subsuper_mode_selection_by_size_factor;
-        /** \brief fraction of a whitespace by which to shift a sub-/superscript left/right when the previous text is italic
-         *
-         *  \image html jkqtmathtext/jkqtmathtext_doc_subsuper_italiccorrection.png
-         *
-         *  \image html jkqtmathtext/jkqtmathtext_doc_subsuper_italiccorrection_boxes.png
-         *
-         */
-        double italic_correction_factor;
         /** \brief like subsuper_size_factor, but for operators (\c \\sum , \c \\int , ...) where the text is placed above/below the symbol */
         double operatorsubsuper_size_factor;
         /** \brief for operators (\c \\sum , \c \\int , ...) where the text is placed above/below the symbol, this is the distance between the operator symbol and the sub-/super-text if multiplied by xHeight

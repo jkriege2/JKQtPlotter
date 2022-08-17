@@ -58,7 +58,7 @@ jkqtmathtext_doc_subsuper_italiccorrection.png
 sub-/superscript:\\
 \begin{tabular}{c|c}
 italic-correction  &  no correction\\\hdashline
-$x_\textcolor{blue}{\leftarrow}^\textcolor{red}{0}$ & $\mathrm{M}_\textcolor{red}{0}^\textcolor{red}{0}$
+$x_\textcolor{blue}{\leftarrow}^\textcolor{red}{0}$\ \ \ $\alpha_\textcolor{blue}{\leftarrow}^\textcolor{red}{0}$\ \ \ $\nabla_\textcolor{blue}{\leftarrow}^\textcolor{red}{0}$ & $\mathrm{M}_\textcolor{red}{0}^\textcolor{red}{0}$\ \ \ $\upalpha_\textcolor{red}{0}^\textcolor{red}{0}$
 \end{tabular}
 ---
 jkqtmathtext_doc_subsuper_italiccorrection_boxes.png
@@ -66,5 +66,5 @@ jkqtmathtext_doc_subsuper_italiccorrection_boxes.png
 sub-/superscript:\\
 \begin{tabular}{c|c}
 italic-correction  &  no correction\\\hdashline
-$x_\textcolor{blue}{\leftarrow}^\textcolor{red}{0}$ & $\mathrm{M}_\textcolor{red}{0}^\textcolor{red}{0}$
+$x_\textcolor{blue}{\leftarrow}^\textcolor{red}{0}$\ \ \ $\alpha_\textcolor{blue}{\leftarrow}^\textcolor{red}{0}$\ \ \ $\nabla_\textcolor{blue}{\leftarrow}^\textcolor{red}{0}$ & $\mathrm{M}_\textcolor{red}{0}^\textcolor{red}{0}$\ \ \ $\upalpha_\textcolor{red}{0}^\textcolor{red}{0}$
 \end{tabular}

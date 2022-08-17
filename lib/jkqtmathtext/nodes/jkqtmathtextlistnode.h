@@ -36,9 +36,19 @@ class JKQTMathText; // forward
 /** \brief subclass representing a list of nodes in the syntax tree, layed out horizontally
  *  \ingroup jkqtmathtext_items
  *
- *  \note This type of node also implements typesetting sub-/superscript above/below the previous node (if
- *        JKQTMathTextNode::is() is \c true for that previus node. The drawing is done as defined in the
- *        following image \image html jkqtmathtext_subsuper_with_limits.png
+ *  This type of node also implements typesetting sub-/superscript above/below the previous node (if
+ *  JKQTMathTextNode::is() is \c true for that previus node. The drawing is done as defined in the
+ *  following image:
+ *    \image html jkqtmathtext_subsuper_with_limits.png
+ *
+ *  In addition this node also ensures that subscripts are moved to the left for italic previous
+ *  text or nodes that require such a shift (e.g. \c \\nabla or \c \\int ):
+ *
+ *  \image html jkqtmathtext/jkqtmathtext_doc_subsuper_italiccorrection.png
+ *
+ *  \image html jkqtmathtext/jkqtmathtext_doc_subsuper_italiccorrection_boxes.png
+ *
+ *  This is implemented using JKQTMathTextNodeSize::baselineXCorrection .
  *
  *  \see JKQTMathTextVerticalListNode
  */

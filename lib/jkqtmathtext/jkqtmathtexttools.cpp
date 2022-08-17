@@ -596,7 +596,9 @@ JKQTMathTextNodeSize::JKQTMathTextNodeSize():
     width(0),
     baselineHeight(0),
     overallHeight(0),
-    strikeoutPos()
+    strikeoutPos(),
+    baselineXCorrection(0),
+    topXCorrection(0)
 {
 
 }
