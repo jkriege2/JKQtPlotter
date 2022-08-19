@@ -374,33 +374,35 @@ void JKQTMathTextMultiChildNode::setDrawBoxes(bool draw)
 
 }
 
-JKQTMathTextNoopNode::JKQTMathTextNoopNode(JKQTMathText *parent):
+
+
+
+
+
+
+
+JKQTMathTextNonDrawingBaseNode::JKQTMathTextNonDrawingBaseNode(JKQTMathText *parent):
     JKQTMathTextNode(parent)
 {
 
 }
 
-JKQTMathTextNoopNode::~JKQTMathTextNoopNode()
+JKQTMathTextNonDrawingBaseNode::~JKQTMathTextNonDrawingBaseNode()
 {
 
 }
 
-QString JKQTMathTextNoopNode::getTypeName() const
-{
-    return "MTNoopNode";
-}
-
-bool JKQTMathTextNoopNode::toHtml(QString &html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) const
-{
-    return true;
-}
-
-double JKQTMathTextNoopNode::draw(QPainter &painter, double x, double y, JKQTMathTextEnvironment currentEv) const
+double JKQTMathTextNonDrawingBaseNode::draw(QPainter &/*painter*/, double x, double /*y*/, JKQTMathTextEnvironment /*currentEv*/) const
 {
     return x;
 }
 
-JKQTMathTextNodeSize JKQTMathTextNoopNode::getSizeInternal(QPainter &painter, JKQTMathTextEnvironment currentEv) const
+bool JKQTMathTextNonDrawingBaseNode::toHtml(QString &/*html*/, JKQTMathTextEnvironment /*currentEv*/, JKQTMathTextEnvironment /*defaultEv*/) const
+{
+    return true;
+}
+
+JKQTMathTextNodeSize JKQTMathTextNonDrawingBaseNode::getSizeInternal(QPainter &/*painter*/, JKQTMathTextEnvironment /*currentEv*/) const
 {
     return JKQTMathTextNodeSize();
 }

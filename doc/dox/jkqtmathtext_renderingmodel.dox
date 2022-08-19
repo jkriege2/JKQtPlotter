@@ -2,8 +2,10 @@
 
   \defgroup jkqtmathtext_renderingmodel JKQTMathText Rendering Model
   \ingroup jkqtmathtext_general
+  
+  \section jkqtmathtext_renderingmodel_basics Basics
 
-  JKQTMathText parses an (LaTeX) input string of mathematicalkmarkup and in a first step generates a memory representation of the it (cf. \ref jkqtmathtext_items ).
+  JKQTMathText parses an input string of mathematical markup (i.e. LaTeX) and in a first step generates a memory representation of the it (cf. \ref jkqtmathtext_items ).
   Then this memory representation is used to draw the represented math using the renndering API of <a href="https://doc.qt.io/qt-6/qpainter.html">QPainter</a>.
   
   As an example, we look at the following LaTeX markup, representing the solution to a quadratic equation:
@@ -25,7 +27,10 @@
   \image html jkqtmathtext/jkqtmathtext_doc_quadraticeq_tree.png
 
   \note  The memory representation is independent of the actual math markup language (e.g. LaTeX) which was initially parsed. 
-  But of course it is modelled, so the features of the supported markup languages are supported by the memory model.
+         But of course it is modelled, so the features of the supported markup languages are supported by the memory model.
+         
+  \note  Also the parser performs optimizations on the tree, e.g. by removing a JKQTMathTextHorizontalListNode if it contains 
+         only one entry!
 
 
   You can see that each node corresponds to a box, if these are overlayed over the rendering:
@@ -38,5 +43,27 @@
   \image html jkqtmathtext_node_geo.png
   
    
-
+  \section jkqtmathtext_renderingmodel_linebreaks Linebreaks and Blocks
+  
+  As described above, JKQTMathText represents the mathematicl markup as a tree of boxes. When calling JKQTMathText::parse() without
+  any additional parameters, the base-node is a JKQTMathTextVerticalListNode that can represent several lines of text. A new line
+  is started when a \c \\\\ or \c \\newline command is found. Automatic line breaking is not performed, i.e. each line can possibly
+  become very long, also longer than the available space for drawing! Also lineabreaks are only allowed directly in the current 
+  context. You cannot write 
+  \code.tex 
+  \textbf{line1\\text2}
+  \endcode
+  but have to write 
+  \code.tex 
+  \textbf{line1}\\
+  \textbf{line2} 
+  \endcode
+  
+  With environment-altering instructions like \c \\bfserie or \c \\it this can be overcome: If you write 
+  \code.tex
+  \bf line1\\
+  line2
+  \endcode
+  both lines are typeset in bold face!
+  
 */

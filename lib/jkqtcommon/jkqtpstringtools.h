@@ -210,6 +210,8 @@ JKQTCOMMON_LIB_EXPORT QColor jkqtp_lookupQColorName(const QString& color);
  * This function allows to add the alpha-value as \c "<color_name>,<alpha>" as integer betwee 0 and 255
  * or as \c "<color_name>,<transparency_percent>%" in the range of 0..100 % (i.e. (1-transparency_percent/100)*255).
  * Also \c "<color_name>,a<alpha_percent>%" in the range of 0..100 % (i.e. alpha_percent/100*255).
+ *
+ * Finally the default Qt color definitions are supported, i.e. \c #RGB , \c #RRGGBB , \c #AARRGGBB , \c #RRRGGGBBB , \c #RRRRGGGGBBBB
  */
 JKQTCOMMON_LIB_EXPORT QColor jkqtp_String2QColor(const QString& color);
 

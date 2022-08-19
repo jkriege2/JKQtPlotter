@@ -282,23 +282,47 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextDualChildNode: public JKQTMathTextMult
 
 
 
-/** \brief subclass representing a node that outputs nothing
+/** \brief base class for all derived classes that do not draw anything
  *  \ingroup jkqtmathtext_items
  *
+ *  This class finalizes draw() with no drawing actions and and getSizeInternal(), which
+ *  return a size 0.
  */
-class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextNoopNode: public JKQTMathTextNode {
+class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextNonDrawingBaseNode: public JKQTMathTextNode {
     public:
-        explicit JKQTMathTextNoopNode(JKQTMathText* parent);
-        virtual ~JKQTMathTextNoopNode() override;
-        /** \copydoc JKQTMathTextNode::getTypeName() */
-        virtual QString getTypeName() const override;
-        /** \copydoc JKQTMathTextNode::toHtml() */
-        virtual bool toHtml(QString& html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) const override;
+        explicit JKQTMathTextNonDrawingBaseNode(JKQTMathText* parent);
+        virtual ~JKQTMathTextNonDrawingBaseNode() override;
         /** \copydoc JKQTMathTextNode::draw() */
-        virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) const override;
+        virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) const override final;
+        /** \copydoc JKQTMathTextNode::toHtml() */
+        virtual bool toHtml(QString& html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) const override final;
     protected:
         /** \copydoc JKQTMathTextNode::getSizeInternal() */
-        virtual JKQTMathTextNodeSize getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv) const override;
+        virtual JKQTMathTextNodeSize getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv) const override final;
 
 };
+
+
+/** \brief mixin extending a node that does not produce any output,
+ *         but provides a function modifyEnvironment() that modifies the current
+ *         JKQTMathTextEnvironment. Deriving classes are used to represent
+ *         instructions like \c \\bf or \c \\color{...} that alter the text
+ *         formatting for all further nodes in the current block.
+ *  \ingroup jkqtmathtext_items
+ *
+ *  Classes derived from this require a parent node that executes the additional method
+ *  modifyEnvironment(). In the context of JKQTMathText, this is done by JKQTMathTextHorizontalListNode .
+ *  Therefor the effect of the node end with the last nod in the parent list node.
+ */
+class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextModifyEnvironmentNodeMixIn {
+    public:
+        inline virtual ~JKQTMathTextModifyEnvironmentNodeMixIn() {};
+        /** \brief modifies the fiven JKQTMathTextEnvironment \a currrentEv */
+        virtual void modifyEnvironment(JKQTMathTextEnvironment& currentEv) const=0;
+    protected:
+
+};
+
+
+
 #endif // JKQTMATHTEXTNODE_H

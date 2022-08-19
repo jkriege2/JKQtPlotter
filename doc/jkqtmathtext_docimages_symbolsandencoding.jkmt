@@ -11,6 +11,13 @@ hyphen: -
 jkqtmathtext_greek.png
 $\alpha\beta\gamma\xi\chi\nu\Gamma\Delta\Omega$
 ---
+jkqtmathtext_upgreek.png
+$\upalpha\upbeta\upgamma\upxi\upchi\upnu\upGamma\upDelta\upOmega$
+---
+jkqtmathtext_textgreek.png
+text: \textalpha\textbeta\textgamma\textxi\textchi\textnu\textGamma\textDelta\textOmega\\
+italic: {\itshape\textalpha\textbeta\textgamma\textxi\textchi\textnu\textGamma\textDelta\textOmega}
+---
 jkqtmathtext_char.png
 A: \char65, circonflex: \char"109 accent: \char'351
 ---

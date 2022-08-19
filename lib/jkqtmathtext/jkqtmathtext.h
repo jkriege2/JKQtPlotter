@@ -985,6 +985,9 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         QString parseString;
         /** \brief used by the parser. indicates whether we are in a math environment */
         bool parsingMathEnvironment;
+        /** \brief used by the parser. indicates whether to use textstyle or displaystyle in math-mode */
+        bool parsinginMathTextStyle;
+
 
 
     public:

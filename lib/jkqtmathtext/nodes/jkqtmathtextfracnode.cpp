@@ -124,6 +124,11 @@ QString JKQTMathTextFracNode::getTypeName() const
 }
 
 JKQTMathTextNodeSize JKQTMathTextFracNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv) const {
+    FracType fracmode=this->mode;
+    if (currentEv.isMathTextStyle()) {
+        if (fracmode==MTFMfrac) fracmode=MTFMtfrac;
+        if (fracmode==MTFMsfrac) fracmode=MTFMstfrac;
+    }
     const QFont f=currentEv.getFont(parentMathText);
     const QFontMetricsF fm(f, painter.device());
     JKQTMathTextEnvironment ev1=currentEv;
@@ -137,14 +142,14 @@ JKQTMathTextNodeSize JKQTMathTextFracNode::getSizeInternal(QPainter& painter, JK
     const double braceheight=fm.xHeight()*parentMathText->getUnderbraceBraceSizeXFactor();
     const double braceseparation=fm.xHeight()*parentMathText->getUnderbraceSeparationXFactor();
 
-    if (mode==JKQTMathTextFracNode::MTFMunderbrace || mode==JKQTMathTextFracNode::MTFMoverbrace||mode==JKQTMathTextFracNode::MTFMunderbracket || mode==JKQTMathTextFracNode::MTFMoverbracket) {
+    if (fracmode==JKQTMathTextFracNode::MTFMunderbrace || fracmode==JKQTMathTextFracNode::MTFMoverbrace||fracmode==JKQTMathTextFracNode::MTFMunderbracket || fracmode==JKQTMathTextFracNode::MTFMoverbracket) {
         ev2.fontSize=ev2.fontSize*parentMathText->getUnderbraceFactor();
-    } else if (mode==JKQTMathTextFracNode::MTFMunderset || mode==JKQTMathTextFracNode::MTFMoverset) {
+    } else if (fracmode==JKQTMathTextFracNode::MTFMunderset || fracmode==JKQTMathTextFracNode::MTFMoverset) {
         ev2.fontSize=ev2.fontSize*parentMathText->getUndersetFactor();
-    } else  if (mode==JKQTMathTextFracNode::MTFMfrac || mode==JKQTMathTextFracNode::MTFMsfrac) {
+    } else  if (fracmode==JKQTMathTextFracNode::MTFMfrac || fracmode==JKQTMathTextFracNode::MTFMsfrac) {
         ev1.fontSize=ev1.fontSize*getFracScalingFactor();
         ev2.fontSize=ev2.fontSize*getFracScalingFactor();
-    } else  if (mode==JKQTMathTextFracNode::MTFMtfrac || mode==JKQTMathTextFracNode::MTFMstfrac) {
+    } else  if (fracmode==JKQTMathTextFracNode::MTFMtfrac || fracmode==JKQTMathTextFracNode::MTFMstfrac) {
         ev1.fontSize=ev1.fontSize*getFracScalingFactor()*0.7;
         ev2.fontSize=ev2.fontSize*getFracScalingFactor()*0.7;
     }
@@ -174,19 +179,19 @@ JKQTMathTextNodeSize JKQTMathTextFracNode::getSizeInternal(QPainter& painter, JK
     size.overallHeight=0;
     size.baselineHeight=0;
     size.width=0;
-    if (mode==JKQTMathTextFracNode::MTFMfrac || mode==JKQTMathTextFracNode::MTFMdfrac || mode==JKQTMathTextFracNode::MTFMtfrac || mode==JKQTMathTextFracNode::MTFMstackrel) {
+    if (fracmode==JKQTMathTextFracNode::MTFMfrac || fracmode==JKQTMathTextFracNode::MTFMdfrac || fracmode==JKQTMathTextFracNode::MTFMtfrac || fracmode==JKQTMathTextFracNode::MTFMstackrel) {
         const double top_ascent=line_ascent+xheight*parentMathText->getFracShiftFactor();
         const double bot_ascent=line_ascent-xheight*parentMathText->getFracShiftFactor();
         const double newascent=size1.overallHeight+top_ascent;
         const double newdescent=size2.overallHeight-bot_ascent;
         size.width=qMax(size1.width, size2.width);
-        if (mode!=JKQTMathTextFracNode::MTFMstackrel) size.width+=xwidth/2.0;
+        if (fracmode!=JKQTMathTextFracNode::MTFMstackrel) size.width+=xwidth/2.0;
         size.strikeoutPos=line_ascent;
 
         size.overallHeight=newascent+newdescent;
         size.baselineHeight=newascent;
 
-    } else if (mode==JKQTMathTextFracNode::MTFMstfrac || mode==JKQTMathTextFracNode::MTFMsfrac) {
+    } else if (fracmode==JKQTMathTextFracNode::MTFMstfrac || fracmode==JKQTMathTextFracNode::MTFMsfrac) {
         const double top_ascent=line_ascent;
         const double newascent=size1.overallHeight+top_ascent;
         const double newdescent=qMax(size2.overallHeight-size2.baselineHeight, qheight-xheight);
@@ -195,23 +200,23 @@ JKQTMathTextNodeSize JKQTMathTextFracNode::getSizeInternal(QPainter& painter, JK
 
         size.overallHeight=newascent+newdescent;
         size.baselineHeight=newascent;
-    } else if (mode==JKQTMathTextFracNode::MTFMunderbrace || mode==JKQTMathTextFracNode::MTFMunderbracket) {
+    } else if (fracmode==JKQTMathTextFracNode::MTFMunderbrace || fracmode==JKQTMathTextFracNode::MTFMunderbracket) {
         const double newdescent=descent1+size2.overallHeight+braceheight+2.0*braceseparation;
         size.overallHeight=newdescent+size1.baselineHeight;
         size.baselineHeight=size1.baselineHeight;
         size.width=qMax(size1.width, size2.width)+xwidth;
         size.strikeoutPos=line_ascent;
-    } else if (mode==JKQTMathTextFracNode::MTFMoverbrace || mode==JKQTMathTextFracNode::MTFMoverbracket) {
+    } else if (fracmode==JKQTMathTextFracNode::MTFMoverbrace || fracmode==JKQTMathTextFracNode::MTFMoverbracket) {
         size.overallHeight=size1.overallHeight+size2.overallHeight+braceheight+2.0*braceseparation;
         size.baselineHeight=size1.baselineHeight+size2.overallHeight+braceheight+2.0*braceseparation;
         size.width=qMax(size1.width, size2.width)+xwidth;
         size.strikeoutPos=line_ascent;
-    } else if (mode==JKQTMathTextFracNode::MTFMunderset) {
+    } else if (fracmode==JKQTMathTextFracNode::MTFMunderset) {
         size.overallHeight=size1.overallHeight+size2.overallHeight+xheight/6.0;
         size.baselineHeight=size1.baselineHeight;
         size.width=qMax(size1.width, size2.width)+xwidth;
         size.strikeoutPos=line_ascent;
-    } else if (mode==JKQTMathTextFracNode::MTFMoverset) {
+    } else if (fracmode==JKQTMathTextFracNode::MTFMoverset) {
         size.overallHeight=size1.overallHeight+size1.overallHeight+xheight/6.0;
         size.baselineHeight=size1.baselineHeight+size2.overallHeight+xheight/6.0;
         size.width=qMax(size1.width, size2.width)+xwidth;
@@ -240,6 +245,12 @@ double JKQTMathTextFracNode::getFracScalingFactor() const
 }
 
 double JKQTMathTextFracNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) const {
+    FracType fracmode=this->mode;
+    if (currentEv.isMathTextStyle()) {
+        if (fracmode==MTFMfrac) fracmode=MTFMtfrac;
+        if (fracmode==MTFMsfrac) fracmode=MTFMstfrac;
+    }
+
     doDrawBoxes(painter, x, y, currentEv);
     const QFont f=currentEv.getFont(parentMathText);
     const QFontMetricsF fm(f, painter.device());
@@ -255,14 +266,14 @@ double JKQTMathTextFracNode::draw(QPainter& painter, double x, double y, JKQTMat
     const double braceheight=fm.xHeight()*parentMathText->getUnderbraceBraceSizeXFactor();
     const double braceseparation=fm.xHeight()*parentMathText->getUnderbraceSeparationXFactor();
 
-    if (mode==JKQTMathTextFracNode::MTFMunderbrace || mode==JKQTMathTextFracNode::MTFMoverbrace||mode==JKQTMathTextFracNode::MTFMunderbracket || mode==JKQTMathTextFracNode::MTFMoverbracket) {
+    if (fracmode==JKQTMathTextFracNode::MTFMunderbrace || fracmode==JKQTMathTextFracNode::MTFMoverbrace||fracmode==JKQTMathTextFracNode::MTFMunderbracket || fracmode==JKQTMathTextFracNode::MTFMoverbracket) {
         ev2.fontSize=ev2.fontSize*parentMathText->getUnderbraceFactor();
-    } else if (mode==JKQTMathTextFracNode::MTFMunderset || mode==JKQTMathTextFracNode::MTFMoverset) {
+    } else if (fracmode==JKQTMathTextFracNode::MTFMunderset || fracmode==JKQTMathTextFracNode::MTFMoverset) {
         ev2.fontSize=ev2.fontSize*parentMathText->getUndersetFactor();
-    } else  if (mode==JKQTMathTextFracNode::MTFMfrac || mode==JKQTMathTextFracNode::MTFMsfrac) {
+    } else  if (fracmode==JKQTMathTextFracNode::MTFMfrac || fracmode==JKQTMathTextFracNode::MTFMsfrac) {
         ev1.fontSize=ev1.fontSize*getFracScalingFactor();
         ev2.fontSize=ev2.fontSize*getFracScalingFactor();
-    } else  if (mode==JKQTMathTextFracNode::MTFMtfrac || mode==JKQTMathTextFracNode::MTFMstfrac) {
+    } else  if (fracmode==JKQTMathTextFracNode::MTFMtfrac || fracmode==JKQTMathTextFracNode::MTFMstfrac) {
         ev1.fontSize=ev1.fontSize*getFracScalingFactor()*0.7;
         ev2.fontSize=ev2.fontSize*getFracScalingFactor()*0.7;
     }
@@ -306,26 +317,26 @@ double JKQTMathTextFracNode::draw(QPainter& painter, double x, double y, JKQTMat
     p.setWidthF(qMax(parentMathText->ABS_MIN_LINEWIDTH, linewideth));
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     painter.setPen(p);
-    if (mode==JKQTMathTextFracNode::MTFMfrac || mode==JKQTMathTextFracNode::MTFMdfrac || mode==JKQTMathTextFracNode::MTFMtfrac) {
+    if (fracmode==JKQTMathTextFracNode::MTFMfrac || fracmode==JKQTMathTextFracNode::MTFMdfrac || fracmode==JKQTMathTextFracNode::MTFMtfrac) {
         deltaWidth=xwidth/2.0;
         const QLineF l(x+p.widthF()*2.0, yline, x+maxWidth+deltaWidth-p.widthF()*2.0, yline);
         if (l.length()>0) painter.drawLine(l);
         child1->draw(painter, x+deltaWidth/2.0+(maxWidth-size1.width)/2.0, yline-xheight*(parentMathText->getFracShiftFactor())-descent1, ev1);
         child2->draw(painter, x+deltaWidth/2.0+(maxWidth-size2.width)/2.0, yline+xheight*(parentMathText->getFracShiftFactor())+ascent2, ev2);
-    } else if (mode==JKQTMathTextFracNode::MTFMstackrel) {
+    } else if (fracmode==JKQTMathTextFracNode::MTFMstackrel) {
         child1->draw(painter, x+(maxWidth-size1.width)/2.0, yline-xheight*(parentMathText->getFracShiftFactor())-descent1, ev1);
         child2->draw(painter, x+(maxWidth-size2.width)/2.0, yline+xheight*(parentMathText->getFracShiftFactor())+ascent2, ev2);
-    } else if (mode==JKQTMathTextFracNode::MTFMstfrac || mode==JKQTMathTextFracNode::MTFMsfrac) {
+    } else if (fracmode==JKQTMathTextFracNode::MTFMstfrac || fracmode==JKQTMathTextFracNode::MTFMsfrac) {
         deltaWidth=xwidth*0.666;
         child1->draw(painter, x, yline, ev1);
         child2->draw(painter, x+size1.width+deltaWidth, y, ev2);
         const QLineF l(x+size1.width+deltaWidth, y-Mheight, x+size1.width, y+(qheight-xheight));
         if (l.length()>0) painter.drawLine(l);
-    } else if (mode==JKQTMathTextFracNode::MTFMunderset) {
+    } else if (fracmode==JKQTMathTextFracNode::MTFMunderset) {
         child1->draw(painter, x+xwidth/2.0+(maxWidth-size1.width)/2.0, y, ev1);
         child2->draw(painter, x+xwidth/2.0+(maxWidth-size2.width)/2.0, y+descent1+xheight/6.0+ascent2, ev2);
         deltaWidth=xwidth;
-    } else if (mode==JKQTMathTextFracNode::MTFMunderbrace) {
+    } else if (fracmode==JKQTMathTextFracNode::MTFMunderbrace) {
         const double ybrace=y+descent1+braceseparation+braceheight/2.0;
         const double ybot=y+descent1+2.0*braceseparation+braceheight+ascent2;
         {
@@ -337,7 +348,7 @@ double JKQTMathTextFracNode::draw(QPainter& painter, double x, double y, JKQTMat
         child1->draw(painter, x+xwidth/2.0+(maxWidth-size1.width)/2.0, y, ev1);
         child2->draw(painter, x+xwidth/2.0+(maxWidth-size2.width)/2.0, ybot, ev2);
         deltaWidth=xwidth;
-    } else if (mode==JKQTMathTextFracNode::MTFMunderbracket) {
+    } else if (fracmode==JKQTMathTextFracNode::MTFMunderbracket) {
         const double ybrace=y+descent1+braceseparation+braceheight/2.0;
         const double ybot=y+descent1+2.0*braceseparation+braceheight+ascent2;
         {
@@ -355,11 +366,11 @@ double JKQTMathTextFracNode::draw(QPainter& painter, double x, double y, JKQTMat
         child1->draw(painter, x+xwidth/2.0+(maxWidth-size1.width)/2.0, y, ev1);
         child2->draw(painter, x+xwidth/2.0+(maxWidth-size2.width)/2.0, ybot, ev2);
         deltaWidth=xwidth;
-    } else if (mode==JKQTMathTextFracNode::MTFMoverset) {
+    } else if (fracmode==JKQTMathTextFracNode::MTFMoverset) {
         child1->draw(painter, x+xwidth/2.0+(maxWidth-size1.width)/2.0, y, ev1);
         child2->draw(painter, x+xwidth/2.0+(maxWidth-size2.width)/2.0, y-ascent1-xheight/6.0-descent2, ev2);
         deltaWidth=xwidth;
-    } else if (mode==JKQTMathTextFracNode::MTFMoverbrace) {
+    } else if (fracmode==JKQTMathTextFracNode::MTFMoverbrace) {
         const double ybrace=y-ascent1-braceheight/2.0-braceseparation;
         const double ytop=y-ascent1-2.0*braceseparation-braceheight-descent2;
         {
@@ -375,7 +386,7 @@ double JKQTMathTextFracNode::draw(QPainter& painter, double x, double y, JKQTMat
         child1->draw(painter, x+xwidth/2.0+(maxWidth-size1.width)/2.0, y, ev1);
         child2->draw(painter, x+xwidth/2.0+(maxWidth-size2.width)/2.0, ytop, ev2);
         deltaWidth=xwidth;
-    } else if (mode==JKQTMathTextFracNode::MTFMoverbracket) {
+    } else if (fracmode==JKQTMathTextFracNode::MTFMoverbracket) {
         const double ybrace=y-ascent1-braceheight/2.0-braceseparation;
         const double ytop=y-ascent1-2.0*braceseparation-braceheight-descent2;
         {
@@ -396,7 +407,7 @@ double JKQTMathTextFracNode::draw(QPainter& painter, double x, double y, JKQTMat
     }
 
 
-    if (mode==JKQTMathTextFracNode::MTFMstfrac || mode==JKQTMathTextFracNode::MTFMsfrac) return x+size1.width+size2.width+deltaWidth;
+    if (fracmode==JKQTMathTextFracNode::MTFMstfrac || fracmode==JKQTMathTextFracNode::MTFMsfrac) return x+size1.width+size2.width+deltaWidth;
     else return x+maxWidth+deltaWidth;
 
 }

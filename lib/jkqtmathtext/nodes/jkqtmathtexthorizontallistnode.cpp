@@ -19,7 +19,7 @@
 
 
 
-#include "jkqtmathtext/nodes/jkqtmathtextlistnode.h"
+#include "jkqtmathtext/nodes/jkqtmathtexthorizontallistnode.h"
 #include "jkqtmathtext/nodes/jkqtmathtextsymbolnode.h"
 #include "jkqtmathtext/nodes/jkqtmathtextbracenode.h"
 #include "jkqtmathtext/nodes/jkqtmathtextsubsupernode.h"
@@ -52,15 +52,9 @@ QString JKQTMathTextHorizontalListNode::getTypeName() const
     return "MTHorizontalListNode";
 }
 
-JKQTMathTextNodeSize JKQTMathTextHorizontalListNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv) const {
+JKQTMathTextNodeSize JKQTMathTextHorizontalListNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment ev) const {
+    JKQTMathTextEnvironment currentEv=ev;
     JKQTMathTextNodeSize outSize;
-    const QFont f=currentEv.getFont(parentMathText);
-    const QFontMetricsF fm(f);
-    const double subsupershift=fm.xHeight()*parentMathText->getOperatorsubsuperDistanceFactor();
-    const double subsuperextrawidth=fm.boundingRect('x').width()*parentMathText->getOperatorsubsuperExtraSpaceFactor();
-    const double subsuperSpecialModeAscent=fm.ascent()*parentMathText->getSubsuperModeSelectionBySizeFactor();
-    const double subsuperSpecialModeDecent=fm.descent()*parentMathText->getSubsuperModeSelectionBySizeFactor();
-    const double spaceWidth=fm.boundingRect(' ').width();
 
     //QRectF tbr=parent->getTightBoundingRect(currentEv.getFont(parent), "M", painter.device());
 
@@ -68,6 +62,14 @@ JKQTMathTextNodeSize JKQTMathTextHorizontalListNode::getSizeInternal(QPainter& p
     double xnew=0;
     //bool wasBrace=false;
     for (int i=0; i<nodes.size(); i++) {
+        const QFont f=currentEv.getFont(parentMathText);
+        const QFontMetricsF fm(f);
+        const double subsupershift=fm.xHeight()*parentMathText->getOperatorsubsuperDistanceFactor();
+        const double subsuperextrawidth=fm.boundingRect('x').width()*parentMathText->getOperatorsubsuperExtraSpaceFactor();
+        const double subsuperSpecialModeAscent=fm.ascent()*parentMathText->getSubsuperModeSelectionBySizeFactor();
+        const double subsuperSpecialModeDecent=fm.descent()*parentMathText->getSubsuperModeSelectionBySizeFactor();
+        const double spaceWidth=fm.boundingRect(' ').width();
+
         JKQTMathTextSymbolNode::NodeSize prevNodeSize;
         JKQTMathTextNodeSize* prevNodeSizePtrForSubscript=nullptr;
         JKQTMathTextNodeSize* prevNodeSizePtrForSuperscript=nullptr;
@@ -291,6 +293,7 @@ JKQTMathTextNodeSize JKQTMathTextHorizontalListNode::getSizeInternal(QPainter& p
             if (nodeI_SubScript) ns=nodeI_SubScript->getSizeWithSpecialPlacement(painter, currentEv, prevNodeSizePtrForSubscript);
             else if (nodeI_SuperScript) ns=nodeI_SuperScript->getSizeWithSpecialPlacement(painter, currentEv, prevNodeSizePtrForSuperscript);
             else ns=nodes[i]->getSize(painter, currentEv);
+
             const double cDescent=ns.getDescent();
 
             //qDebug()<<"### else:  ns.baselineHeight="<<ns.baselineHeight<<" baselineHeight="<<baselineHeight<<"   oh="<<oh<<" overallHeight="<<overallHeight;
@@ -309,6 +312,12 @@ JKQTMathTextNodeSize JKQTMathTextHorizontalListNode::getSizeInternal(QPainter& p
 
             xnew+=ns.width;
             //qDebug()<<i<<xnew;
+
+
+            JKQTMathTextModifyEnvironmentNodeMixIn* modEnvNode=dynamic_cast<JKQTMathTextModifyEnvironmentNodeMixIn*>(nodes[i]);
+            if (modEnvNode) {
+                modEnvNode->modifyEnvironment(currentEv);
+            }
         }
          //wasBrace=dynamic_cast<JKQTMathTextBraceNode*>(nodes[i]);
     }
@@ -317,18 +326,19 @@ JKQTMathTextNodeSize JKQTMathTextHorizontalListNode::getSizeInternal(QPainter& p
     return outSize;
 }
 
-double JKQTMathTextHorizontalListNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) const {
+double JKQTMathTextHorizontalListNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment ev) const {
+    JKQTMathTextEnvironment currentEv=ev;
     doDrawBoxes(painter, x, y, currentEv);
     double ynew=y;
     double xnew=x;
     //qDebug()<<"listNode: "<<currentEv.fontSize;
-    const QFontMetricsF fm(currentEv.getFont(parentMathText));
-    const double subsupershift=fm.xHeight()*parentMathText->getOperatorsubsuperDistanceFactor();
-    const double subsuperextrawidth=fm.boundingRect('x').width()*parentMathText->getOperatorsubsuperExtraSpaceFactor();
-    const double subsuperSpecialModeAscent=fm.ascent()*parentMathText->getSubsuperModeSelectionBySizeFactor();
-    const double subsuperSpecialModeDecent=fm.descent()*parentMathText->getSubsuperModeSelectionBySizeFactor();
     for (int i=0; i<nodes.size(); i++) {
         bool doDraw=true;
+        const QFontMetricsF fm(currentEv.getFont(parentMathText));
+        const double subsupershift=fm.xHeight()*parentMathText->getOperatorsubsuperDistanceFactor();
+        const double subsuperextrawidth=fm.boundingRect('x').width()*parentMathText->getOperatorsubsuperExtraSpaceFactor();
+        const double subsuperSpecialModeAscent=fm.ascent()*parentMathText->getSubsuperModeSelectionBySizeFactor();
+        const double subsuperSpecialModeDecent=fm.descent()*parentMathText->getSubsuperModeSelectionBySizeFactor();
 
         JKQTMathTextSymbolNode::NodeSize prevNodeSize;
         JKQTMathTextNodeSize* prevNodeSizePtrForSubscript=nullptr;
@@ -493,6 +503,10 @@ double JKQTMathTextHorizontalListNode::draw(QPainter& painter, double x, double 
             if (nodeI_SuperScript) xnew=nodeI_SuperScript->drawWithSpecialPlacement(painter, xnew, ynew, currentEv, prevNodeSizePtrForSuperscript);
             else if (nodeI_SubScript) xnew=nodeI_SubScript->drawWithSpecialPlacement(painter, xnew+subscript_xcorrection, ynew, currentEv, prevNodeSizePtrForSubscript);
             else xnew=nodes[i]->draw(painter, xnew, ynew, currentEv);
+            JKQTMathTextModifyEnvironmentNodeMixIn* modEnvNode=dynamic_cast<JKQTMathTextModifyEnvironmentNodeMixIn*>(nodes[i]);
+            if (modEnvNode) {
+                modEnvNode->modifyEnvironment(currentEv);
+            }
         }
     }
     return xnew;
@@ -503,12 +517,17 @@ void JKQTMathTextHorizontalListNode::addChild(JKQTMathTextNode *n) {
     nodes.append(n);
 }
 
-bool JKQTMathTextHorizontalListNode::toHtml(QString &html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) const {
+bool JKQTMathTextHorizontalListNode::toHtml(QString &html, JKQTMathTextEnvironment ev, JKQTMathTextEnvironment defaultEv) const {
+    JKQTMathTextEnvironment currentEv=ev;
     bool ok=true;
     for (int i=0; i<nodes.size(); i++) {
         QString h="";
         ok = ok && nodes[i]->toHtml(h, currentEv, defaultEv);
         html=html+h;
+        JKQTMathTextModifyEnvironmentNodeMixIn* modEnvNode=dynamic_cast<JKQTMathTextModifyEnvironmentNodeMixIn*>(nodes[i]);
+        if (modEnvNode) {
+            modEnvNode->modifyEnvironment(currentEv);
+        }
     }
     return ok;
 }
@@ -565,261 +584,13 @@ JKQTMathTextNode *JKQTMathTextHorizontalListNode::replaceChild(int i, JKQTMathTe
     return c;
 }
 
-
-JKQTMathTextVerticalListNode::JKQTMathTextVerticalListNode(JKQTMathText *_parent, JKQTMathTextHorizontalAlignment _alignment, double _linespacingFactor, JKQTMathTextLineSpacingMode spacingMode_, JKQTMathTextVerticalOrientation _verticalOrientation):
-    JKQTMathTextMultiChildNode(_parent),
-    alignment(_alignment),
-    lineSpacingFactor(_linespacingFactor),
-    verticalOrientation(_verticalOrientation),
-    spacingMode(spacingMode_)
+void JKQTMathTextHorizontalListNode::modifyEnvironment(JKQTMathTextEnvironment &currentEv) const
 {
-    nodes.clear();
-    // these operations cause sub/sup script to be typeset over/under the operator, not right besides!
-}
-
-JKQTMathTextVerticalListNode::~JKQTMathTextVerticalListNode() {
-    clearChildrenImpl(true);
-}
-
-QString JKQTMathTextVerticalListNode::getTypeName() const
-{
-    return "MTVerticalListNode";
-}
-
-JKQTMathTextNodeSize JKQTMathTextVerticalListNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv) const {
-    return calcLayout(painter, currentEv);
-}
-
-JKQTMathTextVerticalListNode::LayoutInfo JKQTMathTextVerticalListNode::calcLayout(QPainter &painter, JKQTMathTextEnvironment currentEv) const
-{
-    LayoutInfo l;
-    const QFontMetricsF fm(currentEv.getFont(parentMathText));
-    const double linespacing=fm.lineSpacing()*lineSpacingFactor;
-    const double fleading=fm.leading();
-    const double synLeading=fm.lineWidth();
-    const double lineLeading=((fabs(fleading)>1e-6)?fleading:synLeading)*lineSpacingFactor;
-
-    if (nodes.size()<=0) {
-        return l;
-    }
-
-    // from now on we have at least one child node!!!
-
-    QList<double> widths, heights, ascents, descents, strikeouts;
-    double heightSum=0;
-    QList<double> ysFromFirstLine; // y-position of each line, where the first line is always at y=0 (i.e. ysFromFirstLine[0]==0)
-    double y=0;
     for (int i=0; i<nodes.size(); i++) {
-        const JKQTMathTextNodeSize loc=nodes[i]->getSize(painter, currentEv);
-
-        if (i==0) {
-            heightSum=loc.baselineHeight;
-        } else if (i>0) {
-            double deltaLine=0;
-            if (spacingMode==MTSMMinimalSpacing) {
-                deltaLine=descents.last()+lineLeading+loc.baselineHeight;
-            } else if (spacingMode==MTSMDefaultSpacing) {
-                deltaLine=qMax(linespacing, descents.last()+lineLeading+loc.baselineHeight);
-            }
-            heightSum=heightSum+deltaLine;
-            y=y+deltaLine;
-        }
-        widths<<loc.width;
-        l.width=qMax(l.width, loc.width);
-        heights<<loc.overallHeight;
-        ascents<<loc.baselineHeight;
-        descents<<(loc.overallHeight-loc.baselineHeight);
-        strikeouts<<loc.strikeoutPos;
-        ysFromFirstLine<<y;
-    }
-    heightSum+=descents.last();
-
-    l.overallHeight=heightSum;
-    double y0=0;
-    if (verticalOrientation==MTVOTop) {
-        l.baselineHeight=0;
-        l.strikeoutPos=0;
-        y0=ascents.first();
-    } else if (verticalOrientation==MTVOFirstLine) {
-        l.baselineHeight=ascents.first();
-        l.strikeoutPos=strikeouts.first();
-        y0=0;
-    } else if (verticalOrientation==MTVOCentered) {
-        l.baselineHeight=heightSum/2.0;
-        l.strikeoutPos=heightSum/4.0;
-        y0=-heightSum/2.0+ascents.first();
-    } else if (verticalOrientation==MTVOLastLine) {
-        l.baselineHeight=heightSum-descents.last();
-        l.strikeoutPos=strikeouts.last();
-        y0=-(heightSum-ascents.first()-descents.last());
-    } else if (verticalOrientation==MTVOBottom) {
-        l.baselineHeight=heightSum;
-        l.strikeoutPos=0;
-        y0=-(heightSum-ascents.first());
-    }
-    for (int i=0; i<nodes.size(); i++) {
-        double x=0;
-        if (alignment==MTHARight) x=l.width-widths[i];
-        else if (alignment==MTHACentered) x=(l.width-widths[i])/2.0;
-        l.X<<QPointF(x,ysFromFirstLine[i]+y0);
-    }
-    return l;
-}
-
-double JKQTMathTextVerticalListNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) const {
-    doDrawBoxes(painter, x, y, currentEv);
-    const LayoutInfo l=calcLayout(painter, currentEv);
-    for (int i=0; i<nodes.size(); i++) {
-        nodes[i]->draw(painter, x+l.X.at(i).x(), y+l.X.at(i).y(), currentEv);
-    }
-    return x+l.width;
-}
-
-void JKQTMathTextVerticalListNode::addChild(JKQTMathTextNode *n) {
-    n->setParentNode(this);
-    nodes.append(n);
-}
-
-bool JKQTMathTextVerticalListNode::toHtml(QString &html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) const {
-    bool ok=true;
-    if (alignment==MTHALeft) {
-        html+="<div align=\"left\">";
-    } else if (alignment==MTHACentered) {
-        html+="<div align=\"center\">";
-    } else if (alignment==MTHARight) {
-        html+="<div align=\"right\">";
-    }
-    for (int i=0; i<nodes.size(); i++) {
-        QString h="";
-        ok = ok && nodes[i]->toHtml(h, currentEv, defaultEv);
-        if (i==0) html=html+h;
-        else html=html+"<br/>"+h;
-    }
-    html+="</div>";
-    return ok;
-}
-
-QList<JKQTMathTextNode *> JKQTMathTextVerticalListNode::getChildren()  {
-    return this->nodes;
-}
-
-
-int JKQTMathTextVerticalListNode::childCount() const
-{
-    return nodes.size();
-}
-
-
-void JKQTMathTextVerticalListNode::clearChildrenImpl(bool deleteChildren)
-{
-    if (deleteChildren) {
-        for (int i=0; i<nodes.size(); i++) {
-            delete nodes[i];
+        JKQTMathTextModifyEnvironmentNodeMixIn* modEnvNode=dynamic_cast<JKQTMathTextModifyEnvironmentNodeMixIn*>(nodes[i]);
+        if (modEnvNode) {
+            modEnvNode->modifyEnvironment(currentEv);
         }
     }
-    nodes.clear();
 }
 
-void JKQTMathTextVerticalListNode::deleteChild(int i)
-{
-    if (i>=0 && i<nodes.size()) {
-        delete nodes[i];
-        nodes.removeAt(i);
-    }
-}
-void JKQTMathTextVerticalListNode::clearChildren(bool deleteChildren)
-{
-    clearChildrenImpl(deleteChildren);
-}
-
-JKQTMathTextNode *JKQTMathTextVerticalListNode::getChild(int i)
-{
-    return nodes[i];
-}
-
-const JKQTMathTextNode *JKQTMathTextVerticalListNode::getChild(int i) const
-{
-    return nodes[i];
-}
-
-JKQTMathTextNode *JKQTMathTextVerticalListNode::replaceChild(int i, JKQTMathTextNode *newChild)
-{
-    JKQTMathTextNode* c=nodes[i];
-    nodes[i]=newChild;
-    newChild->setParentNode(this);
-    return c;
-}
-
-JKQTMathTextHorizontalAlignment JKQTMathTextVerticalListNode::getAlignment() const
-{
-    return alignment;
-}
-
-JKQTMathTextVerticalOrientation JKQTMathTextVerticalListNode::getVerticalOrientation() const
-{
-    return verticalOrientation;
-}
-
-double JKQTMathTextVerticalListNode::getLineSpacingFactor() const
-{
-    return lineSpacingFactor;
-}
-
-JKQTMathTextLineSpacingMode JKQTMathTextVerticalListNode::getSpacingMode() const
-{
-    return spacingMode;
-}
-
-void JKQTMathTextVerticalListNode::setAlignment(JKQTMathTextHorizontalAlignment value)
-{
-    alignment=value;
-}
-
-void JKQTMathTextVerticalListNode::setVerticalOrientation(JKQTMathTextVerticalOrientation value)
-{
-    verticalOrientation=value;
-}
-
-void JKQTMathTextVerticalListNode::setLineSpacingFactor(double value)
-{
-    lineSpacingFactor=value;
-}
-
-void JKQTMathTextVerticalListNode::setSpacingMode(JKQTMathTextLineSpacingMode value)
-{
-    spacingMode=value;
-}
-
-JKQTMathTextVerticalListNode::LayoutInfo::LayoutInfo():
-    JKQTMathTextNodeSize(), X()
-{}
-
-
-
-JKQTMathTextVerticalListNode::LayoutInfo::LayoutInfo(const JKQTMathTextNodeSize &other):
-    JKQTMathTextNodeSize(other),
-    X()
-{
-
-}
-
-JKQTMathTextVerticalListNode::LayoutInfo &JKQTMathTextVerticalListNode::LayoutInfo::operator=(const JKQTMathTextNodeSize &other)
-{
-    JKQTMathTextNodeSize::operator=(other);
-    X.clear();
-    return *this;
-}
-
-JKQTMathTextVerticalListNode::LayoutInfo &JKQTMathTextVerticalListNode::LayoutInfo::operator=(const LayoutInfo &other)
-{
-    JKQTMathTextNodeSize::operator=(dynamic_cast<const JKQTMathTextNodeSize&>(other));
-    X=other.X;
-    return *this;
-}
-
-JKQTMathTextVerticalListNode::LayoutInfo::LayoutInfo(const LayoutInfo &other):
-    JKQTMathTextNodeSize(dynamic_cast<const JKQTMathTextNodeSize&>(other)),
-    X(other.X)
-{
-
-}

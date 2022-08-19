@@ -65,6 +65,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSymbolNode: public JKQTMathTextNode {
         virtual double draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) const override;
         /** \copydoc JKQTMathTextNode::toHtml() */
         virtual bool toHtml(QString& html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) const override;
+
         /** \copydoc symbolName */ 
         QString getSymbolName() const;
         /** \brief return type for getSymbolSize(), extends JKQTMathTextNodeSize with information about x-correction for sub- and superscript */
@@ -91,7 +92,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSymbolNode: public JKQTMathTextNode {
         static bool hasSymbol(const QString& symbolName);
         /** \brief return a list of all defined symbols */
         static QStringList getSymbols();
-        /** \brief checks whether the given symbol name codes for an instruction that has SymbolFullProps::SubSuperscriptBelowAboveSymbol , i.e. JKQTMathTextNode::isSubSuperscriptAboveBelowNode() \c ==true */
+        /** \brief checks whether the given symbol name codes for an instruction that has SymbolFullProps::SubSuperscriptBelowAboveSymbol , does not neccessarily return the same value as JKQTMathTextNode::isSubSuperscriptAboveBelowNode() */
         static bool isSubSuperscriptBelowAboveSymbol(const QString& symbolName);
         /** \brief checks whether the given symbol has global flags SymbolFullProps::ExtendWidthInMathmode or SymbolFullProps::SmallExtendWidthInMathmode defined */
         static bool isExtendedWidthSymbol(const QString& symbolName);
@@ -283,9 +284,13 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSymbolNode: public JKQTMathTextNode {
         /** \brief constructs a SymbolProps for a symbol with encoding in UnicodeFull-fonts a */
         static SymbolFullProps UnicodeSymbol(const QString& symbol, SymbolFlags _flags=AsOutside, double _fontScalingFactor=1.0, double _yShiftFactor=0.0);
         /** \brief constructs a SymbolProps for a symbol with encoding in Standard-fonts a */
-        static SymbolFullProps UprightSymbolStd(const QString& symbol, const QString& html=QString());
+        static SymbolFullProps UprightSymbolStd(const QString& symbol);
         /** \brief constructs a SymbolProps for a symbol with encoding in UnicodeFull-fonts a */
-        static SymbolFullProps UprightSymbolUnicode(const QString& symbol, const QString& html=QString());
+        static SymbolFullProps UprightSymbolUnicode(const QString& symbol);
+        /** \brief constructs a SymbolProps for a symbol with encoding in Standard-fonts a */
+        static SymbolFullProps UprightSymbolStd(const QString& symbol, const QString& html);
+        /** \brief constructs a SymbolProps for a symbol with encoding in UnicodeFull-fonts a */
+        static SymbolFullProps UprightSymbolUnicode(const QString& symbol, const QString& html);
         /** \brief constructs a SymbolProps for a math-operator symbol like \c \\pm ... in unicode-full-encoding, i.e. ItalicOff, BoldOff, ExtendWidthInMathmode */
         static SymbolFullProps MathOperatorSymbolUnicode(const QString& unicode);
         /** \brief constructs a SymbolProps for a narrow math-operator symbol like \c \\pm ... in unicode-full-encoding, i.e. ItalicOff, BoldOff, SmallExtendWidthInMathmode */

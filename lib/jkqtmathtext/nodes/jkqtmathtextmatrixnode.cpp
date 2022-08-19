@@ -20,6 +20,7 @@
 
 
 #include "jkqtmathtext/nodes/jkqtmathtextmatrixnode.h"
+#include "jkqtmathtext/nodes/jkqtmathtextnoopnode.h"
 #include "jkqtmathtext/jkqtmathtexttools.h"
 #include "jkqtmathtext/jkqtmathtext.h"
 #include "jkqtcommon/jkqtpcodestructuring.h"
@@ -315,9 +316,9 @@ JKQTMathTextMatrixNode::LayoutInfo JKQTMathTextMatrixNode::calcLayout(QPainter &
 {
     LayoutInfo l;
 
-    const QFontMetricsF fm(currentEv.getFont(parentMathText), painter.device());
     JKQTMathTextEnvironment ev1=currentEv;
 
+    const QFontMetricsF fm(ev1.getFont(parentMathText), painter.device());
     const double strikepos=fm.strikeOutPos();
     const double xwidth=fm.boundingRect("x").width();
     const double lw=fm.lineWidth()*1.5;
@@ -347,13 +348,17 @@ JKQTMathTextMatrixNode::LayoutInfo JKQTMathTextMatrixNode::calcLayout(QPainter &
             l.colwidth[j]=qMax(l.colwidth[j], cs.width);
             l.rowascent[i]=qMax(l.rowascent[i], cs.baselineHeight);
             rowdescent[i]=qMax(rowdescent[i], cs.getDescent());
+            JKQTMathTextModifyEnvironmentNodeMixIn* modEnvNode=dynamic_cast<JKQTMathTextModifyEnvironmentNodeMixIn*>(children[i].at(j));
+            if (modEnvNode) {
+                modEnvNode->modifyEnvironment(ev1);
+            }
         }
         l.rowheight[i]=l.rowascent[i]+rowdescent[i];
     }
 
 
-    l.overallHeight=(lines-1)*YSeparation+l.topPadding+l.bottomPadding;
-    l.width=(columns-1)*XSeparation+l.leftPadding+l.rightPadding;
+    l.overallHeight=static_cast<double>(lines-1)*YSeparation+l.topPadding+l.bottomPadding;
+    l.width=static_cast<double>(columns-1)*XSeparation+l.leftPadding+l.rightPadding;
     for (int i=0; i<columns; i++) l.width=l.width+l.colwidth[i];
     for (int i=0; i<lines; i++) l.overallHeight=l.overallHeight+l.rowheight[i];
     l.baselineHeight=l.overallHeight/2.0+strikepos;
@@ -406,6 +411,11 @@ double JKQTMathTextMatrixNode::draw(QPainter& painter, double x, double y, JKQTM
             children[i].at(j)->draw(painter, xx+xoffset, yy, ev1);
             xx=xx+l.colwidth[j]+XSeparation;
             if (i==0 && j<columns-1) drawVLine(painter, xx-XSeparation/2.0, toplineY, bottomlineY-toplineY, verticalLineRHSColumn.value(j, LTnone), linewidth, linewidthThick, currentEv.color, lineSeparation);
+            JKQTMathTextModifyEnvironmentNodeMixIn* modEnvNode=dynamic_cast<JKQTMathTextModifyEnvironmentNodeMixIn*>(children[i].at(j));
+            if (modEnvNode) {
+                modEnvNode->modifyEnvironment(ev1);
+            }
+
         }
 
         if (i<lines-1) {

@@ -5,8 +5,18 @@ jkqtmathtext_bold.png
 jkqtmathtext_italic.png
 {\backslash}textit: \textit{italic text}
 ---
+jkqtmathtext_emph.png
+{\backslash}emph in text: \emph{emphasized} non-emphasized\\
+{\backslash}emph in italic: \textit{\emph{emphasized} non-emphasized}
+---
 jkqtmathtext_sc.png
 {\backslash}textsc: \textsc{SmallCaps text}
+---
+jkqtmathtext_uppercase.png
+{\backslash}uppercase: \uppercase{All upper-Case text}
+---
+jkqtmathtext_lowercase.png
+{\backslash}lowercase: \lowercase{All LOWER-Case text}
 ---
 jkqtmathtext_tt.png
 {\backslash}texttt: \textsc{Typewriter text}
@@ -93,4 +103,48 @@ Schrödinger's equation: $\left[-\frac{\hbar^2}{2m}\frac{\partial^2}{\partial x^
 ---
 schreq_normalmode.png
 Schrödinger's equation: \left[-\frac{\hbar^2}{2m}\frac{\partial^2}{\partial x^2}+V\right]\Psi(x)=\mathrm{i}\hbar\frac{\partial}{\partial t}\Psi(x)
-
+---
+jkqtmathtext_fontsizes.png
+\begin{array}{|l|c|}
+\hline
+\textbf{Commmand} & \textbf{Output} \\
+\hline
+{\backslash}tiny: & {\tiny sample text} \\
+{\backslash}ssmall: & {\ssmall sample text} \\
+{\backslash}scriptsize: & {\scriptsize sample text} \\
+{\backslash}footnotesize: & {\footnotesize sample text} \\
+{\backslash}small: & {\small sample text} \\
+{\backslash}normalsize: & {\normalsize sample text} \\
+{\backslash}large: & {\large sample text} \\
+{\backslash}Large: & {\Large sample text} \\
+{\backslash}LARGE: & {\LARGE sample text} \\
+{\backslash}huge: & {\huge sample text} \\
+{\backslash}Huge: & {\Huge sample text} \\
+\hline
+{\backslash}userfontsize\{ptsize\}: & {\userfontsize{5} 5pt} {\userfontsize{10} 10pt} {\userfontsize{30} 30pt} {\userfontsize{40} 40pt}\\
+\hline
+\end{array}
+---
+jkqtmathtext_mathfontsizes.png
+\begin{array}{|l|c|}
+\hline
+\textbf{Commmand} & \textbf{Output} \\
+\hline
+default text-mode: & outsize: x^2\ \mathcal{O}(n^2)\ \frac{1}{2}\cdot\sum_{i=0}^\infty k_i \\
+default math-mode: & outsize: $ x^2\ \mathcal{O}(n^2)\ \frac{1}{2}\cdot\sum_{i=0}^\infty k_i$ \\
+{\backslash}displaystyle: & outsize: $\displaystyle x^2\ \mathcal{O}(n^2)\ \frac{1}{2}\cdot\sum_{i=0}^\infty k_i$ \\
+{\backslash}textstyle: & outsize: $\textstyle x^2\ \mathcal{O}(n^2)\ \frac{1}{2}\cdot\sum_{i=0}^\infty k_i$ \\
+{\backslash}scriptstyle: & outsize: $\scriptstyle x^2\ \mathcal{O}(n^2)\ \frac{1}{2}\cdot\sum_{i=0}^\infty k_i$ \\
+{\backslash}scriptscriptstyle: & outsize: $\scriptscriptstyle x^2\ \mathcal{O}(n^2)\ \frac{1}{2}\cdot\sum_{i=0}^\infty k_i$ \\
+\hline
+\end{array}
+---
+jkqtmathtext_mathstyle.png
+\begin{array}{|l|c|}
+\hline
+\textbf{Style} & \textbf{Output} \\
+\hline
+display-style: & outsize: $\displaystyle x^2\ \mathcal{O}(n^2)\ \frac{1}{2}\cdot\sum_{i=0}^\infty k_i$ \\
+text-style: & outsize: $\textstyle x^2\ \mathcal{O}(n^2)\ \frac{1}{2}\cdot\sum_{i=0}^\infty k_i$ \\
+\hline
+\end{array}

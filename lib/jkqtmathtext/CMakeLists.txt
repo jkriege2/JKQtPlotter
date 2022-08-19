@@ -32,13 +32,18 @@ set(SOURCES_NODES
   ${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextdecoratednode.cpp
   ${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextfracnode.cpp
   ${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextinstructionnode.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextlistnode.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextboxinstructionnode.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextmodifyenvironmentnode.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextverticallistnode.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtexthorizontallistnode.cpp
   ${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextmatrixnode.cpp
   ${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextsqrtnode.cpp
   ${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextsubsupernode.cpp
   ${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextsymbolnode.cpp
   ${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextnodetools.cpp
   ${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextwhitespacenode.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextnoopnode.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextverbatimnode.cpp
 )
 
 set(HEADERS
@@ -56,6 +61,10 @@ set(HEADERS_NODES
   $<INSTALL_INTERFACE:nodes/jkqtmathtextnode.h>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtexttextnode.h>
   $<INSTALL_INTERFACE:nodes/jkqtmathtexttextnode.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextboxinstructionnode.h>
+  $<INSTALL_INTERFACE:nodes/jkqtmathtextboxinstructionnode.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextmodifyenvironmentnode.h>
+  $<INSTALL_INTERFACE:nodes/jkqtmathtextmodifyenvironmentnode.h>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextbracenode.h>
   $<INSTALL_INTERFACE:nodes/jkqtmathtextbracenode.h>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextdecoratednode.h>
@@ -66,6 +75,10 @@ set(HEADERS_NODES
   $<INSTALL_INTERFACE:nodes/jkqtmathtextinstructionnode.h>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextlistnode.h>
   $<INSTALL_INTERFACE:nodes/jkqtmathtextlistnode.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextverticallistnode.h>
+  $<INSTALL_INTERFACE:nodes/jkqtmathtextverticallistnode.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtexthorizontallistnode.h>
+  $<INSTALL_INTERFACE:nodes/jkqtmathtexthorizontallistnode.h>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextmatrixnode.h>
   $<INSTALL_INTERFACE:nodes/jkqtmathtextmatrixnode.h>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextsqrtnode.h>
@@ -78,6 +91,10 @@ set(HEADERS_NODES
   $<INSTALL_INTERFACE:nodes/jkqtmathtextnodetools.h>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextwhitespacenode.h>
   $<INSTALL_INTERFACE:nodes/jkqtmathtextwhitespacenode.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextnoopnode.h>
+  $<INSTALL_INTERFACE:nodes/jkqtmathtextnoopnode.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextverbatimnode.h>
+  $<INSTALL_INTERFACE:nodes/jkqtmathtextverbatimnode.h>
 )
 
 if(JKQtPlotter_BUILD_INCLUDE_XITS_FONTS)

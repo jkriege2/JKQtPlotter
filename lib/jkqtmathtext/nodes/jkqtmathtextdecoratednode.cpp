@@ -246,8 +246,8 @@ double JKQTMathTextDecoratedNode::draw(QPainter& painter, double x, double y, JK
     const double italic_xcorrection=getNonItalicXCorretion(painter, cs.width, ev, getChild());
     const double deco_xoffset=parentMathText->getDecorationWidthReductionXFactor()*width_X/2.0;
     const double deco_width=std::max<double>(width_x*0.5,cs.width-2.0*deco_xoffset-italic_xcorrection);
-    const double deco_vecwidth=width_x*0.18;
-    const double deco_vecheight=deco_height*0.25;
+    const double deco_vecwidth=width_x*0.25;
+    const double deco_vecheight=deco_height*0.5;
     const double deco_accentwidth=deco_height/4.0;
     const double deco_miniwidth=((decoration==MTDtilde||decoration==MTDbreve)?fm.boundingRect("j").width():fm.boundingRect("^").width())-italic_xcorrection;
     const double decotop_xcenter=x+italic_xcorrection+(cs.width-italic_xcorrection)/2.0;

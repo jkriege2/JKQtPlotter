@@ -452,20 +452,22 @@ JKQTMathTextEnvironment::JKQTMathTextEnvironment() {
     fontSizeUnit=POINTS;
     bold=false;
     italic=false;
-    smallCaps=false;
+    capitalization=QFont::MixedCase;
     underlined=false;
     overline=false;
     strike=false;
     insideMath=false;
     insideMathForceDigitsUpright=true;
+    insideMathUseTextStyle=false;
 }
 
-void JKQTMathTextEnvironment::beginMathMode()
+void JKQTMathTextEnvironment::beginMathMode(bool displaystyle)
 {
     insideMath=true;
     insideMathForceDigitsUpright=true;
+    insideMathUseTextStyle=!displaystyle;
     italic=true;
-    smallCaps=false;
+    capitalization=QFont::MixedCase;
     underlined=false;
     overline=false;
     strike=false;
@@ -476,10 +478,23 @@ void JKQTMathTextEnvironment::endMathMode()
     insideMath=false;
     insideMathForceDigitsUpright=true;
     italic=false;
-    smallCaps=false;
+    capitalization=QFont::MixedCase;
     underlined=false;
     overline=false;
     strike=false;
+}
+
+bool JKQTMathTextEnvironment::isMathDisplayStyle() const
+{
+    if (insideMath) return !insideMathUseTextStyle;
+    else {
+        return false;
+    }
+}
+
+bool JKQTMathTextEnvironment::isMathTextStyle() const
+{
+    return !isMathDisplayStyle();
 }
 
 JKQTMathTextFontEncoding JKQTMathTextEnvironment::getFontEncoding(JKQTMathText* parent) const {
@@ -540,8 +555,7 @@ QFont JKQTMathTextEnvironment::getFont(const JKQTMathText* parent) const {
     f.setUnderline(underlined);
     f.setOverline(overline);
     f.setStrikeOut(strike);
-    f.setCapitalization(QFont::MixedCase);
-    if (smallCaps) f.setCapitalization(QFont::SmallCaps);
+    f.setCapitalization(capitalization);
     if (fontSizeUnit==POINTS) f.setPointSizeF(fontSize);
     else if (fontSizeUnit==PIXELS) f.setPixelSize(static_cast<int>(fontSize));
     f.setStyleStrategy(QFont::NoFontMerging);

@@ -333,6 +333,8 @@ std::string jkqtp_booltostr(bool data){
 #  undef rgb
 #endif
 #define rgb(r,g,b) (0xff000000 | (r << 16) |  (g << 8) | b)
+#define gray(g) rgb(g,g,g)
+#define gray_p(p) gray(static_cast<uint8_t>(g/100.0*255.0))
 
 static const struct RGBData {
     const char *name;
@@ -496,7 +498,6 @@ const QStringList& jkqtp_listNamedColors() {
         sl.reserve(rgbTblSize);
         for (int i=0; i<rgbTblSize; i++) {
             sl.push_back(rgbTbl[i].name);
-
         }
     }
     return sl;

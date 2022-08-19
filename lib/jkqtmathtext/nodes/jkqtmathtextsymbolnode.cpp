@@ -432,6 +432,12 @@ JKQTMathTextSymbolNode::SymbolFullProps JKQTMathTextSymbolNode::UnicodeSymbol(co
     return SymbolFullProps(MTFEUnicode, SymbolProps(symbol, _flags, _fontScalingFactor, _yShiftFactor));
 }
 
+JKQTMathTextSymbolNode::SymbolFullProps JKQTMathTextSymbolNode::UprightSymbolStd(const QString &symbol)
+{
+    QString html=symbol;
+    return UprightSymbolStd(symbol, html);
+}
+
 JKQTMathTextSymbolNode::SymbolFullProps JKQTMathTextSymbolNode::UnicodeSymbol(const QString &symbol, const QString &html)
 {
     return SymbolFullProps(MTFEUnicode, SymbolProps(symbol), html);
@@ -445,6 +451,13 @@ JKQTMathTextSymbolNode::SymbolFullProps JKQTMathTextSymbolNode::StdSymbol(const 
 JKQTMathTextSymbolNode::SymbolFullProps JKQTMathTextSymbolNode::UprightSymbolStd(const QString &symbol, const QString &html)
 {
     return SymbolFullProps(MTFEStandard, SymbolProps(symbol, ItalicOff), html, ItalicOff);
+}
+
+JKQTMathTextSymbolNode::SymbolFullProps JKQTMathTextSymbolNode::UprightSymbolUnicode(const QString &symbol)
+{
+    QString html=symbol;
+    return UprightSymbolUnicode(symbol, html);
+
 }
 
 JKQTMathTextSymbolNode::SymbolFullProps JKQTMathTextSymbolNode::UprightSymbolUnicode(const QString &symbol, const QString &html)
@@ -529,14 +542,14 @@ void JKQTMathTextSymbolNode::fillSymbolTables()
     symbols["backslash"]=SimpleTextSymbol("\\");
     symbols["benzene"]=UprightSymbolUnicode(QChar(0x232C));
     symbols["benzenr"]=UprightSymbolUnicode(QChar(0x23E3));
-    symbols["blacksquare"]=UprightSymbolUnicode(QChar(0x220E)).addHtml("&squ;");
+    symbols["blacksquare"]=UprightSymbolUnicode(QChar(0x220E)).addUprightHtml("&squ;");
     { auto s=UprightSymbolUnicode(QChar(0x231E));
         symbols["blcorner"]=s; symbols["llcorner"]=s; }
     { auto s=UprightSymbolUnicode(QChar(0x231F));
         symbols["brcorner"]=s; symbols["lrcorner"]=s; }
     { auto s=UprightSymbolUnicode(QChar(0x2022)).addUprightHtml("&bull;").addUprightWinSymbol(QChar(0xB7));
         symbols["bullet"]=s; symbols["textbullet"]=s; }
-    symbols["cdots"]=UprightSymbolUnicode(QChar(0x22EF)).addHtml("&middot;&middot;&middot;").addStd(QString(3, QChar(0xB7)));
+    symbols["cdots"]=UprightSymbolUnicode(QChar(0x22EF)).addUprightHtml("&middot;&middot;&middot;").addUprightStd(QString(3, QChar(0xB7)));
     { auto s=UnicodeSymbol(QChar(0x2103)).addUprightStd("°C").addUprightHtml("&deg;C");
         symbols["celsius"]=s; symbols["degC"]=s; symbols["degreeCelsius"]=s; }
     symbols["ell"]=UprightSymbolUnicode(QChar(0x2113), "&ell;");
@@ -584,13 +597,13 @@ void JKQTMathTextSymbolNode::fillSymbolTables()
     symbols["hbar"]=UprightSymbolUnicode(QChar(0x210F)).addUprightHtml("&hbar;").addStd("h", ItalicOn|DrawLeftHBar).addGlobalFlags(SubscriptCorrection);
     symbols["hexagon"]=UprightSymbolUnicode(QChar(0x2394));
     symbols["ii"] = SymbolFullProps(SymbolProps("i", Upright|BoldOff), "i", Upright|BoldOff);
-    symbols["infty"]=UnicodeSymbol(QChar(0x221E)).addHtml("&infin;").addWinSymbol(QChar(0xA5)).addStd("8", RotateSymbol90);
+    symbols["infty"]=UprightSymbolUnicode(QChar(0x221E)).addUprightHtml("&infin;").addUprightWinSymbol(QChar(0xA5)).addUprightStd("8", RotateSymbol90);
     symbols["langle"]=UprightSymbolUnicode(QChar(0x2329)).addWinSymbol(QChar(0xE1));
-    symbols["lceil"]=UprightSymbolUnicode(QChar(0x2308)).addHtml("&LeftCeiling;").addWinSymbol(QChar(0xE9));
-    symbols["lfloor"]=UprightSymbolUnicode(QChar(0x230A)).addHtml("&LeftFloor;").addWinSymbol(QChar(0xEB));
+    symbols["lceil"]=UprightSymbolUnicode(QChar(0x2308)).addUprightHtml("&LeftCeiling;").addUprightWinSymbol(QChar(0xE9));
+    symbols["lfloor"]=UprightSymbolUnicode(QChar(0x230A)).addUprightHtml("&LeftFloor;").addUprightWinSymbol(QChar(0xEB));
     symbols["lightning"]=UnicodeSymbol(QChar(0x21AF));
     symbols["male"]=UnicodeSymbol(QChar(0x2642)).addHtml("&male;");
-    symbols["measuredangle"]=UprightSymbolUnicode(QChar(0x2221)).addHtml("&measuredangle;");
+    symbols["measuredangle"]=UprightSymbolUnicode(QChar(0x2221)).addUprightHtml("&measuredangle;");
     symbols["micro"] = SimpleTextSymbol(QChar(0xB5), "&micro;");
     symbols["ohm"]=UprightSymbolUnicode(QChar(0x2126)).addUprightHtml("&Omega;").addUprightWinSymbol(QChar(0x57));
     symbols["partial"]=UprightSymbolUnicode(QChar(0x2202)).addUprightHtml("&part;").addUprightWinSymbol(QChar(0xB6));
@@ -601,14 +614,14 @@ void JKQTMathTextSymbolNode::fillSymbolTables()
     symbols["prime"]=UnicodeSymbol(QChar(0x2032)).addHtml("&prime;").addStd("'");
     symbols["arcminute"]=UnicodeSymbol(QChar(0x2032)).addHtml("&prime;").addStd("'");
     symbols["arcsecond"]=UnicodeSymbol(QChar(0x2033)).addHtml("&dprime;").addStd("'");
-    symbols["rangle"]=UprightSymbolUnicode(QChar(0x232A)).addWinSymbol(QChar(0xF1));
-    symbols["rceil"]=UprightSymbolUnicode(QChar(0x2309)).addHtml("&RightCeiling;").addWinSymbol(QChar(0xF9));
+    symbols["rangle"]=UprightSymbolUnicode(QChar(0x232A)).addUprightWinSymbol(QChar(0xF1));
+    symbols["rceil"]=UprightSymbolUnicode(QChar(0x2309)).addUprightHtml("&RightCeiling;").addUprightWinSymbol(QChar(0xF9));
     { auto s=SimpleTextSymbol(QChar(0xAE), "&reg;");
         symbols["registered"]=s; symbols["textregistered"]=s; symbols["circledR"]=s; }
-    symbols["rfloor"]=UprightSymbolUnicode(QChar(0x230B)).addHtml("&RightFloor;").addWinSymbol(QChar(0xFB));
-    symbols["rightangle"]=UprightSymbolUnicode(QChar(0x221F)).addHtml("&angrt;");
-    symbols["smile"]=UprightSymbolUnicode(QChar(0x2323)).addHtml("&smile;");
-    symbols["sphericalangle"]=UprightSymbolUnicode(QChar(0x2222)).addHtml("&angsph;");
+    symbols["rfloor"]=UprightSymbolUnicode(QChar(0x230B)).addUprightHtml("&RightFloor;").addUprightWinSymbol(QChar(0xFB));
+    symbols["rightangle"]=UprightSymbolUnicode(QChar(0x221F)).addUprightHtml("&angrt;");
+    symbols["smile"]=UprightSymbolUnicode(QChar(0x2323)).addUprightHtml("&smile;");
+    symbols["sphericalangle"]=UprightSymbolUnicode(QChar(0x2222)).addUprightHtml("&angsph;");
     symbols["star"]=UprightSymbolUnicode(QChar(0x22C6));
     symbols["tcohm"]=UnicodeSymbol(QChar(0x2126));
     { auto s=UnicodeSymbol(QChar(0x2014), "&#11840;");

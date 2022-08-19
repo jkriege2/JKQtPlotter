@@ -283,7 +283,7 @@ struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextEnvironment {
     /** \brief is the text currently italic? */
     bool italic;
     /** \brief is the text currently in small caps? */
-    bool smallCaps;
+    QFont::Capitalization capitalization;
     /** \brief is the text currently underlined? */
     bool underlined;
     /** \brief is the text currently overlined? */
@@ -294,10 +294,25 @@ struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextEnvironment {
     bool insideMath;
     /** \brief if \a insideMath \c ==true and this is \c  true (the default), then digits are forced to be typeset in upright, otherwise they are typeset as defined by the other properties */
     bool insideMathForceDigitsUpright;
-    /** \brief sets  insideMath \c =true and insideMathForceDigitsUpright \c =true */
-    void beginMathMode();
-    /** \brief sets  insideMath \c =false and insideMathForceDigitsUpright \c =true */
+    /** \brief if \c true the commands like \c \\frac{}{} are executes as \c \\tfrac{}{} . This implements \c \\textstyle or if \c false \c \\displaystyle
+     *
+     *  \image html jkqtmathtext/jkqtmathtext_mathstyle.png
+     */
+    bool insideMathUseTextStyle;
+    /** \brief sets  insideMath \c =true and insideMathForceDigitsUpright \c =true and \c insideMathUseTextStyle=!displaystyle*/
+    void beginMathMode(bool displaystyle=true);
+    /** \brief sets  insideMath \c =false  */
     void endMathMode();
+    /** \brief determines whether to use displaystyle or textstyle for math-instructions like \c \\frace{}{} or \c \\int_x
+     *
+     *  \image html jkqtmathtext/jkqtmathtext_mathstyle.png
+     */
+    bool isMathDisplayStyle() const;
+    /** \brief determines whether to use displaystyle or textstyle for math-instructions like \c \\frace{}{} or \c \\int_x
+     *
+     *  \image html jkqtmathtext/jkqtmathtext_mathstyle.png
+     */
+    bool isMathTextStyle() const;
 
 
     /** \brief build a <a href="https://doc.qt.io/qt-5/qfont.html">QFont</a> object from the settings in this object */

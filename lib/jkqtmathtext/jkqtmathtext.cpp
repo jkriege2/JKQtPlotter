@@ -23,6 +23,7 @@
 #include "jkqtmathtext/nodes/jkqtmathtextnode.h"
 #include "jkqtcommon/jkqtpcodestructuring.h"
 #include "jkqtcommon/jkqtpstringtools.h"
+#include "jkqtmathtext/nodes/jkqtmathtextnodetools.h"
 #include "jkqtmathtext/nodes/jkqtmathtexttextnode.h"
 #include "jkqtmathtext/nodes/jkqtmathtextbracenode.h"
 #include "jkqtmathtext/nodes/jkqtmathtextdecoratednode.h"
@@ -34,7 +35,12 @@
 #include "jkqtmathtext/nodes/jkqtmathtextsubsupernode.h"
 #include "jkqtmathtext/nodes/jkqtmathtextsymbolnode.h"
 #include "jkqtmathtext/nodes/jkqtmathtextwhitespacenode.h"
-#include "jkqtmathtext/nodes/jkqtmathtextnodetools.h"
+#include "jkqtmathtext/nodes/jkqtmathtextboxinstructionnode.h"
+#include "jkqtmathtext/nodes/jkqtmathtexthorizontallistnode.h"
+#include "jkqtmathtext/nodes/jkqtmathtextmodifyenvironmentnode.h"
+#include "jkqtmathtext/nodes/jkqtmathtextnoopnode.h"
+#include "jkqtmathtext/nodes/jkqtmathtextverbatimnode.h"
+#include "jkqtmathtext/nodes/jkqtmathtextverticallistnode.h"
 #include <cmath>
 #include <QFontMetricsF>
 #include <QDebug>
@@ -100,10 +106,10 @@ JKQTMathText::JKQTMathText(QObject* parent):
     matrix_linewidth_thin_factor=0.4;
     matrix_linewidth_heavy_factor=1.5;
     matrix_line_separation_factor=2.0;
-    matrix_xSeparation_factor=0.5;
-    matrix_ySeparation_factor=0.5;
-    matrix_xPadding_factor=0.5;
-    matrix_yPadding_factor=0.5;
+    matrix_xSeparation_factor=0.75;
+    matrix_ySeparation_factor=0.6;
+    matrix_xPadding_factor=0.75;
+    matrix_yPadding_factor=0.75;
 
     blackboradFontMode=MTBBDMdefault;
 
@@ -191,6 +197,7 @@ JKQTMathText::JKQTMathText(QObject* parent):
     currentTokenID=0;
     parseString="";
     parsingMathEnvironment=false;
+    parsinginMathTextStyle=false;
 }
 
 JKQTMathText::~JKQTMathText() {
@@ -1764,7 +1771,7 @@ JKQTMathTextNode* JKQTMathText::parseLatexString(bool get, JKQTMathTextBraceType
             if (child!=nullptr) nl->addChild(new JKQTMathTextSuperscriptNode(this, child));
             if (child2!=nullptr) nl->addChild(child2);
         } else if (currentToken==MTTopenbrace) {
-            nl->addChild(parseLatexString(true));
+            nl->addChild(new JKQTMathTextBlockNode(parseLatexString(true), this));
         } else if (currentToken==MTTclosebrace) {
             break;
         } else if (currentToken==MTTopenbracket) {
@@ -1954,8 +1961,16 @@ JKQTMathTextNode* JKQTMathText::parseInstruction(bool *_foundError, bool* getNew
         child= new JKQTMathTextWhitespaceNode(currentInstructionName, this);
     } else if (JKQTMathTextSymbolNode::hasSymbol(currentInstructionName)) {
         child=new JKQTMathTextSymbolNode(this, currentInstructionName);
-        if (JKQTMathTextSymbolNode::isSubSuperscriptBelowAboveSymbol(currentInstructionName) && parsingMathEnvironment) {
-            child->setSubSuperscriptAboveBelowNode(true);
+        if (JKQTMathTextSymbolNode::isSubSuperscriptBelowAboveSymbol(currentInstructionName)) {
+            if (parsingMathEnvironment) {
+                if (parsinginMathTextStyle) {
+                    child->setSubSuperscriptAboveBelowNode(false);
+                } else {
+                    child->setSubSuperscriptAboveBelowNode(true);
+                }
+            } else {
+                child->setSubSuperscriptAboveBelowNode(false);
+            }
         }
         if (getNew) *getNew=true;
     } else if (big_instructions_family.contains(currentInstructionName)) {
@@ -1994,6 +2009,22 @@ JKQTMathTextNode* JKQTMathText::parseInstruction(bool *_foundError, bool* getNew
             error_list.append(tr("error @ ch. %1: expected symbol-encoding instruction or character after '\\%2' command").arg(currentTokenID).arg(currentInstructionName));
         }
         if (getNew) *getNew=true;
+    } else if (JKQTMathTextModifiedEnvironmentInstructionNode::supportsInstructionName(currentInstructionName)) {
+        const size_t Nparams=JKQTMathTextModifiedEnvironmentInstructionNode::countParametersOfInstruction(currentInstructionName);
+        bool foundError=false;
+        QStringList params;
+        if (Nparams>0) {
+            params=parseStringParams(true, Nparams, &foundError);
+        }
+        if (getToken()!=MTTwhitespace) {
+            if (getNew) *getNew=false;
+        }
+        if (!foundError) {
+            child=new JKQTMathTextModifiedEnvironmentInstructionNode(this, currentInstructionName, params);
+            JKQTMathTextModifiedEnvironmentInstructionNode::modifyInMathTextStyleEnvironment(currentInstructionName, parsinginMathTextStyle, this, params);
+        } else {
+            error_list.append(tr("error @ ch. %1: expected %3 arguments in '{...}' braces after '%2' command").arg(currentTokenID).arg(currentInstructionName).arg(Nparams));
+        }
     } else if (JKQTMathTextModifiedTextPropsInstructionNode::supportsInstructionName(currentInstructionName)) {
         const size_t Nparams=JKQTMathTextModifiedTextPropsInstructionNode::countParametersOfInstruction(currentInstructionName);
         bool foundError=false;
@@ -2002,7 +2033,7 @@ JKQTMathTextNode* JKQTMathText::parseInstruction(bool *_foundError, bool* getNew
             if (getToken()==MTTopenbrace) {
                 const bool oldParseMath=parsingMathEnvironment;
                 auto __finalpaint=JKQTPFinally(std::bind([&oldParseMath](bool& parsingMathEnvironment) { parsingMathEnvironment=oldParseMath; }, std::ref(parsingMathEnvironment)));
-                JKQTMathTextModifiedTextPropsInstructionNode::modifyInMathEnvironment(currentInstructionName, parsingMathEnvironment, params);
+                JKQTMathTextModifiedTextPropsInstructionNode::modifyInMathEnvironment(currentInstructionName, parsingMathEnvironment, parsinginMathTextStyle, params);
                 child=new JKQTMathTextModifiedTextPropsInstructionNode(this, currentInstructionName, parseLatexString(true), params);
 
             } else {
@@ -2018,8 +2049,7 @@ JKQTMathTextNode* JKQTMathText::parseInstruction(bool *_foundError, bool* getNew
         const QStringList params=parseStringParams(true, Nparams, &foundError);
         if (!foundError) {
             child=new JKQTMathTextSimpleInstructionNode(this, currentInstructionName, params);
-        }
-        if (foundError){
+        } else {
             error_list.append(tr("error @ ch. %1: expected %3 arguments in '{...}' braces after '%2' command").arg(currentTokenID).arg(currentInstructionName).arg(Nparams));
         }
     } else if (JKQTMathTextBoxInstructionNode::supportsInstructionName(currentInstructionName)) {
@@ -2031,7 +2061,7 @@ JKQTMathTextNode* JKQTMathText::parseInstruction(bool *_foundError, bool* getNew
             if (getToken()==MTTopenbrace) {
                 const bool oldParseMath=parsingMathEnvironment;
                 auto __finalpaint=JKQTPFinally(std::bind([&oldParseMath](bool& parsingMathEnvironment) { parsingMathEnvironment=oldParseMath; }, std::ref(parsingMathEnvironment)));
-                JKQTMathTextBoxInstructionNode::modifyInMathEnvironment(currentInstructionName, parsingMathEnvironment, params);
+                JKQTMathTextBoxInstructionNode::modifyInMathEnvironment(currentInstructionName, parsingMathEnvironment, parsinginMathTextStyle, params);
                 child=new JKQTMathTextBoxInstructionNode(this, currentInstructionName, parseLatexString(true), params);
             } else {
                 foundError=true;

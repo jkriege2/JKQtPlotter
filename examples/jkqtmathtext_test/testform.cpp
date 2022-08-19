@@ -4,6 +4,7 @@
 #include <sstream>
 #include "jkqtcommon/jkqtpstringtools.h"
 #include "jkqtmathtext/jkqtmathtext.h"
+#include "jkqtmathtext/nodes/jkqtmathtextnodetools.h"
 #include "jkqtmathtext/nodes/jkqtmathtexttextnode.h"
 #include "jkqtmathtext/nodes/jkqtmathtextbracenode.h"
 #include "jkqtmathtext/nodes/jkqtmathtextdecoratednode.h"
@@ -15,7 +16,12 @@
 #include "jkqtmathtext/nodes/jkqtmathtextsubsupernode.h"
 #include "jkqtmathtext/nodes/jkqtmathtextsymbolnode.h"
 #include "jkqtmathtext/nodes/jkqtmathtextwhitespacenode.h"
-
+#include "jkqtmathtext/nodes/jkqtmathtextboxinstructionnode.h"
+#include "jkqtmathtext/nodes/jkqtmathtexthorizontallistnode.h"
+#include "jkqtmathtext/nodes/jkqtmathtextmodifyenvironmentnode.h"
+#include "jkqtmathtext/nodes/jkqtmathtextnoopnode.h"
+#include "jkqtmathtext/nodes/jkqtmathtextverbatimnode.h"
+#include "jkqtmathtext/nodes/jkqtmathtextverticallistnode.h"
 
 TestForm::TestForm(QWidget *parent) :
     QWidget(parent),
@@ -41,6 +47,24 @@ TestForm::TestForm(QWidget *parent) :
                             "\\end{matrix}");
     ui->cmbTestset->addItem("text: umlaute", umla);
     ui->cmbTestset->addItem("text: umlaute and fonts", "rm: \\textrm{"+testTextUmla+"}, sf: \\textsf{"+testTextUmla+"}, tt: \\texttt{"+testTextUmla+"}, cal: \\textcal{"+testTextUmla+"}, scr: \\textscr{"+testTextUmla+"}, bb: \\textbb{"+testTextUmla+"}, frak: \\textfrak{"+testTextUmla+"}, ");
+    ui->cmbTestset->addItem("text: font sizes", "\\begin{array}{|lll|llc|}\\hline"
+                                                "\\textbf{Commmand} &\\ \\ \\ &\\ \\ \\ & \\textbf{Output}\\\\"
+                                                "\\hline"
+                                                "{\\backslash}tiny: &&& {\\tiny sample text} \\\\"
+                                                "{\\backslash}ssmall: &&& {\\ssmall sample text} \\\\"
+                                                "{\\backslash}scriptsize: &&& {\\scriptsize sample text} \\\\"
+                                                "{\\backslash}footnotesize: &&& {\\footnotesize sample text} \\\\"
+                                                "{\\backslash}small: &&& {\\small sample text} \\\\"
+                                                "{\\backslash}normalsize: &&& {\\normalsize sample text} \\\\"
+                                                "{\\backslash}large: &&& {\\large sample text} \\\\"
+                                                "{\\backslash}Large: &&& {\\Large sample text} \\\\"
+                                                "{\\backslash}LARGE: &&& {\\LARGE sample text} \\\\"
+                                                "{\\backslash}huge: &&& {\\huge sample text} \\\\"
+                                                "{\\backslash}Huge: &&& {\\Huge sample text} \\\\"
+                                                "\\hline"
+                                                "\\end{array}");
+
+    ui->cmbTestset->addItem("text: multi-line", "line 1\\\\\\bf line 2 in bold \\\\line 3 still bold \\it now also italic");
     ui->cmbTestset->addItem("text: dashes", "hyphen: - endash: -- emdash: --- \\ \\ \\ endash--within text\\ \\ \\ emdash---within text\\ \\ \\ enemdash-----within text\\ \\ \\ ememdash------within text");
     ui->cmbTestset->addItem("math: fonts", "base: $"+testText+"$, rm: $\\mathrm{"+testText+"}$, sf: $\\mathsf{"+testText+"}$, tt: $\\mathtt{"+testText+"}$, cal: $\\mathcal{"+testText+"}$, scr: $\\mathscr{"+testText+"}$, bb: $\\mathbb{"+testText+"}$, frak: $\\mathfrak{"+testText+"}$, ");
     ui->cmbTestset->addItem("math: umlaute", "$"+umla_math+"$");
@@ -76,6 +100,7 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbTestset->addItem("math: std dev", "$\\sigma_x=\\sqrt{\\langle (x-\\langle x\\rangle)^2\\rangle}=\\sqrt{\\frac{1}{N-1}\\cdot\\left( \\sum_{i=1}^N{x_i}^2-\\frac{1}{N}\\cdot\\left(\\sum_{i=1}^Nx_i\\right)^2\\right)}$");
     ui->cmbTestset->addItem("math: std dev 2", "$\\sigma_x=\\sqrt{\\langle (x-\\langle x\\rangle)^2\\rangle}=\\sqrt{\\frac{1}{N-1}\\cdot\\left( \\sum_{i=1}^Nx_i^2-\\frac{1}{N}\\cdot\\left(\\sum_{i=1}^Nx_i\\right)^2\\right)}$");
     ui->cmbTestset->addItem("math: rotation matrix", "$\\mathrm{\\mathbf{M}}(\\alpha) = \\left(\\begin{matrix}\\cos(\\alpha)+n_x^2\\cdot (1-\\cos(\\alpha))  &  n_x\\cdot n_y\\cdot (1-\\cos(\\alpha))-n_z\\cdot \\sin(\\alpha) &  n_x\\cdot n_z\\cdot (1-\\cos(\\alpha))+n_y\\cdot \\sin(\\alpha)\\\\n_x\\cdot n_y\\cdot (1-\\cos(\\alpha))+n_z\\cdot \\sin(\\alpha) & \\cos(\\alpha)+n_y^2\\cdot (1-\\cos(\\alpha))  &   n_y\\cdot n_z\\cdot (1-\\cos(\\alpha))-n_x\\cdot \\sin(\\alpha)\\\\n_z\\cdot n_x\\cdot (1-\\cos(\\alpha))-n_y\\cdot \\sin(\\alpha) & n_z\\cdot n_y\\cdot (1-\\cos(\\alpha))+n_x\\cdot \\sin(\\alpha)  & \\cos(\\alpha)+n_z^2\\cdot (1-\\cos(\\alpha))\\end{matrix}\\right)$");
+    ui->cmbTestset->addItem("math: rotation matrix, \\tiny", "$\\mathrm{\\mathbf{M}}(\\alpha) = \\left(\\begin{matrix}\\tiny\\cos(\\alpha)+n_x^2\\cdot (1-\\cos(\\alpha))  &  n_x\\cdot n_y\\cdot (1-\\cos(\\alpha))-n_z\\cdot \\sin(\\alpha) &  n_x\\cdot n_z\\cdot (1-\\cos(\\alpha))+n_y\\cdot \\sin(\\alpha)\\\\n_x\\cdot n_y\\cdot (1-\\cos(\\alpha))+n_z\\cdot \\sin(\\alpha) & \\cos(\\alpha)+n_y^2\\cdot (1-\\cos(\\alpha))  &   n_y\\cdot n_z\\cdot (1-\\cos(\\alpha))-n_x\\cdot \\sin(\\alpha)\\\\n_z\\cdot n_x\\cdot (1-\\cos(\\alpha))-n_y\\cdot \\sin(\\alpha) & n_z\\cdot n_y\\cdot (1-\\cos(\\alpha))+n_x\\cdot \\sin(\\alpha)  & \\cos(\\alpha)+n_z^2\\cdot (1-\\cos(\\alpha))\\end{matrix}\\right)$");
     ui->cmbTestset->addItem("math: like in label at bottom", "$\\left(\\left[\\sqrt{2\\pi\\cdot\\int_{-\\infty}^\\infty f(x)\\;\\mathrm{d}x}\\right]\\right)$");
     ui->cmbTestset->addItem("text: like in label at bottom)", "\\left(\\left[\\sqrt{2\\pi\\cdot\\int_{-\\infty}^\\infty f(x)\\;\\mathrm{d}x}\\right]\\right)");
     ui->cmbTestset->addItem("text 0", "text");
@@ -94,6 +119,7 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbTestset->addItem("text: \\begin{verbatim*}", "outside\\begin{verbatim*}\ninside \\LaTeX verbatim\n  2nd verbaimline\n\t3rd line\n\\end{verbatim*}");
     ui->cmbTestset->addItem("text: \\begin{lstlistings}", "outside\\begin{lstlisting}\nint main() {\n  printf(\"Hello World\\n\");\n}\n\\end{lstlisting}");
     ui->cmbTestset->addItem("text: flushleft", "\\begin{flushleft}text\\\\\\textbf{2^{nd} line of text}\\\\last \\textit{line!} $\\frac{1}{2}$\\end{flushleft}");
+    ui->cmbTestset->addItem("text: flushleft, tiny", "\\begin{flushleft}\\tiny text\\\\\\textbf{2^{nd} line of text}\\\\\\color{red}last \\textit{line!} $\\frac{1}{2}$\\end{flushleft}");
     ui->cmbTestset->addItem("text: flushright", "\\begin{flushright}text\\\\\\textbf{2^{nd} line of text}\\\\last \\textit{line!} $\\frac{1}{2}$\\end{flushright}");
     ui->cmbTestset->addItem("text: center", "\\begin{center}text\\\\\\textbf{2^{nd} line of text}\\\\last \\textit{line!} $\\frac{1}{2}$\\end{center}");
     ui->cmbTestset->addItem("text: framed", "\\begin{framed}text\\\\\\textbf{2^{nd} line of text}\\\\last \\textit{line!} $\\frac{1}{2}$\\end{framed}");
@@ -476,6 +502,7 @@ QTreeWidgetItem *TestForm::createTree(JKQTMathTextNode *node, QTreeWidgetItem* p
     JKQTMathTextVerbatimNode* verbN=dynamic_cast<JKQTMathTextVerbatimNode*>(node);
     JKQTMathTextPhantomNode* phanN=dynamic_cast<JKQTMathTextPhantomNode*>(node);
     JKQTMathTextNoopNode* noopN=dynamic_cast<JKQTMathTextNoopNode*>(node);
+    JKQTMathTextModifiedEnvironmentInstructionNode* modenvN=dynamic_cast<JKQTMathTextModifiedEnvironmentInstructionNode*>(node);
 
     QTreeWidgetItem* ti=nullptr;
     if (parent) ti=new QTreeWidgetItem(parent);
@@ -519,12 +546,14 @@ QTreeWidgetItem *TestForm::createTree(JKQTMathTextNode *node, QTreeWidgetItem* p
         name=QString("SubscriptNode");
         if (subN->getChild()) ti->addChild(createTree(subN->getChild(), ti));
     } else if (instS)  {
-        name=QString("SimpleInstructionNode: \'%1\' (subsuper=%2, params=%3)").arg(instS->getInstructionName()).arg(instS->isSubSuperscriptAboveBelowNode()).arg(instS->getParameters().join("/"));
+        name=QString("SimpleInstructionNode: \'%1\' (params=%2)").arg(instS->getInstructionName()).arg(instS->getParameters().join("/"));
+    } else if (modenvN)  {
+        name=QString("ModifiedEnvironmentInstructionNode: \'%1\' (params=%2)").arg(modenvN->getInstructionName()).arg(modenvN->getParameters().join("/"));
     } else if (inst1N)  {
-        name=QString("ModifiedTextPropsInstructionNode: \'%1\' (subsuper=%2, params=%3)").arg(inst1N->getInstructionName()).arg(inst1N->isSubSuperscriptAboveBelowNode()).arg(inst1N->getParameters().join("/"));
+        name=QString("ModifiedTextPropsInstructionNode: \'%1\' (params=%2)").arg(inst1N->getInstructionName()).arg(inst1N->getParameters().join("/"));
         if (inst1N->getChild()) ti->addChild(createTree(inst1N->getChild(), ti));
     } else if (inst1B)  {
-        name=QString("BoxInstructionNode: \'%1\' (subsuper=%2, params=%3)").arg(inst1B->getInstructionName()).arg(inst1B->isSubSuperscriptAboveBelowNode()).arg(inst1B->getParameters().join("/"));
+        name=QString("BoxInstructionNode: \'%1\' (params=%2)").arg(inst1B->getInstructionName()).arg(inst1B->getParameters().join("/"));
         if (inst1B->getChild()) ti->addChild(createTree(inst1B->getChild(), ti));
     } else if (lstN)  {
         name=QString("HorizontalListNode");
@@ -541,7 +570,7 @@ QTreeWidgetItem *TestForm::createTree(JKQTMathTextNode *node, QTreeWidgetItem* p
     } else if (verbN)  {
         name=QString("VerbatimTextNode (align=%1, spacingFactor=%2x, verticalOrientation=%3, text='%4')").arg(JKQTMathTextHorizontalAlignment2String(verbN->getAlignment())).arg(verbN->getLineSpacingFactor()).arg(JKQTMathTextVerticalOrientation2String(verbN->getVerticalOrientation())).arg(jkqtp_backslashEscape(verbN->getText()));
     } else if (symN)  {
-        name=QString("SymbolNode: \'%1\' (subsuper=%3)").arg(symN->getSymbolName()).arg(symN->isSubSuperscriptAboveBelowNode());
+        name=QString("SymbolNode: \'%1\'").arg(symN->getSymbolName());
     } else if (spN)  {
         name=QString("WhitespaceNode :type=%1, count=%2").arg(spN->Type2String(spN->getWhitespaceType())).arg(spN->getWhitespaceCount());
     } else if (txtN)  {
