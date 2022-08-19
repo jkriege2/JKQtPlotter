@@ -1,33 +1,36 @@
 ---
+jkqtmathtext_whitespace_none.png
+\rightarrow\leftarrow\ \ \ f{}g
+---
 jkqtmathtext_whitespace_thicker.png
-\rightarrow\ \leftarrow
+\rightarrow\ \leftarrow\ \ \ f{\ }g
 ---
 jkqtmathtext_whitespace_enspace.png
-\rightarrow\enspace\leftarrow
+\rightarrow\enspace\leftarrow\ \ \ f{\enspace}g
 ---
 jkqtmathtext_whitespace_emspace.png
-\rightarrow\emspace\leftarrow
+\rightarrow\emspace\leftarrow\ \ \ f{\emspace}g
 ---
 jkqtmathtext_whitespace_qquad.png
-\rightarrow\qquad\leftarrow
+\rightarrow\qquad\leftarrow\ \ \ f{\qquad}g
 ---
 jkqtmathtext_whitespace_thinspace.png
-\rightarrow\thinspace\leftarrow
+\rightarrow\thinspace\leftarrow\ \ \ f{\thinspace}g
 ---
 jkqtmathtext_whitespace_medspace.png
-\rightarrow\medspace\leftarrow
+\rightarrow\medspace\leftarrow\ \ \ f{\medspace}g
 ---
 jkqtmathtext_whitespace_thickspace.png
-\rightarrow\thickspace\leftarrow
+\rightarrow\thickspace\leftarrow\ \ \ f{\thickspace}g
 ---
 jkqtmathtext_whitespace_negthinspace.png
-\rightarrow\negthinspace\leftarrow
+\rightarrow\negthinspace\leftarrow\ \ \ f{\negthinspace}g
 ---
 jkqtmathtext_whitespace_negmedspace.png
-\rightarrow\negmedspace\leftarrow
+\rightarrow\negmedspace\leftarrow\ \ \ f{\negmedspace}g
 ---
 jkqtmathtext_whitespace_negthickspace.png
-\rightarrow\negthickspace\leftarrow
+\rightarrow\negthickspace\leftarrow\ \ \ f{\negthickspace}g
 ---
 jkqtmathtext_whitespace_phantom.png
 \begin{flushleft}\rightarrow\snugbox{\snugshade{yellow}{\phantom{XXX}}}\leftarrow\\\rightarrow\snugbox{\snugshade{yellow}{XXX}}\leftarrow\end{flushleft}

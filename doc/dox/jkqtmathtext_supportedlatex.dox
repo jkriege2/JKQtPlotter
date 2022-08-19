@@ -171,6 +171,10 @@
 
     <table>
       <tr>
+        <td>
+        <td>NONE
+        <td>\image html jkqtmathtext/jkqtmathtext_whitespace_none.png
+      <tr>
         <td>\c \\   (backslash+whitespace)
         <td>thicker whitespace (1/3em)
         <td>\image html jkqtmathtext/jkqtmathtext_whitespace_thicker.png
