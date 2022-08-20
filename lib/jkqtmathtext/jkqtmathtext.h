@@ -268,7 +268,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         template <class TParser>
         inline bool parse(const QString &markup, ParseOptions options=DefaultParseOptions) {
             static_assert(std::is_base_of<JKQTMathTextParser, TParser>::value, "in parse<TParser>() the type TParser has to be derived from JKQTMathTextParser to work!");
-            std::unique_ptr<TParser> p=std::make_unique<TParser>(this);
+            std::unique_ptr<TParser> p=std::unique_ptr<TParser>(new TParser(this));
             if (parsedNode) delete parsedNode;
             parsedNode=nullptr;
             clearErrorList();
