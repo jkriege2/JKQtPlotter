@@ -39,7 +39,7 @@
 #include <QImage>
 #include <QPixmap>
 #include <type_traits>
-
+#include <memory>
 
 
 class JKQTMathTextNode; // forward
