@@ -60,7 +60,7 @@
   They form a tree in memory.
 
   \defgroup jkqtmathtext_parser Math Markup Parser Classes
-  \ingroup jkqtmathtext
+  \ingroup jkqtmathtext_interaltools
 
   \defgroup jkqtmathtext_tools Tool Functions and Types for JKQTMathText
   \ingroup jkqtmathtext_interaltools
