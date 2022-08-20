@@ -57,6 +57,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>IMPROVED/REWORKED rendering of text in text- and math-mode. Now it is more consistent with the output of LaTeX itself</li>
     <li>IMPROVED/REWORKED rendering of blackboard font: now several different rendering modes can be selected using JKQTMathText::setFontBlackboradMode()</li>
     <li>BREAKING/REWORKED: The \\verb!...!-command now works the same as in LaTeX</li>
+    <li>BREAKING/REWORKED: Separated the LaTeX parser into JKQTMathTextLatexParser from JKQTMathText</li>
     <li>BREAKING/CLEANUP: cleanup: Removed Parameter prevNodeSize from JKQTMathTextNode::draw() and JKQTMathTextNode::getSize()/JKQTMathTextNode::getSizeInternal(), since it is only really necessary for JKQTMathTextSubscriptNode and JKQTMathTextSuperscriptNode</li>
     <li>BREAKING/CLEANUP: using JKQTMathTextNodeSize for all size-calculation functions and got rid of all functions that take the output parameters with call-by-reference, additional information can be outut by local size-classes that derive from JKQTMathTextNodeSize, see e.g. JKQTMathTextSymbolNode::NodeSize and JKQTMathTextSymbolNode::getSymbolSize()</li>
     <li>NEW: JKQTMathTextVerticalListNode allows to typeset a vertical list of lines</li>

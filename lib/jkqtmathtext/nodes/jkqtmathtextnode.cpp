@@ -114,6 +114,11 @@ void JKQTMathTextNode::doDrawBoxes(QPainter& painter, double x, double y, JKQTMa
     }
 }
 
+void JKQTMathTextNode::addToErrorList(const QString &error)
+{
+    parentMathText->addToErrorList(error);
+}
+
 void JKQTMathTextNode::setDrawBoxes(bool draw)
 {
     this->drawBoxes=draw;

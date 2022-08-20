@@ -24,6 +24,13 @@
 
   This group assembles general information around JKQTMathText. It explains the rendering model, lists the supported LaTeX-subset etc.
 
+  \defgroup jkqtmathtext_general_languages Supported Markup Languages
+  \ingroup jkqtmathtext_general
+  
+  \defgroup jkqtmathtext_general_latex LaTeX Markup
+  \ingroup jkqtmathtext_general_languages
+
+  LaTeX is the default markup language and supported in JKQTMathText via JKQTMathTextLatexParser.
   
   \defgroup jkqtmathtext_render Math Renderer Class (JKQTMathText)
   \ingroup jkqtmathtext
@@ -51,6 +58,9 @@
   
   This group contains all classes that are used to build a memory-representation of the math to be rendered.
   They form a tree in memory.
+
+  \defgroup jkqtmathtext_parser Math Markup Parser Classes
+  \ingroup jkqtmathtext
 
   \defgroup jkqtmathtext_tools Tool Functions and Types for JKQTMathText
   \ingroup jkqtmathtext_interaltools

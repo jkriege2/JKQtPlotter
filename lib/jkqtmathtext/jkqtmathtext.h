@@ -34,33 +34,47 @@
 #include <QFile>
 #include "jkqtmathtext/jkqtmathtext_imexport.h"
 #include "jkqtmathtext/jkqtmathtexttools.h"
-#include <QWidget>
-#include <QLabel>
 #include <QHash>
 #include <QPicture>
 #include <QImage>
 #include <QPixmap>
+#include <type_traits>
 
 
 
 class JKQTMathTextNode; // forward
+class JKQTMathTextParser; // forward
 class JKQTMathTextVerticalListNode; // forward
 
-/*! \brief this class parses a LaTeX string and can then draw the contained text/equation onto a <a href="http://doc.qt.io/qt-5/qpainter.html">QPainter</a>
+/*! \brief this class parses a mathematical markup string and can then draw the contained text/equation onto a <a href="http://doc.qt.io/qt-5/qpainter.html">QPainter</a>
     \ingroup jkqtmathtext_render
 
     
-    JKQTMathText is a self-contained LaTeX-renderer for Qt. It is used to renderer
+    JKQTMathText is a self-contained mathematical markup renderer for Qt. It is used to renderer
     labels in JKQTPlotter/JKQTBasePlotter, but can be used independently. 
     The class does not depend on any library, except Qt. 
-    In particular it actually parses a LaTeX string and draws it in pure C++. It does NOT rely
+    
+    The implementation is split over several classes:
+      - JKQTMathText implements drawing, based on a memory representatioj of the markup. It also provides an interface for class users.
+      - JKQTMathTextParser and its children like JKQTMathTextLatexParser parses mathamtical markup.
+      - The nodes summarized in \ref jkqtmathtext_nodes  are used to build the memory representation of the markup.
+    .
+    
+    In particular JKQTMathTextLatexParser actually parses e.g. a LaTeX string and draws it in pure C++. It does NOT rely
     on an installed LaTeX for the rendering!
 
     \see See \ref jkqtmathtext_supportedlatex for a description of the supported LaTeX subset
-         and \ref jkqtmathtext_renderingmodel for a description of the rendering model.
+         and \ref jkqtmathtext_renderingmodel for a description of the rendering model of JKQTMathTextLatexParser.
     
 
     \section JKQTMathTextUsage Usage
+
+    \subsection JKQTMathTextUsageParsing Parsing Functions
+    The class provieds two flavours of a parsing function:
+      - There is a function \c parse(markup, markupType) that accepts the markup, the type of markup (as enum DefaultParserTypes)  and parser options.
+        This function determines the appropriate parser class, based on the markup type.
+      - A templated function parse<TParser>(markup, options) that gets a parser class to be used on the markup.
+    .
 
     \subsection JKQTMathTextUsageDirect Drawing Functions
     The class provides different variants of the drawing function draw() that paints using an
@@ -71,6 +85,8 @@ class JKQTMathTextVerticalListNode; // forward
     location-variants draw from a position that is on the left-hand side of the output's baseline:
 
     \image html jkqtmathtext/jkqtmathtext_node_geo.png
+
+    Note that you first need to call one of the \ref JKQTMathTextUsageParsing so there is anything to render!
 
 
 
@@ -203,6 +219,9 @@ class JKQTMathTextVerticalListNode; // forward
 class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         Q_OBJECT
     public:
+        friend class JKQTMathTextParser;
+        friend class JKQTMathTextNode;
+
         /** \brief minimum linewidth allowed in a JKQTMathText (given in pt) */
         static const double ABS_MIN_LINEWIDTH;
 
@@ -224,14 +243,42 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         };
         Q_DECLARE_FLAGS(ParseOptions, ParseOption)
         Q_FLAG(ParseOptions)
-        /** \brief parse the given LaTeX string.
+        /** \brief lists the parser classes that are available by default (convenience interface to the templated parse()-funktion */
+        enum DefaultParserTypes {
+            LatexParser, /*!< \brief use the LaTeX parser from JKQTMathTextLatexParser */
+            DefaultParser=LatexParser
+        };
+        /** \brief parse the given math \a markup string with a parser derived from \a markuptType.
          *
+         *  \param markup the string of math markup
+         *  \param markupType defines the language the \a markup is written in (and  is used to derive the parser to use)
          *  \param options Options for parsing, \see ParseOptions
-         *  \param allowLinebreaks
          *
          *  \returns \c true on success.
          */
-        bool parse(const QString &text, ParseOptions options=DefaultParseOptions);
+        bool parse(const QString &markup, DefaultParserTypes markuptType=DefaultParser, ParseOptions options=DefaultParseOptions);
+        /** \brief parse the given math \a markup string, using the given parser class \a TParser
+         *
+         *  \tparam TParser the  parser (deived from JKQTMathTextParser) to be used
+         *  \param markup the string of math markup
+         *  \param options Options for parsing, \see ParseOptions
+         *
+         *  \returns \c true on success.
+         */
+        template <class TParser>
+        inline bool parse(const QString &markup, ParseOptions options=DefaultParseOptions) {
+            static_assert(std::is_base_of<JKQTMathTextParser, TParser>::value, "in parse<TParser>() the type TParser has to be derived from JKQTMathTextParser to work!");
+            std::unique_ptr<TParser> p=std::make_unique<TParser>(this);
+            if (parsedNode) delete parsedNode;
+            parsedNode=nullptr;
+            clearErrorList();
+            parsedNode=p->parse(markup, options);
+            return parsedNode!=nullptr;
+        }
+        /** \brief returns the syntax tree of JKQTMathTextNode's that was created by the last parse() call */
+        JKQTMathTextNode* getNodeTree() ;
+        /** \copydoc parsedNode */
+        const JKQTMathTextNode *getNodeTree() const;
 
         /** \brief get the size of the drawn representation. returns an invalid size if no text has been parsed. */
         QSizeF getSize(QPainter& painter);
@@ -652,12 +699,15 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         QStringList getErrorList() const;
         /** \brief returns \c true when errors were registered in the system \see error_list */
         bool hadErrors() const;
+    protected:
         /** \copydoc error_list */
         void addToErrorList(const  QString& error);
+        /** \brief clears all registered errors (see error_list)
+         */
+        void clearErrorList();
 
 
 
-    protected:
         /** \brief table with font replacements to use (e.g. if it is known that a certain font is not good for rendering, you can add
          *         an alternative using addReplacementFont(). These are automatically applied, when setting a new font name! */
         QMap<QString, QString> fontReplacements;
@@ -885,114 +935,10 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
           */
         QStringList error_list;
 
-        /** \brief the result of parsing the last string supplied to the object via parse() */
+        /** \brief the syntax tree of JKQTMathTextNode's that was created by the last parse() call */
         JKQTMathTextNode* parsedNode;
 
-        /** \brief returns the syntax tree of JKQTMathTextNode's that was created by the last parse call */
-        JKQTMathTextNode* getNodeTree() const;
 
-        /** \brief the token types that may arrise in the string */
-        enum tokenType {
-            MTTnone, /*!< \brief no token */
-            MTTtext, /*!< \brief a piece of general text */
-            MTTinstruction, /*!< \brief an instruction, started by \c "\", e.g. \c "\\textbf", ... */
-            MTTinstructionNewline,   /*!< \brief a newline instruction \c "\\" */
-            MTTinstructionVerbatim,  /*!< \brief a verbatim instruction, e.g. \c \\verb!verbatimtext! was found: currentTokenName will contain the text enclode by the verbatim delimiters */
-            MTTinstructionVerbatimVisibleSpace,  /*!< \brief a verbatim instruction that generates visible whitespaces, e.g. \c \\begin{verbatim}...\\end{verbatim} was found: currentTokenName will contain the text enclode by the verbatim delimiters */
-            MTTinstructionBegin, /*!< \brief a \c '\\begin{...}' instruction, currentTokenName is the name of the environment */
-            MTTinstructionEnd, /*!< \brief a \c '\\end{...}' instruction, currentTokenName is the name of the environment */
-            MTTunderscore,  /*!< \brief the character \c "_" */
-            MTThat,  /*!< \brief the character \c "^" */
-            MTTdollar,  /*!< \brief the character \c "$" */
-            MTTopenbrace, /*!< \brief the character \c "{" */
-            MTTclosebrace, /*!< \brief the character \c "}" */
-            MTTopenbracket, /*!< \brief the character \c "[" */
-            MTTclosebracket, /*!< \brief the character \c "]" */
-            MTTwhitespace, /*!< \brief some whitespace */
-            MTTampersand,  /*!< \brief the character \c "&" */
-            MTThyphen,  /*!< \brief the single hyphen character \c "-" in text-mode \note MTTendash and MTTemdash take precedence over MTThypen  */
-            MTTendash,  /*!< \brief the en-dash character sequence \c "--" in text-mode */
-            MTTemdash,  /*!< \brief the em-dash character sequence \c "---" in text-mode */
-
-        };
-        /** \brief convert a tokenType into a string, e.g. for debugging output */
-        static QString tokenType2String(tokenType type);
-
-        /** \brief tokenizer for the LaTeX parser */
-        tokenType getToken();
-        /** \brief returns some characters to the Tokenizer */
-        void giveBackToTokenizer(size_t count);
-        /** \brief parse a LaTeX string
-         *
-         *  \param get if \c true this calls getToken()
-         *  \param quitOnClosingBrace if unequal MTBTAny, this returns if the given closing brace is found
-         *  \param quitOnEnvironmentEnd wuit if \c \\end{quitOnEnvironmentEnd} is found
-         *  \param quitOnClosingBracket if \c true, quits on encountering a MTTclosebracket token
-         */
-        JKQTMathTextNode* parseLatexString(bool get, JKQTMathTextBraceType quitOnClosingBrace=JKQTMathTextBraceType::MTBTAny, const QString& quitOnEnvironmentEnd=QString(""), bool quitOnClosingBracket=false);
-        /** \brief parse a LaTeX string with linebreaks
-         *
-         *  \param get if \c true this calls getToken()
-         *  \param quitOnEnvironmentEnd wuit if \c \\end{quitOnEnvironmentEnd} is found
-         *  \param _alignment horizontal alignment of the JKQTMathTextVerticalListNode \see JKQTMathTextVerticalListNode::alignment and JKQTMathTextHorizontalAlignment
-         *  \param _linespacingFactor line spacing factor of the lines \see JKQTMathTextVerticalListNode::linespacingFactor
-         *  \param spacingMode_ spacing mode/algorithm for the lines \see JKQTMathTextLineSpacingMode and JKQTMathTextLineSpacingMode
-         *  \param _verticalOrientation vertical orientation of the block of all lines, see JKQTMathTextVerticalListNode::verticalOrientation and JKQTMathTextVerticalOrientation
-         *
-         *  \returns JKQTMathTextVerticalListNode with the lines as children
-         */
-        JKQTMathTextVerticalListNode *parseMultilineLatexString(bool get, const QString& quitOnEnvironmentEnd=QString(""), JKQTMathTextHorizontalAlignment _alignment=MTHALeft, double _linespacingFactor=1.0, JKQTMathTextLineSpacingMode spacingMode_=MTSMDefaultSpacing, JKQTMathTextVerticalOrientation _verticalOrientation=MTVOFirstLine);
-        /** \brief parses a list of string-arguments, i.e. \c {p1}{p2}{...}
-         *
-         *  \param get call getToken() at the start, otherwise it is expected that currentToken==MTTopenbrace
-         *  \param Nparams the number of parameters to expect
-         *  \param[out] foundError will be set to \c true if an error occured (unexpected token) or \c false otherwise
-         *  \return the list of parameter strings with Nparam entries or an empty or partial list on error
-         */
-        QStringList parseStringParams(bool get, size_t Nparams, bool *foundError=nullptr);
-        /** \brief parses a string, i.e. a sequence of text and whitespaces. returns after any other token was found */
-        QString parseSingleString(bool get);
-        /** \brief read all text without tokenizing, until the sequence \a endsequence is found.
-         *
-         *  \param get if \c true the functions begins by reading a new character, otherwise the current character is used as first character
-         *  \param endsequence the sequence, ending the read
-         *  \param removeFirstlineWhitespace if \c true the returned string does not contain the first whitespace-line and a possible trailing whitespace line
-         *  \return the read string, excluding the  \a endsequence
-         */
-        QString readUntil(bool get, const QString& endsequence, bool removeFirstlineWhitespace=false);
-        /** \brief parses a single instruction (including it's parameters)
-         *
-         *  \param[out] _foundError will be set to \c true if an error occured (unexpected token) or \c false otherwise
-         *  \param[out] getNew returns \c true if the parser has to call getToken() to go on
-         *  \return the instruction node or \c nullptr on error (then also \a _foundError is set \c true )
-         *  \note This method expects the current token currentToken to be MTTinstruction
-         */
-        JKQTMathTextNode* parseInstruction(bool *_foundError=nullptr, bool* getNew=nullptr);
-        /** \brief parse a LaTeX math environment */
-        JKQTMathTextNode* parseMath(bool get);
-
-        /** \brief used by the tokenizer. type of the current token */
-        tokenType currentToken;
-        /** \brief the JKQTMathTextBraceType associated with the last \c \\right command the parser encountered */
-        JKQTMathTextBraceType lastRightBraceType;
-        /**  \brief returns the number of \c \\hline , \c \\hdashline , ... commands in the last parseLatexString() call */
-        QMap<QString,size_t> lastLineCount;
-        /** \brief used by the tokenizer. Name of the current token, id applicable */
-        QString currentTokenName;
-        /** \brief used by the tokenizer. Points to the currently read character in parseString */
-        int currentTokenID;
-        /** \brief used by the tokenizer. The string to be parsed */
-        QString parseString;
-        /** \brief used by the parser. indicates whether we are in a math environment */
-        bool parsingMathEnvironment;
-        /** \brief used by the parser. indicates whether to use textstyle or displaystyle in math-mode */
-        bool parsinginMathTextStyle;
-
-
-
-    public:
-        /** \copydoc parsedNode */ 
-        JKQTMathTextNode *getParsedNode() const;
 
 };
 

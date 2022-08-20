@@ -160,6 +160,13 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextNode {
             }
             return lst;
         }
+
+        /** \brief adds a new error to the JKQTMathText referenced by parentMathText
+         *
+         *  \see JKQTMathText::addToErrorList()
+         */
+        void addToErrorList(const  QString& error);
+
 };
 
 

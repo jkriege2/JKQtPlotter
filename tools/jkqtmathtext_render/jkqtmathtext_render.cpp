@@ -136,7 +136,7 @@ int main(int argc, char* argv[])
             int i=1;
             fileList<<"/*!\n"
                       "   \\defgroup jkqtmathtext_supportedlatexsymbols Supported LaTeX-Symbols\n"
-                      "   \\ingroup jkqtmathtext_general\n\n\\tableofcontents\n\n";
+                      "   \\ingroup jkqtmathtext_general_latex\n\n\\tableofcontents\n\n";
             fileList<<"   \\section jkqtmathtext_supportedlatexsymbols_greek Greek Letters\n";
             fileList<<"   The following table lists all greek letters and their variants available in JKQTMathParser. They are defined in the node-class JKQTMathTextSymbolNode:\n";
             fileList<<"   <table>\n";
@@ -512,7 +512,7 @@ int main(int argc, char* argv[])
                     <<"-----------------------------------------------------------\n"
                     <<mathText.getErrorList().join("\n").toStdString()<<"\n"
                    <<"-----------------------------------------------------------\n"
-                   <<"RENDERTREE:\n"<<JKQTMathTextNodeTree2String(mathText.getParsedNode()).toStdString()
+                   <<"RENDERTREE:\n"<<JKQTMathTextNodeTree2String(mathText.getNodeTree()).toStdString()
                    <<"-----------------------------------------------------------\n"
                     ;
         } else if (verbose) {
@@ -521,7 +521,7 @@ int main(int argc, char* argv[])
                     <<"-----------------------------------------------------------\n"
                     <<latex[i].toStdString()<<"\n"
                     <<"-----------------------------------------------------------\n"
-                    <<"RENDERTREE:\n"<<JKQTMathTextNodeTree2String(mathText.getParsedNode()).toStdString()
+                    <<"RENDERTREE:\n"<<JKQTMathTextNodeTree2String(mathText.getNodeTree()).toStdString()
                     <<"-----------------------------------------------------------\n";
         }
 

@@ -25,8 +25,10 @@ isEmpty(JKQTP_MATHTEXT_PRI_INCLUDED) {
                $$PWD/jkqtmathtext/nodes/jkqtmathtextnodetools.h  \
                $$PWD/jkqtmathtext/nodes/jkqtmathtextnoopnode.h \
                $$PWD/jkqtmathtext/nodes/jkqtmathtextverbatimnode.h  \
-               $$PWD/jkqtmathtext/nodes/jkqtmathtextboxinstructionnode.cpp \
-               $$PWD/jkqtmathtext/nodes/jkqtmathtextmodifyenvironmentnode.cpp
+               $$PWD/jkqtmathtext/nodes/jkqtmathtextboxinstructionnode.h \
+               $$PWD/jkqtmathtext/nodes/jkqtmathtextmodifyenvironmentnode.h \
+               $$PWD/jkqtmathtext/parsers/jkqtmathtextparser.h \
+               $$PWD/jkqtmathtext/parsers/jkqtmathtextlatexparser.h
 
 
     SOURCES += $$PWD/jkqtmathtext/jkqtmathtext.cpp \
@@ -49,7 +51,9 @@ isEmpty(JKQTP_MATHTEXT_PRI_INCLUDED) {
                $$PWD/jkqtmathtext/nodes/jkqtmathtextnoopnode.cpp \
                $$PWD/jkqtmathtext/nodes/jkqtmathtextverbatimnode.cpp \
                $$PWD/jkqtmathtext/nodes/jkqtmathtextboxinstructionnode.cpp \
-               $$PWD/jkqtmathtext/nodes/jkqtmathtextmodifyenvironmentnode.cpp
+               $$PWD/jkqtmathtext/nodes/jkqtmathtextmodifyenvironmentnode.cpp\
+               $$PWD/jkqtmathtext/parsers/jkqtmathtextparser.cpp \
+               $$PWD/jkqtmathtext/parsers/jkqtmathtextlatexparser.cpp
 
     include($$PWD/jkqtmathtext/resources/xits.pri)
     DEFINES += AUTOLOAD_XITS_FONTS

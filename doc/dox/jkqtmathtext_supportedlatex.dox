@@ -1,7 +1,7 @@
 /*!
 
   \defgroup jkqtmathtext_supportedlatex Supported LaTeX-Subset
-  \ingroup jkqtmathtext_general
+  \ingroup jkqtmathtext_general_latex
   
   \tableofcontents
 

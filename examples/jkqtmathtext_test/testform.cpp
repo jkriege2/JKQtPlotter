@@ -685,7 +685,7 @@ void TestForm::updateMath()
     double durationParse=0;
     if (mt.parse(mathTest)) {
         durationParse=ht.getTime()/1000.0;
-        ui->tree->addTopLevelItem(createTree(mt.getParsedNode()));
+        ui->tree->addTopLevelItem(createTree(mt.getNodeTree()));
     } else {
         durationParse=ht.getTime()/1000.0;
     }

@@ -297,7 +297,7 @@ void JKQTMathTextMatrixNode::parseColumnSpec(const QString &columnSpec)
                 verticalLineRHSColumn[columnAlignment.size()-1]=LTdashed;
             }
         } else if (!columnSpec[i].isSpace()){
-            parentMathText->addToErrorList(QString("array spec has unknown character '%1' (full spec was '%2')").arg(columnSpec[i]).arg(columnSpec));
+            addToErrorList(QString("array spec has unknown character '%1' (full spec was '%2')").arg(columnSpec[i]).arg(columnSpec));
         }
         i++;
     }

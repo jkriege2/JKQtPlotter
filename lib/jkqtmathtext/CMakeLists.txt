@@ -46,6 +46,11 @@ set(SOURCES_NODES
   ${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextverbatimnode.cpp
 )
 
+set(SOURCES_PARSERS
+  ${CMAKE_CURRENT_LIST_DIR}/parsers/jkqtmathtextparser.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/parsers/jkqtmathtextlatexparser.cpp
+)
+
 set(HEADERS
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtmathtext.h>
   $<INSTALL_INTERFACE:jkqtmathtext.h>
@@ -56,6 +61,7 @@ set(HEADERS
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtmathtext_imexport.h>
   $<INSTALL_INTERFACE:jkqtmathtext_imexport.h>
 )
+
 set(HEADERS_NODES
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextnode.h>
   $<INSTALL_INTERFACE:nodes/jkqtmathtextnode.h>
@@ -97,6 +103,14 @@ set(HEADERS_NODES
   $<INSTALL_INTERFACE:nodes/jkqtmathtextverbatimnode.h>
 )
 
+
+set(HEADERS_PARSERS
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/parsers/jkqtmathtextparser.h>
+  $<INSTALL_INTERFACE:parsers/jkqtmathtextparser.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/parsers/jkqtmathtextlatexparser.h>
+  $<INSTALL_INTERFACE:parsers/jkqtmathtextlatexparser.h>
+)
+
 if(JKQtPlotter_BUILD_INCLUDE_XITS_FONTS)
     set(RESOURCES
       ${CMAKE_CURRENT_LIST_DIR}/resources/xits.qrc
@@ -136,7 +150,7 @@ function(JKQtMathText_setDefaultLibOptions TARGETNAME)
 endfunction()
 
 if(JKQtPlotter_BUILD_SHARED_LIBS)
-    add_library(${libsh_name} SHARED  ${SOURCES} ${RESOURCES} ${HEADERS} ${SOURCES_NODES} ${HEADERS_NODES} )
+    add_library(${libsh_name} SHARED  ${SOURCES} ${RESOURCES} ${HEADERS} ${SOURCES_NODES} ${HEADERS_NODES} ${SOURCES_PARSERS} ${HEADERS_PARSERS})
     JKQtMathText_setDefaultLibOptions(${libsh_name})
     set_property(TARGET ${libsh_name} PROPERTY OUTPUT_NAME  "${libsh_name_decorated}")
     target_link_libraries(${libsh_name} PUBLIC JKQTCommonSharedLib)
@@ -149,7 +163,7 @@ if(JKQtPlotter_BUILD_SHARED_LIBS)
 endif()
 
 if(JKQtPlotter_BUILD_STATIC_LIBS)
-    add_library(${lib_name} STATIC ${SOURCES} ${RESOURCES} ${HEADERS} ${SOURCES_NODES} ${HEADERS_NODES})
+    add_library(${lib_name} STATIC ${SOURCES} ${RESOURCES} ${HEADERS} ${SOURCES_NODES} ${HEADERS_NODES} ${SOURCES_PARSERS} ${HEADERS_PARSERS})
     JKQtMathText_setDefaultLibOptions(${lib_name})
     set_property(TARGET ${lib_name} PROPERTY OUTPUT_NAME  "${lib_name_decorated}")
 
