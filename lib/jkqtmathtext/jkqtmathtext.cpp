@@ -317,7 +317,6 @@ bool JKQTMathText::useSTIX(bool mathModeOnly, bool useAsFallbackSymbol) {
 
 bool JKQTMathText::useXITS(bool mathModeOnly, bool useAsFallbackSymbol)
 {
-
     const JKQTMathTextFontSpecifier xits=JKQTMathTextFontSpecifier::getXITSFamilies();
     bool res=false;
 

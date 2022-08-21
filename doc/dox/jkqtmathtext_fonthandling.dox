@@ -71,6 +71,8 @@
         - using <a href="https://dejavu-fonts.github.io/">"DejaVu Sans"</a> <c>JKQTMathText::setFontRomanAndMath("DejaVu Sans")</c>: \image html jkqtmathtext/jkqtmathtext_DejaVuSans.png
         - using <a href="https://dejavu-fonts.github.io/">"DejaVu Serif"</a> <c>JKQTMathText::setFontRomanAndMath("DejaVu Serif")</c>: \image html jkqtmathtext/jkqtmathtext_DejaVuSerif.png
         - using "XITS" <c>JKQTMathText::useXITS(false)</c>: \image html jkqtmathtext/jkqtmathtext_xits_all.png
+        - using "Noto Sans" <c>JKQTMathText::setFontRomanAndMath("Noto Sans", "Noto Sans Math")</c>: \image html jkqtmathtext/jkqtmathtext_notosans.png
+        - using "Noto Serif" <c>JKQTMathText::setFontRomanAndMath("Noto Serif", "Noto Serif")</c>: \image html jkqtmathtext/jkqtmathtext_notoserif.png
     .
 
     Math-mode is activated by enclosing your equation in \c $...$ or \c \\[...\\] .
