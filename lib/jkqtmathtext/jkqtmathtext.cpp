@@ -47,7 +47,6 @@
 #include <QDebug>
 #include <QFontDatabase>
 #include <typeinfo>
-#include <QApplication>
 #include <QPainterPath>
 
 
@@ -294,7 +293,7 @@ bool JKQTMathText::parse(const QString &markup, DefaultParserTypes markuptType, 
     return false;
 }
 
-bool JKQTMathText::useSTIX(bool mathModeOnly) {
+bool JKQTMathText::useSTIX(bool mathModeOnly, bool useAsFallbackSymbol) {
 
     const JKQTMathTextFontSpecifier stixs=JKQTMathTextFontSpecifier::getSTIXFamilies();
     bool res=false;
@@ -305,18 +304,18 @@ bool JKQTMathText::useSTIX(bool mathModeOnly) {
     }
     if (!stixs.mathFontName().isEmpty()) {
         setFontMathRoman(stixs.mathFontName(), MTFEUnicode);
-        setFallbackFontSymbols(stixs.mathFontName(), MTFEUnicode);
+        if (useAsFallbackSymbol) setFallbackFontSymbols(stixs.fallbackSymbolsFontName(), MTFEUnicode);
         res=true;
     } else if (!stixs.fontName().isEmpty()) {
         setFontMathRoman(stixs.fontName(), MTFEUnicode);
-        setFallbackFontSymbols(stixs.fontName(), MTFEUnicode);
+        if (useAsFallbackSymbol) setFallbackFontSymbols(stixs.fallbackSymbolsFontName(), MTFEUnicode);
         res=true;
     }
 
     return res;
 }
 
-bool JKQTMathText::useXITS(bool mathModeOnly)
+bool JKQTMathText::useXITS(bool mathModeOnly, bool useAsFallbackSymbol)
 {
 
     const JKQTMathTextFontSpecifier xits=JKQTMathTextFontSpecifier::getXITSFamilies();
@@ -324,32 +323,32 @@ bool JKQTMathText::useXITS(bool mathModeOnly)
 
     if (!mathModeOnly && !xits.fontName().isEmpty()) {
         setFontRoman(xits.fontName(), MTFEUnicode);
-        setFallbackFontSymbols(xits.fontName(), MTFEUnicode);
+        if (useAsFallbackSymbol) setFallbackFontSymbols(xits.fallbackSymbolsFontName(), MTFEUnicode);
         res=true;
     }
     if (!xits.mathFontName().isEmpty()) {
         setFontMathRoman(xits.mathFontName(), MTFEUnicode);
-        setFallbackFontSymbols(xits.mathFontName(), MTFEUnicode);
+        if (useAsFallbackSymbol) setFallbackFontSymbols(xits.fallbackSymbolsFontName(), MTFEUnicode);
         res=true;
     }
 
     return res;
 }
 
-bool JKQTMathText::useASANA(bool mathModeOnly)
+bool JKQTMathText::useASANA(bool mathModeOnly, bool useAsFallbackSymbol)
 {
 
-    const JKQTMathTextFontSpecifier asana=JKQTMathTextFontSpecifier::getXITSFamilies();
+    const JKQTMathTextFontSpecifier asana=JKQTMathTextFontSpecifier::getASANAFamilies();
     bool res=false;
 
     if (!mathModeOnly && !asana.fontName().isEmpty()) {
         setFontRoman(asana.fontName(), MTFEUnicode);
-        setFallbackFontSymbols(asana.fontName(), MTFEUnicode);
+        if (useAsFallbackSymbol) setFallbackFontSymbols(asana.fallbackSymbolsFontName(), MTFEUnicode);
         res=true;
     }
     if (!asana.mathFontName().isEmpty()) {
         setFontMathRoman(asana.mathFontName(), MTFEUnicode);
-        setFallbackFontSymbols(asana.mathFontName(), MTFEUnicode);
+        if (useAsFallbackSymbol) setFallbackFontSymbols(asana.fallbackSymbolsFontName(), MTFEUnicode);
         res=true;
     }
 
@@ -487,20 +486,13 @@ void JKQTMathText::setFontRomanOrSpecial(const QString &__value, JKQTMathTextFon
 void JKQTMathText::setFontRomanOrSpecial(const JKQTMathTextFontSpecifier &fontName, JKQTMathTextFontEncoding encoding)
 {
     if (!fontName.hasMathFontName()) {
-        if (fontName.fontName().toUpper()=="XITS") useXITS(false);
-        else if (fontName.fontName().toUpper()=="STIX") useSTIX(false);
-        else if (fontName.fontName().toUpper()=="ASANA") useASANA(false);
-        else {
-            setFontRoman(fontName.fontName(), encoding);
-            setFontMathRoman(fontName.fontName(), encoding);
-        }
-    } else {
-        if (fontName.mathFontName().toUpper()=="XITS") useXITS(true);
-        else if (fontName.mathFontName().toUpper()=="STIX") useSTIX(true);
-        else if (fontName.mathFontName().toUpper()=="ASANA") useASANA(true);
-        else setFontMathRoman(fontName.mathFontName(), encoding);
         setFontRoman(fontName.fontName(), encoding);
+        setFontMathRoman(fontName.fontName(), encoding);
+    } else {
+        setFontRoman(fontName.fontName(), encoding);
+        setFontMathRoman(fontName.mathFontName(), encoding);
     }
+    if (fontName.hasFallbcakSymbolFontName()) setFallbackFontSymbols(fontName.fallbackSymbolsFontName(), encoding);
 }
 
 void JKQTMathText::setFontRoman(const QString &__value, JKQTMathTextFontEncoding encoding)
@@ -508,6 +500,12 @@ void JKQTMathText::setFontRoman(const QString &__value, JKQTMathTextFontEncoding
     auto f=getReplacementFont(__value, __value, encoding);
     fontDefinitions[MTEroman].fontName = f.first;
     fontDefinitions[MTEroman].fontEncoding = f.second;
+}
+
+void JKQTMathText::setFontRomanAndMath(const QString &fontName, JKQTMathTextFontEncoding encoding)
+{
+    setFontRoman(fontName, encoding);
+    setFontMathRoman(fontName, encoding);
 }
 
 QString JKQTMathText::getFontRoman() const

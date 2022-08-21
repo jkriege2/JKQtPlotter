@@ -56,7 +56,16 @@ JKQTMATHTEXT_LIB_EXPORT void initJKQTMathTextResources();
 /*! \brief represents a font specifier for JKQTMathText. The font consists of two parts: the actual font and the font used for math output (which may be empty)
     \ingroup jkqtmathtext_tools
 
-    \section JKQTMathTextFontSpecifier_specialNames Special FOnt Names
+    \section JKQTMathTextFontSpecifier_specialSyntax Font Definition Syntax
+    JKQTMathTextFontSpecifier::fromFontSpec() defines a special syntax that when parsed allows to seth the font,
+    a math-mode alternative:
+      - \c FONTNAME : set the text-mode font only
+      - \c FONTNAME+MATH_FONTNAME : set the text- and math-mode fonts
+
+
+
+
+    \section JKQTMathTextFontSpecifier_specialNames Special Font Names
     This object also implements replacing special font names with actual fonts. Supported special font names are:
       - \c default / \c app / \c application - the applications default font
       - \c times / \c serif - a general serif font
@@ -75,14 +84,19 @@ JKQTMATHTEXT_LIB_EXPORT void initJKQTMathTextResources();
       - \c title
       - \c general
     .
+
+    Also some sepcial fonts are defined:
+      - xits XITS fonts
+      - stix STIX fonts
+      - asana ASANA fonts
 */
 struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextFontSpecifier {
     JKQTMathTextFontSpecifier();
     JKQTMathTextFontSpecifier(const QString& fontName, const QString& mathFontName);
-    /** \brief construct a JKQTMathTextFontSpecifier, by parsing a \a fontSpec string with the form \c "FONT_NAME[+MATH_FONT_NAME]". */
+    /** \brief construct a JKQTMathTextFontSpecifier, by parsing a \a fontSpec string as defined in the struct description, see \ref JKQTMathTextFontSpecifier_specialNames . */
     static JKQTMathTextFontSpecifier fromFontSpec(const QString& fontSpec);
 
-    /** \brief initialises the object with values from parsing a \a fontSpec string with the form \c "FONT_NAME[+MATH_FONT_NAME]". */
+    /** \brief initialises the object with values from parsing a \a fontSpec string as defined in the struct description, see \ref JKQTMathTextFontSpecifier_specialNames . */
     void setFontSpec(const QString& fontSpec);
 
     /** \brief returns the object's constents as a fontSpec string with the form \c "FONT_NAME[+MATH_FONT_NAME]". */
@@ -91,19 +105,25 @@ struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextFontSpecifier {
     QString fontName() const;
     /** \copydoc m_mathFontName */
     QString mathFontName() const;
+    /** \copydoc m_fallbackSymbolFont */
+    QString fallbackSymbolsFontName() const;
 
     /** \copydoc m_fontName */
     void setFontName(const QString& name);
     /** \copydoc m_mathFontName */
     void setmathFontName(const QString& name);
+    /** \copydoc fallbackSymbolsFontName */
+    void setFallbackSymbolsFontName(const QString& name);
     /** \brief finds actual fonts for some predefined special font names, as listed in \ref JKQTMathTextFontSpecifier_specialNames */
-    static QString transformFontName(const QString& fontName);
+    static QString transformFontName(const QString& fontName, bool mathmode=false);
     /** \brief same as transformFontName(), but also finds the actual name for XITS, STIX, ASANA,... */
-    static QString transformFontNameAndDecodeSpecialFonts(const QString& fontName);
+    static QString transformFontNameAndDecodeSpecialFonts(const QString& fontName, bool mathmode=false);
     /** \brief leiefert \c true, wenn ein fontName() verfügbar ist */
     bool hasFontName() const;
     /** \brief leiefert \c true, wenn ein mathFontName() verfügbar ist */
     bool hasMathFontName() const;
+    /** \brief leiefert \c true, wenn ein fallbcakSymbolsFontName() verfügbar ist */
+    bool hasFallbcakSymbolFontName() const;
 
     /** \brief initialize with the font-families from the XITS package for text and math */
     static JKQTMathTextFontSpecifier getXITSFamilies();
@@ -118,6 +138,10 @@ private:
     QString m_fontName;
     /** \brief specifies the math font to use in addition to fontName */
     QString m_mathFontName;
+    /** \brief specifies a font to be used for fallbackSymbols */
+    QString m_fallbackSymbolFont;
+    /** \brief if set \c true the fonts are transformed when fontname() or mathFontName() is called by calling transformFontNameAndDecodeSpecialFonts() */
+    bool m_transformOnOutput;
 
 
 };

@@ -61,10 +61,14 @@ class JKQTMathTextVerticalListNode; // forward
     .
     
     In particular JKQTMathTextLatexParser actually parses e.g. a LaTeX string and draws it in pure C++. It does NOT rely
-    on an installed LaTeX for the rendering!
+    on an installed LaTeX for the rendering! See \ref jkqtmathtext_supportedlatex for a description of the supported LaTeX subset.
 
-    \see See \ref jkqtmathtext_supportedlatex for a description of the supported LaTeX subset
-         and \ref jkqtmathtext_renderingmodel for a description of the rendering model of JKQTMathTextLatexParser.
+    More generally these pages describe how the class renders math markup:
+      - \ref jkqtmathtext_renderingmodel for a description of the rendering model of JKQTMathTextLatexParser
+      - \ref jkqtmathtext_fonthandling for a description of the font handling in JKQTMathTextLatexParser
+        (which is modelled after LaTeX, but with tweaks especially for use in the  context of GUI code)
+      - \ref jkqtmathtext_supportedlatex for a description of the supported LaTeX subset
+    .
     
 
     \section JKQTMathTextUsage Usage
@@ -171,49 +175,6 @@ class JKQTMathTextVerticalListNode; // forward
     .
 
 
-    \section JKQTMathTextInternalDetails Implementation Details
-    \subsection JKQTMathTextSuppoertedFonts Font Handling
-
-    Several fonts are defined as properties to the class:
-      - A "roman" (MTEroman / MTEmathRoman) font used as the standard font ( setFontRoman() and for use in math mode setFontMathRoman() )
-      - A "sans-serif" (MTEsans / MTEmathSans) font which may be activated with \c \\sf ... ( setFontSans() and for use in math mode setFontMathSans()  )
-      - A "typewriter" (MTEtypewriter) font which may be activated with \c \\tt ... ( setFontTypewriter() )
-      - A "script" (MTEscript) font which may be activated with \c \\script ... ( setFontScript() )
-      - A "math-roman" (MTEmathRoman) font used as the standard font in math mode ( setFontMathRoman() )
-      - A "math-sans-serif" (MTEmathSans) used as sans serif font in math mode ( setFontMathSans() )
-      - A "blackboard" (MTEblackboard) font used to display double stroked characters ( setFontBlackboard() )
-      - A "caligraphic" (MTEcaligraphic) font used to display caligraphic characters ( setFontCaligraphic() )
-      - A "fraktur" (MTEfraktur) font used to display fraktur characters ( setFontFraktur() )
-      - A fallback font MTEFallbackSymbols for (math) symbols, greek letters ... (if the symbols are not present in the currently used font). ( setFallbackFontSymbols() )
-    .
-
-    These fonts are generic font classes, which font is actually used can be configured in JKQTMathText class with the \c set...() functions mentioned above. You can also use these functions to set the fonts used for math rendering in math-mode:
-      - useSTIX() use the STIX fonts from <a href="https://www.stixfonts.org/">https://www.stixfonts.org/</a> in math-mode<br>\image html jkqtmathtext/jkqtmathtext_stix.png
-      - useXITS() use the XITS fonts from <a href="https://github.com/alif-type/xits">https://github.com/alif-type/xits</a> in math-mode. These are included by default in this library and also activated by default.<br>\image html jkqtmathtext/jkqtmathtext_xits.png
-      - useASANA() use the ASANA fonts from <a href="https://ctan.org/tex-archive/fonts/Asana-Math/">https://ctan.org/tex-archive/fonts/Asana-Math/</a> in math-mode<br>\image html jkqtmathtext/jkqtmathtext_asana.png
-      - useAnyUnicode() use generic Unicode fonts, e.g. "Arial" and "Times New Roman" in math-mode. You should use fonts that contain as many of the mathematical symbols as possible to ensure good rendering results.<br>using "Times New Roman": \image html jkqtmathtext/jkqtmathtext_timesnewroman.png
-        <br>using "Arial": \image html jkqtmathtext/jkqtmathtext_arial.png
-        <br>using "Courier New": \image html jkqtmathtext/jkqtmathtext_couriernew.png
-        <br>using "Comic Sans MS": \image html jkqtmathtext/jkqtmathtext_comicsans.png
-        <br>using "Old English Text": \image html jkqtmathtext/jkqtmathtext_OldEnglish.png
-        <br>using "Computer Modern": \image html jkqtmathtext/jkqtmathtext_computermodern.png
-        <br>using "Fira": \image html jkqtmathtext/jkqtmathtext_fira.png
-        <br>using "MS Segoe UI": \image html jkqtmathtext/jkqtmathtext_mssegoeui.png
-        <br>using "DejaVu Sans": \image html jkqtmathtext/jkqtmathtext_DejaVuSans.png
-        <br>using "DejaVu Serif": \image html jkqtmathtext/jkqtmathtext_DejaVuSerif.png
-    .
-
-    Math-mode is activated by enclosing your equation in \c $...$ or \c \\[...\\] . This mode is optimized for mathematical equations. Here is an example of the difference:
-      - <b>math-mode (MTEmathRoman and MTEmathSans, whitespaces are mostly not drawn directly, symbol spacing is different)</b> \c $...$: <br>\image html jkqtmathtext/schreq_mathmode.png
-      - <b>normal mode (MTEroman and MTEsans is used, whitespaces are evaluated directly)</b>: <br>\image html jkqtmathtext/schreq_normalmode.png
-    .
-
-    Font Lookup for symbols works as follows in JKQTMathTextSymbolNode:
-      - if a character is found in the current (or to be used) font, it is taken from there
-      - if the character is not found, it is looked for in the fallback fonts MTEFallbackSymbols
-      - as a last resort, some symbols can be created otherwise, so if neither of the two options above
-        contain the required symbol, the symbol might be synthesized otherwise, or a rectangle with the size of "X" is drawn instead
-    .
 
  */
 class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
@@ -230,10 +191,10 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         JKQTMathText(QObject * parent = nullptr);
         /** \brief class destructor */
         ~JKQTMathText();
-        /** \brief load the object settings from the given QSettings object with the given name prefix */
-        void loadSettings(const QSettings& settings, const QString& group=QString("mathtext/"));
-        /** \brief store the object settings to the given QSettings object with the given name prefix */
-        void saveSettings(QSettings& settings, const QString& group=QString("mathtext/")) const;
+
+
+/** @name Parsing Math Markup */
+/**@{*/
         /** \brief options for parse() */
         enum ParseOption {
             AddSpaceBeforeAndAfter = 0x01, /*!< \brief If set, a little bit of space is added before and after the text. */
@@ -271,7 +232,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
             std::unique_ptr<TParser> p=std::unique_ptr<TParser>(new TParser(this));
             if (parsedNode) delete parsedNode;
             parsedNode=nullptr;
-            clearErrorList();
+                        clearErrorList();
             parsedNode=p->parse(markup, options);
             return parsedNode!=nullptr;
         }
@@ -279,6 +240,11 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         JKQTMathTextNode* getNodeTree() ;
         /** \copydoc parsedNode */
         const JKQTMathTextNode *getNodeTree() const;
+/**@}*/
+
+
+/** @name Determine the Size of the Output */
+/**@{*/
 
         /** \brief get the size of the drawn representation. returns an invalid size if no text has been parsed. */
         QSizeF getSize(QPainter& painter);
@@ -292,6 +258,12 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         void getSizeDetail(QPainter& painter, double& width, double& ascent, double& descent, double& strikeoutPos);
         /** \brief return the detailes sizes of the text */
         JKQTMathTextNodeSize getSizeDetail(QPainter& painter);
+/**@}*/
+
+
+/** @name Rendering */
+/**@{*/
+
         /** \brief draw a representation to the  object at the specified position \a x , \a y
          *
          *  \param painter the <a href="http://doc.qt.io/qt-5/qpainter.html">QPainter</a> to use for drawing
@@ -356,8 +328,11 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
 
         /** \brief convert LaTeX to HTML. returns \c ok=true on success and \c ok=false else. */
         QString toHtml(bool* ok=nullptr, double fontPointSize=10);
+/**@}*/
 
-        /** \copydoc fontColor */ 
+/** @name Font Handling */
+/**@{*/
+        /** \copydoc fontColor */
         void setFontColor(const QColor & __value);
         /** \copydoc fontColor */ 
         QColor getFontColor() const;
@@ -377,6 +352,8 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         /** \brief returns the currently set default font size in pixels, if it was defined in points using setFontSizePixels(), or -1 if it was set in points with setFontSize()
          *  \see setFontSizePixels(), fontSize, fontSizeUnits */
         double getFontSizePixels() const;
+
+
         /** \brief add a font pair to the table with font replacements
          *
          * e.g. if it is known that a certain font is not good for rendering, you can add an alternative with this function.
@@ -404,36 +381,70 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         /** \brief retrieve the font and encoding to be used for \a font, which might optionally be typeset inside a math environment, specified by in_math_environment, possibly for the given font subclass \a subclass */
         QPair<QString, JKQTMathTextFontEncoding> getFontData(JKQTMathTextEnvironmentFont font, bool in_math_environment=false) const;
 
-        /*! \brief calls setFontRoman(), or calls useXITS() if \a __value \c =="XITS".  calls useSTIX() if \a __value \c =="STIX", ...
-
-            \see setFontRoman(), useXITS(), useSTIX() for more information */
+        /*! \brief set the font by parsing a special syntax defined in the description of JKQTMathTextFontSpecifier
+         *
+         *  This allows to set the text-mode and math-mode roman fonts.
+         *
+         *   \note This function is a shorthand for
+         *   \code
+         *     setFontRomanOrSpecial(JKQTMathTextFontSpecifier::fromFontSpec(fontName), encoding);
+         *   \endcode
+         *
+         *  \see JKQTMathTextFontSpecifier, setFontRoman(), setFontMathRoman(),  \ref jkqtmathtext_fonthandling
+         */
         void setFontRomanOrSpecial(const QString & fontName, JKQTMathTextFontEncoding encoding=JKQTMathTextFontEncoding::MTFEStandard);
-        /*! \brief calls setFontRoman(), or calls useXITS() if \a __value \c =="XITS".  calls useSTIX() if \a __value \c =="STIX", ...
-
-            \see setFontRoman(), useXITS(), useSTIX() for more information */
+        /*! \brief set the font by an instance of JKQTMathTextFontSpecifier
+         *
+         *  This allows to set the text-mode and math-mode roman fonts.
+         *
+         *  \see JKQTMathTextFontSpecifier, setFontRoman(), setFontMathRoman(),  \ref jkqtmathtext_fonthandling
+         */
         void setFontRomanOrSpecial(const JKQTMathTextFontSpecifier & fontName, JKQTMathTextFontEncoding encoding=JKQTMathTextFontEncoding::MTFEStandard);
 
-        /** \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEroman   */
+        /** \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEroman
+         *
+         *  \see  \ref jkqtmathtext_fonthandling
+          */
         void setFontRoman(const QString & fontName, JKQTMathTextFontEncoding encoding=JKQTMathTextFontEncoding::MTFEStandard);
+        /** \brief set the font \a fontName and it's encoding \a encoding to be used for text and math, i.e. the logical font MTEroman and MTEmathRoman
+         *
+         *  \see  \ref jkqtmathtext_fonthandling
+         */
+        void setFontRomanAndMath(const QString & fontName, JKQTMathTextFontEncoding encoding=JKQTMathTextFontEncoding::MTFEStandard);
         /** \brief retrieves the font to be used for text in the logical font MTEroman   */
         QString getFontRoman() const;
-        /** \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEsans   */
+        /** \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEsans
+         *
+         *  \see  \ref jkqtmathtext_fonthandling
+         */
         void setFontSans(const QString & fontName, JKQTMathTextFontEncoding encoding=JKQTMathTextFontEncoding::MTFEStandard);
         /** \brief retrieves the font to be used for text in the logical font MTEsans   */
         QString getFontSans() const;
-        /** \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEtypewriter   */
+        /** \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEtypewriter
+         *
+         *  \see  \ref jkqtmathtext_fonthandling
+         */
         void setFontTypewriter(const QString & fontName, JKQTMathTextFontEncoding encoding=JKQTMathTextFontEncoding::MTFEStandard);
         /** \brief retrieves the font to be used for text in the logical font MTEtypewriter   */
         QString getFontTypewriter() const;
-        /** \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEscript   */
+        /** \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEscript
+         *
+         *  \see  \ref jkqtmathtext_fonthandling
+         */
         void setFontScript(const QString & fontName, JKQTMathTextFontEncoding encoding=JKQTMathTextFontEncoding::MTFEStandard);
         /** \brief retrieves the font to be used for text in the logical font MTEscript   */
         QString getFontScript() const;
-        /** \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEfraktur   */
+        /** \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEfraktur
+         *
+         *  \see  \ref jkqtmathtext_fonthandling
+         */
         void setFontFraktur(const QString & fontName, JKQTMathTextFontEncoding encoding=JKQTMathTextFontEncoding::MTFEStandard);
         /** \brief retrieves the font to be used for text in the logical font MTEfraktur   */
         QString getFontFraktur() const;
-        /** \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEcaligraphic   */
+        /** \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEcaligraphic
+         *
+         *  \see  \ref jkqtmathtext_fonthandling
+         */
         void setFontCaligraphic(const QString & fontName, JKQTMathTextFontEncoding encoding=JKQTMathTextFontEncoding::MTFEStandard);
         /** \brief retrieves the font to be used for text in the logical font MTEcaligraphic   */
         QString getFontCaligraphic() const;
@@ -449,7 +460,10 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
 
         /** \brief retrieves the font to be used for text in the logical font MTEblackboard \see blackboradFontMode  */
         QString getFontBlackboard() const;
-        /** \brief set the font \a fontName and it's encoding \a encoding to be used for symbols in the logical font \a font   */
+        /** \brief set the font \a fontName and it's encoding \a encoding to be used for symbols in the logical font \a font
+         *
+         *  \see  \ref jkqtmathtext_fonthandling
+         */
         void setFallbackFontSymbols(const QString & fontName, JKQTMathTextFontEncoding encoding=JKQTMathTextFontEncoding::MTFEStandard);
         /** \brief retrieves the font to be used for symbols in the logical font \a font   */
         QString getFallbackFontSymbols() const;
@@ -472,11 +486,17 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         JKQTMathTextFontEncoding getFontEncodingCaligraphic() const;
 
 
-        /** \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEmathRoman   */
+        /** \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEmathRoman
+         *
+         *  \see  \ref jkqtmathtext_fonthandling
+         */
         void setFontMathRoman(const QString & fontName, JKQTMathTextFontEncoding encoding=JKQTMathTextFontEncoding::MTFEStandard);
         /** \brief retrieves the font to be used for text in the logical font MTEroman   */
         QString getFontMathRoman() const;
-        /** \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEmathSans   */
+        /** \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEmathSans
+         *
+         *  \see  \ref jkqtmathtext_fonthandling
+         */
         void setFontMathSans(const QString & fontName, JKQTMathTextFontEncoding encoding=JKQTMathTextFontEncoding::MTFEStandard);
         /** \brief retrieves the font to be used for text in the logical font MTEsans   */
         QString getFontMathSans() const;
@@ -488,15 +508,26 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         /** \brief configures the class to use the STIX fonts in mathmode
          *
          * use STIX (1.x/2.x) fonts from <a href="https://www.stixfonts.org/">https://www.stixfonts.org/</a> in math-mode
+         * or in math and text-mode (if \a mathModeOnly \c ==false )
+         *
+         * If \c useAsFallbackSymbol is set \c ==true then the XITS fonts are also used as MTEFallbackSymbols
          *
          * \image html jkqtmathtext/jkqtmathtext_stix.png
+         *
+         * This function does not only use default font-names for STIX, but searches
+         * the font database of the system with several different variants, using JKQTMathTextFontSpecifier::getSTIXFamilies().
+         * It also sets the special math-variant of STIX for math mode and the normal variant for text-mode
+         *
+         * \see \ref jkqtmathtext_fonthandling
          */
-        bool useSTIX(bool mathModeOnly=true);
+        bool useSTIX(bool mathModeOnly=true, bool useAsFallbackSymbol=true);
 
         /** \brief configures the class to use the XITS fonts in mathmode
          *
-         * use XITS fonts from <a href="https://github.com/alif-type/xits">https://github.com/alif-type/xits</a> in math-mode.
-         * These are included by default in this library and also activated by default.
+         * use XITS fonts from <a href="https://github.com/alif-type/xits">https://github.com/alif-type/xits</a> in math-mode
+         * or in math and text-mode (if \a mathModeOnly \c ==false ).
+         *
+         * If \c useAsFallbackSymbol is set \c ==true then the XITS fonts are also used as MTEFallbackSymbols
          *
          * \image html jkqtmathtext/jkqtmathtext_xits.png
          *
@@ -504,16 +535,31 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
          *       Then the XITS fonts are added as Qt-Ressources to the library binary.
          *       If this is not the case, you have to provide the XITS fonts on the target system by other means, if you want
          *       to use them.
+         *
+         * This function does not only use default font-names for XITS, but searches
+         * the font database of the system with several different variants, using JKQTMathTextFontSpecifier::getXITSFamilies().
+         * It also sets the special math-variant of XITS for math mode and the normal variant for text-mode
+         *
+         * \see \ref jkqtmathtext_fonthandling
          */
-        bool useXITS(bool mathModeOnly=true);
+        bool useXITS(bool mathModeOnly=true, bool useAsFallbackSymbol=true);
 
         /** \brief configures the class to use the ASANA fonts in mathmode
          *
          * use the ASANA fonts from <a href="https://ctan.org/tex-archive/fonts/Asana-Math/">https://ctan.org/tex-archive/fonts/Asana-Math/</a> in math-mode
+         * or in math and text-mode (if \a mathModeOnly \c ==false )
+         *
+         * If \c useAsFallbackSymbol is set \c ==true then the XITS fonts are also used as MTEFallbackSymbols
          *
          * \image html jkqtmathtext/jkqtmathtext_asana.png
+         *
+         * This function does not only use default font-names for ASANA, but searches
+         * the font database of the system with several different variants, using JKQTMathTextFontSpecifier::getASANAFamilies().
+         * It also sets the special math-variant of ASANA for math mode and the normal variant for text-mode
+         *
+         * \see \ref jkqtmathtext_fonthandling
          */
-        bool useASANA(bool mathModeOnly=true);
+        bool useASANA(bool mathModeOnly=true, bool useAsFallbackSymbol=true);
 
         /** \brief sets \a timesFont (with its encoding \a encodingTimes ) for serif-text and \a sansFont (with its encoding \a encodingSans ) for both mathmode and textmode fonts
          *
@@ -521,11 +567,12 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
          *       You should use fonts that contain as many of the mathematical symbols as possible
          *       to ensure good rendering results.
          *
-         * <code>useAnyUnicode("Times New Roman", "Times New Roman")</code>:<br>\image html jkqtmathtext/jkqtmathtext_timesnewroman.png  <br><br>
-         * <code>useAnyUnicode("Arial", "Arial")</code>:<br>\image html jkqtmathtext/jkqtmathtext_arial.png  <br><br>
-         * <code>useAnyUnicode("Courier New", "Courier New")</code>:<br>\image html jkqtmathtext/jkqtmathtext_couriernew.png  <br><br>
+         *
          * <code>useAnyUnicode("Comic Sans MS", "Comic Sans MS")</code>:<br>\image html jkqtmathtext/jkqtmathtext_comicsans.png  <br><br>
          * <code>useAnyUnicodeForTextOnly("Comic Sans MS", "Comic Sans MS");</code>:<br/>\image html jkqtmathtext/jkqtmathtext_comicsans_textonly.png
+         * <code>useAnyUnicodeForMathOnly("Comic Sans MS", "Comic Sans MS");</code>:<br/>\image html jkqtmathtext/jkqtmathtext_comicsans_mathonly.png
+         *
+         * \see useAnyUnicodeForMathOnly(), useAnyUnicodeForTextOnly(), \ref jkqtmathtext_fonthandling
          */
         void useAnyUnicode(QString timesFont, const QString& sansFont, JKQTMathTextFontEncoding encodingTimes=JKQTMathTextFontEncoding::MTFEUnicode, JKQTMathTextFontEncoding encodingSans=JKQTMathTextFontEncoding::MTFEUnicode);
         /** \brief sets \a timesFont (with its encoding \a encodingTimes ) for serif-text and \a sansFont (with its encoding \a encodingSans ) for mathmode fonts only
@@ -533,19 +580,31 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
          * \note use generic Unicode fonts, e.g. "Arial" and "Times New Roman" in math-mode.
          *       You should use fonts that contain as many of the mathematical symbols as possible to ensure good rendering results.
          *
-         * \see useAnyUnicodeForTextOnly(), useAnyUnicode()
+         * <code>useAnyUnicode("Comic Sans MS", "Comic Sans MS")</code>:<br>\image html jkqtmathtext/jkqtmathtext_comicsans.png  <br><br>
+         * <code>useAnyUnicodeForTextOnly("Comic Sans MS", "Comic Sans MS");</code>:<br/>\image html jkqtmathtext/jkqtmathtext_comicsans_textonly.png
+         * <code>useAnyUnicodeForMathOnly("Comic Sans MS", "Comic Sans MS");</code>:<br/>\image html jkqtmathtext/jkqtmathtext_comicsans_mathonly.png
+         *
+         * \see useAnyUnicodeForTextOnly(), useAnyUnicode(), \ref jkqtmathtext_fonthandling
          */
         void useAnyUnicodeForMathOnly(QString timesFont, const QString& sansFont, JKQTMathTextFontEncoding encodingTimes=JKQTMathTextFontEncoding::MTFEUnicode, JKQTMathTextFontEncoding encodingSans=JKQTMathTextFontEncoding::MTFEUnicode);
         /** \brief sets \a timesFont (with its encoding \a encodingTimes ) for serif-text and \a sansFont (with its encoding \a encodingSans ) for both mathmode fonts only
          *
-         *  \see useAnyUnicodeForMathOnly(), useAnyUnicode()
-         *
          * <code>useAnyUnicode("Comic Sans MS", "Comic Sans MS")</code>:<br>\image html jkqtmathtext/jkqtmathtext_comicsans.png  <br><br>
          * <code>useAnyUnicodeForTextOnly("Comic Sans MS", "Comic Sans MS");</code>:<br/>\image html jkqtmathtext/jkqtmathtext_comicsans_textonly.png
+         * <code>useAnyUnicodeForMathOnly("Comic Sans MS", "Comic Sans MS");</code>:<br/>\image html jkqtmathtext/jkqtmathtext_comicsans_mathonly.png
+         *
+         *  \see useAnyUnicodeForMathOnly(), useAnyUnicode(), \ref jkqtmathtext_fonthandling
          */
         void useAnyUnicodeForTextOnly(QString timesFont, const QString& sansFont, JKQTMathTextFontEncoding encodingTimes=JKQTMathTextFontEncoding::MTFEUnicode, JKQTMathTextFontEncoding encodingSans=JKQTMathTextFontEncoding::MTFEUnicode);
+/**@}*/
 
 
+/** @name (Defining) Rendering Details */
+/**@{*/
+        /** \brief load the object settings from the given QSettings object with the given name prefix */
+        void loadSettings(const QSettings& settings, const QString& group=QString("mathtext/"));
+        /** \brief store the object settings to the given QSettings object with the given name prefix */
+        void saveSettings(QSettings& settings, const QString& group=QString("mathtext/")) const;
 
         /** \copydoc brace_factor */ 
         void setBraceFactor(double __value);
@@ -607,7 +666,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         void setUnderbraceFactor(double __value);
         /** \copydoc underbrace_factor */ 
         double getUnderbraceFactor() const;
-        /** \copydoc underbrace_separation_xfactor */
+                /** \copydoc underbrace_separation_xfactor */
         void setUnderbraceSeparationXFactor(double __value);
         /** \copydoc underbrace_separation_xfactor */
         double getUnderbraceSeparationXFactor() const;
@@ -647,7 +706,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         /** \copydoc decoration_separation_factor */
         double getDecorationSeparationFactor() const;
         /** \copydoc decoration_width_reduction_Xfactor */
-        void setDecorationWidthReductionFactor(double __value);
+                void setDecorationWidthReductionFactor(double __value);
         /** \copydoc decoration_width_reduction_Xfactor */
         double getDecorationWidthReductionXFactor() const;
 
@@ -693,8 +752,11 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         double getMatrixYPaddingFactor();
         /** \copydoc matrix_yPadding_factor */
         void setMatrixYPaddingFactor(double factor);
+/**@}*/
 
 
+/** @name Error Handling */
+/**@{*/
         /** \copydoc error_list */
         QStringList getErrorList() const;
         /** \brief returns \c true when errors were registered in the system \see error_list */
@@ -705,6 +767,22 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         /** \brief clears all registered errors (see error_list)
          */
         void clearErrorList();
+
+        /** \brief a list that will be filled with error messages while parsing, if any error occur
+         *
+         *  This list of errors is (mostly) filled during a call to parse(). During rendering (e.g. with draw() )
+         *  only very few errors will be detected, as most errors are caused by wrong markup.
+         *
+         *  A call to parse() also clears this list.
+         *
+         *  \see getErrorList(), hadErrors() and addToErrorList()
+         *
+          */
+        QStringList error_list;
+/**@}*/
+
+        /** \brief the syntax tree of JKQTMathTextNode's that was created by the last parse() call */
+        JKQTMathTextNode* parsedNode;
 
 
 
@@ -741,7 +819,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
          *    - MTBBDMunicodeCharactersOrSimulate: \image html jkqtmathtext/jkqtmathtext_bb_unicode_or_simulate.png using \c JKQTMathText::setFontBlackboard("Arial")
          *  .
          *
-         *  \see setFontBlackboard() setBlackboardFontMode()
+         *  \see JKQTMathTextBlackboradDrawingMode, setFontBlackboard(), setBlackboardFontMode(),  \ref jkqtmathtext_fonthandling
          */
         JKQTMathTextBlackboradDrawingMode blackboradFontMode;
 
@@ -922,21 +1000,6 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
          *  \image html jkqtmathtext/jkqtmathtext_matrix_geometry.png
          */
         double matrix_yPadding_factor;
-
-        /** \brief a list that will be filled with error messages while parsing, if any error occur
-         *
-         *  This list of errors is (mostly) filled during a call to parse(). During rendering (e.g. with draw() )
-         *  only very few errors will be detected, as most errors are caused by wrong markup.
-         *
-         *  A call to parse() also clears this list.
-         *
-         *  \see getErrorList(), hadErrors() and addToErrorList()
-         *
-          */
-        QStringList error_list;
-
-        /** \brief the syntax tree of JKQTMathTextNode's that was created by the last parse() call */
-        JKQTMathTextNode* parsedNode;
 
 
 

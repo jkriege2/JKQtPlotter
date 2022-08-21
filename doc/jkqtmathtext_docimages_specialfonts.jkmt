@@ -11,6 +11,10 @@ jkqtmathtext_comicsans_textonly.png
 --fontroman=Comic Sans MS --sizeincrease=10
 Schrödinger's equation: $\left[-\frac{\hbar^2}{2m}\frac{\partial^2}{\partial x^2}+V\right]\Psi(x)=\mathrm{i}\hbar\frac{\partial}{\partial t}\Psi(x)$
 ---
+jkqtmathtext_comicsans_mathonly.png
+--fontmathroman=Comic Sans MS --sizeincrease=10
+Schrödinger's equation: $\left[-\frac{\hbar^2}{2m}\frac{\partial^2}{\partial x^2}+V\right]\Psi(x)=\mathrm{i}\hbar\frac{\partial}{\partial t}\Psi(x)$
+---
 jkqtmathtext_couriernew.png
 --fontroman=Courier New --fontmathroman=Courier New --sizeincrease=10
 Schrödinger's equation: $\left[-\frac{\hbar^2}{2m}\frac{\partial^2}{\partial x^2}+V\right]\Psi(x)=\mathrm{i}\hbar\frac{\partial}{\partial t}\Psi(x)$
@@ -56,5 +60,5 @@ jkqtmathtext_xits.png
 Schrödinger's equation: $\left[-\frac{\hbar^2}{2m}\frac{\partial^2}{\partial x^2}+V\right]\Psi(x)=\mathrm{i}\hbar\frac{\partial}{\partial t}\Psi(x),\ \ x\in\mathbb{R}, \Psi(x)\in\mathbb{C}$
 ---
 jkqtmathtext_stix.png
---fontmathroman=STIX Two Math --fontroman=STIX Two Text --sizeincrease=10
+--fontmathroman=STIX Two Math --sizeincrease=10
 Schrödinger's equation: $\left[-\frac{\hbar^2}{2m}\frac{\partial^2}{\partial x^2}+V\right]\Psi(x)=\mathrm{i}\hbar\frac{\partial}{\partial t}\Psi(x),\ \ x\in\mathbb{R}, \Psi(x)\in\mathbb{C}$

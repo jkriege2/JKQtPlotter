@@ -1,0 +1,104 @@
+/*!
+
+  \defgroup jkqtmathtext_fonthandling Font Handling
+  \ingroup jkqtmathtext_general
+  
+
+
+    As LaTeX also does, fonts are set by font classes. These are defined in JKQTMathTextEnvironmentFont:
+      - A "roman" (MTEroman / MTEmathRoman) font used as the standard font ( JKQTMathText::setFontRoman() and for use in math mode JKQTMathText::setFontMathRoman() )
+      - A "sans-serif" (MTEsans / MTEmathSans) font which may be activated with \c \\sf ... ( JKQTMathText::setFontSans() and for use in math mode JKQTMathText::setFontMathSans()  )
+      - A "typewriter" (MTEtypewriter) font which may be activated with \c \\tt ... ( JKQTMathText::setFontTypewriter() )
+      - A "script" (MTEscript) font which may be activated with \c \\script ... ( JKQTMathText::setFontScript() )
+      - A "math-roman" (MTEmathRoman) font used as the standard font in math mode ( JKQTMathText::setFontMathRoman() )
+      - A "math-sans-serif" (MTEmathSans) used as sans serif font in math mode ( JKQTMathText::setFontMathSans() )
+      - A "blackboard" (MTEblackboard) font used to display double stroked characters ( JKQTMathText::setFontBlackboard() )
+      - A "caligraphic" (MTEcaligraphic) font used to display caligraphic characters ( JKQTMathText::setFontCaligraphic() )
+      - A "fraktur" (MTEfraktur) font used to display fraktur characters ( JKQTMathText::setFontFraktur() )
+      - A fallback font MTEFallbackSymbols for (math) symbols, greek letters ... (if the symbols are not present in the currently used font). ( JKQTMathText::setFallbackFontSymbols() )
+    .
+
+    The default font class is "roman" (i.e. MTEroman in text-mode and MTEmathRoman in math-mode). You can switch to
+    "sans-serif" by using LaTeX commands like \c \\sf .
+
+    Especially when using the library in the context of a GUI, usually a sans-serif font is used to typeset text in the GUI
+    as these are generally better readable on a screen than serif fonts. Therefore when using JKQTMathText for GUI rendering,
+    it makes sense to redefine the class "roman" with the GUI font. You can e.g. write:
+    \code
+        JKQTMathText::setFontRoman(QGuiApplication::font().family(), MTFEUnicode);
+        JKQTMathText::setFontMathRoman(QGuiApplication::font().family(), MTFEUnicode);
+        JKQTMathText::setFontSize(QGuiApplication::font().pointSize());
+    \endcode
+    or the short hand:
+    \code
+        JKQTMathText::setFontRomanAndMath(QGuiApplication::font().family(), MTFEUnicode);
+    \endcode
+    With JKQTMathTextFontSpecifier::fromFontSpec() there is a third way that allows to use a special string syntax (handy for INI files)
+    to define fonts, see JKQTMathTextFontSpecifier . You can e.g. simply write:
+    \code
+        JKQTMathText::setFontRomanAndMath("application+XITS", MTFEUnicode);
+    \endcode
+    In all cases the default GUI font is used for rendering default output. For \c \\sf to make a difference you can additionally
+    set the "sans" class as a serif font, e.g.:
+    \code
+        JKQTMathText::setFontSans("serif");
+        JKQTMathText::setFontMathSans("serif");
+    \endcode
+    Using the font name \c "serif" will cause Qt to lookup a suitable serif font.
+
+
+    These fonts are generic font classes, which font is actually used can be configured in JKQTMathText
+    class with the \c set...() functions mentioned above. Additionally some short ahnds exist:
+      - JKQTMathText::useSTIX() use the STIX fonts from <a href="https://www.stixfonts.org/">https://www.stixfonts.org/</a> in math-mode (or math- and text-mode, additionally also as MTEFallbackSymbols)<br>\image html jkqtmathtext/jkqtmathtext_stix.png
+      - JKQTMathText::useXITS() use the XITS fonts from <a href="https://github.com/alif-type/xits">https://github.com/alif-type/xits</a> in math-mode (or math- and text-mode, additionally also as MTEFallbackSymbols). These are included by default in this library and also activated by default.<br>\image html jkqtmathtext/jkqtmathtext_xits.png
+      - JKQTMathText::useASANA() use the ASANA fonts from <a href="https://ctan.org/tex-archive/fonts/Asana-Math/">https://ctan.org/tex-archive/fonts/Asana-Math/</a> in math-mode (or math- and text-mode, additionally also as MTEFallbackSymbols)<br>\image html jkqtmathtext/jkqtmathtext_asana.png
+      - JKQTMathText::useAnyUnicode() set fonts for "roman" and "sans" in text- and math-mode with one call
+      - JKQTMathText::useAnyUnicodeForMathOnly() set fonts for "roman" and "sans" in math-mode only with one call, leaves text-mode fonts as is
+      - JKQTMathText::useAnyUnicodeForTextOnly() set fonts for "roman" and "sans" in text-mode only with one call, leaves math-mode fonts as is
+      - JKQTMathText::setFontRomanAndMath() set "roman" font in text- and math-mode
+      - JKQTMathText::setFontRomanOrSpecial() use an object of type JKQTMathTextFontSpecifier or a special string syntax (see struct documentation
+        of JKQTMathTextFontSpecifier) to define the text- and math-mode "roman" fonts
+    .
+
+    Here are some examples of using different, widely available, fonts:
+        - using "Arial" <c>JKQTMathText::setFontRomanAndMath("Arial")</c>: \image html jkqtmathtext/jkqtmathtext_arial.png
+        - using "Courier New" <c>JKQTMathText::setFontRomanAndMath("Courier New")</c>: \image html jkqtmathtext/jkqtmathtext_couriernew.png
+        - using "Comic Sans MS" <c>JKQTMathText::setFontRomanAndMath("Comic Sans MS")</c>: \image html jkqtmathtext/jkqtmathtext_comicsans.png
+        - using "Old English Text" <c>JKQTMathText::setFontRomanAndMath("Old English Text")</c>: \image html jkqtmathtext/jkqtmathtext_OldEnglish.png
+        - using "Computer Modern" <c>JKQTMathText::setFontRomanAndMath("CMU Serif")</c>: \image html jkqtmathtext/jkqtmathtext_computermodern.png
+        - using <a href="https://en.wikipedia.org/wiki/Fira_(typeface)">"Fira"</a> <c>JKQTMathText::setFontRoman("Fira Sans"); setFontMathRoman("Fira Math")</c>: \image html jkqtmathtext/jkqtmathtext_fira.png
+        - using "MS Segoe UI" (the default Win 10/11 GUI font) <c>JKQTMathText::setFontRomanAndMath("MS Segoe UI")</c>: \image html jkqtmathtext/jkqtmathtext_mssegoeui.png
+        - using <a href="https://dejavu-fonts.github.io/">"DejaVu Sans"</a> <c>JKQTMathText::setFontRomanAndMath("DejaVu Sans")</c>: \image html jkqtmathtext/jkqtmathtext_DejaVuSans.png
+        - using <a href="https://dejavu-fonts.github.io/">"DejaVu Serif"</a> <c>JKQTMathText::setFontRomanAndMath("DejaVu Serif")</c>: \image html jkqtmathtext/jkqtmathtext_DejaVuSerif.png
+        - using "XITS" <c>JKQTMathText::useXITS(false)</c>: \image html jkqtmathtext/jkqtmathtext_xits_all.png
+    .
+
+    Math-mode is activated by enclosing your equation in \c $...$ or \c \\[...\\] .
+    This mode is optimized for mathematical equations. Here is an example of the difference:
+      - <b>math-mode</b>:
+          - use fonts MTEmathRoman and MTEmathSans
+          - whitespaces are mostly not drawn directly
+          - symbol spacing is different
+          - an example: \image html jkqtmathtext/schreq_mathmode.png
+        .
+      - <b>text-mode</b>:
+          - use fonts MTEroman and MTEsans
+          - whitespaces are evaluated directly
+          - an example: \image html jkqtmathtext/schreq_normalmode.png
+    .
+
+    Font Lookup for symbols works as follows in JKQTMathTextSymbolNode:
+      - if a character is found in the current (or to be used) font, it is taken from there
+      - if the character is not found, it is looked for in the fallback fonts MTEFallbackSymbols
+      - as a last resort, some symbols can be created otherwise, so if neither of the two options above
+        contain the required symbol, the symbol might be synthesized otherwise, or a rectangle with the size of "X" is drawn instead
+    .
+
+    In "normal text", i.e. JKQTMathTextTextNode no font-lookup is perfomed, i.e. if a acharacter
+    is not available in the selected font, it is not typeset (or typeset with a replacement, like a box).
+    There are exceptions to this rule however: For some special fonts a lookup or synthetisation of
+    the characters is performed. Currently this is implemented for:
+      - "blackboard", the options are defined by setBlackboardFontMode(). See JKQTMathTextBlackboradDrawingMode
+    .
+    
+*/

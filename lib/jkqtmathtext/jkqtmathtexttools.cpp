@@ -45,14 +45,16 @@ void initJKQTMathTextResources()
 
 JKQTMathTextFontSpecifier::JKQTMathTextFontSpecifier():
     m_fontName(""),
-    m_mathFontName("")
+    m_mathFontName(""),
+    m_transformOnOutput(true)
 {
 
 }
 
 JKQTMathTextFontSpecifier::JKQTMathTextFontSpecifier(const QString &_fontName, const QString &_mathFontName):
     m_fontName(_fontName),
-    m_mathFontName(_mathFontName)
+    m_mathFontName(_mathFontName),
+    m_transformOnOutput(true)
 {
 
 }
@@ -90,15 +92,28 @@ QString JKQTMathTextFontSpecifier::getFontSpec() const
 
 QString JKQTMathTextFontSpecifier::fontName() const
 {
-    return transformFontName(m_fontName);
+    if (m_transformOnOutput) return transformFontNameAndDecodeSpecialFonts(m_fontName, false);
+    else return m_fontName;
 }
 
 QString JKQTMathTextFontSpecifier::mathFontName() const
 {
-    return transformFontName(m_mathFontName);
+    if (m_transformOnOutput) return transformFontNameAndDecodeSpecialFonts(m_mathFontName, true);
+    else return m_mathFontName;
 }
 
-QString JKQTMathTextFontSpecifier::transformFontName(const QString &fontName)
+QString JKQTMathTextFontSpecifier::fallbackSymbolsFontName() const
+{
+    if (m_transformOnOutput) return transformFontNameAndDecodeSpecialFonts(m_fallbackSymbolFont, true);
+    else return m_fallbackSymbolFont;
+}
+
+void JKQTMathTextFontSpecifier::setFallbackSymbolsFontName(const QString &name)
+{
+    m_fallbackSymbolFont=name;
+}
+
+QString JKQTMathTextFontSpecifier::transformFontName(const QString &fontName, bool mathmode)
 {
     const QString fnt=fontName.trimmed().toLower();
     QFont testFnt;
@@ -168,17 +183,20 @@ QString JKQTMathTextFontSpecifier::transformFontName(const QString &fontName)
     return fontName;
 }
 
-QString JKQTMathTextFontSpecifier::transformFontNameAndDecodeSpecialFonts(const QString &fontName)
+QString JKQTMathTextFontSpecifier::transformFontNameAndDecodeSpecialFonts(const QString &fontName, bool mathmode)
 {
     const QString fnt=fontName.toLower().trimmed();
     if (fnt=="xits") {
-        return getXITSFamilies().fontName();
+        if (mathmode) return getXITSFamilies().mathFontName();
+        else return getXITSFamilies().fontName();
     } else if (fnt=="asana") {
-        return getASANAFamilies().fontName();
+        if (mathmode) return getASANAFamilies().mathFontName();
+        else return getASANAFamilies().fontName();
     } else if (fnt=="stix") {
-        return getSTIXFamilies().fontName();
+        if (mathmode) return getSTIXFamilies().mathFontName();
+        else return getSTIXFamilies().fontName();
     }
-    return transformFontName(fontName);
+    return transformFontName(fontName, mathmode);
 }
 
 bool JKQTMathTextFontSpecifier::hasFontName() const
@@ -189,6 +207,11 @@ bool JKQTMathTextFontSpecifier::hasFontName() const
 bool JKQTMathTextFontSpecifier::hasMathFontName() const
 {
     return !m_mathFontName.isEmpty();
+}
+
+bool JKQTMathTextFontSpecifier::hasFallbcakSymbolFontName() const
+{
+    return !m_fallbackSymbolFont.isEmpty();
 }
 
 JKQTMathTextFontSpecifier JKQTMathTextFontSpecifier::getXITSFamilies()
@@ -210,6 +233,7 @@ JKQTMathTextFontSpecifier JKQTMathTextFontSpecifier::getXITSFamilies()
 
     static JKQTMathTextFontSpecifier fontSpec;
     if (fontSpec.m_fontName.isEmpty() && fontSpec.m_mathFontName.isEmpty()) {
+        fontSpec.m_transformOnOutput=false;
         for (int i=0; i<fontFamilies.size(); i++) {
             if (fontFamilies.at(i).contains("XITS Math")) {
                 fontSpec.m_mathFontName=fontFamilies.at(i);
@@ -225,6 +249,7 @@ JKQTMathTextFontSpecifier JKQTMathTextFontSpecifier::getXITSFamilies()
         } else if (!fontSpec.m_mathFontName.isEmpty() && fontSpec.m_fontName.isEmpty()) {
             fontSpec.m_fontName=fontSpec.m_mathFontName;
         }
+        fontSpec.m_fallbackSymbolFont=fontSpec.m_mathFontName;
     }
 
     return fontSpec;
@@ -245,6 +270,7 @@ JKQTMathTextFontSpecifier JKQTMathTextFontSpecifier::getASANAFamilies()
 
     static JKQTMathTextFontSpecifier fontSpec;
     if (fontSpec.m_fontName.isEmpty() && fontSpec.m_mathFontName.isEmpty()) {
+        fontSpec.m_transformOnOutput=false;
         for (int i=0; i<fontFamilies.size(); i++) {
             if (fontFamilies.at(i).contains("Asana Math")) {
                 fontSpec.m_mathFontName=fontFamilies.at(i);
@@ -260,6 +286,7 @@ JKQTMathTextFontSpecifier JKQTMathTextFontSpecifier::getASANAFamilies()
         } else if (!fontSpec.m_mathFontName.isEmpty() && fontSpec.m_fontName.isEmpty()) {
             fontSpec.m_fontName=fontSpec.m_mathFontName;
         }
+        fontSpec.m_fallbackSymbolFont=fontSpec.m_mathFontName;
     }
 
 
@@ -273,6 +300,7 @@ JKQTMathTextFontSpecifier JKQTMathTextFontSpecifier::getSTIXFamilies()
 
     static JKQTMathTextFontSpecifier fontSpec;
     if (fontSpec.m_fontName.isEmpty() && fontSpec.m_mathFontName.isEmpty()) {
+        fontSpec.m_transformOnOutput=false;
 #if (QT_VERSION<QT_VERSION_CHECK(6, 0, 0))
         QFontDatabase fdb;
         const auto fontFamilies=fdb.families();
@@ -310,6 +338,7 @@ JKQTMathTextFontSpecifier JKQTMathTextFontSpecifier::getSTIXFamilies()
         } else if (!fontSpec.m_mathFontName.isEmpty() && fontSpec.m_fontName.isEmpty()) {
             fontSpec.m_fontName=fontSpec.m_mathFontName;
         }
+        fontSpec.m_fallbackSymbolFont=fontSpec.m_mathFontName;
     }
     return fontSpec;
 }
