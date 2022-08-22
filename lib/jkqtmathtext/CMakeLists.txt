@@ -25,6 +25,18 @@ set(SOURCES
   ${CMAKE_CURRENT_LIST_DIR}/jkqtmathtexttools.cpp
   ${CMAKE_CURRENT_LIST_DIR}/jkqtmathtextlabel.cpp
 )
+
+set(HEADERS
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtmathtext.h>
+  $<INSTALL_INTERFACE:jkqtmathtext.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtmathtexttools.h>
+  $<INSTALL_INTERFACE:jkqtmathtexttools.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtmathtextlabel.h>
+  $<INSTALL_INTERFACE:jkqtmathtextlabel.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtmathtext_imexport.h>
+  $<INSTALL_INTERFACE:jkqtmathtext_imexport.h>
+)
+
 set(SOURCES_NODES
   ${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextnode.cpp
   ${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtexttextnode.cpp
@@ -44,22 +56,6 @@ set(SOURCES_NODES
   ${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextwhitespacenode.cpp
   ${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextnoopnode.cpp
   ${CMAKE_CURRENT_LIST_DIR}/nodes/jkqtmathtextverbatimnode.cpp
-)
-
-set(SOURCES_PARSERS
-  ${CMAKE_CURRENT_LIST_DIR}/parsers/jkqtmathtextparser.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/parsers/jkqtmathtextlatexparser.cpp
-)
-
-set(HEADERS
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtmathtext.h>
-  $<INSTALL_INTERFACE:jkqtmathtext.h>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtmathtexttools.h>
-  $<INSTALL_INTERFACE:jkqtmathtexttools.h>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtmathtextlabel.h>
-  $<INSTALL_INTERFACE:jkqtmathtextlabel.h>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtmathtext_imexport.h>
-  $<INSTALL_INTERFACE:jkqtmathtext_imexport.h>
 )
 
 set(HEADERS_NODES
@@ -103,6 +99,11 @@ set(HEADERS_NODES
   $<INSTALL_INTERFACE:nodes/jkqtmathtextverbatimnode.h>
 )
 
+
+set(SOURCES_PARSERS
+  ${CMAKE_CURRENT_LIST_DIR}/parsers/jkqtmathtextparser.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/parsers/jkqtmathtextlatexparser.cpp
+)
 
 set(HEADERS_PARSERS
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/parsers/jkqtmathtextparser.h>

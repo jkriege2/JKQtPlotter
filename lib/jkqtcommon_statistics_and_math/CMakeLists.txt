@@ -36,6 +36,8 @@ set(SOURCES
 set(HEADERS
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtcommon_statistics_and_math_imexport.h>
   $<INSTALL_INTERFACE:jkqtcommon_statistics_and_math_imexport.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpalgorithms.h>
+  $<INSTALL_INTERFACE:jkqtpalgorithms.h>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtplinalgtools.h>
   $<INSTALL_INTERFACE:jkqtplinalgtools.h>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpmathparser.h>

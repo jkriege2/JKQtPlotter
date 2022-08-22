@@ -39,6 +39,8 @@ set(HEADERS
   $<INSTALL_INTERFACE:jkqtcommon_imexport.h>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpdebuggingtools.h>
   $<INSTALL_INTERFACE:jkqtpdebuggingtools.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpmathtools.h>
+  $<INSTALL_INTERFACE:jkqtpmathtools.h>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpstringtools.h>
   $<INSTALL_INTERFACE:jkqtpstringtools.h>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpcodestructuring.h>
@@ -55,6 +57,8 @@ set(HEADERS
   $<INSTALL_INTERFACE:jkqttools.h>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpicons.h>
   $<INSTALL_INTERFACE:jkqtpicons.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpgeometrytools.h>
+  $<INSTALL_INTERFACE:jkqtpgeometrytools.h>
 )
 
 include(CMakePackageConfigHelpers)
