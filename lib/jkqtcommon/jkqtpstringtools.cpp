@@ -554,8 +554,9 @@ QColor jkqtp_lookupQColorName(const QString &color) {
    if (col=="norole") return QGuiApplication::palette().color(QPalette::NoRole);
    if (col=="tooltipbase") return QGuiApplication::palette().color(QPalette::ToolTipBase);
    if (col=="tooltiptext") return QGuiApplication::palette().color(QPalette::ToolTipText);
+#if (QT_VERSION>=QT_VERSION_CHECK(5, 12, 0))
    if (col=="placeholdertext") return QGuiApplication::palette().color(QPalette::PlaceholderText);
-
+#endif
 
    for (int i=0; i<rgbTblSize; i++) {
        if (col==rgbTbl[i].name) return QColor(rgbTbl[i].value);

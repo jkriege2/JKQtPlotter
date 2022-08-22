@@ -277,11 +277,12 @@ void JKQTPStylePlainTextEdit::contextMenuEvent(QContextMenuEvent *event)
            act=new QAction(jkqtp_makeQColorIcon(jkqtp_String2QColor(colName)), colName);
            connect(act, &QAction::triggered, std::bind(std::mem_fn(&JKQTPStylePlainTextEdit::changeCurrentLineValueTo), this, act->text()));
            menuPal->addAction(act);
+#if (QT_VERSION>=QT_VERSION_CHECK(5, 12, 0))
            colName="placeholdertext";
            act=new QAction(jkqtp_makeQColorIcon(jkqtp_String2QColor(colName)), colName);
            connect(act, &QAction::triggered, std::bind(std::mem_fn(&JKQTPStylePlainTextEdit::changeCurrentLineValueTo), this, act->text()));
            menuPal->addAction(act);
-
+#endif
            int trans;
            trans=100;          colName=QString::number(trans)+"%";
            act=new QAction(jkqtp_makeQColorIcon(QColor(0,0,255,(100-trans)*255/100)), colName);
