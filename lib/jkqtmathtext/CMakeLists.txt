@@ -225,10 +225,13 @@ install(FILES ${HEADERS}
 install(FILES ${HEADERS_NODES}
                 DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${libIncludeSubdir}/nodes
                 COMPONENT Headers)
+install(FILES ${SOURCES_PARSERS}
+                DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${libIncludeSubdir}/parsers
+                COMPONENT Headers)
 
-configure_file(${PROJECT_SOURCE_DIR}/readme.txt.in ${CMAKE_CURRENT_BINARY_DIR}/${lib_name}_Readme.txt @ONLY)
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${lib_name}_Readme.txt" DESTINATION doc/JKQtPlotter )
-install(FILES "${PROJECT_SOURCE_DIR}/LICENSE" DESTINATION doc/JKQtPlotter RENAME "${lib_name}_LICENSE.txt" )
-install(FILES "${PROJECT_SOURCE_DIR}/lib/jkqtmathtext/resources/xits/OFL.txt" DESTINATION doc/JKQtPlotter RENAME "${lib_name}_XITS_LICENSE.txt" )
-install(FILES "${PROJECT_SOURCE_DIR}/lib/jkqtmathtext/resources/xits/README.md" DESTINATION doc/JKQtPlotter RENAME "${lib_name}_XITS_README.md" )
+configure_file(${PROJECT_SOURCE_DIR}/readme.txt.in ${CMAKE_CURRENT_BINARY_DIR}/${libBasename}_Readme.txt @ONLY)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${libBasename}_Readme.txt" DESTINATION doc/JKQtPlotter )
+install(FILES "${PROJECT_SOURCE_DIR}/LICENSE" DESTINATION doc/JKQtPlotter RENAME "${libBasename}_LICENSE.txt" )
+install(FILES "${PROJECT_SOURCE_DIR}/lib/jkqtmathtext/resources/xits/OFL.txt" DESTINATION doc/JKQtPlotter RENAME "${libBasename}_XITS_LICENSE.txt" )
+install(FILES "${PROJECT_SOURCE_DIR}/lib/jkqtmathtext/resources/xits/README.md" DESTINATION doc/JKQtPlotter RENAME "${libBasename}_XITS_README.md" )
 
