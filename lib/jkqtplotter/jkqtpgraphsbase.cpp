@@ -616,6 +616,7 @@ void JKQTPXYGraph::intSortData()
 
 
     if (parent==nullptr)  return ;
+    if (sortData==JKQTPXYLineGraph::Unsorted) return ;
 
     JKQTPDatastore* datastore=parent->getDatastore();
     int imin=0;
