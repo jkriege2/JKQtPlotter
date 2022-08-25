@@ -1,7 +1,7 @@
 /*
     Copyright (c) 2008-2022 Jan W. Krieger (<jan@jkrieger.de>)
 
-    
+
 
     This software is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License (LGPL) as published by
@@ -133,10 +133,10 @@ void JKQTPXYLineGraph::draw(JKQTPEnhancedPainter& painter) {
                     if (linesP.size()>0) {
                         if (isHighlighted()) {
                             painter.setPen(penSelection);
-                            painter.drawPolyline(linesP.data(), linesP.size());
+                            painter.drawPolyline(linesP);
                         }
                         painter.setPen(p);
-                        painter.drawPolyline(linesP.data(), linesP.size());
+                        painter.drawPolyline(linesP);
                     }
                 }
             }
