@@ -66,6 +66,7 @@ set(SOURCES_GRAPHS
     ${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpviolinplotstylingmixins.cpp
     ${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpstatisticsadaptors.cpp 
     ${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpevaluatedparametriccurve.cpp 
+    ${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtplines.cpp 
     )
 set(SOURCES_GUI
     ${CMAKE_CURRENT_LIST_DIR}/gui/jkqtpcomboboxes.cpp
@@ -169,6 +170,8 @@ set(HEADERS_GRAPHS
     $<INSTALL_INTERFACE:graphs/jkqtpbarchart.h>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpevaluatedparametriccurve.h>
     $<INSTALL_INTERFACE:graphs/jkqtpevaluatedparametriccurve.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtplines.h>
+    $<INSTALL_INTERFACE:graphs/jkqtplines.h>
 )
 set(HEADERS_GUI
     $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/gui/jkqtpcomboboxes.h>

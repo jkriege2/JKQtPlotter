@@ -24,6 +24,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>FIXED issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/70">#70: Typo in jkqtplotter/CMakeLists.txt</a>, thanks to <a href="https://github.com/tedlinlab">user:tedlinlab</a></li>
     <li>FIXED issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/80">#80: Bug with multiple inheritance with Q_GDAGET with CLANG</a>, thanks to <a href="https://github.com/igormironchik">user:igormironchik</a>, caused by <a href="https://bugreports.qt.io/browse/QTBUG-104874">QTBUG-104874</a></li>
     <li>FIXED: styling was not properly applied to coordinate axes of colorbars outside the plot</li>
+    <li>REORGANIZED: separated line-graphs from jkqtpscatter.h/.cpp into jkqtplines.h/.cpp</li>
     <li>IMPROVED: QT6-compatibility by removing deprecated warnings</li>
     <li>NEW: JKQTPFilledCurveXGraph and JKQTPFilledCurveYGraph can now plot wiggle plots with different fill styles above and below the baseline (feature request <a href="https://github.com/jkriege2/JKQtPlotter/issues/68">#68 Wiggle Plots</a> from <a href="https://github.com/xichaoqiang">user:xichaoqiang</a>   </li>
     <li>NEW/BREAKING CHANGE: data tooltip can now also be shown when "just" moving the mouse (so far this was only possible when dragging the mouse with a button pressed). This also removes JKQtPlotter::getActMouseLeftAsToolTip() and adds JKQtPlotter::getActMouseMoveToolTip() instead! Also the default toolbars and context menus changed!</li>
