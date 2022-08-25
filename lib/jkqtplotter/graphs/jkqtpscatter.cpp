@@ -128,7 +128,7 @@ void JKQTPXYLineGraph::draw(JKQTPEnhancedPainter& painter) {
                 //qDebug()<<"JKQTPXYLineGraph::draw(): linesToDraw.size()=="<<linesToDraw.size()<<", clip: x="<<xmin<<".."<<xmax<<", y="<<ymin<<".."<<ymax;
                 for (const auto &linesPFromV : linesToDraw) {
                     //qDebug()<<"JKQTPXYLineGraph::draw():   linesPFromV.size()=="<<linesPFromV.size()<<"   useNonvisibleLineCompression="<<getUseNonvisibleLineCompression();
-                    const QPolygonF linesP=getUseNonvisibleLineCompression()?JKQTPSimplifyPolyLines(linesPFromV, p.widthF()*getNonvisibleLineCompressionAgressiveness()):linesPFromV;
+                    const QPolygonF linesP=getUseNonvisibleLineCompression()?QPolygonF(JKQTPSimplifyPolyLines(linesPFromV, p.widthF()*getNonvisibleLineCompressionAgressiveness())):QPolygonF(linesPFromV);
                     //qDebug()<<"JKQTPXYLineGraph::draw():     --> linesP.size()=="<<linesP.size();
                     if (linesP.size()>0) {
                         if (isHighlighted()) {

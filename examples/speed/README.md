@@ -71,33 +71,29 @@ There are different factors affecting the replot speed:
 
 You can change all these properties by additional context-menu actions in this test-program.
 
-The next table summarizes some results for plotting speed under different conditions, obatined with the test program in this directory (conditions: Qt 5.11, 32-bit, MinGW, Release, Win7, Phenom II X4 765, 500 data points):
-
-| Anti-Aliasing    | X-Axis Redraw   | # Graphs      | frame rate [fps] |
-| ---------------- | --------------- | ------------- | ---------------- |
-| yes              | yes             | 2             |  4               |
-| yes              | yes             | 1             |  7               |
-| yes              | no              | 2             |  9               |
-| yes              | no              | 1             | 16               |
-| no               | yes             | 2             | 18               |
-| no               | yes             | 1             | 24               |
-| no               | no              | 2             | 32               |
-| no               | no              | 1             | 48               |
+![speed1](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/speed_contextmenu.png)
 
 
+Running this test on a modern AMD Ryzen 7 5800H laptop (eaxct conditions: Qt 6.2.4, 64-bit, MinGW, Release, AMD Ryzen 3600, Win11, high-res display) for two graphs with 500 datapoints each yields:
 
-Rerunning this test on a modern AMD Ryzen 3600 (conditions: Qt 5.13.1, 64-bit, MinGW, Release, AMD Ryzen 3600, Win10, 500 data points):
-
-| Anti-Aliasing    | X-Axis Redraw   | # Graphs      | frame rate [fps] |
-| ---------------- | --------------- | ------------- | ---------------- |
-| yes              | yes             | 2             |  7               |
-| yes              | yes             | 1             | 14               |
-| yes              | no              | 2             | 14               |
-| yes              | no              | 1             | 28               |
-| no               | yes             | 2             | 30               |
-| no               | yes             | 1             | 52               |
-| no               | no              | 2             | 59               |
-| no               | no              | 1             | 100              |
+| Graph Style  | Anti-Aliasing    | Fixed X-Axis    |  frame rate [fps] |
+| ------------ | ---------------- | --------------- | ----------------- |
+| lines+symbols| yes              | no              |   3               |
+| lines+symbols| yes              | yes             |   6               |
+| lines+symbols| no               | no              |  32               |
+| lines+symbols| no               | yes             |  50               |
+| lines-only   | yes              | no              |   4               |
+| lines-only   | yes              | yes             |   7               |
+| lines-only   | no               | no              |  43               |
+| lines-only   | no               | yes             |  80               |
 
 
+Since 5.0.0 JKQTPlotter supports a line-compression algorithm (see `JKQTPSimplifyPolyLines()`). This allows to also draw very large datasets with sub-linear speed-decrease. The algorithm tries to not draw lines that are not visible, because they overlay each other. Using this mode we obtain these framerates for a two line-only graphs without anti-aliasing:
+
+| Number of Points | frame rate [fps] |
+| ---------------- | ---------------- |
+|   500            |  48              |
+|  1000            |  32              |
+|  2000            |   8              |
+| 10000            |   5              |
 
