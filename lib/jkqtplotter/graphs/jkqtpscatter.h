@@ -123,7 +123,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXYLineGraph: public JKQTPXYGraph, public JKQTP
 
     \see JKQTPXYParametrizedErrorScatterGraph, \ref JKQTPlotterParamScatter , \ref JKQTPlotterParamScatterImage, \ref JKQTPlotterParametricCurves
 */
-class JKQTPLOTTER_LIB_EXPORT JKQTPXYParametrizedScatterGraph: public JKQTPXYLineGraph, public JKQTPColorPaletteStyleAndToolsMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPXYParametrizedScatterGraph: public JKQTPXYGraph, public JKQTPGraphLineStyleMixin, public JKQTPGraphSymbolStyleMixin, public JKQTPColorPaletteStyleAndToolsMixin {
         Q_OBJECT
     public:
         /** \brief functor, which converts the value of the symbol column (at a location x,y) into a JKQTPGraphSymbols */
@@ -312,8 +312,18 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXYParametrizedScatterGraph: public JKQTPXYLine
         virtual void cbGetDataMinMax(double& imin, double& imax) override;
         /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int c) const override;
+        /** \copydoc drawLine */
+        void setDrawLine(bool __value);
+        /** \copydoc drawLine */
+        bool getDrawLine() const;
+
+        /** \brief set color of line and symbol */
+        void setColor(QColor c);
 
     protected:
+
+        /** \brief indicates whether to draw a line or not */
+        bool drawLine;
         /** \brief this column contains the symbol size in pt */
         int sizeColumn;
         /** \brief this column contains the symbol color */

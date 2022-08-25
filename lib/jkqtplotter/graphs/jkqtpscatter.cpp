@@ -313,8 +313,9 @@ void JKQTPXYLineErrorGraph::drawErrorsBefore(JKQTPEnhancedPainter &painter)
 
 
 JKQTPXYParametrizedScatterGraph::JKQTPXYParametrizedScatterGraph(JKQTBasePlotter *parent):
-    JKQTPXYLineGraph(parent),
-    JKQTPColorPaletteStyleAndToolsMixin(parent)
+    JKQTPXYGraph(parent),
+    JKQTPColorPaletteStyleAndToolsMixin(parent),
+    drawLine(false)
 {
     sizeColumn=-1;
     colorColumn=-1;
@@ -748,19 +749,19 @@ void JKQTPXYParametrizedScatterGraph::setSymbolFillDerivationMode(JKQTPColorDeri
 
 void JKQTPXYParametrizedScatterGraph::setParent(JKQTBasePlotter *parent)
 {
-    JKQTPXYLineGraph::setParent(parent);
+    JKQTPXYGraph::setParent(parent);
     cbSetParent(parent);
 }
 
 void JKQTPXYParametrizedScatterGraph::getOutsideSize(JKQTPEnhancedPainter &painter, int &leftSpace, int &rightSpace, int &topSpace, int &bottomSpace)
 {
-    JKQTPXYLineGraph::getOutsideSize(painter, leftSpace, rightSpace, topSpace, bottomSpace);
+    JKQTPXYGraph::getOutsideSize(painter, leftSpace, rightSpace, topSpace, bottomSpace);
     if (showColorBar&& colorColumn>=0 && !colorColumnContainsRGB) cbGetOutsideSize(painter, leftSpace, rightSpace, topSpace, bottomSpace);
 }
 
 void JKQTPXYParametrizedScatterGraph::drawOutside(JKQTPEnhancedPainter &painter, QRect leftSpace, QRect rightSpace, QRect topSpace, QRect bottomSpace)
 {
-    JKQTPXYLineGraph::drawOutside(painter, leftSpace, rightSpace, topSpace, bottomSpace);
+    JKQTPXYGraph::drawOutside(painter, leftSpace, rightSpace, topSpace, bottomSpace);
     if (showColorBar&& colorColumn>=0 && !colorColumnContainsRGB) cbDrawOutside(painter, leftSpace, rightSpace, topSpace, bottomSpace);
 }
 
@@ -803,7 +804,26 @@ void JKQTPXYParametrizedScatterGraph::cbGetDataMinMax(double &dmin, double &dmax
 
 bool JKQTPXYParametrizedScatterGraph::usesColumn(int c) const
 {
-    return (c==colorColumn) || (c==sizeColumn) || (c==symbolColumn) || (c==linewidthColumn) || JKQTPXYLineGraph::usesColumn(c);
+    return (c==colorColumn) || (c==sizeColumn) || (c==symbolColumn) || (c==linewidthColumn) || JKQTPXYGraph::usesColumn(c);
+}
+
+void JKQTPXYParametrizedScatterGraph::setDrawLine(bool __value)
+{
+    drawLine=__value;
+}
+
+bool JKQTPXYParametrizedScatterGraph::getDrawLine() const
+{
+    return drawLine;
+}
+
+void JKQTPXYParametrizedScatterGraph::setColor(QColor c)
+{
+    setLineColor(c);
+    setSymbolColor(c);
+    setSymbolFillColor(JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphsStyle.defaultGraphStyle.fillColorDerivationMode, c));
+    c.setAlphaF(0.5);
+    setHighlightingLineColor(c);
 }
 
 
@@ -884,7 +904,7 @@ JKQTPXYParametrizedErrorScatterGraph::JKQTPXYParametrizedErrorScatterGraph(JKQTP
 bool JKQTPXYParametrizedErrorScatterGraph::getXMinMax(double &minx, double &maxx, double &smallestGreaterZero)
 {
     if (xErrorColumn<0 || xErrorStyle==JKQTPNoError) {
-        return JKQTPXYLineGraph::getXMinMax(minx, maxx, smallestGreaterZero);
+        return JKQTPXYGraph::getXMinMax(minx, maxx, smallestGreaterZero);
     } else {
         bool start=true;
         minx=0;
@@ -922,7 +942,7 @@ bool JKQTPXYParametrizedErrorScatterGraph::getXMinMax(double &minx, double &maxx
 bool JKQTPXYParametrizedErrorScatterGraph::getYMinMax(double &miny, double &maxy, double &smallestGreaterZero)
 {
     if (yErrorColumn<0 || yErrorStyle==JKQTPNoError) {
-        return JKQTPXYLineGraph::getYMinMax(miny, maxy, smallestGreaterZero);
+        return JKQTPXYGraph::getYMinMax(miny, maxy, smallestGreaterZero);
     } else {
         bool start=true;
         miny=0;
