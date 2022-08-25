@@ -50,7 +50,7 @@ class JKQTPDatastore;
  *
  *  \see JKQTPSpecialLineHorizontalGraph, JKQTPSpecialLineVerticalGraph
  */
-class JKQTPLOTTER_LIB_EXPORT JKQTPSpecialLineGraphBase: public JKQTPXYBaselineGraph, public JKQTPGraphLineAndFillStyleMixin, public JKQTPGraphSymbolStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPSpecialLineGraphBase: public JKQTPXYBaselineGraph, public JKQTPGraphLineAndFillStyleMixin, public JKQTPGraphSymbolStyleMixin, public JKQTPGraphLinesCompressionMixin {
     Q_OBJECT
 public:
     /** \brief class constructor */

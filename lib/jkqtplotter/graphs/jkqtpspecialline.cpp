@@ -268,13 +268,14 @@ void JKQTPSpecialLineHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
 
         QList<QPolygonF> pl_fordrawing;
         if (isHighlighted() || getDrawLine()) {
-            pl_fordrawing=JKQTPClipPolyLine(pl, cliprect);
+            if (getUseNonvisibleLineCompression()) pl_fordrawing=JKQTPClipPolyLine(JKQTPSimplifyPolyLines(pl, p.widthF()*getNonvisibleLineCompressionAgressiveness()), cliprect);
+            else pl_fordrawing=JKQTPClipPolyLine(pl, cliprect);
         }
 
         if (isHighlighted()) {
             painter.setBrush(Qt::NoBrush);
             painter.setPen(ph);
-            for (const QPolygonF lines : pl_fordrawing) {
+            for (const QPolygonF& lines : pl_fordrawing) {
                 painter.drawPolyline(lines);
             }
         }
@@ -282,10 +283,11 @@ void JKQTPSpecialLineHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
         if (getDrawLine()) {
             painter.setBrush(Qt::NoBrush);
             painter.setPen(p);
-            for (const QPolygonF lines : pl_fordrawing) {
+            for (const QPolygonF& lines : pl_fordrawing) {
                 painter.drawPolyline(lines);
             }
         }
+
 
         if (m_drawSymbols) {
             painter.save();
@@ -454,13 +456,14 @@ void JKQTPSpecialLineVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
 
         QList<QPolygonF> pl_fordrawing;
         if (isHighlighted() || getDrawLine()) {
-            pl_fordrawing=JKQTPClipPolyLine(pl, cliprect);
+            if (getUseNonvisibleLineCompression()) pl_fordrawing=JKQTPClipPolyLine(JKQTPSimplifyPolyLines(pl, p.widthF()*getNonvisibleLineCompressionAgressiveness()), cliprect);
+            else pl_fordrawing=JKQTPClipPolyLine(pl, cliprect);
         }
 
         if (isHighlighted()) {
             painter.setBrush(Qt::NoBrush);
             painter.setPen(ph);
-            for (const QPolygonF lines : pl_fordrawing) {
+            for (const QPolygonF& lines : pl_fordrawing) {
                 painter.drawPolyline(lines);
             }
         }
@@ -468,7 +471,7 @@ void JKQTPSpecialLineVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
         if (getDrawLine()) {
             painter.setBrush(Qt::NoBrush);
             painter.setPen(p);
-            for (const QPolygonF lines : pl_fordrawing) {
+            for (const QPolygonF& lines : pl_fordrawing) {
                 painter.drawPolyline(lines);
             }
         }
