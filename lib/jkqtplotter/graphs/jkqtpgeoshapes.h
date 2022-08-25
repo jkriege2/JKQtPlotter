@@ -208,14 +208,14 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoPolygon: public JKQTPGeoBaseFilled {
          *  \param points points on the polygon
          *  \param drawMode draw the rectangle as a graphic or geometric element
          */
-        JKQTPGeoPolygon(JKQTBasePlotter* parent, const QVector<QPointF>& points, DrawMode drawMode=DrawAsGraphicElement);
+        JKQTPGeoPolygon(JKQTBasePlotter* parent, const QPolygonF& points, DrawMode drawMode=DrawAsGraphicElement);
         /** \brief class constructor
          *
          *  \param parent the parent plotter object
          *  \param points points on the polygon
          *  \param drawMode draw the rectangle as a graphic or geometric element
          */
-        JKQTPGeoPolygon(JKQTPlotter* parent, const QVector<QPointF>& points, DrawMode drawMode=DrawAsGraphicElement);
+        JKQTPGeoPolygon(JKQTPlotter* parent, const QPolygonF& points, DrawMode drawMode=DrawAsGraphicElement);
 
         /** \brief class constructor
          *
@@ -245,9 +245,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoPolygon: public JKQTPGeoBaseFilled {
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 
         /** \copydoc points */ 
-        void setPoints(const QVector<QPointF> & __value);
+        void setPoints(const QPolygonF & __value);
         /** \copydoc points */ 
-        QVector<QPointF> getPoints() const;
+        QPolygonF getPoints() const;
 
         /** \brief append a point to the polygon \see points */
         void appendPoint(const QPointF& p);
@@ -266,17 +266,17 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoPolygon: public JKQTPGeoBaseFilled {
         /** \brief deletes the i-the point \see points */
         void removePoint(int i);
         /** \brief returns an iterator to the first point \see points */
-        QVector<QPointF>::iterator pointsBegin();
+        QPolygonF::iterator pointsBegin();
         /** \brief returns an iterator after the last point \see points */
-        QVector<QPointF>::iterator pointsEnd();
+        QPolygonF::iterator pointsEnd();
         /** \brief returns a constant iterator to the first point \see points */
-        QVector<QPointF>::const_iterator pointsCBegin() const;
+        QPolygonF::const_iterator pointsCBegin() const;
         /** \brief returns a constant iterator after the last point  \see points*/
-        QVector<QPointF>::const_iterator pointsCEnd() const;
+        QPolygonF::const_iterator pointsCEnd() const;
 
     protected:
         /** \brief list with all points on the polygon */
-        QVector<QPointF> points;
+        QPolygonF points;
 };
 
 /** \brief This JKQTPGeometricPlotElement is used to draw an ellipse

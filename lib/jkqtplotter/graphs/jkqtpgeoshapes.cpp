@@ -243,13 +243,13 @@ QRectF JKQTPGeoRectangle::getBottomLeftRectangle() const
 
 
 
-JKQTPGeoPolygon::JKQTPGeoPolygon(JKQTBasePlotter *parent, const QVector<QPointF> &points, JKQTPGeometricPlotElement::DrawMode drawMode):
+JKQTPGeoPolygon::JKQTPGeoPolygon(JKQTBasePlotter *parent, const QPolygonF &points, JKQTPGeometricPlotElement::DrawMode drawMode):
     JKQTPGeoBaseFilled(parent, drawMode)
 {
     this->points=points;
 }
 
-JKQTPGeoPolygon::JKQTPGeoPolygon(JKQTPlotter *parent, const QVector<QPointF> &points, JKQTPGeometricPlotElement::DrawMode drawMode):
+JKQTPGeoPolygon::JKQTPGeoPolygon(JKQTPlotter *parent, const QPolygonF &points, JKQTPGeometricPlotElement::DrawMode drawMode):
     JKQTPGeoPolygon(parent->getPlotter(), points, drawMode)
 {
 
@@ -314,13 +314,12 @@ void JKQTPGeoPolygon::draw(JKQTPEnhancedPainter& painter) {
         painter.setPen(getLinePen(painter, parent));
         painter.setBrush(getFillBrush(painter, parent));
         if ((getDrawMode()==DrawAsGraphicElement) || (getParent()->getXAxis()->isLinearAxis() && getParent()->getYAxis()->isLinearAxis())) {
-            const QPolygonF path=transformToPolygon(points);
-            painter.drawPolygon(path);
+            painter.drawPolygon(points);
         } else {
             // for non-linear axes, a line might not be drawn as a line, so we need to segment the line (i.e. linear function in coordinate space)
             // and transform each node to draw the corresponding non-linear curve in pixel-space!
             auto fTransform=std::bind([](const JKQTPGeometricPlotElement* plot, const QPointF& p) { return plot->transform(p); }, this, std::placeholders::_1);
-            QVector<QPointF> polyp=points;
+            QPolygonF polyp=points;
             if (polyp.first()!=polyp.last()) polyp.push_back(polyp.first());
             QPolygonF path=JKQTPSplitPolylineIntoPoints(polyp, fTransform);
             path=JKQTPSimplyfyLineSegemnts(path);
@@ -335,12 +334,12 @@ void JKQTPGeoPolygon::draw(JKQTPEnhancedPainter& painter) {
     }
 }
 
-void JKQTPGeoPolygon::setPoints(const QVector<QPointF> &__value)
+void JKQTPGeoPolygon::setPoints(const QPolygonF &__value)
 {
     this->points = __value;
 }
 
-QVector<QPointF> JKQTPGeoPolygon::getPoints() const
+QPolygonF JKQTPGeoPolygon::getPoints() const
 {
     return this->points;
 }
@@ -378,22 +377,22 @@ void JKQTPGeoPolygon::removePoint(int i)
     points.remove(i);
 }
 
-QVector<QPointF>::iterator JKQTPGeoPolygon::pointsBegin()
+QPolygonF::iterator JKQTPGeoPolygon::pointsBegin()
 {
     return points.begin();
 }
 
-QVector<QPointF>::iterator JKQTPGeoPolygon::pointsEnd()
+QPolygonF::iterator JKQTPGeoPolygon::pointsEnd()
 {
     return points.end();
 }
 
-QVector<QPointF>::const_iterator JKQTPGeoPolygon::pointsCBegin() const
+QPolygonF::const_iterator JKQTPGeoPolygon::pointsCBegin() const
 {
     return points.cbegin();
 }
 
-QVector<QPointF>::const_iterator JKQTPGeoPolygon::pointsCEnd() const
+QPolygonF::const_iterator JKQTPGeoPolygon::pointsCEnd() const
 {
     return points.cend();
 }
@@ -460,7 +459,7 @@ void JKQTPGeoEllipse::drawInternal(JKQTPEnhancedPainter& painter, double angleSt
     } else if (mode==InternalDrawMode::Pie) {
         QPointF first, last;
         rect=JKQTPSplitEllipseIntoPoints(fTransform, x,y,width/2.0, height/2.0, angleStart, angleStop, 0, nullptr, nullptr, &first, &last);
-        QVector<QPointF> pie;
+        QPolygonF pie;
         pie<<last<<QPointF(x,y)<<first;
         rect.append(JKQTPSimplyfyLineSegemnts(JKQTPSplitPolylineIntoPoints(pie, fTransform)));
     } else if (mode==InternalDrawMode::Chord) {

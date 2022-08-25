@@ -240,18 +240,13 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPPlotElement: public QObject {
         inline QPointF backTransform(double x, double y) const {
             return backTransform(QPointF(x,y));
         }
-        /** \brief tool routine that transforms a QVector<QPointF> according to the parent's transformation rules (plot coordinate --> pixels) */
-        QVector<QPointF> transform(const QVector<QPointF>& x) const;
+        /** \brief tool routine that transforms a QPolygonF according to the parent's transformation rules (plot coordinate --> pixels) */
+        QPolygonF transform(const QPolygonF& x) const;
 
-        /** \brief tool routine that transforms a QVector<QPointF> according to the parent's transformation rules
+        /** \brief tool routine that transforms a QPolygonF according to the parent's transformation rules
          *         and returns a (non-closed) path consisting of lines (plot coordinate --> pixels) */
-        QPainterPath transformToLinePath(const QVector<QPointF>& x) const;
+        QPainterPath transformToLinePath(const QPolygonF& x) const;
 
-        /** \brief tool routine that transforms a QVector<QPointF> according to the parent's transformation rules
-         *         and returns a polygon (plot coordinate --> pixels) */
-        inline QPolygonF transformToPolygon(const QVector<QPointF>& x) const {
-            return QPolygonF(transform(x));
-        }
 
         /** \brief transform all x-coordinates in a vector \a x */
         QVector<double> transformX(const QVector<double>& x) const;

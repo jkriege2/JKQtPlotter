@@ -348,18 +348,18 @@ double JKQTPLineDecoratorStyleCalcDecoratorSize(double line_width, double decora
 }
 
 
-QList<QPointF> JKQTPSimplifyPolyLines(const QList<QPointF> &lines_in, double maxDeltaXY)
+QPolygonF JKQTPSimplifyPolyLines(const QPolygonF &lines_in, double maxDeltaXY)
 {
-    if (lines_in.size()<=1) return QList<QPointF>();
+    if (lines_in.size()<=1) return QPolygonF();
     if (lines_in.size()<=10) return lines_in;
-    QList<QPointF> l;
+    QPolygonF l;
     l.reserve(lines_in.size());
 
     int groupStart=0;
     int groupCount=1;
     QRectF groupSize(lines_in[0], QSizeF(0,0));
 
-    auto writeGroup=[](QList<QPointF>& l, const int& groupStart, const int& groupCount, const QRectF& groupSize, const QList<QPointF>& lines_in, double maxDeltaXY) {
+    auto writeGroup=[](QPolygonF& l, const int& groupStart, const int& groupCount, const QRectF& groupSize, const QPolygonF& lines_in, double maxDeltaXY) {
         // group ends
         if (groupCount>4) {
             // we can optimize the group away
@@ -411,24 +411,24 @@ QList<QPointF> JKQTPSimplifyPolyLines(const QList<QPointF> &lines_in, double max
     return l;
 }
 
-QList<QList<QPointF> > JKQTPClipPolyLine(const QList<QPointF> &polyline_in, const QRectF &clipRect)
+QList<QPolygonF > JKQTPClipPolyLine(const QPolygonF &polyline_in, const QRectF &clipRect)
 {
-    QList<QList<QPointF>> l;
+    QList<QPolygonF> l;
     l<<polyline_in;
     return JKQTPClipPolyLines(l, clipRect);
 }
 
-QList<QList<QPointF> > JKQTPClipPolyLines(const QList<QList<QPointF> > &polylines_in, const QRectF &clipRect)
+QList<QPolygonF > JKQTPClipPolyLines(const QList<QPolygonF > &polylines_in, const QRectF &clipRect)
 {
     const double xmin=qMin(clipRect.left(), clipRect.right());
     const double xmax=qMax(clipRect.left(), clipRect.right());
     const double ymin=qMin(clipRect.top(), clipRect.bottom());
     const double ymax=qMax(clipRect.top(), clipRect.bottom());
-    QList<QList<QPointF>> out;
-    for (const QList<QPointF>& pl: polylines_in) {
+    QList<QPolygonF> out;
+    for (const QPolygonF& pl: polylines_in) {
         if (pl.size()>1) {
             if (out.size()==0 || out.last().size()>0) {
-                out<<QList<QPointF>();
+                out<<QPolygonF();
             }
             for (int i=1; i<pl.size(); i++) {
                 const QLineF l(pl[i-1], pl[i]);
@@ -441,13 +441,13 @@ QList<QList<QPointF> > JKQTPClipPolyLines(const QList<QList<QPointF> > &polyline
                 // p1 and p2 clipped, i.e. segment clipped on both ends: add clipped line as separate segment
                 if (lclipped.length()==0) {
                     if (out.last().size()>0) {
-                        out<<QList<QPointF>();
+                        out<<QPolygonF();
                     }
                 } else if (l==lclipped) {
                     if (out.last().size()==0) {
                         out.last()<<lclipped.p1();
                     } if (out.last().last()!=lclipped.p1()) {
-                        out<<QList<QPointF>();
+                        out<<QPolygonF();
                         out.last()<<lclipped.p1();
                     }
                     out.last()<<lclipped.p2();
@@ -455,26 +455,26 @@ QList<QList<QPointF> > JKQTPClipPolyLines(const QList<QList<QPointF> > &polyline
                     if (out.last().size()==0) {
                         out.last()<<lclipped.p1();
                     } if (out.last().last()!=lclipped.p1()) {
-                        out<<QList<QPointF>();
+                        out<<QPolygonF();
                         out.last()<<lclipped.p1();
                     }
                     out.last()<<lclipped.p2();
-                    out<<QList<QPointF>();
+                    out<<QPolygonF();
                 } else if (l.p1()!=lclipped.p1() && l.p2()==lclipped.p2()) {
                     if (out.last().size()==0) {
                         out.last()<<lclipped.p1();
                     } if (out.last().last()!=lclipped.p1()) {
-                        out<<QList<QPointF>();
+                        out<<QPolygonF();
                         out.last()<<lclipped.p1();
                     }
                     out.last()<<lclipped.p2();
                 } else if (l.p1()!=lclipped.p1() && l.p2()!=lclipped.p2()) {
                     if (out.last().size()>0) {
-                        out<<QList<QPointF>();
+                        out<<QPolygonF();
                     }
                     out.last()<<lclipped.p1();
                     out.last()<<lclipped.p2();
-                    out<<QList<QPointF>();
+                    out<<QPolygonF();
                 }
             }
         }

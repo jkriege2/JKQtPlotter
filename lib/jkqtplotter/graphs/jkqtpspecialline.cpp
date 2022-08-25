@@ -144,7 +144,7 @@ void JKQTPSpecialLineHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
 
 
         QPolygonF pl, pf;
-        QList<QPointF> ps;
+        QPolygonF ps;
 
         double xold=-1;
         double yold=-1;
@@ -266,7 +266,7 @@ void JKQTPSpecialLineHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
             painter.drawPolygon(pf.intersected(cliprect));
         }
 
-        QList<QList<QPointF>> pl_fordrawing;
+        QList<QPolygonF> pl_fordrawing;
         if (isHighlighted() || getDrawLine()) {
             pl_fordrawing=JKQTPClipPolyLine(pl, cliprect);
         }
@@ -350,7 +350,7 @@ void JKQTPSpecialLineVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
 
 
         QPolygonF pl, pf;
-        QList<QPointF> ps;
+        QPolygonF ps;
 
         double xold=-1;
         double yold=-1;
@@ -452,7 +452,7 @@ void JKQTPSpecialLineVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
             painter.drawPolygon(pf.intersected(cliprect));
         }
 
-        QList<QList<QPointF>> pl_fordrawing;
+        QList<QPolygonF> pl_fordrawing;
         if (isHighlighted() || getDrawLine()) {
             pl_fordrawing=JKQTPClipPolyLine(pl, cliprect);
         }

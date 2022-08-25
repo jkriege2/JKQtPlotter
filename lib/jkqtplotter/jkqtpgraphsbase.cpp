@@ -275,15 +275,15 @@ void JKQTPGraph::drawErrorsAfter(JKQTPEnhancedPainter &)
 
 }
 
-QVector<QPointF> JKQTPPlotElement::transform(const QVector<QPointF> &x) const {
-    QVector<QPointF> res;
+QPolygonF JKQTPPlotElement::transform(const QPolygonF &x) const {
+    QPolygonF res;
     for (int i=0; i<x.size(); i++) {
         res.append(transform(x[i]));
     }
     return res;
 }
 
-QPainterPath JKQTPPlotElement::transformToLinePath(const QVector<QPointF> &x) const {
+QPainterPath JKQTPPlotElement::transformToLinePath(const QPolygonF &x) const {
     QPainterPath res;
     if (x.size()>0) {
         res.moveTo(transform(x[0]));

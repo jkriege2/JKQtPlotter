@@ -91,8 +91,8 @@ void JKQTPXYLineGraph::draw(JKQTPEnhancedPainter& painter) {
         if (getIndexRange(imin, imax)) {
 
 
-            QList<QList<QPointF>> vec_linesP;
-            vec_linesP.push_back(QList<QPointF>());
+            QList<QPolygonF> vec_linesP;
+            vec_linesP.push_back(QPolygonF());
             intSortData();
             for (int iii=imin; iii<imax; iii++) {
                 const int i=qBound(imin, getDataIndex(iii), imax);
@@ -114,7 +114,7 @@ void JKQTPXYLineGraph::draw(JKQTPEnhancedPainter& painter) {
                     } else {
                         if (drawLine) {
                             if (vec_linesP.size()==0 || vec_linesP.last().size()>0)
-                            vec_linesP.push_back(QList<QPointF>());
+                            vec_linesP.push_back(QPolygonF());
                         }
                     }
                 }
@@ -124,7 +124,7 @@ void JKQTPXYLineGraph::draw(JKQTPEnhancedPainter& painter) {
             if (drawLine) {
                 //qDebug()<<"JKQTPXYLineGraph::draw(): vec_linesP.size()=="<<vec_linesP.size();
 
-                const QList<QList<QPointF>> linesToDraw=JKQTPClipPolyLines(vec_linesP, cliprect);
+                const QList<QPolygonF> linesToDraw=JKQTPClipPolyLines(vec_linesP, cliprect);
                 //qDebug()<<"JKQTPXYLineGraph::draw(): linesToDraw.size()=="<<linesToDraw.size()<<", clip: x="<<xmin<<".."<<xmax<<", y="<<ymin<<".."<<ymax;
                 for (const auto &linesPFromV : linesToDraw) {
                     //qDebug()<<"JKQTPXYLineGraph::draw():   linesPFromV.size()=="<<linesPFromV.size()<<"   useNonvisibleLineCompression="<<getUseNonvisibleLineCompression();

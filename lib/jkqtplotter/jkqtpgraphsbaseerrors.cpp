@@ -304,7 +304,7 @@ void JKQTPGraphErrorStyleMixin::intPlotXYErrorIndicators(JKQTPEnhancedPainter& p
     bool pastFirst=false;
     double ebs_px=parent->pt2px(painter, m_errorBarCapSize);
     QPolygonF polyX, polyY;
-    QList<QPointF> polyXTopPoints, polyXBottomPoints, polyYTopPoints, polyYBottomPoints;
+    QPolygonF polyXTopPoints, polyXBottomPoints, polyYTopPoints, polyYBottomPoints;
     QList<QColor> errFC, errC;
     bool defaultErrorColor=true;
 

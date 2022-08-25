@@ -390,7 +390,7 @@ inline QLineF JKQTPClipLine(const QLineF& line, const QRectF& clipRect) {
     \param clipRect rectangle to clip to
     \return a list of poly-lines representing the clipped lines. Note that some lines may be split further so the number of poly-lines in the output may actually be larger than the number of polylines in the input!
 */
-JKQTCOMMON_LIB_EXPORT QList<QList<QPointF>> JKQTPClipPolyLines(const QList<QList<QPointF>> & polylines_in, const QRectF& clipRect);
+JKQTCOMMON_LIB_EXPORT QList<QPolygonF> JKQTPClipPolyLines(const QList<QPolygonF> & polylines_in, const QRectF& clipRect);
 /*! \brief clips the given poly-line \a polyline_in to the given rectangle \a clipRect
     \ingroup jkqtptools_drawing
 
@@ -398,7 +398,7 @@ JKQTCOMMON_LIB_EXPORT QList<QList<QPointF>> JKQTPClipPolyLines(const QList<QList
     \param clipRect rectangle to clip to
     \return a list of poly-lines representing the clipped line.
 */
-JKQTCOMMON_LIB_EXPORT QList<QList<QPointF>> JKQTPClipPolyLine(const QList<QPointF> & polyline_in, const QRectF& clipRect);
+JKQTCOMMON_LIB_EXPORT QList<QPolygonF> JKQTPClipPolyLine(const QPolygonF & polyline_in, const QRectF& clipRect);
 
 /*! \brief tries to reduce the complexity of the given poly-line \a lines_in, but keeping the appearance as if all lines were drawn
     \ingroup jkqtptools_drawing
@@ -407,7 +407,7 @@ JKQTCOMMON_LIB_EXPORT QList<QList<QPointF>> JKQTPClipPolyLine(const QList<QPoint
     \param maxDeltaXY a group has to be either less wide or less high than this, typically equals the linewidth of the poly-line
     \return a simplified version of lines_in
 */
-JKQTCOMMON_LIB_EXPORT QList<QPointF> JKQTPSimplifyPolyLines(const QList<QPointF>& lines_in, double maxDeltaXY=1.0);
+JKQTCOMMON_LIB_EXPORT QPolygonF JKQTPSimplifyPolyLines(const QPolygonF& lines_in, double maxDeltaXY=1.0);
 
 /*! \brief draw a tooltip, using the current brush and pen of the provided painter
     \ingroup jkqtptools_drawing
