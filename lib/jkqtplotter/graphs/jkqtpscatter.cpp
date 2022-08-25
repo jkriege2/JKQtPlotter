@@ -23,7 +23,9 @@
 #include "jkqtplotter/jkqtpbaseplotter.h"
 #include <stdlib.h>
 #include <QDebug>
+#include <QMarginsF>
 #include <iostream>
+#include "jkqtcommon/jkqtpdrawingtools.h"
 #include "jkqtplotter/jkqtptools.h"
 #include "jkqtplotter/jkqtpimagetools.h"
 #include "jkqtplotter/graphs/jkqtpimage.h"
@@ -47,10 +49,10 @@ JKQTPXYLineGraph::JKQTPXYLineGraph(JKQTPlotter* parent):
 }
 
 JKQTPXYLineGraph::JKQTPXYLineGraph(JKQTBasePlotter* parent):
-    JKQTPXYGraph(parent)
+    JKQTPXYGraph(parent),
+    drawLine(true)
 {
     sortData=JKQTPXYGraph::Unsorted;
-    drawLine=true;
 
     initLineStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Default);
     initSymbolStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Default);
@@ -74,6 +76,14 @@ void JKQTPXYLineGraph::draw(JKQTPEnhancedPainter& painter) {
 
         const QPen p=getLinePen(painter, parent);
         const QPen penSelection=getHighlightingLinePen(painter, parent);
+        const auto symType=getSymbolType();
+        const double xmin=transformX(parent->getXAxis()->getMin());
+        const double xmax=transformX(parent->getXAxis()->getMax());
+        const double ymin=transformY(parent->getYAxis()->getMin());
+        const double ymax=transformY(parent->getYAxis()->getMax());
+        const double symbolSize=parent->pt2px(painter, getSymbolSize());
+        const QMarginsF clipMargins=(symType==JKQTPNoSymbol)?QMarginsF(0,0,0,0):QMarginsF(symbolSize,symbolSize,symbolSize,symbolSize);
+        const QRectF cliprect=QRectF(qMin(xmin,xmax),qMin(ymin,ymax),fabs(xmax-xmin),fabs(ymax-ymin))+clipMargins;
 
 
         int imax=0;
@@ -81,8 +91,8 @@ void JKQTPXYLineGraph::draw(JKQTPEnhancedPainter& painter) {
         if (getIndexRange(imin, imax)) {
 
 
-            std::vector<QPolygonF> vec_linesP;
-            vec_linesP.push_back(QPolygonF());
+            QList<QList<QPointF>> vec_linesP;
+            vec_linesP.push_back(QList<QPointF>());
             intSortData();
             for (int iii=imin; iii<imax; iii++) {
                 const int i=qBound(imin, getDataIndex(iii), imax);
@@ -93,31 +103,41 @@ void JKQTPXYLineGraph::draw(JKQTPEnhancedPainter& painter) {
                 //qDebug()<<"JKQTPXYLineGraph::draw(): (xv, yv) =    ( "<<xv<<", "<<yv<<" )";
                 if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)  &&  JKQTPIsOKFloat(x) && JKQTPIsOKFloat(y)) {
 
-                    if (isHighlighted() && getSymbolType()!=JKQTPNoSymbol) {
+                    //if (isHighlighted() && getSymbolType()!=JKQTPNoSymbol) {
                         //JKQTPPlotSymbol(painter, x, y, JKQTPFilledCircle, parent->pt2px(painter, symbolSize*1.5), parent->pt2px(painter, symbolWidth*parent->getLineWidthMultiplier()), penSelection.color(), penSelection.color());
-                    }
+                    //}
                     if ((!parent->getXAxis()->isLogAxis() || xv>0.0) && (!parent->getYAxis()->isLogAxis() || yv>0.0) ) {
-                        plotStyledSymbol(parent, painter, x, y);
+                        if (symType!=JKQTPNoSymbol && cliprect.contains(x,y)) plotStyledSymbol(parent, painter, x, y);
                         if (drawLine) {
-                            vec_linesP[vec_linesP.size()-1] << QPointF(x,y);
+                            vec_linesP.last() << QPointF(x,y);
                         }
                     } else {
-                        vec_linesP.push_back(QPolygonF());
+                        if (drawLine) {
+                            if (vec_linesP.size()==0 || vec_linesP.last().size()>0)
+                            vec_linesP.push_back(QList<QPointF>());
+                        }
                     }
                 }
             }
             //qDebug()<<"JKQTPXYLineGraph::draw(): "<<4<<" lines="<<lines.size();
             //qDebug()<<"JKQTPXYLineGraph::draw(): "<<5<<"  p="<<painter.pen();
-            for (auto &linesP : vec_linesP) {
-                if (linesP.size()>0) {
-                    if (isHighlighted()) {
-                        painter.setPen(penSelection);
-                        //painter.drawLines(lines);
-                        painter.drawPolyline(linesP);
+            if (drawLine) {
+                //qDebug()<<"JKQTPXYLineGraph::draw(): vec_linesP.size()=="<<vec_linesP.size();
+
+                const QList<QList<QPointF>> linesToDraw=JKQTPClipPolyLines(vec_linesP, cliprect);
+                //qDebug()<<"JKQTPXYLineGraph::draw(): linesToDraw.size()=="<<linesToDraw.size()<<", clip: x="<<xmin<<".."<<xmax<<", y="<<ymin<<".."<<ymax;
+                for (const auto &linesPFromV : linesToDraw) {
+                    //qDebug()<<"JKQTPXYLineGraph::draw():   linesPFromV.size()=="<<linesPFromV.size()<<"   useNonvisibleLineCompression="<<getUseNonvisibleLineCompression();
+                    const QList<QPointF> linesP=getUseNonvisibleLineCompression()?JKQTPSimplifyPolyLines(linesPFromV, p.widthF()*getNonvisibleLineCompressionAgressiveness()):linesPFromV;
+                    //qDebug()<<"JKQTPXYLineGraph::draw():     --> linesP.size()=="<<linesP.size();
+                    if (linesP.size()>0) {
+                        if (isHighlighted()) {
+                            painter.setPen(penSelection);
+                            painter.drawPolyline(linesP.data(), linesP.size());
+                        }
+                        painter.setPen(p);
+                        painter.drawPolyline(linesP.data(), linesP.size());
                     }
-                    painter.setPen(p);
-                    //painter.drawLines(lines);
-                    painter.drawPolyline(linesP);
                 }
             }
             //qDebug()<<"JKQTPXYLineGraph::draw(): "<<6;
@@ -172,6 +192,7 @@ void JKQTPXYLineGraph::setColor(QColor c)
     c.setAlphaF(0.5);
     setHighlightingLineColor(c);
 }
+
 
 
 JKQTPXYLineErrorGraph::JKQTPXYLineErrorGraph(JKQTBasePlotter *parent):

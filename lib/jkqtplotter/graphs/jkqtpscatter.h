@@ -51,9 +51,14 @@ class JKQTPDatastore;
 
     \image html plot_lineplots.png
 
-    \see \ref JKQTPlotterAdvancedLineAndFillStyling, \ref JKQTPlotterSimpleTest, \ref JKQTPlotterSymbolsAndStyles, jkqtpstatAddVKDE1D(), jkqtpstatAddVKDE1DAutoranged(), jkqtpstatAddHKDE1D(), jkqtpstatAddHKDE1DAutoranged()
+    \note This classes can (and does by default) apply a line-compression strategy that improves plotting speed
+          but reduces accuracy a bit. See JKQTPGraphLinesCompressionMixin for details.
+
+    \see \ref JKQTPlotterAdvancedLineAndFillStyling, \ref JKQTPlotterSimpleTest, \ref JKQTPlotterSymbolsAndStyles,
+         jkqtpstatAddVKDE1D(), jkqtpstatAddVKDE1DAutoranged(), jkqtpstatAddHKDE1D(), jkqtpstatAddHKDE1DAutoranged(),
+         JKQTPGraphLinesCompressionMixin
  */
-class JKQTPLOTTER_LIB_EXPORT JKQTPXYLineGraph: public JKQTPXYGraph, public JKQTPGraphLineStyleMixin, public JKQTPGraphSymbolStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPXYLineGraph: public JKQTPXYGraph, public JKQTPGraphLineStyleMixin, public JKQTPGraphSymbolStyleMixin, public JKQTPGraphLinesCompressionMixin {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -76,11 +81,12 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXYLineGraph: public JKQTPXYGraph, public JKQTP
         /** \brief set color of line and symbol */
         void setColor(QColor c);
 
-
     protected:
 
         /** \brief indicates whether to draw a line or not */
         bool drawLine;
+
+
 
 
 };
@@ -100,7 +106,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXYLineGraph: public JKQTPXYGraph, public JKQTP
 
     \image html paramscatterplot.png "Different Styles of Parametrized Scatter/Line Graphs"
 
-    \image html paramscatterplot_image_star.png "JKQTPXYParametrizedScatterGraph with symbols organized in a grid"
+    \note This classes is meant for cases where you want to change the color/size/... of single symbols, in dependence
+          of data. If you are looking for a simple scatter-plot without data-dependent properties, use JKQTPXYLineGraph
+          instead, which is faster.
 
     \note For the size, line width and symbol type columns, you can also set a functor, which converts the column value (optionally based
           also on the x- and y-location of the data point) into the local symbol size, symbol type or line width. Use the functions
@@ -109,6 +117,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXYLineGraph: public JKQTPXYGraph, public JKQTP
           any additional transformations.
           \image html JKQTPXYParametrizedScatterGraph_LinewidthFunctor.png
           \image html JKQTPXYParametrizedScatterGraph_SymbolFunctor.png
+
+    \image html paramscatterplot_image_star.png "JKQTPXYParametrizedScatterGraph with symbols organized in a grid"
 
 
     \see JKQTPXYParametrizedErrorScatterGraph, \ref JKQTPlotterParamScatter , \ref JKQTPlotterParamScatterImage, \ref JKQTPlotterParametricCurves

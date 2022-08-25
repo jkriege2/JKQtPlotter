@@ -347,3 +347,137 @@ double JKQTPLineDecoratorStyleCalcDecoratorSize(double line_width, double decora
     return decoratorSizeFactor*pow(line_width, 0.7);
 }
 
+
+QList<QPointF> JKQTPSimplifyPolyLines(const QList<QPointF> &lines_in, double maxDeltaXY)
+{
+    if (lines_in.size()<=1) return QList<QPointF>();
+    if (lines_in.size()<=10) return lines_in;
+    QList<QPointF> l;
+    l.reserve(lines_in.size());
+
+    int groupStart=0;
+    int groupCount=1;
+    QRectF groupSize(lines_in[0], QSizeF(0,0));
+
+    auto writeGroup=[](QList<QPointF>& l, const int& groupStart, const int& groupCount, const QRectF& groupSize, const QList<QPointF>& lines_in, double maxDeltaXY) {
+        // group ends
+        if (groupCount>4) {
+            // we can optimize the group away
+            // we take the first and the last point and in between one at the top and one at the bottom of the group
+            // unless we have a group that is smaller than maxDeltaXY in both directions, the the first and last point suffice
+            const QPointF& x0=lines_in[groupStart];
+            l<<x0; // first point
+            if (groupSize.width()<=maxDeltaXY && groupSize.height()>maxDeltaXY) {
+                // x-group, i.e. small on x-axis
+                l<<QPointF(x0.x()+groupSize.width()/3.0, groupSize.bottom());
+                l<<QPointF(x0.x()+groupSize.width()*2.0/3.0, groupSize.top());
+            } else  if (groupSize.width()>maxDeltaXY && groupSize.height()<=maxDeltaXY) {
+                // y-group, i.e. small on y-axis
+                l<<QPointF(groupSize.left(), x0.y()+groupSize.height()/3.0);
+                l<<QPointF(groupSize.right(), x0.y()+groupSize.height()*2.0/3.0);
+            }
+            l<<lines_in[groupStart+groupCount-1]; // last point
+        } else {
+            // small groups cannot be optimized away
+            // so we simply copy it to the output
+            for (int j=groupStart; j<groupStart+groupCount; j++) l<<lines_in[j];
+        }
+
+    };
+
+    for (int i=0; i<lines_in.size(); i++) {
+        const QPointF& x=lines_in[i];
+        QRectF newGroupSize=groupSize;
+        newGroupSize.setLeft(qMin(newGroupSize.left(), x.x()));
+        newGroupSize.setRight(qMax(newGroupSize.right(), x.x()));
+        newGroupSize.setTop(qMin(newGroupSize.top(), x.y()));
+        newGroupSize.setBottom(qMax(newGroupSize.bottom(), x.y()));
+
+        if (newGroupSize.width()<=maxDeltaXY || newGroupSize.height()<=maxDeltaXY) {
+            // points still in group, so extend the group
+            groupCount++;
+            groupSize=newGroupSize;
+        } else {
+            // group ends, because adding a new point would increase it's size too much
+            writeGroup(l, groupStart, groupCount, groupSize, lines_in, maxDeltaXY);
+            // start new group with current point
+            groupStart=i;
+            groupCount=1;
+            groupSize=QRectF(x, QSizeF(0,0));
+        }
+    }
+    writeGroup(l, groupStart, groupCount, groupSize, lines_in, maxDeltaXY);
+    //qDebug()<<"JKQTPSimplifyPolyLines("<<lines_in.size()<<", maxDeltaXY="<<maxDeltaXY<<") -> "<<l.size();
+    return l;
+}
+
+QList<QList<QPointF> > JKQTPClipPolyLine(const QList<QPointF> &polyline_in, const QRectF &clipRect)
+{
+    QList<QList<QPointF>> l;
+    l<<polyline_in;
+    return JKQTPClipPolyLines(l, clipRect);
+}
+
+QList<QList<QPointF> > JKQTPClipPolyLines(const QList<QList<QPointF> > &polylines_in, const QRectF &clipRect)
+{
+    const double xmin=qMin(clipRect.left(), clipRect.right());
+    const double xmax=qMax(clipRect.left(), clipRect.right());
+    const double ymin=qMin(clipRect.top(), clipRect.bottom());
+    const double ymax=qMax(clipRect.top(), clipRect.bottom());
+    QList<QList<QPointF>> out;
+    for (const QList<QPointF>& pl: polylines_in) {
+        if (pl.size()>1) {
+            if (out.size()==0 || out.last().size()>0) {
+                out<<QList<QPointF>();
+            }
+            for (int i=1; i<pl.size(); i++) {
+                const QLineF l(pl[i-1], pl[i]);
+                const QLineF lclipped=JKQTPClipLine(l, xmin, xmax, ymin, ymax);
+                //qDebug()<<"  "<<l<<"  -->  "<<lclipped<<"  clip: x="<<xmin<<".."<<xmax<<", y="<<ymin<<".."<<ymax;
+                // 0-length: line remove ==> dont's add anything, start new segment if necessary
+                // l=lclipped: no point was clipped: add second point, or if list empty both points (first line segment)
+                // only p1 clipped, i.e. second point clipped: add second point, end segmnt (i.e. start a new one)
+                // only p2 clipped, i.e. first point clipped: start new segment, add first point to it
+                // p1 and p2 clipped, i.e. segment clipped on both ends: add clipped line as separate segment
+                if (lclipped.length()==0) {
+                    if (out.last().size()>0) {
+                        out<<QList<QPointF>();
+                    }
+                } else if (l==lclipped) {
+                    if (out.last().size()==0) {
+                        out.last()<<lclipped.p1();
+                    } if (out.last().last()!=lclipped.p1()) {
+                        out<<QList<QPointF>();
+                        out.last()<<lclipped.p1();
+                    }
+                    out.last()<<lclipped.p2();
+                } else if (l.p1()==lclipped.p1() && l.p2()!=lclipped.p2()) {
+                    if (out.last().size()==0) {
+                        out.last()<<lclipped.p1();
+                    } if (out.last().last()!=lclipped.p1()) {
+                        out<<QList<QPointF>();
+                        out.last()<<lclipped.p1();
+                    }
+                    out.last()<<lclipped.p2();
+                    out<<QList<QPointF>();
+                } else if (l.p1()!=lclipped.p1() && l.p2()==lclipped.p2()) {
+                    if (out.last().size()==0) {
+                        out.last()<<lclipped.p1();
+                    } if (out.last().last()!=lclipped.p1()) {
+                        out<<QList<QPointF>();
+                        out.last()<<lclipped.p1();
+                    }
+                    out.last()<<lclipped.p2();
+                } else if (l.p1()!=lclipped.p1() && l.p2()!=lclipped.p2()) {
+                    if (out.last().size()>0) {
+                        out<<QList<QPointF>();
+                    }
+                    out.last()<<lclipped.p1();
+                    out.last()<<lclipped.p2();
+                    out<<QList<QPointF>();
+                }
+            }
+        }
+    }
+    return out;
+}

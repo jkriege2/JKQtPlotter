@@ -261,6 +261,154 @@ inline void JKQTPPlotSymbol(TPainter& painter, double x, double y, JKQTPGraphSym
 JKQTCOMMON_LIB_EXPORT void JKQTPPlotSymbol(QPaintDevice& paintDevice, double x, double y, JKQTPGraphSymbols symbol, double size, double symbolLineWidth, QColor color, QColor fillColor);
 
 
+
+
+/*! \brief clips the given line (\a x1 , \a y1 ) -- (\a x2 , \a y2 ) to the given rectangle \a xmin .. \a xmax and \a ymin ... \a ymax
+    \ingroup jkqtptools_drawing
+
+    \return the clipped line in \a x1 , \a y1 , \a x2 , \a y2 and \c true if the line is still to be drawn or \c false else
+
+    This function implements the algorithm descripbed in https://www.researchgate.net/publication/335018076_Another_Simple_but_Faster_Method_for_2D_Line_Clipping
+    i.e. in Pseudocode
+    \verbatim
+    // x1 , y1 , x2 , y2 , xmin , ymax , xmax , ymin //
+    if not ( x1<xmin and x2<xmin ) and not ( x1>xmax and x2>xmax ) then
+        if not ( y1<ymin and y2<ymin ) and not ( y1>ymax and y2>ymax ) then
+            x[1]= x1
+            y[1]= y1
+            x[2]= x2
+            y[2]= y2
+            i =1
+            repeat
+                if x[i] < xmin then
+                    x[i] = xmin
+                    y[i] = ( ( y2-y1 ) / ( x2-x1 ) ) * ( xmin-x1)+y1
+                elseif x[i] > xmax then
+                    x[i] = xmax
+                    y[i] = ( ( y2-y1 ) / ( x2-x1 ) ) * ( xmax-x1)+y1
+                endif
+                if y[i] < ymin then
+                    y[i] = ymin
+                    x[i] = ( ( x2-x1 ) / ( y2-y1 ) ) * ( ymin-y1)+x1
+                elseif y[i] > ymax then
+                    y[i] = ymax
+                    x[i] = ( ( x2-x1 ) / ( y2-y1 ) ) * ( ymax-y1)+x1
+                endif
+                i = i + 1
+            until i >2
+            if not ( x [1 ] < xmin and x [2 ] < xmin ) and not ( x [1 ] >xmax and x [2 ] >xmax ) then
+                drawLine ( x[1] , y[1] , x[2] , y[2] )
+            endif
+        endif
+    endif
+    \endverbatim
+*/
+inline bool JKQTPClipLine(double& x1 , double& y1 , double& x2 , double& y2 , double xmin , double xmax , double ymin, double ymax) {
+    if (! ( x1<xmin && x2<xmin ) && !( x1>xmax && x2>xmax )) {
+        if ( !( y1<ymin && y2<ymin ) && !( y1>ymax && y2>ymax ) ) {
+            double x[2]= {x1,x2};
+            double y[2]= {y1,y2};
+            for (int i=0; i<2; i++) {
+            if (x[i] < xmin) {
+                    x[i] = xmin;
+                    y[i] = ( ( y2-y1 ) / ( x2-x1 ) ) * ( xmin-x1)+y1;
+               } else if (x[i] > xmax) {
+                    x[i] = xmax;
+                    y[i] = ( ( y2-y1 ) / ( x2-x1 ) ) * ( xmax-x1)+y1;
+               }
+               if (y[i] < ymin) {
+                    y[i] = ymin;
+                    x[i] = ( ( x2-x1 ) / ( y2-y1 ) ) * ( ymin-y1)+x1;
+               } else if (y[i] > ymax) {
+                    y[i] = ymax;
+                    x[i] = ( ( x2-x1 ) / ( y2-y1 ) ) * ( ymax-y1)+x1;
+                }
+            }
+            if (! ( x[0] < xmin && x[1]< xmin ) && !( x[0] >xmax && x[1] >xmax )) {
+                x1=x[0];
+                y1=y[0];
+                x2=x[1];
+                y2=y[1];
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+/*! \brief clips the given line \a line to the given rectangle rectangle \a xmin .. \a xmax and \a ymin ... \a ymax
+    \ingroup jkqtptools_drawing
+
+    \return the clipped line or a line with 0-length, i.e. QLineF()
+
+    This function implements the algorithm descripbed in https://www.researchgate.net/publication/335018076_Another_Simple_but_Faster_Method_for_2D_Line_Clipping
+
+*/
+inline QLineF JKQTPClipLine(const QLineF& line, double xmin , double xmax , double ymin, double ymax) {
+    double x1=line.x1();
+    double y1=line.y1();
+    double x2=line.x2();
+    double y2=line.y2();
+    if (JKQTPClipLine(x1,y1,x2,y2,xmin,xmax,ymin,ymax)) {
+        return QLineF(x1,y1,x2,y2);
+    } else {
+        return QLineF();
+    }
+}
+
+/*! \brief clips the given line \a line to the given rectangle \a clipRect
+    \ingroup jkqtptools_drawing
+
+    \param line line to be clipped
+    \param clipRect rectangle to clip to
+    \return the clipped line or a line with 0-length, i.e. QLineF()
+
+    This function implements the algorithm descripbed in https://www.researchgate.net/publication/335018076_Another_Simple_but_Faster_Method_for_2D_Line_Clipping
+
+*/
+inline QLineF JKQTPClipLine(const QLineF& line, const QRectF& clipRect) {
+    const double xmin=qMin(clipRect.left(), clipRect.right());
+    const double xmax=qMax(clipRect.left(), clipRect.right());
+    const double ymin=qMin(clipRect.top(), clipRect.bottom());
+    const double ymax=qMax(clipRect.top(), clipRect.bottom());
+
+    double x1=line.x1();
+    double y1=line.y1();
+    double x2=line.x2();
+    double y2=line.y2();
+    if (JKQTPClipLine(x1,y1,x2,y2,xmin,xmax,ymin,ymax)) {
+        return QLineF(x1,y1,x2,y2);
+    } else {
+        return QLineF();
+    }
+}
+
+/*! \brief clips the given list of poly-lines \a polylines_in to the given rectangle \a clipRect
+    \ingroup jkqtptools_drawing
+
+    \param polylines_in list of poly-lines to be clipped
+    \param clipRect rectangle to clip to
+    \return a list of poly-lines representing the clipped lines. Note that some lines may be split further so the number of poly-lines in the output may actually be larger than the number of polylines in the input!
+*/
+JKQTCOMMON_LIB_EXPORT QList<QList<QPointF>> JKQTPClipPolyLines(const QList<QList<QPointF>> & polylines_in, const QRectF& clipRect);
+/*! \brief clips the given poly-line \a polyline_in to the given rectangle \a clipRect
+    \ingroup jkqtptools_drawing
+
+    \param polyline_in poly-line to be clipped
+    \param clipRect rectangle to clip to
+    \return a list of poly-lines representing the clipped line.
+*/
+JKQTCOMMON_LIB_EXPORT QList<QList<QPointF>> JKQTPClipPolyLine(const QList<QPointF> & polyline_in, const QRectF& clipRect);
+
+/*! \brief tries to reduce the complexity of the given poly-line \a lines_in, but keeping the appearance as if all lines were drawn
+    \ingroup jkqtptools_drawing
+
+    \param lines_in poly-line to be simplified
+    \param maxDeltaXY a group has to be either less wide or less high than this, typically equals the linewidth of the poly-line
+    \return a simplified version of lines_in
+*/
+JKQTCOMMON_LIB_EXPORT QList<QPointF> JKQTPSimplifyPolyLines(const QList<QPointF>& lines_in, double maxDeltaXY=1.0);
+
 /*! \brief draw a tooltip, using the current brush and pen of the provided painter
     \ingroup jkqtptools_drawing
 
@@ -286,6 +434,7 @@ inline void JKQTPDrawTooltip(TPainter& painter, double x, double y, const QRectF
 
 template <class TPainter>
 inline void JKQTPPlotSymbol(TPainter& painter, double x, double y, JKQTPGraphSymbols symbol, double symbolSize, double symbolLineWidth, QColor color, QColor fillColor) {
+    if (symbol==JKQTPNoSymbol) return;
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     QPen p=painter.pen();
     p.setColor(color);

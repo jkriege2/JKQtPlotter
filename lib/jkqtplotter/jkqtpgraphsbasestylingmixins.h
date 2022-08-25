@@ -47,7 +47,9 @@ class JKQTPlotter; // forward
     .
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPGraphLineStyleMixin {
-        Q_GADGET
+#ifndef JKQTPLOTTER_WORKAROUND_QGADGET_BUG
+      Q_GADGET
+#endif
     public:
         /** \brief class constructor */
         JKQTPGraphLineStyleMixin();
@@ -144,6 +146,76 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphLineStyleMixin {
 };
 
 
+
+/*! \brief This Mix-In class provides setter/getter methods, storage and other facilities for a line-graph compression algorithm
+    \ingroup jkqtplotter_basegraphs_stylemixins
+
+    supported properties:
+      - activate compression (improves plotting speed, but decreases detail level)
+      - level of retained details
+    .
+
+    \image html JKQTPSimplifyPolyLines_agressive.png
+ */
+class JKQTPLOTTER_LIB_EXPORT JKQTPGraphLinesCompressionMixin {
+#ifndef JKQTPLOTTER_WORKAROUND_QGADGET_BUG
+      Q_GADGET
+#endif
+    public:
+        /** \brief class constructor */
+        JKQTPGraphLinesCompressionMixin();
+
+        virtual ~JKQTPGraphLinesCompressionMixin();
+
+
+        /** \copydoc useNonvisibleLineCompression */
+        void setUseNonvisibleLineCompression(bool _useNonvisibleLineCompression);
+        /** \copydoc useNonvisibleLineCompression */
+        bool getUseNonvisibleLineCompression() const;
+        /** \copydoc useNonvisibleLineCompression */
+        void setNonvisibleLineCompressionAgressiveness(double Agressiveness);
+        /** \copydoc useNonvisibleLineCompression */
+        double getNonvisibleLineCompressionAgressiveness() const;
+
+
+#ifndef JKQTPLOTTER_WORKAROUND_QGADGET_BUG
+        Q_PROPERTY(bool useNonvisibleLineCompression MEMBER useNonvisibleLineCompression READ getUseNonvisibleLineCompression WRITE setUseNonvisibleLineCompression)
+        Q_PROPERTY(double nonvisibleLineCompressionAgressiveness MEMBER nonvisibleLineCompressionAgressiveness READ getNonvisibleLineCompressionAgressiveness WRITE setNonvisibleLineCompressionAgressiveness)
+#endif
+    private:
+        /** \brief use an optimization algorithm that tries to reduce the number of lines that
+         *         overlap each other (i.e. for noisy data or a low zoom) and thus improves
+         *         drawing speed
+         *
+         *  When the property useNonvisibleLineCompression is activated (\c true ), the graph class
+         *  uses the algorithm implemented in JKQTPSimplifyPolyLines() to simplify the task of plotting.
+         *
+         *  \image html JKQTPSimplifyPolyLines.png
+         *
+         *  \note This option is designed to not alter the plot representation significantly,
+         *        but of course it may ...
+         *
+         *  \see JKQTPSimplifyPolyLines() setUseNonvisibleLineCompression(), getUseNonvisibleLineCompression()
+         */
+        bool m_useNonvisibleLineCompression;
+
+        /** \brief this sets the agressiveness of the option useNonvisibleLineCompression
+         *
+         *  Basically the compressed groups will have a size of nonvisibleLineCompressionAgressiveness*pen.linewidth
+         *
+         *  The default setting is \c 1.0 , larger settings will lead to better compression  (and faster plotting), but less detailed
+         *  plots, whereas smaller settings will increase the detail-level, but also increase plotting time.
+         *
+         *  \image html JKQTPSimplifyPolyLines_agressive.png
+         *
+         *  \note This option is designed to not alter the plot representation significantly,
+         *        but of course it may ...
+         *
+         *  \see JKQTPSimplifyPolyLines() setUseNonvisibleLineCompression(), getUseNonvisibleLineCompression()
+         */
+        double m_nonvisibleLineCompressionAgressiveness;
+protected:
+};
 
 
 

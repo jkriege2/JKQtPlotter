@@ -128,6 +128,14 @@ void JKQTPSpecialLineHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
     QPen ph=getHighlightingLinePen(painter, parent);
     QPen np(Qt::NoPen);
     QBrush b=getFillBrush(painter, parent);
+    const double xmin=transformX(parent->getXAxis()->getMin());
+    const double xmax=transformX(parent->getXAxis()->getMax());
+    const double ymin=transformY(parent->getYAxis()->getMin());
+    const double ymax=transformY(parent->getYAxis()->getMax());
+    const auto symType=getSymbolType();
+    const double symbolSize=parent->pt2px(painter, getSymbolSize());
+    const QMarginsF clipMargins=(symType==JKQTPNoSymbol)?QMarginsF(0,0,0,0):QMarginsF(symbolSize,symbolSize,symbolSize,symbolSize);
+    const QRectF cliprect=QRectF(qMin(xmin,xmax),qMin(ymin,ymax),fabs(xmax-xmin),fabs(ymax-ymin))+clipMargins;
 
     int imax=0;
     int imin=0;
@@ -135,18 +143,17 @@ void JKQTPSpecialLineHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
     if (getIndexRange(imin, imax)) {
 
 
-        QPainterPath pl, pf;
-        QVector<QPointF> ps;
+        QPolygonF pl, pf;
+        QList<QPointF> ps;
 
         double xold=-1;
         double yold=-1;
         double y0=transformY(getBaseline());
         if (parent->getYAxis()->isLogAxis()) {
-            y0=transformY(parent->getYAxis()->getMin());
             if (getBaseline()>0 && getBaseline()>parent->getYAxis()->getMin()) y0=transformY(getBaseline());
             else y0=transformY(parent->getYAxis()->getMin());
         }
-        bool subsequentItem=false;
+        bool firstPoint=true;
         intSortData();
         for (int iii=imin; iii<imax; iii++) {
             const int i=qBound(imin, getDataIndex(iii), imax);
@@ -158,7 +165,7 @@ void JKQTPSpecialLineHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
                 const double y=transformY(yv);
                 if (JKQTPIsOKFloat(x) && JKQTPIsOKFloat(y)) {
                     ps.append(QPointF(x,y));
-                    if (subsequentItem) {
+                    if (!firstPoint) {
                         //double xl1=xold;
                         //double yl1=yold;
                         //double xl2=x;
@@ -171,13 +178,13 @@ void JKQTPSpecialLineHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
                             //     *--------|
                             // xold/yold
                             const double d=(x-xold);
-                            pf.lineTo(xold+d/2.0, yold);
-                            pf.lineTo(xold+d/2.0, y);
-                            pf.lineTo(x, y);
+                            pf<<QPointF(xold+d/2.0, yold);
+                            pf<<QPointF(xold+d/2.0, y);
+                            pf<<QPointF(x, y);
                             if (getDrawLine()) {
-                                pl.lineTo(xold+d/2.0, yold);
-                                pl.lineTo(xold+d/2.0, y);
-                                pl.lineTo(x, y);
+                                pl<<QPointF(xold+d/2.0, yold);
+                                pl<<QPointF(xold+d/2.0, y);
+                                pl<<QPointF(x, y);
                             }
                         } else if (m_specialLineType==JKQTPStepLeft) {
                             //                     x/y
@@ -185,11 +192,11 @@ void JKQTPSpecialLineHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
                             //     |
                             //     *
                             // xold/yold
-                            pf.lineTo(xold, y);
-                            pf.lineTo(x, y);
+                            pf<<QPointF(xold, y);
+                            pf<<QPointF(x, y);
                             if (getDrawLine()) {
-                                pl.lineTo(xold, y);
-                                pl.lineTo(x, y);
+                                pl<<QPointF(xold, y);
+                                pl<<QPointF(x, y);
                             }
                         } else if (m_specialLineType==JKQTPStepRight) {
                             //                     x/y
@@ -197,11 +204,11 @@ void JKQTPSpecialLineHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
                             //                      |
                             //     *----------------|
                             // xold/yold
-                            pf.lineTo(x, yold);
-                            pf.lineTo(x, y);
+                            pf<<QPointF(x, yold);
+                            pf<<QPointF(x, y);
                             if (getDrawLine()) {
-                                pl.lineTo(x, yold);
-                                pl.lineTo(x, y);
+                                pl<<QPointF(x, yold);
+                                pl<<QPointF(x, y);
                             }
                         } else if (m_specialLineType==JKQTPStepAverage) {
                             //                     x/y
@@ -213,13 +220,13 @@ void JKQTPSpecialLineHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
                             // xold/yold
                             //const double d=(x-xold);
                             const double h=(y-yold);
-                            pf.lineTo(xold, yold+h/2.0);
-                            pf.lineTo(x, yold+h/2.0);
-                            pf.lineTo(x,y);
+                            pf<<QPointF(xold, yold+h/2.0);
+                            pf<<QPointF(x, yold+h/2.0);
+                            pf<<QPointF(x,y);
                             if (getDrawLine()) {
-                                pl.lineTo(xold, yold+h/2.0);
-                                pl.lineTo(x, yold+h/2.0);
-                                pl.lineTo(x,y);
+                                pl<<QPointF(xold, yold+h/2.0);
+                                pl<<QPointF(x, yold+h/2.0);
+                                pl<<QPointF(x,y);
                             }
                         } else if (m_specialLineType==JKQTPDirectLine) {
                             //                     x/y
@@ -227,54 +234,64 @@ void JKQTPSpecialLineHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
                             //           /----/
                             //     *----/
                             // xold/yold
-                            pf.lineTo(x, y);
+                            pf<<QPointF(x, y);
                             if (getDrawLine()) {
-                                pl.lineTo(x, y);
+                                pl<<QPointF(x, y);
                             }
                         }
 
                         //std::cout<<"line ("<<xl1<<", "<<yl1<<") -- ("<<xl2<<", "<<yl2<<")"<<std::endl;
                     } else {
-                        if (getDrawLine()) pl.moveTo(x,y);
-                        pf.moveTo(x, y0);
-                        pf.lineTo(x, y);
+                        if (getDrawLine()) pl<<QPointF(x,y);
+                        pf<<QPointF(x, y0);
+                        pf<<QPointF(x, y);
                         //xstart=x;
                         //ystart=y0;
                     }
                     xold=x;
                     yold=y;
-                    subsequentItem=true;
+                    firstPoint=false;
                 }
             }
         }
         if (getFillCurve()) {
-            pf.lineTo(xold, y0);
-            pf.closeSubpath();
+            pf<<QPointF(xold, y0);
         }
         painter.save();
         auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
 
         if (getFillCurve()) {
-            painter.fillPath(pf, b);
+            painter.setBrush(b);
+            painter.setPen(Qt::NoPen);
+            painter.drawPolygon(pf.intersected(cliprect));
+        }
+
+        QList<QList<QPointF>> pl_fordrawing;
+        if (isHighlighted() || getDrawLine()) {
+            pl_fordrawing=JKQTPClipPolyLine(pl, cliprect);
         }
 
         if (isHighlighted()) {
-            painter.setBrush(QBrush(Qt::transparent));
+            painter.setBrush(Qt::NoBrush);
             painter.setPen(ph);
-            painter.drawPath(pl);
+            for (const auto &lines : pl_fordrawing) {
+                painter.drawPolyline(lines);
+            }
         }
 
         if (getDrawLine()) {
-            painter.setBrush(QBrush(Qt::transparent));
+            painter.setBrush(Qt::NoBrush);
             painter.setPen(p);
-            painter.drawPath(pl);
+            for (const auto &lines : pl_fordrawing) {
+                painter.drawPolyline(lines);
+            }
         }
 
         if (m_drawSymbols) {
             painter.save();
             auto __finalpaintsym=JKQTPFinally([&painter]() {painter.restore();});
             for (auto& ppoint: ps) {
-                plotStyledSymbol(parent, painter, ppoint.x(), ppoint.y());
+                if (cliprect.contains(ppoint)) plotStyledSymbol(parent, painter, ppoint.x(), ppoint.y());
             }
         }
     }
@@ -317,6 +334,14 @@ void JKQTPSpecialLineVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
     QPen ph=getHighlightingLinePen(painter, parent);
     QPen np(Qt::NoPen);
     QBrush b=getFillBrush(painter, parent);
+    const double xmin=transformX(parent->getXAxis()->getMin());
+    const double xmax=transformX(parent->getXAxis()->getMax());
+    const double ymin=transformY(parent->getYAxis()->getMin());
+    const double ymax=transformY(parent->getYAxis()->getMax());
+    const auto symType=getSymbolType();
+    const double symbolSize=parent->pt2px(painter, getSymbolSize());
+    const QMarginsF clipMargins=(symType==JKQTPNoSymbol)?QMarginsF(0,0,0,0):QMarginsF(symbolSize,symbolSize,symbolSize,symbolSize);
+    const QRectF cliprect=QRectF(qMin(xmin,xmax),qMin(ymin,ymax),fabs(xmax-xmin),fabs(ymax-ymin))+clipMargins;
 
     int imax=0;
     int imin=0;
@@ -324,8 +349,8 @@ void JKQTPSpecialLineVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
     if (getIndexRange(imin, imax)) {
 
 
-        QPainterPath pl, pf;
-        QVector<QPointF> ps;
+        QPolygonF pl, pf;
+        QList<QPointF> ps;
 
         double xold=-1;
         double yold=-1;
@@ -354,27 +379,27 @@ void JKQTPSpecialLineVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
 
                         if (m_specialLineType==JKQTPStepCenter) {
                             double d=(y-yold);
-                            pf.lineTo(xold, yold+d/2.0);
-                            pf.lineTo(x, yold+d/2.0);
-                            pf.lineTo(x, y);
+                            pf<<QPointF(xold, yold+d/2.0);
+                            pf<<QPointF(x, yold+d/2.0);
+                            pf<<QPointF(x, y);
                             if (getDrawLine()) {
-                                pl.lineTo(xold, yold+d/2.0);
-                                pl.lineTo(x, yold+d/2.0);
-                                pl.lineTo(x, y);
+                                pl<<QPointF(xold, yold+d/2.0);
+                                pl<<QPointF(x, yold+d/2.0);
+                                pl<<QPointF(x, y);
                             }
                         } else if (m_specialLineType==JKQTPStepLeft) {
-                            pf.lineTo(x, yold);
-                            pf.lineTo(x, y);
+                            pf<<QPointF(x, yold);
+                            pf<<QPointF(x, y);
                             if (getDrawLine()) {
-                                pl.lineTo(x, yold);
-                                pl.lineTo(x, y);
+                                pl<<QPointF(x, yold);
+                                pl<<QPointF(x, y);
                             }
                         } else if (m_specialLineType==JKQTPStepRight) {
-                            pf.lineTo(xold, y);
-                            pf.lineTo(x, y);
+                            pf<<QPointF(xold, y);
+                            pf<<QPointF(x, y);
                             if (getDrawLine()) {
-                                pl.lineTo(xold, y);
-                                pl.lineTo(x, y);
+                                pl<<QPointF(xold, y);
+                                pl<<QPointF(x, y);
                             }
                         } else if (m_specialLineType==JKQTPStepAverage) {
                             //                     x/y
@@ -386,13 +411,13 @@ void JKQTPSpecialLineVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
                             // xold/yold
                             const double d=(x-xold);
                             //const double h=(y-yold);
-                            pf.lineTo(xold+d/2.0, yold);
-                            pf.lineTo(xold+d/2.0, y);
-                            pf.lineTo(x,y);
+                            pf<<QPointF(xold+d/2.0, yold);
+                            pf<<QPointF(xold+d/2.0, y);
+                            pf<<QPointF(x,y);
                             if (getDrawLine()) {
-                                pl.lineTo(xold+d/2.0, yold);
-                                pl.lineTo(xold+d/2.0, y);
-                                pl.lineTo(x,y);
+                                pl<<QPointF(xold+d/2.0, yold);
+                                pl<<QPointF(xold+d/2.0, y);
+                                pl<<QPointF(x,y);
                             }
                         } else if (m_specialLineType==JKQTPDirectLine) {
                             //                     x/y
@@ -400,17 +425,17 @@ void JKQTPSpecialLineVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
                             //           /----/
                             //     *----/
                             // xold/yold
-                            pf.lineTo(x, y);
+                            pf<<QPointF(x, y);
                             if (getDrawLine()) {
-                                pl.lineTo(x, y);
+                                pl<<QPointF(x, y);
                             }
                         }
 
                         //std::cout<<"line ("<<xl1<<", "<<yl1<<") -- ("<<xl2<<", "<<yl2<<")"<<std::endl;
                     } else {
-                        if (getDrawLine()) pl.moveTo(x,y);
-                        pf.moveTo(x0, y);
-                        pf.lineTo(x, y);
+                        if (getDrawLine()) pl<<QPointF(x,y);
+                        pf<<QPointF(x0, y);
+                        pf<<QPointF(x, y);
                     }
                     xold=x;
                     yold=y;
@@ -418,31 +443,41 @@ void JKQTPSpecialLineVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
                 }
             }
         }
-        pf.lineTo(x0, yold);
-        pf.closeSubpath();
+        pf<<QPointF(x0, yold);
         painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
 
         if (getFillCurve()) {
-            painter.fillPath(pf, b);
+            painter.setBrush(b);
+            painter.setPen(Qt::NoPen);
+            painter.drawPolygon(pf.intersected(cliprect));
+        }
+
+        QList<QList<QPointF>> pl_fordrawing;
+        if (isHighlighted() || getDrawLine()) {
+            pl_fordrawing=JKQTPClipPolyLine(pl, cliprect);
         }
 
         if (isHighlighted()) {
-            painter.setBrush(QBrush(Qt::transparent));
+            painter.setBrush(Qt::NoBrush);
             painter.setPen(ph);
-            painter.drawPath(pl);
+            for (const auto &lines : pl_fordrawing) {
+                painter.drawPolyline(lines);
+            }
         }
 
         if (getDrawLine()) {
-            painter.setBrush(QBrush(Qt::transparent));
+            painter.setBrush(Qt::NoBrush);
             painter.setPen(p);
-            painter.drawPath(pl);
+            for (const auto &lines : pl_fordrawing) {
+                painter.drawPolyline(lines);
+            }
         }
 
         if (m_drawSymbols) {
             painter.save();
             auto __finalpaintsym=JKQTPFinally([&painter]() {painter.restore();});
-            for (auto& point: ps) {
-                plotStyledSymbol(parent, painter, point.x(), point.y());
+            for (auto& ppoint: ps) {
+                if (cliprect.contains(ppoint)) plotStyledSymbol(parent, painter, ppoint.x(), ppoint.y());
             }
         }
     }

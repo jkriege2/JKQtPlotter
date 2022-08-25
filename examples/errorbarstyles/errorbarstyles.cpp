@@ -98,7 +98,7 @@ int main(int argc, char* argv[])
         // graph title is made from symbol+errorStylestyle, we use the LaTeX instruction \verb around the
         // result of JKQTPErrorPlotstyle2String(), because it contains underscores that would otherwise
         // lead to lower-case letter, which we don't want
-        graph->setTitle("\\verb{"+JKQTPErrorPlotstyle2String(errorStyles[errorID])+"}");
+        graph->setTitle("\\verb!"+JKQTPErrorPlotstyle2String(errorStyles[errorID])+"!");
 
         // add the graph to the plot, so it is actually displayed
         plot.addGraph(graph);

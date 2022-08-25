@@ -53,7 +53,7 @@ int main(int argc, char* argv[])
         plot.addGraph(a=new JKQTPGeoArrow(&plot, 0.7,  arr_y, 0.9, arr_y+0.05, decor, JKQTPNoDecorator)); a->setStyle(QColor("red"), 1);
         plot.addGraph(a=new JKQTPGeoArrow(&plot, 1.0,  arr_y, 1.3, arr_y+0.05, decor, JKQTPNoDecorator)); a->setStyle(QColor("red"), 2);
         plot.addGraph(a=new JKQTPGeoArrow(&plot, 1.4,  arr_y, 1.7, arr_y+0.05, decor, JKQTPNoDecorator)); a->setStyle(QColor("red"), 3);
-        plot.addGraph(new JKQTPGeoText(&plot, a->getX2()+0.05, a->getY2(), "\\verb{"+JKQTPLineDecoratorStyle2String(decor)+"}", 12, a->getLineColor()));
+        plot.addGraph(new JKQTPGeoText(&plot, a->getX2()+0.05, a->getY2(), "\\verb!"+JKQTPLineDecoratorStyle2String(decor)+"!", 12, a->getLineColor()));
         arr_y+=arr_deltay;
     }
 

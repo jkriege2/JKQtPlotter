@@ -6,11 +6,16 @@
 
 #include "speedtestplot.h"
 #include "jkqtplotter/graphs/jkqtpscatter.h"
+#include "jkqtcommon_statistics_and_math/jkqtpstatisticstools.h"
 
 SpeedTestPlot::SpeedTestPlot():
     JKQTPlotter(), NDATA(500), dx(1.0/500.0*4.0*JKQTPSTATISTICS_PI), x0(0)
 
 {
+    X.fill(0);
+    Y.fill(0);
+    Y2.fill(0);
+
     // 1. optimize JKQTPlotter for speed (by switching off anti-aliasing)
     getPlotter()->setUseAntiAliasingForGraphs(false);
     getPlotter()->setUseAntiAliasingForSystem(false);
@@ -18,12 +23,7 @@ SpeedTestPlot::SpeedTestPlot():
 
 
     // 2. now we create data for a simple plot (a sine curve + random[-0.5,0.5])
-    for (size_t i=0; i<X.size(); i++) {
-        const double x=static_cast<double>(i)*dx;
-        X[i]=x0+x;
-        Y[i]=sin(x)+static_cast<double>(std::rand())/static_cast<double>(RAND_MAX + 1u)-0.5;
-        Y2[i]=cos(x)+static_cast<double>(std::rand())/static_cast<double>(RAND_MAX + 1u)-0.5;
-    }
+    updateDataSize(NDATA, false);
 
     // 3. make data available to JKQTPlotter by adding it to the internal datastore.
     //    Here the data from the std::array's is not copied, but only the pointer to
@@ -60,6 +60,7 @@ SpeedTestPlot::SpeedTestPlot():
                 p->getPlotter()->setUseAntiAliasingForGraphs(p->actAntiAliase->isChecked());
                 p->getPlotter()->setUseAntiAliasingForSystem(p->actAntiAliase->isChecked());
                 p->getPlotter()->setUseAntiAliasingForText(p->actAntiAliase->isChecked());
+                if (!p->actAnimation->isChecked()) p->redrawPlot();
             }, this));
 
     actTwoGraphs=new QAction(QObject::tr("2 Graphs"));
@@ -67,6 +68,7 @@ SpeedTestPlot::SpeedTestPlot():
     actTwoGraphs->setChecked(true);
     connect(actTwoGraphs, &QAction::triggered, std::bind([](SpeedTestPlot* p, JKQTPXYLineGraph* g){
                 g->setVisible(p->actTwoGraphs->isChecked());
+                if (!p->actAnimation->isChecked()) p->redrawPlot();
             }, this, graph2));
 
     actFixedXAxis=new QAction(QObject::tr("Fixed X-Axis"));
@@ -76,18 +78,20 @@ SpeedTestPlot::SpeedTestPlot():
     actLines=new QAction(QObject::tr("Show Graph Lines"));
     actLines->setCheckable(true);
     actLines->setChecked(true);
-    connect(actLines, &QAction::toggled, std::bind([](bool enabled, JKQTPXYLineGraph* g, JKQTPXYLineGraph* g2){
+    connect(actLines, &QAction::toggled, std::bind([](bool enabled, JKQTPXYLineGraph* g, JKQTPXYLineGraph* g2,SpeedTestPlot* p){
                 g->setDrawLine(enabled);
                 g2->setDrawLine(enabled);
-            }, std::placeholders::_1, graph, graph2));
+                if (!p->actAnimation->isChecked()) p->redrawPlot();
+            }, std::placeholders::_1, graph, graph2,this));
 
     actSymbols=new QAction(QObject::tr("Show Graph Symbols"));
     actSymbols->setCheckable(true);
     actSymbols->setChecked(true);
-    connect(actSymbols, &QAction::toggled, std::bind([](bool enabled, JKQTPXYLineGraph* g, JKQTPXYLineGraph* g2){
+    connect(actSymbols, &QAction::toggled, std::bind([](bool enabled, JKQTPXYLineGraph* g, JKQTPXYLineGraph* g2,SpeedTestPlot* p){
                 g->setSymbolType(enabled?JKQTPCross:JKQTPNoSymbol);
                 g2->setSymbolType(enabled?JKQTPCircle:JKQTPNoSymbol);
-            }, std::placeholders::_1, graph, graph2));
+                if (!p->actAnimation->isChecked()) p->redrawPlot();
+            }, std::placeholders::_1, graph, graph2,this));
 
     menuSizes=new QMenu(QObject::tr("number of datapoints"), this);
     QActionGroup* actGroup=new QActionGroup(menuSizes);
@@ -103,12 +107,58 @@ SpeedTestPlot::SpeedTestPlot():
         menuSizes->addAction(act);
     }
 
+    actUseNonvisibleLineCompression=new QAction(QObject::tr("use NonvisibleLineCompression"));
+    actUseNonvisibleLineCompression->setCheckable(true);
+    actUseNonvisibleLineCompression->setChecked(true);
+    connect(actUseNonvisibleLineCompression, &QAction::toggled, std::bind([](bool enabled, JKQTPXYLineGraph* g, JKQTPXYLineGraph* g2,SpeedTestPlot* p){
+                g->setUseNonvisibleLineCompression(enabled);
+                g2->setUseNonvisibleLineCompression(enabled);
+                if (!p->actAnimation->isChecked()) p->redrawPlot();
+            }, std::placeholders::_1, graph, graph2,this));
+
+
+    menuUseNonvisibleLineCompressionAgressiveness=new QMenu(QObject::tr("NonvisibleLineCompression level"), this);
+    actGroup=new QActionGroup(menuUseNonvisibleLineCompressionAgressiveness);
+    for (double a: {0.5, 0.8, 1.0, 1.5, 2.0, 5.0}) {
+        QAction* act=actGroup->addAction(QString::number(a));
+        act->setCheckable(true);
+        act->setChecked(a==1.0);
+        connect(act, &QAction::toggled, std::bind([](bool enabled,JKQTPXYLineGraph* g, JKQTPXYLineGraph* g2,SpeedTestPlot* p, double a){
+                    g->setNonvisibleLineCompressionAgressiveness(a);
+                    g2->setNonvisibleLineCompressionAgressiveness(a);
+                    if (!p->actAnimation->isChecked()) p->redrawPlot();
+                }, std::placeholders::_1, graph, graph2,this, a));
+        menuUseNonvisibleLineCompressionAgressiveness->addAction(act);
+    }
+
+    actStepAnimation=new QAction(QObject::tr("Next Animation Step"));
+    actStepAnimation->setCheckable(false);
+    actStepAnimation->setEnabled(false);
+    connect(actStepAnimation, &QAction::triggered, std::bind([](SpeedTestPlot* p){
+                p->plotNewData();
+            }, this));
+
+    actAnimation=new QAction(QObject::tr("Animation Active"));
+    actAnimation->setCheckable(true);
+    actAnimation->setChecked(true);
+    connect(actAnimation, &QAction::toggled, std::bind([](bool enabled, SpeedTestPlot* p, QAction* actStepAnimation){
+                if (enabled) {
+                    p->plotNewData();
+                }
+                actStepAnimation->setEnabled(!enabled);
+            }, std::placeholders::_1, this, actStepAnimation));
+
+
     addAction(actAntiAliase);
     addAction(actFixedXAxis);
     addAction(menuSizes->menuAction());
     addAction(actTwoGraphs);
     addAction(actLines);
     addAction(actSymbols);
+    addAction(actUseNonvisibleLineCompression);
+    addAction(menuUseNonvisibleLineCompressionAgressiveness->menuAction());
+    addAction(actAnimation);
+    addAction(actStepAnimation);
 
     // show plotter and make it a decent size
     show();
@@ -130,8 +180,8 @@ void SpeedTestPlot::plotNewData()
             Y2[i]=Y2[i+1];
         }
         // add one new data point
-        Y[NDATA-1]=sin(X[NDATA-1]+x0)+static_cast<double>(std::rand())/static_cast<double>(RAND_MAX + 1u)-0.5;
-        Y2[NDATA-1]=cos(X[NDATA-1]+x0)+static_cast<double>(std::rand())/static_cast<double>(RAND_MAX + 1u)-0.5;
+        Y[NDATA-1]=sin(X[NDATA-1]+x0)+static_cast<double>(std::rand())/static_cast<double>(RAND_MAX + 1u)-0.5+addOutlier(1.0/static_cast<double>(NDATA/5), 2.0);
+        Y2[NDATA-1]=cos(X[NDATA-1]+x0)+static_cast<double>(std::rand())/static_cast<double>(RAND_MAX + 1u)-0.5+addOutlier(1.0/static_cast<double>(NDATA/7), 2.0);
     } else {
         // move old data to the left
         for (size_t i=0; i<NDATA-1; i++) {
@@ -141,8 +191,8 @@ void SpeedTestPlot::plotNewData()
         }
         // add one new data point
         X[NDATA-1]=X[NDATA-2]+dx;
-        Y[NDATA-1]=sin(X[NDATA-1])+static_cast<double>(std::rand())/static_cast<double>(RAND_MAX + 1u)-0.5;
-        Y2[NDATA-1]=cos(X[NDATA-1])+static_cast<double>(std::rand())/static_cast<double>(RAND_MAX + 1u)-0.5;
+        Y[NDATA-1]=sin(X[NDATA-1])+static_cast<double>(std::rand())/static_cast<double>(RAND_MAX + 1u)-0.5+addOutlier(1.0/static_cast<double>(NDATA/5), 2.0);
+        Y2[NDATA-1]=cos(X[NDATA-1])+static_cast<double>(std::rand())/static_cast<double>(RAND_MAX + 1u)-0.5+addOutlier(1.0/static_cast<double>(NDATA/7), 2.0);
 
     }
 
@@ -155,12 +205,17 @@ void SpeedTestPlot::plotNewData()
     const auto tlastalst=t_lastplot;
     t_lastplot=std::chrono::system_clock::now();
     const double delta_secs=static_cast<double>(std::chrono::duration_cast<std::chrono::milliseconds>(t_lastplot-tlastalst).count())/1000.0;
-    setWindowTitle(QString("Live Data Speed Test: %2 datapoint, %1 fps").arg(1.0/delta_secs,0,'f',2).arg(NDATA));
+    calctimes.push_back(delta_secs);
+    if (delta_secs<0.05) { while (calctimes.size()>60) calctimes.pop_front(); }
+    else if (delta_secs<0.1) { while (calctimes.size()>30) calctimes.pop_front(); }
+    else if (delta_secs<1) { while (calctimes.size()>10) calctimes.pop_front(); }
+    else { while (calctimes.size()>5) calctimes.pop_front(); }
+    setWindowTitle(QString("Live Data Speed Test: %2 datapoint, %3 [this: %1] fps").arg(1.0/delta_secs,0,'f',2).arg(NDATA).arg(1.0/jkqtpstatAverage(calctimes.begin(), calctimes.end()),0,'f',2));
     // enqueue call for next data value
-    QTimer::singleShot(1, this, SLOT(plotNewData()));
+    if (actAnimation->isChecked()) QTimer::singleShot(1, this, SLOT(plotNewData()));
 }
 
-void SpeedTestPlot::updateDataSize(size_t newSize)
+void SpeedTestPlot::updateDataSize(size_t newSize, bool updatePlots)
 {
     NDATA=newSize;
     dx=1.0/double(NDATA)*4.0*JKQTPSTATISTICS_PI;
@@ -168,28 +223,36 @@ void SpeedTestPlot::updateDataSize(size_t newSize)
     for (size_t i=0; i<X.size(); i++) {
         const double x=static_cast<double>(i)*dx;
         X[i]=x0+x;
-        Y[i]=sin(x)+static_cast<double>(std::rand())/static_cast<double>(RAND_MAX + 1u)-0.5;
-        Y2[i]=cos(x)+static_cast<double>(std::rand())/static_cast<double>(RAND_MAX + 1u)-0.5;
+        Y[i]=sin(x)+static_cast<double>(std::rand())/static_cast<double>(RAND_MAX + 1u)-0.5+addOutlier(1.0/static_cast<double>(NDATA/5), 2.0);
+        Y2[i]=cos(x)+static_cast<double>(std::rand())/static_cast<double>(RAND_MAX + 1u)-0.5+addOutlier(1.0/static_cast<double>(NDATA/7), 2.0);
     }
 
-    // 3. make data available to JKQTPlotter by adding it to the internal datastore.
-    //    Here the data from the std::array's is not copied, but only the pointer to
-    //    the array is added to the datastore. therefore the datastore does not manage
-    //    the memory, oly uses the data stored in it!
-    JKQTPDatastore* ds=getDatastore();
-    ds->clear();
-    size_t columnX=ds->addColumn(X.data(), NDATA, "x");
-    size_t columnY=ds->addColumn(Y.data(), NDATA, "y");
-    size_t columnY2=ds->addColumn(Y2.data(), NDATA, "y2");
+    if (updatePlots) {
+        // 3. make data available to JKQTPlotter by adding it to the internal datastore.
+        //    Here the data from the std::array's is not copied, but only the pointer to
+        //    the array is added to the datastore. therefore the datastore does not manage
+        //    the memory, oly uses the data stored in it!
+        JKQTPDatastore* ds=getDatastore();
+        ds->clear();
+        size_t columnX=ds->addColumn(X.data(), NDATA, "x");
+        size_t columnY=ds->addColumn(Y.data(), NDATA, "y");
+        size_t columnY2=ds->addColumn(Y2.data(), NDATA, "y2");
 
-    // 4. create two  graphs in the plot, which plots the dataset X/Y:
-    graph->setXColumn(columnX);
-    graph->setYColumn(columnY);
+        // 4. create two  graphs in the plot, which plots the dataset X/Y:
+        graph->setXColumn(columnX);
+        graph->setYColumn(columnY);
 
-    graph2->setXColumn(columnX);
-    graph2->setYColumn(columnY2);
+        graph2->setXColumn(columnX);
+        graph2->setYColumn(columnY2);
 
-    // 6. scale the plot so the graph is contained
-    setX(X[0], X[NDATA]);
-    setY(-2,2);
+        // 6. scale the plot so the graph is contained
+        setX(X[0], X[NDATA]);
+        setY(-2,2);
+    }
+}
+
+double SpeedTestPlot::addOutlier(double prob, double height)
+{
+    if (static_cast<double>(std::rand())/static_cast<double>(RAND_MAX + 1u)<prob) return height*(2.0*static_cast<double>(std::rand())/static_cast<double>(RAND_MAX + 1u)-1.0);
+    else return 0;
 }

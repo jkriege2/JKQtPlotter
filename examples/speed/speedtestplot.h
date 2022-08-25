@@ -2,6 +2,7 @@
 #include <array>
 #include <random>
 #include <chrono>
+#include <QList>
 #include <QMenu>
 #include <QActionGroup>
 #include "jkqtplotter/jkqtplotter.h"
@@ -22,15 +23,22 @@ class SpeedTestPlot: public JKQTPlotter {
         QAction* actFixedXAxis;
         QAction* actLines;
         QAction* actSymbols;
+        QAction* actUseNonvisibleLineCompression;
+        QMenu* menuUseNonvisibleLineCompressionAgressiveness;
+        QAction* actUseClipping;
+        QAction* actAnimation;
+        QAction* actStepAnimation;
         QMenu* menuSizes;
         JKQTPXYLineGraph* graph;
         JKQTPXYLineGraph* graph2;
+        QList<double> calctimes;
     public:
         SpeedTestPlot();
 
         virtual ~SpeedTestPlot();
     protected slots:
         void plotNewData();
-        void updateDataSize(size_t newSize);
+        void updateDataSize(size_t newSize, bool updatePlots=true);
+        static double addOutlier(double prob, double height);
 
 };

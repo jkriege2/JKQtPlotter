@@ -155,6 +155,38 @@ QPen JKQTPGraphLineStyleMixin::getLinePenForRects(JKQTPEnhancedPainter &painter,
 
 
 
+JKQTPGraphLinesCompressionMixin::JKQTPGraphLinesCompressionMixin():
+    m_useNonvisibleLineCompression(true),
+    m_nonvisibleLineCompressionAgressiveness(1)
+{
+
+}
+
+JKQTPGraphLinesCompressionMixin::~JKQTPGraphLinesCompressionMixin()
+{
+
+}
+
+void JKQTPGraphLinesCompressionMixin::setUseNonvisibleLineCompression(bool _useNonvisibleLineCompression)
+{
+    m_useNonvisibleLineCompression=_useNonvisibleLineCompression;
+}
+
+bool JKQTPGraphLinesCompressionMixin::getUseNonvisibleLineCompression() const
+{
+    return m_useNonvisibleLineCompression;
+}
+
+void JKQTPGraphLinesCompressionMixin::setNonvisibleLineCompressionAgressiveness(double Agressiveness)
+{
+    m_nonvisibleLineCompressionAgressiveness=Agressiveness;
+}
+
+double JKQTPGraphLinesCompressionMixin::getNonvisibleLineCompressionAgressiveness() const
+{
+    return m_nonvisibleLineCompressionAgressiveness;
+}
+
 
 
 
