@@ -446,7 +446,7 @@ QList<QPolygonF > JKQTPClipPolyLines(const QList<QPolygonF > &polylines_in, cons
                 } else if (l==lclipped) {
                     if (out.last().size()==0) {
                         out.last()<<lclipped.p1();
-                    } if (out.last().last()!=lclipped.p1()) {
+                    } else if (out.last().last()!=lclipped.p1()) {
                         out<<QPolygonF();
                         out.last()<<lclipped.p1();
                     }
@@ -454,7 +454,7 @@ QList<QPolygonF > JKQTPClipPolyLines(const QList<QPolygonF > &polylines_in, cons
                 } else if (l.p1()==lclipped.p1() && l.p2()!=lclipped.p2()) {
                     if (out.last().size()==0) {
                         out.last()<<lclipped.p1();
-                    } if (out.last().last()!=lclipped.p1()) {
+                    } else if (out.last().last()!=lclipped.p1()) {
                         out<<QPolygonF();
                         out.last()<<lclipped.p1();
                     }
@@ -463,7 +463,7 @@ QList<QPolygonF > JKQTPClipPolyLines(const QList<QPolygonF > &polylines_in, cons
                 } else if (l.p1()!=lclipped.p1() && l.p2()==lclipped.p2()) {
                     if (out.last().size()==0) {
                         out.last()<<lclipped.p1();
-                    } if (out.last().last()!=lclipped.p1()) {
+                    } else if (out.last().last()!=lclipped.p1()) {
                         out<<QPolygonF();
                         out.last()<<lclipped.p1();
                     }
@@ -480,4 +480,13 @@ QList<QPolygonF > JKQTPClipPolyLines(const QList<QPolygonF > &polylines_in, cons
         }
     }
     return out;
+}
+
+QList<QPolygonF> JKQTPSimplifyPolyLines(const QList<QPolygonF> &lines_in, double maxDeltaXY)
+{
+    QList<QPolygonF> l;
+    for (const QPolygonF& p: lines_in) {
+        l<<JKQTPSimplifyPolyLines(p, maxDeltaXY);
+    }
+    return l;
 }

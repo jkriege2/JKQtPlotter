@@ -400,6 +400,15 @@ JKQTCOMMON_LIB_EXPORT QList<QPolygonF> JKQTPClipPolyLines(const QList<QPolygonF>
 */
 JKQTCOMMON_LIB_EXPORT QList<QPolygonF> JKQTPClipPolyLine(const QPolygonF & polyline_in, const QRectF& clipRect);
 
+/*! \brief tries to reduce the complexity of the given list of poly-lines \a lines_in, but keeping the appearance as if all lines were drawn
+    \ingroup jkqtptools_drawing
+
+    \param lines_in list of poly-lines to be simplified
+    \param maxDeltaXY a group has to be either less wide or less high than this, typically equals the linewidth of the poly-line
+    \return a simplified version of lines_in
+*/
+JKQTCOMMON_LIB_EXPORT QList<QPolygonF> JKQTPSimplifyPolyLines(const QList<QPolygonF>& lines_in, double maxDeltaXY=1.0);
+
 /*! \brief tries to reduce the complexity of the given poly-line \a lines_in, but keeping the appearance as if all lines were drawn
     \ingroup jkqtptools_drawing
 
