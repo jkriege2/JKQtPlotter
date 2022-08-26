@@ -67,7 +67,7 @@ endif()
 if(JKQtPlotter_BUILD_EXAMPLES)
 
     # custom target that generates the images for the JKQTMathText documentation
-    set(JKQTPlotter_GenerateDocScreenshots_DefaultOptions --screenshotdir="${CMAKE_CURRENT_LIST_DIR}/../screenshots/" --screenshot --disablehighdpi )
+    set(JKQTPlotter_GenerateDocScreenshots_DefaultOptions --screenshotdir="${CMAKE_CURRENT_LIST_DIR}/../screenshots/" --screenshot --disablehighdpi --smallscreenshotplot)
     # list examples for which to save a screenshot
     # the output basename equals the example name in this list,
     # unless you specify the basenames by adding it/them after a slash '/'
@@ -87,7 +87,7 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         evalcurve
         filledgraphs
         functionplot/functionplot,functionplot_fy
-        styledboxplot
+        styledboxplot/test_styledboxplot
         test_multiplot
     )
 

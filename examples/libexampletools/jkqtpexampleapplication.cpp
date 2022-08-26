@@ -137,8 +137,8 @@ int JKQTPExampleApplication::exec()
                     QImage gr=plot->grabPixelImage();
 
                     if (saveScreenshotPlot) {
-                        QString fn=bn+"_small.png";
-                        if (saveScreenshot) fn=bnp+"_small.png";
+                        QString fn=bn+".png";
+                        if (saveScreenshot) fn=bnp+".png";
                         if (scaleDownFromHighDPI && gr.devicePixelRatio()>1.0) {
                             gr.scaled((QSizeF(gr.size())/gr.devicePixelRatio()).toSize()).save(screenshotDir.absoluteFilePath(fn));
                         } else {
