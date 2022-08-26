@@ -45,9 +45,88 @@ class JKQTPDatastore;
 
 
 
+/*! \brief This implements xy scatter plots. This also alows to draw symbols at the data points.
+    \ingroup jkqtplotter_linesymbolgraphs_simple
+
+    \image html plot_scatterplots.png
+
+    \note This classes can (and does by default) apply a line-compression strategy that improves plotting speed
+          but reduces accuracy a bit. See JKQTPGraphLinesCompressionMixin for details.
+
+    \see JKQTPXYScatterErrorGraph for a version with error indicators and JKQTPXYParametrizedScatterGraph for a more feature-rich version
+         that allows to also change the color/size of the symbols from data
+ */
+class JKQTPLOTTER_LIB_EXPORT JKQTPXYScatterGraph: public JKQTPXYGraph, public JKQTPGraphSymbolStyleMixin {
+        Q_OBJECT
+    public:
+        /** \brief class constructor */
+        explicit JKQTPXYScatterGraph(JKQTBasePlotter* parent=nullptr);
+        /** \brief class constructor */
+        JKQTPXYScatterGraph(JKQTPlotter* parent);
+
+        /** \brief plots the graph to the plotter object specified as parent */
+        virtual void draw(JKQTPEnhancedPainter& painter) override;
+        /** \brief plots a key marker inside the specified rectangle \a rect */
+        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
+        /** \brief returns the color to be used for the key label */
+        virtual QColor getKeyLabelColor() const override;
+        /** \brief set color of line and symbol */
+        void setColor(QColor c);
+
+    protected:
 
 
-/*! \brief This implements xy scatter plots (like JKQTPXYLineGraph), but the color and size of the symbols may be taken from a column.
+
+
+
+};
+
+
+
+
+
+
+/*! \brief This implements xy scatter plots with x and y error indicators.
+    \ingroup jkqtplotter_linesymbolgraphs_simple
+
+    \image html plot_errorbarscatterlots.png
+
+    \see JKQTPXYScatterGraph, JKQTPXYGraphErrors
+ */
+class JKQTPLOTTER_LIB_EXPORT JKQTPXYScatterErrorGraph: public JKQTPXYScatterGraph, public JKQTPXYGraphErrors {
+        Q_OBJECT
+    public:
+        /** \brief class constructor */
+        JKQTPXYScatterErrorGraph(JKQTBasePlotter* parent=nullptr);
+        /** \brief class constructor */
+        JKQTPXYScatterErrorGraph(JKQTPlotter* parent);
+
+        /** \brief get the maximum and minimum x-value of the graph
+         *
+         * The result is given in the two parameters which are call-by-reference parameters!
+         */
+        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
+        /** \brief get the maximum and minimum y-value of the graph
+         *
+         * The result is given in the two parameters which are call-by-reference parameters!
+         */
+        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
+        /** \copydoc JKQTPGraph::usesColumn() */
+        virtual bool usesColumn(int c) const override;
+
+    protected:
+        /** \brief this function is used to plot error inidcators before plotting the graphs. */
+        virtual void drawErrorsBefore(JKQTPEnhancedPainter& painter)  override;
+};
+
+
+
+
+
+
+
+
+/*! \brief This implements xy scatter plots (like JKQTPXYScatterGraph), but the color and size of the symbols may be taken from a column.
     \ingroup jkqtplotter_linesymbolgraphs_param
 
     set the properties sizeColumn and/or colorColumn to change the size and/or color of the symbols according to the values in the column.
@@ -55,7 +134,7 @@ class JKQTPDatastore;
     \image html paramscatterplot.png "Different Styles of Parametrized Scatter/Line Graphs"
 
     \note This classes is meant for cases where you want to change the color/size/... of single symbols, in dependence
-          of data. If you are looking for a simple scatter-plot without data-dependent properties, use JKQTPXYLineGraph
+          of data. If you are looking for a simple scatter-plot without data-dependent properties, use JKQTPXYScatterGraph
           instead, which is faster.
 
     \note For the size, line width and symbol type columns, you can also set a functor, which converts the column value (optionally based
@@ -331,7 +410,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXYParametrizedScatterGraph: public JKQTPXYGrap
 
 
 
-/*! \brief This implements xy scatter plots (like JKQTPXYLineGraph), but the color and size of the symbols may be taken from a column. with errorbars
+/*! \brief This implements xy scatter plots (like JKQTPXYScatterGraph), but the color and size of the symbols may be taken from a column. with errorbars
     \ingroup jkqtplotter_linesymbolgraphs_param
 
     set the properties sizeColumn and/or colorColumn to change the size and/or color of the symbols according to the values in the column.
