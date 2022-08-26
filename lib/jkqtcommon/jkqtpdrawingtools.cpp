@@ -356,7 +356,7 @@ QPolygonF JKQTPSimplifyPolyLines(const QPolygonF &lines_in, double maxDeltaXY)
     l.reserve(lines_in.size());
 
     int groupStart=0;
-    int groupCount=1;
+    int groupCount=0;
     QRectF groupSize(lines_in[0], QSizeF(0,0));
 
     auto writeGroup=[](QPolygonF& l, const int& groupStart, const int& groupCount, const QRectF& groupSize, const QPolygonF& lines_in, double maxDeltaXY) {
