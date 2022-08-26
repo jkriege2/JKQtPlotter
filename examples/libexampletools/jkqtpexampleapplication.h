@@ -1,6 +1,7 @@
 #pragma once
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
+#include "jkqtpappsettingcontroller.h"
 #include <QDir>
 
 
@@ -20,7 +21,8 @@ protected:
     bool saveSmallScreenshot;
     bool saveScreenshotPlot;
     bool saveSmallScreenshotPlot;
-    QString screenshotBasename;
+    bool scaleDownFromHighDPI;
+    QStringList screenshotBasename;
     void readCmdLine();
     QRect getBoundsWithoutColor(QImage qImage, const QColor &exclusionColor = Qt::white);
 };

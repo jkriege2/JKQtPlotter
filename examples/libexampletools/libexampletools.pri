@@ -5,10 +5,12 @@ isEmpty(JKQTP_LIBEXAMPLETOOLS_PRI_INCLUDED) {
     INCLUDEPATH += $PWD
 
 
-    HEADERS += $$PWD/jkqtpexampleapplication.h
+    HEADERS += $$PWD/jkqtpexampleapplication.h \
+               $$PWD/jkqtpappsettingcontroller.h
 
 
-    SOURCES += $$PWD/jkqtpexampleapplication.cpp
+    SOURCES += $$PWD/jkqtpexampleapplication.cpp \
+               $$PWD/jkqtpappsettingcontroller.cpp
 
 
 }

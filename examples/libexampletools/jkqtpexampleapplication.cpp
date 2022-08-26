@@ -13,10 +13,21 @@ JKQTPExampleApplication::JKQTPExampleApplication(int &argc, char **argv):
     saveSmallScreenshot(false),
     saveScreenshotPlot(false),
     saveSmallScreenshotPlot(false),
+    scaleDownFromHighDPI(false),
     screenshotBasename("screenshot")
 {
     screenshotDir=QDir::current();
-
+    for (int i=0; i<argc; i++) {
+        if (QString(argv[i])=="--disablehighdpi") {
+#if QT_VERSION >= QT_VERSION_CHECK(5,6,0) &&  QT_VERSION < QT_VERSION_CHECK(6,0,0)
+            QApplication::setAttribute(Qt::AA_EnableHighDpiScaling, false); // DPI support
+            QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, false); //HiDPI pixmaps
+#endif
+#if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
+            QApplication::setAttribute(Qt::AA_Use96Dpi); // disable DPI support
+#endif
+        }
+    }
 }
 
 JKQTPExampleApplication::~JKQTPExampleApplication()
@@ -41,15 +52,20 @@ void JKQTPExampleApplication::readCmdLine() {
     parser.addOption(screenshotPlotOption);
     QCommandLineOption smallscreenshotPlotOption(QStringList()<<"smallscreenshotplot", "save screenshot(s) of the plot(s).");
     parser.addOption(smallscreenshotPlotOption);
+    QCommandLineOption scaleDownFromHighDPIOption(QStringList()<<"scalescreenshotdownfromhighdpi", "if on high-dpi device, rescale to standard size.");
+    parser.addOption(scaleDownFromHighDPIOption);
+    QCommandLineOption disablehighdpiOption(QStringList()<<"disablehighdpi", "idisable high-dpi support.");
+    parser.addOption(disablehighdpiOption);
 
     parser.process(*this);
 
     screenshotDir=QDir(parser.value(outputDirectoryOption));
-    screenshotBasename=parser.value(basenameOption);
+    screenshotBasename=parser.value(basenameOption).split(',');
     saveScreenshot = parser.isSet(screenshotOption);
     saveSmallScreenshot = parser.isSet(smallscreenshotOption);
     saveScreenshotPlot = parser.isSet(screenshotPlotOption);
     saveSmallScreenshotPlot = parser.isSet(smallscreenshotPlotOption);
+    scaleDownFromHighDPI = parser.isSet(scaleDownFromHighDPIOption);
 }
 
 QRect JKQTPExampleApplication::getBoundsWithoutColor(QImage qImage, const QColor &exclusionColor)
@@ -92,8 +108,8 @@ int JKQTPExampleApplication::exec()
             QWidget* w=widgets[i];
             if (w->isVisible()) {
                 JKQTPlotter* plot=dynamic_cast<JKQTPlotter*>(w);
-                QString bn=screenshotBasename;
-                if (iVisible>0) {
+                QString bn=screenshotBasename.value(iVisible, screenshotBasename.value(0));
+                if (iVisible>0 && screenshotBasename.value(iVisible, "")=="") {
                     bn+=QString("_win%1").arg(iVisible, 2, 10, QLatin1Char('0'));
                 }
                 if (w) {
@@ -105,7 +121,11 @@ int JKQTPExampleApplication::exec()
                         pix=pix_win;
                     }*/
                     if (saveScreenshot) {
-                        pix_win.save(screenshotDir.absoluteFilePath(bn+".png"));
+                        if (scaleDownFromHighDPI && pix_win.devicePixelRatio()>1.0) {
+                            pix_win.scaled((QSizeF(pix_win.size())/pix_win.devicePixelRatio()).toSize()).save(screenshotDir.absoluteFilePath(bn+".png"));
+                        } else {
+                            pix_win.save(screenshotDir.absoluteFilePath(bn+".png"));
+                        }
                     }
                     if (saveSmallScreenshot) {
                         QPixmap img=pix_win.scaledToWidth(150, Qt::SmoothTransformation);
@@ -119,7 +139,11 @@ int JKQTPExampleApplication::exec()
                     if (saveScreenshotPlot) {
                         QString fn=bn+"_small.png";
                         if (saveScreenshot) fn=bnp+"_small.png";
-                        gr.save(screenshotDir.absoluteFilePath(fn));
+                        if (scaleDownFromHighDPI && gr.devicePixelRatio()>1.0) {
+                            gr.scaled((QSizeF(gr.size())/gr.devicePixelRatio()).toSize()).save(screenshotDir.absoluteFilePath(fn));
+                        } else {
+                            gr.save(screenshotDir.absoluteFilePath(fn));
+                        }
                     }
                     if (saveSmallScreenshotPlot) {
                         QString fn=bn+"_small.png";

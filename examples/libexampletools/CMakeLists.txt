@@ -10,10 +10,12 @@ set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 # Set up source files
 set(SOURCES
   ${CMAKE_CURRENT_LIST_DIR}/jkqtpexampleapplication.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/jkqtpappsettingcontroller.cpp
 )
 
 set(HEADERS
   ${CMAKE_CURRENT_LIST_DIR}/jkqtpexampleapplication.h
+  ${CMAKE_CURRENT_LIST_DIR}/jkqtpappsettingcontroller.h
 )
 
 
