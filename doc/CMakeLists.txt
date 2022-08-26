@@ -69,6 +69,7 @@ if(JKQtPlotter_BUILD_EXAMPLES)
     # custom target that generates the images for the JKQTMathText documentation
     set(JKQTPlotter_GenerateDocScreenshots_DefaultOptions --screenshotdir="${CMAKE_CURRENT_LIST_DIR}/../screenshots/" --screenshot --smallscreenshotplot)
     set(JKQTPlotter_GenerateDocScreenshots_From
+        scatter
     )
 
     add_custom_target(JKQTPlotter_GenerateDocScreenshots
