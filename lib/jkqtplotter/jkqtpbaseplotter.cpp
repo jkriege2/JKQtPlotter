@@ -3851,58 +3851,57 @@ void JKQTBasePlotter::saveAsPixelImage(const QString& filename, bool displayPrev
     }
 }
 
-
-void JKQTBasePlotter::copyPixelImage() {
-    /*qDebug()<<gridPrintingSize.width()<<", "<<gridPrintingSize.height();
-    qDebug()<<widgetWidth<<", "<<widgetHeight;
-    qDebug()<<paintMagnification;*/
-   /* QImage png(gridPrintingSize, QImage::Format_ARGB32);
-    {
-        JKQTPEnhancedPainter painter;
-        painter.begin(&png);
-        painter.setRenderHint(JKQTPEnhancedPainter::Antialiasing);
-        painter.setRenderHint(JKQTPEnhancedPainter::TextAntialiasing);
-        painter.setRenderHint(JKQTPEnhancedPainter::SmoothPixmapTransform);
-        painter.setRenderHint(JKQTPEnhancedPainter::HighQualityAntialiasing);
-        //calcPlotScaling(painter);
-        gridPaint(painter, gridPrintingSize);
-        painter.end();
+QImage JKQTBasePlotter::grabPixelImage(QSize size, bool showPreview)
+{
+    gridPrintingCalc();
+    //std::cout<<gridPrintingSize.width()<<", "<<gridPrintingSize.height()<<std::endl;
+    printSizeX_Millimeter=gridPrintingSize.width();
+    printSizeY_Millimeter=gridPrintingSize.height();
+    if (!showPreview) {
+        printSizeX_Millimeter=widgetWidth;
+        printSizeY_Millimeter=widgetHeight;
     }
+    if (!showPreview||exportpreview(gridPrintingSize, false)) {
 
-    QClipboard *clipboard = QApplication::clipboard();
-    qDebug()<<"clipboard before adding content:\n"<<clipboard->mimeData()->formats();
-    clipboard->setImage(png);
-    qDebug()<<"clipboard after adding content:\n"<<clipboard->mimeData()->formats();
+        QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+        if (size.isEmpty() || size.isNull() || !size.isValid() || size.width()*size.height()==0) size=QSizeF(double(printSizeX_Millimeter), double(printSizeY_Millimeter)).toSize();
+        QImage png(size, QImage::Format_ARGB32);
+        {
+            png.fill(Qt::transparent);
+            JKQTPEnhancedPainter painter;
+            painter.begin(&png);
+            painter.setRenderHint(JKQTPEnhancedPainter::Antialiasing);
+            painter.setRenderHint(JKQTPEnhancedPainter::TextAntialiasing);
+            painter.setRenderHint(JKQTPEnhancedPainter::SmoothPixmapTransform);
+    #if (QT_VERSION<QT_VERSION_CHECK(6, 0, 0))
+            painter.setRenderHint(JKQTPEnhancedPainter::NonCosmeticDefaultPen, true);
+            painter.setRenderHint(JKQTPEnhancedPainter::HighQualityAntialiasing);
+    #endif
 
-*/
+            /*calcPlotScaling(painter);
+            gridPaint(painter, png.rect().size());*/
+            exportpreviewPaintRequested(painter, QSizeF(printSizeX_Millimeter, printSizeY_Millimeter).toSize());
+            painter.end();
+        }
+        QApplication::restoreOverrideCursor();
+
+        return png;
+    }
+    return QImage();
+
+}
+
+
+void JKQTBasePlotter::copyPixelImage(bool showPreview) {
 
     gridPrintingCalc();
     //std::cout<<gridPrintingSize.width()<<", "<<gridPrintingSize.height()<<std::endl;
     printSizeX_Millimeter=gridPrintingSize.width();
     printSizeY_Millimeter=gridPrintingSize.height();
 
-    if (exportpreview(gridPrintingSize, false)) {
+    if (!showPreview||exportpreview(gridPrintingSize, false)) {
         QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 
-        //if (exportpreview(gridPrintingSize, false)) {
-        QImage png(QSizeF(double(printSizeX_Millimeter), double(printSizeY_Millimeter)).toSize(), QImage::Format_ARGB32);
-            {
-                png.fill(Qt::transparent);
-                JKQTPEnhancedPainter painter;
-                painter.begin(&png);
-                painter.setRenderHint(JKQTPEnhancedPainter::Antialiasing);
-                painter.setRenderHint(JKQTPEnhancedPainter::TextAntialiasing);
-                painter.setRenderHint(JKQTPEnhancedPainter::SmoothPixmapTransform);
-#if (QT_VERSION<QT_VERSION_CHECK(6, 0, 0))
-                painter.setRenderHint(JKQTPEnhancedPainter::NonCosmeticDefaultPen, true);
-                painter.setRenderHint(JKQTPEnhancedPainter::HighQualityAntialiasing);
-#endif
-
-                /*calcPlotScaling(painter);
-                gridPaint(painter, png.rect().size());*/
-                exportpreviewPaintRequested(painter, QSizeF(printSizeX_Millimeter, printSizeY_Millimeter).toSize());
-                painter.end();
-            }
         QByteArray svgdata;
             {
 
@@ -3926,32 +3925,52 @@ void JKQTBasePlotter::copyPixelImage() {
 
             }
 
+        if (!showPreview) {
+            printSizeX_Millimeter=widgetWidth;
+            printSizeY_Millimeter=widgetHeight;
+        }
+        QImage png(QSizeF(double(printSizeX_Millimeter), double(printSizeY_Millimeter)).toSize(), QImage::Format_ARGB32);
+            {
+                png.fill(Qt::transparent);
+                JKQTPEnhancedPainter painter;
+                painter.begin(&png);
+                painter.setRenderHint(JKQTPEnhancedPainter::Antialiasing);
+                painter.setRenderHint(JKQTPEnhancedPainter::TextAntialiasing);
+                painter.setRenderHint(JKQTPEnhancedPainter::SmoothPixmapTransform);
+#if (QT_VERSION<QT_VERSION_CHECK(6, 0, 0))
+                painter.setRenderHint(JKQTPEnhancedPainter::NonCosmeticDefaultPen, true);
+                painter.setRenderHint(JKQTPEnhancedPainter::HighQualityAntialiasing);
+#endif
+
+                /*calcPlotScaling(painter);
+                gridPaint(painter, png.rect().size());*/
+                exportpreviewPaintRequested(painter, QSizeF(printSizeX_Millimeter, printSizeY_Millimeter).toSize());
+                painter.end();
+            }
 
 
 
 
-            QClipboard *clipboard = QApplication::clipboard();
-            //qDebug()<<"clipboard before adding content:\n"<<clipboard->mimeData()->formats();
-            //clipboard->setImage(png);
-            clipboard->clear();
-            clipboard->setPixmap(QPixmap::fromImage(png));
-            QMimeData* mime=new QMimeData();
-            mime->setImageData(QPixmap::fromImage(png));
-            QBuffer pngbuf;
-            png.save(&pngbuf, "png");
-            mime->setData("image/x-png", pngbuf.data());
-            png.save(&pngbuf, "bmp");
-            mime->setData("image/bmp", pngbuf.data());
-            mime->setData("image/svg+xml", svgdata);
-            clipboard->setMimeData(mime);
-            //qDebug()<<"clipboard after adding content:\n"<<clipboard->mimeData()->formats();
+        QClipboard *clipboard = QApplication::clipboard();
+        //qDebug()<<"clipboard before adding content:\n"<<clipboard->mimeData()->formats();
+        //clipboard->setImage(png);
+        clipboard->clear();
+        clipboard->setPixmap(QPixmap::fromImage(png));
+        QMimeData* mime=new QMimeData();
+        mime->setImageData(QPixmap::fromImage(png));
+        QBuffer pngbuf;
+        png.save(&pngbuf, "png");
+        mime->setData("image/x-png", pngbuf.data());
+        png.save(&pngbuf, "bmp");
+        mime->setData("image/bmp", pngbuf.data());
+        mime->setData("image/svg+xml", svgdata);
+        clipboard->setMimeData(mime);
+        //qDebug()<<"clipboard after adding content:\n"<<clipboard->mimeData()->formats();
 
 
 
 
-            QApplication::restoreOverrideCursor();
-
-        //}
+        QApplication::restoreOverrideCursor();
     }
 
 

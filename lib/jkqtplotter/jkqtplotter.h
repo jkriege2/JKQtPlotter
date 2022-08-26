@@ -937,6 +937,14 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
         /** \brief \copydoc actMouseLeftAsPanView */
         const QAction *getActMouseLeftAsPanView() const;
 
+        /** \brief save the current plot as a pixel image into a QImage with the given size */
+        inline QImage grabPixelImage(QSize size=QSize(), bool showPreview=false) {
+            return plotter->grabPixelImage(size,showPreview);
+        }
+        /** \brief copy the current plot as a pixel+svg image to the clipboard */
+        inline void copyPixelImage(bool showPreview=true) {
+            plotter->copyPixelImage(showPreview);
+        }
 
     public slots:
         /** \brief set the current plot magnification */
@@ -1041,6 +1049,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
         inline void copyDataMatlab() {
             plotter->copyDataMatlab();
         }
+
+
         /** \brief this method zooms the graph so that all plotted datapoints are visible.
          *
          * \param zoomX if set \c true (default) zooms the x axis

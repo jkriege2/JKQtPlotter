@@ -35,6 +35,8 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: improved plotting speed for line-graphs by a compression algorithm (see JKQTPGraphLinesCompressionMixin) that removes overlaying lines (e.g. in JKQTPXYLineGraph)</li>
     <li>NEW: improved plotting speed for line-graphs by a clipping algorithm (applies to JKQTPXYLineGraph, JKQTPGraphErrorStyleMixin, JKQTPSpecialLineHorizontalGraph, JKQTPSpecialLineVerticalGraph and others)</li>
     <li>NEW: improved plotting speed for scatter-graphs by not calling draw functions for symbols outside the plot window (e.g. in JKQTPXYLineGraph)</li>
+    <li>NEW: added JKQTBasePlotter::grabPixelImage() and JKQTPlotter::grabPixelImage(), which grab the plotter into a QImage</li>
+    <li>NEW: added option to not display the preview dialog to JKQTBasePlotter::copyPixelImage() and JKQTPlotter::copyPixelImage()</li>
   </ul></li>
   
   <li>JKQTMathText:<ul>
