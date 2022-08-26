@@ -57,3 +57,38 @@ if(JKQtPlotter_BUILD_TOOLS)
 
     add_dependencies(JKQTMathText_GenerateDocImages JKQTMathText_GenerateDocImages_listsymbols)
 endif()
+
+
+
+
+
+
+
+if(JKQtPlotter_BUILD_EXAMPLES)
+
+    # custom target that generates the images for the JKQTMathText documentation
+    set(JKQTPlotter_GenerateDocScreenshots_DefaultOptions --screenshotdir="${CMAKE_CURRENT_LIST_DIR}/../screenshots/" --screenshot --smallscreenshotplot)
+    set(JKQTPlotter_GenerateDocScreenshots_From
+    )
+
+    add_custom_target(JKQTPlotter_GenerateDocScreenshots
+        COMMENT "Building JKQTPlotter Documentation Screenshots ..."
+    )
+
+    foreach(example ${JKQTPlotter_GenerateDocScreenshots_From})
+        set(loc_target_name JKQTPlotter_GenerateDocScreenshots_${example})
+        set(dep_name jkqtptest_${example})
+        add_custom_target(${loc_target_name}
+            COMMENT "Building JKQTPlotter Documentation Screenshot: ${loc_name_upper}"
+            COMMAND $<TARGET_FILE:${dep_name}> ${JKQTPlotter_GenerateDocScreenshots_DefaultOptions} --screenshotbasename=${example}
+            WORKING_DIRECTORY ${JKQtPlotter_QT_BINDIR}
+            DEPENDS ${dep_name}
+        )
+
+        add_dependencies(JKQTPlotter_GenerateDocScreenshots ${loc_target_name})
+
+        unset(loc_target_name)
+        unset(dep_name)
+    endforeach()
+
+endif()

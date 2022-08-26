@@ -25,6 +25,11 @@ message( STATUS "...............................................................
 
 
 
+# examples for libexampletools
+message( STATUS ".. BUILDING EXAMPLE TOOLS LIB:" )
+add_subdirectory(libexampletools)
+
+
 # examples for JKQtFastPlotter
 message( STATUS ".. BUILDING EXAMPLES FOR JKQTFASTPLOTTER:" )
 add_subdirectory(jkqtfastplotter_test)
