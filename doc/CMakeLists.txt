@@ -67,21 +67,50 @@ endif()
 if(JKQtPlotter_BUILD_EXAMPLES)
 
     # custom target that generates the images for the JKQTMathText documentation
-    set(JKQTPlotter_GenerateDocScreenshots_DefaultOptions --screenshotdir="${CMAKE_CURRENT_LIST_DIR}/../screenshots/" --screenshot --smallscreenshotplot)
+    set(JKQTPlotter_GenerateDocScreenshots_DefaultOptions --screenshotdir="${CMAKE_CURRENT_LIST_DIR}/../screenshots/" --screenshot --disablehighdpi )
+    # list examples for which to save a screenshot
+    # the output basename equals the example name in this list,
+    # unless you specify the basenames by adding it/them after a slash '/'
+    # e.g. "barchart/barchart,barchart_hor"
     set(JKQTPlotter_GenerateDocScreenshots_From
         scatter
+        simpletest
+        barchart/barchart_hor,barchart
+        wiggleplots/wiggleplot_x,wiggleplot_y
+        advplotstyling/advancedlineandfillstyling
+        boxplot
+        contourplot
+        violinplot/violinplot_hor,violinplot_vert
+        errorbarstyles
+        dateaxes/dateaxes,dateaxes_timeaxis
+        distributionplot/test_distributionplot
+        evalcurve
+        filledgraphs
+        functionplot/functionplot,functionplot_fy
+        styledboxplot
+        test_multiplot
     )
 
     add_custom_target(JKQTPlotter_GenerateDocScreenshots
         COMMENT "Building JKQTPlotter Documentation Screenshots ..."
     )
 
-    foreach(example ${JKQTPlotter_GenerateDocScreenshots_From})
+    foreach(ex ${JKQTPlotter_GenerateDocScreenshots_From})
+        string(REGEX MATCH "(.+)/(.+)" dummy ${ex})
+        if(CMAKE_MATCH_1 STREQUAL "" OR CMAKE_MATCH_2 STREQUAL "")
+            set(example ${ex})
+            set(basename ${ex})
+        else()
+            set(example ${CMAKE_MATCH_1})
+            set(basename ${CMAKE_MATCH_2})
+        endif()
+
         set(loc_target_name JKQTPlotter_GenerateDocScreenshots_${example})
         set(dep_name jkqtptest_${example})
+        string(TOUPPER ${example} example_upper)
         add_custom_target(${loc_target_name}
-            COMMENT "Building JKQTPlotter Documentation Screenshot: ${loc_name_upper}"
-            COMMAND $<TARGET_FILE:${dep_name}> ${JKQTPlotter_GenerateDocScreenshots_DefaultOptions} --screenshotbasename=${example}
+            COMMENT "Building JKQTPlotter Documentation Screenshot: ${example_upper}"
+            COMMAND $<TARGET_FILE:${dep_name}> ${JKQTPlotter_GenerateDocScreenshots_DefaultOptions} --screenshotbasename=${basename}
             WORKING_DIRECTORY ${JKQtPlotter_QT_BINDIR}
             DEPENDS ${dep_name}
         )
@@ -90,6 +119,9 @@ if(JKQtPlotter_BUILD_EXAMPLES)
 
         unset(loc_target_name)
         unset(dep_name)
+        unset(example)
+        unset(example_upper)
+        unset(basename)
     endforeach()
 
 endif()

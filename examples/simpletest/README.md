@@ -94,7 +94,7 @@ int main(int argc, char* argv[])
 ```
 The result looks like this:
 
-![jkqtplotter_simpletest1](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest1.png)
+![simpletest](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/simpletest.png)
 
 
 

@@ -16,6 +16,7 @@ if(OpenCV_FOUND)
     set(UIS  )
 
     add_executable(${EXENAME} WIN32 ${SOURCES} ${HEADERS} ${RESOURCES} ${UIS})
+target_link_libraries(${EXENAME} JKQTPExampleToolsLib)
     target_include_directories(${EXENAME} PRIVATE ../../lib)
     if(JKQtPlotter_BUILD_STATIC_LIBS)
         target_link_libraries(${EXENAME} JKQTPlotterLib)

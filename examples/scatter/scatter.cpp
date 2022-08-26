@@ -4,6 +4,7 @@
  * \ref JKQTPlotterscatter
  */
  
+#include "jkqtpexampleapplication.h"
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/graphs/jkqtpscatter.h"
@@ -14,11 +15,7 @@
 int main(int argc, char* argv[])
 {
 
-#if QT_VERSION >= QT_VERSION_CHECK(5,6,0) &&  QT_VERSION < QT_VERSION_CHECK(6,0,0)
-    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling); // DPI support
-    QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps); //HiDPI pixmaps
-#endif
-
+    JKQTPAppSettingController highDPIController(argc,argv);
     JKQTPExampleApplication app(argc, argv);
 
 
@@ -33,7 +30,7 @@ int main(int argc, char* argv[])
     auto colYInserter=ds->backInserter(columnY);
 
     // 3. now we create data for a simple plot (a sine curve with random noise)
-    std::default_random_engine generator;
+    std::default_random_engine generator(123);
     std::normal_distribution<double> distribution(0,0.5);
     const int Ndata=100;
     for (int i=0; i<Ndata; i++) {

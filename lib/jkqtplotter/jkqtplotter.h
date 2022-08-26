@@ -103,7 +103,7 @@ JKQTPLOTTER_LIB_EXPORT void initJKQTPlotterResources();
  *
  * The result should look something like this:
  *
- * \image html jkqtplotter_simpletest1.png
+ * \image html simpletest.png
  *
  * Starting from this basic example, you can observe several important principles:
  *   # Data is stored in an (internal) instance of JKQTPDatastore, which is accessible through

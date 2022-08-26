@@ -4,6 +4,7 @@
  * \ref JKQTPlotterSpeedTest
  */
 
+#include "jkqtpexampleapplication.h"
 #include "speedtestplot.h"
 #include "jkqtplotter/graphs/jkqtpscatter.h"
 #include "jkqtcommon_statistics_and_math/jkqtpstatisticstools.h"

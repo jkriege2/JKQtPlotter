@@ -4,6 +4,7 @@
  * \ref JKQTPlotterImagePlotRGBOpenCV
  */
 
+#include "jkqtpexampleapplication.h"
 #include <QApplication>
 #include <cmath>
 #include "jkqtplotter/jkqtplotter.h"

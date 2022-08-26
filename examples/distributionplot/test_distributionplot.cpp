@@ -4,6 +4,7 @@
  * \ref JKQTPlotterDistributionPlot
  */
  
+#include "jkqtpexampleapplication.h"
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/graphs/jkqtpscatter.h"
@@ -18,12 +19,8 @@
 int main(int argc, char* argv[])
 {
         
-#if QT_VERSION >= QT_VERSION_CHECK(5,6,0) &&  QT_VERSION < QT_VERSION_CHECK(6,0,0)
-
-    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling); // DPI support
-    QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps); //HiDPI pixmaps
-#endif
-    QApplication app(argc, argv);
+    JKQTPAppSettingController highDPIController(argc, argv);
+    JKQTPExampleApplication app(argc, argv);
 
 
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
@@ -40,6 +37,7 @@ int main(int argc, char* argv[])
 
     std::random_device rd; // random number generators:
     std::mt19937 gen{rd()};
+    gen.seed(12345);
 
     // draw 301 random values from a gaussian distribution around 5 with width 3
     const double th_mean=5;
@@ -146,14 +144,14 @@ int main(int argc, char* argv[])
 
 
     // 9. autoscale the plot so the graph is contained
-    plot.setXY(-6,16,-0.1,0.2);
+    plot.setXY(-6,16,-0.15,0.25);
 
     // 10. Move key to top-left
     plot.getPlotter()->setKeyPosition(JKQTPKeyInsideTopLeft);
 
     // 11. show plotter and make it a decent size
     plot.show();
-    plot.resize(800,650);
+    plot.resize(600,550);
 
     return app.exec();
 }

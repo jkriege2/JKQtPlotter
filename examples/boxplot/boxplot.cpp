@@ -4,6 +4,7 @@
  * \ref JKQTPlotterBoxplotsGraphs
  */
 
+#include "jkqtpexampleapplication.h"
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/graphs/jkqtpscatter.h"
@@ -12,12 +13,8 @@
 int main(int argc, char* argv[])
 {
         
-#if QT_VERSION >= QT_VERSION_CHECK(5,6,0) &&  QT_VERSION < QT_VERSION_CHECK(6,0,0)
-
-    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling); // DPI support
-    QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps); //HiDPI pixmaps
-#endif
-    QApplication app(argc, argv);
+    JKQTPAppSettingController highDPIController(argc, argv);
+    JKQTPExampleApplication app(argc, argv);
 
 
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
@@ -118,7 +115,7 @@ int main(int argc, char* argv[])
 
     // show plotter and make it a decent size
     plot.show();
-    plot.resize(800,800);
+    plot.resize(600,600);
 
     return app.exec();
 }

@@ -13,7 +13,7 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 
 <table>
 <tr><th>Screenshot<th>Description<th>Notes
-<tr><td> \image html jkqtplotter_simpletest1_small.png 
+<tr><td> \image html simpletest_small.png 
     <td> \subpage JKQTPlotterSimpleTest 
 	  <td> `JKQTPXYLineGraph` <br> C++-style QVector arrays of data 
 <tr><td> \image html scatter_small.png 

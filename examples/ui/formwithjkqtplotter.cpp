@@ -4,6 +4,7 @@
  * \ref JKQTPlotterQtCreator
  */
 
+#include "jkqtpexampleapplication.h"
 #include "formwithjkqtplotter.h"
 #include "ui_formwithjkqtplotter.h"
 

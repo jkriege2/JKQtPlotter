@@ -4,10 +4,12 @@
  * \ref JKQTPlotterContourPlot
  */
 
+#include "jkqtpexampleapplication.h"
 #include <QApplication>
 #include <cmath>
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/graphs/jkqtpcontour.h"
+#include "jkqtpexampleapplication.h"
 
 // if deJKQTPSTATISTICS_PId, an animation is shown
 //#definJKQTPSTATISTICS_PIIMATE
@@ -20,11 +22,8 @@
 int main(int argc, char* argv[])
 {
         
-#if QT_VERSION >= QT_VERSION_CHECK(5,6,0) && QT_VERSION<QT_VERSION_CHECK(6,0,0)
-    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling); // DPI support
-    QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps); //HiDPI pixmaps
-#endif
-    QApplication app(argc, argv);
+    JKQTPAppSettingController highDPIController(argc,argv);
+    JKQTPExampleApplication app(argc, argv);
 
 
 
@@ -148,7 +147,7 @@ int main(int argc, char* argv[])
 
     // 8. show plotter and make it a decent size
     plot.show();
-    plot.resize(800,800);
+    plot.resize(600,600);
     plot.setWindowTitle("JKQTPColumnContourPlot");
 
 

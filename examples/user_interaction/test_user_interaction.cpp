@@ -5,6 +5,7 @@
  * \see \ref JKQTPLOTTER_USERINTERACTION
  */
 
+#include "jkqtpexampleapplication.h"
 #include "test_user_interaction.h"
 #include <QMenuBar>
 #include <QMessageBox>

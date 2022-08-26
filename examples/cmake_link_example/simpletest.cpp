@@ -4,6 +4,7 @@
  * \ref JKQTCMakeLinkExample
  */
  
+#include "jkqtpexampleapplication.h"
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/graphs/jkqtpscatter.h"

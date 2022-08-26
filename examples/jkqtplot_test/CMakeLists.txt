@@ -29,8 +29,8 @@ if(JKQtPlotter_BUILD_STATIC_LIBS)
 
 elseif(JKQtPlotter_BUILD_SHARED_LIBS)
     target_link_libraries(${EXENAME} JKQTPlotterSharedLib)
-
 endif()
+target_link_libraries(${EXENAME} JKQTPExampleToolsLib)
 
 # precomiled headers to speed up compilation
 if (JKQtPlotter_BUILD_WITH_PRECOMPILED_HEADERS)

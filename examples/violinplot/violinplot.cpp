@@ -4,6 +4,7 @@
  * \ref JKQTPlotterViolinplotGraphs
  */
 
+#include "jkqtpexampleapplication.h"
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/graphs/jkqtpviolinplot.h"
@@ -31,6 +32,7 @@ JKQTPlotter* showPlot() {
     size_t randomdatacol3=datastore1->addColumn("random data N(6,2)");
     std::random_device rd; // random number generators:
     std::mt19937 gen{rd()};
+    gen.seed(12345);
     std::uniform_int_distribution<> ddecide(0,1);
     std::normal_distribution<> d1{1,1};
     std::normal_distribution<> d2{6,2};
@@ -156,7 +158,7 @@ JKQTPlotter* showPlot() {
 
     // show plotter and make it a decent size
     plot->show();
-    plot->resize(800,600);
+    plot->resize(600,400);
 
     return plot;
 }
@@ -164,12 +166,8 @@ JKQTPlotter* showPlot() {
 int main(int argc, char* argv[])
 {
         
-#if QT_VERSION >= QT_VERSION_CHECK(5,6,0) &&  QT_VERSION < QT_VERSION_CHECK(6,0,0)
-
-    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling); // DPI support
-    QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps); //HiDPI pixmaps
-#endif
-    QApplication app(argc, argv);
+    JKQTPAppSettingController highDPIController(argc, argv);
+    JKQTPExampleApplication app(argc, argv);
 
 
     showPlot<JKQTPViolinplotHorizontalElement,JKQTPSingleColumnSymbolsGraph::DataDirection::X>();

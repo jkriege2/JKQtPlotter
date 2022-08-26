@@ -60,10 +60,10 @@ void JKQTPGraphViolinplotStyleMixin::initViolinplotStyle(JKQTBasePlotter *parent
 {
     setFillStyle(Qt::SolidPattern);
     setFillColor(parent->getCurrentPlotterStyle().plotBackgroundBrush.color());
-    initLineStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Barchart);
+    initLineStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Boxplot);
     if (parent) { // get style settings from parent object
         if (parentPlotStyle<0) parentPlotStyle=parent->getNextStyle();
-        const JKQTBasePlotter::JKQTPPen pen=parent->getPlotStyle(parentPlotStyle, JKQTPPlotStyleType::Barchart);
+        const JKQTBasePlotter::JKQTPPen pen=parent->getPlotStyle(parentPlotStyle, JKQTPPlotStyleType::Boxplot);
         m_whiskerLinePen.setColor(pen.color());
         m_whiskerLinePen.setStyle(pen.style());
         whiskerLineWidth=pen.widthF();
