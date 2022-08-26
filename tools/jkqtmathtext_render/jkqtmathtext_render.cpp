@@ -5,7 +5,6 @@
 
  */
  
-#include "jkqtpexampleapplication.h"
 #include <QApplication>
 #include <QPixmap>
 #include <QPainter>
