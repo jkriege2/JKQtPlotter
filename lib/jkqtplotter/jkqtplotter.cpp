@@ -32,8 +32,17 @@
 #include "jkqtplotter.h"
 
 
-#define jkqtp_RESIZE_DELAY 100
+int JKQTPlotter::jkqtp_RESIZE_DELAY = 100;
 
+void JKQTPlotter::setGlobalResizeDelay(int delayMS)
+{
+    jkqtp_RESIZE_DELAY=delayMS;
+}
+
+int JKQTPlotter::getGlobalResizeDelay()
+{
+    return jkqtp_RESIZE_DELAY;
+}
 
 
 
@@ -42,6 +51,7 @@
 /**************************************************************************************************************************
  * JKQTPlotter
  **************************************************************************************************************************/
+
 JKQTPlotter::JKQTPlotter(bool datastore_internal, QWidget* parent, JKQTPDatastore* datast):
     QWidget(parent, Qt::Widget),
     currentMouseDragAction(),
@@ -1346,6 +1356,11 @@ QSize JKQTPlotter::minimumSizeHint() const {
 
 QSize JKQTPlotter::sizeHint() const {
     return QWidget::sizeHint();
+}
+
+bool JKQTPlotter::isResizeTimerRunning() const
+{
+    return resizeTimer.isActive();
 }
 
 void JKQTPlotter::synchronizeToMaster(JKQTPlotter *master, JKQTBasePlotter::SynchronizationDirection synchronizeDirection, bool synchronizeAxisLength, bool synchronizeZoomingMasterToSlave, bool synchronizeZoomingSlaveToMaster)

@@ -441,6 +441,15 @@ JKQTPLOTTER_LIB_EXPORT void initJKQTPlotterResources();
 class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
         Q_OBJECT
     public:
+        /** \brief sets the global resize delay in milliseconds \a delayMS. After calling this function all plots will use the new delay
+          *
+          * \see jkqtp_RESIZE_DELAY, setGlobalResizeDelay(), getGlobalResizeDelay(), resizeTimer */
+        static void setGlobalResizeDelay(int delayMS);
+        /** \brief returns the currently set global resize delay in milliseconds \a delayMS.
+          *
+          * \see jkqtp_RESIZE_DELAY, setGlobalResizeDelay(), getGlobalResizeDelay(), resizeTimer */
+        static int getGlobalResizeDelay();
+
         /** \brief class constructor
          *
          * If \a datastore_internal \c ==false, you can supply an external JKQTPDatastore with the parameter \a datast
@@ -553,6 +562,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
         /** \brief returns the size of the widget */
         QSize sizeHint() const;
 
+        /** \brief returns \c true, if the JKQTPlotter::resizeTimer is currently running and the widget is waiting for the resize-event to finish
+          *
+          * \see jkqtp_RESIZE_DELAY, setGlobalResizeDelay(), getGlobalResizeDelay(), resizeTimer */
+        bool isResizeTimerRunning() const;
 
 
 
@@ -1693,8 +1706,16 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
          * \see delayedResizeEvent()
          *
          * \image html jkqtplotter_fastresizing.gif
+         *
+         * \see jkqtp_RESIZE_DELAY, setGlobalResizeDelay(), getGlobalResizeDelay(), resizeTimer
          */
         QTimer resizeTimer;
+
+        /** \brief delay for  resizing in milliseconds
+         *
+         * \see jkqtp_RESIZE_DELAY, setGlobalResizeDelay(), getGlobalResizeDelay(), resizeTimer
+         */
+        static int jkqtp_RESIZE_DELAY;
 
         /** \brief destroys the internal contextMenu and optionally creates a new one
          *
