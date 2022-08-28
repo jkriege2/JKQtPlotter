@@ -59,7 +59,7 @@ int main(int argc, char* argv[])
     // show plotter and make it a decent size
     plot.getPlotter()->setPlotLabel(QObject::tr("Scatter Example"));
     plot.show();
-    plot.resize(600,400);
+    plot.resize(600/plot.devicePixelRatioF(),400/plot.devicePixelRatioF());
 
     return app.exec();
 }

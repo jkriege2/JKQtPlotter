@@ -9,13 +9,16 @@
 class JKQTPExampleApplication: public QApplication {
     Q_OBJECT
 public:
-    JKQTPExampleApplication(int &argc, char **argv);
+    JKQTPExampleApplication(int &argc, char **argv, bool waitForScreenshotReady=false);
 
     virtual ~JKQTPExampleApplication();
 
     int exec();
-
+public slots:
+    void notifyReadyForScreenshot();
 protected:
+    bool waitForScreenshotReady;
+    bool readyForScreenshot;
     QDir screenshotDir;
     bool saveScreenshot;
     bool saveSmallScreenshot;

@@ -48,7 +48,7 @@ class JKQTPDatastore;
 /*! \brief This implements xy scatter plots. This also alows to draw symbols at the data points.
     \ingroup jkqtplotter_linesymbolgraphs_simple
 
-    \image html plot_scatterplots.png
+    \image html JKQTPXYScatterGraph.png
 
     \note This classes can (and does by default) apply a line-compression strategy that improves plotting speed
           but reduces accuracy a bit. See JKQTPGraphLinesCompressionMixin for details.

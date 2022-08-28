@@ -40,17 +40,17 @@
 
     \image html bargraph_basics.png
 
-    By default the sift parameter is, so the bar is centered at the x-value. The width is 0.9,
+    By default the shift parameter is, so the bar is centered at the x-value. The width is 0.9,
     so adjacent bars are plotted with a small distance between them. It is possible to use these two parameters
     to plot multiple bars for every x-value, by having on JKQTPSpecialLineHorizontalGraph object per
     set of bars that belong together. For example for three bars per x-value one would set:
     \verbatim
-          widthoverride.3
+          width=0.3
           shift=-0.3 / 0 / +0.3
     \endverbatim
     This results in a bargraph, as shown here:
 
-    \image html plot_bargraphverplot.png
+    \image html JKQTPBarVerticalGraph.png
 
 
     You can use JKQTPlotter::addHorizontalBargraph() to add a series of bargraphs, where the width and shift are determined
@@ -162,7 +162,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarVerticalErrorGraph: public JKQTPBarVertical
 
     This works much the same as JKQTPBarHorizontalGraph. Here is an example output:
 
-    \image html plot_bargraphhorplot.png
+    \image html JKQTPBarHorizontalGraph.png
 
 
     \see \ref JKQTPlotterBarcharts, jkqtpstatAddVHistogram1D(), jkqtpstatAddVHistogram1DAutoranged()

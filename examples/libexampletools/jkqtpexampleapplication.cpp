@@ -7,8 +7,10 @@
 #include "jkqtplotter/jkqtplotter.h"
 
 
-JKQTPExampleApplication::JKQTPExampleApplication(int &argc, char **argv):
+JKQTPExampleApplication::JKQTPExampleApplication(int &argc, char **argv, bool _waitForScreenshotReady):
     QApplication(argc, argv),
+    waitForScreenshotReady(_waitForScreenshotReady),
+    readyForScreenshot(!_waitForScreenshotReady),
     saveScreenshot(false),
     saveSmallScreenshot(false),
     saveScreenshotPlot(false),
@@ -17,17 +19,6 @@ JKQTPExampleApplication::JKQTPExampleApplication(int &argc, char **argv):
     screenshotBasename("screenshot")
 {
     screenshotDir=QDir::current();
-    for (int i=0; i<argc; i++) {
-        if (QString(argv[i])=="--disablehighdpi") {
-#if QT_VERSION >= QT_VERSION_CHECK(5,6,0) &&  QT_VERSION < QT_VERSION_CHECK(6,0,0)
-            QApplication::setAttribute(Qt::AA_EnableHighDpiScaling, false); // DPI support
-            QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, false); //HiDPI pixmaps
-#endif
-#if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
-            QApplication::setAttribute(Qt::AA_Use96Dpi); // disable DPI support
-#endif
-        }
-    }
 }
 
 JKQTPExampleApplication::~JKQTPExampleApplication()
@@ -96,13 +87,38 @@ QRect JKQTPExampleApplication::getBoundsWithoutColor(QImage qImage, const QColor
 int JKQTPExampleApplication::exec()
 {
     readCmdLine();
-    if (saveScreenshot||saveSmallScreenshot) {
-        QElapsedTimer timer;
-        timer.start();
-        while(timer.elapsed()<150) {
-            QApplication::processEvents();
+    if (saveScreenshot||saveSmallScreenshot||saveScreenshotPlot||saveSmallScreenshotPlot) {
+        QList<JKQTPlotter*> plotterList;
+        auto checkPlottersResizeDone=[plotterList]() {
+            if (plotterList.isEmpty()) return true;
+            for (JKQTPlotter* p: plotterList) {
+                if (p->isResizeTimerRunning()) return false;
+            }
+            return true;
+        };
+        for (QWidget* w: allWidgets()) {
+            JKQTPlotter* plot=dynamic_cast<JKQTPlotter*>(w);
+            if (plot) plotterList<<plot;
         }
         QWidgetList widgets=topLevelWidgets();
+        std::sort(widgets.begin(), widgets.end(), [](const QWidget* a, const QWidget* b) {
+            if (a && b) return a->windowTitle().toLower()<b->windowTitle().toLower();
+            if (a) return true;
+            if (b) return false;
+            return a<b;
+        });
+        //JKQTPlotter::setGlobalResizeDelay(10);
+        QElapsedTimer timer;
+        timer.start();
+        while(timer.elapsed()<JKQTPlotter::getGlobalResizeDelay()*3/2 || !readyForScreenshot || !checkPlottersResizeDone()) {
+            QApplication::processEvents();
+            QApplication::processEvents();
+        }
+        timer.start();
+        while(timer.elapsed()<50) {
+            QApplication::processEvents();
+            QApplication::processEvents();
+        }
         int iVisible=0;
         for (int i=0; i<widgets.size(); i++) {
             QWidget* w=widgets[i];
@@ -120,14 +136,14 @@ int JKQTPExampleApplication::exec()
                     } else {
                         pix=pix_win;
                     }*/
-                    if (saveScreenshot) {
+                    if (saveScreenshot || (saveScreenshotPlot&&!plot)) {
                         if (scaleDownFromHighDPI && pix_win.devicePixelRatio()>1.0) {
                             pix_win.scaled((QSizeF(pix_win.size())/pix_win.devicePixelRatio()).toSize()).save(screenshotDir.absoluteFilePath(bn+".png"));
                         } else {
                             pix_win.save(screenshotDir.absoluteFilePath(bn+".png"));
                         }
                     }
-                    if (saveSmallScreenshot) {
+                    if (saveSmallScreenshot || (saveSmallScreenshotPlot&&!plot)) {
                         QPixmap img=pix_win.scaledToWidth(150, Qt::SmoothTransformation);
                         img.save(screenshotDir.absoluteFilePath(bn+"_small.png"));
                     }
@@ -159,4 +175,9 @@ int JKQTPExampleApplication::exec()
     } else {
         return QApplication::exec();
     }
+}
+
+void JKQTPExampleApplication::notifyReadyForScreenshot()
+{
+    readyForScreenshot=true;
 }

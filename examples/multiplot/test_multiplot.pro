@@ -9,7 +9,7 @@ QT += core gui xml  svg
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 # output executable name
-TARGET = test_multiplot
+TARGET = multiplot
 
 
 # include JKQTPlotter source code

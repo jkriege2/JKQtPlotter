@@ -51,6 +51,7 @@ int main(int argc, char* argv[])
     graph1->setYColumn(columnY);
     graph1->setDrawLine(true);
     graph1->setSymbolType(JKQTPNoSymbol);
+    graph1->setUseNonvisibleLineCompression(false); // necessary, because this is enabled by default and leads a distrubed plot
     graph1->setTitle("one-colored spiral");
     plot.addGraph(graph1);
 
@@ -89,9 +90,11 @@ int main(int argc, char* argv[])
 
     // 5. show plotters and make them a decent size
     plot.show();
-    plot.resize(600,600);
+    plot.resize(400,400);
+    plot.setWindowTitle("1: JKQTPXYLineGraph");
     plot2.show();
-    plot2.resize(600,600);
+    plot2.setWindowTitle("2: JKQTPXYParametrizedScatterGraph");
+    plot2.resize(400,400);
 
     return app.exec();
 }

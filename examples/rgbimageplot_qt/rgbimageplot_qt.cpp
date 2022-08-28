@@ -67,7 +67,7 @@ int main(int argc, char* argv[])
 
     // 8. show plotter and make it a decent size
     plot.show();
-    plot.resize(800,600);
+    plot.resize(800/plot.devicePixelRatioF(),600/plot.devicePixelRatioF());
     plot.setWindowTitle("JKQTPImage");
 
 

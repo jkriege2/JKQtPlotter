@@ -520,7 +520,7 @@ Examples:
       <td>\image html overlayimageenhanced_small.png
       <td>  JKQTPOverlayImageEnhanced, JKQTPColumnOverlayImageEnhanced
     <tr>
-      <td>\image html JKQTPContour_small.png
+      <td>\image html JKQTPColumnContourPlot_small.png
       <td> JKQTPContourPlot, JKQTPColumnContourPlot
 </table>
 
@@ -572,7 +572,7 @@ Examples:
       <th> Screenshot
       <th> Classes
     <tr>
-      <td>\image html JKQTPContour_small.png
+      <td>\image html JKQTPColumnContourPlot_small.png
       <td> JKQTPContourPlot, JKQTPColumnContourPlot
 </table>
 

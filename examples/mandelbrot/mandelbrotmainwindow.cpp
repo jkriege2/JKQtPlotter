@@ -125,6 +125,7 @@ void MandelbrotMainWindow::plotZoomChangedLocally(double newxmin, double newxmax
     // this call ensures correctly set NX and NY
     graph->setImageColumn(mandelbrot_col_display);
     ui->plot->redrawPlot();
+    emit readyForScreenshot();
 }
 
 

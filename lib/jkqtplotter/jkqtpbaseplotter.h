@@ -240,7 +240,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPPaintDeviceAdapter {
  *
  * Often a single plot is not sufficient, but several plots need to be aligned with respect to each other:
  *
- * \image html test_multiplot.png
+ * \image html multiplot.png
  *
  * This can be achieved by putting several JKQTPlotter instances into a
  * <a href="http://doc.qt.io/qt-5/layout.html">Qt Layout</a>. Then you can fill each plot differently and

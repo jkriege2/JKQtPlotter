@@ -81,7 +81,7 @@ int main(int argc, char* argv[])
 
     // show window and make it a decent size
     mainWin.show();
-    mainWin.resize(600,400);
+    mainWin.resize(600/mainWin.devicePixelRatioF(),400/mainWin.devicePixelRatioF());
 
     return app.exec();
 }

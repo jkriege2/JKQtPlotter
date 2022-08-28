@@ -179,7 +179,7 @@ int main(int argc, char* argv[])
 
     // 5. show plotter and make it a decent size
     plot.show();
-    plot.resize(800,600);
+    plot.resize(1000/plot.devicePixelRatioF(),600/plot.devicePixelRatioF());
 
     return app.exec();
 }

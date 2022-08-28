@@ -261,7 +261,7 @@ int main(int argc, char* argv[])
 
     // 4. show plotter and make it a decent size
     widMain.show();
-    widMain.resize(1100,800);
+    widMain.resize(1100/widMain.devicePixelRatioF(),1000/widMain.devicePixelRatioF());
 
     return app.exec();
 }

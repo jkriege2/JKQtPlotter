@@ -72,10 +72,11 @@ if(JKQtPlotter_BUILD_EXAMPLES)
     # the output basename equals the example name in this list,
     # unless you specify the basenames by adding it/them after a slash '/'
     # e.g. "barchart/barchart,barchart_hor"
+    # the basenames are applied to the windows in the order of their windowTitle()s!
     set(JKQTPlotter_GenerateDocScreenshots_From
         scatter
         simpletest
-        barchart/barchart_hor,barchart
+        barchart/barchart,barchart_hor
         wiggleplots/wiggleplot_x,wiggleplot_y
         advplotstyling/advancedlineandfillstyling
         boxplot
@@ -85,15 +86,64 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         dateaxes/dateaxes,dateaxes_timeaxis
         distributionplot/test_distributionplot
         evalcurve
-        filledgraphs
+        filledgraphs/filledgraphs,filledgraphs_y
         functionplot/functionplot,functionplot_fy
         styledboxplot/test_styledboxplot
-        test_multiplot
+        multiplot/multiplot,multiplot_controlwindow
+        #symbols_and_styles
+        symbols_and_errors
+        stepplots
+        stackedbars/stackedbars,stackedbars_hor
+        #geo_arrows
+        #geo_simple
+        geometric
+        imageplot
+        imageplot_modifier
+        imageplot_nodatastore
+        imageplot_userpal/imageplot_userpal_program
+        impulsesplot
+        parametriccurve/parametriccurve1,parametriccurve2
+        paramscatterplot
+        #paramscatterplot_image
+        parsedfunctionplot
+        rgbimageplot
+        rgbimageplot_qt
+        mandelbrot
+        #speed
+    )
+
+
+
+
+
+    # custom target that generates the images for the JKQTMathText documentation
+    set(JKQTPlotter_GenerateDocImage_DefaultOptions --screenshotdir="${CMAKE_CURRENT_LIST_DIR}/../doc/images/" --screenshotplot --disablehighdpi)
+    set(JKQTPlotter_GenerateDocImages_From
+        stackedbars/JKQTPbarVerticalGraphStacked,JKQTPbarHorizontalGraphStacked
+        scatter/JKQTPXYScatterGraph
+        simpletest/JKQTPXYLineGraph
+        barchart/JKQTPBarVerticalGraph,JKQTPBarHorizontalGraph
+        wiggleplots/JKQTPFilledCurveXGraph_wiggle,JKQTPFilledCurveYGraph_wiggle
+        contourplot/JKQTPColumnContourPlot
+        filledgraphs/JKQTPFilledCurveXGraph,JKQTPFilledCurveYGraph
+        evalcurve/JKQTPXYFunctionLineGraph
     )
 
     add_custom_target(JKQTPlotter_GenerateDocScreenshots
         COMMENT "Building JKQTPlotter Documentation Screenshots ..."
     )
+
+    add_custom_target(JKQTPlotter_GenerateDocImages
+        COMMENT "Building JKQTPlotter Documentation Images ..."
+    )
+
+
+
+
+
+
+
+
 
     foreach(ex ${JKQTPlotter_GenerateDocScreenshots_From})
         string(REGEX MATCH "(.+)/(.+)" dummy ${ex})
@@ -123,5 +173,36 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         unset(example_upper)
         unset(basename)
     endforeach()
+
+
+    foreach(ex ${JKQTPlotter_GenerateDocImages_From})
+        string(REGEX MATCH "(.+)/(.+)" dummy ${ex})
+        if(CMAKE_MATCH_1 STREQUAL "" OR CMAKE_MATCH_2 STREQUAL "")
+            set(example ${ex})
+            set(basename ${ex})
+        else()
+            set(example ${CMAKE_MATCH_1})
+            set(basename ${CMAKE_MATCH_2})
+        endif()
+
+        set(loc_target_name JKQTPlotter_GenerateDocImages_${example})
+        set(dep_name jkqtptest_${example})
+        string(TOUPPER ${example} example_upper)
+        add_custom_target(${loc_target_name}
+            COMMENT "Building JKQTPlotter Documentation Image: ${example_upper}"
+            COMMAND $<TARGET_FILE:${dep_name}> ${JKQTPlotter_GenerateDocImage_DefaultOptions} --screenshotbasename=${basename}
+            WORKING_DIRECTORY ${JKQtPlotter_QT_BINDIR}
+            DEPENDS ${dep_name}
+        )
+
+        add_dependencies(JKQTPlotter_GenerateDocImages ${loc_target_name})
+
+        unset(loc_target_name)
+        unset(dep_name)
+        unset(example)
+        unset(example_upper)
+        unset(basename)
+    endforeach()
+
 
 endif()

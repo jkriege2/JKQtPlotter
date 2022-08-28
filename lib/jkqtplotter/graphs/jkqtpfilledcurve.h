@@ -35,6 +35,7 @@
  *
  *  \image html filledgraphs.png
  *
+ *
  *  \see JKQTPFilledCurveXGraph, JKQTPFilledCurveYGraph
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPFilledCurveGraphBase: public JKQTPXYBaselineGraph, public JKQTPGraphLineAndFillStyleMixin {
@@ -81,7 +82,7 @@ protected:
 /*! \brief This implements filled curve plots where the area is filled between the plot line and the x-Axis.
     \ingroup jkqtplotter_filledgraphs
 
-    \image html filledgraphs.png
+    \image html JKQTPFilledCurveXGraph.png
 
     \see \ref JKQTPlotterFilledGraphs
 
@@ -89,7 +90,7 @@ protected:
     Such plots are sometimes called "Wiggle Plots" and are often used (in their black/white-variety for seismographic
     data plotting.
 
-    \image html wiggleplot_x.png
+ *  \image html JKQTPFilledCurveXGraph_wiggle.png
 
     To generate such a plot, used \c JKQTPFilledCurveXGraph::setFillMode(JKQTPFilledCurveXGraph::FillMode::TwoColorFilling)
     and then use \c JKQTPFilledCurveXGraph::fillStyleBelow() to access the fill style for the area below the baseline
@@ -143,7 +144,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPFilledCurveXErrorGraph: public JKQTPFilledCurv
 /*! \brief This implements filled curve plots where the area is filled between the plot line and y-Axis
     \ingroup jkqtplotter_filledgraphs
 
-    \image html filledgraphs_yaxis.png
+    \image html JKQTPFilledCurveYGraph.png
 
     \see \ref JKQTPlotterFilledGraphs
 
@@ -151,7 +152,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPFilledCurveXErrorGraph: public JKQTPFilledCurv
     Such plots are sometimes called "Wiggle Plots" and are often used (in their black/white-variety for seismographic
     data plotting.
 
-    \image html wiggleplot_y.png
+ *  \image html JKQTPFilledCurveYGraph_wiggle.png
 
     To generate such a plot, used \c JKQTPFilledCurveXGraph::setFillMode(JKQTPFilledCurveXGraph::FillMode::TwoColorFilling)
     and then use \c JKQTPFilledCurveXGraph::fillStyleBelow() to access the fill style for the area below the baseline

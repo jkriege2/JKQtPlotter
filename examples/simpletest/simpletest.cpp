@@ -4,7 +4,6 @@
  * \ref JKQTPlotterSimpleTest
  */
  
-#include "jkqtpexampleapplication.h"
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/graphs/jkqtpscatter.h"
@@ -54,7 +53,7 @@ int main(int argc, char* argv[])
     // show plotter and make it a decent size
     plot.getPlotter()->setPlotLabel(QObject::tr("Simple Test"));
     plot.show();
-    plot.resize(600,400);
+    plot.resize(400,300);
 
     return app.exec();
 }

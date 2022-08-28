@@ -97,7 +97,7 @@ void addGraph(JKQTPlotter& plot, bool swapXY) {
 
     // show plotter and make it a decent size
     plot.show();
-    plot.resize(600,400);
+    plot.resize(550,350);
 }
 
 
@@ -110,11 +110,11 @@ int main(int argc, char* argv[])
 
     JKQTPlotter plotV;
     addGraph<JKQTPBarVerticalStackableGraph>(plotV, false);
-    plotV.setWindowTitle("JKQTPBarVerticalStackableGraph");
+    plotV.setWindowTitle("1: JKQTPBarVerticalStackableGraph");
 
     JKQTPlotter plotH;
     addGraph<JKQTPBarHorizontalStackableGraph>(plotH, true);
-    plotH.setWindowTitle("JKQTPBarHorizontalStackableGraph");
+    plotH.setWindowTitle("2: JKQTPBarHorizontalStackableGraph");
 
     plotV.move(100,100);
     plotH.move(750,100);

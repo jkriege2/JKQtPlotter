@@ -137,7 +137,7 @@ typedef std::function<QPointF(double)> jkqtpSimpleParametricCurveFunctionType;
   *
   * The following image shows a Lissajou's fugure drawn with this function
   *
-  * \image html plot_evalcurve.png
+  * \image html JKQTPXYFunctionLineGraph.png
   *
   * The source code for this example is:
   * \code

@@ -104,8 +104,8 @@ int main(int argc, char* argv[])
 ```
 The result looks like this:
 
-![JKQTPBarVerticalGraphStacked](https://raw.githubusercontent.com/jkriege2/JKQTPlotter/master/doc/images/JKQTPbarVerticalGraphStacked.png)
+![JKQTPBarVerticalGraphStacked](https://raw.githubusercontent.com/jkriege2/JKQTPlotter/master/screenshots/stackedbars.png)
 
 If you use `JKQTPBarHorizontalGraphStacked` instead of `JKQTPBarVerticalStackableGraph`, you'll get a result like this: 
-![JKQTPBarHorizontalGraphStacked](https://raw.githubusercontent.com/jkriege2/JKQTPlotter/master/doc/images/JKQTPbarHorizontalGraphStacked.png)
+![JKQTPBarHorizontalGraphStacked](https://raw.githubusercontent.com/jkriege2/JKQTPlotter/master/screenshots/stackedbars_hor.png)
 

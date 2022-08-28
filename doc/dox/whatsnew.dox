@@ -38,6 +38,8 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: added JKQTBasePlotter::grabPixelImage() and JKQTPlotter::grabPixelImage(), which grab the plotter into a QImage</li>
     <li>NEW: added option to not display the preview dialog to JKQTBasePlotter::copyPixelImage() and JKQTPlotter::copyPixelImage()</li>
     <li>NEW: added simple scatter plot JKQTPXYScatterGraph</li>
+    <li>NEW: made resize-timer status accessible from outside via JKQTPlotter::isResizeTimerRunning() </li>
+    <li>NEW: made it's delay a global static variable that can be set and red with JKQTPlotter::setGlobalResizeDelay() and JKQTPlotter::getGlobalResizeDelay()</li>
   </ul></li>
   
   <li>JKQTMathText:<ul>

@@ -53,6 +53,7 @@ TestStyling::~TestStyling()
     if (!plotExtra.isNull()) {
         plotExtra->close();
         plotExtra.clear();
+        plotExtra->setWindowTitle("2: symbols/lines");
     }
 }
 

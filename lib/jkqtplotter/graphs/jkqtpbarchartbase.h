@@ -48,7 +48,7 @@
  *  \endverbatim
  *  This results in a bargraph, as shown here:
  *
- *  \image html plot_bargraphverplot.png
+ *  \image html JKQTPBarVerticalGraph.png
  *
  *
  *

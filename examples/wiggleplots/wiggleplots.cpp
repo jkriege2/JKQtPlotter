@@ -72,8 +72,9 @@ void drawRandomWalkX(JKQTPlotter& plot) {
     plot.zoomToFit();
 
     // 11. show plotter and make it a decent size
+    plot.setWindowTitle("1: JKQTPFilledCurveXGraph wiggle plot");
     plot.show();
-    plot.resize(600,400);
+    plot.resize(500,350);
 }
 
 void drawWavepacketsY(JKQTPlotter& plot) {
@@ -112,7 +113,7 @@ void drawWavepacketsY(JKQTPlotter& plot) {
         graph->setYColumn(columnT); graph->setXColumn(columnPacket);
 
         // enable wiggle-plot filling
-        graph->setFillMode(JKQTPFilledCurveXGraph::TwoColorFilling);
+        graph->setFillMode(JKQTPFilledCurveYGraph::TwoColorFilling);
         // draw the data also as a black, thin line
         graph->setLineColor(QColor("black"));
         graph->setLineWidth(1);
@@ -137,8 +138,9 @@ void drawWavepacketsY(JKQTPlotter& plot) {
     plot.zoomToFit();
 
     // 5. show plotter and make it a decent size
+    plot.setWindowTitle("1: JKQTPFilledCurveYGraph wiggle plot");
     plot.show();
-    plot.resize(600,600);
+    plot.resize(500,500);
 }
 
 int main(int argc, char* argv[])

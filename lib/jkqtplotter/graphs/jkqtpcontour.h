@@ -62,7 +62,7 @@
  *
  * \author Sebastian Isbaner (2013-2014) & Jan Krieger (2019)
  *
- * \image html JKQTPContour.png
+ * \image html JKQTPColumnContourPlot.png
  *
  * \image html contourplot.png
  *

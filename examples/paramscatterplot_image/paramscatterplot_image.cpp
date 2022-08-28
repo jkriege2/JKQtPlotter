@@ -79,18 +79,18 @@ int main(int argc, char* argv[])
     plot.getYAxis()->setAxisLabel("y-axis");
     plot.getXAxis()->setDrawGrid(false);
     plot.getYAxis()->setDrawGrid(false);
-    // max. size is the size of the image
-    plot.setXY(0,image.width()-1,0,image.height()-1);
-    plot.setAbsoluteXY(0,image.width()-1,0,image.height()-1);
     // ensure that axis aspect ratio and coordinate system aspect ratio are maintained
     plot.getPlotter()->setMaintainAspectRatio(true);
     plot.getPlotter()->setAspectRatio(1);
     plot.getPlotter()->setMaintainAxisAspectRatio(true);
     plot.getPlotter()->setAxisAspectRatio(1);
+    // max. size is the size of the image
+    plot.setAbsoluteXY(0,image.width()-1,0,image.height()-1);
+    plot.setXY(0,image.width()-1,0,image.height()-1);
 
     // 5. show plotter and make it a decent size
     plot.show();
-    plot.resize(800,800);
+    plot.resize(800/plot.devicePixelRatioF(),850/plot.devicePixelRatioF());
 
     return app.exec();
 }

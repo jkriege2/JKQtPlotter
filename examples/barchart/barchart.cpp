@@ -15,7 +15,7 @@
 
 
 template <class TCHART>
-void doExample()
+void doExample(const QString& title)
 {
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
     JKQTPlotter* plot=new JKQTPlotter();
@@ -98,6 +98,7 @@ void doExample()
     plot->zoomToFit();
 
     // show plotter and make it a decent size
+    plot->setWindowTitle(title);
     plot->show();
     plot->resize(600,400);
 }
@@ -109,8 +110,8 @@ int main(int argc, char* argv[])
     JKQTPExampleApplication app(argc, argv);
 
 
-    doExample<JKQTPBarVerticalGraph>();
-    doExample<JKQTPBarHorizontalGraph>();
+    doExample<JKQTPBarVerticalGraph>("1: JKQTPBarVerticalGraph");
+    doExample<JKQTPBarHorizontalGraph>("2: JKQTPBarHorizontalGraph");
 
     return app.exec();
 }

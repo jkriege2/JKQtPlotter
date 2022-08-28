@@ -147,7 +147,7 @@ int main(int argc, char* argv[])
 
     // 8. show plotter and make it a decent size
     plot.show();
-    plot.resize(600,600);
+    plot.resize(450,400);
     plot.setWindowTitle("JKQTPColumnContourPlot");
 
 

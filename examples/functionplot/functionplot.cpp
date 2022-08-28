@@ -130,7 +130,7 @@ void drawExample(QApplication& app, const QString& name) {
 
     // show window and make it a decent size
     mainWin->show();
-    mainWin->resize(600,600);
+    mainWin->resize(500,500);
 }
 
 int main(int argc, char* argv[])
@@ -140,8 +140,8 @@ int main(int argc, char* argv[])
     JKQTPExampleApplication app(argc, argv);
 
 
-    drawExample<JKQTPXFunctionLineGraph>(app, "functionplot: JKQTPXFunctionLineGraph");
-    drawExample<JKQTPYFunctionLineGraph>(app, "functionplot: JKQTPYFunctionLineGraph");
+    drawExample<JKQTPXFunctionLineGraph>(app, "1: functionplot: JKQTPXFunctionLineGraph");
+    drawExample<JKQTPYFunctionLineGraph>(app, "2: functionplot: JKQTPYFunctionLineGraph");
 
 
     return app.exec();

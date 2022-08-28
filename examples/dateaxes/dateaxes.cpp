@@ -175,10 +175,12 @@ int main(int argc, char* argv[])
 
     JKQTPlotter plotDate;
     drawWithDateAxis(plotDate);
+    plotDate.setWindowTitle("1: "+plotDate.windowTitle());
     //plotDate.move(100,100);
 
     JKQTPlotter plotTime;
     drawWithTimeAxis(plotTime);
+    plotTime.setWindowTitle("2: "+plotTime.windowTitle());
     //plotTime.move(100,550);
 
     return app.exec();

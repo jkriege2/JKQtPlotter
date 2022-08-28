@@ -9,15 +9,8 @@
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/graphs/jkqtpfilledcurve.h"
 
-int main(int argc, char* argv[])
-{
-        
-    JKQTPAppSettingController highDPIController(argc, argv);
-    JKQTPExampleApplication app(argc, argv);
-
-
-    // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
-    JKQTPlotter plot;
+template<class TGraph>
+void drawGraph(JKQTPlotter& plot) {
     JKQTPDatastore* ds=plot.getDatastore();
 
     // 2. now we create 4 datacolumns with length 256 entries in the datastore
@@ -52,9 +45,9 @@ int main(int argc, char* argv[])
 
 
     // 4. now we add three semi-transparent, filled curve plots, one for each histogram
-    JKQTPFilledCurveXGraph* graphR=new JKQTPFilledCurveXGraph(&plot);
-    JKQTPFilledCurveXGraph* graphG=new JKQTPFilledCurveXGraph(&plot);
-    JKQTPFilledCurveXGraph* graphB=new JKQTPFilledCurveXGraph(&plot);
+    TGraph* graphR=new TGraph(&plot);
+    TGraph* graphG=new TGraph(&plot);
+    TGraph* graphB=new TGraph(&plot);
 
     // set graph titles
     graphR->setTitle("R-channel");
@@ -74,9 +67,15 @@ int main(int argc, char* argv[])
     graphB->setLineWidth(1);
 
     // set data
-    graphR->setXColumn(columnX); graphR->setYColumn(columnR);
-    graphG->setXColumn(columnX); graphG->setYColumn(columnG);
-    graphB->setXColumn(columnX); graphB->setYColumn(columnB);
+    if (typeid(TGraph)==typeid(JKQTPFilledCurveXGraph)) {
+        graphR->setXColumn(columnX); graphR->setYColumn(columnR);
+        graphG->setXColumn(columnX); graphG->setYColumn(columnG);
+        graphB->setXColumn(columnX); graphB->setYColumn(columnB);
+    } else {
+        graphR->setYColumn(columnX); graphR->setXColumn(columnR);
+        graphG->setYColumn(columnX); graphG->setXColumn(columnG);
+        graphB->setYColumn(columnX); graphB->setXColumn(columnB);
+    }
 
 
     // add the graphs to the plot, so they are actually displayed
@@ -85,19 +84,48 @@ int main(int argc, char* argv[])
     plot.addGraph(graphR);
 
     // 5. set axis labels
-    plot.getXAxis()->setAxisLabel("R/G/B-value");
-    plot.getYAxis()->setAxisLabel("normalized frequency [%]");
+    if (typeid(TGraph)==typeid(JKQTPFilledCurveXGraph)) {
+        plot.getXAxis()->setAxisLabel("R/G/B-value");
+        plot.getYAxis()->setAxisLabel("normalized frequency [%]");
+    } else {
+        plot.getYAxis()->setAxisLabel("R/G/B-value");
+        plot.getXAxis()->setAxisLabel("normalized frequency [%]");
+    }
 
 
     // 4. set the maximum size of the plot to 0..100% and 0..256
-    plot.setAbsoluteX(0,256);
-    plot.setAbsoluteY(0,100);
+    if (typeid(TGraph)==typeid(JKQTPFilledCurveXGraph)) {
+        plot.setAbsoluteX(0,256);
+        plot.setAbsoluteY(0,100);
+    } else {
+        plot.setAbsoluteY(0,256);
+        plot.setAbsoluteX(0,100);
+    }
     // ... and scale plot automatically
     plot.zoomToFit();
 
     // 5. show plotter and make it a decent size
+    plot.resize(400,300);
     plot.show();
-    plot.resize(600,400);
+}
+
+int main(int argc, char* argv[])
+{
+        
+    JKQTPAppSettingController highDPIController(argc, argv);
+    JKQTPExampleApplication app(argc, argv);
+
+
+    // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
+    JKQTPlotter plotX;
+    drawGraph<JKQTPFilledCurveXGraph>(plotX);
+    plotX.setWindowTitle("1: JKQTPFilledCurveXGraph");
+
+    JKQTPlotter plotY;
+    drawGraph<JKQTPFilledCurveYGraph>(plotY);
+    plotY.setWindowTitle("2: JKQTPFilledCurveYGraph");
+    plotY.resize(300,400);
+
 
     return app.exec();
 }

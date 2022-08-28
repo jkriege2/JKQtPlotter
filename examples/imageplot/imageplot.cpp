@@ -105,7 +105,7 @@ int main(int argc, char* argv[])
 
     // show plotter and make it a decent size
     plot.show();
-    plot.resize(600,600);
+    plot.resize(600/plot.devicePixelRatioF(),600/plot.devicePixelRatioF());
     plot.setWindowTitle("JKQTPColumnMathImage");
 
 

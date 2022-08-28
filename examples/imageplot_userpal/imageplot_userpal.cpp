@@ -165,7 +165,7 @@ int main(int argc, char* argv[])
 
     // 8. show plotter and make it a decent size
     win.show();
-    win.resize(500,550);
+    win.resize(500/plot->devicePixelRatioF(),550/plot->devicePixelRatioF());
     win.setWindowTitle("JKQTPColumnMathImage, USer Palettes");
 
 

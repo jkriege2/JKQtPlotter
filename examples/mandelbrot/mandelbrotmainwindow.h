@@ -17,6 +17,8 @@ class MandelbrotMainWindow : public QMainWindow
 public:
     explicit MandelbrotMainWindow(QWidget *parent = nullptr);
     ~MandelbrotMainWindow();
+signals:
+    void readyForScreenshot();
 protected slots:
     void paletteChanged(JKQTPMathImageColorPalette pal);
     void plotZoomChangedLocally(double newxmin, double newxmax, double newymin, double newymax, JKQTPlotter* sender);
