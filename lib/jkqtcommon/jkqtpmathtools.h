@@ -31,7 +31,12 @@
 #include <QString>
 #include <functional>
 
-
+#ifdef max
+#  undef max
+#endif
+#ifdef min
+#  undef min
+#endif
 
 /*! \brief \f$ \pi=3.14159... \f$
     \ingroup jkqtptools_math_basic
