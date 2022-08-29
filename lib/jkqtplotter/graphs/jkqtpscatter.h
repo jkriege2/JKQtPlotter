@@ -89,7 +89,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXYScatterGraph: public JKQTPXYGraph, public JK
 /*! \brief This implements xy scatter plots with x and y error indicators.
     \ingroup jkqtplotter_linesymbolgraphs_simple
 
-    \image html plot_errorbarscatterlots.png
+    \image html JKQTPXYScatterErrorGraph.png
 
     \see JKQTPXYScatterGraph, JKQTPXYGraphErrors
  */

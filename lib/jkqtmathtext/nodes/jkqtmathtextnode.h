@@ -91,10 +91,8 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextNode {
          *
          * \param painter painter to use for determining the size
          * \param currentEv current environment object
-         * \param[out] width width of the block/node
-         * \param[out] baselineHeight distance from the bottom of the block/node-box to the baseline
-         * \param[out] overallHeight overall height (bottom to top) of the node, the ascent is \c overallHeight-baselineHeight
-         * \param[out] strikeoutPos position of the strikeout-line
+         *
+         * \return all important box size parameters packed as JKQTMathTextNodeSize
          *
          */
         virtual JKQTMathTextNodeSize getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv) const =0;

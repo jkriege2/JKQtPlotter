@@ -57,7 +57,7 @@ class JKQTMathTextVerticalListNode; // forward
     The implementation is split over several classes:
       - JKQTMathText implements drawing, based on a memory representatioj of the markup. It also provides an interface for class users.
       - JKQTMathTextParser and its children like JKQTMathTextLatexParser parses mathamtical markup.
-      - The nodes summarized in \ref jkqtmathtext_nodes  are used to build the memory representation of the markup.
+      - The nodes summarized in \ref jkqtmathtext_items  are used to build the memory representation of the markup.
     .
     
     In particular JKQTMathTextLatexParser actually parses e.g. a LaTeX string and draws it in pure C++. It does NOT rely

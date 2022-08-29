@@ -140,7 +140,7 @@ JKQTPLOTTER_LIB_EXPORT void initJKQTPlotterResources();
  *
  * Often a single plot is not sufficient, but several plots need to be aligned with respect to each other:
  *
- * \image html test_multiplot.png
+ * \image html multiplot.png
  *
  * In the Qt Window this is achieved by placing several JKQTPlotter objects into a <a href="http://doc.qt.io/qt-5/qgridlayout.html">QGridLayout</a>.
  * In order to support this alignment, also when exporting/printing a plot, and when the user interactions with the plot (e.g. zooming),

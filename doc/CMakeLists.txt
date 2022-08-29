@@ -74,7 +74,7 @@ if(JKQtPlotter_BUILD_EXAMPLES)
     # e.g. "barchart/barchart,barchart_hor"
     # the basenames are applied to the windows in the order of their windowTitle()s!
     set(JKQTPlotter_GenerateDocScreenshots_From
-        scatter
+        scatter/scatter,scatter_error
         simpletest
         barchart/barchart,barchart_hor
         wiggleplots/wiggleplot_x,wiggleplot_y
@@ -119,14 +119,14 @@ if(JKQtPlotter_BUILD_EXAMPLES)
     # custom target that generates the images for the JKQTMathText documentation
     set(JKQTPlotter_GenerateDocImage_DefaultOptions --screenshotdir="${CMAKE_CURRENT_LIST_DIR}/../doc/images/" --screenshotplot --disablehighdpi)
     set(JKQTPlotter_GenerateDocImages_From
-        stackedbars/JKQTPbarVerticalGraphStacked,JKQTPbarHorizontalGraphStacked
-        scatter/JKQTPXYScatterGraph
-        simpletest/JKQTPXYLineGraph
-        barchart/JKQTPBarVerticalGraph,JKQTPBarHorizontalGraph
+        stackedbars/JKQTPbarVerticalGraphStacked,JKQTPbarHorizontalGraphStacked/--smallscreenshotplot
+        scatter/JKQTPXYScatterGraph,JKQTPXYScatterErrorGraph/--smallscreenshotplot
+        simpletest/JKQTPXYLineGraph/--smallscreenshotplot
+        barchart/JKQTPBarVerticalGraph,JKQTPBarHorizontalGraph/--smallscreenshotplot
         wiggleplots/JKQTPFilledCurveXGraph_wiggle,JKQTPFilledCurveYGraph_wiggle
-        contourplot/JKQTPColumnContourPlot
-        filledgraphs/JKQTPFilledCurveXGraph,JKQTPFilledCurveYGraph
-        evalcurve/JKQTPXYFunctionLineGraph
+        contourplot/JKQTPColumnContourPlot/--smallscreenshotplot
+        filledgraphs/JKQTPFilledCurveXGraph,JKQTPFilledCurveYGraph/--smallscreenshotplot
+        evalcurve/JKQTPXYFunctionLineGraph/--smallscreenshotplot
     )
 
     add_custom_target(JKQTPlotter_GenerateDocScreenshots
@@ -147,12 +147,18 @@ if(JKQtPlotter_BUILD_EXAMPLES)
 
     foreach(ex ${JKQTPlotter_GenerateDocScreenshots_From})
         string(REGEX MATCH "(.+)/(.+)" dummy ${ex})
+        set(extra_command "")
         if(CMAKE_MATCH_1 STREQUAL "" OR CMAKE_MATCH_2 STREQUAL "")
             set(example ${ex})
             set(basename ${ex})
         else()
             set(example ${CMAKE_MATCH_1})
             set(basename ${CMAKE_MATCH_2})
+            if(NOT (CMAKE_MATCH_3 STREQUAL ""))
+                set(example ${CMAKE_MATCH_1})
+                set(basename ${CMAKE_MATCH_2})
+                set(extra_command ${CMAKE_MATCH_3})
+            endif()
         endif()
 
         set(loc_target_name JKQTPlotter_GenerateDocScreenshots_${example})
@@ -160,7 +166,7 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         string(TOUPPER ${example} example_upper)
         add_custom_target(${loc_target_name}
             COMMENT "Building JKQTPlotter Documentation Screenshot: ${example_upper}"
-            COMMAND $<TARGET_FILE:${dep_name}> ${JKQTPlotter_GenerateDocScreenshots_DefaultOptions} --screenshotbasename=${basename}
+            COMMAND $<TARGET_FILE:${dep_name}> ${JKQTPlotter_GenerateDocScreenshots_DefaultOptions} --screenshotbasename=${basename} ${extra_command}
             WORKING_DIRECTORY ${JKQtPlotter_QT_BINDIR}
             DEPENDS ${dep_name}
         )
@@ -177,12 +183,20 @@ if(JKQtPlotter_BUILD_EXAMPLES)
 
     foreach(ex ${JKQTPlotter_GenerateDocImages_From})
         string(REGEX MATCH "(.+)/(.+)" dummy ${ex})
+        set(extra_command "")
         if(CMAKE_MATCH_1 STREQUAL "" OR CMAKE_MATCH_2 STREQUAL "")
             set(example ${ex})
             set(basename ${ex})
         else()
             set(example ${CMAKE_MATCH_1})
             set(basename ${CMAKE_MATCH_2})
+            string(REGEX MATCH "(.+)/(.*)/(.+)" dummy ${ex})
+            if(NOT (CMAKE_MATCH_3 STREQUAL ""))
+                set(example ${CMAKE_MATCH_1})
+                set(basename ${CMAKE_MATCH_2})
+                set(extra_command ${CMAKE_MATCH_3})
+            endif()
+
         endif()
 
         set(loc_target_name JKQTPlotter_GenerateDocImages_${example})
@@ -190,7 +204,7 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         string(TOUPPER ${example} example_upper)
         add_custom_target(${loc_target_name}
             COMMENT "Building JKQTPlotter Documentation Image: ${example_upper}"
-            COMMAND $<TARGET_FILE:${dep_name}> ${JKQTPlotter_GenerateDocImage_DefaultOptions} --screenshotbasename=${basename}
+            COMMAND $<TARGET_FILE:${dep_name}> ${JKQTPlotter_GenerateDocImage_DefaultOptions} --screenshotbasename=${basename} ${extra_command}
             WORKING_DIRECTORY ${JKQtPlotter_QT_BINDIR}
             DEPENDS ${dep_name}
         )
