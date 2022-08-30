@@ -33,6 +33,7 @@
 #include <forward_list>
 #include <cmath>
 #include <utility>
+#include <random>
 #include <QDebug>
 #include "jkqtcommon/jkqtpmathtools.h"
 #include "jkqtcommon/jkqtpcodestructuring.h"
@@ -105,6 +106,13 @@ protected:
     double slopeTolerance;
     /** \brief create one sample at least every \a minPixelPerSample pixels */
     double minPixelPerSample;
+    /** \brief random number generation: device */
+    mutable std::random_device rd; // random number generators:
+    /** \brief random number generation: egenrator */
+    mutable std::mt19937 gen;
+    /** \brief random number generation: distribution */
+    mutable std::uniform_real_distribution<double> dist;
+
 };
 
 

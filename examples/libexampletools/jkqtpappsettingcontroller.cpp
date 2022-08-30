@@ -5,6 +5,8 @@
 
 JKQTPAppSettingController::JKQTPAppSettingController(int &argc, char **argv, bool enableHighDPIIfAVailable)
 {
+    // seed RNG
+    std::srand(123456);
     bool deactivated=false;
     for (int i=0; i<argc; i++) {
         if (QString(argv[i])=="--disablehighdpi") {

@@ -235,9 +235,10 @@ JKQTPAdaptiveFunctionGraphEvaluator::JKQTPAdaptiveFunctionGraphEvaluator(const s
     minSamples(minSamples_),
     maxRefinementDegree(maxRefinementDegree_),
     slopeTolerance(slopeTolerance_),
-    minPixelPerSample(minPixelPerSample_)
+    minPixelPerSample(minPixelPerSample_),
+    rd(), gen{rd()}, dist(0,1)
 {
-
+    gen.seed(12345);
 }
 
 JKQTPAdaptiveFunctionGraphEvaluator::JKQTPAdaptiveFunctionGraphEvaluator(const std::function<QPointF (double)> &fxy_, unsigned int minSamples_, unsigned int maxRefinementDegree_, double slopeTolerance_, double minPixelPerSample_):
@@ -245,9 +246,10 @@ JKQTPAdaptiveFunctionGraphEvaluator::JKQTPAdaptiveFunctionGraphEvaluator(const s
     minSamples(minSamples_),
     maxRefinementDegree(maxRefinementDegree_),
     slopeTolerance(slopeTolerance_),
-    minPixelPerSample(minPixelPerSample_)
+    minPixelPerSample(minPixelPerSample_),
+    rd(), gen{rd()}, dist(0,1)
 {
-
+    gen.seed(12345);
 }
 
 QVector<QPointF> JKQTPAdaptiveFunctionGraphEvaluator::evaluate(double tmin, double tmax) const
@@ -285,7 +287,7 @@ void JKQTPAdaptiveFunctionGraphEvaluator::refine(JKQTPAdaptiveFunctionGraphEvalu
     if (degree>=maxRefinementDegree) return;
     const double ta=a->first;
     const double tb=b->first;
-    const double tmid=ta+(tb-ta)*(0.5 +(static_cast<double>(rand())/static_cast<double>(RAND_MAX)-0.5)/5.0);
+    const double tmid=ta+(tb-ta)*(0.5 +(dist(gen)-0.5)/5.0);
     const QPointF pa=a->second;
     const QPointF pb=b->second;
     const QPointF pmid(fxy(tmid));
