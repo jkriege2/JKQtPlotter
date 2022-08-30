@@ -48,7 +48,7 @@ SpeedTestPlot::SpeedTestPlot():
     graph2->setXColumn(columnX);
     graph2->setYColumn(columnY2);
     graph2->setTitle(QObject::tr("live cos() graph"));
-    graph2->setLineWidth(2);
+    graph2->setLineWidth(1);
     graph2->setSymbolType(JKQTPNoSymbol);
 
     addGraph(graph2);

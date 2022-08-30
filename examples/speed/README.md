@@ -78,22 +78,22 @@ Running this test on a modern AMD Ryzen 7 5800H laptop (eaxct conditions: Qt 6.2
 
 | Graph Style  | Anti-Aliasing    | Fixed X-Axis    |  frame rate [fps] |
 | ------------ | ---------------- | --------------- | ----------------- |
-| lines+symbols| yes              | no              |   3               |
-| lines+symbols| yes              | yes             |   6               |
-| lines+symbols| no               | no              |  32               |
-| lines+symbols| no               | yes             |  50               |
-| lines-only   | yes              | no              |   4               |
-| lines-only   | yes              | yes             |   7               |
-| lines-only   | no               | no              |  43               |
-| lines-only   | no               | yes             |  80               |
+| lines+symbols| yes              | no              |  20               |
+| lines+symbols| yes              | yes             |  40               |
+| lines+symbols| no               | no              |  50               |
+| lines+symbols| no               | yes             |  95               |
+| lines-only   | yes              | no              |  30               |
+| lines-only   | yes              | yes             |  65               |
+| lines-only   | no               | no              |  78               |
+| lines-only   | no               | yes             | 140               |
 
 
-Since 5.0.0 JKQTPlotter supports a line-compression algorithm (see `JKQTPSimplifyPolyLines()`). This allows to also draw very large datasets with sub-linear speed-decrease. The algorithm tries to not draw lines that are not visible, because they overlay each other. Using this mode we obtain these framerates for a two line-only graphs without anti-aliasing:
+Since 5.0.0 JKQTPlotter supports a line-compression algorithm (see `JKQTPSimplifyPolyLines()`). This allows to also draw very large datasets with sub-linear speed-decrease. The algorithm tries to not draw lines that are not visible, because they overlay each other. Using this mode we obtain these framerates for a two line-only graphs without anti-aliasing and with fixed x-axis:
 
 | Number of Points | frame rate [fps] |
 | ---------------- | ---------------- |
-|   500            |  48              |
-|  1000            |  32              |
-|  2000            |   8              |
-| 10000            |   5              |
+|   500            |  67              |
+|  1000            |  42              |
+|  2000            |  23              |
+| 10000            |  11              |
 
