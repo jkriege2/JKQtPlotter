@@ -52,6 +52,7 @@ void JKQTPFilledCurveGraphBase::drawKeyMarker(JKQTPEnhancedPainter &painter, QRe
 {
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     QPen p=getLinePen(painter, parent);
+    p.setWidthF(getKeyLineWidthPx(painter, rect, parent));
     QPen np(Qt::NoPen);
     QBrush b=getFillBrush(painter, parent);
     const double y=rect.top()+rect.height()/2.0;
@@ -488,7 +489,7 @@ void JKQTPFilledVerticalRangeGraph::drawKeyMarker(JKQTPEnhancedPainter &painter,
     r.moveTo(r.x(), r.y()+r.height()-1);
     painter.fillRect(r, getFillBrush(painter, parent));
     if (getDrawLine()) {
-        painter.setPen(getLinePen(painter, parent));
+        painter.setPen(getKeyLinePen(painter, rect, parent));
         painter.drawLine(QLineF(r.topLeft(), r.topRight()));
     }
 
@@ -603,7 +604,7 @@ void JKQTPFilledHorizontalRangeGraph::drawKeyMarker(JKQTPEnhancedPainter &painte
     r.moveTo(r.x(), r.y()+r.height()-1);
     painter.fillRect(r, getFillBrush(painter, parent));
     if (getDrawLine()) {
-        painter.setPen(getLinePen(painter, parent));
+        painter.setPen(getKeyLinePen(painter, rect, parent));
         painter.drawLine(QLineF(r.topLeft(), r.topRight()));
     }
 

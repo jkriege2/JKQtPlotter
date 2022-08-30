@@ -76,6 +76,7 @@ void JKQTPEvaluatedFunctionWithErrorsGraphDrawingBase::drawKeyMarker(JKQTPEnhanc
     QPen p=getLinePen(painter, parent);
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);
+    p.setWidthF(getKeyLineWidthPx(painter, rect, parent));
     QPen np(Qt::NoPen);
     QBrush b=getFillBrush(painter, parent);
     const double y=rect.top()+rect.height()/2.0;

@@ -503,6 +503,8 @@ inline void JKQTPPlotSymbol(TPainter& painter, double x, double y, JKQTPGraphSym
         }
     }
 
+    painter.setBrush(QColor(Qt::transparent));
+    painter.setPen(p);
     switch(symbol) {
         case JKQTPDot:
             painter.drawPoint(QPointF(x,y));
@@ -576,6 +578,7 @@ inline void JKQTPPlotSymbol(TPainter& painter, double x, double y, JKQTPGraphSym
             }
             break;
         case JKQTPFemale:{
+                painter.setBrush(QColor(Qt::transparent));
                 QPainterPath path;
                 QRectF rectangle3(x-w2/2.0, y-w2, w2, w2);
                 path.addEllipse(rectangle3);
@@ -587,6 +590,7 @@ inline void JKQTPPlotSymbol(TPainter& painter, double x, double y, JKQTPGraphSym
             }
             break;
         case JKQTPMale:{
+                painter.setBrush(QColor(Qt::transparent));
                 QPainterPath path;
                 QRectF rectangle3(x-w2/2.0, y-w2/2.0, w2, w2);
                 path.addEllipse(rectangle3);

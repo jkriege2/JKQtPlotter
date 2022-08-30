@@ -116,17 +116,8 @@ void JKQTPXYScatterGraph::draw(JKQTPEnhancedPainter& painter) {
 }
 
 void JKQTPXYScatterGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
-    const double minSize=qMin(rect.width(), rect.height());
-    const double maxSize=qMax(rect.width(), rect.height());
-    double symbolSize=parent->pt2px(painter, this->getSymbolSize());
-    if (symbolSize>minSize*0.9) symbolSize=minSize*0.9;
-    double symbolWidth=parent->pt2px(painter, this->getSymbolLineWidth()*parent->getLineWidthMultiplier());
-    if (symbolWidth>0.3*symbolSize) symbolWidth=0.3*symbolSize;
-
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-    double y=rect.top()+rect.height()/2.0;
-    JKQTPPlotSymbol(painter, rect.left()+rect.width()/2.0, rect.top()+rect.height()/2.0, getSymbolType(), symbolSize, symbolWidth, getKeyLabelColor(), getSymbolFillColor());
-
+    JKQTPPlotSymbol(painter, rect.left()+rect.width()/2.0, rect.top()+rect.height()/2.0, getSymbolType(), getKeySymbolSizePx(painter, rect, parent), getKeySymbolLineWidthPx(painter, rect, parent), getKeyLabelColor(), getSymbolFillColor());
 }
 
 QColor JKQTPXYScatterGraph::getKeyLabelColor() const {
@@ -427,14 +418,8 @@ void JKQTPXYParametrizedScatterGraph::draw(JKQTPEnhancedPainter &painter)
 
 void JKQTPXYParametrizedScatterGraph::drawKeyMarker(JKQTPEnhancedPainter &painter, QRectF &rect)
 {
-    const double minSize=qMin(rect.width(), rect.height());
-    const double maxSize=qMax(rect.width(), rect.height());
-    double symbolSize1=parent->pt2px(painter, this->getSymbolSize());
-    if (symbolSize1>minSize*0.9) symbolSize1=minSize*0.9;
-    if (symbolSize1<minSize*0.6) symbolSize1=minSize*0.6;
-    double symbolSize2=parent->pt2px(painter, this->getSymbolSize()*0.75);
-    if (symbolSize2>minSize*0.6) symbolSize2=minSize*0.5;
-    if (symbolSize2<minSize*0.5) symbolSize2=minSize*0.5;
+    double symbolSize1=getKeySymbolSizePx(painter, rect, parent, 0.75);
+    double symbolSize2=symbolSize1*0.8;
 
     if (sizeColumn<0) {
         symbolSize2=symbolSize1;
@@ -464,10 +449,7 @@ void JKQTPXYParametrizedScatterGraph::drawKeyMarker(JKQTPEnhancedPainter &painte
         symbol2=JKQTPFilledRect;
     }
 
-    double symbolWidth=parent->pt2px(painter, this->getSymbolLineWidth()*0.7*parent->getLineWidthMultiplier());
-    if (symbolWidth>0.2*getSymbolLineWidth()) symbolWidth=0.3*getSymbolLineWidth();
-    double lineWidth=parent->pt2px(painter, this->getSymbolLineWidth()*0.7*parent->getLineWidthMultiplier());
-    if (lineWidth>0.1*maxSize) lineWidth=0.1*maxSize;
+    double lineWidth=getKeyLineWidthPx(painter, rect, parent)*0.75;
 
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     QPen p=painter.pen();
@@ -475,12 +457,12 @@ void JKQTPXYParametrizedScatterGraph::drawKeyMarker(JKQTPEnhancedPainter &painte
     p.setStyle(getLineStyle());
     p.setWidthF(lineWidth);
     painter.setPen(p);
-    double x1=rect.left()+symbolSize1/2.0;
-    double y1=rect.top()+symbolSize1/2.0;
-    double x2=rect.right()-symbolSize2/2.0;
-    double y2=rect.bottom()-symbolSize2/2.0;
-    JKQTPPlotSymbol(painter, x1, y1, symbol1, symbolSize1, symbolWidth, color1, JKQTPGetDerivedColor(symbolFillDerivationMode, color1));
-    JKQTPPlotSymbol(painter, x2, y2, symbol2, symbolSize2, symbolWidth, color2, JKQTPGetDerivedColor(symbolFillDerivationMode, color2));
+    const double x1=rect.left()+symbolSize1/2.0;
+    const double y1=rect.top()+symbolSize1/2.0;
+    const double x2=rect.right()-symbolSize2/2.0;
+    const double y2=rect.bottom()-symbolSize2/2.0;
+    JKQTPPlotSymbol(painter, x1, y1, symbol1, symbolSize1, getKeySymbolLineWidthPx(painter, rect, parent,0.5), color1, JKQTPGetDerivedColor(symbolFillDerivationMode, color1));
+    JKQTPPlotSymbol(painter, x2, y2, symbol2, symbolSize2, getKeySymbolLineWidthPx(painter, rect, parent,0.5), color2, JKQTPGetDerivedColor(symbolFillDerivationMode, color2));
     if (drawLine) painter.drawLine(QLineF(x1,y1, x2,y2));
 
 }

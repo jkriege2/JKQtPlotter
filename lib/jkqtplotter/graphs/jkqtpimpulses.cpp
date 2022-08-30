@@ -136,7 +136,7 @@ void JKQTPImpulsesHorizontalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, 
 
 
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-    QPen p=getLinePen(painter, parent);
+    QPen p=getKeyLinePen(painter, rect, parent);
     p.setCapStyle(Qt::FlatCap);
     painter.setPen(p);
 
@@ -170,7 +170,7 @@ void JKQTPImpulsesVerticalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QR
 
 
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-    QPen p=getLinePen(painter, parent);
+    QPen p=getKeyLinePen(painter, rect, parent);
     p.setCapStyle(Qt::FlatCap);
     painter.setPen(p);
     const int x=rect.left()+rect.width()/2.0;

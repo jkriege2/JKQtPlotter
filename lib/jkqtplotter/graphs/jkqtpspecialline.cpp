@@ -46,7 +46,7 @@ JKQTPSpecialLineGraphBase::JKQTPSpecialLineGraphBase(JKQTBasePlotter* parent):
 
 void JKQTPSpecialLineGraphBase::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-    QPen p=getLinePen(painter, parent);
+    QPen p=getKeyLinePen(painter, rect, parent);
     QPen np(Qt::NoPen);
     QBrush b=getFillBrush(painter, parent);
     const double y=rect.top()+rect.height()/2.0;
@@ -56,7 +56,7 @@ void JKQTPSpecialLineGraphBase::drawKeyMarker(JKQTPEnhancedPainter& painter, QRe
     if (getFillCurve()) painter.drawRect(rect);
     if (!getFillCurve() && getDrawLine()) painter.drawLine(QLineF(rect.left(), y, rect.right(), y));
     if (m_drawSymbols) {
-        plotStyledSymbol(parent, painter, rect.center().x(), rect.center().y(), rect.width()*0.5);
+        JKQTPPlotSymbol(painter, rect.center().x(), rect.center().y(), getSymbolType(), getKeySymbolSizePx(painter, rect, parent), getKeySymbolLineWidthPx(painter, rect, parent), getKeyLabelColor(), getSymbolFillColor());
     }
 
 }

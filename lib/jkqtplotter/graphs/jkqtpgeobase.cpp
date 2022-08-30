@@ -66,9 +66,9 @@ void JKQTPGeoBaseLine::setColor(QColor c)
 
 void JKQTPGeoBaseLine::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-    painter.setPen(getLinePen(painter, parent));
-    double y=rect.top()+rect.height()/2.0;
-    if (rect.width()>0) painter.drawLine(QLineF(rect.left(), y, rect.right(), y));
+    painter.setPen(getKeyLinePen(painter, rect, parent));
+    const double y=rect.top()+rect.height()/2.0;
+    painter.drawLine(QLineF(rect.left(), y, rect.right(), y));
 
 }
 
@@ -175,10 +175,9 @@ void JKQTPGeoBaseFilled::setStyleTransparentFill(QColor color)
 
 void JKQTPGeoBaseFilled::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-    painter.setPen(getLinePen(painter, parent));
+    painter.setPen(getKeyLinePen(painter, rect, parent));
     painter.setBrush(getFillBrush(painter, parent));
-    painter.drawRect(rect);
-
+    painter.drawRect(rect-QMarginsF(1,1,1,1));
 }
 
 
@@ -231,8 +230,8 @@ void JKQTPGeoBaseDecoratedHeadLine::drawKeyMarker(JKQTPEnhancedPainter &painter,
 {
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     painter.setPen(getLinePen(painter, parent));
-    double y=rect.top()+rect.height()/2.0;
-    if (rect.width()>0) painter.drawLine(QLineF(rect.left(), y, rect.right(), y));
+    const double y=rect.top()+rect.height()/2.0;
+    painter.drawLine(QLineF(rect.left(), y, rect.right(), y));
 }
 
 QColor JKQTPGeoBaseDecoratedHeadLine::getKeyLabelColor() const
@@ -291,9 +290,12 @@ void JKQTPGeoBaseDecoratedLine::setColor(QColor c)
 void JKQTPGeoBaseDecoratedLine::drawKeyMarker(JKQTPEnhancedPainter &painter, QRectF &rect)
 {
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-    painter.setPen(getLinePen(painter, parent));
-    double y=rect.top()+rect.height()/2.0;
-    if (rect.width()>0) painter.drawLine(QLineF(rect.left(), y, rect.right(), y));
+    QPen p=getLinePen(painter, parent);
+    p.setColor(getKeyLabelColor());
+    p.setWidthF(getKeyLineWidthPx(painter,rect,parent));
+    painter.setPen(p);
+    const double y=rect.top()+rect.height()/2.0;
+    painter.drawLine(QLineF(rect.left(), y, rect.right(), y));
 }
 
 QColor JKQTPGeoBaseDecoratedLine::getKeyLabelColor() const

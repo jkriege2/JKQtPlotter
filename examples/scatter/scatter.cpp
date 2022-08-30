@@ -96,6 +96,7 @@ void createErrorScatterGraph(JKQTPlotter&plot) {
     graph1->setYColumn(columnY);
     graph1->setYErrorColumn(columnEY);
     graph1->setYErrorStyle(JKQTPErrorSimpleBars);
+    graph1->setSymbolType(JKQTPCross);
     graph1->setTitle(QObject::tr("y-errorlines"));
     plot.addGraph(graph1);
 
@@ -107,6 +108,7 @@ void createErrorScatterGraph(JKQTPlotter&plot) {
     graph2->setXErrorStyle(JKQTPErrorBars);
     graph2->setYErrorStyle(JKQTPErrorBars);
     graph2->setTitle(QObject::tr("xy-errorbars"));
+    graph2->setSymbolLineWidth(3);
     plot.addGraph(graph2);
 
     // 6. autoscale the plot so the graph is contained
@@ -114,6 +116,7 @@ void createErrorScatterGraph(JKQTPlotter&plot) {
 
     // show plotter and make it a decent size
     plot.getPlotter()->setPlotLabel(QObject::tr("Error Scatter Example"));
+    plot.setGrid(false);
     plot.show();
     plot.resize(600/plot.devicePixelRatioF(),400/plot.devicePixelRatioF());
 }

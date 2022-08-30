@@ -150,25 +150,13 @@ void JKQTPXYLineGraph::draw(JKQTPEnhancedPainter& painter) {
 }
 
 void JKQTPXYLineGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
-    const double minSize=qMin(rect.width(), rect.height());
-    const double maxSize=qMax(rect.width(), rect.height());
-    double symbolSize=parent->pt2px(painter, this->getSymbolSize());
-    if (symbolSize>minSize*0.9) symbolSize=minSize*0.9;
-    double symbolWidth=parent->pt2px(painter, this->getSymbolLineWidth()*parent->getLineWidthMultiplier());
-    if (symbolWidth>0.3*symbolSize) symbolWidth=0.3*symbolSize;
-    double lineWidth=parent->pt2px(painter, this->getLineWidth()*parent->getLineWidthMultiplier());
-    if (lineWidth>0.5*maxSize) lineWidth=0.5*maxSize;
-
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     QPen p=getLinePen(painter, parent);
-    p.setColor(getKeyLabelColor());
-    p.setStyle(getLineStyle());
-    p.setWidthF(lineWidth);
+    p.setWidthF(getKeyLineWidthPx(painter,rect,parent));
     painter.setPen(p);
     double y=rect.top()+rect.height()/2.0;
     if (drawLine) painter.drawLine(QLineF(rect.left(), y, rect.right(), y));
-    JKQTPPlotSymbol(painter, rect.left()+rect.width()/2.0, rect.top()+rect.height()/2.0, getSymbolType(), symbolSize, symbolWidth, getKeyLabelColor(), getSymbolFillColor());
-
+    JKQTPPlotSymbol(painter, rect.left()+rect.width()/2.0, rect.top()+rect.height()/2.0, getSymbolType(), getKeySymbolSizePx(painter, rect, parent), getKeySymbolLineWidthPx(painter, rect, parent), getKeyLabelColor(), getSymbolFillColor());
 }
 
 QColor JKQTPXYLineGraph::getKeyLabelColor() const {

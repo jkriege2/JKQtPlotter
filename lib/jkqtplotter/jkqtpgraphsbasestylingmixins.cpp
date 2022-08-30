@@ -140,6 +140,13 @@ QPen JKQTPGraphLineStyleMixin::getLinePen(JKQTPEnhancedPainter& painter, JKQTBas
     return p;
 }
 
+
+QPen JKQTPGraphLineStyleMixin::getKeyLinePen(JKQTPEnhancedPainter& painter, const QRectF& rect, JKQTBasePlotter* parent) const {
+    QPen p=m_linePen;
+    p.setWidthF(getKeyLineWidthPx(painter, rect, parent));
+    return p;
+}
+
 QPen JKQTPGraphLineStyleMixin::getLinePenForRects(JKQTPEnhancedPainter &painter, JKQTBasePlotter *parent) const
 {
     QPen p=getLinePen(painter, parent);
@@ -268,6 +275,23 @@ void JKQTPGraphSymbolStyleMixin::setSymbolLineWidth(double __value)
 double JKQTPGraphSymbolStyleMixin::getSymbolLineWidth() const
 {
     return m_symbolLineWidth;
+}
+
+double JKQTPGraphSymbolStyleMixin::getKeySymbolLineWidthPx(JKQTPEnhancedPainter& painter, const QRectF& keyRect, const JKQTBasePlotter *parent, double maxSymbolSizeFracton) const
+{
+    const double minSize=qMin(keyRect.width(), keyRect.height());
+    double symbolWidth=parent->pt2px(painter, this->getSymbolLineWidth()*parent->getLineWidthMultiplier());
+    double symbolSize=getKeySymbolSizePx(painter, keyRect, parent, maxSymbolSizeFracton);
+    if (symbolWidth>0.3*symbolSize) symbolWidth=0.3*symbolSize;
+    return symbolWidth;
+}
+
+double JKQTPGraphSymbolStyleMixin::getKeySymbolSizePx(JKQTPEnhancedPainter& painter, const QRectF& keyRect, const JKQTBasePlotter *parent, double maxSymbolSizeFracton) const
+{
+    const double minSize=qMin(keyRect.width(), keyRect.height());
+    double symbolSize=parent->pt2px(painter, this->getSymbolSize());
+    if (symbolSize>minSize*maxSymbolSizeFracton) symbolSize=minSize*maxSymbolSizeFracton;
+    return symbolSize;
 }
 
 QPen JKQTPGraphSymbolStyleMixin::getSymbolPen(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent) const {
@@ -436,6 +460,14 @@ void JKQTPGraphLineStyleMixin::setHighlightingLineColor(const QColor &__value)
 QColor JKQTPGraphLineStyleMixin::getHighlightingLineColor() const
 {
     return m_highlightingLineColor;
+}
+
+double JKQTPGraphLineStyleMixin::getKeyLineWidthPx(JKQTPEnhancedPainter &painter, const QRectF &keyRect, const JKQTBasePlotter *parent) const
+{
+    const double minSize=qMin(keyRect.width(), keyRect.height());
+    double lineWidth=parent->pt2px(painter, this->getLineWidth()*parent->getLineWidthMultiplier());
+    if (lineWidth>0.4*minSize) lineWidth=0.4*minSize;
+    return lineWidth;
 }
 
 QPen JKQTPGraphLineStyleMixin::getHighlightingLinePen(JKQTPEnhancedPainter &painter, JKQTBasePlotter *parent) const

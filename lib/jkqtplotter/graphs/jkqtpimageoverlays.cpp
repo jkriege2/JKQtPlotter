@@ -126,8 +126,6 @@ void JKQTPOverlayImage::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rec
     painter.fillRect(r1, QBrush(trueColor));
     painter.setBrush(QBrush(falseColor));
     painter.fillRect(r2, QBrush(falseColor));
-
-
 }
 
 QColor JKQTPOverlayImage::getKeyLabelColor() const {

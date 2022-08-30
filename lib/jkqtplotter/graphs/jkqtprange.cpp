@@ -311,7 +311,7 @@ void JKQTPHorizontalRange::draw(JKQTPEnhancedPainter& painter) {
 
 void JKQTPHorizontalRange::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-    QPen p=getLinePen(painter, parent);
+    QPen p=getKeyLinePen(painter, rect, parent);
     QPen np(Qt::NoPen);
     QBrush nb(Qt::NoBrush);
     QBrush b=getFillBrush(painter, parent);
@@ -430,7 +430,7 @@ void JKQTPVerticalRange::draw(JKQTPEnhancedPainter& painter) {
 
 void JKQTPVerticalRange::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-    QPen p=getLinePen(painter, parent);
+    QPen p=getKeyLinePen(painter, rect, parent);
     QPen np(Qt::NoPen);
     QBrush nb(Qt::NoBrush);
     QBrush b=getFillBrush(painter, parent);

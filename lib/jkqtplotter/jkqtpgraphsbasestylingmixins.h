@@ -135,6 +135,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphLineStyleMixin {
         /** \brief line pen for the highlighted look */
         QColor m_highlightingLineColor;
     protected:
+        /** \brief returns the linewidth for drawing lines in a key entry with \a keyRect for the symbol, using \a painter and \a parent  . */
+        double getKeyLineWidthPx(JKQTPEnhancedPainter &painter, const QRectF &keyRect, const JKQTBasePlotter *parent) const;
+
         /** \brief constructs a QPen from the line styling properties */
         QPen getLinePen(JKQTPEnhancedPainter &painter, JKQTBasePlotter* parent) const;
         /** \brief constructs a QPen from the line styling properties, suitable for drawing rectangles with sharp edges */
@@ -143,6 +146,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphLineStyleMixin {
         QPen getHighlightingLinePen(JKQTPEnhancedPainter &painter, JKQTBasePlotter* parent) const;
         /** \brief constructs a QPen from the line styling properties, suitable for drawing rectangle with sharp corners */
         QPen getHighlightingLinePenForRects(JKQTPEnhancedPainter &painter, JKQTBasePlotter* parent) const;
+        /** \brief constructs a QPen from the line styling properties, but uses getKeyLineWidthPx() for the width, i.e. constructs a pen for drawing lines in key-symbols */
+        QPen getKeyLinePen(JKQTPEnhancedPainter &painter, const QRectF &rect, JKQTBasePlotter *parent) const;
 };
 
 
@@ -406,7 +411,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphSymbolStyleMixin {
         Q_PROPERTY(double symbolSize MEMBER m_symbolSize READ getSymbolSize WRITE setSymbolSize)
         Q_PROPERTY(double symbolLineWidth MEMBER m_symbolLineWidth READ getSymbolLineWidth WRITE setSymbolLineWidth)
 #endif
-    private:
+private:
         /** \brief which symbol to use for the datapoints */
         JKQTPGraphSymbols m_symbolType;
         /** \brief size (diameter in pt) of the symbol for the data points, given in pt */
@@ -458,8 +463,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphSymbolStyleMixin {
             \param fillColor fill color of the symbol
          */
         void plotStyledSymbol(JKQTBasePlotter* parent, JKQTPEnhancedPainter& painter, double x, double y, QColor color, QColor fillColor) const;
-
-
+        /** \brief returns the symbol linewidth for drawing symbols in a key entry with \a keyRect for the symbol, using \a painter and \a parent  . \a maxSymbolSizeFracton specifies the maximum fraction of \a keyRect to be used for the symbol. */
+        double getKeySymbolLineWidthPx(JKQTPEnhancedPainter &painter, const QRectF &keyRect, const JKQTBasePlotter *parent, double maxSymbolSizeFracton=0.9) const;
+        /** \brief returns the symbol size for drawing symbols in a key entry with \a keyRect for the symbol, using \a painter and \a parent . \a maxSymbolSizeFracton specifies the maximum fraction of \a keyRect to be used for the symbol. */
+        double getKeySymbolSizePx(JKQTPEnhancedPainter &painter, const QRectF &keyRect, const JKQTBasePlotter *parent, double maxSymbolSizeFracton=0.9) const;
 };
 
 
