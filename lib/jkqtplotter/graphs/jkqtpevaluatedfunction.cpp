@@ -299,14 +299,14 @@ void JKQTPEvaluatedFunctionWithErrorsGraphDrawingBase::drawXGraph(JKQTPEnhancedP
         if (getDrawLine()) {
             painter.save(); auto __finalpaintline=JKQTPFinally([&painter]() {painter.restore();});
             painter.setPen(p);
-            painter.drawPolyline(linePolygon);
+            painter.drawPolylineFast(linePolygon);
         }
 
         if (drawErrorLines && (static_cast<bool>(errorPlotFunction))) {
             painter.save(); auto __finalpainterrline=JKQTPFinally([&painter]() {painter.restore();});
             painter.setPen(ep);
-            painter.drawPolyline(errorLineTop);
-            painter.drawPolyline(errorLineBottom);
+            painter.drawPolylineFast(errorLineTop);
+            painter.drawPolylineFast(errorLineBottom);
         }
 
 
@@ -425,14 +425,14 @@ void JKQTPEvaluatedFunctionWithErrorsGraphDrawingBase::drawYGraph(JKQTPEnhancedP
         if (getDrawLine()) {
             painter.save(); auto __finalpaintline=JKQTPFinally([&painter]() {painter.restore();});
             painter.setPen(p);
-            painter.drawPolyline(linePolygon);
+            painter.drawPolylineFast(linePolygon);
         }
 
         if (drawErrorLines && (static_cast<bool>(errorPlotFunction))) {
             painter.save(); auto __finalpainterrline=JKQTPFinally([&painter]() {painter.restore();});
             painter.setPen(ep);
-            painter.drawPolyline(errorLineTop);
-            painter.drawPolyline(errorLineBottom);
+            painter.drawPolylineFast(errorLineTop);
+            painter.drawPolylineFast(errorLineBottom);
         }
 
 

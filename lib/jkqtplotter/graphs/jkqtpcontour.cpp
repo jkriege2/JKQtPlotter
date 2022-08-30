@@ -126,7 +126,7 @@ void JKQTPContourPlot::draw(JKQTPEnhancedPainter &painter)
                 //qDebug()<<lineTranformed;
             }
             for (const QPolygonF& poly: contourLinesTransformedSingleLevel) {
-                painter.drawPolyline(poly);
+                painter.drawPolylineFast(poly);
             }
         }
     }

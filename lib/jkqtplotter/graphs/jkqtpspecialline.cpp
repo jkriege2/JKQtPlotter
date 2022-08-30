@@ -276,7 +276,7 @@ void JKQTPSpecialLineHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
             painter.setBrush(Qt::NoBrush);
             painter.setPen(ph);
             for (const QPolygonF& lines : pl_fordrawing) {
-                painter.drawPolyline(lines);
+                painter.drawPolylineFast(lines);
             }
         }
 
@@ -284,7 +284,7 @@ void JKQTPSpecialLineHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
             painter.setBrush(Qt::NoBrush);
             painter.setPen(p);
             for (const QPolygonF& lines : pl_fordrawing) {
-                painter.drawPolyline(lines);
+                painter.drawPolylineFast(lines);
             }
         }
 
@@ -464,7 +464,7 @@ void JKQTPSpecialLineVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
             painter.setBrush(Qt::NoBrush);
             painter.setPen(ph);
             for (const QPolygonF& lines : pl_fordrawing) {
-                painter.drawPolyline(lines);
+                painter.drawPolylineFast(lines);
             }
         }
 
@@ -472,7 +472,7 @@ void JKQTPSpecialLineVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
             painter.setBrush(Qt::NoBrush);
             painter.setPen(p);
             for (const QPolygonF& lines : pl_fordrawing) {
-                painter.drawPolyline(lines);
+                painter.drawPolylineFast(lines);
             }
         }
 

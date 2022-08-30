@@ -393,7 +393,7 @@ void JKQTPXYParametrizedScatterGraph::draw(JKQTPEnhancedPainter &painter)
                 } else {
                     pp.setColor(getHighlightingLineColor());
                     painter.setPen(pp);
-                    painter.drawPolyline(linesP);
+                    painter.drawPolylineFast(linesP);
                 }
             }
             QPen pp=p;
@@ -407,7 +407,7 @@ void JKQTPXYParametrizedScatterGraph::draw(JKQTPEnhancedPainter &painter)
             } else {
                 pp.setColor(getHighlightingLineColor());
                 painter.setPen(pp);
-                painter.drawPolyline(linesP);
+                painter.drawPolylineFast(linesP);
             }
 
         }

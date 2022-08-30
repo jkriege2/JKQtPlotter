@@ -466,14 +466,14 @@ void JKQTPFilledVerticalRangeGraph::draw(JKQTPEnhancedPainter &painter)
                 if (isHighlighted()) {
 
                     painter.setPen(ps);
-                    painter.drawPolyline(phigh);
-                    painter.drawPolyline(plow);
+                    painter.drawPolylineFast(phigh);
+                    painter.drawPolylineFast(plow);
                 }
 
 
                 painter.setPen(p);
-                painter.drawPolyline(phigh);
-                painter.drawPolyline(plow);
+                painter.drawPolylineFast(phigh);
+                painter.drawPolylineFast(plow);
 
             }
         }
@@ -581,14 +581,14 @@ void JKQTPFilledHorizontalRangeGraph::draw(JKQTPEnhancedPainter &painter)
                 if (isHighlighted()) {
 
                     painter.setPen(ps);
-                    painter.drawPolyline(phigh);
-                    painter.drawPolyline(plow);
+                    painter.drawPolylineFast(phigh);
+                    painter.drawPolylineFast(plow);
                 }
 
 
                 painter.setPen(p);
-                painter.drawPolyline(phigh);
-                painter.drawPolyline(plow);
+                painter.drawPolylineFast(phigh);
+                painter.drawPolylineFast(plow);
 
             }
         }

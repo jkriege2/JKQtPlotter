@@ -1965,6 +1965,7 @@ void JKQTBasePlotter::printpreviewPaintRequested(QPrinter* printer) {
     }
 
     JKQTPEnhancedPainter painter;
+    painter.setPainterFlag(JKQTPEnhancedPainter::VectorPainting);
     painter.begin(printer);
     if (!printSetAbsolutePageSize) {
 #ifdef SHOW_JKQTPLOTTER_DEBUG
@@ -2065,6 +2066,7 @@ void JKQTBasePlotter::printpreviewPaintRequestedNewPaintDevice(QPaintDevice *pai
     if (printer) painter.begin(printer);
     else if (svg) painter.begin(svg);
     else painter.begin(paintDevice);
+    if (printer||svg) painter.setPainterFlag(JKQTPEnhancedPainter::VectorPainting);
 #else
     painter.begin(paintDevice);
 #endif
@@ -3916,6 +3918,7 @@ void JKQTBasePlotter::copyPixelImage(bool showPreview) {
                 svg->setSize(size);
                 svg->setOutputDevice(&buffer);
                 JKQTPEnhancedPainter painter;
+                painter.setPainterFlag(JKQTPEnhancedPainter::VectorPainting);
                 painter.begin(svg);
                 painter.scale(factor,factor);
                 printAspect=printSizeY_Millimeter/printSizeX_Millimeter;

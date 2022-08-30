@@ -108,7 +108,7 @@ void JKQTPXYFunctionLineGraphBase::draw(JKQTPEnhancedPainter& painter) {
         {
             painter.save(); auto __finalpaintline=JKQTPFinally([&painter]() {painter.restore();});
             painter.setPen(p);
-            painter.drawPolyline(data);
+            painter.drawPolylineFast(data);
         }
 
 

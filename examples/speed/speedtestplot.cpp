@@ -41,13 +41,16 @@ SpeedTestPlot::SpeedTestPlot():
     graph->setYColumn(columnY);
     graph->setTitle(QObject::tr("live sin() graph"));
     graph->setLineWidth(1);
+    graph->setSymbolType(JKQTPNoSymbol);
     addGraph(graph);
 
     graph2=new JKQTPXYLineGraph(this);
     graph2->setXColumn(columnX);
     graph2->setYColumn(columnY2);
     graph2->setTitle(QObject::tr("live cos() graph"));
-    graph2->setLineWidth(1);
+    graph2->setLineWidth(2);
+    graph2->setSymbolType(JKQTPNoSymbol);
+
     addGraph(graph2);
 
     // 6. scale the plot so the graph is contained
@@ -87,7 +90,7 @@ SpeedTestPlot::SpeedTestPlot():
 
     actSymbols=new QAction(QObject::tr("Show Graph Symbols"));
     actSymbols->setCheckable(true);
-    actSymbols->setChecked(true);
+    actSymbols->setChecked(false);
     connect(actSymbols, &QAction::toggled, std::bind([](bool enabled, JKQTPXYLineGraph* g, JKQTPXYLineGraph* g2,SpeedTestPlot* p){
                 g->setSymbolType(enabled?JKQTPCross:JKQTPNoSymbol);
                 g2->setSymbolType(enabled?JKQTPCircle:JKQTPNoSymbol);

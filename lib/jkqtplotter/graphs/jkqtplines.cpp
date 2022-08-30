@@ -134,10 +134,10 @@ void JKQTPXYLineGraph::draw(JKQTPEnhancedPainter& painter) {
                     if (linesP.size()>0) {
                         if (isHighlighted()) {
                             painter.setPen(penSelection);
-                            painter.drawPolyline(linesP);
+                            painter.drawPolylineFast(linesP);
                         }
                         painter.setPen(p);
-                        painter.drawPolyline(linesP);
+                        painter.drawPolylineFast(linesP);
                     }
                 }
             }

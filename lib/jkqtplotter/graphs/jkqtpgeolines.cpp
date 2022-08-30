@@ -142,7 +142,7 @@ void JKQTPGeoLine::draw(JKQTPEnhancedPainter& painter) {
                     if (drawHead) JKQTPPlotLineDecorator(painter, xx2.x(), xx2.y(), angle2, getHeadDecoratorStyle(), calcHeadDecoratorSize(getLinePen(painter, getParent()).widthF()));//, &lx2);
                     //points[0]=lx1;
                     //points[points.size()-1]=lx2;
-                    painter.drawPolyline(points.data(), points.size());
+                    painter.drawPolylineFast(points.data(), points.size());
                     /*for (auto& p: points) {
                         JKQTPPlotSymbol(painter, p.x(), p.y(), JKQTPPlus, 5, 1, QColor("green"), QColor("darkgreen"));
                     }*/
@@ -421,7 +421,7 @@ void JKQTPGeoInfiniteLine::draw(JKQTPEnhancedPainter& painter) {
                     xx1=points[0];
                     const QPointF xx1p=points[1];
                     angle1=atan2(xx1p.y()-xx1.y(), xx1p.x()-xx1.x());
-                    painter.drawPolyline(points.data(), points.size());
+                    painter.drawPolylineFast(points.data(), points.size());
                     /*for (auto& p: points) {
                         JKQTPPlotSymbol(painter, p.x(), p.y(), JKQTPPlus, 5, 1, QColor("green"), QColor("darkgreen"));
                     }*/
@@ -592,7 +592,7 @@ void JKQTPGeoPolyLines::draw(JKQTPEnhancedPainter& painter) {
             xx1=path[0];
             xx2=path[path.size()-1];
             // draw corrected line
-            painter.drawPolyline(path.data(), path.size());
+            painter.drawPolylineFast(path.data(), path.size());
             doDrawDecorator=true;
         } else {
             // for non-linear axes, a line might not be drawn as a line, so we need to segment the line (i.e. linear function in coordinate space)
@@ -607,7 +607,7 @@ void JKQTPGeoPolyLines::draw(JKQTPEnhancedPainter& painter) {
                 xx2=points_poly[points_poly.size()-1];
                 const QPointF xx2p=points_poly[points_poly.size()-2];
                 angle2=atan2(xx2p.y()-xx2.y(), xx2p.x()-xx2.x());
-                painter.drawPolyline(points_poly.data(), points_poly.size());
+                painter.drawPolylineFast(points_poly.data(), points_poly.size());
                 doDrawDecorator=true;
                 /*for (auto& p: points_poly) {
                     JKQTPPlotSymbol(painter, p.x(), p.y(), JKQTPPlus, 5, 1, QColor("green"), QColor("darkgreen"));
@@ -719,7 +719,7 @@ void JKQTPGeoArc::draw(JKQTPEnhancedPainter& painter) {
 
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     painter.setPen(getLinePen(painter, parent));
-    painter.drawPolyline(rect);
+    painter.drawPolylineFast(rect);
 }
 
 void JKQTPGeoArc::setAngleStart(double __value)

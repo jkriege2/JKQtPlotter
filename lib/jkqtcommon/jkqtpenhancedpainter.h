@@ -32,17 +32,46 @@
 */
 class JKQTCOMMON_LIB_EXPORT JKQTPEnhancedPainter : public QPainter {
     public:
+
+        enum PainterFlag { DefaultPaintMode = 0x00, /*!< \brief the default  mode, the JKQTPEnhancedPainter draws on a pixel-device */
+                           VectorPainting   = 0x01, /*!< \brief if set, the JKQTPEnhancedPainter draws onto a vector-device, like a printer, PDF or SVG-output */
+                         };
+        Q_ENUMS(PainterFlag)
+        Q_FLAGS(PainterFlags)
+        Q_DECLARE_FLAGS(PainterFlags, PainterFlag)
+
         JKQTPEnhancedPainter(QPaintDevice* device);
         JKQTPEnhancedPainter();
+        /** \copydoc m_flags */
+        PainterFlags painterFlags() const ;
+        /** \copydoc m_flags */
+        void setPainterFlag(PainterFlag flag, bool enabled=true);
+        /** \copydoc m_flags */
+        void setPainterFlag(PainterFlags flags);
 
+        /** \brief faster variant of QPainter::drawPolyline(),it turns out that drawing single lines is way faster than drawing with drawPolyLine()
+         *
+         *  At least for thin (1 Pixel) lines on non-vector-devices, this does not make much difference in appearance
+         */
+        void drawPolylineFast(const QPointF *points, int pointCount);
+        inline void drawPolylineFast(const QPolygonF &polyline) {
+            drawPolylineFast(polyline.constData(), int(polyline.size()));
+        }
+        void drawPolylineFast(const QPoint *points, int pointCount);
+        inline void drawPolylineFast(const QPolygon &polyline) {
+            drawPolylineFast(polyline.constData(), int(polyline.size()));
+        }
 
     protected:
         void initQEnhacedPainter();
     private:
-
+        /** \brief flags, specifying how the JKQTPEnhancedPainter works
+         *
+         *  \see PainterFlags */
+        PainterFlags m_flags;
 };
 
-
+Q_DECLARE_OPERATORS_FOR_FLAGS(JKQTPEnhancedPainter::PainterFlags)
 
 
 
