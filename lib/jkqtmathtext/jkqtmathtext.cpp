@@ -1194,6 +1194,8 @@ void JKQTMathText::draw(QPainter &painter, QPointF x, bool drawBoxes)
 double JKQTMathText::draw(QPainter& painter, double x, double y, bool drawBoxes){
     if (getNodeTree()!=nullptr) {
         painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+        painter.setPen(fontColor);
+        painter.setBrush(Qt::NoBrush);
         JKQTMathTextEnvironment ev;
         ev.color=fontColor;
         ev.fontSize=fontSize;
@@ -1208,6 +1210,8 @@ double JKQTMathText::draw(QPainter& painter, double x, double y, bool drawBoxes)
 void JKQTMathText::draw(QPainter& painter, unsigned int flags, QRectF rect, bool drawBoxes) {
     if (getNodeTree()!=nullptr) {
         painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+        painter.setPen(fontColor);
+        painter.setBrush(Qt::NoBrush);
 
         JKQTMathTextEnvironment ev;
         ev.color=fontColor;
