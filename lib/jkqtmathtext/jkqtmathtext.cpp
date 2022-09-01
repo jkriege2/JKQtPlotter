@@ -50,8 +50,19 @@
 #include <QPainterPath>
 
 
+// --------------------------------------------------------------------------------------------------
+// -- instanciation of the static JKQTMathText members
+// --------------------------------------------------------------------------------------------------
 const double JKQTMathText::ABS_MIN_LINEWIDTH=0.02;
-
+QString JKQTMathText::init_serifFont="serif";
+QString JKQTMathText::init_sansFont="sans";
+QString JKQTMathText::init_symbolFont="symbol";
+QString JKQTMathText::init_scriptFont="script";
+QString JKQTMathText::init_typewriterFont="typewriter";
+QString JKQTMathText::init_caligraphicFont="decorative";
+QString JKQTMathText::init_blackboardFont="blackboard";
+QString JKQTMathText::init_fracturFont="fraktur";
+bool JKQTMathText::s_firstStart=true;
 
 
 
@@ -59,7 +70,7 @@ const double JKQTMathText::ABS_MIN_LINEWIDTH=0.02;
 // --------------------------------------------------------------------------------------------------
 // -- implementation of the JKQTMathText methods
 // --------------------------------------------------------------------------------------------------
-JKQTMathText::JKQTMathText(QObject* parent):
+JKQTMathText::JKQTMathText(QObject* parent, bool useFontsForGUI):
     QObject(parent)
 {
     //std::chrono::high_resolution_clock::time_point t0=std::chrono::high_resolution_clock::now();
@@ -114,20 +125,12 @@ JKQTMathText::JKQTMathText(QObject* parent):
     blackboradFontMode=MTBBDMdefault;
 
 
-    static QString serifFont="serif";
-    static QString sansFont="sans";
-    static QString symbolFont="symbol";
-    static QString scriptFont="script";
-    static QString typewriterFont="typewriter";
-    static QString decorativeFont="decorative";
-    static QString blackboardFont="blackboard";
-    static QString fracturFont="fraktur";
-    static bool firstStart=true;
 
-    if (firstStart) {
+
+    if (s_firstStart) {
         //t0=std::chrono::high_resolution_clock::now();
 
-        firstStart=false;
+        s_firstStart=false;
 #if (QT_VERSION<QT_VERSION_CHECK(6, 0, 0))
         QFontDatabase fdb;
         const auto fonts=fdb.families();
@@ -145,51 +148,51 @@ JKQTMathText::JKQTMathText(QObject* parent):
             }
         };
 
-        checkForFonts(serifFont, QStringList {"Times New Roman", "Times", "FreeSerif", "DejaVu Serif"});
+        checkForFonts(init_serifFont, QStringList {"Times New Roman", "Times", "FreeSerif", "DejaVu Serif"});
         //qDebug()<<"check 1st font: "<<std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now()-t0).count()/1000.0<<"ms";
 
-        checkForFonts(sansFont, QStringList {"Arial Unicode MS", "Arial Unicode", "Lucida Sans Unicode", "Arial", "Helvetica", "FreeSans", "DejaVu Sans", "Lucida Sans"});
-        checkForFonts(symbolFont, QStringList {"SymbolStandard", "Symbol"});
-        checkForFonts(typewriterFont, QStringList {"Courier New", "Courier", "Courier Std", "FreeMono", "CMU Typewriter Text", "UM Typewriter"});
-        checkForFonts(blackboardFont, QStringList {"Double Stroke", "CloisterOpenFace BT", "GoudyHandtooled BT", "Castellar", "MathJax_AMS", "Castellar Standard", "MathJax_AMS Standard", "Colonna MT"});
-        checkForFonts(decorativeFont, QStringList {"Lucida Calligraphy", "Cookie", "Segoe Print", "Comic Sans", "Comic Sans MS", "Gabriola", "Gabriola Standard", "Lucida Handwriting Kursiv", "Lucida Handwriting", "Pristina", "Pristina Standard", "MathJax_Caligraphics"});
-        checkForFonts(scriptFont, QStringList {"Lucida Handwriting", "Dancing Script", "Amazone BT", "ScriptS", "ScriptC", "ScriptC Standard", "Script", "Brush Script MT", "Brush Script MT Kursiv", "MathJax_Script"});
-        checkForFonts(fracturFont, QStringList {"Old English Text MT", "Old English Text MT Standard", "UnifrakturMaguntia Standard", "UnifrakturMaguntia", "MathJax_Fraktur", "UnifrakturCook Fett"});
+        checkForFonts(init_sansFont, QStringList {"Segoe UI", "Arial Unicode MS", "Arial Unicode", "Lucida Sans Unicode", "Arial", "Helvetica", "FreeSans", "DejaVu Sans", "Lucida Sans"});
+        checkForFonts(init_symbolFont, QStringList {"Segoe UI Symbol", "XITS Math", "Cambria Math", "Fira Math", "Lucida Bright Math", "SymbolStandard", "Symbol"});
+        checkForFonts(init_typewriterFont, QStringList {"Courier New", "Courier", "Courier Std", "FreeMono", "CMU Typewriter Text", "UM Typewriter"});
+        checkForFonts(init_blackboardFont, QStringList {"Double Stroke", "CloisterOpenFace BT", "GoudyHandtooled BT", "Castellar", "MathJax_AMS", "Castellar Standard", "MathJax_AMS Standard", "Colonna MT"});
+        checkForFonts(init_caligraphicFont, QStringList {"Lucida Calligraphy", "Cookie", "Segoe Print", "Comic Sans", "Comic Sans MS", "Gabriola", "Gabriola Standard", "Lucida Handwriting Kursiv", "Lucida Handwriting", "Pristina", "Pristina Standard", "MathJax_Caligraphics"});
+        checkForFonts(init_scriptFont, QStringList {"Lucida Handwriting", "Dancing Script", "Amazone BT", "ScriptS", "ScriptC", "ScriptC Standard", "Script", "Brush Script MT", "Brush Script MT Kursiv", "MathJax_Script"});
+        checkForFonts(init_fracturFont, QStringList {"Old English Text MT", "Old English Text MT Standard", "UnifrakturMaguntia Standard", "UnifrakturMaguntia", "MathJax_Fraktur", "UnifrakturCook Fett"});
         //qDebug()<<"check all font: "<<std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now()-t0).count()/1000.0<<"ms";
     }
 
     //t0=std::chrono::high_resolution_clock::now();
-    if (serifFont!="serif") addReplacementFont("serif", serifFont);
-    if (sansFont!="sans") addReplacementFont("sans", sansFont);
-    if (symbolFont!="symbol") addReplacementFont("symbol", symbolFont);
-    if (scriptFont!="script") addReplacementFont("script", scriptFont);
-    if (typewriterFont!="typewriter") addReplacementFont("typewriter", typewriterFont);
-    if (decorativeFont!="decorative") addReplacementFont("decorative", decorativeFont);
-    if (fracturFont!="fraktur") addReplacementFont("fraktur", fracturFont);
-    if (blackboardFont!="blackboard") {
-        addReplacementFont("blackboard", blackboardFont);
+    if (init_serifFont!="serif") addReplacementFont("serif", init_serifFont);
+    if (init_sansFont!="sans") addReplacementFont("sans", init_sansFont);
+    if (init_symbolFont!="symbol") addReplacementFont("symbol", init_symbolFont);
+    if (init_scriptFont!="script") addReplacementFont("script", init_scriptFont);
+    if (init_typewriterFont!="typewriter") addReplacementFont("typewriter", init_typewriterFont);
+    if (init_caligraphicFont!="decorative") addReplacementFont("decorative", init_caligraphicFont);
+    if (init_fracturFont!="fraktur") addReplacementFont("fraktur", init_fracturFont);
+    if (init_blackboardFont!="blackboard") {
+        addReplacementFont("blackboard", init_blackboardFont);
     }
     //qDebug()<<"add replacement fonts: "<<std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now()-t0).count()/1000.0<<"ms"; t0=std::chrono::high_resolution_clock::now();
-    setFontSans(sansFont, estimateJKQTMathTextFontEncoding(sansFont));
-    setFontMathSans(sansFont, estimateJKQTMathTextFontEncoding(sansFont));
-    setFontTypewriter(typewriterFont, estimateJKQTMathTextFontEncoding(typewriterFont));
-    setFontRoman(serifFont, estimateJKQTMathTextFontEncoding(serifFont));
-    setFontMathRoman(serifFont, estimateJKQTMathTextFontEncoding(serifFont));
-    setFontCaligraphic(decorativeFont, estimateJKQTMathTextFontEncoding(decorativeFont));
-    if (blackboardFont!="blackboard") {
-        setFontBlackboard(blackboardFont, estimateJKQTMathTextFontEncoding(blackboardFont));
+    setFontSans(init_sansFont, estimateJKQTMathTextFontEncoding(init_sansFont));
+    setFontMathSans(init_sansFont, estimateJKQTMathTextFontEncoding(init_sansFont));
+    setFontTypewriter(init_typewriterFont, estimateJKQTMathTextFontEncoding(init_typewriterFont));
+    setFontRoman(init_serifFont, estimateJKQTMathTextFontEncoding(init_serifFont));
+    setFontMathRoman(init_serifFont, estimateJKQTMathTextFontEncoding(init_serifFont));
+    setFontCaligraphic(init_caligraphicFont, estimateJKQTMathTextFontEncoding(init_caligraphicFont));
+    if (init_blackboardFont!="blackboard") {
+        setFontBlackboard(init_blackboardFont, estimateJKQTMathTextFontEncoding(init_blackboardFont));
         setFontBlackboradMode(MTBBDMunicodeCharactersOrFontDirectly);
     } else {
-        setFontBlackboard(sansFont, estimateJKQTMathTextFontEncoding(sansFont));
+        setFontBlackboard(init_sansFont, estimateJKQTMathTextFontEncoding(init_sansFont));
         setFontBlackboradMode(MTBBDMunicodeCharactersOrSimulate);
     }
-    setFontScript(scriptFont, estimateJKQTMathTextFontEncoding(scriptFont));
-    setFontFraktur(fracturFont, estimateJKQTMathTextFontEncoding(fracturFont));
-    setFallbackFontSymbols(symbolFont, estimateJKQTMathTextFontEncoding(symbolFont));
+    setFontScript(init_scriptFont, estimateJKQTMathTextFontEncoding(init_scriptFont));
+    setFontFraktur(init_fracturFont, estimateJKQTMathTextFontEncoding(init_fracturFont));
+    setFallbackFontSymbols(init_symbolFont, estimateJKQTMathTextFontEncoding(init_symbolFont));
     //qDebug()<<"set fonts: "<<std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now()-t0).count()/1000.0<<"ms"; t0=std::chrono::high_resolution_clock::now();
     useXITS();
     //qDebug()<<"useXITS: "<<std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now()-t0).count()/1000.0<<"ms"; t0=std::chrono::high_resolution_clock::now();
-
+    if (useFontsForGUI) useGuiFonts();
     parsedNode=nullptr;
 
 }
@@ -334,6 +337,27 @@ bool JKQTMathText::useXITS(bool mathModeOnly, bool useAsFallbackSymbol)
     return res;
 }
 
+bool JKQTMathText::useFiraMath(bool mathModeOnly, bool useAsFallbackSymbol)
+{
+    const JKQTMathTextFontSpecifier fira=JKQTMathTextFontSpecifier::getFIRAFamilies();
+    bool res=false;
+    qDebug()<<"useFiraMath("<<mathModeOnly<<", "<<useAsFallbackSymbol<<")";
+
+    if (!mathModeOnly && !fira.fontName().isEmpty()) {
+        setFontRoman(fira.fontName(), MTFEUnicode);
+        if (useAsFallbackSymbol) setFallbackFontSymbols(fira.fallbackSymbolsFontName(), MTFEUnicode);
+        res=true;
+    }
+    if (!fira.mathFontName().isEmpty()) {
+        setFontMathRoman(fira.mathFontName(), MTFEUnicode);
+        if (useAsFallbackSymbol) setFallbackFontSymbols(fira.fallbackSymbolsFontName(), MTFEUnicode);
+        res=true;
+    }
+
+    //std::cout<<"useFiraMath("<<mathModeOnly<<", "<<useAsFallbackSymbol<<") roman="<<getFontRoman().toStdString()<<", mathRoman="<<getFontMathRoman().toStdString()<<", symbol="<<getFallbackFontSymbols().toStdString();
+    return res;
+}
+
 bool JKQTMathText::useASANA(bool mathModeOnly, bool useAsFallbackSymbol)
 {
 
@@ -352,6 +376,19 @@ bool JKQTMathText::useASANA(bool mathModeOnly, bool useAsFallbackSymbol)
     }
 
     return res;
+}
+
+bool JKQTMathText::useGuiFonts()
+{
+    const JKQTMathTextFontSpecifier rm=JKQTMathTextFontSpecifier::getAppFontFamilies();
+    const JKQTMathTextFontSpecifier sf=JKQTMathTextFontSpecifier::getAppFontSFFamilies();
+
+    if (rm.hasFontName()) setFontRoman(rm.fontName(), MTFEUnicode);
+    if (rm.hasMathFontName()) setFontMathRoman(rm.mathFontName(), MTFEUnicode);
+    if (rm.hasFallbackSymbolFontName()) setFallbackFontSymbols(rm.fallbackSymbolsFontName(), MTFEUnicode);
+    if (sf.hasFontName()) setFontSans(sf.fontName(), MTFEUnicode);
+    if (sf.hasMathFontName()) setFontMathSans(sf.mathFontName(), MTFEUnicode);
+    return true;
 }
 
 void JKQTMathText::useAnyUnicode(QString timesFont, const QString &sansFont, JKQTMathTextFontEncoding encodingTimes, JKQTMathTextFontEncoding encodingSans)
@@ -491,7 +528,45 @@ void JKQTMathText::setFontRomanOrSpecial(const JKQTMathTextFontSpecifier &fontNa
         setFontRoman(fontName.fontName(), encoding);
         setFontMathRoman(fontName.mathFontName(), encoding);
     }
-    if (fontName.hasFallbcakSymbolFontName()) setFallbackFontSymbols(fontName.fallbackSymbolsFontName(), encoding);
+    if (fontName.hasFallbackSymbolFontName()) setFallbackFontSymbols(fontName.fallbackSymbolsFontName(), encoding);
+}
+
+void JKQTMathText::setFontSpecial(const QString &fontSpec)
+{
+    if (fontSpec.trimmed().size()==0) return;
+    QString beforePlus=fontSpec;
+    QString afterPlus="";
+    const int Iplus=fontSpec.lastIndexOf('+');
+    if (Iplus>=0 && Iplus<fontSpec.size()) {
+        beforePlus=fontSpec.left(Iplus);
+        afterPlus=fontSpec.mid(Iplus+1);
+    }
+    if (beforePlus.toUpper()=="GUI") useGuiFonts();
+    else {
+        const QStringList splitSlash=beforePlus.split('/');
+        if (splitSlash.size()==1) {
+            setFontRoman(JKQTMathTextFontSpecifier::transformFontNameAndDecodeSpecialFonts(splitSlash[0]), MTFEUnicode);
+            setFontMathRoman(JKQTMathTextFontSpecifier::transformFontNameAndDecodeSpecialFonts(splitSlash[0]), MTFEUnicode);
+            setFontSans(init_sansFont, estimateJKQTMathTextFontEncoding(init_sansFont));
+            setFontMathSans(init_sansFont, estimateJKQTMathTextFontEncoding(init_sansFont));
+        } else if (splitSlash.size()==2) {
+            setFontRoman(JKQTMathTextFontSpecifier::transformFontNameAndDecodeSpecialFonts(splitSlash[0]), MTFEUnicode);
+            setFontMathRoman(JKQTMathTextFontSpecifier::transformFontNameAndDecodeSpecialFonts(splitSlash[0]), MTFEUnicode);
+            setFontSans(JKQTMathTextFontSpecifier::transformFontNameAndDecodeSpecialFonts(splitSlash[1]), MTFEUnicode);
+            setFontMathSans(JKQTMathTextFontSpecifier::transformFontNameAndDecodeSpecialFonts(splitSlash[1]), MTFEUnicode);
+        } else if (splitSlash.size()==4) {
+            setFontRoman(JKQTMathTextFontSpecifier::transformFontNameAndDecodeSpecialFonts(splitSlash[0]), MTFEUnicode);
+            setFontMathRoman(JKQTMathTextFontSpecifier::transformFontNameAndDecodeSpecialFonts(splitSlash[2]), MTFEUnicode);
+            setFontSans(JKQTMathTextFontSpecifier::transformFontNameAndDecodeSpecialFonts(splitSlash[1]), MTFEUnicode);
+            setFontMathSans(JKQTMathTextFontSpecifier::transformFontNameAndDecodeSpecialFonts(splitSlash[3]), MTFEUnicode);
+        } else {
+            qDebug()<<"JKQTMathText::setFontSpecial(): undecodable fontSpec '"<<fontSpec<<"'";
+        }
+    }
+    if (afterPlus.toUpper()=="XITS") useXITS();
+    if (afterPlus.toUpper()=="STIX") useSTIX();
+    if (afterPlus.toUpper()=="ASANA") useASANA();
+    if (afterPlus.toUpper()=="FIRA") useFiraMath();
 }
 
 void JKQTMathText::setFontRoman(const QString &__value, JKQTMathTextFontEncoding encoding)

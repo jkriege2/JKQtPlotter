@@ -632,62 +632,32 @@
        </item>
        <item>
         <property name="text">
-         <string>Default-Constructed</string>
+         <string>Below+Math: Fira</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Default-Constructed+SetAppFontRoman+SetAppFontMath</string>
+         <string>useAnyUnicodeForTextOnly(&quot;Times New Roman&quot;, &quot;Times New Roman&quot;)</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Default-Constructed+SetAppFontRoman+SetAppFontMath+XITS</string>
+         <string>useAnyUnicodeForTextOnly(&quot;Arial&quot;, &quot;Arial&quot;)</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>useXITS(true)+useAnyUnicode(&quot;Times New Roman&quot;, &quot;Times New Roman&quot;)</string>
+         <string>useAnyUnicodeForTextOnly(&quot;Courier New&quot;, &quot;Courier New&quot;)</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>useXITS(true)+useAnyUnicode(&quot;Arial&quot;, &quot;Arial&quot;)</string>
+         <string>useAnyUnicodeForTextOnly(&quot;Comic Sans MS&quot;, &quot;Comic Sans MS&quot;)</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>useXITS(true)+useAnyUnicode(&quot;Courier New&quot;, &quot;Courier New&quot;)</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>useXITS(true)+useAnyUnicode(&quot;Comic Sans MS&quot;, &quot;Comic Sans MS&quot;)</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>useAnyUnicodeForTextOnly(&quot;Times New Roman&quot;, &quot;Times New Roman&quot;)+useXITS(true)</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>useAnyUnicodeForTextOnly(&quot;Arial&quot;, &quot;Arial&quot;)+useXITS(true)</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>useAnyUnicodeForTextOnly(&quot;Courier New&quot;, &quot;Courier New&quot;)+useXITS(true)</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>useAnyUnicodeForTextOnly(&quot;Comic Sans MS&quot;, &quot;Comic Sans MS&quot;)+useXITS(true)</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>useXITS(false)</string>
+         <string>useGuiFonts()</string>
         </property>
        </item>
       </widget>

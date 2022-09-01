@@ -162,7 +162,7 @@ double JKQTMathTextSymbolNode::draw(QPainter& painter, double x, double y, JKQTM
     double italic_xcorrection=fabs(tbr.width()-tbrNonItalic.width());
     if (fabs(italic_xcorrection)<1e-6) italic_xcorrection=double(fm.boundingRect(' ').width())*0.4;
 
-    //qDebug()<<"SYMB::draw(): symbolName="<<symbolName<<" font="<<f<<" sym="<<sym<<" yShiftFactor="<<symprops.yShiftFactor;
+    //std::cout<<"SYMB::draw(): symbolName="<<symbolName.toStdString()<<" font="<<f.family().toStdString()<<" sym="<<sym.toStdString()<<"(0x"<<std::hex<<((sym.size()==0)?uint64_t(0):uint64_t(sym[0].unicode()))<<") yShiftFactor="<<symprops.yShiftFactor<<"\n";
 
     if (!sym.isEmpty()) {
         // if the symbol has been recognized in the constructor: draw the symbol
@@ -585,7 +585,7 @@ void JKQTMathTextSymbolNode::fillSymbolTables()
     symbols["female"]=UnicodeSymbol(QChar(0x2640)).addHtml("&female;");
     symbols["flq"]=UnicodeSymbol(QChar(0x2039)).addHtml("&lsaquo;").addStd("<");
     symbols["flqq"]=UnicodeSymbol(QChar(0x00AB)).addHtml("&laquo;").addStd(QChar(0xAB));
-    symbols["frown"]=UnicodeSymbol(QChar(0x2322)).addHtml("&frown;");
+    //symbols["frown"]=UnicodeSymbol(QChar(0x2322)).addHtml("&frown;");
     symbols["frq"]=UnicodeSymbol(QChar(0x203A)).addHtml("&rsaquo;").addStd(">");
     symbols["frqq"]=UnicodeSymbol(QChar(0x00BB)).addHtml("&raquo;").addStd(QChar(0xBB));
     { auto s=UnicodeSymbol(QChar(0x2137)).addHtml("&gimel;");
@@ -620,7 +620,7 @@ void JKQTMathTextSymbolNode::fillSymbolTables()
         symbols["registered"]=s; symbols["textregistered"]=s; symbols["circledR"]=s; }
     symbols["rfloor"]=UprightSymbolUnicode(QChar(0x230B)).addUprightHtml("&RightFloor;").addUprightWinSymbol(QChar(0xFB));
     symbols["rightangle"]=UprightSymbolUnicode(QChar(0x221F)).addUprightHtml("&angrt;");
-    symbols["smile"]=UprightSymbolUnicode(QChar(0x2323)).addUprightHtml("&smile;");
+    //symbols["smile"]=UprightSymbolUnicode(QChar(0x2323)).addUprightHtml("&smile;");
     symbols["sphericalangle"]=UprightSymbolUnicode(QChar(0x2222)).addUprightHtml("&angsph;");
     symbols["star"]=UprightSymbolUnicode(QChar(0x22C6));
     symbols["tcohm"]=UnicodeSymbol(QChar(0x2126));
@@ -835,7 +835,7 @@ void JKQTMathTextSymbolNode::fillSymbolTables()
     symbols["times"] = MathOperatorSymbol(QChar(0xD7), "&times;").addMathOperatorWinSymbol(QChar(0xB4));
     { auto s=UprightSymbolUnicode(QChar(0x2192)).addUprightHtml("&rarr;").addUprightWinSymbol(QChar(0xAE));
       symbols["to"]=s; symbols["rightarrow"]=s; }
-    symbols["top"]=MathOperatorSymbolUnicode(QChar(0x22A4)).addMathOperatorHtml("&top;").addMathOperatorWinSymbol(QChar(0x5E));
+    symbols["top"]=MathOperatorSymbolUnicode(QChar(0x22A4)).addMathOperatorHtml("&top;").addMathOperatorWinSymbol(QChar(0x5E)).addUprightStd("T");
     symbols["triangle"]=NarrowMathOperatorSymbolUnicode(QChar(0x2206));
     symbols["uparrow"]=UprightSymbolUnicode(QChar(0x2191)).addUprightHtml("&ShortUpArrow;").addUprightWinSymbol(QChar(0xAD));
     symbols["updownarrow"]=UprightSymbolUnicode(QChar(0x2195)).addUprightHtml("&updownarrow;");
@@ -1211,6 +1211,7 @@ QPair<QFont, JKQTMathTextSymbolNode::SymbolProps> JKQTMathTextSymbolNode::Symbol
 
 
     outFont=currentEv.getFont(parent);
+    outFont.setStyleStrategy(QFont::PreferDefault);
     if (outProps.fontScalingFactor!=1) outFont.setPointSizeF(outFont.pointSizeF()*outProps.fontScalingFactor);
     if (has(outProps.flags, ItalicOn)) outFont.setItalic(true);
     if (has(outProps.flags, ItalicOff)) outFont.setItalic(false);

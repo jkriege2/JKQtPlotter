@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/JKQTMathText/fonts">
+        <file alias="FiraMath-Regular.otf">firaMath/FiraMath-Regular.otf</file>
+    </qresource>
+</RCC>

@@ -126,7 +126,7 @@ bool JKQTPGeoText::getYMinMax(double& miny, double& maxy, double& smallestGreate
 void JKQTPGeoText::draw(JKQTPEnhancedPainter& painter) {
     clearHitTestData();
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-    parent->getMathText()->setFontRomanOrSpecial(getTextFontName());
+    parent->getMathText()->setFontSpecial(getTextFontName());
     parent->getMathText()->setFontSize(getTextFontSize()*parent->getFontSizeMultiplier());
     parent->getMathText()->setFontColor(getTextColor());
     parent->getMathText()->parse("\\;"+text);

@@ -50,7 +50,7 @@ if(JKQtPlotter_BUILD_TOOLS)
 
     add_custom_target(JKQTMathText_GenerateDocImages_listsymbols
         COMMENT "Building JKQTMathText Documentation Images: LISTSYMBOLS"
-        COMMAND ${JKQTMathText_GenerateDocImages_COMMAND} --listsymbols="${CMAKE_CURRENT_LIST_DIR}/dox/jkqtmathtext_supportedlatexsymbols.dox" --outputdir="${JKQTMathText_GenerateDocImages_OutputDir}/symbols/"
+        COMMAND ${JKQTMathText_GenerateDocImages_COMMAND} --listsymbolsfonts=XITS_MATHANDTEXT,FIRA_MATHANDTEXT --listsymbols="${CMAKE_CURRENT_LIST_DIR}/dox/jkqtmathtext_supportedlatexsymbols.dox" --outputdir="${JKQTMathText_GenerateDocImages_OutputDir}/symbols/"
         WORKING_DIRECTORY ${JKQtPlotter_QT_BINDIR}
         DEPENDS jkqtmathtext_render
     )

@@ -1213,7 +1213,7 @@ void JKQTPVerticalAxis::drawGrids(JKQTPEnhancedPainter& painter) {
 void JKQTPVerticalAxis::drawTickLabel1(JKQTPEnhancedPainter &painter, double xx, double yy, const QString& label, double fontSize)
 {
     getParentMathText()->setFontSize(fontSize*parent->getFontSizeMultiplier());
-    getParentMathText()->setFontRomanOrSpecial(getParent()->getCurrentPlotterStyle().defaultFontName);
+    getParentMathText()->setFontSpecial(getParent()->getCurrentPlotterStyle().defaultFontName);
     getParentMathText()->setFontColor(axisStyle.axisColor);
 
     getParentMathText()->parse(label);
@@ -1253,7 +1253,7 @@ void JKQTPVerticalAxis::drawTickLabel1(JKQTPEnhancedPainter &painter, double xx,
 void JKQTPVerticalAxis::drawTickLabel2(JKQTPEnhancedPainter &painter, double xx, double yy, const QString &label, double fontSize)
 {
     getParentMathText()->setFontSize(fontSize*parent->getFontSizeMultiplier());
-    getParentMathText()->setFontRomanOrSpecial(getParent()->getCurrentPlotterStyle().defaultFontName);
+    getParentMathText()->setFontSpecial(getParent()->getCurrentPlotterStyle().defaultFontName);
     getParentMathText()->setFontColor(axisStyle.axisColor);
 
     getParentMathText()->parse(label);
@@ -1352,7 +1352,7 @@ void JKQTPVerticalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
     pmtick.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, axisStyle.minorTickWidth*parent->getLineWidthMultiplier())));
 
     getParentMathText()->setFontSize(this->axisStyle.tickLabelFontSize*parent->getFontSizeMultiplier());
-    getParentMathText()->setFontRomanOrSpecial(getParent()->getCurrentPlotterStyle().defaultFontName);
+    getParentMathText()->setFontSpecial(getParent()->getCurrentPlotterStyle().defaultFontName);
     getParentMathText()->setFontColor(axisStyle.axisColor);
 
     painter.setPen(pmain);
@@ -1524,7 +1524,7 @@ void JKQTPVerticalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
             JKQTPAutoOutputTimer jkaati(QString("JKQTPEnhancedPainter[%1]::drawAxes(): axisLabel1").arg(objectName()));
         #endif
         getParentMathText()->setFontSize(axisStyle.labelFontSize*parent->getFontSizeMultiplier());
-        getParentMathText()->setFontRomanOrSpecial(getParent()->getCurrentPlotterStyle().defaultFontName);
+        getParentMathText()->setFontSpecial(getParent()->getCurrentPlotterStyle().defaultFontName);
         getParentMathText()->parse(axisLabel);
         double width, ascent, descent, strikeoutPos;
         getParentMathText()->getSizeDetail(painter, width, ascent, descent, strikeoutPos);
@@ -1566,7 +1566,7 @@ void JKQTPVerticalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
             JKQTPAutoOutputTimer jkaati(QString("JKQTPEnhancedPainter[%1]::drawAxes(): axisLabel2").arg(objectName()));
         #endif
         getParentMathText()->setFontSize(axisStyle.labelFontSize*parent->getFontSizeMultiplier());
-        getParentMathText()->setFontRomanOrSpecial(getParent()->getCurrentPlotterStyle().defaultFontName);
+        getParentMathText()->setFontSpecial(getParent()->getCurrentPlotterStyle().defaultFontName);
         getParentMathText()->parse(axisLabel);
 
 
@@ -1845,7 +1845,7 @@ void JKQTPHorizontalAxis::drawGrids(JKQTPEnhancedPainter& painter) {
 void JKQTPHorizontalAxis::drawTickLabel1(JKQTPEnhancedPainter &painter, double xx, double yy, const QString &label, double fontSize, double ascentMax, double /*descentMax*/)
 {
     getParentMathText()->setFontSize(fontSize*parent->getFontSizeMultiplier());
-    getParentMathText()->setFontRomanOrSpecial(getParent()->getCurrentPlotterStyle().defaultFontName);
+    getParentMathText()->setFontSpecial(getParent()->getCurrentPlotterStyle().defaultFontName);
     getParentMathText()->setFontColor(axisStyle.axisColor);
 
     getParentMathText()->parse(label);
@@ -1875,7 +1875,7 @@ void JKQTPHorizontalAxis::drawTickLabel1(JKQTPEnhancedPainter &painter, double x
 void JKQTPHorizontalAxis::drawTickLabel2(JKQTPEnhancedPainter &painter, double xx, double yy, const QString &label, double fontSize, double /*ascentMax*/, double descentMax)
 {
     getParentMathText()->setFontSize(fontSize*parent->getFontSizeMultiplier());
-    getParentMathText()->setFontRomanOrSpecial(getParent()->getCurrentPlotterStyle().defaultFontName);
+    getParentMathText()->setFontSpecial(getParent()->getCurrentPlotterStyle().defaultFontName);
     getParentMathText()->setFontColor(axisStyle.axisColor);
 
     getParentMathText()->parse(label);
@@ -1958,7 +1958,7 @@ void JKQTPHorizontalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
     pmtick.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, axisStyle.minorTickWidth*parent->getLineWidthMultiplier())));
 
     getParentMathText()->setFontSize(this->axisStyle.tickLabelFontSize*parent->getFontSizeMultiplier());
-    getParentMathText()->setFontRomanOrSpecial(getParent()->getCurrentPlotterStyle().defaultFontName);
+    getParentMathText()->setFontSpecial(getParent()->getCurrentPlotterStyle().defaultFontName);
     getParentMathText()->setFontColor(axisStyle.axisColor);
 
     painter.setPen(pmain);
@@ -2121,7 +2121,7 @@ void JKQTPHorizontalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
             JKQTPAutoOutputTimer jkaati(QString("JKQTPHorizontalAxis[%1]::drawAxes(): axisLabel1").arg(objectName()));
         #endif
         getParentMathText()->setFontSize(axisStyle.labelFontSize*parent->getFontSizeMultiplier());
-        getParentMathText()->setFontRomanOrSpecial(getParent()->getCurrentPlotterStyle().defaultFontName);
+        getParentMathText()->setFontSpecial(getParent()->getCurrentPlotterStyle().defaultFontName);
         getParentMathText()->parse(axisLabel);
         double width, ascent, descent, strikeoutPos;
         getParentMathText()->getSizeDetail(painter, width, ascent, descent, strikeoutPos);
@@ -2162,7 +2162,7 @@ void JKQTPHorizontalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
             JKQTPAutoOutputTimer jkaati(QString("JKQTPHorizontalAxis[%1]::drawAxes(): axisLabel2").arg(objectName()));
         #endif
         getParentMathText()->setFontSize(axisStyle.labelFontSize*parent->getFontSizeMultiplier());
-        getParentMathText()->setFontRomanOrSpecial(getParent()->getCurrentPlotterStyle().defaultFontName);
+        getParentMathText()->setFontSpecial(getParent()->getCurrentPlotterStyle().defaultFontName);
         getParentMathText()->parse(axisLabel);
 
 

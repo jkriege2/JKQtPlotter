@@ -576,7 +576,7 @@ void JKQTPlotter::paintUserAction() {
                         QString txt;
                         double a=0,d=0,so=0,w=0;
                         getPlotter()->getMathText()->setFontSize(plotterStyle.userActionFontSize);
-                        getPlotter()->getMathText()->setFontRomanOrSpecial(plotterStyle.userActionFontName);
+                        getPlotter()->getMathText()->setFontSpecial(plotterStyle.userActionFontName);
 
                         txt=QString::fromStdString("\\delta_{x}="+jkqtp_floattolatexstr(dx, 3));
                         getPlotter()->getMathText()->parse(txt);
@@ -654,7 +654,7 @@ void JKQTPlotter::paintUserAction() {
                         QString txt;
                         double ascent=0,descent=0,strikeout=0,width=0;
                         getPlotter()->getMathText()->setFontSize(plotterStyle.userActionFontSize);
-                        getPlotter()->getMathText()->setFontRomanOrSpecial(plotterStyle.userActionFontName);
+                        getPlotter()->getMathText()->setFontSpecial(plotterStyle.userActionFontName);
 
 
                         for (auto& m: mouseDragMarkers) {

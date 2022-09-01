@@ -1,4 +1,8 @@
 ---
+jkqtmathtext_useguifonts.png
+--guifonts
+\textsf{Schrödinger's} equation: $\left[-\frac{\hbar^2}{2m}\frac{\partial^2}{\partial x^2}+V\right]\Psi(x)=\mathrm{i}\hbar\frac{\partial}{\partial t}\Psi(x)$
+---
 jkqtmathtext_arial.png
 --fontroman=Arial --fontmathroman=Arial --sizeincrease=10
 Schrödinger's equation: $\left[-\frac{\hbar^2}{2m}\frac{\partial^2}{\partial x^2}+V\right]\Psi(x)=\mathrm{i}\hbar\frac{\partial}{\partial t}\Psi(x)$
@@ -29,6 +33,10 @@ Schrödinger's equation: $\left[-\frac{\hbar^2}{2m}\frac{\partial^2}{\partial x^
 ---
 jkqtmathtext_fira.png
 --fontmathroman=Fira Math --fontroman=Fira Sans --sizeincrease=10
+Schrödinger's equation: $\left[-\frac{\hbar^2}{2m}\frac{\partial^2}{\partial x^2}+V\right]\Psi(x)=\mathrm{i}\hbar\frac{\partial}{\partial t}\Psi(x),\ \ x\in\mathbb{R}, \Psi(x)\in\mathbb{C}$
+---
+jkqtmathtext_usefira.png
+--fontmathroman=FIRA --sizeincrease=10
 Schrödinger's equation: $\left[-\frac{\hbar^2}{2m}\frac{\partial^2}{\partial x^2}+V\right]\Psi(x)=\mathrm{i}\hbar\frac{\partial}{\partial t}\Psi(x),\ \ x\in\mathbb{R}, \Psi(x)\in\mathbb{C}$
 ---
 jkqtmathtext_DejaVuSerif.png

@@ -632,7 +632,7 @@ void TestForm::updateMath()
 
 
     mt.setFallbackFontSymbols(ui->cmbUnicodeSymbol->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingSymbol->currentIndex()));
-    if (ui->cmbFont->currentIndex()<=3) {
+    if (ui->cmbFont->currentIndex()<=4) {
         mt.setFontRoman(ui->cmbUnicodeSerif->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingSerif->currentIndex()));
         mt.setFontSans(ui->cmbUnicodeSans->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingSans->currentIndex()));
         mt.setFontMathRoman(ui->cmbUnicodeSerifMath->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingSerifMath->currentIndex()));
@@ -643,35 +643,20 @@ void TestForm::updateMath()
         mt.setFontFraktur(ui->cmbUnicodeFraktur->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingFraktur->currentIndex()));
         mt.setFontBlackboard(ui->cmbUnicodeBlackboard->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingBlackboard->currentIndex()));
         mt.setFallbackFontSymbols(ui->cmbUnicodeSymbol->currentFont().family(), static_cast<JKQTMathTextFontEncoding>(ui->cmbEncodingSymbol->currentIndex()));
-    } else if (ui->cmbFont->currentIndex()==5 || ui->cmbFont->currentIndex()==6) {
-        mt.setFontRoman(QGuiApplication::font().family());
-        mt.setFontMathRoman(QGuiApplication::font().family());
-    } else if (ui->cmbFont->currentIndex()==7) {
+    } else if (ui->cmbFont->currentIndex()==5) {
         mt.useXITS();
         mt.useAnyUnicode("Times New Roman", "Times New Roman");
-    } else if (ui->cmbFont->currentIndex()==8) {
+    } else if (ui->cmbFont->currentIndex()==6) {
         mt.useXITS();
         mt.useAnyUnicode("Arial", "Arial");
-    } else if (ui->cmbFont->currentIndex()==9) {
+    } else if (ui->cmbFont->currentIndex()==7) {
         mt.useXITS();
         mt.useAnyUnicode("Courier New", "Courier New");
-    } else if (ui->cmbFont->currentIndex()==10) {
+    } else if (ui->cmbFont->currentIndex()==8) {
         mt.useXITS();
         mt.useAnyUnicode("Comic Sans MS", "Comic Sans MS");
-    } else if (ui->cmbFont->currentIndex()==11) {
-        mt.useAnyUnicodeForTextOnly("Times New Roman", "Times New Roman");
-        mt.useXITS();
-    } else if (ui->cmbFont->currentIndex()==12) {
-        mt.useAnyUnicodeForTextOnly("Arial", "Arial");
-        mt.useXITS();
-    } else if (ui->cmbFont->currentIndex()==13) {
-        mt.useAnyUnicodeForTextOnly("Courier New", "Courier New");
-        mt.useXITS();
-    } else if (ui->cmbFont->currentIndex()==14) {
-        mt.useAnyUnicodeForTextOnly("Comic Sans MS", "Comic Sans MS");
-        mt.useXITS();
-    } else if (ui->cmbFont->currentIndex()==15) {
-        mt.useXITS(false);
+    } else if (ui->cmbFont->currentIndex()==9) {
+        mt.useGuiFonts();
     }
 
     mt.setFontBlackboradMode(String2JKQTMathTextBlackboradDrawingMode(ui->cmdBlackboradMode->currentText()));
@@ -679,7 +664,7 @@ void TestForm::updateMath()
     if (ui->cmbFont->currentIndex()==1) qDebug()<<"useXITS: "<<mt.useXITS();
     else if (ui->cmbFont->currentIndex()==2) qDebug()<<"useSTIX: "<<mt.useSTIX();
     else if (ui->cmbFont->currentIndex()==3) qDebug()<<"useASANA: "<<mt.useASANA();
-    else if (ui->cmbFont->currentIndex()==6) qDebug()<<"useXITS: "<<mt.useXITS();
+    else if (ui->cmbFont->currentIndex()==4) qDebug()<<"useFiraMath: "<<mt.useFiraMath();
     ui->tree->clear();
     ht.start();
     double durationParse=0;

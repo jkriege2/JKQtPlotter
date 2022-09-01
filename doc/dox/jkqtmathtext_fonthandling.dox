@@ -52,12 +52,15 @@
       - JKQTMathText::useSTIX() use the STIX fonts from <a href="https://www.stixfonts.org/">https://www.stixfonts.org/</a> in math-mode (or math- and text-mode, additionally also as MTEFallbackSymbols)<br>\image html jkqtmathtext/jkqtmathtext_stix.png
       - JKQTMathText::useXITS() use the XITS fonts from <a href="https://github.com/alif-type/xits">https://github.com/alif-type/xits</a> in math-mode (or math- and text-mode, additionally also as MTEFallbackSymbols). These are included by default in this library and also activated by default.<br>\image html jkqtmathtext/jkqtmathtext_xits.png
       - JKQTMathText::useASANA() use the ASANA fonts from <a href="https://ctan.org/tex-archive/fonts/Asana-Math/">https://ctan.org/tex-archive/fonts/Asana-Math/</a> in math-mode (or math- and text-mode, additionally also as MTEFallbackSymbols)<br>\image html jkqtmathtext/jkqtmathtext_asana.png
+      - JKQTMathText::useFiraMath() use the Fira Math fonts from <a href="https://github.com/firamath/firamath">https://github.com/firamath/firamath</a> in math-mode (or math- and text-mode, additionally also as MTEFallbackSymbols)<br>\image html jkqtmathtext/jkqtmathtext_usefira.png
+      - JKQTMathText::useGuiFonts() use the default application font (e.g. Segoe UI on Win10/11) for the "roman" and "math-roman" and try to determine mathing fonts for "sans"/"math-sans" and MTEFallbackSymbols.<br>\image html jkqtmathtext/jkqtmathtext_useguifonts.png
       - JKQTMathText::useAnyUnicode() set fonts for "roman" and "sans" in text- and math-mode with one call
       - JKQTMathText::useAnyUnicodeForMathOnly() set fonts for "roman" and "sans" in math-mode only with one call, leaves text-mode fonts as is
       - JKQTMathText::useAnyUnicodeForTextOnly() set fonts for "roman" and "sans" in text-mode only with one call, leaves math-mode fonts as is
       - JKQTMathText::setFontRomanAndMath() set "roman" font in text- and math-mode
       - JKQTMathText::setFontRomanOrSpecial() use an object of type JKQTMathTextFontSpecifier or a special string syntax (see struct documentation
         of JKQTMathTextFontSpecifier) to define the text- and math-mode "roman" fonts
+      - JKQTMathText::setFontSpecial() seit "roman" and "sans" fonts from a parsed specifier, see function documentation for details  
     .
 
     Here are some examples of using different, widely available, fonts:

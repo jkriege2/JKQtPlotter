@@ -42,6 +42,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: added simple scatter plot JKQTPXYScatterGraph</li>
     <li>NEW: made resize-timer status accessible from outside via JKQTPlotter::isResizeTimerRunning() </li>
     <li>NEW: made it's delay a global static variable that can be set and red with JKQTPlotter::setGlobalResizeDelay() and JKQTPlotter::getGlobalResizeDelay()</li>
+    <li>NEW: Using JKQTMathText::useGuiFonts() for FONT rendering by default</li>
   </ul></li>
   
   <li>JKQTMathText:<ul>
@@ -110,6 +111,8 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: added environment-modifying commands for font sizes: \c \\tiny ... \c \\normalsize ... \c \\Huge </li>
     <li>NEW: added environment-modifying commands for text color: \c {\\color{COL}...} </li>
     <li>NEW: added environment-modifying commands for text formatting: \c {\\bfseries...}, \c {\\itshape...}, \c {\\bf...}, \c {\\it...}, \c {\\sffamily...}, \c {\\ttfamily...}, ... </li>
+    <li>NEW: Added the Fira Math fonts as sans-serif symbol font to the library (as a ressource) and added JKQTMathText::useFiraMath()</li>
+    <li>NEW: Added JKQTMathText::useGuiFonts()</li>
   </ul></li>
 </ul>
 

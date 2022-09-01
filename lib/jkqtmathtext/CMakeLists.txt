@@ -112,11 +112,14 @@ set(HEADERS_PARSERS
   $<INSTALL_INTERFACE:parsers/jkqtmathtextlatexparser.h>
 )
 
+set(RESOURCES "")
 if(JKQtPlotter_BUILD_INCLUDE_XITS_FONTS)
-    set(RESOURCES
-      ${CMAKE_CURRENT_LIST_DIR}/resources/xits.qrc
-    )
+    list(APPEND RESOURCES ${CMAKE_CURRENT_LIST_DIR}/resources/xits.qrc )
 endif(JKQtPlotter_BUILD_INCLUDE_XITS_FONTS)
+
+if(JKQtPlotter_BUILD_INCLUDE_FIRAMATH_FONTS)
+    list(APPEND RESOURCES ${CMAKE_CURRENT_LIST_DIR}/resources/firamath.qrc )
+endif(JKQtPlotter_BUILD_INCLUDE_FIRAMATH_FONTS)
 
 
 include(CMakePackageConfigHelpers)
@@ -142,6 +145,9 @@ function(JKQtMathText_setDefaultLibOptions TARGETNAME)
     if(JKQtPlotter_BUILD_INCLUDE_XITS_FONTS)
         target_compile_definitions(${TARGETNAME} PRIVATE JKQTMATHTEXT_COMPILED_WITH_XITS)
     endif(JKQtPlotter_BUILD_INCLUDE_XITS_FONTS)
+    if(JKQtPlotter_BUILD_INCLUDE_FIRAMATH_FONTS)
+        target_compile_definitions(${TARGETNAME} PRIVATE JKQTMATHTEXT_COMPILED_WITH_FIRAMATH)
+    endif(JKQtPlotter_BUILD_INCLUDE_FIRAMATH_FONTS)
 
     # precomiled headers to speed up compilation
     if (JKQtPlotter_BUILD_WITH_PRECOMPILED_HEADERS)
@@ -234,4 +240,6 @@ install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${libBasename}_Readme.txt" DESTINATIO
 install(FILES "${PROJECT_SOURCE_DIR}/LICENSE" DESTINATION doc/JKQtPlotter RENAME "${libBasename}_LICENSE.txt" )
 install(FILES "${PROJECT_SOURCE_DIR}/lib/jkqtmathtext/resources/xits/OFL.txt" DESTINATION doc/JKQtPlotter RENAME "${libBasename}_XITS_LICENSE.txt" )
 install(FILES "${PROJECT_SOURCE_DIR}/lib/jkqtmathtext/resources/xits/README.md" DESTINATION doc/JKQtPlotter RENAME "${libBasename}_XITS_README.md" )
+install(FILES "${PROJECT_SOURCE_DIR}/lib/jkqtmathtext/resources/firaMath/LICENSE" DESTINATION doc/JKQtPlotter RENAME "${libBasename}_FIRAMATH_LICENSE" )
+install(FILES "${PROJECT_SOURCE_DIR}/lib/jkqtmathtext/resources/firaMath/README.md" DESTINATION doc/JKQtPlotter RENAME "${libBasename}_FIRAMATH_README.md" )
 

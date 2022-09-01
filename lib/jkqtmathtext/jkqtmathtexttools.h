@@ -68,6 +68,7 @@ JKQTMATHTEXT_LIB_EXPORT void initJKQTMathTextResources();
     \section JKQTMathTextFontSpecifier_specialNames Special Font Names
     This object also implements replacing special font names with actual fonts. Supported special font names are:
       - \c default / \c app / \c application - the applications default font
+      - \c application-sf - a font for "sans", based on the application font
       - \c times / \c serif - a general serif font
       - \c sans-serif - a general sans-serif font
       - \c typewriter - a general typewrter/monospaced font
@@ -89,6 +90,7 @@ JKQTMATHTEXT_LIB_EXPORT void initJKQTMathTextResources();
       - xits XITS fonts
       - stix STIX fonts
       - asana ASANA fonts
+      - fira Fira fonts
 */
 struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextFontSpecifier {
     JKQTMathTextFontSpecifier();
@@ -123,7 +125,7 @@ struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextFontSpecifier {
     /** \brief leiefert \c true, wenn ein mathFontName() verfügbar ist */
     bool hasMathFontName() const;
     /** \brief leiefert \c true, wenn ein fallbcakSymbolsFontName() verfügbar ist */
-    bool hasFallbcakSymbolFontName() const;
+    bool hasFallbackSymbolFontName() const;
 
     /** \brief initialize with the font-families from the XITS package for text and math */
     static JKQTMathTextFontSpecifier getXITSFamilies();
@@ -133,6 +135,25 @@ struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextFontSpecifier {
 
     /** \brief initialize with the font-families from the STIX package for text and math */
     static JKQTMathTextFontSpecifier getSTIXFamilies();
+
+    /** \brief initialize with the font-families from the Fira (Math) package for text and math */
+    static JKQTMathTextFontSpecifier getFIRAFamilies();
+
+    /** \brief initialize with the default app font-families for "roman" text and math and tries to find a matching fallback-font. This may be used to initialize serif-fonts
+     *
+     *  This method encodes some pre-coded knowledge of suitable combinations of fonts for different systems.
+     *  e.g. on newer windows systems, the font "Segoe UI" is used for the GUI... a suitable math
+     *  font with symbols is "Segoe UI Symbol" ...
+     */
+    static JKQTMathTextFontSpecifier getAppFontFamilies();
+    /** \brief initialize with the default app font-families for "serif" text and math and tries to find a matching fallback-font. This may be used to initialize sans-serif-fonts
+     *
+     *  This method encodes some pre-coded knowledge of suitable combinations of fonts for different systems.
+     *
+     *  This function e.g. checks whether the  default app font is sans-serif and then looks for a serif
+     *  font for the "sans" font class (so the two can be distinguished) and vice-versa.
+     */
+    static JKQTMathTextFontSpecifier getAppFontSFFamilies();
 private:
     /** \brief specifies the main font name */
     QString m_fontName;

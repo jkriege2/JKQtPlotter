@@ -15,7 +15,7 @@ JKQTPlotterStyle::JKQTPlotterStyle():
     userActionMarkerPen(QColor("red").darker(), 1, Qt::DotLine),
     userActionMarkerBrush(QColorWithAlphaF(QColor("red"), 0.2)),
     userActionMarkerType(jkqtpuamtCircleAndCrossHair),
-    userActionFontName("application+XITS"),
+    userActionFontName("GUI"),
     userActionFontSize(QApplication::font().pointSizeF()*1.1),
     userActionMarkerDiameter(12),
     mousePositionTemplate("(%1; %2)"),

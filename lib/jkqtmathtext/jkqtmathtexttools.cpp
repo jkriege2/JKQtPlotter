@@ -39,6 +39,9 @@ void initJKQTMathTextResources()
 #ifdef JKQTMATHTEXT_COMPILED_WITH_XITS
         Q_INIT_RESOURCE(xits);
 #endif
+#ifdef JKQTMATHTEXT_COMPILED_WITH_FIRAMATH
+        Q_INIT_RESOURCE(firamath);
+#endif
         initialized=true;
     }
 }
@@ -48,7 +51,7 @@ JKQTMathTextFontSpecifier::JKQTMathTextFontSpecifier():
     m_mathFontName(""),
     m_transformOnOutput(true)
 {
-
+    initJKQTMathTextResources();
 }
 
 JKQTMathTextFontSpecifier::JKQTMathTextFontSpecifier(const QString &_fontName, const QString &_mathFontName):
@@ -56,7 +59,7 @@ JKQTMathTextFontSpecifier::JKQTMathTextFontSpecifier(const QString &_fontName, c
     m_mathFontName(_mathFontName),
     m_transformOnOutput(true)
 {
-
+    initJKQTMathTextResources();
 }
 
 JKQTMathTextFontSpecifier JKQTMathTextFontSpecifier::fromFontSpec(const QString &fontSpec)
@@ -117,7 +120,7 @@ QString JKQTMathTextFontSpecifier::transformFontName(const QString &fontName, bo
 {
     const QString fnt=fontName.trimmed().toLower();
     QFont testFnt;
-    if (fnt=="serif") {
+    if (fnt=="serif" || fnt=="times") {
         testFnt.setStyleHint(QFont::StyleHint::Serif);
         return testFnt.defaultFamily();
     }
@@ -151,6 +154,16 @@ QString JKQTMathTextFontSpecifier::transformFontName(const QString &fontName, bo
     }
     if (fnt=="default" || fnt=="app" || fnt=="application") {
         return QGuiApplication::font().family();
+    }
+    if (fnt=="appsf" || fnt=="application sf" || fnt=="application-sf") {
+        const QFont f=QGuiApplication::font().family();
+        if (f.styleHint()==QFont::SansSerif) {
+            testFnt.setStyleHint(QFont::StyleHint::Serif);
+            return testFnt.defaultFamily();
+        } else {
+            testFnt.setStyleHint(QFont::StyleHint::SansSerif);
+            return testFnt.defaultFamily();
+        }
     }
 #if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
     if (fnt=="fixed") {
@@ -186,15 +199,18 @@ QString JKQTMathTextFontSpecifier::transformFontName(const QString &fontName, bo
 QString JKQTMathTextFontSpecifier::transformFontNameAndDecodeSpecialFonts(const QString &fontName, bool mathmode)
 {
     const QString fnt=fontName.toLower().trimmed();
-    if (fnt=="xits") {
-        if (mathmode) return getXITSFamilies().mathFontName();
+    if (fnt=="xits"||fnt=="xits_math") {
+        if (mathmode||fnt=="xits_math") return getXITSFamilies().mathFontName();
         else return getXITSFamilies().fontName();
-    } else if (fnt=="asana") {
-        if (mathmode) return getASANAFamilies().mathFontName();
+    } else if (fnt=="asana"||fnt=="asana_math") {
+        if (mathmode||fnt=="asana_math") return getASANAFamilies().mathFontName();
         else return getASANAFamilies().fontName();
-    } else if (fnt=="stix") {
-        if (mathmode) return getSTIXFamilies().mathFontName();
+    } else if (fnt=="stix"||fnt=="stix_math") {
+        if (mathmode||fnt=="stix_math") return getSTIXFamilies().mathFontName();
         else return getSTIXFamilies().fontName();
+    } else if (fnt=="fira"||fnt=="fira_math") {
+        if (mathmode||fnt=="firs_math") return getFIRAFamilies().mathFontName();
+        else return getFIRAFamilies().fontName();
     }
     return transformFontName(fontName, mathmode);
 }
@@ -209,13 +225,14 @@ bool JKQTMathTextFontSpecifier::hasMathFontName() const
     return !m_mathFontName.isEmpty();
 }
 
-bool JKQTMathTextFontSpecifier::hasFallbcakSymbolFontName() const
+bool JKQTMathTextFontSpecifier::hasFallbackSymbolFontName() const
 {
     return !m_fallbackSymbolFont.isEmpty();
 }
 
 JKQTMathTextFontSpecifier JKQTMathTextFontSpecifier::getXITSFamilies()
 {
+    initJKQTMathTextResources();
 #if (QT_VERSION<QT_VERSION_CHECK(6, 0, 0))
     QFontDatabase fdb;
     const auto fontFamilies=fdb.families();
@@ -257,6 +274,7 @@ JKQTMathTextFontSpecifier JKQTMathTextFontSpecifier::getXITSFamilies()
 
 JKQTMathTextFontSpecifier JKQTMathTextFontSpecifier::getASANAFamilies()
 {
+    initJKQTMathTextResources();
 #if (QT_VERSION<QT_VERSION_CHECK(6, 0, 0))
     QFontDatabase fdb;
     const auto fontFamilies=fdb.families();
@@ -295,6 +313,7 @@ JKQTMathTextFontSpecifier JKQTMathTextFontSpecifier::getASANAFamilies()
 
 JKQTMathTextFontSpecifier JKQTMathTextFontSpecifier::getSTIXFamilies()
 {
+    initJKQTMathTextResources();
     static QStringList mathNames{"STIX Two Math", "STIX Math", "STIX Two Math Standard", "STIX Math Standard"};
     static QStringList textNames{"STIX", "STIXGeneral", "STIX General"};
 
@@ -339,6 +358,102 @@ JKQTMathTextFontSpecifier JKQTMathTextFontSpecifier::getSTIXFamilies()
             fontSpec.m_fontName=fontSpec.m_mathFontName;
         }
         fontSpec.m_fallbackSymbolFont=fontSpec.m_mathFontName;
+    }
+    return fontSpec;
+}
+
+JKQTMathTextFontSpecifier JKQTMathTextFontSpecifier::getFIRAFamilies()
+{
+    initJKQTMathTextResources();
+#if (QT_VERSION<QT_VERSION_CHECK(6, 0, 0))
+    QFontDatabase fdb;
+    const auto fontFamilies=fdb.families();
+#else
+    const auto fontFamilies=QFontDatabase::families();
+#endif
+    if (!fontFamilies.contains("Fira Math")) {
+        if (QFile::exists(":/JKQTMathText/fonts/FiraMath-Regular.otf")) { QFontDatabase::addApplicationFont(":/JKQTMathText/fonts/FiraMath-Regular.otf"); }
+    }
+
+    static JKQTMathTextFontSpecifier fontSpec;
+    if (fontSpec.m_fontName.isEmpty() && fontSpec.m_mathFontName.isEmpty()) {
+        fontSpec.m_transformOnOutput=false;
+        for (int i=0; i<fontFamilies.size(); i++) {
+            if (fontFamilies.at(i).contains("Fira Math")) {
+                fontSpec.m_mathFontName=fontFamilies.at(i);
+                fontSpec.m_fontName=fontFamilies.at(i);
+            }
+            if (fontFamilies.at(i).contains("Fira Sans")) {
+                fontSpec.m_fontName=fontFamilies.at(i);
+            }
+            if (fontSpec.m_mathFontName.size()>0 && fontSpec.m_fontName.size()>0) {
+                break;
+            }
+        }
+        if (fontSpec.m_mathFontName.isEmpty() && !fontSpec.m_fontName.isEmpty()) {
+            fontSpec.m_mathFontName=fontSpec.m_fontName;
+        } else if (!fontSpec.m_mathFontName.isEmpty() && fontSpec.m_fontName.isEmpty()) {
+            fontSpec.m_fontName=fontSpec.m_mathFontName;
+        }
+        fontSpec.m_fallbackSymbolFont=fontSpec.m_mathFontName;
+    }
+
+    return fontSpec;
+}
+
+JKQTMathTextFontSpecifier JKQTMathTextFontSpecifier::getAppFontFamilies()
+{
+    static JKQTMathTextFontSpecifier fontSpec;
+    if (fontSpec.m_fontName.isEmpty() && fontSpec.m_mathFontName.isEmpty()) {
+#if (QT_VERSION<QT_VERSION_CHECK(6, 0, 0))
+        QFontDatabase fdb;
+        const auto fontFamilies=fdb.families();
+#else
+        const auto fontFamilies=QFontDatabase::families();
+#endif
+        const QFont f=QGuiApplication::font().family();
+        fontSpec.m_fontName=f.family();
+        fontSpec.m_mathFontName=f.family();
+        bool set=false;
+        if (f.family().toLower().startsWith("segoe ui")) {
+            if (fontFamilies.contains("Segoe UI Symbol")) {
+                fontSpec.m_fallbackSymbolFont=fontSpec.m_mathFontName="Segoe UI Symbol";
+                set=true;
+            }
+        } else if (f.family().toLower().startsWith("cambria")) {
+            if (fontFamilies.contains("Cambria Math")) {
+                fontSpec.m_fallbackSymbolFont=fontSpec.m_mathFontName="Cambria Math";
+                set=true;
+            }
+        }
+        if (!set) {
+            if (f.styleHint()==QFont::SansSerif) {
+                const JKQTMathTextFontSpecifier fira=getFIRAFamilies();
+                if (fira.hasFallbackSymbolFontName()) fontSpec.m_fallbackSymbolFont=fira.fallbackSymbolsFontName();
+                if (fira.hasMathFontName()) fontSpec.m_mathFontName=fira.mathFontName();
+            } else {
+                const JKQTMathTextFontSpecifier xits=getXITSFamilies();
+                if (xits.hasFallbackSymbolFontName()) fontSpec.m_fallbackSymbolFont=xits.fallbackSymbolsFontName();
+                if (xits.hasMathFontName()) fontSpec.m_mathFontName=xits.mathFontName();
+            }
+        }
+    }
+    return fontSpec;
+}
+
+JKQTMathTextFontSpecifier JKQTMathTextFontSpecifier::getAppFontSFFamilies()
+{
+    static JKQTMathTextFontSpecifier fontSpec;
+    if (fontSpec.m_fontName.isEmpty() && fontSpec.m_mathFontName.isEmpty()) {
+        const QFont f=QGuiApplication::font().family();
+        QFont testFnt;
+        if (f.styleHint()==QFont::SansSerif) {
+            testFnt.setStyleHint(QFont::StyleHint::Serif);
+            fontSpec.m_fontName=fontSpec.m_mathFontName=testFnt.defaultFamily();
+        } else {
+            testFnt.setStyleHint(QFont::StyleHint::SansSerif);
+            fontSpec.m_fontName=fontSpec.m_mathFontName=testFnt.defaultFamily();
+        }
     }
     return fontSpec;
 }

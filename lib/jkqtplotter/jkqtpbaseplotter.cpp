@@ -120,7 +120,7 @@ JKQTBasePlotter::textSizeData JKQTBasePlotter::getTextSizeDetail(const QString &
     JKQTBasePlotter::textSizeKey  dh(fontName, fontSize, text, painter.device());
     if (s_TextSizeDataCache.contains(dh)) return s_TextSizeDataCache[dh];
     JKQTBasePlotter::textSizeData d;
-    mathText.setFontRomanOrSpecial(fontName);
+    mathText.setFontSpecial(fontName);
     mathText.setFontSize(fontSize);
     mathText.parse(text);
     mathText.getSizeDetail(painter, d.width, d.ascent, d.descent, d.strikeoutPos);
@@ -1275,7 +1275,7 @@ void JKQTBasePlotter::drawPlot(JKQTPEnhancedPainter& painter) {
 
     if (!plotLabel.isEmpty()) {
         mathText.setFontSize(plotterStyle.plotLabelFontSize*fontSizeMultiplier);
-        mathText.setFontRomanOrSpecial(plotterStyle.plotLabelFontName);
+        mathText.setFontSpecial(plotterStyle.plotLabelFontName);
 
         mathText.parse(plotLabel);
         double a=0,d=0,so=0,w=0;
@@ -4250,7 +4250,7 @@ void JKQTBasePlotter::drawKeyContents(JKQTPEnhancedPainter& painter, double x, d
                 g->drawKeyMarker(painter, markerRect);
                 mathText.setFontColor(plotterStyle.keyStyle.textColor);
                 mathText.setFontSize(plotterStyle.keyStyle.fontSize*fontSizeMultiplier);
-                mathText.setFontRomanOrSpecial(plotterStyle.defaultFontName);
+                mathText.setFontSpecial(plotterStyle.defaultFontName);
 
                 mathText.parse(g->getTitle());
                 QRectF txtRect(x+(plotterStyle.keyStyle.sampleLineLength+plotterStyle.keyStyle.xSeparation)*Xwid,y, key_text_width, itheight);
@@ -4288,7 +4288,7 @@ void JKQTBasePlotter::drawKeyContents(JKQTPEnhancedPainter& painter, double x, d
                 g->drawKeyMarker(painter, markerRect);
                 mathText.setFontColor(plotterStyle.keyStyle.textColor);
                 mathText.setFontSize(plotterStyle.keyStyle.fontSize*fontSizeMultiplier);
-                mathText.setFontRomanOrSpecial(plotterStyle.defaultFontName);
+                mathText.setFontSpecial(plotterStyle.defaultFontName);
 
                 mathText.parse(g->getTitle());
                 QRectF txtRect(x+(plotterStyle.keyStyle.sampleLineLength+plotterStyle.keyStyle.xSeparation)*Xwid,y, fs.width(), itheight);
@@ -4336,7 +4336,7 @@ void JKQTBasePlotter::drawKeyContents(JKQTPEnhancedPainter& painter, double x, d
                 g->drawKeyMarker(painter, markerRect);
                 mathText.setFontColor(plotterStyle.keyStyle.textColor);
                 mathText.setFontSize(plotterStyle.keyStyle.fontSize*fontSizeMultiplier);
-                mathText.setFontRomanOrSpecial(plotterStyle.defaultFontName);
+                mathText.setFontSpecial(plotterStyle.defaultFontName);
                 mathText.parse(g->getTitle());
                 //QSizeF fs=mt.getSize(painter);
                 QRectF txtRect(xx+(plotterStyle.keyStyle.sampleLineLength+plotterStyle.keyStyle.xSeparation)*Xwid,yy, key_text_width, key_text_height);

@@ -187,8 +187,8 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         static const double ABS_MIN_LINEWIDTH;
 
 
-        /** \brief class constructor */
-        JKQTMathText(QObject * parent = nullptr);
+        /** \brief class constructor with a paren QObject \a parent and calls useGuiFonts() if \a useFontsForGUI \c =true */
+        JKQTMathText(QObject * parent = nullptr, bool useFontsForGUI=false);
         /** \brief class destructor */
         ~JKQTMathText();
 
@@ -400,6 +400,25 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
          *  \see JKQTMathTextFontSpecifier, setFontRoman(), setFontMathRoman(),  \ref jkqtmathtext_fonthandling
          */
         void setFontRomanOrSpecial(const JKQTMathTextFontSpecifier & fontName, JKQTMathTextFontEncoding encoding=JKQTMathTextFontEncoding::MTFEStandard);
+        /*! \brief set font(s) from parsing a font specifier
+         *
+         *  This function understands a font-specifier in the following forms:
+         *    - \c fontRoman - set "roman" and "math-roman" to fontRoman "sans"/"math-sans" are reset to the default, when constructing the object
+         *    - \c fontRoman/fontSans -  set "roman" and "math-roman" to fontRoman and "sans" and "math-sans" to fontSans
+         *    - \c fontRoman/fontSans/fontMathRoman/fontMathSans -  sets all four majpr fonts
+         *    - any above with addition:
+         *        - \c +XITS use XITS for math/symbols, calls useXITS()
+         *        - \c +ASANA use ASANA for math/symbols, calls useASANA()
+         *        - \c +STIX use STIX for math/symbols, calls useSTIX()
+         *        - \c +FIRA use Fira Math for math/symbols, calls useFiraMath()
+         *      .
+         *    - \c GUI use GUI-fonts, calls useGuiFonts()
+         *  .
+         *
+         *  Font names can also be one of the special names, specified in the documentation of JKQTMathTextFontSpecifier and JKQTMathTextFontSpecifier::transformFontNameAndDecodeSpecialFonts()
+         *
+         */
+        void setFontSpecial(const QString& fontSpec);
 
         /** \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEroman
          *
@@ -531,7 +550,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
          *
          * \image html jkqtmathtext/jkqtmathtext_xits.png
          *
-         * \note The XITS fonts can be compiled into JKQTPlotter, when the CMake-option \c is set to ON (default: ON).
+         * \note The XITS fonts can be compiled into JKQTPlotter, when the CMake-option \c JKQtPlotter_BUILD_INCLUDE_XITS_FONTS is set to ON (default: ON).
          *       Then the XITS fonts are added as Qt-Ressources to the library binary.
          *       If this is not the case, you have to provide the XITS fonts on the target system by other means, if you want
          *       to use them.
@@ -543,6 +562,28 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
          * \see \ref jkqtmathtext_fonthandling
          */
         bool useXITS(bool mathModeOnly=true, bool useAsFallbackSymbol=true);
+
+        /** \brief configures the class to use the Fira Math fonts in mathmode
+         *
+         * use Fira Math fonts from <a href="https://github.com/firamath/firamath">https://github.com/firamath/firamath</a> in math-mode
+         * or in math and text-mode (if \a mathModeOnly \c ==false ).
+         *
+         * If \c useAsFallbackSymbol is set \c ==true then the Fira Math fonts are also used as MTEFallbackSymbols
+         *
+         * \image html jkqtmathtext/jkqtmathtext_usefira.png
+         *
+         * \note The Fira Math fonts can be compiled into JKQTPlotter, when the CMake-option \c JKQtPlotter_BUILD_INCLUDE_FIRAMATH_FONTS is set to ON (default: ON).
+         *       Then the Fira Math fonts are added as Qt-Ressources to the library binary.
+         *       If this is not the case, you have to provide the Fira Math fonts on the target system by other means, if you want
+         *       to use them.
+         *
+         * This function does not only use default font-names for Fira Math, but searches
+         * the font database of the system with several different variants, using JKQTMathTextFontSpecifier::getFIRAFamilies().
+         * It also sets the special math-variant of Fira for math mode and the normal variant for text-mode
+         *
+         * \see \ref jkqtmathtext_fonthandling
+         */
+        bool useFiraMath(bool mathModeOnly=true, bool useAsFallbackSymbol=true);
 
         /** \brief configures the class to use the ASANA fonts in mathmode
          *
@@ -560,6 +601,15 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
          * \see \ref jkqtmathtext_fonthandling
          */
         bool useASANA(bool mathModeOnly=true, bool useAsFallbackSymbol=true);
+
+        /** \brief configures the class to be used for GUI output, i.e. tries to find fonts that are harmonious for the
+         *         default GUI font, sets the default GUI font for "roman" and finds an oppposite font for "sans", which means that
+         *         "sans" may actually be a serif font,when the app font is sans serif!
+         *
+         *
+         * \see \ref jkqtmathtext_fonthandling
+         */
+        bool useGuiFonts();
 
         /** \brief sets \a timesFont (with its encoding \a encodingTimes ) for serif-text and \a sansFont (with its encoding \a encodingSans ) for both mathmode and textmode fonts
          *
@@ -1001,8 +1051,24 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
          */
         double matrix_yPadding_factor;
 
-
-
+        /** \brief initial choice for "serif" font */
+        static QString init_serifFont;
+        /** \brief initial choice for "sans-erif" font */
+        static QString init_sansFont;
+        /** \brief initial choice for "fallback symbol" font */
+        static QString init_symbolFont;
+        /** \brief initial choice for "script" font */
+        static QString init_scriptFont;
+        /** \brief initial choice for "typewriter" font */
+        static QString init_typewriterFont;
+        /** \brief initial choice for "caligraphic" font */
+        static QString init_caligraphicFont;
+        /** \brief initial choice for "blackboard" font */
+        static QString init_blackboardFont;
+        /** \brief initial choice for "fraktur" font */
+        static QString init_fracturFont;
+        /** \brief used to check for the first construction of a JKQTMathText ... if \c true several static variables are initialized in the constructor */
+        static bool s_firstStart;
 };
 
 
