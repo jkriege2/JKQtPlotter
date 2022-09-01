@@ -102,13 +102,15 @@ void JKQTPSymbolComboBox::setCurrentSymbol(JKQTPGraphSymbols symbol)
 
 void JKQTPSymbolComboBox::addSymbol(JKQTPGraphSymbols symbol, const QString &name)
 {
-    QPixmap pix(12,12);
+    const qreal dpr = devicePixelRatioF();
+    QPixmap pix(12*dpr,12*dpr);
+    pix.setDevicePixelRatio(dpr);
     pix.fill(Qt::transparent);
     JKQTPEnhancedPainter p;
     p.begin(&pix);
     p.setRenderHint(JKQTPEnhancedPainter::Antialiasing);
     p.setRenderHint(JKQTPEnhancedPainter::TextAntialiasing);
-    JKQTPPlotSymbol(p, 6,6,symbol,10,1,QColor("blue"), QColor("blue").lighter());
+    JKQTPPlotSymbol(p, 6.0*dpr,6.0*dpr,symbol,10.0*dpr,1,QColor("blue"), QColor("blue").lighter());
     p.end();
     addItem(QIcon(pix), name, JKQTPGraphSymbols2String(symbol));
 }
@@ -176,15 +178,17 @@ void JKQTPLinePlotStyleComboBox::refill()
 
 void JKQTPLinePlotStyleComboBox::addSymbol(JKQTPGraphSymbols symbol, bool line, const QString &name, const QVariant &data)
 {
-    QPixmap pix(12,12);
+    const qreal dpr = devicePixelRatioF();
+    QPixmap pix(12*dpr,12*dpr);
+    pix.setDevicePixelRatio(dpr);
     pix.fill(Qt::transparent);
     JKQTPEnhancedPainter p;
     p.begin(&pix);
     p.setRenderHint(JKQTPEnhancedPainter::Antialiasing);
     p.setRenderHint(JKQTPEnhancedPainter::TextAntialiasing);
-    JKQTPPlotSymbol(p, 6,6,symbol,7,1,QColor("blue"), QColor("blue").lighter());
+    JKQTPPlotSymbol(p, 6.0*dpr,6.0*dpr,symbol,7.0*dpr,1,QColor("blue"), QColor("blue").lighter());
     p.setPen(QColor("blue"));
-    if (line) p.drawLine(0,6,12,6);
+    if (line) p.drawLine(0,6*dpr,12*dpr,6*dpr);
     p.end();
     addItem(QIcon(pix), name, data);
 }
@@ -492,8 +496,10 @@ void JKQTPLinePlotStyleWithSymbolSizeComboBox::refill()
 
 void JKQTPLinePlotStyleWithSymbolSizeComboBox::addSymbol(JKQTPGraphSymbols symbol, bool line, double symbolSize, const QString &name, const QVariant &data)
 {
-    int pixSize=qMax(16.0, 1.2*symbolSize);
+    const qreal dpr = devicePixelRatioF();
+    int pixSize=qMax(16.0, 1.2*symbolSize)*dpr;
     QPixmap pix(pixSize, pixSize);
+    pix.setDevicePixelRatio(dpr);
     pix.fill(Qt::transparent);
     JKQTPEnhancedPainter p;
     p.begin(&pix);
