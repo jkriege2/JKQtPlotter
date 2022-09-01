@@ -268,7 +268,7 @@ void JKQTPSpecialLineHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
 
         QList<QPolygonF> pl_fordrawing;
         if (isHighlighted() || getDrawLine()) {
-            if (getUseNonvisibleLineCompression()) pl_fordrawing=JKQTPClipPolyLine(JKQTPSimplifyPolyLines(pl, p.widthF()*getNonvisibleLineCompressionAgressiveness()), cliprect);
+            if (getUseNonvisibleLineCompression()) pl_fordrawing=JKQTPClipPolyLine(JKQTPSimplifyPolyLines(pl, getNonvisibleLineCompressionAgressiveness()), cliprect);
             else pl_fordrawing=JKQTPClipPolyLine(pl, cliprect);
         }
 
@@ -456,7 +456,7 @@ void JKQTPSpecialLineVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
 
         QList<QPolygonF> pl_fordrawing;
         if (isHighlighted() || getDrawLine()) {
-            if (getUseNonvisibleLineCompression()) pl_fordrawing=JKQTPClipPolyLine(JKQTPSimplifyPolyLines(pl, p.widthF()*getNonvisibleLineCompressionAgressiveness()), cliprect);
+            if (getUseNonvisibleLineCompression()) pl_fordrawing=JKQTPClipPolyLine(JKQTPSimplifyPolyLines(pl, getNonvisibleLineCompressionAgressiveness()), cliprect);
             else pl_fordrawing=JKQTPClipPolyLine(pl, cliprect);
         }
 

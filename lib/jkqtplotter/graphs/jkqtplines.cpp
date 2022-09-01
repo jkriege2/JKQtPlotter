@@ -125,7 +125,7 @@ void JKQTPXYLineGraph::draw(JKQTPEnhancedPainter& painter) {
                 //qDebug()<<"JKQTPXYLineGraph::draw(): vec_linesP.size()=="<<vec_linesP.size();
 
                 QList<QPolygonF> linesToDraw;
-                if (getUseNonvisibleLineCompression()) linesToDraw=JKQTPClipPolyLines(JKQTPSimplifyPolyLines(vec_linesP, p.widthF()*getNonvisibleLineCompressionAgressiveness()), cliprect);
+                if (getUseNonvisibleLineCompression()) linesToDraw=JKQTPClipPolyLines(JKQTPSimplifyPolyLines(vec_linesP, getNonvisibleLineCompressionAgressiveness()), cliprect);
                 else linesToDraw=JKQTPClipPolyLines(vec_linesP, cliprect);
                 //qDebug()<<"JKQTPXYLineGraph::draw(): linesToDraw.size()=="<<linesToDraw.size()<<", clip: x="<<xmin<<".."<<xmax<<", y="<<ymin<<".."<<ymax;
                 for (const auto &linesP : linesToDraw) {

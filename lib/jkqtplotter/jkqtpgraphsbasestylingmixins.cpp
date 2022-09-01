@@ -163,7 +163,7 @@ QPen JKQTPGraphLineStyleMixin::getLinePenForRects(JKQTPEnhancedPainter &painter,
 
 
 JKQTPGraphLinesCompressionMixin::JKQTPGraphLinesCompressionMixin():
-    m_useNonvisibleLineCompression(true),
+    m_useNonvisibleLineCompression(false),
     m_nonvisibleLineCompressionAgressiveness(1)
 {
 
