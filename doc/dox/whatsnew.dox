@@ -43,6 +43,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: made resize-timer status accessible from outside via JKQTPlotter::isResizeTimerRunning() </li>
     <li>NEW: made it's delay a global static variable that can be set and red with JKQTPlotter::setGlobalResizeDelay() and JKQTPlotter::getGlobalResizeDelay()</li>
     <li>NEW: Using JKQTMathText::useGuiFonts() for FONT rendering by default</li>
+    <li>NEW: added the option to draw a character from a font as symbol (<code>JKQTPCharacterSymbol+QChar('C').unicode()</code>)</li>
   </ul></li>
   
   <li>JKQTMathText:<ul>

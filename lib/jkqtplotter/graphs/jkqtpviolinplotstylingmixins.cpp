@@ -46,6 +46,7 @@ JKQTPGraphViolinplotStyleMixin::JKQTPGraphViolinplotStyleMixin()
     m_meanSymbolType=JKQTPGraphSymbols::JKQTPDefaultSymbol;
     m_meanSymbolSize=12;
     m_meanSymbolFillColor=m_meanSymbolLinePen.color().lighter();
+    m_meanSymbolFontName=QGuiApplication::font().family();
 
 
     violinWidthAbsolute=m_meanSymbolSize*6.0;
@@ -78,6 +79,7 @@ void JKQTPGraphViolinplotStyleMixin::initViolinplotStyle(JKQTBasePlotter *parent
         m_meanSymbolLineWidth=pen.symbolLineWidthF();
         m_meanSymbolType=pen.symbol();
         m_meanSymbolFillColor=pen.symbolFillColor();
+        m_meanSymbolFontName=parent->getDefaultTextFontName();
     }
 
     setWhiskerLineColor(getLineColor());
@@ -147,6 +149,16 @@ JKQTPGraphSymbols JKQTPGraphViolinplotStyleMixin::getMeanSymbolType() const
     return m_meanSymbolType;
 }
 
+void JKQTPGraphViolinplotStyleMixin::setMeanSymbolFontName(const QString &__value)
+{
+    m_meanSymbolFontName=__value;
+}
+
+QString JKQTPGraphViolinplotStyleMixin::getMeanSymbolFontName() const
+{
+    return m_meanSymbolFontName;
+}
+
 void JKQTPGraphViolinplotStyleMixin::setMeanSize(double __value)
 {
     m_meanSymbolSize=__value;
@@ -185,6 +197,13 @@ void JKQTPGraphViolinplotStyleMixin::setMeanLineWidth(double __value)
 double JKQTPGraphViolinplotStyleMixin::getMeanLineWidth() const
 {
     return m_meanSymbolLineWidth;
+}
+
+QFont JKQTPGraphViolinplotStyleMixin::getMeanSymbolFont() const
+{
+    QFont f(m_meanSymbolFontName, m_meanSymbolSize);
+    f.setStyleStrategy(QFont::PreferDefault);
+    return f;
 }
 
 JKQTPGraphViolinplotStyleMixin::ViolinStyle JKQTPGraphViolinplotStyleMixin::getViolinStyle() const
@@ -552,7 +571,7 @@ QBrush JKQTPGraphViolinplotStyleMixin::getMeanSymbolBrush(JKQTPEnhancedPainter& 
 
 void JKQTPGraphViolinplotStyleMixin::plotStyledMeanSymbol(JKQTBasePlotter *parent, JKQTPEnhancedPainter &painter, double x, double y) const
 {
-    JKQTPPlotSymbol(painter, x, y,m_meanSymbolType, parent->pt2px(painter, m_meanSymbolSize), parent->pt2px(painter, m_meanSymbolLineWidth*parent->getLineWidthMultiplier()), m_meanSymbolLinePen.color(), m_meanSymbolFillColor);
+    JKQTPPlotSymbol(painter, x, y,m_meanSymbolType, parent->pt2px(painter, m_meanSymbolSize), parent->pt2px(painter, m_meanSymbolLineWidth*parent->getLineWidthMultiplier()), m_meanSymbolLinePen.color(), m_meanSymbolFillColor, getMeanSymbolFont());
 }
 
 

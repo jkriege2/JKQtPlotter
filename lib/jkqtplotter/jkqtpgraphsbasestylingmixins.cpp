@@ -207,6 +207,7 @@ JKQTPGraphSymbolStyleMixin::JKQTPGraphSymbolStyleMixin()
     m_symbolSize=12;
     m_symbolFillColor=m_symbolColor.lighter();
     m_symbolLineWidth=1;
+    m_symbolFontName=QGuiApplication::font().family();
 }
 
 void JKQTPGraphSymbolStyleMixin::initSymbolStyle(JKQTBasePlotter *parent, int& parentPlotStyle, JKQTPPlotStyleType styletype)
@@ -219,6 +220,7 @@ void JKQTPGraphSymbolStyleMixin::initSymbolStyle(JKQTBasePlotter *parent, int& p
         m_symbolLineWidth=pen.symbolLineWidthF();
         m_symbolType=pen.symbol();
         m_symbolFillColor=pen.symbolFillColor();
+        m_symbolFontName=parent->getDefaultTextFontName();
     }
 }
 
@@ -277,6 +279,16 @@ double JKQTPGraphSymbolStyleMixin::getSymbolLineWidth() const
     return m_symbolLineWidth;
 }
 
+void JKQTPGraphSymbolStyleMixin::setSymbolFontName(const QString &__value)
+{
+    m_symbolFontName=__value;
+}
+
+QString JKQTPGraphSymbolStyleMixin::getSymbolFontName() const
+{
+    return m_symbolFontName;
+}
+
 double JKQTPGraphSymbolStyleMixin::getKeySymbolLineWidthPx(JKQTPEnhancedPainter& painter, const QRectF& keyRect, const JKQTBasePlotter *parent, double maxSymbolSizeFracton) const
 {
     const double minSize=qMin(keyRect.width(), keyRect.height());
@@ -310,25 +322,20 @@ QBrush JKQTPGraphSymbolStyleMixin::getSymbolBrush(JKQTPEnhancedPainter& /*painte
     return b;
 }
 
-void JKQTPGraphSymbolStyleMixin::plotStyledSymbol(JKQTBasePlotter* parent, JKQTPEnhancedPainter &painter, double x, double y) const
+QFont JKQTPGraphSymbolStyleMixin::getSymbolFont() const
 {
-    JKQTPPlotSymbol(painter, x, y,m_symbolType, parent->pt2px(painter, m_symbolSize), parent->pt2px(painter, m_symbolLineWidth*parent->getLineWidthMultiplier()), m_symbolColor, m_symbolFillColor);
+    QFont f(m_symbolFontName, m_symbolSize);
+    f.setStyleStrategy(QFont::PreferDefault);
+    return f;
 }
 
-void JKQTPGraphSymbolStyleMixin::plotStyledSymbol(JKQTBasePlotter* parent, JKQTPEnhancedPainter &painter, double x, double y, JKQTPGraphSymbols type) const
-{
-    JKQTPPlotSymbol(painter, x, y,type, parent->pt2px(painter, m_symbolSize), parent->pt2px(painter, m_symbolLineWidth*parent->getLineWidthMultiplier()), m_symbolColor, m_symbolFillColor);
-}
 
-void JKQTPGraphSymbolStyleMixin::plotStyledSymbol(JKQTBasePlotter* parent, JKQTPEnhancedPainter &painter, double x, double y, double symbolSize) const
-{
-    JKQTPPlotSymbol(painter, x, y,m_symbolType, symbolSize, parent->pt2px(painter, m_symbolLineWidth*parent->getLineWidthMultiplier()), m_symbolColor, m_symbolFillColor);
-}
 
-void JKQTPGraphSymbolStyleMixin::plotStyledSymbol(JKQTBasePlotter* parent, JKQTPEnhancedPainter &painter, double x, double y, QColor color, QColor fillColor) const
-{
-    JKQTPPlotSymbol(painter, x, y,m_symbolType, parent->pt2px(painter, m_symbolSize), parent->pt2px(painter, m_symbolLineWidth*parent->getLineWidthMultiplier()), color, fillColor);
-}
+
+
+
+
+
 
 
 

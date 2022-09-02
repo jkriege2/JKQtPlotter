@@ -363,6 +363,7 @@ private:
       - symbol (outline) color
       - symbol fill color (not required for all symbols)
       - symbol (line) width
+      - symbol font name (family) for character symbols \c JKQTPCharacterSymbol+QChar('').unicode()
     .
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPGraphSymbolStyleMixin {
@@ -402,6 +403,11 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphSymbolStyleMixin {
         /** \brief get the line width of the graph symbol outline (in pt) */
         double getSymbolLineWidth() const;
 
+        /** \brief set the font to be used for character symbols \c JKQTPCharacterSymbol+QChar('').unicode() */
+        void setSymbolFontName(const QString& __value);
+        /** \brief get the font to be used for character symbols \c JKQTPCharacterSymbol+QChar('').unicode() */
+        QString getSymbolFontName() const;
+
 
 
 #ifndef JKQTPLOTTER_WORKAROUND_QGADGET_BUG
@@ -410,8 +416,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphSymbolStyleMixin {
         Q_PROPERTY(QColor symbolFillColor MEMBER m_symbolFillColor READ getSymbolFillColor WRITE setSymbolFillColor)
         Q_PROPERTY(double symbolSize MEMBER m_symbolSize READ getSymbolSize WRITE setSymbolSize)
         Q_PROPERTY(double symbolLineWidth MEMBER m_symbolLineWidth READ getSymbolLineWidth WRITE setSymbolLineWidth)
+        Q_PROPERTY(QString symbolFontName MEMBER m_symbolFontName READ getSymbolFontName WRITE setSymbolFontName)
 #endif
-private:
+    private:
         /** \brief which symbol to use for the datapoints */
         JKQTPGraphSymbols m_symbolType;
         /** \brief size (diameter in pt) of the symbol for the data points, given in pt */
@@ -422,11 +429,15 @@ private:
         QColor m_symbolFillColor;
         /** \brief width (in pt) of the lines used to plot the symbol for the data points, given in pt */
         double m_symbolLineWidth;
+        /** \brief font to be used for character symbols \c JKQTPCharacterSymbol+QChar('').unicode() */
+        QString m_symbolFontName;
     protected:
         /** \brief constructs a QPen from the line styling properties */
         QPen getSymbolPen(JKQTPEnhancedPainter &painter, JKQTBasePlotter* parent) const;
         /** \brief constructs a QPen from the line styling properties */
         QBrush getSymbolBrush(JKQTPEnhancedPainter &painter, JKQTBasePlotter* parent) const;
+        /** \brief generate a QFont for darwing symbols */
+        QFont getSymbolFont() const;
         /*! \brief plot a symbol at location x,y (in painter coordinates), using the current style
 
             \param parent parent JKQTBasePlotter of the graph that uses this mix-in (used e.g. for line-width transformation)
@@ -434,7 +445,10 @@ private:
             \param x x-coordinate of the symbol center
             \param y y-coordinate of the symbol center
          */
-        void plotStyledSymbol(JKQTBasePlotter* parent, JKQTPEnhancedPainter& painter, double x, double y) const;
+        inline void plotStyledSymbol(JKQTBasePlotter* parent, JKQTPEnhancedPainter& painter, double x, double y) const
+        {
+            JKQTPPlotSymbol(painter, x, y,m_symbolType, parent->pt2px(painter, m_symbolSize), parent->pt2px(painter, m_symbolLineWidth*parent->getLineWidthMultiplier()), m_symbolColor, m_symbolFillColor, getSymbolFont());
+        }
         /*! \brief plot a symbol at location x,y (in painter coordinates), using the current style
 
             \param parent parent JKQTBasePlotter of the graph that uses this mix-in (used e.g. for line-width transformation)
@@ -443,7 +457,10 @@ private:
             \param y y-coordinate of the symbol center
             \param symbolSize size of the symbol
          */
-        void plotStyledSymbol(JKQTBasePlotter* parent, JKQTPEnhancedPainter& painter, double x, double y, double symbolSize) const;
+        inline void plotStyledSymbol(JKQTBasePlotter* parent, JKQTPEnhancedPainter& painter, double x, double y, double symbolSize) const
+        {
+            JKQTPPlotSymbol(painter, x, y,m_symbolType, symbolSize, parent->pt2px(painter, m_symbolLineWidth*parent->getLineWidthMultiplier()), m_symbolColor, m_symbolFillColor, getSymbolFont());
+        }
         /*! \brief plot a symbol at location x,y (in painter coordinates), using the current style
 
             \param parent parent JKQTBasePlotter of the graph that uses this mix-in (used e.g. for line-width transformation)
@@ -452,7 +469,10 @@ private:
             \param y y-coordinate of the symbol center
             \param type type of the symbol
          */
-        void plotStyledSymbol(JKQTBasePlotter* parent, JKQTPEnhancedPainter& painter, double x, double y, JKQTPGraphSymbols type) const;
+        inline void plotStyledSymbol(JKQTBasePlotter* parent, JKQTPEnhancedPainter& painter, double x, double y, JKQTPGraphSymbols type) const
+        {
+            JKQTPPlotSymbol(painter, x, y,type, parent->pt2px(painter, m_symbolSize), parent->pt2px(painter, m_symbolLineWidth*parent->getLineWidthMultiplier()), m_symbolColor, m_symbolFillColor, getSymbolFont());
+        }
         /*! \brief plot a symbol at location x,y (in painter coordinates), using the current style
 
             \param parent parent JKQTBasePlotter of the graph that uses this mix-in (used e.g. for line-width transformation)
@@ -462,7 +482,10 @@ private:
             \param color color of the symbol
             \param fillColor fill color of the symbol
          */
-        void plotStyledSymbol(JKQTBasePlotter* parent, JKQTPEnhancedPainter& painter, double x, double y, QColor color, QColor fillColor) const;
+        inline void plotStyledSymbol(JKQTBasePlotter* parent, JKQTPEnhancedPainter& painter, double x, double y, QColor color, QColor fillColor) const
+        {
+            JKQTPPlotSymbol(painter, x, y,m_symbolType, parent->pt2px(painter, m_symbolSize), parent->pt2px(painter, m_symbolLineWidth*parent->getLineWidthMultiplier()), color, fillColor, getSymbolFont());
+        }
         /** \brief returns the symbol linewidth for drawing symbols in a key entry with \a keyRect for the symbol, using \a painter and \a parent  . \a maxSymbolSizeFracton specifies the maximum fraction of \a keyRect to be used for the symbol. */
         double getKeySymbolLineWidthPx(JKQTPEnhancedPainter &painter, const QRectF &keyRect, const JKQTBasePlotter *parent, double maxSymbolSizeFracton=0.9) const;
         /** \brief returns the symbol size for drawing symbols in a key entry with \a keyRect for the symbol, using \a painter and \a parent . \a maxSymbolSizeFracton specifies the maximum fraction of \a keyRect to be used for the symbol. */

@@ -66,7 +66,7 @@ void JKQTPEvaluatedFunctionGraphBase::drawSamplePoints(JKQTPEnhancedPainter& pai
     painter.save(); auto __finalpaintsamplepoints=JKQTPFinally([&painter]() {painter.restore();});
     for (const auto& d: data) {
         if (JKQTPIsOKFloat(d.x()) && JKQTPIsOKFloat(d.y())) {
-            JKQTPPlotSymbol(painter, d.x(), d.y(), JKQTPCross, 6,1*parent->getLineWidthMultiplier(), c, QColor(Qt::transparent));
+            JKQTPPlotSymbol(painter, d.x(), d.y(), JKQTPCross, 6,1*parent->getLineWidthMultiplier(), c, QColor(Qt::transparent), QGuiApplication::font().family());
         }
     }
 }

@@ -91,6 +91,13 @@ QString JKQTPGraphSymbols2String(JKQTPGraphSymbols pos) {
         case JKQTPMale: return "symbol_male";
         case JKQTPCirclePeace: return "symbol_circle_peace";
         case JKQTPSymbolCount: JKQTPGraphSymbols2String(JKQTPMaxSymbolID);
+        case JKQTPCharacterSymbol:
+        break;
+    }
+    if (pos>=JKQTPCharacterSymbol && pos<=JKQTPCharacterSymbol+0xFF) {
+        QString s=QString::number(pos-JKQTPCharacterSymbol,16);
+        while (s.size()<4) s="0"+s;
+        return "symbol_char"+s;
     }
     return "";
 }
@@ -162,11 +169,16 @@ QString JKQTPGraphSymbols2NameString(JKQTPGraphSymbols pos) {
         case JKQTPMale: return QObject::tr("male");
         case JKQTPCirclePeace: return QObject::tr("circled peace");
         case JKQTPSymbolCount: JKQTPGraphSymbols2NameString(JKQTPMaxSymbolID);
+        case JKQTPCharacterSymbol: break;
+    }
+    if (pos>=JKQTPCharacterSymbol && pos<=JKQTPCharacterSymbol+0xFF) {
+        return QObject::tr("character")+" '"+QChar(static_cast<uint16_t>(pos-JKQTPCharacterSymbol))+"'";
     }
     return "";
 }
 JKQTPGraphSymbols String2JKQTPGraphSymbols(const QString& pos)  {
-    QString s=pos.trimmed().toLower();
+    const QString posT=pos.trimmed();
+    const QString s=posT.toLower();
     if (s=="symbol_dot"||s=="dot"||s==".") return JKQTPDot;
     if (s=="symbol_cross"||s=="cross"||s=="x") return JKQTPCross;
     if (s=="symbol_plus"||s=="plus"||s=="+") return JKQTPPlus;
@@ -230,7 +242,20 @@ JKQTPGraphSymbols String2JKQTPGraphSymbols(const QString& pos)  {
     if (s=="symbol_circle_peace" || s=="circle_peace") return JKQTPCirclePeace;
     if (s=="symbol_female" || s=="female") return JKQTPFemale;
     if (s=="symbol_male" || s=="male") return JKQTPMale;
-
+    if (posT.startsWith("symbol_charsym") && posT.size()>14) {
+        //qDebug()<<posT<<" --> "<<posT[14]<<" "<<posT[14].unicode();
+        return JKQTPCharacterSymbol+posT[14].unicode();
+    }
+    if (posT.startsWith("charsym") && posT.size()>7) {
+        //qDebug()<<posT<<" --> "<<posT[7]<<" "<<posT[7].unicode();
+        return JKQTPCharacterSymbol+posT[7].unicode();
+    }
+    if (posT.startsWith("char")) {
+        return JKQTPCharacterSymbol+posT.mid(4).toUInt(nullptr,16);
+    }
+    if (posT.startsWith("symbol_char")) {
+        return JKQTPCharacterSymbol+posT.mid(11).toUInt(nullptr,16);
+    }
     return JKQTPNoSymbol;
 }
 
@@ -238,9 +263,9 @@ JKQTPGraphSymbols String2JKQTPGraphSymbols(const QString& pos)  {
 
 
 
-void JKQTPPlotSymbol(QPaintDevice &paintDevice, double x, double y, JKQTPGraphSymbols symbol, double size, double symbolLineWidth, QColor color, QColor fillColor) {
+void JKQTPPlotSymbol(QPaintDevice &paintDevice, double x, double y, JKQTPGraphSymbols symbol, double size, double symbolLineWidth, QColor color, QColor fillColor, const  QFont& symbolFont) {
     JKQTPEnhancedPainter p(&paintDevice);
-    JKQTPPlotSymbol(p, x, y, symbol, size, symbolLineWidth, color, fillColor);
+    JKQTPPlotSymbol(p, x, y, symbol, size, symbolLineWidth, color, fillColor, symbolFont);
 }
 
 QString JKQTPLineDecoratorStyle2String(JKQTPLineDecoratorStyle pos)

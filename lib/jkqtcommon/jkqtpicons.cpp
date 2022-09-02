@@ -104,7 +104,7 @@ QIcon JKQTPGraphSymbols2Icon(JKQTPGraphSymbols style)
         p.setRenderHint(QPainter::Antialiasing);
         p.setRenderHint(QPainter::TextAntialiasing);
         p.setPen(QPen(QColor(Qt::black), 1, Qt::SolidLine));
-        JKQTPPlotSymbol(p, icon.width()/2, icon.height()/2, style, 15, 1, QColor("black"), QColor("silver"));
+        JKQTPPlotSymbol(p, icon.width()/2, icon.height()/2, style, 15, 1, QColor("black"), QColor("silver"),QGuiApplication::font().family());
         p.end();
 
     }

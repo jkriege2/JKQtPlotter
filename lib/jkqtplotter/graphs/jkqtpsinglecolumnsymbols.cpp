@@ -232,7 +232,7 @@ void JKQTPSingleColumnSymbolsGraph::drawKeyMarker(JKQTPEnhancedPainter &painter,
     QPen p=getSymbolPen(painter, parent);
     painter.setPen(p);
     if (positionScatterStyle!=RugPlot) {
-        JKQTPPlotSymbol(painter, rect.left()+rect.width()/2.0, rect.top()+rect.height()/2.0, getSymbolType(), symbolSize, symbolWidth, getKeyLabelColor(), getSymbolFillColor());
+        JKQTPPlotSymbol(painter, rect.left()+rect.width()/2.0, rect.top()+rect.height()/2.0, getSymbolType(), symbolSize, symbolWidth, getKeyLabelColor(), getSymbolFillColor(),getSymbolFont());
     } else {
         painter.translate(rect.center());
         if (dataDirection==DataDirection::X) {

@@ -173,6 +173,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPOverlayImageEnhanced: public JKQTPOverlayImage
         void setSymbolSizeFactor(double __value);
         /** \copydoc symbolSizeFactor */ 
         double getSymbolSizeFactor() const;
+        /** \brief set the font to be used for character symbols \c JKQTPCharacterSymbol+QChar('').unicode() */
+        void setSymbolFontName(const QString& __value);
+        /** \brief get the font to be used for character symbols \c JKQTPCharacterSymbol+QChar('').unicode() */
+        QString getSymbolFontName() const;
 
     protected:
         /** \brief which symbol to use for the datapoints */
@@ -185,6 +189,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPOverlayImageEnhanced: public JKQTPOverlayImage
 
         /** \brief a rescaling factor  for the symbols */
         double symbolSizeFactor;
+        /** \brief font to be used for character symbols \c JKQTPCharacterSymbol+QChar('').unicode() */
+        QString m_symbolFontName;
 
 
 };

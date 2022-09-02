@@ -318,6 +318,13 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphBoxplotStyleMixin: public JKQTPGraphLineS
         void setMeanLineWidth(double __value);
         /** \brief get the line width of the symbol for the mean outline, or mean line (in pt) */
         double getMeanLineWidth() const;
+        /** \brief set the font to be used for mean character symbols \c JKQTPCharacterSymbol+QChar('').unicode() */
+        void setMeanSymbolFontName(const QString& __value);
+        /** \brief get the font to be used for mean character symbols \c JKQTPCharacterSymbol+QChar('').unicode() */
+        QString getMeanSymbolFontName() const;
+
+        /** \brief generate a QFont for darwing symbols */
+        QFont getMeanSymbolFont() const;
 
         /** \brief constructs a QPen from the line styling properties to draw the mean line */
         QPen getMeanLinePen(JKQTPEnhancedPainter &painter, JKQTBasePlotter* parent) const;
@@ -398,6 +405,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphBoxplotStyleMixin: public JKQTPGraphLineS
         QColor m_meanSymbolFillColor;
         /** \brief width (in pt) of the lines used to plot the symbol for the data points, given in pt */
         double m_meanSymbolLineWidth;
+        /** \brief font to be used for character mean symbols \c JKQTPCharacterSymbol+QChar('').unicode() */
+        QString m_meanSymbolFontName;
         /** \brief line style of the whisker lines */
         QPen m_whiskerLinePen;
         /** \brief line width (in pt) of the whisker lines */

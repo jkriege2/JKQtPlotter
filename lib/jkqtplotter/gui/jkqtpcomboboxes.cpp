@@ -110,7 +110,7 @@ void JKQTPSymbolComboBox::addSymbol(JKQTPGraphSymbols symbol, const QString &nam
     p.begin(&pix);
     p.setRenderHint(JKQTPEnhancedPainter::Antialiasing);
     p.setRenderHint(JKQTPEnhancedPainter::TextAntialiasing);
-    JKQTPPlotSymbol(p, 6.0*dpr,6.0*dpr,symbol,10.0*dpr,1,QColor("blue"), QColor("blue").lighter());
+    JKQTPPlotSymbol(p, 6.0*dpr,6.0*dpr,symbol,10.0*dpr,1,QColor("blue"), QColor("blue").lighter(),font().family());
     p.end();
     addItem(QIcon(pix), name, JKQTPGraphSymbols2String(symbol));
 }
@@ -186,7 +186,7 @@ void JKQTPLinePlotStyleComboBox::addSymbol(JKQTPGraphSymbols symbol, bool line, 
     p.begin(&pix);
     p.setRenderHint(JKQTPEnhancedPainter::Antialiasing);
     p.setRenderHint(JKQTPEnhancedPainter::TextAntialiasing);
-    JKQTPPlotSymbol(p, 6.0*dpr,6.0*dpr,symbol,7.0*dpr,1,QColor("blue"), QColor("blue").lighter());
+    JKQTPPlotSymbol(p, 6.0*dpr,6.0*dpr,symbol,7.0*dpr,1,QColor("blue"), QColor("blue").lighter(), font().family());
     p.setPen(QColor("blue"));
     if (line) p.drawLine(0,6*dpr,12*dpr,6*dpr);
     p.end();
@@ -505,7 +505,7 @@ void JKQTPLinePlotStyleWithSymbolSizeComboBox::addSymbol(JKQTPGraphSymbols symbo
     p.begin(&pix);
     p.setRenderHint(JKQTPEnhancedPainter::Antialiasing);
     p.setRenderHint(JKQTPEnhancedPainter::TextAntialiasing);
-    JKQTPPlotSymbol(p, double(pixSize)/2.0,double(pixSize)/2.0,symbol,symbolSize,1,QColor("blue"), QColor("blue").lighter());
+    JKQTPPlotSymbol(p, double(pixSize)/2.0,double(pixSize)/2.0,symbol,symbolSize,1,QColor("blue"), QColor("blue").lighter(), font().family());
     p.setPen(QColor("blue"));
     if (line) p.drawLine(QLineF(0,double(pixSize)/2.0,pixSize,double(pixSize)/2.0));
     p.end();

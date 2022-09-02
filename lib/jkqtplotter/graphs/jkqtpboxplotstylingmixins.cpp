@@ -47,6 +47,7 @@ JKQTPGraphBoxplotStyleMixin::JKQTPGraphBoxplotStyleMixin()
     m_meanSymbolType=JKQTPGraphSymbols::JKQTPDefaultSymbol;
     m_meanSymbolSize=12;
     m_meanSymbolFillColor=m_meanSymbolLinePen.color().lighter();
+    m_meanSymbolFontName=QGuiApplication::font().family();
 
 
     boxWidthAbsolute=m_meanSymbolSize*3.0;
@@ -80,6 +81,7 @@ void JKQTPGraphBoxplotStyleMixin::initBoxplotStyle(JKQTBasePlotter *parent, int 
         m_meanSymbolLineWidth=pen.symbolLineWidthF();
         m_meanSymbolType=pen.symbol();
         m_meanSymbolFillColor=pen.symbolFillColor();
+        m_meanSymbolFontName=parent->getDefaultTextFontName();
     }
 
     setWhiskerLineColor(getLineColor());
@@ -216,6 +218,23 @@ void JKQTPGraphBoxplotStyleMixin::setMeanLineWidth(double __value)
 double JKQTPGraphBoxplotStyleMixin::getMeanLineWidth() const
 {
     return m_meanSymbolLineWidth;
+}
+
+void JKQTPGraphBoxplotStyleMixin::setMeanSymbolFontName(const QString &__value)
+{
+    m_meanSymbolFontName=__value;
+}
+
+QString JKQTPGraphBoxplotStyleMixin::getMeanSymbolFontName() const
+{
+    return m_meanSymbolFontName;
+}
+
+QFont JKQTPGraphBoxplotStyleMixin::getMeanSymbolFont() const
+{
+    QFont f(m_meanSymbolFontName, m_meanSymbolSize);
+    f.setStyleStrategy(QFont::PreferDefault);
+    return f;
 }
 
 
@@ -563,7 +582,7 @@ QBrush JKQTPGraphBoxplotStyleMixin::getMeanSymbolBrush(JKQTPEnhancedPainter& /*p
 
 void JKQTPGraphBoxplotStyleMixin::plotStyledMeanSymbol(JKQTBasePlotter *parent, JKQTPEnhancedPainter &painter, double x, double y) const
 {
-    JKQTPPlotSymbol(painter, x, y,m_meanSymbolType, parent->pt2px(painter, m_meanSymbolSize), parent->pt2px(painter, m_meanSymbolLineWidth*parent->getLineWidthMultiplier()), m_meanSymbolLinePen.color(), m_meanSymbolFillColor);
+    JKQTPPlotSymbol(painter, x, y,m_meanSymbolType, parent->pt2px(painter, m_meanSymbolSize), parent->pt2px(painter, m_meanSymbolLineWidth*parent->getLineWidthMultiplier()), m_meanSymbolLinePen.color(), m_meanSymbolFillColor, getMeanSymbolFont());
 }
 
 

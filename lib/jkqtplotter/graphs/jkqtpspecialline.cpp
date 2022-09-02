@@ -56,7 +56,7 @@ void JKQTPSpecialLineGraphBase::drawKeyMarker(JKQTPEnhancedPainter& painter, QRe
     if (getFillCurve()) painter.drawRect(rect);
     if (!getFillCurve() && getDrawLine()) painter.drawLine(QLineF(rect.left(), y, rect.right(), y));
     if (m_drawSymbols) {
-        JKQTPPlotSymbol(painter, rect.center().x(), rect.center().y(), getSymbolType(), getKeySymbolSizePx(painter, rect, parent), getKeySymbolLineWidthPx(painter, rect, parent), getKeyLabelColor(), getSymbolFillColor());
+        JKQTPPlotSymbol(painter, rect.center().x(), rect.center().y(), getSymbolType(), getKeySymbolSizePx(painter, rect, parent), getKeySymbolLineWidthPx(painter, rect, parent), getKeyLabelColor(), getSymbolFillColor(),getSymbolFont());
     }
 
 }

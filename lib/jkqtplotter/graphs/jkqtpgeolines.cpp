@@ -143,9 +143,6 @@ void JKQTPGeoLine::draw(JKQTPEnhancedPainter& painter) {
                     //points[0]=lx1;
                     //points[points.size()-1]=lx2;
                     painter.drawPolylineFast(points.data(), points.size());
-                    /*for (auto& p: points) {
-                        JKQTPPlotSymbol(painter, p.x(), p.y(), JKQTPPlus, 5, 1, QColor("green"), QColor("darkgreen"));
-                    }*/
                 }
             }
         }
@@ -422,9 +419,6 @@ void JKQTPGeoInfiniteLine::draw(JKQTPEnhancedPainter& painter) {
                     const QPointF xx1p=points[1];
                     angle1=atan2(xx1p.y()-xx1.y(), xx1p.x()-xx1.x());
                     painter.drawPolylineFast(points.data(), points.size());
-                    /*for (auto& p: points) {
-                        JKQTPPlotSymbol(painter, p.x(), p.y(), JKQTPPlus, 5, 1, QColor("green"), QColor("darkgreen"));
-                    }*/
                 }
             }
 
@@ -609,9 +603,6 @@ void JKQTPGeoPolyLines::draw(JKQTPEnhancedPainter& painter) {
                 angle2=atan2(xx2p.y()-xx2.y(), xx2p.x()-xx2.x());
                 painter.drawPolylineFast(points_poly.data(), points_poly.size());
                 doDrawDecorator=true;
-                /*for (auto& p: points_poly) {
-                    JKQTPPlotSymbol(painter, p.x(), p.y(), JKQTPPlus, 5, 1, QColor("green"), QColor("darkgreen"));
-                }*/
             }
 
         }

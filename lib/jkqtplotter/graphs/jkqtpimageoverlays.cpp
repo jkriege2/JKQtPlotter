@@ -207,6 +207,8 @@ JKQTPOverlayImageEnhanced::JKQTPOverlayImageEnhanced(double x, double y, double 
     symbolLineWidth=1;
     drawMode=OverlayImageEnhancedDrawMode::DrawAsRectangles;
     symbolSizeFactor=0.9;
+    m_symbolFontName=parent->getDefaultTextFontName();
+
 }
 
 JKQTPOverlayImageEnhanced::JKQTPOverlayImageEnhanced(JKQTBasePlotter *parent):
@@ -216,6 +218,8 @@ JKQTPOverlayImageEnhanced::JKQTPOverlayImageEnhanced(JKQTBasePlotter *parent):
     symbolLineWidth=1;
     drawMode=OverlayImageEnhancedDrawMode::DrawAsRectangles;
     symbolSizeFactor=0.9;
+    m_symbolFontName=parent->getDefaultTextFontName();
+
 }
 
 JKQTPOverlayImageEnhanced::JKQTPOverlayImageEnhanced(double x, double y, double width, double height, bool* data, int Nx, int Ny, QColor colTrue, JKQTPlotter* parent):
@@ -225,6 +229,8 @@ JKQTPOverlayImageEnhanced::JKQTPOverlayImageEnhanced(double x, double y, double 
     symbolLineWidth=1;
     drawMode=OverlayImageEnhancedDrawMode::DrawAsRectangles;
     symbolSizeFactor=0.9;
+    m_symbolFontName=parent->getPlotter()->getDefaultTextFontName();
+
 }
 
 JKQTPOverlayImageEnhanced::JKQTPOverlayImageEnhanced(JKQTPlotter *parent):
@@ -234,11 +240,13 @@ JKQTPOverlayImageEnhanced::JKQTPOverlayImageEnhanced(JKQTPlotter *parent):
     symbolLineWidth=1;
     drawMode=OverlayImageEnhancedDrawMode::DrawAsRectangles  ;
     symbolSizeFactor=0.9;
+    m_symbolFontName=parent->getPlotter()->getDefaultTextFontName();
+
 }
 
 void JKQTPOverlayImageEnhanced::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
     if (drawMode!=OverlayImageEnhancedDrawMode::DrawAsSymbols) JKQTPOverlayImage::drawKeyMarker(painter, rect);
-    else JKQTPPlotSymbol(painter, rect.center().x(), rect.center().y(), symbol, qMin(rect.width(), rect.height()), parent->pt2px(painter, symbolLineWidth*parent->getLineWidthMultiplier()), trueColor, trueColor.lighter());
+    else JKQTPPlotSymbol(painter, rect.center().x(), rect.center().y(), symbol, qMin(rect.width(), rect.height()), parent->pt2px(painter, symbolLineWidth*parent->getLineWidthMultiplier()), trueColor, trueColor.lighter(), m_symbolFontName);
 }
 
 void JKQTPOverlayImageEnhanced::setSymbolType(JKQTPGraphSymbols __value)
@@ -249,6 +257,17 @@ void JKQTPOverlayImageEnhanced::setSymbolType(JKQTPGraphSymbols __value)
 JKQTPGraphSymbols JKQTPOverlayImageEnhanced::getSymbol() const
 {
     return this->symbol;
+}
+
+
+void JKQTPOverlayImageEnhanced::setSymbolFontName(const QString& __value)
+{
+    this->m_symbolFontName = __value;
+}
+
+QString JKQTPOverlayImageEnhanced::getSymbolFontName() const
+{
+    return this->m_symbolFontName;
 }
 
 void JKQTPOverlayImageEnhanced::setSymbolLineWidth(double __value)
@@ -314,7 +333,7 @@ void JKQTPOverlayImageEnhanced::draw(JKQTPEnhancedPainter& painter) {
                 } else if (drawMode==DrawAsSymbols){
                     QPointF p=(p1+p2)/2.0;
                     if (data[ix+iy*Nx]) {
-                        JKQTPPlotSymbol(painter, p.x(), p.y(), symbol, fabs(p2.x()-p1.x())*symbolSizeFactor, parent->pt2px(painter, symbolLineWidth*parent->getLineWidthMultiplier()), trueColor, trueColor.lighter());
+                        JKQTPPlotSymbol(painter, p.x(), p.y(), symbol, fabs(p2.x()-p1.x())*symbolSizeFactor, parent->pt2px(painter, symbolLineWidth*parent->getLineWidthMultiplier()), trueColor, trueColor.lighter(),QFont(m_symbolFontName,10));
                     }
                 }
             }

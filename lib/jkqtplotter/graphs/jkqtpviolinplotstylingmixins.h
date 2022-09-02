@@ -274,6 +274,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphViolinplotStyleMixin: public JKQTPGraphLi
         void setMeanSymbolType(JKQTPGraphSymbols __value);
         /** \brief get the type of the symbol for the mean */
         JKQTPGraphSymbols getMeanSymbolType() const;
+        /** \brief set the font to be used for mean character symbols \c JKQTPCharacterSymbol+QChar('').unicode() */
+        void setMeanSymbolFontName(const QString& __value);
+        /** \brief get the font to be used for mean character symbols \c JKQTPCharacterSymbol+QChar('').unicode() */
+        QString getMeanSymbolFontName() const;
 
         /** \brief set the size (=diameter in pt) of the symbol for the mean (in pt) */
         void setMeanSize(double __value);
@@ -336,6 +340,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphViolinplotStyleMixin: public JKQTPGraphLi
 
         /** \brief set the color of the graph (colors all elements, based on the given color \a c , sets background colors from \a bc ) */
         void setViolinplotColor(QColor c, QColor bc, JKQTBasePlotter *parent);
+        /** \brief generate a QFont for darwing symbols */
+        QFont getMeanSymbolFont() const;
     protected:
         /*! \brief plot a symbol at location x,y (in painter coordinates), using the current style
 
@@ -397,6 +403,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphViolinplotStyleMixin: public JKQTPGraphLi
         QColor m_meanSymbolFillColor;
         /** \brief width (in pt) of the lines used to plot the symbol for the data points, given in pt */
         double m_meanSymbolLineWidth;
+        /** \brief font to be used for character mean symbols \c JKQTPCharacterSymbol+QChar('').unicode() */
+        QString m_meanSymbolFontName;
+
         /** \brief line style of the whisker lines */
         QPen m_whiskerLinePen;
         /** \brief line width (in pt) of the whisker lines */
