@@ -55,10 +55,10 @@ int main(int argc, char* argv[])
             QImage  img(QSize(iconsize,iconsize),QImage::Format_ARGB32_Premultiplied);
             img.fill(backgroundColor);
             JKQTPEnhancedPainter p;
+            p.begin(&img);
             p.setRenderHint(QPainter::Antialiasing);
             p.setRenderHint(QPainter::TextAntialiasing);
             p.setRenderHint(QPainter::SmoothPixmapTransform);
-            p.begin(&img);
             JKQTPPlotSymbol(p, iconsize/2,iconsize/2,s,iconsize-4,2,QColor("blue"), QColor("salmon").lighter(120),QGuiApplication::font().family());
             p.end();
             const  bool ok=img.save(outputDir.absoluteFilePath(JKQTPGraphSymbols2String(s)+".png"));
@@ -67,10 +67,10 @@ int main(int argc, char* argv[])
         QImage  img(QSize(iconsize,iconsize),QImage::Format_ARGB32_Premultiplied);
         img.fill(backgroundColor);
         JKQTPEnhancedPainter p;
+        p.begin(&img);
         p.setRenderHint(QPainter::Antialiasing);
         p.setRenderHint(QPainter::TextAntialiasing);
         p.setRenderHint(QPainter::SmoothPixmapTransform);
-        p.begin(&img);
         JKQTPPlotSymbol(p, iconsize/2,iconsize/2,JKQTPCharacterSymbol+QChar('@').unicode(),iconsize-4,2,QColor("blue"), QColor("blue").lighter(),QGuiApplication::font().family());
         p.end();
         img.save(outputDir.absoluteFilePath("symbol_char_at.png"));
