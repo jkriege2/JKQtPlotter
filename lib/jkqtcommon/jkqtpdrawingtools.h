@@ -29,6 +29,7 @@
 #include <QRect>
 #include <QLineF>
 #include <QLine>
+#include <array>
 #include <QPainterPath>
 #include <QColor>
 #include <QVector>
@@ -450,57 +451,241 @@ inline void JKQTPPlotSymbol(TPainter& painter, double x, double y, JKQTPGraphSym
     p.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH,  symbolLineWidth));
     p.setStyle(Qt::SolidLine);
     p.setCapStyle(Qt::FlatCap);
-    painter.setPen(p);
-    QBrush b=painter.brush();
-    b.setColor(fillColor);
-    b.setStyle(Qt::SolidPattern);
-    const double w=symbolSize;
-    const double w2=w/2.0;
-    const double w45=fabs(w*cos(45.0/180.0*JKQTPSTATISTICS_PI));
-    const double w3=w/3.0;
+    QPen pDescaled=p;
+    pDescaled.setWidthF(pDescaled.widthF()/symbolSize);
+    const QBrush b=QBrush(fillColor, Qt::SolidPattern);
 
-    // calculate star cordinates as static values
-    static int star5_items=0;
-    static double star5cordsx[10];
-    static double star5cordsy[10];
-    if (star5_items==0) {
-        star5_items=5;
-        double angle=360.0/double(star5_items)/180.0*JKQTPSTATISTICS_PI;
-        for (int i=0; i<star5_items; i++) {
-            double a=(static_cast<double>(i)+0.5)*angle;
-            star5cordsx[i*2]=sin(a);
-            star5cordsx[i*2+1]=0.5*sin(a+angle/2.0);
-            star5cordsy[i*2]=cos(a);
-            star5cordsy[i*2+1]=0.5*cos(a+angle/2.0);
+
+    static bool pathsInitialized=false;
+    static std::array<QPainterPath, JKQTPSymbolCount> paths;
+    static std::array<QPainterPath, JKQTPSymbolCount> filledpaths;
+    static std::array<QVector<QLineF>, JKQTPSymbolCount> lines;
+    static std::array<QPolygonF, JKQTPSymbolCount> polygons;
+    static std::array<QPolygonF, JKQTPSymbolCount> filledpolygons;
+    static std::array<qreal, JKQTPSymbolCount> pathsrotation;
+    if (!pathsInitialized) {
+        // calculate star cordinates as static values
+        static double s45=fabs(cos(45.0/180.0*JKQTPSTATISTICS_PI));
+        static int star5_items=0;
+        static double star5cordsx[10];
+        static double star5cordsy[10];
+        if (star5_items==0) {
+            star5_items=5;
+            double angle=360.0/double(star5_items)/180.0*JKQTPSTATISTICS_PI;
+            for (int i=0; i<star5_items; i++) {
+                double a=(static_cast<double>(i)+0.5)*angle;
+                star5cordsx[i*2]=sin(a);
+                star5cordsx[i*2+1]=0.5*sin(a+angle/2.0);
+                star5cordsy[i*2]=cos(a);
+                star5cordsy[i*2+1]=0.5*cos(a+angle/2.0);
+            }
         }
-    }
-    static int star6_items=0;
-    static double star6cordsx[12];
-    static double star6cordsy[12];
-    if (star6_items==0) {
-        star6_items=6;
-        double angle=360.0/double(star6_items)/180.0*JKQTPSTATISTICS_PI;
-        for (int i=0; i<star6_items; i++) {
-            double a=(static_cast<double>(i)+0.5)*angle;
-            star6cordsx[i*2]=sin(a);
-            star6cordsx[i*2+1]=0.5*sin(a+angle/2.0);
-            star6cordsy[i*2]=cos(a);
-            star6cordsy[i*2+1]=0.5*cos(a+angle/2.0);
+        static int star6_items=0;
+        static double star6cordsx[12];
+        static double star6cordsy[12];
+        if (star6_items==0) {
+            star6_items=6;
+            double angle=360.0/double(star6_items)/180.0*JKQTPSTATISTICS_PI;
+            for (int i=0; i<star6_items; i++) {
+                double a=(static_cast<double>(i)+0.5)*angle;
+                star6cordsx[i*2]=sin(a);
+                star6cordsx[i*2+1]=0.5*sin(a+angle/2.0);
+                star6cordsy[i*2]=cos(a);
+                star6cordsy[i*2+1]=0.5*cos(a+angle/2.0);
+            }
         }
-    }
-    static int star8_items=0;
-    static double star8cordsx[16];
-    static double star8cordsy[16];
-    if (star8_items==0) {
-        star8_items=8;
-        double angle=360.0/double(star8_items)/180.0*JKQTPSTATISTICS_PI;
-        for (int i=0; i<star8_items; i++) {
-            double a=(static_cast<double>(i)+0.5)*angle;
-            star8cordsx[i*2]=sin(a);
-            star8cordsx[i*2+1]=0.5*sin(a+angle/2.0);
-            star8cordsy[i*2]=cos(a);
-            star8cordsy[i*2+1]=0.5*cos(a+angle/2.0);
+        static int star8_items=0;
+        static double star8cordsx[16];
+        static double star8cordsy[16];
+        if (star8_items==0) {
+            star8_items=8;
+            double angle=360.0/double(star8_items)/180.0*JKQTPSTATISTICS_PI;
+            for (int i=0; i<star8_items; i++) {
+                double a=(static_cast<double>(i)+0.5)*angle;
+                star8cordsx[i*2]=sin(a);
+                star8cordsx[i*2+1]=0.5*sin(a+angle/2.0);
+                star8cordsy[i*2]=cos(a);
+                star8cordsy[i*2+1]=0.5*cos(a+angle/2.0);
+            }
         }
+
+        pathsrotation.fill(0);
+        paths[JKQTPCross].moveTo(-0.5,-0.5);
+        paths[JKQTPCross].lineTo(0.5,0.5);
+        paths[JKQTPCross].moveTo(-0.5,+0.5);
+        paths[JKQTPCross].lineTo(+0.5,-0.5);
+        paths[JKQTPPlus].moveTo(-0.5,0);
+        paths[JKQTPPlus].lineTo(0.5,0);
+        paths[JKQTPPlus].moveTo(0,+0.5);
+        paths[JKQTPPlus].lineTo(0,-0.5);
+        paths[JKQTPCircle].addEllipse(QPointF(0,0), 0.5, 0.5);
+        filledpaths[JKQTPFilledCircle]=paths[JKQTPCircle];
+        paths[JKQTPCircleCross].addEllipse(QPointF(0,0), 0.5, 0.5);
+        paths[JKQTPCircleCross].moveTo(-0.5*s45,-0.5*s45);
+        paths[JKQTPCircleCross].lineTo(0.5*s45,0.5*s45);
+        paths[JKQTPCircleCross].moveTo(-0.5*s45,+0.5*s45);
+        paths[JKQTPCircleCross].lineTo(+0.5*s45,-0.5*s45);
+        paths[JKQTPCirclePlus].addEllipse(QPointF(0,0), 0.5, 0.5);
+        paths[JKQTPCirclePlus].moveTo(-0.5,0);
+        paths[JKQTPCirclePlus].lineTo(0.5,0);
+        paths[JKQTPCirclePlus].moveTo(0,+0.5);
+        paths[JKQTPCirclePlus].lineTo(0,-0.5);
+        paths[JKQTPCirclePeace].addEllipse(QPointF(0,0), 0.5, 0.5);
+        paths[JKQTPCirclePeace].moveTo(0,-0.5);
+        paths[JKQTPCirclePeace].lineTo(0, 0.5);
+        paths[JKQTPCirclePeace].moveTo(0,0);
+        paths[JKQTPCirclePeace].lineTo(0.5*s45,0.5*s45);
+        paths[JKQTPCirclePeace].moveTo(0,0);
+        paths[JKQTPCirclePeace].lineTo(-0.5*s45,0.5*s45);
+        paths[JKQTPPeace].moveTo(0,-0.5);
+        paths[JKQTPPeace].lineTo(0, 0.5);
+        paths[JKQTPPeace].moveTo(0,0);
+        paths[JKQTPPeace].lineTo(0.5*s45,0.5*s45);
+        paths[JKQTPPeace].moveTo(0,0);
+        paths[JKQTPPeace].lineTo(-0.5*s45,0.5*s45);
+        paths[JKQTPTarget].addEllipse(QPointF(0,0), 0.33333, 0.33333);
+        paths[JKQTPTarget].moveTo(QPointF(0,-0.5));
+        paths[JKQTPTarget].lineTo(QPointF(0,0.5));
+        paths[JKQTPTarget].moveTo(QPointF(-0.5,0));
+        paths[JKQTPTarget].lineTo(QPointF(0.5,0));
+        paths[JKQTPFemale].addEllipse(-0.25,-0.5,0.5,0.5);
+        paths[JKQTPFemale].moveTo(0,0);
+        paths[JKQTPFemale].lineTo(0,0.5);
+        paths[JKQTPFemale].moveTo(-0.5/3.0,0.5/2.0);
+        paths[JKQTPFemale].lineTo(0.5/3.0,0.5/2.0);
+        paths[JKQTPMale].addEllipse(QRectF(-0.5/2.0, -0.5/2.0, 0.5, 0.5));
+        paths[JKQTPMale].moveTo(QPointF(+0.5/2.0*cos(45.0/180.0*JKQTPSTATISTICS_PI),-0.5/2.0*cos(45.0/180.0*JKQTPSTATISTICS_PI)));
+        paths[JKQTPMale].lineTo(QPointF(+0.5,-0.5));
+        paths[JKQTPMale].moveTo(QPointF(+0.5-0.5/2.0,-0.5));
+        paths[JKQTPMale].lineTo(QPointF(+0.5,-0.5));
+        paths[JKQTPMale].lineTo(QPointF(+0.5,-0.5+0.5/2.0));
+        paths[JKQTPRect].addRect(-0.5,-0.5, 1,1);
+        filledpaths[JKQTPFilledRect]=paths[JKQTPRect];
+        paths[JKQTPRectCross].addRect(-0.5,-0.5, 1,1);
+        paths[JKQTPRectCross].moveTo(-0.5,-0.5);
+        paths[JKQTPRectCross].lineTo(0.5,0.5);
+        paths[JKQTPRectCross].moveTo(-0.5,+0.5);
+        paths[JKQTPRectCross].lineTo(+0.5,-0.5);
+        paths[JKQTPRectPlus].addRect(-0.5,-0.5, 1,1);
+        paths[JKQTPRectPlus].moveTo(-0.5,0);
+        paths[JKQTPRectPlus].lineTo(0.5,0);
+        paths[JKQTPRectPlus].moveTo(0,+0.5);
+        paths[JKQTPRectPlus].lineTo(0,-0.5);
+        paths[JKQTPCurvedTriangle].moveTo(0,0-0.5);
+        paths[JKQTPCurvedTriangle].quadTo(0-1.0/10.0,0+1.0/4.0, 0-0.5,0+0.5);
+        paths[JKQTPCurvedTriangle].quadTo(0,0+1.0/4.0, 0+0.5,0+0.5);
+        paths[JKQTPCurvedTriangle].quadTo(0+1.0/10.0,0+1.0/4.0, 0,0-0.5);
+        filledpaths[JKQTPFilledCurvedTriangle]=paths[JKQTPCurvedTriangle];
+
+        paths[JKQTPDownCurvedTriangle]=paths[JKQTPCurvedTriangle];
+        pathsrotation[JKQTPDownCurvedTriangle]=180.0;
+        filledpaths[JKQTPFilledDownCurvedTriangle]=paths[JKQTPDownCurvedTriangle];
+        pathsrotation[JKQTPFilledDownCurvedTriangle]=180.0;
+
+        paths[JKQTPLeftCurvedTriangle]=paths[JKQTPCurvedTriangle];
+        pathsrotation[JKQTPLeftCurvedTriangle]=-90.0;
+        filledpaths[JKQTPFilledLeftCurvedTriangle]=paths[JKQTPLeftCurvedTriangle];
+        pathsrotation[JKQTPFilledLeftCurvedTriangle]=-90.0;
+
+        paths[JKQTPRightCurvedTriangle]=paths[JKQTPCurvedTriangle];
+        pathsrotation[JKQTPRightCurvedTriangle]=90.0;
+        filledpaths[JKQTPFilledRightCurvedTriangle]=paths[JKQTPRightCurvedTriangle];
+        pathsrotation[JKQTPFilledRightCurvedTriangle]=90.0;
+
+        {
+            QPolygonF poly;
+            painter.setBrush(QColor(Qt::transparent));
+            poly<<QPointF(0.0, 0.0-0.5)<<QPointF(0.0+0.5, 0.0)<<QPointF(0.0, 0.0+0.5)<<QPointF(0.0-0.5, 0.0);
+            poly<<poly[0];
+            paths[JKQTPDiamondPlus].addPolygon(poly);
+            paths[JKQTPDiamondPlus].moveTo(poly[0]);
+            paths[JKQTPDiamondPlus].lineTo(poly[2]);
+            paths[JKQTPDiamondPlus].moveTo(poly[1]);
+            paths[JKQTPDiamondPlus].lineTo(poly[3]);
+        }
+        {
+            QPolygonF poly;
+            painter.setBrush(QColor(Qt::transparent));
+            poly<<QPointF(0.0, 0.0-0.5)<<QPointF(0.0+0.5, 0.0)<<QPointF(0.0, 0.0+0.5)<<QPointF(0.0-0.5, 0.0);
+            poly<<poly[0];
+            paths[JKQTPDiamondCross].addPolygon(poly);
+            paths[JKQTPDiamondCross].moveTo((poly[0]+poly[1])/2.0);
+            paths[JKQTPDiamondCross].lineTo((poly[2]+poly[3])/2.0);
+            paths[JKQTPDiamondCross].moveTo((poly[1]+poly[2])/2.0);
+            paths[JKQTPDiamondCross].lineTo((poly[3]+poly[0])/2.0);
+        }
+
+
+        for (int i=0; i<star8_items*2; i+=2) {
+            paths[JKQTPAsterisc8].moveTo(star8cordsx[i]*0.5, star8cordsy[i]*0.5);
+            paths[JKQTPAsterisc8].lineTo(0,0);
+        }
+        for (int i=0; i<star6_items*2; i+=2) {
+            paths[JKQTPAsterisc6].moveTo(star6cordsx[i]*0.5, star6cordsy[i]*0.5);
+            paths[JKQTPAsterisc6].lineTo(0,0);
+        }
+        for (int i=0; i<star5_items*2; i+=2) {
+            paths[JKQTPAsterisc].moveTo(star5cordsx[i]*0.5, star5cordsy[i]*0.5);
+            paths[JKQTPAsterisc].lineTo(0,0);
+        }
+
+        polygons[JKQTPRectTriangle]<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0, 0.0-0.5)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0+0.5, 0.0-0.5)<<QPointF(0.0+0.5, 0.0+0.5);
+        polygons[JKQTPRectDownTriangle]<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0, 0.0+0.5)<<QPointF(0.0+0.5, 0.0-0.5)<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0-0.5);
+        polygons[JKQTPRectLeftTriangle]<<QPointF(0.0+0.5, 0.0-0.5)<<QPointF(0.0-0.5, 0.0)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0+0.5, 0.0-0.5)<<QPointF(0.0+0.5, 0.0+0.5);
+        polygons[JKQTPRectRightTriangle]<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0+0.5, 0.0)<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0-0.5)<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0-0.5, 0.0+0.5);
+        polygons[JKQTPTriangle]<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0, 0.0-0.5);
+        filledpolygons[JKQTPFilledTriangle]=polygons[JKQTPTriangle];
+        polygons[JKQTPDownTriangle]<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0+0.5, 0.0-0.5)<<QPointF(0.0, 0.0+0.5);
+        filledpolygons[JKQTPFilledDownTriangle]=polygons[JKQTPDownTriangle];
+        polygons[JKQTPLeftTriangle]<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0-0.5, 0.0)<<QPointF(0.0+0.5, 0.0-0.5);
+        filledpolygons[JKQTPFilledLeftTriangle]=polygons[JKQTPLeftTriangle];
+        polygons[JKQTPRightTriangle]<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0)<<QPointF(0.0-0.5, 0.0-0.5);
+        filledpolygons[JKQTPFilledRightTriangle]=polygons[JKQTPRightTriangle];
+        for (int i=0; i<star5_items*2; i++) {
+            polygons[JKQTPstar]<<QPointF(0.0+star5cordsx[i]*0.5, 0.0+star5cordsy[i]*0.5);
+            filledpolygons[JKQTPFilledStar]<<QPointF(0.0+star5cordsx[i]*0.5, 0.0+star5cordsy[i]*0.5);
+            if (i%2==0) {
+                polygons[JKQTPPentagon]<<QPointF(0.0+star5cordsx[i]*0.5, 0.0+star5cordsy[i]*0.5);
+                filledpolygons[JKQTPFilledPentagon]<<QPointF(0.0+star5cordsx[i]*0.5, 0.0+star5cordsy[i]*0.5);
+            }
+        }
+        for (int i=0; i<star6_items*2; i+=2) {
+            polygons[JKQTPHexagon]<<QPointF(0.0+star6cordsx[i]*0.5, 0.0+star6cordsy[i]*0.5);
+            filledpolygons[JKQTPFilledHexagon]<<QPointF(0.0+star6cordsx[i]*0.5, 0.0+star6cordsy[i]*0.5);
+        }
+        for (int i=0; i<star8_items*2; i+=2) {
+            polygons[JKQTPOctagon]<<QPointF(0.0+star8cordsx[i]*0.5, 0.0+star8cordsy[i]*0.5);
+            filledpolygons[JKQTPFilledOctagon]<<QPointF(0.0+star8cordsx[i]*0.5, 0.0+star8cordsy[i]*0.5);
+        }
+        polygons[JKQTPDiamond]<<QPointF(0.0, 0.0-0.5)<<QPointF(0.0+0.5, 0.0)<<QPointF(0.0, 0.0+0.5)<<QPointF(0.0-0.5, 0.0);
+        filledpolygons[JKQTPFilledDiamond]=polygons[JKQTPDiamond];
+        polygons[JKQTPHourglass]<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0+0.5, 0.0-0.5);
+        filledpolygons[JKQTPFilledHourglass]=polygons[JKQTPHourglass];
+        polygons[JKQTPHorizontalHourglass]<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0-0.5);
+        filledpolygons[JKQTPFilledHorizontalHourglass]=polygons[JKQTPHorizontalHourglass];
+        polygons[JKQTPSantaClauseHouse]<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0-1.0/6.0)<<QPointF(0.0-0.5, 0.0-1.0/6.0)<<QPointF(0.0, 0.0-0.5)<<QPointF(0.0+0.5, 0.0-1.0/6.0)<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0-0.5, 0.0-1.0/6.0)<<QPointF(0.0+0.5, 0.0+0.5);
+        filledpolygons[JKQTPFilledSantaClauseHouse]=polygons[JKQTPSantaClauseHouse];
+        polygons[JKQTPUpDownTriangle]<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0, 0.0+0.5)<<QPointF(0.0+0.5, 0.0-0.5)<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0, 0.0+0.5)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0, 0.0-0.5)<<QPointF(0.0-0.5, 0.0+0.5);
+        filledpolygons[JKQTPFilledUpDownTriangle]=polygons[JKQTPUpDownTriangle];
+
+
+        lines[JKQTPTripod]<<QLineF(0.0, 0.0-0.5, 0.0, 0.0)
+            <<QLineF(0.0, 0.0, 0.0-s45, 0.0+s45)
+            <<QLineF(0.0, 0.0, 0.0+s45, 0.0+s45);
+
+        lines[JKQTPDownTripod]<<QLineF(0.0, 0.0+0.5, 0.0, 0.0)
+            <<QLineF(0.0, 0.0, 0.0-s45, 0.0-s45)
+            <<QLineF(0.0, 0.0, 0.0+s45, 0.0-s45);
+
+        lines[JKQTPLeftTripod]<<QLineF(0.0-0.5, 0.0, 0.0, 0.0)
+            <<QLineF(0.0, 0.0, 0.0+s45, 0.0-s45)
+            <<QLineF(0.0, 0.0, 0.0+s45, 0.0+s45);
+
+        lines[JKQTPRightTripod]<<QLineF(0.0+0.5, 0.0, 0.0, 0.0)
+            <<QLineF(0.0, 0.0, 0.0-s45, 0.0-s45)
+            <<QLineF(0.0, 0.0, 0.0-s45, 0.0+s45);
+
+        pathsInitialized=true;
     }
 
     painter.setBrush(QColor(Qt::transparent));
@@ -509,524 +694,123 @@ inline void JKQTPPlotSymbol(TPainter& painter, double x, double y, JKQTPGraphSym
         case JKQTPDot:
             painter.drawPoint(QPointF(x,y));
             break;
-        case JKQTPCross:{
-                QPainterPath path;
-                path.moveTo(x-w2,y-w2);
-                path.lineTo(x+w2,y+w2);
-                path.moveTo(x-w2,y+w2);
-                path.lineTo(x+w2,y-w2);
-                painter.drawPath(path);
-            }
-            break;
-        case JKQTPPlus:{
-                QVector<QLineF> lines;
-                lines<<QLineF(x,y-w2,x,y+w2);
-                lines<<QLineF(x-w2,y,x+w2,y);
-                painter.drawLines(lines);
-            }
-            break;
-        case JKQTPCircle:{
-                QRectF rectangle(x-w2, y-w2, w, w);
-                painter.drawEllipse(rectangle);
-            }
-            break;
-        case JKQTPCircleCross:{
-                QRectF rectangle(x-w2, y-w2, w, w);
-                painter.drawEllipse(rectangle);
-                QVector<QLineF> lines;
-                lines<<QLineF(x-w45/2.0,y-w45/2.0,x+w45/2.0,y+w45/2.0);
-                lines<<QLineF(x-w45/2.0,y+w45/2.0,x+w45/2.0,y-w45/2.0);
-                painter.drawLines(lines);
-            }
-            break;
-        case JKQTPCirclePlus:{
-                QRectF rectangle(x-w2, y-w2, w, w);
-                painter.drawEllipse(rectangle);
-                QVector<QLineF> lines;
-                lines<<QLineF(x,y-w2,x,y+w2);
-                lines<<QLineF(x-w2,y,x+w2,y);
-                painter.drawLines(lines);
-            }
-            break;
-        case JKQTPCirclePeace:{
-                QRectF rectangle(x-w2, y-w2, w, w);
-                painter.drawEllipse(rectangle);
-                QVector<QLineF> lines;
-                lines<<QLineF(x,y-w2,x,y+w2);
-                lines<<QLineF(x,y,x+w45/2.0,y+w45/2.0);
-                lines<<QLineF(x,y,x-w45/2.0,y+w45/2.0);
-                painter.drawLines(lines);
-            }
-            break;
-        case JKQTPPeace:{
-                QVector<QLineF> lines;
-                lines<<QLineF(x,y-w2,x,y+w2);
-                lines<<QLineF(x,y,x+w45/2.0,y+w45/2.0);
-                lines<<QLineF(x,y,x-w45/2.0,y+w45/2.0);
-                painter.drawLines(lines);
-            }
-            break;
-        case JKQTPTarget:{
-                QPainterPath path;
-                QRectF rectangle3(x-w3, y-w3, 2.0*w3, 2.0*w3);
-                path.addEllipse(rectangle3);
-                path.moveTo(QPointF(x,y-w2));
-                path.lineTo(QPointF(x,y+w2));
-                path.moveTo(QPointF(x-w2,y));
-                path.lineTo(QPointF(x+w2,y));
-                painter.drawPath(path);
-            }
-            break;
-        case JKQTPFemale:{
+
+        case JKQTPCross:
+        case JKQTPPlus:
+        case JKQTPCircle:
+        case JKQTPCircleCross:
+        case JKQTPCirclePlus:
+        case JKQTPCirclePeace:
+        case JKQTPPeace:
+        case JKQTPFemale:
+        case JKQTPMale:
+        case JKQTPTarget:
+        case JKQTPRect:
+        case JKQTPRectCross:
+        case JKQTPRectPlus:
+        case JKQTPDownCurvedTriangle:
+        case JKQTPCurvedTriangle:
+        case JKQTPLeftCurvedTriangle:
+        case JKQTPRightCurvedTriangle:
+        case JKQTPAsterisc:
+        case JKQTPAsterisc6:
+        case JKQTPAsterisc8:
+        case JKQTPDiamondPlus:
+        case JKQTPDiamondCross:
+                painter.translate(QPointF(x,y));
+                painter.scale(symbolSize,symbolSize);
                 painter.setBrush(QColor(Qt::transparent));
-                QPainterPath path;
-                QRectF rectangle3(x-w2/2.0, y-w2, w2, w2);
-                path.addEllipse(rectangle3);
-                path.moveTo(QPointF(x,y));
-                path.lineTo(QPointF(x,y+w2));
-                path.moveTo(QPointF(x-w2/3.0,y+w2/2.0));
-                path.lineTo(QPointF(x+w2/3.0,y+w2/2.0));
-                painter.drawPath(path);
-            }
-            break;
-        case JKQTPMale:{
-                painter.setBrush(QColor(Qt::transparent));
-                QPainterPath path;
-                QRectF rectangle3(x-w2/2.0, y-w2/2.0, w2, w2);
-                path.addEllipse(rectangle3);
-                path.moveTo(QPointF(x+w2/2.0*cos(45.0/180.0*JKQTPSTATISTICS_PI),y-w2/2.0*cos(45.0/180.0*JKQTPSTATISTICS_PI)));
-                path.lineTo(QPointF(x+w2,y-w2));
-                path.moveTo(QPointF(x+w2-w2/2.0,y-w2));
-                path.lineTo(QPointF(x+w2,y-w2));
-                path.lineTo(QPointF(x+w2,y-w2+w2/2.0));
-                painter.drawPath(path);
-            }
-            break;
-        case JKQTPFilledCircle:{
-                painter.setBrush(b);
-                QRectF rectangle(x-w2, y-w2, w, w);
-                painter.drawEllipse(rectangle);
-            }
-            break;
-        case JKQTPRect:{
-                painter.setBrush(QColor(Qt::transparent));
-                QRectF rectangle(x-w2, y-w2, w, w);
-                painter.drawRect(rectangle);
-            }
-            break;
-        case JKQTPRectCross:{
-                painter.setBrush(QColor(Qt::transparent));
-                QPainterPath path;
-                path.moveTo(x-w2,y-w2);
-                path.lineTo(x+w2,y+w2);
-                path.moveTo(x-w2,y+w2);
-                path.lineTo(x+w2,y-w2);
-                painter.drawPath(path);
-                QRectF rectangle(x-w2, y-w2, w, w);
-                painter.drawRect(rectangle);
-            }
-            break;
-        case JKQTPFilledCurvedTriangle:{
-                painter.save();
-                painter.translate(x,y);
-                painter.setBrush(b);
-                QPainterPath path;
-                path.moveTo(0,0-w2);
-                path.quadTo(0-w/10.0,0+w/4.0, 0-w2,0+w2);
-                path.quadTo(0,0+w/4.0, 0+w2,0+w2);
-                path.quadTo(0+w/10.0,0+w/4.0, 0,0-w2);
-                painter.drawPath(path);
-                painter.restore();
-            }
-            break;
-        case JKQTPCurvedTriangle:{
-                painter.save();
-                painter.translate(x,y);
-                painter.setBrush(QColor(Qt::transparent));
-                QPainterPath path;
-                path.moveTo(0,0-w2);
-                path.quadTo(0-w/10.0,0+w/4.0, 0-w2,0+w2);
-                path.quadTo(0,0+w/4.0, 0+w2,0+w2);
-                path.quadTo(0+w/10.0,0+w/4.0, 0,0-w2);
-                painter.drawPath(path);
-                painter.restore();
-            }
+                painter.setPen(pDescaled);
+                if (pathsrotation[symbol]!=0.0) painter.rotate(pathsrotation[symbol]);
+                painter.drawPath(paths[symbol]);
             break;
 
-        case JKQTPFilledDownCurvedTriangle:{
-                painter.save();
-                painter.translate(x,y);
-                painter.rotate(180);
+
+
+        case JKQTPFilledCircle:
+        case JKQTPFilledRect:
+        case JKQTPFilledDownCurvedTriangle:
+        case JKQTPFilledCurvedTriangle:
+        case JKQTPFilledLeftCurvedTriangle:
+        case JKQTPFilledRightCurvedTriangle:
+                painter.translate(QPointF(x,y));
+                painter.scale(symbolSize,symbolSize);
                 painter.setBrush(b);
-                QPainterPath path;
-                path.moveTo(0,0-w2);
-                path.quadTo(0-w/10.0,0+w/4.0, 0-w2,0+w2);
-                path.quadTo(0,0+w/4.0, 0+w2,0+w2);
-                path.quadTo(0+w/10.0,0+w/4.0, 0,0-w2);
-                painter.drawPath(path);
-                painter.restore();
-            }
-            break;
-        case JKQTPDownCurvedTriangle:{
-                painter.save();
-                painter.translate(x,y);
-                painter.rotate(180);
-                painter.setBrush(QColor(Qt::transparent));
-                QPainterPath path;
-                path.moveTo(0,0-w2);
-                path.quadTo(0-w/10.0,0+w/4.0, 0-w2,0+w2);
-                path.quadTo(0,0+w/4.0, 0+w2,0+w2);
-                path.quadTo(0+w/10.0,0+w/4.0, 0,0-w2);
-                painter.drawPath(path);
-                painter.restore();
-            }
-            break;
-        case JKQTPFilledLeftCurvedTriangle:{
-                painter.save();
-                painter.translate(x,y);
-                painter.rotate(-90);
-                painter.setBrush(b);
-                QPainterPath path;
-                path.moveTo(0,0-w2);
-                path.quadTo(0-w/10.0,0+w/4.0, 0-w2,0+w2);
-                path.quadTo(0,0+w/4.0, 0+w2,0+w2);
-                path.quadTo(0+w/10.0,0+w/4.0, 0,0-w2);
-                painter.drawPath(path);
-                painter.restore();
-            }
-            break;
-        case JKQTPLeftCurvedTriangle:{
-                painter.save();
-                painter.translate(x,y);
-                painter.rotate(-90);
-                painter.setBrush(QColor(Qt::transparent));
-                QPainterPath path;
-                path.moveTo(0,0-w2);
-                path.quadTo(0-w/10.0,0+w/4.0, 0-w2,0+w2);
-                path.quadTo(0,0+w/4.0, 0+w2,0+w2);
-                path.quadTo(0+w/10.0,0+w/4.0, 0,0-w2);
-                painter.drawPath(path);
-                painter.restore();
-            }
-            break;
-        case JKQTPFilledRightCurvedTriangle:{
-                painter.save();
-                painter.translate(x,y);
-                painter.rotate(90);
-                painter.setBrush(b);
-                QPainterPath path;
-                path.moveTo(0,0-w2);
-                path.quadTo(0-w/10.0,0+w/4.0, 0-w2,0+w2);
-                path.quadTo(0,0+w/4.0, 0+w2,0+w2);
-                path.quadTo(0+w/10.0,0+w/4.0, 0,0-w2);
-                painter.drawPath(path);
-                painter.restore();
-            }
-            break;
-        case JKQTPRightCurvedTriangle:{
-                painter.save();
-                painter.translate(x,y);
-                painter.rotate(90);
-                painter.setBrush(QColor(Qt::transparent));
-                QPainterPath path;
-                path.moveTo(0,0-w2);
-                path.quadTo(0-w/10.0,0+w/4.0, 0-w2,0+w2);
-                path.quadTo(0,0+w/4.0, 0+w2,0+w2);
-                path.quadTo(0+w/10.0,0+w/4.0, 0,0-w2);
-                painter.drawPath(path);
-                painter.restore();
-            }
+                painter.setPen(pDescaled);
+                if (pathsrotation[symbol]!=0.0) painter.rotate(pathsrotation[symbol]);
+                painter.drawPath(filledpaths[symbol]);
+
             break;
 
-        case JKQTPRectTriangle:{
+
+
+        case JKQTPRectTriangle:
+        case JKQTPRectDownTriangle:
+        case JKQTPRectLeftTriangle:
+        case JKQTPRectRightTriangle:
+        case JKQTPTriangle:
+        case JKQTPDownTriangle:
+        case JKQTPLeftTriangle:
+        case JKQTPRightTriangle:
+        case JKQTPstar:
+        case JKQTPPentagon:
+        case JKQTPHexagon:
+        case JKQTPOctagon:
+        case JKQTPUpDownTriangle:
+        case JKQTPSantaClauseHouse:
+        case JKQTPHourglass:
+        case JKQTPHorizontalHourglass:
+        case JKQTPDiamond:
+                painter.translate(QPointF(x,y));
+                painter.scale(symbolSize,symbolSize);
                 painter.setBrush(QColor(Qt::transparent));
-                QPolygonF poly;
-                poly<<QPointF(x-w2, y+w2)<<QPointF(x, y-w2)<<QPointF(x+w2, y+w2)<<QPointF(x-w2, y+w2)<<QPointF(x-w2, y-w2)<<QPointF(x+w2, y-w2)<<QPointF(x+w2, y+w2);
-                painter.drawConvexPolygon(poly);
-            }
+                painter.setPen(pDescaled);
+                if (pathsrotation[symbol]!=0.0) painter.rotate(pathsrotation[symbol]);
+                painter.drawConvexPolygon(polygons[symbol]);
             break;
-        case JKQTPRectDownTriangle:{
-                painter.setBrush(QColor(Qt::transparent));
-                QPolygonF poly;
-                poly<<QPointF(x-w2, y-w2)<<QPointF(x, y+w2)<<QPointF(x+w2, y-w2)<<QPointF(x-w2, y-w2)<<QPointF(x-w2, y+w2)<<QPointF(x+w2, y+w2)<<QPointF(x+w2, y-w2);
-                painter.drawConvexPolygon(poly);
-            }
+
+
+
+        case JKQTPFilledTriangle:
+        case JKQTPFilledDownTriangle:
+        case JKQTPFilledLeftTriangle:
+        case JKQTPFilledRightTriangle:
+        case JKQTPFilledStar:
+        case JKQTPFilledPentagon:
+        case JKQTPFilledHexagon:
+        case JKQTPFilledOctagon:
+        case JKQTPFilledSantaClauseHouse:
+        case JKQTPFilledUpDownTriangle:
+        case JKQTPFilledHourglass:
+        case JKQTPFilledHorizontalHourglass:
+        case JKQTPFilledDiamond:
+                painter.translate(QPointF(x,y));
+                painter.scale(symbolSize,symbolSize);
+                painter.setBrush(b);
+                painter.setPen(pDescaled);
+                if (pathsrotation[symbol]!=0.0) painter.rotate(pathsrotation[symbol]);
+                painter.drawConvexPolygon(filledpolygons[symbol]);
             break;
-        case JKQTPRectLeftTriangle:{
-                painter.setBrush(QColor(Qt::transparent));
-                QPolygonF poly;
-                poly<<QPointF(x+w2, y-w2)<<QPointF(x-w2, y)<<QPointF(x+w2, y+w2)<<QPointF(x-w2, y+w2)<<QPointF(x-w2, y-w2)<<QPointF(x+w2, y-w2)<<QPointF(x+w2, y+w2);
-                painter.drawConvexPolygon(poly);
-            }
+
+
+
+        case JKQTPTripod:
+        case JKQTPDownTripod:
+        case JKQTPLeftTripod:
+        case JKQTPRightTripod:
+            painter.translate(QPointF(x,y));
+            painter.scale(symbolSize,symbolSize);
+            painter.setBrush(QColor(Qt::transparent));
+            painter.setPen(pDescaled);
+            if (pathsrotation[symbol]!=0.0) painter.rotate(pathsrotation[symbol]);
+            painter.drawLines(lines[symbol]);
+        break;
+
+
+
+        case JKQTPNoSymbol:
+        case JKQTPSymbolCount:
             break;
-        case JKQTPRectRightTriangle:{
-                painter.setBrush(QColor(Qt::transparent));
-                QPolygonF poly;
-                poly<<QPointF(x-w2, y-w2)<<QPointF(x+w2, y)<<QPointF(x-w2, y+w2)<<QPointF(x+w2, y+w2)<<QPointF(x+w2, y-w2)<<QPointF(x-w2, y-w2)<<QPointF(x-w2, y+w2);
-                painter.drawConvexPolygon(poly);
-            }
-            break;
-        case JKQTPRectPlus:{
-                painter.setBrush(QColor(Qt::transparent));
-                QVector<QLineF> lines;
-                lines<<QLineF(x,y-w2,x,y+w2);
-                lines<<QLineF(x-w2,y,x+w2,y);
-                painter.drawLines(lines);
-                QRectF rectangle(x-w2, y-w2, w, w);
-                painter.drawRect(rectangle);
-            }
-            break;
-        case JKQTPFilledRect:{
-                painter.setBrush(b);
-                QRectF rectangle(x-w2, y-w2, w, w);
-                painter.drawRect(rectangle);
-            }
-            break;
-        case JKQTPTriangle: {
-                painter.setBrush(QColor(Qt::transparent));
-                QPolygonF poly;
-                poly<<QPointF(x-w2, y+w2)<<QPointF(x+w2, y+w2)<<QPointF(x, y-w2);
-                painter.drawConvexPolygon(poly);
-            } break;
-        case JKQTPFilledTriangle: {
-                painter.setBrush(b);
-                QPolygonF poly;
-                poly<<QPointF(x-w2, y+w2)<<QPointF(x+w2, y+w2)<<QPointF(x, y-w2);
-                painter.drawConvexPolygon(poly);
-            } break;
-        case JKQTPDownTriangle: {
-                painter.setBrush(QColor(Qt::transparent));
-                QPolygonF poly;
-                poly<<QPointF(x-w2, y-w2)<<QPointF(x+w2, y-w2)<<QPointF(x, y+w2);
-                painter.drawConvexPolygon(poly);
-            } break;
-        case JKQTPFilledDownTriangle: {
-                painter.setBrush(b);
-                QPolygonF poly;
-                poly<<QPointF(x-w2, y-w2)<<QPointF(x+w2, y-w2)<<QPointF(x, y+w2);
-                painter.drawConvexPolygon(poly);
-            } break;
-        case JKQTPLeftTriangle: {
-                painter.setBrush(QColor(Qt::transparent));
-                QPolygonF poly;
-                poly<<QPointF(x+w2, y+w2)<<QPointF(x-w2, y)<<QPointF(x+w2, y-w2);
-                painter.drawConvexPolygon(poly);
-            } break;
-        case JKQTPFilledLeftTriangle: {
-                painter.setBrush(b);
-                QPolygonF poly;
-                poly<<QPointF(x+w2, y+w2)<<QPointF(x-w2, y)<<QPointF(x+w2, y-w2);
-                painter.drawConvexPolygon(poly);
-            } break;
-        case JKQTPRightTriangle: {
-                painter.setBrush(QColor(Qt::transparent));
-                QPolygonF poly;
-                poly<<QPointF(x-w2, y+w2)<<QPointF(x+w2, y)<<QPointF(x-w2, y-w2);
-                painter.drawConvexPolygon(poly);
-            } break;
-        case JKQTPFilledRightTriangle: {
-                painter.setBrush(b);
-                QPolygonF poly;
-                poly<<QPointF(x-w2, y+w2)<<QPointF(x+w2, y)<<QPointF(x-w2, y-w2);
-                painter.drawConvexPolygon(poly);
-            } break;
-        case JKQTPTripod: {
-                painter.setBrush(QColor(Qt::transparent));
-                QVector<QLineF> lines;
-                lines<<QLineF(x, y-w2, x, y)
-                    <<QLineF(x, y, x-w45, y+w45)
-                   <<QLineF(x, y, x+w45, y+w45);
-                painter.drawLines(lines);
-            } break;
-        case JKQTPDownTripod: {
-                painter.setBrush(QColor(Qt::transparent));
-                QVector<QLineF> lines;
-                lines<<QLineF(x, y+w2, x, y)
-                    <<QLineF(x, y, x-w45, y-w45)
-                   <<QLineF(x, y, x+w45, y-w45);
-                painter.drawLines(lines);
-            } break;
-        case JKQTPLeftTripod: {
-                painter.setBrush(QColor(Qt::transparent));
-                QVector<QLineF> lines;
-                lines<<QLineF(x-w2, y, x, y)
-                    <<QLineF(x, y, x+w45, y-w45)
-                   <<QLineF(x, y, x+w45, y+w45);
-                painter.drawLines(lines);
-            } break;
-        case JKQTPRightTripod: {
-                painter.setBrush(QColor(Qt::transparent));
-                QVector<QLineF> lines;
-                lines<<QLineF(x+w2, y, x, y)
-                    <<QLineF(x, y, x-w45, y-w45)
-                   <<QLineF(x, y, x-w45, y+w45);
-                painter.drawLines(lines);
-            } break;
-        case JKQTPUpDownTriangle: {
-                painter.setBrush(QColor(Qt::transparent));
-                QPolygonF poly;
-                poly<<QPointF(x-w2, y+w2)<<QPointF(x, y+w2)<<QPointF(x+w2, y-w2)<<QPointF(x-w2, y-w2)<<QPointF(x, y+w2)<<QPointF(x+w2, y+w2)<<QPointF(x, y-w2)<<QPointF(x-w2, y+w2);
-                painter.drawConvexPolygon(poly);
-            } break;
-        case JKQTPFilledUpDownTriangle: {
-                painter.setBrush(b);
-                QPolygonF poly;
-                poly<<QPointF(x-w2, y+w2)<<QPointF(x, y+w2)<<QPointF(x+w2, y-w2)<<QPointF(x-w2, y-w2)<<QPointF(x, y+w2)<<QPointF(x+w2, y+w2)<<QPointF(x, y-w2)<<QPointF(x-w2, y+w2);
-                painter.drawConvexPolygon(poly);
-            } break;
-        case JKQTPSantaClauseHouse: {
-                painter.setBrush(QColor(Qt::transparent));
-                QPolygonF poly;
-                poly<<QPointF(x-w2, y+w2)<<QPointF(x+w2, y+w2)<<QPointF(x+w2, y-w/6.0)<<QPointF(x-w2, y-w/6.0)<<QPointF(x, y-w2)<<QPointF(x+w2, y-w/6.0)<<QPointF(x-w2, y+w2)<<QPointF(x-w2, y-w/6.0)<<QPointF(x+w2, y+w2);
-                painter.drawConvexPolygon(poly);
-            } break;
-        case JKQTPFilledSantaClauseHouse: {
-                painter.setBrush(b);
-                QPolygonF poly;
-                poly<<QPointF(x-w2, y+w2)<<QPointF(x+w2, y+w2)<<QPointF(x+w2, y-w/6.0)<<QPointF(x-w2, y-w/6.0)<<QPointF(x, y-w2)<<QPointF(x+w2, y-w/6.0)<<QPointF(x-w2, y+w2)<<QPointF(x-w2, y-w/6.0)<<QPointF(x+w2, y+w2);
-                painter.drawConvexPolygon(poly);
-            } break;
-        case JKQTPHourglass: {
-                painter.setBrush(QColor(Qt::transparent));
-                QPolygonF poly;
-                poly<<QPointF(x-w2, y+w2)<<QPointF(x+w2, y+w2)<<QPointF(x-w2, y-w2)<<QPointF(x+w2, y-w2);
-                painter.drawConvexPolygon(poly);
-            } break;
-        case JKQTPHorizontalHourglass: {
-                painter.setBrush(QColor(Qt::transparent));
-                QPolygonF poly;
-                poly<<QPointF(x-w2, y+w2)<<QPointF(x-w2, y-w2)<<QPointF(x+w2, y+w2)<<QPointF(x+w2, y-w2);
-                painter.drawConvexPolygon(poly);
-            } break;
-        case JKQTPFilledHourglass: {
-                painter.setBrush(b);
-                QPolygonF poly;
-                poly<<QPointF(x-w2, y+w2)<<QPointF(x+w2, y+w2)<<QPointF(x-w2, y-w2)<<QPointF(x+w2, y-w2);
-                painter.drawConvexPolygon(poly);
-            } break;
-        case JKQTPFilledHorizontalHourglass: {
-                painter.setBrush(b);
-                QPolygonF poly;
-                poly<<QPointF(x-w2, y+w2)<<QPointF(x-w2, y-w2)<<QPointF(x+w2, y+w2)<<QPointF(x+w2, y-w2);
-                painter.drawConvexPolygon(poly);
-            } break;
-        case JKQTPDiamond: {
-                QPolygonF poly;
-                painter.setBrush(QColor(Qt::transparent));
-                poly<<QPointF(x, y-w2)<<QPointF(x+w2, y)<<QPointF(x, y+w2)<<QPointF(x-w2, y);
-                painter.drawConvexPolygon(poly);
-            } break;
-        case JKQTPDiamondPlus: {
-                QPolygonF poly;
-                painter.setBrush(QColor(Qt::transparent));
-                poly<<QPointF(x, y-w2)<<QPointF(x+w2, y)<<QPointF(x, y+w2)<<QPointF(x-w2, y);
-                painter.drawConvexPolygon(poly);
-                painter.drawLine(poly[0], poly[2]);
-                painter.drawLine(poly[1], poly[3]);
-            } break;
-        case JKQTPDiamondCross: {
-                QPolygonF poly;
-                painter.setBrush(QColor(Qt::transparent));
-                poly<<QPointF(x, y-w2)<<QPointF(x+w2, y)<<QPointF(x, y+w2)<<QPointF(x-w2, y);
-                painter.drawConvexPolygon(poly);
-                painter.drawLine((poly[0]+poly[1])/2.0, (poly[2]+poly[3])/2.0);
-                painter.drawLine((poly[1]+poly[2])/2.0, (poly[3]+poly[0])/2.0);
-            } break;
-        case JKQTPFilledDiamond: {
-                painter.setBrush(b);
-                QPolygonF poly;
-                poly<<QPointF(x, y-w2)<<QPointF(x+w2, y)<<QPointF(x, y+w2)<<QPointF(x-w2, y);
-                painter.drawConvexPolygon(poly);
-            } break;
-        case JKQTPstar: {
-                painter.setBrush(QColor(Qt::transparent));
-                QPolygonF poly;
-                for (int i=0; i<star5_items*2; i++) {
-                    poly<<QPointF(x+star5cordsx[i]*w2, y+star5cordsy[i]*w2);
-                }
-                painter.drawConvexPolygon(poly);
-            } break;
-        case JKQTPFilledStar: {
-                painter.setBrush(b);
-                QPolygonF poly;
-                for (int i=0; i<star5_items*2; i++) {
-                    poly<<QPointF(x+star5cordsx[i]*w2, y+star5cordsy[i]*w2);
-                }
-                painter.drawConvexPolygon(poly);
-            } break;
-        case JKQTPPentagon: {
-                painter.setBrush(QColor(Qt::transparent));
-                QPolygonF poly;
-                for (int i=0; i<star5_items*2; i+=2) {
-                    poly<<QPointF(x+star5cordsx[i]*w2, y+star5cordsy[i]*w2);
-                }
-                painter.drawConvexPolygon(poly);
-            } break;
-        case JKQTPHexagon: {
-                painter.setBrush(QColor(Qt::transparent));
-                QPolygonF poly;
-                for (int i=0; i<star6_items*2; i+=2) {
-                    poly<<QPointF(x+star6cordsx[i]*w2, y+star6cordsy[i]*w2);
-                }
-                painter.drawConvexPolygon(poly);
-            } break;
-        case JKQTPOctagon: {
-                painter.setBrush(QColor(Qt::transparent));
-                QPolygonF poly;
-                for (int i=0; i<star8_items*2; i+=2) {
-                    poly<<QPointF(x+star8cordsx[i]*w2, y+star8cordsy[i]*w2);
-                }
-                painter.drawConvexPolygon(poly);
-            } break;
-        case JKQTPAsterisc: {
-                QPainterPath path;
-                for (int i=0; i<star5_items*2; i+=2) {
-                    path.moveTo(x+star5cordsx[i]*w2, y+star5cordsy[i]*w2);
-                    path.lineTo(x,y);
-                }
-                painter.drawPath(path);
-            } break;
-        case JKQTPAsterisc6: {
-                QPainterPath path;
-                for (int i=0; i<star6_items*2; i+=2) {
-                    path.moveTo(x+star6cordsx[i]*w2, y+star6cordsy[i]*w2);
-                    path.lineTo(x,y);
-                }
-                painter.drawPath(path);
-            } break;
-        case JKQTPAsterisc8: {
-                QPainterPath path;
-                for (int i=0; i<star8_items*2; i+=2) {
-                    path.moveTo(x+star8cordsx[i]*w2, y+star8cordsy[i]*w2);
-                    path.lineTo(x,y);
-                }
-                painter.drawPath(path);
-            } break;
-        case JKQTPFilledPentagon: {
-                painter.setBrush(b);
-                QPolygonF poly;
-                for (int i=0; i<star5_items*2; i+=2) {
-                    poly<<QPointF(x+star5cordsx[i]*w2, y+star5cordsy[i]*w2);
-                }
-                painter.drawConvexPolygon(poly);
-            } break;
-        case JKQTPFilledHexagon: {
-                painter.setBrush(b);
-                QPolygonF poly;
-                for (int i=0; i<star6_items*2; i+=2) {
-                    poly<<QPointF(x+star6cordsx[i]*w2, y+star6cordsy[i]*w2);
-                }
-                painter.drawConvexPolygon(poly);
-            } break;
-        case JKQTPFilledOctagon: {
-                painter.setBrush(b);
-                QPolygonF poly;
-                for (int i=0; i<star8_items*2; i+=2) {
-                    poly<<QPointF(x+star8cordsx[i]*w2, y+star8cordsy[i]*w2);
-                }
-                painter.drawConvexPolygon(poly);
-            } break;
-        default: break;
     }
 
 }
