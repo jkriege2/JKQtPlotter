@@ -270,7 +270,10 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 <tr><th> Screenshot    <th> Name   <th> Notes/Description  
 <tr><td> \image html jkqtmathtext_render_small.png
     <td> \subpage JKQTMathTextRenderCmdLineTool 
-	<td> uses JKQTMathText to render LaTeX Markup into an image file
+	<td> uses JKQTMathText to render LaTeX Markup into an image file and used to render different images for the documentation
+<tr><td> \image html jkqtplotter_doc_imagegenerator_small.png
+    <td> \subpage JKQTPlotterDocImageRenderCmdLineTool 
+	<td> uses JKQTPlotter to render different images for the documentation
 </table>
 	
 

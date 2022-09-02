@@ -1,5 +1,21 @@
 cmake_minimum_required(VERSION 3.16)
 
+add_custom_target(JKQTMathText_GenerateDocImages
+    COMMENT "Building JKQTMathText Documentation Images ..."
+)
+
+add_custom_target(JKQTPlotter_GenerateDocScreenshots
+    COMMENT "Building JKQTPlotter Documentation Screenshots ..."
+)
+
+add_custom_target(JKQTPlotter_GenerateDocImages
+    COMMENT "Building JKQTPlotter Documentation Images ..."
+)
+
+
+add_custom_target(JKQTP_GenerateAllDocImages
+    DEPENDS JKQTPlotter_GenerateDocImages JKQTPlotter_GenerateDocScreenshots JKQTMathText_GenerateDocImages
+)
 
 if(JKQtPlotter_BUILD_TOOLS)
 
@@ -22,10 +38,6 @@ if(JKQtPlotter_BUILD_TOOLS)
 
     set(JKQTMathText_GenerateDocImages_COMMAND $<TARGET_FILE:jkqtmathtext_render> ${JKQTMathText_GenerateDocImages_DefaultOptions})
     set(JKQTMathText_GenerateDocImages_OutputDir "${CMAKE_CURRENT_LIST_DIR}/images/jkqtmathtext/")
-    add_custom_target(JKQTMathText_GenerateDocImages
-        COMMENT "Building JKQTMathText Documentation Images ..."
-        DEPENDS jkqtmathtext_render
-    )
 
     foreach(file ${JKQTMathText_GenerateDocImages_StdInputFiles})
         string(REGEX MATCH ".*_([^_\.]+)\.[A-Za-z]+" dummy ${file})
@@ -60,6 +72,33 @@ endif()
 
 
 
+
+
+
+
+
+
+
+
+if(JKQtPlotter_BUILD_TOOLS)
+
+    # custom target that generates the images for the JKQTPlotter documentation
+    set(JKQTPlotter_GenerateDocImages_DefaultOptions )
+
+
+    set(JKQTPlotter_GenerateDocImages_COMMAND $<TARGET_FILE:jkqtplotter_doc_imagegenerator> ${JKQTPlotter_GenerateDocImages_DefaultOptions})
+    set(JKQTPlotter_GenerateDocImages_OutputDir "${CMAKE_CURRENT_LIST_DIR}/images/")
+
+
+    add_custom_target(JKQTPlotter_GenerateDocImages_listplotsymbols
+        COMMENT "Building JKQTPlotter Documentation Images: LISTPLOTSYMBOLS"
+        COMMAND ${JKQTPlotter_GenerateDocImages_COMMAND} --listsymbols --iconsize=32 --outputdir="${JKQTPlotter_GenerateDocImages_OutputDir}/symbols/"
+        WORKING_DIRECTORY ${JKQtPlotter_QT_BINDIR}
+        DEPENDS jkqtplotter_doc_imagegenerator
+    )
+
+    add_dependencies(JKQTPlotter_GenerateDocImages JKQTPlotter_GenerateDocImages_listplotsymbols)
+endif(JKQtPlotter_BUILD_TOOLS)
 
 
 
@@ -129,13 +168,6 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         evalcurve/JKQTPXYFunctionLineGraph/--smallscreenshotplot
     )
 
-    add_custom_target(JKQTPlotter_GenerateDocScreenshots
-        COMMENT "Building JKQTPlotter Documentation Screenshots ..."
-    )
-
-    add_custom_target(JKQTPlotter_GenerateDocImages
-        COMMENT "Building JKQTPlotter Documentation Images ..."
-    )
 
 
 

@@ -19,4 +19,5 @@ message( STATUS "...............................................................
 # examples specific to JKQtMathText
 message( STATUS ".. BUILDING TOOLS FOR JKQTMATHTEXT:" )
 add_subdirectory(jkqtmathtext_render)
+add_subdirectory(jkqtplotter_doc_imagegenerator)
 
