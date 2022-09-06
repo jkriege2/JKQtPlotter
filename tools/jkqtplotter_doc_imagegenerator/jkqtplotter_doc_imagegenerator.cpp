@@ -79,13 +79,32 @@ int main(int argc, char* argv[])
             JKQTPEnhancedPainter p;
             startPainting(img, p, iconsize, backgroundColor);
             JKQTPPlotSymbol(p, iconsize/2,iconsize/2,s,iconsize-4,2,QColor("blue"), QColor("salmon").lighter(120),QGuiApplication::font().family());
+            p.setPen(QPen(QColor("green"),0.5));
+            //p.drawRect(2,2,iconsize-4,iconsize-4);
             stopPaintingAndSave(img, p, outputDir.absoluteFilePath(JKQTPGraphSymbols2String(s)+".png"));
         }
         QImage  img;
         JKQTPEnhancedPainter p;
         startPainting(img, p, iconsize, backgroundColor);
-        JKQTPPlotSymbol(p, iconsize/2,iconsize/2,JKQTPCharacterSymbol+QChar('@').unicode(),iconsize-4,2,QColor("blue"), QColor("blue").lighter(),QGuiApplication::font().family());
+        JKQTPPlotSymbol(p, iconsize/2,iconsize/2,JKQTPCharacterSymbol+QChar('@').unicode(),iconsize-4,1,QColor("blue"), QColor("salmon").lighter(120),QGuiApplication::font().family());
+        p.setPen(QPen(QColor("green"),0.5));
+        //p.drawRect(2,2,iconsize-4,iconsize-4);
         stopPaintingAndSave(img, p, outputDir.absoluteFilePath("symbol_char_at.png"));
+        startPainting(img, p, iconsize, backgroundColor);
+        JKQTPPlotSymbol(p, iconsize/2,iconsize/2,JKQTPFilledCharacterSymbol+QChar('@').unicode(),iconsize-4,0.5,QColor("blue"), QColor("salmon").lighter(120),QGuiApplication::font().family());
+        p.setPen(QPen(QColor("green"),0.5));
+        //p.drawRect(2,2,iconsize-4,iconsize-4);
+        stopPaintingAndSave(img, p, outputDir.absoluteFilePath("symbol_filled_char_at.png"));
+        startPainting(img, p, iconsize, backgroundColor);
+        JKQTPPlotSymbol(p, iconsize/2,iconsize/2,JKQTPCharacterSymbol+QChar(0x2663).unicode(),iconsize-4,1,QColor("blue"), QColor("salmon").lighter(120),QGuiApplication::font().family());
+        p.setPen(QPen(QColor("green"),0.5));
+        //p.drawRect(2,2,iconsize-4,iconsize-4);
+        stopPaintingAndSave(img, p, outputDir.absoluteFilePath("symbol_char_club.png"));
+        startPainting(img, p, iconsize, backgroundColor);
+        JKQTPPlotSymbol(p, iconsize/2,iconsize/2,JKQTPFilledCharacterSymbol+QChar(0x2663).unicode(),iconsize-4,0.5,QColor("blue"), QColor("salmon").lighter(120),QGuiApplication::font().family());
+        p.setPen(QPen(QColor("green"),0.5));
+        //p.drawRect(2,2,iconsize-4,iconsize-4);
+        stopPaintingAndSave(img, p, outputDir.absoluteFilePath("symbol_filled_char_club.png"));
     }
 
     if (listlinedecorators) {

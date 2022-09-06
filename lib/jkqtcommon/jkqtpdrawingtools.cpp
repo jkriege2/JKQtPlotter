@@ -92,12 +92,18 @@ QString JKQTPGraphSymbols2String(JKQTPGraphSymbols pos) {
         case JKQTPCirclePeace: return "symbol_circle_peace";
         case JKQTPSymbolCount: JKQTPGraphSymbols2String(JKQTPMaxSymbolID);
         case JKQTPCharacterSymbol:
-        break;
+        case JKQTPFilledCharacterSymbol:
+            break;
     }
-    if (pos>=JKQTPCharacterSymbol && pos<=JKQTPCharacterSymbol+0xFF) {
+    if (pos>=JKQTPCharacterSymbol && pos<=JKQTPCharacterSymbol+0xFFFF) {
         QString s=QString::number(pos-JKQTPCharacterSymbol,16);
         while (s.size()<4) s="0"+s;
         return "symbol_char"+s;
+    }
+    if (pos>=JKQTPFilledCharacterSymbol && pos<=JKQTPFilledCharacterSymbol+0xFFFF) {
+        QString s=QString::number(pos-JKQTPFilledCharacterSymbol,16);
+        while (s.size()<4) s="0"+s;
+        return "symbol_filled_char"+s;
     }
     return "";
 }
@@ -169,10 +175,15 @@ QString JKQTPGraphSymbols2NameString(JKQTPGraphSymbols pos) {
         case JKQTPMale: return QObject::tr("male");
         case JKQTPCirclePeace: return QObject::tr("circled peace");
         case JKQTPSymbolCount: JKQTPGraphSymbols2NameString(JKQTPMaxSymbolID);
-        case JKQTPCharacterSymbol: break;
+        case JKQTPCharacterSymbol:
+        case JKQTPFilledCharacterSymbol:
+            break;
     }
-    if (pos>=JKQTPCharacterSymbol && pos<=JKQTPCharacterSymbol+0xFF) {
+    if (pos>=JKQTPCharacterSymbol && pos<=JKQTPCharacterSymbol+0xFFFF) {
         return QObject::tr("character")+" '"+QChar(static_cast<uint16_t>(pos-JKQTPCharacterSymbol))+"'";
+    }
+    if (pos>=JKQTPFilledCharacterSymbol && pos<=JKQTPFilledCharacterSymbol+0xFFFF) {
+        return QObject::tr("filled character")+" '"+QChar(static_cast<uint16_t>(pos-JKQTPFilledCharacterSymbol))+"'";
     }
     return "";
 }
@@ -255,6 +266,18 @@ JKQTPGraphSymbols String2JKQTPGraphSymbols(const QString& pos)  {
     }
     if (posT.startsWith("symbol_char")) {
         return JKQTPCharacterSymbol+posT.mid(11).toUInt(nullptr,16);
+    }
+    if (posT.startsWith("symbol_fillcharsym") && posT.size()>18) {
+        return JKQTPFilledCharacterSymbol+posT[18].unicode();
+    }
+    if (posT.startsWith("fillcharsym") && posT.size()>11) {
+        return JKQTPFilledCharacterSymbol+posT[11].unicode();
+    }
+    if (posT.startsWith("filled_char")) {
+        return JKQTPFilledCharacterSymbol+posT.mid(11).toUInt(nullptr,16);
+    }
+    if (posT.startsWith("symbol_filled_char")) {
+        return JKQTPFilledCharacterSymbol+posT.mid(18).toUInt(nullptr,16);
     }
     return JKQTPNoSymbol;
 }
