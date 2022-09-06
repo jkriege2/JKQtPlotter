@@ -105,6 +105,18 @@ int main(int argc, char* argv[])
         p.setPen(QPen(QColor("green"),0.5));
         //p.drawRect(2,2,iconsize-4,iconsize-4);
         stopPaintingAndSave(img, p, outputDir.absoluteFilePath("symbol_filled_char_club.png"));
+
+        JKQTPCustomGraphSymbolFunctor f=[](QPainter& p) {
+            p.drawEllipse(QPointF(-0.2, -0.2), 0.3, 0.3);
+            p.setBrush(Qt::NoBrush);
+            p.drawEllipse(QPointF(0.2, -0.2), 0.3, 0.3);
+            p.drawEllipse(QPointF(0, 0.2), 0.3, 0.3);
+        };
+        JKQTPGraphSymbols customs=JKQTPRegisterCustomGraphSymbol(f);
+        startPainting(img, p, iconsize, backgroundColor);
+        JKQTPPlotSymbol(p, iconsize/2,iconsize/2,customs,iconsize-4,2,QColor("blue"), QColor("salmon").lighter(120),QGuiApplication::font().family());
+        p.setPen(QPen(QColor("green"),0.5));
+        stopPaintingAndSave(img, p, outputDir.absoluteFilePath("symbol_custom.png"));
     }
 
     if (listlinedecorators) {

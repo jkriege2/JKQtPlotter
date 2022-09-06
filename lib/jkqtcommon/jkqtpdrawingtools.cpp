@@ -93,6 +93,7 @@ QString JKQTPGraphSymbols2String(JKQTPGraphSymbols pos) {
         case JKQTPSymbolCount: JKQTPGraphSymbols2String(JKQTPMaxSymbolID);
         case JKQTPCharacterSymbol:
         case JKQTPFilledCharacterSymbol:
+        case JKQTPFirstCustomSymbol:
             break;
     }
     if (pos>=JKQTPCharacterSymbol && pos<=JKQTPCharacterSymbol+0xFFFF) {
@@ -104,6 +105,10 @@ QString JKQTPGraphSymbols2String(JKQTPGraphSymbols pos) {
         QString s=QString::number(pos-JKQTPFilledCharacterSymbol,16);
         while (s.size()<4) s="0"+s;
         return "symbol_filled_char"+s;
+    }
+    if (pos>=JKQTPFirstCustomSymbol) {
+        QString s=QString::number(pos-JKQTPFirstCustomSymbol);
+        return "symbol_custom"+s;
     }
     return "";
 }
@@ -177,6 +182,7 @@ QString JKQTPGraphSymbols2NameString(JKQTPGraphSymbols pos) {
         case JKQTPSymbolCount: JKQTPGraphSymbols2NameString(JKQTPMaxSymbolID);
         case JKQTPCharacterSymbol:
         case JKQTPFilledCharacterSymbol:
+        case JKQTPFirstCustomSymbol:
             break;
     }
     if (pos>=JKQTPCharacterSymbol && pos<=JKQTPCharacterSymbol+0xFFFF) {
@@ -184,6 +190,9 @@ QString JKQTPGraphSymbols2NameString(JKQTPGraphSymbols pos) {
     }
     if (pos>=JKQTPFilledCharacterSymbol && pos<=JKQTPFilledCharacterSymbol+0xFFFF) {
         return QObject::tr("filled character")+" '"+QChar(static_cast<uint16_t>(pos-JKQTPFilledCharacterSymbol))+"'";
+    }
+    if (pos>=JKQTPFirstCustomSymbol) {
+        return QObject::tr("custom symbol %1").arg(static_cast<uint64_t>(pos-JKQTPFirstCustomSymbol));
     }
     return "";
 }
@@ -278,6 +287,9 @@ JKQTPGraphSymbols String2JKQTPGraphSymbols(const QString& pos)  {
     }
     if (posT.startsWith("symbol_filled_char")) {
         return JKQTPFilledCharacterSymbol+posT.mid(18).toUInt(nullptr,16);
+    }
+    if (posT.startsWith("symbol_custom")) {
+        return JKQTPFirstCustomSymbol+posT.mid(13).toUInt();
     }
     return JKQTPNoSymbol;
 }
@@ -537,4 +549,19 @@ QList<QPolygonF> JKQTPSimplifyPolyLines(const QList<QPolygonF> &lines_in, double
         l<<JKQTPSimplifyPolyLines(p, maxDeltaXY);
     }
     return l;
+}
+
+
+QVector<JKQTPCustomGraphSymbolFunctor> JKQTPlotterDrawingTools::JKQTPCustomGraphSymbolStore=QVector<JKQTPCustomGraphSymbolFunctor>();
+
+JKQTPGraphSymbols JKQTPRegisterCustomGraphSymbol(JKQTPCustomGraphSymbolFunctor&& f)
+{
+    JKQTPlotterDrawingTools::JKQTPCustomGraphSymbolStore.emplace_back(std::move(f));
+    return JKQTPFirstCustomSymbol+(JKQTPlotterDrawingTools::JKQTPCustomGraphSymbolStore.size()-1);
+}
+
+JKQTPGraphSymbols JKQTPRegisterCustomGraphSymbol(const JKQTPCustomGraphSymbolFunctor& f)
+{
+    JKQTPlotterDrawingTools::JKQTPCustomGraphSymbolStore.emplace_back(f);
+    return JKQTPFirstCustomSymbol+(JKQTPlotterDrawingTools::JKQTPCustomGraphSymbolStore.size()-1);
 }
