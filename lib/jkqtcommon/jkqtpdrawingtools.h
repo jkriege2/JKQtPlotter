@@ -203,31 +203,31 @@ JKQTCOMMON_LIB_EXPORT JKQTPGraphSymbols String2JKQTPGraphSymbols(const QString& 
  * \see \ref JKQTPlotterGeometricArrows and \ref JKQTPlotterGeometricGraphs
  */
 enum JKQTPLineDecoratorStyle {
-    JKQTPNoDecorator=0,                /*!< \brief no decorator, i.e. a simple line-end */
-    JKQTPArrow,                        /*!< \brief a simple arrow tip, unfilled \image html JKQTPArrow.png*/
-    JKQTPFilledArrow,                  /*!< \brief a nice filled arrow tip \image html JKQTPFilledArrow.png */
-    JKQTPTriangleDecorator,                /*!< \brief a triangular arrow tip \image html JKQTPTriangleDecorator.png */
-    JKQTPFilledTriangleDecorator,          /*!< \brief a triangular filled arrow tip \image html JKQTPFilledTriangleDecorator.png */
-    JKQTPTriangleDecoratorAndBar,         /*!< \brief a triangular arrow tip, with vertical bar \image html JKQTPTriangleDecoratorAndBar.png */
-    JKQTPFilledTriangleDecoratorAndBar,   /*!< \brief a triangular filled arrow tip, with vertical bar \image html JKQTPFilledTriangleDecoratorAndBar.png */
-    JKQTPDoubleArrow,                  /*!< \brief a nice double-arrow tip  \image html JKQTPDoubleArrow.png*/
-    JKQTPFilledDoubleArrow,            /*!< \brief a nice filled double-arrow tip \image html JKQTPFilledDoubleArrow.png */
-    JKQTPCircleDecorator,              /*!< \brief an open circle tip \image html JKQTPCircleDecorator.png */
-    JKQTPFilledCircleDecorator,        /*!< \brief a filled circle tip \image html JKQTPFilledCircleDecorator.png */
-    JKQTPRectangleDecorator,           /*!< \brief an open rectangle tip \image html JKQTPRectangleDecorator.png */
-    JKQTPFilledRectangleDecorator,     /*!< \brief a filled rectangle tip \image html JKQTPFilledRectangleDecorator.png */
-    JKQTPArrowAndBar,                 /*!< \brief a simple arrow tip, unfilled, with vertical bar \image html JKQTPArrowAndBar.png */
-    JKQTPDoubleArrowAndBar,           /*!< \brief a simple double-arrow tip, unfilled, with vertical bar \image html JKQTPDoubleArrowAndBar.png */
-    JKQTPBarDecorator,            /*!< \brief a full vertical bar \image html JKQTPBarDecorator.png */
-    JKQTPBracketDecorator,             /*!< \brief a vertical bracket decorator \image html JKQTPBracketDecorator.png */
-    JKQTPDiamondDecorator,           /*!< \brief an open diamond tip \image html JKQTPDiamondDecorator.png */
-    JKQTPDiamondDecoratorAndBar,           /*!< \brief an open diamond tip \image html JKQTPDiamondDecoratorAndBar.png */
-    JKQTPFilledDiamondDecorator,     /*!< \brief a filled diamond tip \image html JKQTPFilledDiamondDecorator.png */
-    JKQTPFilledDiamondDecoratorAndBar,     /*!< \brief a filled diamond tip \image html JKQTPFilledDiamondDecoratorAndBar.png */
-    JKQTPHalfBarDecorator,            /*!< \brief a half vertical bar \image html JKQTPHalfBarDecorator.png */
-    JKQTPHarpoonDecorator,            /*!< \brief an harpoon arrow \image html JKQTPHarpoonDecorator.png */
-    JKQTPHarpoonDecoratorAndBar,            /*!< \brief an harpoon arrow, with vertical bar \image html JKQTPHarpoonDecoratorAndBar.png */
-    JKQTPSkewedBarDecorator,            /*!< \brief a skewed vertical bar \image html JKQTPSkewedBarDecorator.png */
+    JKQTPNoDecorator=0,                /*!< \brief no decorator, i.e. a simple line-end \image html linedecorators/none.png */
+    JKQTPArrow,                        /*!< \brief a simple arrow tip, unfilled \image html linedecorators/arrow.png */
+    JKQTPFilledArrow,                  /*!< \brief a nice filled arrow tip \image html linedecorators/filled_arrow.png */
+    JKQTPTriangleDecorator,                /*!< \brief a triangular arrow tip \image html linedecorators/triangle.png */
+    JKQTPFilledTriangleDecorator,          /*!< \brief a triangular filled arrow tip \image html linedecorators/filled_triangle.png */
+    JKQTPTriangleDecoratorAndBar,         /*!< \brief a triangular arrow tip, with vertical bar \image html linedecorators/triangle_bar.png */
+    JKQTPFilledTriangleDecoratorAndBar,   /*!< \brief a triangular filled arrow tip, with vertical bar \image html linedecorators/filled_triangle_bar.png */
+    JKQTPDoubleArrow,                  /*!< \brief a nice double-arrow tip  \image html linedecorators/double_arrow.png*/
+    JKQTPFilledDoubleArrow,            /*!< \brief a nice filled double-arrow tip \image html linedecorators/filled_double_arrow.png */
+    JKQTPCircleDecorator,              /*!< \brief an open circle tip \image html linedecorators/circle.png */
+    JKQTPFilledCircleDecorator,        /*!< \brief a filled circle tip \image html linedecorators/filled_circle.png */
+    JKQTPRectangleDecorator,           /*!< \brief an open rectangle tip \image html linedecorators/rectangle.png */
+    JKQTPFilledRectangleDecorator,     /*!< \brief a filled rectangle tip \image html linedecorators/filled_rectangle.png */
+    JKQTPArrowAndBar,                 /*!< \brief a simple arrow tip, unfilled, with vertical bar \image html linedecorators/arrow_bar.png */
+    JKQTPDoubleArrowAndBar,           /*!< \brief a simple double-arrow tip, unfilled, with vertical bar \image html linedecorators/double_arrow_bar.png */
+    JKQTPBarDecorator,            /*!< \brief a full vertical bar \image html linedecorators/bar.png */
+    JKQTPBracketDecorator,             /*!< \brief a vertical bracket decorator \image html linedecorators/bracket.png */
+    JKQTPDiamondDecorator,           /*!< \brief an open diamond tip \image html linedecorators/diamond.png */
+    JKQTPDiamondDecoratorAndBar,           /*!< \brief an open diamond tip \image html linedecorators/diamond_bar.png */
+    JKQTPFilledDiamondDecorator,     /*!< \brief a filled diamond tip \image html linedecorators/filled_diamond.png */
+    JKQTPFilledDiamondDecoratorAndBar,     /*!< \brief a filled diamond tip \image html linedecorators/filled_dimanond_bar.png */
+    JKQTPHalfBarDecorator,            /*!< \brief a half vertical bar \image html linedecorators/half_bar.png */
+    JKQTPHarpoonDecorator,            /*!< \brief an harpoon arrow \image html linedecorators/harpoon.png */
+    JKQTPHarpoonDecoratorAndBar,            /*!< \brief an harpoon arrow, with vertical bar \image html linedecorators/harpoon_bar.png */
+    JKQTPSkewedBarDecorator,            /*!< \brief a skewed vertical bar \image html linedecorators/skewed_bar.png */
 
     JKQTPLineDecoratorCount, /*!< \brief can be used to iterate over all symbols using: <code>for (int i=0; i<static_cast<int>(JKQTPLineDecoratorCount); i++) { JKQTPLineDecoratorStyle s=static_cast<JKQTPLineDecoratorStyle>(i); ... }</code> */
     JKQTPMaxLineDecoratorID=JKQTPLineDecoratorCount-1, /*!< \brief points to the last available symbol, can be used to iterate over all symbols: <code>for (int i=0; i<=static_cast<int>(JKQTPMaxLineDecoratorID); i++) { JKQTPLineDecoratorStyle s=static_cast<JKQTPLineDecoratorStyle>(i); ... }</code> */
@@ -262,6 +262,20 @@ JKQTCOMMON_LIB_EXPORT JKQTPLineDecoratorStyle String2JKQTPLineDecoratorStyle(con
    */
 template <class TPainter>
 inline void JKQTPPlotLineDecorator(TPainter& painter, double x, double y, double angle_rad, JKQTPLineDecoratorStyle style, double size, QPointF* line_start=nullptr);
+
+/*! \brief plot a line with the given decorators \a style1 and a style2 at the start- and end-point repsectively, using the painter's current pen
+   \ingroup jkqtptools_drawing
+
+    \tparam TPainter Type of \a painter: A class like JKQTPEnhancedPainter or <a href="http://doc.qt.io/qt-5/qpainter.html">QPainter</a>
+    \param painter the <a href="http://doc.qt.io/qt-5/qpainter.html">QPainter</a> to draw to
+    \param l line to draw
+    \param style1 type of the first decorator to plot, see JKQTPLineDecoratorStyle
+    \param size1 size of the first decorator
+    \param style2 type of the second decorator to plot, see JKQTPLineDecoratorStyle
+    \param size2 size of the second decorator
+   */
+template <class TPainter>
+inline void JKQTPPlotDecoratedLine(TPainter& painter, const QLineF& l, JKQTPLineDecoratorStyle style1, double size1, JKQTPLineDecoratorStyle style2, double size2);
 
 /** \brief calculates the tail decorator size from the line width \a line_width, using decoratorSizeFactor and a non-linear scaling function that levels off towards small \a line_width and increases sub-linearly for large ones, so the arrow heads to not grow too much */
 JKQTCOMMON_LIB_EXPORT double JKQTPLineDecoratorStyleCalcDecoratorSize(double line_width, double decoratorSizeFactor);
@@ -897,6 +911,19 @@ inline void JKQTPDrawTooltip(TPainter& painter, double x, double y, const QRectF
         painter.drawRect(rect);
     }
 }
+
+template <class TPainter>
+inline void JKQTPPlotDecoratedLine(TPainter& painter, const QLineF& l, JKQTPLineDecoratorStyle style1, double size1, JKQTPLineDecoratorStyle style2, double size2) {
+    const double angle1=atan2(l.p2().y()-l.p1().y(), l.p2().x()-l.p1().x());
+    const double angle2=atan2(l.p1().y()-l.p2().y(), l.p1().x()-l.p2().x());
+    QPointF lx1=l.p1(), lx2=l.p2();
+    JKQTPPlotLineDecorator(painter, l.p1().x(), l.p1().y(), angle1, style1, size1, &lx1);
+    JKQTPPlotLineDecorator(painter, l.p2().x(), l.p2().y(), angle2, style2, size2, &lx2);
+    // draw corrected line
+    painter.drawLine(QLineF(lx1, lx2));
+
+}
+
 
 template <class TPainter>
 inline void JKQTPPlotLineDecorator(TPainter& painter, double x, double y, double angle_rad, JKQTPLineDecoratorStyle style, double size, QPointF* line_start) {

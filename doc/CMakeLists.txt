@@ -96,8 +96,16 @@ if(JKQtPlotter_BUILD_TOOLS)
         WORKING_DIRECTORY ${JKQtPlotter_QT_BINDIR}
         DEPENDS jkqtplotter_doc_imagegenerator
     )
-
     add_dependencies(JKQTPlotter_GenerateDocImages JKQTPlotter_GenerateDocImages_listplotsymbols)
+
+    add_custom_target(JKQTPlotter_GenerateDocImages_listlinedecorators
+        COMMENT "Building JKQTPlotter Documentation Images: LISTLINEDECORATORS"
+        COMMAND ${JKQTPlotter_GenerateDocImages_COMMAND} --listlinedecorators --iconsize=32 --outputdir="${JKQTPlotter_GenerateDocImages_OutputDir}/linedecorators/"
+        WORKING_DIRECTORY ${JKQtPlotter_QT_BINDIR}
+        DEPENDS jkqtplotter_doc_imagegenerator
+    )
+    add_dependencies(JKQTPlotter_GenerateDocImages JKQTPlotter_GenerateDocImages_listlinedecorators)
+
 endif(JKQtPlotter_BUILD_TOOLS)
 
 
