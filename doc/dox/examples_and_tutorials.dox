@@ -19,6 +19,9 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 <tr><td> \image html scatter_small.png 
     <td> \subpage JKQTPlotterscatter 
 	  <td> `JKQTPXYScatterGraph` <br> Iterator-Interface for JKQTDatastore
+<tr><td> \image html scatter_customsymbol_small.png 
+    <td> \subpage JKQTPlotterscatterCustomSymbol 
+	  <td> `JKQTPXYScatterGraph` <br>custom symbols JKQTPCharacterSymbol, JKQTPFilledCharacterSymbol, JKQTPRegisterCustomGraphSymbol()<br> Iterator-Interface for JKQTDatastore
 <tr><td> \image html speed_small.png
     <td> \subpage JKQTPlotterSpeedTest
     <td> `JKQTPXYLineGraph` <br> external `std::array<double,N>` data, not owned by datastore <br> live-data, measure plotting speed <br> tipps to increas plotting speed 
@@ -52,6 +55,9 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 <tr><td> \image html paramscatterplot_small.png
     <td> \subpage JKQTPlotterParamScatter
     <td> `JKQTPXYParametrizedScatterGraph` <br> C++-style QVector as plot data <br> modify scatter/points/line-graph properties by data 
+<tr><td> \image html paramscatterplot_customsymbol_small.png
+    <td> \subpage JKQTPlotterparamscatterCustomSymbol
+    <td> `JKQTPXYParametrizedScatterGraph` <br>custom and varying symbols using JKQTPRegisterCustomGraphSymbol()<br>iterator interface to `JKQTPDatastore` 
 <tr><td> \image html paramscatterplot_image_small.png
     <td> \subpage JKQTPlotterParamScatterImage
     <td> `JKQTPXYParametrizedScatterGraph` <br> C++-style QVector as plot data <br> rectangular arrangement of scatters <br> generative computer graphics 

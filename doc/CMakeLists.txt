@@ -122,6 +122,7 @@ if(JKQtPlotter_BUILD_EXAMPLES)
     # the basenames are applied to the windows in the order of their windowTitle()s!
     set(JKQTPlotter_GenerateDocScreenshots_From
         scatter/scatter,scatter_error
+        scatter_customsymbol
         simpletest
         barchart/barchart,barchart_hor
         wiggleplots/wiggleplot_x,wiggleplot_y
@@ -151,6 +152,7 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         impulsesplot
         parametriccurve/parametriccurve1,parametriccurve2
         paramscatterplot
+        paramscatterplot_customsymbol
         #paramscatterplot_image
         parsedfunctionplot
         rgbimageplot
