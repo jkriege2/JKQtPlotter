@@ -214,6 +214,10 @@ inline JKQTPGraphSymbols operator+(JKQTPGraphSymbols a, int64_t b) {
     return static_cast<JKQTPGraphSymbols>(static_cast<uint64_t>(a)+b);
 }
 
+inline JKQTPGraphSymbols operator+(JKQTPGraphSymbols a, const QChar& b) {
+    return static_cast<JKQTPGraphSymbols>(static_cast<uint64_t>(a)+static_cast<uint64_t>(b.unicode()));
+}
+
 
 /** \brief register a JKQTPCustomGraphSymbolFunctor that draws a custom symbol.Returns an ID that allows to access the symbol!
  * \ingroup jkqtptools_drawing
@@ -250,13 +254,13 @@ JKQTCOMMON_LIB_EXPORT JKQTPGraphSymbols String2JKQTPGraphSymbols(const QString& 
 
 
 inline QDataStream& operator<<(QDataStream& str, JKQTPGraphSymbols s) {
-    str<<static_cast<uint64_t>(s);
+    str<<static_cast<quint64>(s);
     return str;
 }
 
 
 inline QDataStream& operator>>(QDataStream& str, JKQTPGraphSymbols& s) {
-    str<<reinterpret_cast<uint64_t&>(s);
+    str<<reinterpret_cast<quint64&>(s);
     return str;
 }
 
