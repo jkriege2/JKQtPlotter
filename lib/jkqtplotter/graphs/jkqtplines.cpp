@@ -50,7 +50,8 @@ JKQTPXYLineGraph::JKQTPXYLineGraph(JKQTPlotter* parent):
 
 JKQTPXYLineGraph::JKQTPXYLineGraph(JKQTBasePlotter* parent):
     JKQTPXYGraph(parent),
-    drawLine(true)
+    drawLine(true),
+    drawLineInForeground(true)
 {
     sortData=JKQTPXYGraph::Unsorted;
 
@@ -91,6 +92,7 @@ void JKQTPXYLineGraph::draw(JKQTPEnhancedPainter& painter) {
         if (getIndexRange(imin, imax)) {
 
 
+            QVector<QPointF> symbols;
             QList<QPolygonF> vec_linesP;
             vec_linesP.push_back(QPolygonF());
             intSortData();
@@ -107,7 +109,10 @@ void JKQTPXYLineGraph::draw(JKQTPEnhancedPainter& painter) {
                         //JKQTPPlotSymbol(painter, x, y, JKQTPFilledCircle, parent->pt2px(painter, symbolSize*1.5), parent->pt2px(painter, symbolWidth*parent->getLineWidthMultiplier()), penSelection.color(), penSelection.color(),getSymbolFont());
                     //}
                     if ((!parent->getXAxis()->isLogAxis() || xv>0.0) && (!parent->getYAxis()->isLogAxis() || yv>0.0) ) {
-                        if (symType!=JKQTPNoSymbol && cliprect.contains(x,y)) plotStyledSymbol(parent, painter, x, y);
+                        if (symType!=JKQTPNoSymbol && cliprect.contains(x,y)) {
+                            if (drawLineInForeground) plotStyledSymbol(parent, painter, x, y);
+                            else symbols.push_back({x,y});
+                        }
                         if (drawLine) {
                             vec_linesP.last() << QPointF(x,y);
                         }
@@ -141,6 +146,9 @@ void JKQTPXYLineGraph::draw(JKQTPEnhancedPainter& painter) {
                     }
                 }
             }
+            for (const auto& s: symbols) {
+                plotStyledSymbol(parent, painter, s.x(), s.y());
+            }
             //qDebug()<<"JKQTPXYLineGraph::draw(): "<<6;
         }
     }
@@ -155,8 +163,9 @@ void JKQTPXYLineGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect
     p.setWidthF(getKeyLineWidthPx(painter,rect,parent));
     painter.setPen(p);
     double y=rect.top()+rect.height()/2.0;
-    if (drawLine) painter.drawLine(QLineF(rect.left(), y, rect.right(), y));
+    if (drawLine && !drawLineInForeground) painter.drawLine(QLineF(rect.left(), y, rect.right(), y));
     JKQTPPlotSymbol(painter, rect.left()+rect.width()/2.0, rect.top()+rect.height()/2.0, getSymbolType(), getKeySymbolSizePx(painter, rect, parent), getKeySymbolLineWidthPx(painter, rect, parent), getKeyLabelColor(), getSymbolFillColor(),getSymbolFont());
+    if (drawLine && drawLineInForeground) painter.drawLine(QLineF(rect.left(), y, rect.right(), y));
 }
 
 QColor JKQTPXYLineGraph::getKeyLabelColor() const {
@@ -171,6 +180,16 @@ void JKQTPXYLineGraph::setDrawLine(bool __value)
 bool JKQTPXYLineGraph::getDrawLine() const
 {
     return this->drawLine;
+}
+
+void JKQTPXYLineGraph::setDrawLineInForeground(bool __value)
+{
+    drawLineInForeground=__value;
+}
+
+bool JKQTPXYLineGraph::getDrawLineInForeground() const
+{
+    return drawLineInForeground;
 }
 
 void JKQTPXYLineGraph::setColor(QColor c)

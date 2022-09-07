@@ -251,7 +251,8 @@ void JKQTPXYScatterErrorGraph::drawErrorsBefore(JKQTPEnhancedPainter &painter)
 JKQTPXYParametrizedScatterGraph::JKQTPXYParametrizedScatterGraph(JKQTBasePlotter *parent):
     JKQTPXYGraph(parent),
     JKQTPColorPaletteStyleAndToolsMixin(parent),
-    drawLine(false)
+    drawLine(false),
+    drawLineInForeground(true)
 {
     sizeColumn=-1;
     colorColumn=-1;
@@ -312,6 +313,7 @@ void JKQTPXYParametrizedScatterGraph::draw(JKQTPEnhancedPainter &painter)
         QVector<QColor> linecols;
         QVector<QColor> linecolss;
         QVector<double> linewidths;
+        QVector<SymbolDescription> symbols;
         //qDebug()<<"JKQTPXYLineGraph::draw(): "<<3<<" imin="<<imin<<" imax="<<imax;
         {
             painter.save(); auto __finalpaintinner=JKQTPFinally([&painter]() {painter.restore();});
@@ -364,9 +366,10 @@ void JKQTPXYParametrizedScatterGraph::draw(JKQTPEnhancedPainter &painter)
 
                     if ((!parent->getXAxis()->isLogAxis() || xv>0.0) && (!parent->getYAxis()->isLogAxis() || yv>0.0) ) {
                         if (isHighlighted() && getSymbolType()!=JKQTPNoSymbol && symbolColumn<0) {
-                            JKQTPPlotSymbol(painter, x, y, JKQTPFilledCircle,symbSize, parent->pt2px(painter, getSymbolLineWidth()*parent->getLineWidthMultiplier()), penSelection.color(), penSelection.color(),getSymbolFont());
+                            JKQTPPlotSymbol(painter, x, y, JKQTPFilledCircle,symbSize*1.25, parent->pt2px(painter, getSymbolLineWidth()*parent->getLineWidthMultiplier()), penSelection.color(), penSelection.color(),getSymbolFont());
                         } else {
-                            JKQTPPlotSymbol(painter, x, y, getLocalSymbolType(i), symbSize, parent->pt2px(painter, getSymbolLineWidth()*parent->getLineWidthMultiplier()), symbColor, symbFillColor,getSymbolFont());
+                            if (drawLineInForeground) JKQTPPlotSymbol(painter, x, y, getLocalSymbolType(i), symbSize, parent->pt2px(painter, getSymbolLineWidth()*parent->getLineWidthMultiplier()), symbColor, symbFillColor,getSymbolFont());
+                            else symbols.push_back({x, y, getLocalSymbolType(i), symbSize, symbColor, symbFillColor});
                         }
                     }
 
@@ -409,7 +412,9 @@ void JKQTPXYParametrizedScatterGraph::draw(JKQTPEnhancedPainter &painter)
                 painter.setPen(pp);
                 painter.drawPolylineFast(linesP);
             }
-
+        }
+        for (auto& s: symbols) {
+            JKQTPPlotSymbol(painter, s.x, s.y, s.type, s.size, parent->pt2px(painter, getSymbolLineWidth()*parent->getLineWidthMultiplier()), s.color, s.fillColor, getSymbolFont());
         }
     }
 
@@ -447,9 +452,15 @@ void JKQTPXYParametrizedScatterGraph::drawKeyMarker(JKQTPEnhancedPainter &painte
     if (symbolColumn>=0) {
         symbol1=JKQTPFilledCircle;
         symbol2=JKQTPFilledRect;
+        JKQTPDatastore* datastore=parent->getDatastore();
+        if (datastore && datastore->getRows(symbolColumn)>0) {
+            symbol1=getLocalSymbolType(0);
+            symbol2=getLocalSymbolType(datastore->getRows(symbolColumn)-1);
+        }
+
     }
 
-    double lineWidth=getKeyLineWidthPx(painter, rect, parent)*0.75;
+    const double lineWidth=getKeyLineWidthPx(painter, rect, parent)*0.75;
 
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     QPen p=painter.pen();
@@ -461,9 +472,10 @@ void JKQTPXYParametrizedScatterGraph::drawKeyMarker(JKQTPEnhancedPainter &painte
     const double y1=rect.top()+symbolSize1/2.0;
     const double x2=rect.right()-symbolSize2/2.0;
     const double y2=rect.bottom()-symbolSize2/2.0;
+    if (drawLine && !drawLineInForeground) painter.drawLine(QLineF(x1,y1, x2,y2));
     JKQTPPlotSymbol(painter, x1, y1, symbol1, symbolSize1, getKeySymbolLineWidthPx(painter, rect, parent,0.5), color1, JKQTPGetDerivedColor(symbolFillDerivationMode, color1),getSymbolFont());
     JKQTPPlotSymbol(painter, x2, y2, symbol2, symbolSize2, getKeySymbolLineWidthPx(painter, rect, parent,0.5), color2, JKQTPGetDerivedColor(symbolFillDerivationMode, color2),getSymbolFont());
-    if (drawLine) painter.drawLine(QLineF(x1,y1, x2,y2));
+    if (drawLine && drawLineInForeground) painter.drawLine(QLineF(x1,y1, x2,y2));
 
 }
 
@@ -742,6 +754,16 @@ void JKQTPXYParametrizedScatterGraph::setDrawLine(bool __value)
 bool JKQTPXYParametrizedScatterGraph::getDrawLine() const
 {
     return drawLine;
+}
+
+void JKQTPXYParametrizedScatterGraph::setDrawLineInForeground(bool __value)
+{
+    drawLineInForeground=__value;
+}
+
+bool JKQTPXYParametrizedScatterGraph::getDrawLineInForeground() const
+{
+    return drawLineInForeground;
 }
 
 void JKQTPXYParametrizedScatterGraph::setColor(QColor c)

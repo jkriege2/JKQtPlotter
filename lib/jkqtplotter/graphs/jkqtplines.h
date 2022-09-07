@@ -77,6 +77,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXYLineGraph: public JKQTPXYGraph, public JKQTP
         void setDrawLine(bool __value);
         /** \copydoc drawLine */
         bool getDrawLine() const;
+        /** \copydoc drawLineInForeground */
+        void setDrawLineInForeground(bool __value);
+        /** \copydoc drawLineInForeground */
+        bool getDrawLineInForeground() const;
 
         /** \brief set color of line and symbol */
         void setColor(QColor c);
@@ -85,8 +89,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXYLineGraph: public JKQTPXYGraph, public JKQTP
 
         /** \brief indicates whether to draw a line or not */
         bool drawLine;
-
-
+        /** \brief indicates whether to draw the line behind or above the symbols */
+        bool drawLineInForeground;
 
 
 };

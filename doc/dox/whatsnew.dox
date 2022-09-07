@@ -45,6 +45,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: Using JKQTMathText::useGuiFonts() for FONT rendering by default</li>
     <li>NEW: added the option to draw a character from a font as symbol (<code>JKQTPCharacterSymbol+QChar('C').unicode()</code> and <code>JKQTPFilledCharacterSymbol+QChar('C').unicode()</code>)</li>
     <li>NEW: added the option to register a custom symbol using JKQTPRegisterCustomGraphSymbol() </li>
+    <li>NEW: added property drawLineInForeground to JKQTPXYLineGraph and JKQTPXYParametrizedScatterGraph</li>
   </ul></li>
   
   <li>JKQTMathText:<ul>

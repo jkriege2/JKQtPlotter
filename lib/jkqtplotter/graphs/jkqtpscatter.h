@@ -343,6 +343,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXYParametrizedScatterGraph: public JKQTPXYGrap
         void setDrawLine(bool __value);
         /** \copydoc drawLine */
         bool getDrawLine() const;
+        /** \copydoc drawLineInForeground */
+        void setDrawLineInForeground(bool __value);
+        /** \copydoc drawLineInForeground */
+        bool getDrawLineInForeground() const;
 
         /** \brief set color of line and symbol */
         void setColor(QColor c);
@@ -351,6 +355,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXYParametrizedScatterGraph: public JKQTPXYGrap
 
         /** \brief indicates whether to draw a line or not */
         bool drawLine;
+        /** \brief indicates whether to draw the line behind or above the symbols */
+        bool drawLineInForeground;
         /** \brief this column contains the symbol size in pt */
         int sizeColumn;
         /** \brief this column contains the symbol color */
@@ -405,6 +411,15 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXYParametrizedScatterGraph: public JKQTPXYGrap
           JKQTPGraphSymbols operator()(double x, double y, double symcolumn) const;
         };
 
+        /** \brief helper struct, which describes a single symbol */
+        struct SymbolDescription {
+            double x;
+            double y;
+            JKQTPGraphSymbols type;
+            double size;
+            QColor color;
+            QColor fillColor;
+        };
 };
 
 
