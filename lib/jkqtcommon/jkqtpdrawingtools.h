@@ -40,6 +40,8 @@
 #include <QDebug>
 #include <QVector>
 #include <QGuiApplication>
+#include <QDataStream>
+#include <ostream>
 #include "jkqtcommon/jkqtpmathtools.h"
 #include "jkqtcommon/jkqtpcodestructuring.h"
 
@@ -212,6 +214,7 @@ inline JKQTPGraphSymbols operator+(JKQTPGraphSymbols a, int64_t b) {
     return static_cast<JKQTPGraphSymbols>(static_cast<uint64_t>(a)+b);
 }
 
+
 /** \brief register a JKQTPCustomGraphSymbolFunctor that draws a custom symbol.Returns an ID that allows to access the symbol!
  * \ingroup jkqtptools_drawing
  *
@@ -244,6 +247,18 @@ JKQTCOMMON_LIB_EXPORT QString JKQTPGraphSymbols2NameString(JKQTPGraphSymbols pos
  * \ingroup jkqtptools_drawing
  */
 JKQTCOMMON_LIB_EXPORT JKQTPGraphSymbols String2JKQTPGraphSymbols(const QString& pos);
+
+
+inline QDataStream& operator<<(QDataStream& str, JKQTPGraphSymbols s) {
+    str<<static_cast<uint64_t>(s);
+    return str;
+}
+
+
+inline QDataStream& operator>>(QDataStream& str, JKQTPGraphSymbols& s) {
+    str<<reinterpret_cast<uint64_t&>(s);
+    return str;
+}
 
 /*! \brief plot the specified symbol at pixel position x,y
    \ingroup jkqtptools_drawing
