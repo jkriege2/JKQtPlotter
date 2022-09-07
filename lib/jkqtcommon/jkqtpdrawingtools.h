@@ -250,13 +250,13 @@ JKQTCOMMON_LIB_EXPORT JKQTPGraphSymbols String2JKQTPGraphSymbols(const QString& 
 
 
 inline QDataStream& operator<<(QDataStream& str, JKQTPGraphSymbols s) {
-    str<<static_cast<uint64_t>(s);
+    str<<static_cast<quint64>(s);
     return str;
 }
 
 
 inline QDataStream& operator>>(QDataStream& str, JKQTPGraphSymbols& s) {
-    str<<reinterpret_cast<uint64_t&>(s);
+    str<<reinterpret_cast<quint64&>(s);
     return str;
 }
 

@@ -556,12 +556,12 @@ QVector<JKQTPCustomGraphSymbolFunctor> JKQTPlotterDrawingTools::JKQTPCustomGraph
 
 JKQTPGraphSymbols JKQTPRegisterCustomGraphSymbol(JKQTPCustomGraphSymbolFunctor&& f)
 {
-    JKQTPlotterDrawingTools::JKQTPCustomGraphSymbolStore.emplace_back(std::move(f));
+    JKQTPlotterDrawingTools::JKQTPCustomGraphSymbolStore.push_back(std::move(f));
     return JKQTPFirstCustomSymbol+(JKQTPlotterDrawingTools::JKQTPCustomGraphSymbolStore.size()-1);
 }
 
 JKQTPGraphSymbols JKQTPRegisterCustomGraphSymbol(const JKQTPCustomGraphSymbolFunctor& f)
 {
-    JKQTPlotterDrawingTools::JKQTPCustomGraphSymbolStore.emplace_back(f);
+    JKQTPlotterDrawingTools::JKQTPCustomGraphSymbolStore.push_back(f);
     return JKQTPFirstCustomSymbol+(JKQTPlotterDrawingTools::JKQTPCustomGraphSymbolStore.size()-1);
 }
