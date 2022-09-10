@@ -40,9 +40,12 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 <tr><td> \image html barchart_small.png
     <td> \subpage JKQTPlotterBarcharts
     <td> `JKQTPBarVerticalGraph` <br> C-style arrays of data 
+<tr><td> \image html barchart_errorbars_small.png
+    <td> \subpage JKQTPlotterBarchartsErrorBars
+    <td> `JKQTPBarVerticalErrorGraph` <br>  JKQTPDatastore::addColumnCalculatedFromColumn()
 <tr><td> \image html barchart_twocolor_small.png
     <td> \subpage JKQTPlotterBarchartsTwoColorFilling
-    <td> `JKQTPBarVerticalGraph` <br> 
+    <td> `JKQTPBarVerticalGraph` <br> JKQTPDatastore::addColumnCalculatedFromColumn()
 <tr><td> \image html stackedbars_small.png
     <td> \subpage JKQTPlotterStackedBarChart
     <td> `JKQTPBarVerticalStackableGraph`, `JKQTPBarHorizontalStackableGraph` <br> C++-style vectors of data 
@@ -52,6 +55,9 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 <tr><td> \image html wiggleplots_small.png
     <td> \subpage JKQTPlotterWigglePlots
     <td> `JKQTPFilledCurveXGraph`/`JKQTPFilledCurveYGraph` <br> setting/altering data in `JKQTPDatstore` directly <br>  data-depentend coloring <br> random-walks <br> seismographic data
+<tr><td> \image html filledgraphs_errors_small.png
+    <td> \subpage JKQTPlotterFilledGraphsErrorBars
+    <td> `JKQTPFilledCurveXErrorGraph`/`JKQTPFilledCurveYErrorGraph` 
 <tr><td> \image html impulsesplot_small.png
     <td> \subpage JKQTPlotterImpulsePlots
     <td> `JKQTPImpulsesVerticalGraph` and `JKQTPImpulsesHorizontalGraph` <br> C++-style QVector as plot data 

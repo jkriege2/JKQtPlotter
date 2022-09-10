@@ -582,6 +582,10 @@ enum JKQTPErrorPlotstyle {
     JKQTPErrorSimpleBars=6,          /*!< \brief simplified error bars for each data point \image html JKQTPErrorSimpleBars.png */
     JKQTPErrorLines=5,               /*!< \brief a second and third graph line above and below the actual data which indicates the error value \image html JKQTPErrorLines.png */
     JKQTPErrorBars=4,                /*!< \brief error bars for each data point \image html JKQTPErrorBars.png */
+    JKQTPErrorHalfBarsOutwards=11,   /*!< \brief half error bars for each data point, pointing outwards \image html JKQTPErrorHalfBarsOutwards.png */
+    JKQTPErrorHalfBarsInwards=12,    /*!< \brief half error bars for each data point, pointing inwards \image html JKQTPErrorHalfBarsInwards.png */
+    JKQTPErrorHalfBarsAbove=13,      /*!< \brief half error bars for each data point, pointing up \image html JKQTPErrorHalfBarsAbove.png */
+    JKQTPErrorHalfBarsBelow=14,      /*!< \brief half error bars for each data point, pointing down \image html JKQTPErrorHalfBarsBelow.png */
     JKQTPErrorPolygons=3,            /*!< \brief line error lines, but with filled range in between \image html JKQTPErrorPolygons.png */
     JKQTPErrorBarsLines=2,           /*!< \brief error bars and lines for each data point \image html JKQTPErrorBarsLines.png */
     JKQTPErrorBarsPolygons=1,        /*!< \brief error bars and polygons for each data point \image html JKQTPErrorBarsPolygons.png */

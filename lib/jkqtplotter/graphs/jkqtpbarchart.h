@@ -117,7 +117,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarVerticalGraph: public JKQTPBarGraphBase {
  *  \ingroup jkqtplotter_barssticks
  *
  *  This works much the same as JKQTPBarHorizontalGraph. Here is an example output:
- *  \image html plot_bargraphverploterr.png
+ *  \image html JKQTPBarVerticalErrorGraph.png
  *
  * \see jkqtpstatAddYErrorBarGraph(), JKQTPBarVerticalGraph, \ref JKQTPlotterBarcharts
  */
@@ -141,7 +141,16 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarVerticalErrorGraph: public JKQTPBarVertical
         int getBarErrorColumn() const;
         /** \brief returns the column that contains the lower bar height errors */
         int getBarLowerErrorColumn() const;
+        /** \brief returns the error style of the bar */
+        JKQTPErrorPlotstyle getBarErrorStyle() const;
+        /** \brief returns whether the errors of the bars are symmetric */
+        bool getBarErrorSymmetric() const;
+
     public slots:
+        /** \brief sets whether the errors of the bars are symmetric */
+        void setBarErrorSymmetric(bool __value);
+        /** \brief sets the error style of the bar */
+        void setBarErrorStyle(JKQTPErrorPlotstyle  __value);
         /** \brief sets the column that contains the bar height errors */
         void setBarErrorColumn(int column) ;
 
@@ -238,7 +247,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarHorizontalGraph: public JKQTPBarGraphBase {
  *  \ingroup jkqtplotter_barssticks
  *
  *  This works much the same as JKQTPBarHorizontalGraph. Here is an example output:
- *  \image html plot_bargraphhorploterr.png
+ *  \image html JKQTPBarHorizontalErrorGraph.png
  *
  * \see jkqtpstatAddXErrorBarGraph(), JKQTPBarHorizontalGraph, \ref JKQTPlotterBarcharts
  *
@@ -264,7 +273,16 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarHorizontalErrorGraph: public JKQTPBarHorizo
         int getBarErrorColumn() const;
         /** \brief returns the column that contains the lower bar height errors */
         int getBarLowerErrorColumn() const;
+        /** \brief returns the error style of the bar */
+        JKQTPErrorPlotstyle getBarErrorStyle() const;
+        /** \brief returns whether the errors of the bars are symmetric */
+        bool getBarErrorSymmetric() const;
+
     public slots:
+        /** \brief sets whether the errors of the bars are symmetric */
+        void setBarErrorSymmetric(bool __value);
+        /** \brief sets the error style of the bar */
+        void setBarErrorStyle(JKQTPErrorPlotstyle  __value);
         /** \brief sets the column that contains the bar height errors */
         void setBarErrorColumn(int column) ;
 

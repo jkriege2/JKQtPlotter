@@ -363,12 +363,51 @@ bool JKQTPBarHorizontalErrorGraph::usesColumn(int c) const
 bool JKQTPBarHorizontalErrorGraph::getXMinMax(double &minx, double &maxx, double &smallestGreaterZero)
 {
     if (xErrorColumn<0 || xErrorStyle==JKQTPNoError) {
-        return JKQTPBarHorizontalGraph::getXMinMax(minx, maxx, smallestGreaterZero);
-    } else {
-        bool start=false;
         minx=0;
         maxx=0;
         smallestGreaterZero=0;
+        if (getBaseline()>0) {
+            smallestGreaterZero=getBaseline();
+            minx=getBaseline();
+            maxx=getBaseline();
+        }
+
+        if (parent==nullptr) return false;
+
+        JKQTPDatastore* datastore=parent->getDatastore();
+        int imax=0;
+        int imin=0;
+        if (getIndexRange(imin, imax)) {
+
+
+            for (int i=imin; i<imax; i++) {
+                double yv=getBaseline();
+                if (JKQTPIsOKFloat(yv)) {
+                    if (yv>maxx) maxx=yv;
+                    if (yv<minx) minx=yv;
+                    double xvsgz;
+                    xvsgz=yv; SmallestGreaterZeroCompare_xvsgz();
+                }
+                yv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
+                if (JKQTPIsOKFloat(yv)) {
+                    if (yv>maxx) maxx=yv;
+                    if (yv<minx) minx=yv;
+                    double xvsgz;
+                    xvsgz=yv; SmallestGreaterZeroCompare_xvsgz();
+                }
+            }
+            return true;
+        }
+    } else {
+        bool start=false;
+        minx=getBaseline();
+        maxx=getBaseline();
+        smallestGreaterZero=0;
+        if (getBaseline()>0) {
+            smallestGreaterZero=getBaseline();
+            minx=getBaseline();
+            maxx=getBaseline();
+        }
 
         if (parent==nullptr) return false;
 
@@ -377,25 +416,25 @@ bool JKQTPBarHorizontalErrorGraph::getXMinMax(double &minx, double &maxx, double
         int imin=0;
         if (getIndexRange(imin, imax)) {
 
+
             for (int i=imin; i<imax; i++) {
-                double xvsgz;
-                const double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i))+getXErrorU(i, datastore);
-                const double xvv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i))-getXErrorL(i, datastore);
-                if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(xvv) ) {
-                    if (start || xv>maxx) maxx=xv;
-                    if (start || xv<minx) minx=xv;
-                    xvsgz=xv; SmallestGreaterZeroCompare_xvsgz();
-                    start=false;
-                    if (xvv>maxx) maxx=xvv;
-                    if (xvv<minx) minx=xvv;
-                    xvsgz=xvv; SmallestGreaterZeroCompare_xvsgz();
+                const double yv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i))+getXErrorU(i, datastore);
+                const double yvv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i))-getXErrorL(i, datastore);
+                if (JKQTPIsOKFloat(yv) && JKQTPIsOKFloat(yvv) ) {
+                    if (start || yv>maxx) maxx=yv;
+                    if (start || yv<minx) minx=yv;
+                    double xvsgz;
+                    xvsgz=yv; SmallestGreaterZeroCompare_xvsgz();
+                    if (start || yvv>maxx) maxx=yvv;
+                    if (start || yvv<minx) minx=yvv;
+                    xvsgz=yvv; SmallestGreaterZeroCompare_xvsgz();
                     start=false;
                 }
             }
             return !start;
         }
-        return false;
     }
+    return false;
 }
 
 void JKQTPBarHorizontalErrorGraph::drawErrorsAfter(JKQTPEnhancedPainter &painter)
@@ -414,6 +453,26 @@ int JKQTPBarHorizontalErrorGraph::getBarErrorColumn() const
 int JKQTPBarHorizontalErrorGraph::getBarLowerErrorColumn() const
 {
     return getXErrorColumnLower();
+}
+
+JKQTPErrorPlotstyle JKQTPBarHorizontalErrorGraph::getBarErrorStyle() const
+{
+    return getXErrorStyle();
+}
+
+bool JKQTPBarHorizontalErrorGraph::getBarErrorSymmetric() const
+{
+    return getXErrorSymmetric();
+}
+
+void JKQTPBarHorizontalErrorGraph::setBarErrorSymmetric(bool __value)
+{
+    setXErrorSymmetric(__value);
+}
+
+void JKQTPBarHorizontalErrorGraph::setBarErrorStyle(JKQTPErrorPlotstyle __value)
+{
+    setXErrorStyle(__value);
 }
 
 void JKQTPBarHorizontalErrorGraph::setBarErrorColumn(int column)
@@ -540,6 +599,26 @@ int JKQTPBarVerticalErrorGraph::getBarErrorColumn() const
 int JKQTPBarVerticalErrorGraph::getBarLowerErrorColumn() const
 {
     return getYErrorColumnLower();
+}
+
+JKQTPErrorPlotstyle JKQTPBarVerticalErrorGraph::getBarErrorStyle() const
+{
+    return getYErrorStyle();
+}
+
+bool JKQTPBarVerticalErrorGraph::getBarErrorSymmetric() const
+{
+    return getYErrorSymmetric();
+}
+
+void JKQTPBarVerticalErrorGraph::setBarErrorSymmetric(bool __value)
+{
+    setYErrorSymmetric(__value);
+}
+
+void JKQTPBarVerticalErrorGraph::setBarErrorStyle(JKQTPErrorPlotstyle __value)
+{
+    setYErrorStyle(__value);
 }
 
 void JKQTPBarVerticalErrorGraph::setBarErrorColumn(int column)

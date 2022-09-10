@@ -197,6 +197,10 @@ QString JKQTPErrorPlotstyle2String(JKQTPErrorPlotstyle pos) {
         case JKQTPErrorEllipses: return "error_ell";
         case JKQTPErrorLines: return "error_lines";
         case JKQTPErrorBars: return "error_bars";
+        case JKQTPErrorHalfBarsAbove: return "error_bars_half_above";
+        case JKQTPErrorHalfBarsBelow: return "error_bars_half_below";
+        case JKQTPErrorHalfBarsInwards: return "error_bars_half_inwards";
+        case JKQTPErrorHalfBarsOutwards: return "error_bars_half_outwards";
         case JKQTPErrorSimpleBars: return "error_simplebars";
         case JKQTPErrorPolygons: return "error_polygons";
         case JKQTPErrorBarsLines: return "error_bars_lines";
@@ -220,6 +224,10 @@ JKQTPErrorPlotstyle String2JKQTPErrorPlotstyle(const QString& pos) {
     if (s=="error_bars_polygons") return JKQTPErrorBarsPolygons;
     if (s=="error_simplebars_lines") return JKQTPErrorSimpleBarsLines;
     if (s=="error_simplebars_polygons") return JKQTPErrorSimpleBarsPolygons;
+    if (s=="error_bars_half_above") return JKQTPErrorHalfBarsAbove;
+    if (s=="error_bars_half_below") return JKQTPErrorHalfBarsBelow;
+    if (s=="error_bars_half_inwards") return JKQTPErrorHalfBarsInwards;
+    if (s=="error_bars_half_outwards") return JKQTPErrorHalfBarsOutwards;
     return JKQTPNoError;
 }
 
