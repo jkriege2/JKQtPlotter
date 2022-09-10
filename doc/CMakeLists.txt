@@ -125,6 +125,7 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         scatter_customsymbol
         simpletest
         barchart/barchart,barchart_hor
+        barchart_twocolor/barchart_twocolor,barchart_twocolor_hor
         wiggleplots/wiggleplot_x,wiggleplot_y
         advplotstyling/advancedlineandfillstyling
         boxplot
@@ -172,6 +173,7 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         scatter/JKQTPXYScatterGraph,JKQTPXYScatterErrorGraph/--smallscreenshotplot
         simpletest/JKQTPXYLineGraph/--smallscreenshotplot
         barchart/JKQTPBarVerticalGraph,JKQTPBarHorizontalGraph/--smallscreenshotplot
+        barchart_twocolor/JKQTPBarVerticalGraphTwoColorFilling,JKQTPBarHorizontalGraphTwoColorFilling/--smallscreenshotplot
         wiggleplots/JKQTPFilledCurveXGraph_wiggle,JKQTPFilledCurveYGraph_wiggle
         contourplot/JKQTPColumnContourPlot/--smallscreenshotplot
         filledgraphs/JKQTPFilledCurveXGraph,JKQTPFilledCurveYGraph/--smallscreenshotplot

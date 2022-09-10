@@ -60,6 +60,7 @@ void JKQTPBarVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
 
     const QPen p=getLinePenForRects(painter, parent);
     const QBrush b=getFillBrush(painter, parent);
+    const QBrush b_below=(getFillMode()==FillMode::TwoColorFilling)?fillStyleBelow().getFillBrush(painter, parent):b;
 
     int imax=0;
     int imin=0;
@@ -80,7 +81,8 @@ void JKQTPBarVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
             const double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
             const int sr=datastore->getNextLowerIndex(xColumn, i);
             const int lr=datastore->getNextHigherIndex(xColumn, i);
-            double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
+            const double yvdirect=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
+            double yv=yvdirect;
             double yv0=y0;
             if (!qFuzzyIsNull(getBaseline())) yv0=transformY(getBaseline());
             if (hasStackPar) {
@@ -112,9 +114,10 @@ void JKQTPBarVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
                 //std::cout<<"delta="<<delta<<"   x="<<x<<" y="<<y<<"   xx="<<xx<<" yy="<<yy<<std::endl;
                 if (yy<y) { qSwap(y,yy); }
                 if (JKQTPIsOKFloat(x) && JKQTPIsOKFloat(xx) && JKQTPIsOKFloat(y) && JKQTPIsOKFloat(yy)) {
-                    painter.setBrush(b);
+                    if (yvdirect<getBaseline()) painter.setBrush(b_below);
+                    else painter.setBrush(b);
                     painter.setPen(p);
-                    QRectF r(QPointF(x, y), QPointF(xx, yy));
+                    const QRectF r(QPointF(x, y), QPointF(xx, yy));
                     painter.drawRect(r);
 
                 }
@@ -256,6 +259,7 @@ void JKQTPBarHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
 
     const QPen p=getLinePenForRects(painter, parent);
     const QBrush b=getFillBrush(painter, parent);
+    const QBrush b_below=(getFillMode()==FillMode::TwoColorFilling)?fillStyleBelow().getFillBrush(painter, parent):b;
 
     int imax=0;
     int imin=0;
@@ -274,7 +278,8 @@ void JKQTPBarHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
             double deltam=0;
             for (int iii=imin; iii<imax; iii++) {
                 int i=qBound(imin, getDataIndex(iii), imax);
-                double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
+                const double xvdirect=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
+                double xv=xvdirect;
                 double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
                 int sr=datastore->getNextLowerIndex(yColumn, i);
                 int lr=datastore->getNextHigherIndex(yColumn, i);
@@ -311,7 +316,8 @@ void JKQTPBarHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
                     //qDebug()<<"delta="<<delta<<"   x="<<x<<" y="<<y<<"   xx="<<xx<<" yy="<<yy;
                     //qDebug()<<"xv="<<xv<<"   x0="<<x0<<"   x="<<x<<"..."<<xx;
                     if (JKQTPIsOKFloat(x) && JKQTPIsOKFloat(xx) && JKQTPIsOKFloat(y) && JKQTPIsOKFloat(yy)) {
-                        painter.setBrush(b);
+                        if (xvdirect<getBaseline()) painter.setBrush(b_below);
+                        else painter.setBrush(b);
                         painter.setPen(p);
                         QRectF r(QPointF(x, y), QPointF(xx, yy));
                         painter.drawRect(r);

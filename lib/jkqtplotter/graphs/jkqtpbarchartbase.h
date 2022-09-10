@@ -50,13 +50,25 @@
  *
  *  \image html JKQTPBarVerticalGraph.png
  *
+ *  You can also set FillMode::TwoColorFilling, which uses different fill styles for bars above and below
+ *  the baseline of the graph:
  *
+ *  \image html JKQTPBarVerticalGraphTwoColorFilling.png
  *
  *  \see JKQTPBarHorizontalGraph, JKQTPBarVerticalGraph
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPBarGraphBase: public JKQTPXYBaselineGraph, public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin {
         Q_OBJECT
     public:
+        /** \brief specifies how the area below the graph is filled
+         *
+         *  \see setFillMode(), getFillMode(), fillStyleBelow(), \ref JKQTPlotterWigglePlots
+         */
+        enum FillMode {
+            SingleFilling=0, /*!< \brief the whole area is filled with the same color/pattern \image html JKQTPBarVerticalGraph.png */
+            TwoColorFilling=1 /*!< \brief the area above and below baseline with the two different colors/pattern \image html JKQTPBarVerticalGraphTwoColorFilling.png */
+        };
+        Q_ENUM(FillMode)
         /** \brief class constructor */
         JKQTPBarGraphBase(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
@@ -84,7 +96,15 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarGraphBase: public JKQTPXYBaselineGraph, pub
 		
 		/** \brief returns xColumn or yColumn, whichever is used for the height of the bars (depending on whether the barchart is vertical or horizontal \see getBarPositionColumn(), xColumn, yColumn */
 		virtual int getBarHeightColumn() const =0;
+        /** \copydoc m_fillStyleBelow */
+        JKQTPGraphFillStyleMixin &fillStyleBelow();
+        /** \copydoc m_fillStyleBelow */
+        const JKQTPGraphFillStyleMixin& fillStyleBelow() const;
+        /** \copydoc m_fillMode */
+        FillMode getFillMode() const;
     public slots:
+        /** \copydoc m_fillMode */
+        void setFillMode(JKQTPBarGraphBase::FillMode mode);
 
         /** \brief finds all bar charts of the same orientation and determines width and shift, so they stand side by side
          *
@@ -134,6 +154,11 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarGraphBase: public JKQTPXYBaselineGraph, pub
          *     \image html bargraph_basics.png
          */
         double shift;
+        /** \brief specifies how the area of the graph is filles */
+        FillMode m_fillMode;
+        /** \brief if m_fillMode \c ==FillAboveAndBelowDifferently then this fill style is used below the baseline and
+         *         the default fill style is used above */
+        JKQTPGraphFillStyleMixin m_fillStyleBelow;
 
 
         /** \brief this function is used by autoscaleBarWidthAndShift() to determine whether a given graph shall be taken into account when autoscaling. 

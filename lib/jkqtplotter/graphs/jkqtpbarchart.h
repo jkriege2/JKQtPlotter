@@ -53,6 +53,11 @@
     \image html JKQTPBarVerticalGraph.png
 
 
+    You can also set JKQTPBarGraphBase::FillMode::TwoColorFilling, which uses different fill styles for bars above and below
+    the baseline of the graph:
+
+    \image html JKQTPBarVerticalGraphTwoColorFilling.png
+
     You can use JKQTPlotter::addHorizontalBargraph() to add a series of bargraphs, where the width and shift are determined
     automatically. The y-columns are given as a QVector<int> to this function.
 
@@ -164,6 +169,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarVerticalErrorGraph: public JKQTPBarVertical
 
     \image html JKQTPBarHorizontalGraph.png
 
+    You can also set JKQTPBarGraphBase::FillMode::TwoColorFilling, which uses different fill styles for bars above and below
+    the baseline of the graph:
+
+    \image html JKQTPBarHorizontalGraphTwoColorFilling.png
 
     \see \ref JKQTPlotterBarcharts, jkqtpstatAddVHistogram1D(), jkqtpstatAddVHistogram1DAutoranged()
  */

@@ -40,6 +40,9 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 <tr><td> \image html barchart_small.png
     <td> \subpage JKQTPlotterBarcharts
     <td> `JKQTPBarVerticalGraph` <br> C-style arrays of data 
+<tr><td> \image html barchart_twocolor_small.png
+    <td> \subpage JKQTPlotterBarchartsTwoColorFilling
+    <td> `JKQTPBarVerticalGraph` <br> 
 <tr><td> \image html stackedbars_small.png
     <td> \subpage JKQTPlotterStackedBarChart
     <td> `JKQTPBarVerticalStackableGraph`, `JKQTPBarHorizontalStackableGraph` <br> C++-style vectors of data 
