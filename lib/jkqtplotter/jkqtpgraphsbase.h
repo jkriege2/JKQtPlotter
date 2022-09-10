@@ -579,6 +579,10 @@ public:
     int getYColumn() const;
     /** \copydoc sortData */
     DataSortOrder getDataSortOrder() const;
+    /** \brief returns the column used as "key" for the current graph (typically this call getXColumn(), but for horizontal graphs like filled curves or barcharts it may call getYColumn() ) */
+    virtual int getKeyColumn() const;
+    /** \brief returns the column used as "value" for the current graph (typically this call getXColumn(), but for horizontal graphs like filled curves or barcharts it may call getYColumn() ) */
+    virtual int getValueColumn() const;
 
     Q_PROPERTY(DataSortOrder sortData READ getDataSortOrder WRITE setDataSortOrder)
     Q_PROPERTY(int xColumn READ getXColumn WRITE setXColumn)
@@ -622,6 +626,10 @@ public slots:
     void setYColumn(int __value);
     /** \copydoc yColumn */
     void setYColumn (size_t __value);
+    /** \brief sets the column used as "key" for the current graph (typically this call setXColumn(), but for horizontal graphs like filled curves or barcharts it may call setYColumn() ) */
+    virtual void setKeyColumn(int __value);
+    /** \brief sets the column used as "value" for the current graph (typically this call setXColumn(), but for horizontal graphs like filled curves or barcharts it may call setYColumn() ) */
+    virtual void setValueColumn(int __value);
 protected:
 
     /** \brief the column that contains the x-component of the datapoints */
@@ -712,6 +720,8 @@ public:
 
     /** \copydoc yColumn2 */
     int getYColumn2() const;
+    /** \brief returns the column used as secondary "value" for the current graph (typically this call getXColumn(), but for horizontal graphs like filled curves or barcharts it may call getYColumn() ) */
+    virtual int getValue2Column() const;
 
     /** \copydoc JKQTPXYGraph::hitTest() */
     virtual double hitTest(const QPointF &posSystem, QPointF* closestSpotSystem=nullptr, QString* label=nullptr, HitTestMode mode=HitTestXY) const override;
@@ -728,6 +738,8 @@ public slots:
     void setYColumn2(int __value);
     /** \copydoc yColumn2 */
     void setYColumn2(size_t __value);
+    /** \brief sets the column used as secondary "value" for the current graph (typically this call setXColumn(), but for horizontal graphs like filled curves or barcharts it may call setYColumn() ) */
+    virtual void setValue2Column(int __value);
 protected:
 
     /** \brief the column that contains the second y-component of the datapoints */
@@ -769,6 +781,8 @@ public:
 
     /** \copydoc xColumn2 */
     int getXColumn2() const;
+    /** \brief returns the column used as "key" for the current graph (typically this call getXColumn(), but for horizontal graphs like filled curves or barcharts it may call getYColumn() ) */
+    virtual int getKey2Column() const;
 
     /** \copydoc JKQTPXYGraph::hitTest() */
     virtual double hitTest(const QPointF &posSystem, QPointF* closestSpotSystem=nullptr, QString* label=nullptr, HitTestMode mode=HitTestXY) const override;
@@ -785,6 +799,8 @@ public slots:
     void setXColumn2(int __value);
     /** \copydoc xColumn2 */
     void setXColumn2(size_t __value);
+    /** \brief sets the column used as "key" for the current graph (typically this call setXColumn(), but for horizontal graphs like filled curves or barcharts it may call setYColumn() ) */
+    virtual void setKey2Column(int __value);
 protected:
 
     /** \brief the column that contains the second y-component of the datapoints */

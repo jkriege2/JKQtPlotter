@@ -68,7 +68,7 @@ public slots:
     /** \brief set line-color, fill color and symbol color */
     void setColor(QColor c);
     /** \copydoc m_fillMode */
-    void setFillMode(FillMode mode);
+    void setFillMode(JKQTPFilledCurveGraphBase::FillMode mode);
 protected:
     /** \brief specifies how the area of the graph is filles */
     FillMode m_fillMode;
@@ -107,7 +107,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPFilledCurveXGraph: public JKQTPFilledCurveGrap
         /** \brief class constructor */
         JKQTPFilledCurveXGraph(JKQTPlotter* parent);
         /** \brief plots the graph to the plotter object specified as parent */
-        void draw(JKQTPEnhancedPainter &painter);
+        void draw(JKQTPEnhancedPainter &painter) override;
 };
 
 
@@ -170,7 +170,16 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPFilledCurveYGraph: public JKQTPFilledCurveGrap
         JKQTPFilledCurveYGraph(JKQTPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
-        void draw(JKQTPEnhancedPainter &painter);
+        void draw(JKQTPEnhancedPainter &painter) override;
+        /** \brief returns the column used as "key" for the current graph (typically this call getXColumn(), but for horizontal graphs like filled curves or barcharts it may call getYColumn() ) */
+        virtual int getKeyColumn() const override;
+        /** \brief returns the column used as "value" for the current graph (typically this call getXColumn(), but for horizontal graphs like filled curves or barcharts it may call getYColumn() ) */
+        virtual int getValueColumn() const override;
+    public slots:
+        /** \brief sets the column used as "key" for the current graph (typically this call setXColumn(), but for horizontal graphs like filled curves or barcharts it may call setYColumn() ) */
+        virtual void setKeyColumn(int __value) override;
+        /** \brief sets the column used as "value" for the current graph (typically this call setXColumn(), but for horizontal graphs like filled curves or barcharts it may call setYColumn() ) */
+        virtual void setValueColumn(int __value) override;
 
 };
 

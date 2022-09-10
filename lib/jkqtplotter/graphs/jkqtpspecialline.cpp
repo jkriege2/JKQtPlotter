@@ -488,6 +488,26 @@ void JKQTPSpecialLineVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
     drawErrorsAfter(painter);
 }
 
+int JKQTPSpecialLineVerticalGraph::getKeyColumn() const
+{
+    return getYColumn();
+}
+
+int JKQTPSpecialLineVerticalGraph::getValueColumn() const
+{
+    return getXColumn();
+}
+
+void JKQTPSpecialLineVerticalGraph::setKeyColumn(int __value)
+{
+    setYColumn(__value);
+}
+
+void JKQTPSpecialLineVerticalGraph::setValueColumn(int __value)
+{
+    setXColumn(__value);
+}
+
 
 
 

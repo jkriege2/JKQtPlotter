@@ -333,6 +333,26 @@ void JKQTPFilledCurveYGraph::draw(JKQTPEnhancedPainter &painter)
     drawErrorsAfter(painter);
 }
 
+int JKQTPFilledCurveYGraph::getKeyColumn() const
+{
+    return getYColumn();
+}
+
+int JKQTPFilledCurveYGraph::getValueColumn() const
+{
+    return getXColumn();
+}
+
+void JKQTPFilledCurveYGraph::setKeyColumn(int __value)
+{
+    setYColumn(__value);
+}
+
+void JKQTPFilledCurveYGraph::setValueColumn(int __value)
+{
+    setXColumn(__value);
+}
+
 
 
 JKQTPFilledCurveXErrorGraph::JKQTPFilledCurveXErrorGraph(JKQTBasePlotter *parent):

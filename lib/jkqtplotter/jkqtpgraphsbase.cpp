@@ -390,6 +390,16 @@ void JKQTPXYGraph::setYColumn(size_t __value) {
     this->yColumn = static_cast<int>(__value);
 }
 
+void JKQTPXYGraph::setKeyColumn(int __value)
+{
+    setXColumn(__value);
+}
+
+void JKQTPXYGraph::setValueColumn(int __value)
+{
+    setYColumn(__value);
+}
+
 void JKQTPXYGraph::setDataSortOrder(JKQTPXYGraph::DataSortOrder __value)
 {
     this->sortData = __value;
@@ -398,6 +408,16 @@ void JKQTPXYGraph::setDataSortOrder(JKQTPXYGraph::DataSortOrder __value)
 JKQTPXYGraph::DataSortOrder JKQTPXYGraph::getDataSortOrder() const
 {
     return this->sortData;
+}
+
+int JKQTPXYGraph::getKeyColumn() const
+{
+    return getXColumn();
+}
+
+int JKQTPXYGraph::getValueColumn() const
+{
+    return getYColumn();
 }
 
 void JKQTPXYGraph::setDataSortOrder(int __value) {
@@ -822,6 +842,16 @@ void JKQTPXYYGraph::setYColumn2(size_t __value)
     yColumn2=static_cast<int>(__value);
 }
 
+int JKQTPXYYGraph::getValue2Column() const
+{
+    return getYColumn2();
+}
+
+void JKQTPXYYGraph::setValue2Column(int __value)
+{
+    setYColumn2(__value);
+}
+
 bool JKQTPXYYGraph::getIndexRange(int &imin, int &imax) const
 {
     bool ok=JKQTPXYGraph::getIndexRange(imin, imax);
@@ -893,6 +923,16 @@ bool JKQTPXXYGraph::usesColumn(int column) const
 int JKQTPXXYGraph::getXColumn2() const
 {
     return xColumn2;
+}
+
+int JKQTPXXYGraph::getKey2Column() const
+{
+    return getXColumn2();
+}
+
+void JKQTPXXYGraph::setKey2Column(int __value)
+{
+    setXColumn2(__value);
 }
 
 double JKQTPXXYGraph::hitTest(const QPointF &posSystem, QPointF *closestSpotSystem, QString *label, JKQTPPlotElement::HitTestMode mode) const

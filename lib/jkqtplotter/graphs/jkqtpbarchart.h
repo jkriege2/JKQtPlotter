@@ -194,7 +194,15 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarHorizontalGraph: public JKQTPBarGraphBase {
 
         /** \brief returns xColumn or yColumn, whichever is used for the height of the bars (depending on whether the barchart is vertical or horizontal \see getBarPositionColumn(), xColumn, yColumn */
         virtual int getBarHeightColumn() const override;
+        /** \brief returns the column used as "key" for the current graph (typically this call getXColumn(), but for horizontal graphs like filled curves or barcharts it may call getYColumn() ) */
+        virtual int getKeyColumn() const override;
+        /** \brief returns the column used as "value" for the current graph (typically this call getXColumn(), but for horizontal graphs like filled curves or barcharts it may call getYColumn() ) */
+        virtual int getValueColumn() const override;
     public slots:
+        /** \brief sets the column used as "key" for the current graph (typically this call setXColumn(), but for horizontal graphs like filled curves or barcharts it may call setYColumn() ) */
+        virtual void setKeyColumn(int __value) override;
+        /** \brief sets the column used as "value" for the current graph (typically this call setXColumn(), but for horizontal graphs like filled curves or barcharts it may call setYColumn() ) */
+        virtual void setValueColumn(int __value) override;
 
         /** \brief sets xColumn or yColumn, whichever is used for the position of the bars (depending on whether the barchart is vertical or horizontal \see getBarHeightColumn(), xColumn, yColumn */
         virtual void setBarPositionColumn(int column)  override;

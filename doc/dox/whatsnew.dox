@@ -46,6 +46,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: added the option to draw a character from a font as symbol (<code>JKQTPCharacterSymbol+QChar('C').unicode()</code> and <code>JKQTPFilledCharacterSymbol+QChar('C').unicode()</code>)</li>
     <li>NEW: added the option to register a custom symbol using JKQTPRegisterCustomGraphSymbol() </li>
     <li>NEW: added property drawLineInForeground to JKQTPXYLineGraph and JKQTPXYParametrizedScatterGraph</li>
+    <li>NEW: added JKQTPXYGraph::setKeyColumn()/JKQTPXYGraph::getKeyColumn() and  JKQTPXYGraph::setValueColumn()/JKQTPXYGraph::getValueColumn() and corresponding functions in other classes. In most graph classes they point to xColumn for key and yColumn for values. These functions are virtual and overwritten in derived classes with horizontally oriented graphs, where they point to yColumn for key and yColumn for value. This way you can write generic code with classes for both orientations.</li>
   </ul></li>
   
   <li>JKQTMathText:<ul>

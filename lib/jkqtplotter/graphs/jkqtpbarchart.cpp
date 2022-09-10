@@ -199,6 +199,26 @@ int JKQTPBarHorizontalGraph::getBarHeightColumn() const
     return xColumn;
 }
 
+int JKQTPBarHorizontalGraph::getKeyColumn() const
+{
+    return getBarPositionColumn();
+}
+
+int JKQTPBarHorizontalGraph::getValueColumn() const
+{
+    return getBarHeightColumn();
+}
+
+void JKQTPBarHorizontalGraph::setKeyColumn(int __value)
+{
+    setBarPositionColumn(__value);
+}
+
+void JKQTPBarHorizontalGraph::setValueColumn(int __value)
+{
+    setBarHeightColumn(__value);
+}
+
 void JKQTPBarHorizontalGraph::setBarPositionColumn(int column)
 {
     yColumn=column;
