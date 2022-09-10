@@ -126,6 +126,7 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         simpletest
         barchart/barchart,barchart_hor
         barchart_twocolor/barchart_twocolor,barchart_twocolor_hor
+        barchart_errorbars/barchart_errorbars,barchart_errorbars_hor
         wiggleplots/wiggleplot_x,wiggleplot_y
         advplotstyling/advancedlineandfillstyling
         boxplot
@@ -136,6 +137,7 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         distributionplot/test_distributionplot
         evalcurve
         filledgraphs/filledgraphs,filledgraphs_y
+        filledgraphs_errors/filledgraphs_errors,filledgraphs_errors_y
         functionplot/functionplot,functionplot_fy
         styledboxplot/test_styledboxplot
         multiplot/multiplot,multiplot_controlwindow
@@ -174,9 +176,11 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         simpletest/JKQTPXYLineGraph/--smallscreenshotplot
         barchart/JKQTPBarVerticalGraph,JKQTPBarHorizontalGraph/--smallscreenshotplot
         barchart_twocolor/JKQTPBarVerticalGraphTwoColorFilling,JKQTPBarHorizontalGraphTwoColorFilling/--smallscreenshotplot
+        barchart_errorbars/JKQTPBarVerticalErrorGraph,JKQTPBarHorizontalErrorGraph/--smallscreenshotplot
         wiggleplots/JKQTPFilledCurveXGraph_wiggle,JKQTPFilledCurveYGraph_wiggle
         contourplot/JKQTPColumnContourPlot/--smallscreenshotplot
         filledgraphs/JKQTPFilledCurveXGraph,JKQTPFilledCurveYGraph/--smallscreenshotplot
+        filledgraphs_errors/JKQTPFilledCurveXErrorGraph,JKQTPFilledCurveYErrorGraph/--smallscreenshotplot
         evalcurve/JKQTPXYFunctionLineGraph/--smallscreenshotplot
     )
 
