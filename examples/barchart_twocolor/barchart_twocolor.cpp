@@ -22,7 +22,7 @@ void doExample(JKQTPlotter& plot, const QString& title)
 
     // 2. now we create two columns for key and value
     size_t columnK=ds->addLinearColumn(15, 0.5*JKQTPSTATISTICS_PI, 3.0*JKQTPSTATISTICS_PI,"k");
-    size_t columnV=ds->addColumnCalculatedFromColumn(columnK, &cos, "v");
+    size_t columnV=ds->addColumnCalculatedFromColumn(columnK, [](double x) { return cos(x); }, "v");
 
     // 3. create graph in the plot, which plots the dataset:
     JKQTPBarGraphBase* graph=new TCHART(&plot);

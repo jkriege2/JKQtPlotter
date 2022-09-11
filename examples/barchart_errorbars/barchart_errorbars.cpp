@@ -22,7 +22,7 @@ void doExample(JKQTPlotter& plot, const QString& title)
 
     // 2. now we create three columns for key and value
     size_t columnK=ds->addLinearColumn(6, 0.4*JKQTPSTATISTICS_PI, 2.2*JKQTPSTATISTICS_PI,"k");
-    size_t columnV=ds->addColumnCalculatedFromColumn(columnK, &cos, "v");
+    size_t columnV=ds->addColumnCalculatedFromColumn(columnK, [](double x) { return cos(x); }, "v");
     size_t columnE=ds->addColumnCalculatedFromColumn(columnK, [](double x) { return 0.05+0.06*(1.0+sin(x)); }, "error");
 
     // 3. create a graph in the plot, which plots the dataset with symmetric:
