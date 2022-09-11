@@ -1508,6 +1508,7 @@ void JKQTBasePlotter::print(QPrinter* printer, bool displayPreview) {
         p->setPageOrientation(QPageLayout::Portrait);
     }
 
+    emit beforeExporting();; auto __finalpaint=JKQTPFinally([&]() { emit afterExporting();});
     printpreviewNew(p, false, -1.0, -1.0, displayPreview);
 
     if (delP) delete p;
@@ -3646,6 +3647,7 @@ void JKQTBasePlotter::saveAsPDF(const QString& filename, bool displayPreview) {
     }
 
     if (!fn.isEmpty()) {
+        emit beforeExporting();; auto __finalpaint=JKQTPFinally([&]() { emit afterExporting();});
         QPrinter* printer=new QPrinter;
         bool doLandscape=widgetWidth>widgetHeight;
         if (gridPrinting) {
@@ -3746,6 +3748,8 @@ void JKQTBasePlotter::saveImage(const QString& filename, bool displayPreview) {
             }
 
 
+            emit beforeExporting();; auto __finalpaint=JKQTPFinally([&]() { emit afterExporting();});
+
             gridPrintingCalc();
             QPaintDevice* paintDevice=jkqtpPaintDeviceAdapters[adapterID]->createPaintdevice(fn, jkqtp_roundTo<int>(gridPrintingSize.width()), jkqtp_roundTo<int>(gridPrintingSize.height()));
 
@@ -3819,7 +3823,7 @@ void JKQTBasePlotter::saveAsPixelImage(const QString& filename, bool displayPrev
             form="XPM";
         }*/
 
-
+        emit beforeExporting();; auto __finalpaint=JKQTPFinally([&]() { emit afterExporting();});
         gridPrintingCalc();
         //std::cout<<gridPrintingSize.width()<<", "<<gridPrintingSize.height()<<std::endl;
 
@@ -3850,6 +3854,7 @@ void JKQTBasePlotter::saveAsPixelImage(const QString& filename, bool displayPrev
             if (form=="NONE") png.save(fn);
             else png.save(fn, form.toLatin1().data());
         }
+
     }
 }
 
@@ -3863,6 +3868,7 @@ QImage JKQTBasePlotter::grabPixelImage(QSize size, bool showPreview)
         printSizeX_Millimeter=widgetWidth;
         printSizeY_Millimeter=widgetHeight;
     }
+    emit beforeExporting();; auto __finalpaint=JKQTPFinally([&]() { emit afterExporting();});
     if (!showPreview||exportpreview(gridPrintingSize, false)) {
 
         QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
@@ -3901,6 +3907,7 @@ void JKQTBasePlotter::copyPixelImage(bool showPreview) {
     printSizeX_Millimeter=gridPrintingSize.width();
     printSizeY_Millimeter=gridPrintingSize.height();
 
+    emit beforeExporting();; auto __finalpaint=JKQTPFinally([&]() { emit afterExporting();});
     if (!showPreview||exportpreview(gridPrintingSize, false)) {
         QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 
@@ -4005,6 +4012,7 @@ void JKQTBasePlotter::saveAsSVG(const QString& filename, bool displayPreview) {
             QFile::copy(fn, tempFM);
         }
 
+        emit beforeExporting();; auto __finalpaint=JKQTPFinally([&]() { emit afterExporting();});
         gridPrintingCalc();
         QSvgGenerator* svg=new QSvgGenerator;
         svg->setResolution(96);

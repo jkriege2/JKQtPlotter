@@ -50,6 +50,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: added JKQTPXYGraph::setKeyColumn()/JKQTPXYGraph::getKeyColumn() and  JKQTPXYGraph::setValueColumn()/JKQTPXYGraph::getValueColumn() and corresponding functions in other classes. In most graph classes they point to xColumn for key and yColumn for values. These functions are virtual and overwritten in derived classes with horizontally oriented graphs, where they point to yColumn for key and yColumn for value. This way you can write generic code with classes for both orientations.</li>
     <li>NEW: barcharts (derived from JKQTPBarGraphBase) can be configured to use different fill styles above and below the baseline, see JKQTPBarGraphBase::FillMode </li>
     <li>NEW: added new error indicator styles JKQTPErrorHalfBarsOutwards, JKQTPErrorHalfBarsInwards, JKQTPErrorHalfBarsAbove, JKQTPErrorHalfBarsBelow which are especially useful for barcharts</li>
+    <li>NEW: Added signals JKQTBasePlotter::beforeExporting()/JKQTBasePlotter::afterExporting() and JKQTBasePlotterJKQTBasePlotter:beforePrinting()/JKQTBasePlotter::afterPrinting() which allow to modify the plot just before and just after an export/print</li>
   </ul></li>
   
   <li>JKQTMathText:<ul>

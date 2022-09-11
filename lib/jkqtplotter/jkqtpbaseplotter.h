@@ -1112,6 +1112,38 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         /** \brief emitted before the plot scaling has been recalculated */
         void beforePlotScalingRecalculate();
 
+        /** \brief emitted just before exporting the current plot as image, or just before the export preview dialog is shown
+         *
+         *  This signal can be used to e.g. modify the plotter settings before an export.
+         *
+         *  \see afterExporting(), beforePrinting(), afterPrinting()
+         */
+        void beforeExporting();
+
+        /** \brief emitted just before exporting the current plot as image, or just before the export preview dialog is shown
+         *
+         *  This signal can be used to e.g. modify the plotter settings after an export.
+         *
+         *  \see beforeExporting(), beforePrinting(), afterPrinting()
+         */
+        void afterExporting();
+
+        /** \brief emitted just before Printing the current plot as image, or just before the print preview dialog is shown
+         *
+         *  This signal can be used to e.g. modify the plotter settings before a print.
+         *
+         *  \see afterPrinting(), beforeExporting(), afterExporting()
+         */
+        void beforePrinting();
+
+        /** \brief emitted just before Printing the current plot as image, or just before the print preview dialog is shown
+         *
+         *  This signal can be used to e.g. modify the plotter settings after a print.
+         *
+         *  \see beforePrinting(), beforeExporting(), afterExporting()
+         */
+        void afterPrinting();
+
 
     public slots:
 
