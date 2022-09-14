@@ -83,6 +83,14 @@ inline QString JKQTPDoubleToQString(double value, int prec = 10, char f = 'g', Q
 }
 
 
+/** \brief convert a double to a string
+ * \ingroup jkqtptools_string
+ */
+inline QString& JKQTPExtendString(QString& s, const QString& separator, const QString& extension) {
+    if (s.size()>0) s+=separator;
+    s+=extension;
+    return s;
+}
 
 /** \brief convert a string to lower-case characters
  * \ingroup jkqtptools_string

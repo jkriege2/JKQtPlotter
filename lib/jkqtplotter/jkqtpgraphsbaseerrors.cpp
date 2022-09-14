@@ -359,6 +359,32 @@ void JKQTPGraphErrorStyleMixin::intPlotXYErrorIndicators(JKQTPEnhancedPainter& p
                        else if (xErrorStyle!=JKQTPNoError && xErrorColumnLower>=0) { xl=datastore->get(xErrorColumnLower,static_cast<size_t>(i)); plotlowerbarx=true; }
         double yl=0;   if (yErrorSymmetric) { yl=ye; plotlowerbary=plotupperbary||(yl>0); }
                        else if (yErrorStyle!=JKQTPNoError && yErrorColumnLower>=0) { yl=datastore->get(yErrorColumnLower,static_cast<size_t>(i)); plotlowerbary=true; }
+
+        if (xErrorStyle.testFlag(JKQTPErrorDirectionOutwards)) {
+            if (xv>=0.0) { xl=0; plotlowerbarx=false; }
+            else { xe=0; plotupperbarx=false; }
+        } else if (xErrorStyle.testFlag(JKQTPErrorDirectionInwards)) {
+            if (xv<0.0) { xl=0; plotlowerbarx=false; }
+            else { xe=0; plotupperbarx=false; }
+        } else if (xErrorStyle.testFlag(JKQTPErrorDirectionAbove)) {
+            xl=0; plotlowerbarx=false;
+        } else if (xErrorStyle.testFlag(JKQTPErrorDirectionBelow)) {
+            xe=0; plotupperbarx=false;
+        }
+
+        if (yErrorStyle.testFlag(JKQTPErrorDirectionOutwards)) {
+            if (yv>=0.0) { yl=0; plotlowerbary=false; }
+            else { ye=0; plotupperbary=false; }
+        } else if (yErrorStyle.testFlag(JKQTPErrorDirectionInwards)) {
+            if (yv<0.0) { yl=0; plotlowerbary=false; }
+            else { ye=0; plotupperbary=false; }
+        } else if (yErrorStyle.testFlag(JKQTPErrorDirectionAbove)) {
+            yl=0; plotlowerbary=false;
+        } else if (yErrorStyle.testFlag(JKQTPErrorDirectionBelow)) {
+            ye=0; plotupperbary=false;
+        }
+
+
         if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv) && JKQTPIsOKFloat(xe) && JKQTPIsOKFloat(ye) && JKQTPIsOKFloat(xl) && JKQTPIsOKFloat(yl)) {
             double x=parentGraph->transformX(xv+xrelshift*deltax); bool xok=JKQTPIsOKFloat(x);
             double y=parentGraph->transformY(yv+yrelshift*deltay); bool yok=JKQTPIsOKFloat(y);
@@ -367,7 +393,7 @@ void JKQTPGraphErrorStyleMixin::intPlotXYErrorIndicators(JKQTPEnhancedPainter& p
             defaultErrorColor = defaultErrorColor && !this->intPlotXYErrorIndicatorsGetColor(painter, parent, parentGraph, xColumn, yColumn, xErrorColumn, yErrorColumn, xErrorStyle, yErrorStyle, i, terrCol, terrFillCol);
 
             // x-errorpolygons
-            if (/*pastFirst &&*/ (xErrorStyle==JKQTPErrorPolygons || xErrorStyle==JKQTPErrorBarsPolygons || xErrorStyle==JKQTPErrorSimpleBarsPolygons)) {
+            if (xErrorStyle.testFlag(JKQTPErrorPolygons)) {
                 double xl2m=parentGraph->transformX(xv+xrelshift*deltax-xl);
                 double xl2p=parentGraph->transformX(xv+xrelshift*deltax+xe);
                 double yl2=y;
@@ -379,7 +405,7 @@ void JKQTPGraphErrorStyleMixin::intPlotXYErrorIndicators(JKQTPEnhancedPainter& p
             }
 
             // y-errorpolygons
-            if (/*pastFirst &&*/ (yErrorStyle==JKQTPErrorPolygons || yErrorStyle==JKQTPErrorBarsPolygons || yErrorStyle==JKQTPErrorSimpleBarsPolygons)) {
+            if (yErrorStyle.testFlag(JKQTPErrorPolygons)) {
 
                 double yl2m=parentGraph->transformY(yv+yrelshift*deltay-yl);
                 double yl2p=parentGraph->transformY(yv+yrelshift*deltay+ye);
@@ -393,9 +419,7 @@ void JKQTPGraphErrorStyleMixin::intPlotXYErrorIndicators(JKQTPEnhancedPainter& p
 
 
             //x-errorbars
-            if ((xErrorColumn>=0 || xErrorColumnLower>=0)
-                && (xErrorStyle==JKQTPErrorBars || xErrorStyle==JKQTPErrorBarsLines|| xErrorStyle==JKQTPErrorBarsPolygons
-                   || xErrorStyle==JKQTPErrorSimpleBars || xErrorStyle==JKQTPErrorSimpleBarsLines|| xErrorStyle==JKQTPErrorSimpleBarsPolygons))
+            if ((xErrorColumn>=0 || xErrorColumnLower>=0) && (xErrorStyle.testFlag(JKQTPErrorSimpleBars)))
             {
                     double x0=parentGraph->transformX(xv+xrelshift*deltax-xl); bool x0ok=JKQTPIsOKFloat(x0);
                     double x1=parentGraph->transformX(xv+xrelshift*deltax+xe); bool x1ok=JKQTPIsOKFloat(x1);
@@ -406,22 +430,12 @@ void JKQTPGraphErrorStyleMixin::intPlotXYErrorIndicators(JKQTPEnhancedPainter& p
                     QList<QLineF> elines;
                     if (x0ok&&x1ok&&xok&&yok) {
                         elines<<QLineF(x0, y, x1, y);
-                        if (xErrorStyle==JKQTPErrorBars || xErrorStyle==JKQTPErrorBarsLines|| xErrorStyle==JKQTPErrorBarsPolygons) {
-                            if (plotlowerbarx) elines<<QLineF(x0,y-ebs_px/2.0,x0,y+ebs_px/2.0);
-                            if (plotupperbarx) elines<<QLineF(x1,y-ebs_px/2.0,x1,y+ebs_px/2.0);
-                        }
                     } else if (x0ok&&!x1ok&&xok&&yok) {
                         elines<<QLineF(x0, y, x, y);
-                        if (xErrorStyle==JKQTPErrorBars || xErrorStyle==JKQTPErrorBarsLines|| xErrorStyle==JKQTPErrorBarsPolygons) {
-                            if (plotlowerbarx) elines<<QLineF(x0,y-ebs_px/2.0,x0,y+ebs_px/2.0);
-                        }
                         if (x0<x) elines<<QLineF(x,y,parentGraph->transformX(parent->getXMax()),y);
                         else elines<<QLineF(x,y,parentGraph->transformX(parent->getXMin()),y);
                     } else if (!x0ok&&x1ok&&xok&&yok) {
                         elines<<QLineF(x1, y, x, y);
-                        if (xErrorStyle==JKQTPErrorBars || xErrorStyle==JKQTPErrorBarsLines|| xErrorStyle==JKQTPErrorBarsPolygons) {
-                            if (plotupperbarx) elines<<QLineF(x1,y-ebs_px/2.0,x1,y+ebs_px/2.0);
-                        }
                         if (x1<x) elines<<QLineF(x,y,parentGraph->transformX(parent->getXMin()),y);
                         else elines<<QLineF(x,y,parentGraph->transformX(parent->getXMax()),y);
                     }
@@ -430,10 +444,50 @@ void JKQTPGraphErrorStyleMixin::intPlotXYErrorIndicators(JKQTPEnhancedPainter& p
                         if (l.length()>0) painter.drawLine(l);
                     }
             }
+            // x-bar indicators
+            if ((xErrorColumn>=0 || xErrorColumnLower>=0) && (xErrorStyle.testFlag(JKQTPErrorIndicatorBar)))
+            {
+                double x0=parentGraph->transformX(xv+xrelshift*deltax-xl); bool x0ok=JKQTPIsOKFloat(x0);
+                double x1=parentGraph->transformX(xv+xrelshift*deltax+xe); bool x1ok=JKQTPIsOKFloat(x1);
+                painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+                QPen pp=p;
+                if (!defaultErrorColor) pp.setColor(terrCol);
+                painter.setPen(pp);
+                painter.setBrush(pp.color());
+                if (x0ok&&xok && plotlowerbarx) painter.drawLine(QLineF(x0, y-ebs_px/2.0,x0, y+ebs_px/2.0));
+                if (x1ok&&xok && plotupperbarx) painter.drawLine(QLineF(x1, y-ebs_px/2.0,x1, y+ebs_px/2.0));
+            }
+
+            // x-inwardArrow indicators
+            if ((xErrorColumn>=0 || xErrorColumnLower>=0) && (xErrorStyle.testFlag(JKQTPErrorIndicatorInwardArrows)))
+            {
+                double x0=parentGraph->transformX(xv+xrelshift*deltax-xl); bool x0ok=JKQTPIsOKFloat(x0);
+                double x1=parentGraph->transformX(xv+xrelshift*deltax+xe); bool x1ok=JKQTPIsOKFloat(x1);
+                painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+                QPen pp=p;
+                if (!defaultErrorColor) pp.setColor(terrCol);
+                painter.setPen(pp);
+                painter.setBrush(pp.color());
+                if (x0ok&&xok && plotlowerbarx) painter.drawPolygon(QPolygonF()<<QPointF(x0,y)<<QPointF(x0-ebs_px/2.0,y+ebs_px/2.0)<<QPointF(x0-ebs_px/2.0,y-ebs_px/2.0));
+                if (x1ok&&xok && plotupperbarx) painter.drawPolygon(QPolygonF()<<QPointF(x1,y)<<QPointF(x1+ebs_px/2.0,y+ebs_px/2.0)<<QPointF(x1+ebs_px/2.0,y-ebs_px/2.0));
+            }
+
+            // x-arrow indicators
+            if ((xErrorColumn>=0 || xErrorColumnLower>=0) && (xErrorStyle.testFlag(JKQTPErrorIndicatorArrows)))
+            {
+                double x0=parentGraph->transformX(xv+xrelshift*deltax-xl); bool x0ok=JKQTPIsOKFloat(x0);
+                double x1=parentGraph->transformX(xv+xrelshift*deltax+xe); bool x1ok=JKQTPIsOKFloat(x1);
+                painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+                QPen pp=p;
+                if (!defaultErrorColor) pp.setColor(terrCol);
+                painter.setPen(pp);
+                painter.setBrush(pp.color());
+                if (x0ok&&xok && plotlowerbarx) painter.drawPolygon(QPolygonF()<<QPointF(x0,y)<<QPointF(x0+ebs_px/2.0,y+ebs_px/2.0)<<QPointF(x0+ebs_px/2.0,y-ebs_px/2.0));
+                if (x1ok&&xok && plotupperbarx) painter.drawPolygon(QPolygonF()<<QPointF(x1,y)<<QPointF(x1-ebs_px/2.0,y+ebs_px/2.0)<<QPointF(x1-ebs_px/2.0,y-ebs_px/2.0));
+            }
+
             // y-errorbars
-            if ((yErrorColumn>=0 || yErrorColumnLower>=0)
-                && (yErrorStyle==JKQTPErrorBars || yErrorStyle==JKQTPErrorBarsLines || yErrorStyle==JKQTPErrorBarsPolygons
-                || yErrorStyle==JKQTPErrorSimpleBars || yErrorStyle==JKQTPErrorSimpleBarsLines || yErrorStyle==JKQTPErrorSimpleBarsPolygons))
+            if ((yErrorColumn>=0 || yErrorColumnLower>=0) && (yErrorStyle.testFlag(JKQTPErrorSimpleBars)))
             {
                 double y0=parentGraph->transformY(yv+yrelshift*deltay-yl); bool y0ok=JKQTPIsOKFloat(y0);
                 double y1=parentGraph->transformY(yv+yrelshift*deltay+ye); bool y1ok=JKQTPIsOKFloat(y1);
@@ -441,25 +495,16 @@ void JKQTPGraphErrorStyleMixin::intPlotXYErrorIndicators(JKQTPEnhancedPainter& p
                 QPen pp=p;
                 if (!defaultErrorColor) pp.setColor(terrCol);
                 painter.setPen(pp);
+                painter.setBrush(pp.color());
                 QList<QLineF> elines;
                 if (y0ok&&y1ok&&xok&&yok) {
                     elines<<QLineF(x, y0, x, y1);
-                    if (yErrorStyle==JKQTPErrorBars || yErrorStyle==JKQTPErrorBarsLines || yErrorStyle==JKQTPErrorBarsPolygons) {
-                        if (plotlowerbary) elines<<QLineF(x-ebs_px/2.0,y0,x+ebs_px/2.0,y0);
-                        if (plotupperbary) elines<<QLineF(x-ebs_px/2.0,y1,x+ebs_px/2.0,y1);
-                    }
                 } else if (y0ok&&!y1ok&&xok&&yok) {   // upper errorbar OK, lower errorbar NAN
                     elines<<QLineF(x, y0, x, y);
-                    if (yErrorStyle==JKQTPErrorBars || yErrorStyle==JKQTPErrorBarsLines || yErrorStyle==JKQTPErrorBarsPolygons) {
-                        if (plotlowerbary) elines<<QLineF(x-ebs_px/2.0,y0,x+ebs_px/2.0,y0);
-                    }
                     if (y0<y) elines<<QLineF(x,y,x,parentGraph->transformY(parent->getYMin()));
                     else elines<<QLineF(x,y,x,parentGraph->transformY(parent->getYMax())); // inverted axis!
                 } else if (!y0ok&&y1ok&&xok&&yok) {
                     elines<<QLineF(x, y1, x, y);
-                    if (yErrorStyle==JKQTPErrorBars || yErrorStyle==JKQTPErrorBarsLines || yErrorStyle==JKQTPErrorBarsPolygons) {
-                        if (plotupperbary) elines<<QLineF(x-ebs_px/2.0,y1,x+ebs_px/2.0,y1);
-                    }
                     if (y1<y) elines<<QLineF(x,y,x,parentGraph->transformY(parent->getYMax()));
                     else elines<<QLineF(x,y,x,parentGraph->transformY(parent->getYMin()));
                 }
@@ -468,69 +513,50 @@ void JKQTPGraphErrorStyleMixin::intPlotXYErrorIndicators(JKQTPEnhancedPainter& p
                     if (l.length()>0) painter.drawLine(l);
                 }
             }
-
-            // half errorbars
-            if ((xErrorColumn>=0) && (xErrorStyle==JKQTPErrorHalfBarsAbove|| xErrorStyle==JKQTPErrorHalfBarsInwards|| xErrorStyle==JKQTPErrorHalfBarsBelow|| xErrorStyle==JKQTPErrorHalfBarsOutwards))
+            // y-bar indicators
+            if ((yErrorColumn>=0 || yErrorColumnLower>=0) && (yErrorStyle.testFlag(JKQTPErrorIndicatorBar)))
             {
-                    double x0=parentGraph->transformX(xv+xrelshift*deltax-xl); bool x0ok=JKQTPIsOKFloat(x0);
-                    double x1=parentGraph->transformX(xv+xrelshift*deltax+xe); bool x1ok=JKQTPIsOKFloat(x1);
-                    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-                    QPen pp=p;
-                    if (!defaultErrorColor) pp.setColor(terrCol);
-                    painter.setPen(pp);
-                    QList<QLineF> elines;
-                    if (    (xErrorStyle==JKQTPErrorHalfBarsAbove
-                         || (xErrorStyle==JKQTPErrorHalfBarsOutwards && xv>0.0)
-                         || (xErrorStyle==JKQTPErrorHalfBarsInwards && xv<0.0))
-                        &&x1ok&&xok&&yok) {
-                        elines<<QLineF(x, y, x1, y);
-                        elines<<QLineF(x1,y-ebs_px/2.0,x1,y+ebs_px/2.0);
-                    } else if ((xErrorStyle==JKQTPErrorHalfBarsBelow
-                         || (xErrorStyle==JKQTPErrorHalfBarsOutwards && xv<=0.0)
-                         || (xErrorStyle==JKQTPErrorHalfBarsInwards && xv>=0.0))
-                        &&x0ok&&xok&&yok) {
-                        elines<<QLineF(x0, y, x, y);
-                        elines<<QLineF(x0,y-ebs_px/2.0,x0,y+ebs_px/2.0);
-                    }
-                    for (QLineF& l: elines) {
-                        l=JKQTPClipLine(l, cliprect);
-                        if (l.length()>0) painter.drawLine(l);
-                    }
+                double y0=parentGraph->transformY(yv+yrelshift*deltay-yl); bool y0ok=JKQTPIsOKFloat(y0);
+                double y1=parentGraph->transformY(yv+yrelshift*deltay+ye); bool y1ok=JKQTPIsOKFloat(y1);
+                painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+                QPen pp=p;
+                if (!defaultErrorColor) pp.setColor(terrCol);
+                painter.setPen(pp);
+                painter.setBrush(pp.color());
+                if (y0ok&&xok && plotlowerbary) painter.drawLine(QLineF(x-ebs_px/2.0,y0,x+ebs_px/2.0,y0));
+                if (y1ok&&xok && plotupperbary) painter.drawLine(QLineF(x-ebs_px/2.0,y1,x+ebs_px/2.0,y1));
             }
 
-
-            // half errorbars
-            if ((yErrorColumn>=0) && (yErrorStyle==JKQTPErrorHalfBarsAbove|| yErrorStyle==JKQTPErrorHalfBarsInwards|| yErrorStyle==JKQTPErrorHalfBarsBelow|| yErrorStyle==JKQTPErrorHalfBarsOutwards))
+            // y-inwardArrow indicators
+            if ((yErrorColumn>=0 || yErrorColumnLower>=0) && (yErrorStyle.testFlag(JKQTPErrorIndicatorInwardArrows)))
             {
-                    double y0=parentGraph->transformY(yv+yrelshift*deltay-yl); bool y0ok=JKQTPIsOKFloat(y0);
-                    double y1=parentGraph->transformY(yv+yrelshift*deltay+ye); bool y1ok=JKQTPIsOKFloat(y1);
-                    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-                    QPen pp=p;
-                    if (!defaultErrorColor) pp.setColor(terrCol);
-                    painter.setPen(pp);
-                    QList<QLineF> elines;
-                    if (    (yErrorStyle==JKQTPErrorHalfBarsAbove
-                         || (yErrorStyle==JKQTPErrorHalfBarsOutwards && yv>0.0)
-                         || (yErrorStyle==JKQTPErrorHalfBarsInwards && yv<0.0))
-                        &&yok&&y1ok&&xok) {
-                        elines<<QLineF(x, y, x, y1);
-                        elines<<QLineF(x-ebs_px/2.0,y1,x+ebs_px/2.0,y1);
-                    } else if ((yErrorStyle==JKQTPErrorHalfBarsBelow
-                         || (yErrorStyle==JKQTPErrorHalfBarsOutwards && yv<=0.0)
-                         || (yErrorStyle==JKQTPErrorHalfBarsInwards && yv>=0.0))
-                        &&y0ok&&yok&&xok) {
-                        elines<<QLineF(x, y0, x, y);
-                        elines<<QLineF(x-ebs_px/2.0,y0,x+ebs_px/2.0,y0);
-                    }
-                    for (QLineF& l: elines) {
-                        l=JKQTPClipLine(l, cliprect);
-                        if (l.length()>0) painter.drawLine(l);
-                    }
+                double y0=parentGraph->transformY(yv+yrelshift*deltay-yl); bool y0ok=JKQTPIsOKFloat(y0);
+                double y1=parentGraph->transformY(yv+yrelshift*deltay+ye); bool y1ok=JKQTPIsOKFloat(y1);
+                painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+                QPen pp=p;
+                if (!defaultErrorColor) pp.setColor(terrCol);
+                painter.setPen(pp);
+                painter.setBrush(pp.color());
+                if (y0ok&&xok && plotlowerbary) painter.drawPolygon(QPolygonF()<<QPointF(x,y0)<<QPointF(x-ebs_px/2.0,y0+ebs_px/2.0)<<QPointF(x+ebs_px/2.0,y0+ebs_px/2.0));
+                if (y1ok&&xok && plotupperbary) painter.drawPolygon(QPolygonF()<<QPointF(x,y1)<<QPointF(x-ebs_px/2.0,y1-ebs_px/2.0)<<QPointF(x+ebs_px/2.0,y1-ebs_px/2.0));
             }
 
+            // y-arrow indicators
+            if ((yErrorColumn>=0 || yErrorColumnLower>=0) && (yErrorStyle.testFlag(JKQTPErrorIndicatorArrows)))
+            {
+                double y0=parentGraph->transformY(yv+yrelshift*deltay-yl); bool y0ok=JKQTPIsOKFloat(y0);
+                double y1=parentGraph->transformY(yv+yrelshift*deltay+ye); bool y1ok=JKQTPIsOKFloat(y1);
+                painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+                QPen pp=p;
+                if (!defaultErrorColor) pp.setColor(terrCol);
+                painter.setPen(pp);
+                painter.setBrush(pp.color());
+                if (y0ok&&xok && plotlowerbary) painter.drawPolygon(QPolygonF()<<QPointF(x,y0)<<QPointF(x-ebs_px/2.0,y0-ebs_px/2.0)<<QPointF(x+ebs_px/2.0,y0-ebs_px/2.0));
+                if (y1ok&&xok && plotupperbary) painter.drawPolygon(QPolygonF()<<QPointF(x,y1)<<QPointF(x-ebs_px/2.0,y1+ebs_px/2.0)<<QPointF(x+ebs_px/2.0,y1+ebs_px/2.0));
+            }
 
             // error boxes
-            if (yErrorStyle==JKQTPErrorBoxes || xErrorStyle==JKQTPErrorBoxes || yErrorStyle==JKQTPErrorEllipses || xErrorStyle==JKQTPErrorEllipses ) {
+            if (yErrorStyle.testFlag(JKQTPErrorBoxes) || xErrorStyle.testFlag(JKQTPErrorBoxes) || yErrorStyle.testFlag(JKQTPErrorEllipses) || xErrorStyle.testFlag(JKQTPErrorEllipses) ) {
                 double y0=parentGraph->transformY(yv+yrelshift*deltay-yl); bool y0ok=JKQTPIsOKFloat(y0);
                 double y1=parentGraph->transformY(yv+yrelshift*deltay+ye); bool y1ok=JKQTPIsOKFloat(y1);
                 double x0=parentGraph->transformX(xv+xrelshift*deltax-xl); bool x0ok=JKQTPIsOKFloat(x0);
@@ -545,14 +571,14 @@ void JKQTPGraphErrorStyleMixin::intPlotXYErrorIndicators(JKQTPEnhancedPainter& p
 
                 const QRectF errRect=QRectF(QPointF(x0,y0), QPointF(x1,y1));
                 if (((y0ok&&y1ok)||(x0ok&&x1ok))&&cliprect.intersects(errRect)) {
-                    if (yErrorStyle==JKQTPErrorEllipses || xErrorStyle==JKQTPErrorEllipses) painter.drawEllipse(errRect);
+                    if (yErrorStyle.testFlag(JKQTPErrorEllipses) || xErrorStyle.testFlag(JKQTPErrorEllipses)) painter.drawEllipse(errRect);
                     else painter.drawRect(errRect);
                 }
 
 
             }
             // x-errorlines
-            if (pastFirst && (xErrorStyle==JKQTPErrorLines || xErrorStyle==JKQTPErrorBarsLines || xErrorStyle==JKQTPErrorSimpleBarsLines)) {
+            if (pastFirst && (xErrorStyle.testFlag(JKQTPErrorLines))) {
                 double xl1m=xmold;
                 double xl1p=xpold;
                 double yl1=yold;
@@ -576,7 +602,7 @@ void JKQTPGraphErrorStyleMixin::intPlotXYErrorIndicators(JKQTPEnhancedPainter& p
 
 
             // y-errorlines
-            if (pastFirst && (yErrorStyle==JKQTPErrorLines || yErrorStyle==JKQTPErrorBarsLines || yErrorStyle==JKQTPErrorSimpleBarsLines)) {
+            if (pastFirst && (yErrorStyle.testFlag(JKQTPErrorLines))) {
                 double yl1m=ymold;
                 double yl1p=ypold;
                 double xl1=xold;
@@ -610,7 +636,7 @@ void JKQTPGraphErrorStyleMixin::intPlotXYErrorIndicators(JKQTPEnhancedPainter& p
         }
     }
     // x-errorpolygons
-    if ((polyXTopPoints.size()>0 || polyXBottomPoints.size()>0) && (xErrorStyle==JKQTPErrorPolygons || xErrorStyle==JKQTPErrorBarsPolygons || xErrorStyle==JKQTPErrorSimpleBarsPolygons)) {
+    if ((polyXTopPoints.size()>0 || polyXBottomPoints.size()>0) && (xErrorStyle.testFlag(JKQTPErrorPolygons))) {
         painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
         painter.setBrush(b);
         painter.setPen(QPen(Qt::NoPen));
@@ -625,7 +651,7 @@ void JKQTPGraphErrorStyleMixin::intPlotXYErrorIndicators(JKQTPEnhancedPainter& p
         painter.drawConvexPolygon(poly.intersected(cliprect));
 
     }
-    if ((polyYTopPoints.size()>0 || polyYBottomPoints.size()>0) && (yErrorStyle==JKQTPErrorPolygons || yErrorStyle==JKQTPErrorBarsPolygons || yErrorStyle==JKQTPErrorSimpleBarsPolygons)) {
+    if ((polyYTopPoints.size()>0 || polyYBottomPoints.size()>0) && (yErrorStyle.testFlag(JKQTPErrorPolygons))) {
         painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
         painter.setBrush(b);
         painter.setPen(QPen(Qt::NoPen));

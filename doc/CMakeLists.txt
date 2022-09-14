@@ -106,6 +106,14 @@ if(JKQtPlotter_BUILD_TOOLS)
     )
     add_dependencies(JKQTPlotter_GenerateDocImages JKQTPlotter_GenerateDocImages_listlinedecorators)
 
+    add_custom_target(JKQTPlotter_GenerateDocImages_listerrorindicators
+        COMMENT "Building JKQTPlotter Documentation Images: listerrorindicators"
+        COMMAND ${JKQTPlotter_GenerateDocImages_COMMAND} --listerrorindicators --iconsize=32 --outputdir="${JKQTPlotter_GenerateDocImages_OutputDir}/errorindicators/"
+        WORKING_DIRECTORY ${JKQtPlotter_QT_BINDIR}
+        DEPENDS jkqtplotter_doc_imagegenerator
+    )
+    add_dependencies(JKQTPlotter_GenerateDocImages JKQTPlotter_GenerateDocImages_listerrorindicators)
+
 endif(JKQtPlotter_BUILD_TOOLS)
 
 

@@ -23,7 +23,10 @@
 #include "jkqtcommon/jkqtpstringtools.h"
 #include "jkqtcommon/jkqtpdrawingtools.h"
 #include "jkqtcommon/jkqtpenhancedpainter.h"
+#include "jkqtplotter/jkqtpbaseplotter.h"
+#include "jkqtplotter/graphs/jkqtplines.h"
 #include <iostream>
+
 
 void startPainting(QImage& img, JKQTPEnhancedPainter& p, int iconsizex, int iconsizey, QColor backgroundColor) {
     img=QImage(QSize(iconsizex,iconsizey),QImage::Format_ARGB32_Premultiplied);
@@ -54,10 +57,12 @@ int main(int argc, char* argv[])
     parser.addVersionOption();
     QCommandLineOption outputDirectoryOption("outputdir", "write results into this directory.", "outputdir", app.applicationDirPath());
     parser.addOption(outputDirectoryOption);
-    QCommandLineOption listsymbolsOption("listsymbols", "list all symbols in the given output file and generate images.");
+    QCommandLineOption listsymbolsOption("listsymbols", "generate example images for all symbols.");
     parser.addOption(listsymbolsOption);
-    QCommandLineOption listlinedecoratorsOption("listlinedecorators", "list all line-endings in the given output file and generate images.");
+    QCommandLineOption listlinedecoratorsOption("listlinedecorators", "generate example images for all line-decorators.");
     parser.addOption(listlinedecoratorsOption);
+    QCommandLineOption listerrorindicatorsOption("listerrorindicators", "generate example images for all error-indicators.");
+    parser.addOption(listerrorindicatorsOption);
     QCommandLineOption iconsizeOption("iconsize", "typical size of the generatued images.", "iconsize", "24");
     parser.addOption(iconsizeOption);
     QCommandLineOption backgroundOption("background", "background color.", "background", "white");
@@ -67,6 +72,7 @@ int main(int argc, char* argv[])
     const QDir outputDir(parser.value(outputDirectoryOption));
     const bool listsymbols=parser.isSet(listsymbolsOption);
     const bool listlinedecorators=parser.isSet(listlinedecoratorsOption);
+    const bool listerrorindicators=parser.isSet(listerrorindicatorsOption);
     const int iconsize=parser.value(iconsizeOption).toInt();
     const QColor backgroundColor = jkqtp_String2QColor(parser.value(backgroundOption));
 
@@ -136,6 +142,71 @@ int main(int argc, char* argv[])
 
             stopPaintingAndSave(img, p, outputDir.absoluteFilePath(JKQTPLineDecoratorStyle2String(s)+".png"));
         }
+    }
+
+    if (listerrorindicators) {
+        JKQTBasePlotter plot(true);
+        JKQTPDatastore* ds=plot.getDatastore();
+        size_t cx=ds->addCopiedColumn(QVector<double>{-1.5,-0.5,0.5,1.5,2.5},"x");
+        size_t cy=ds->addCopiedColumn(QVector<double>{-0.75,-0.3,-0.05,0.2,0.65},"y");
+        size_t cex=ds->addCopiedColumn(QVector<double>{0,0.2,0.1,0.45,0},"ex");
+        size_t cey=ds->addCopiedColumn(QVector<double>{0.05,0.1,0.3,0.3,0.05},"ey");
+
+        plot.setXY(-0.8,2.2,-0.5,0.7);
+        plot.setWidgetSize(150,50);
+        plot.setShowKey(false);
+        plot.setGrid(false);
+        plot.getXAxis()->setShowZeroAxis(false);
+        plot.getYAxis()->setShowZeroAxis(false);
+        plot.getXAxis()->setDrawMode1(JKQTPCADMnone);
+        plot.getXAxis()->setDrawMode2(JKQTPCADMnone);
+        plot.getYAxis()->setDrawMode1(JKQTPCADMnone);
+        plot.getYAxis()->setDrawMode2(JKQTPCADMnone);
+
+        JKQTPXYLineErrorGraph* g=new JKQTPXYLineErrorGraph(&plot);
+        g->setDrawLine(false);
+        g->setLineStyle(Qt::DotLine);
+        g->setSymbolType(JKQTPCross);
+        g->setSymbolSize(6);
+        g->setXColumn(cx);
+        g->setYColumn(cy);
+        g->setXErrorColumn(cex);
+        g->setYErrorColumn(cey);
+        plot.addGraph(g);
+        const  std::vector<std::tuple<QString, JKQTPErrorPlotstyle, JKQTPErrorPlotstyle, bool, bool>> plots=
+        {
+            {"JKQTPNoError", JKQTPNoError, JKQTPNoError, true, false},
+            {"JKQTPErrorSimpleBars", JKQTPErrorSimpleBars, JKQTPErrorSimpleBars, false, false},
+            {"JKQTPErrorLines", JKQTPNoError, JKQTPErrorLines, true, false},
+            {"JKQTPErrorPolygons", JKQTPNoError, JKQTPErrorPolygons, true, false},
+            {"JKQTPErrorEllipses", JKQTPErrorEllipses, JKQTPErrorEllipses, false, false},
+            {"JKQTPErrorBoxes", JKQTPErrorBoxes, JKQTPErrorBoxes, false, false},
+            {"JKQTPErrorArrows", JKQTPErrorArrows, JKQTPErrorArrows, false, false},
+            {"JKQTPErrorInwardArrows", JKQTPErrorInwardArrows, JKQTPErrorInwardArrows, false, false},
+            {"JKQTPErrorBars", JKQTPErrorBars, JKQTPErrorBars, false, false},
+            {"JKQTPErrorSimpleBarsPolygons", JKQTPNoError, JKQTPErrorSimpleBarsPolygons, true, false},
+            {"JKQTPErrorSimpleBarsLines", JKQTPNoError, JKQTPErrorSimpleBarsLines, true, false},
+            {"JKQTPErrorBarsLines", JKQTPNoError, JKQTPErrorBarsLines, true, false},
+            {"JKQTPErrorBarsPolygons", JKQTPNoError, JKQTPErrorBarsPolygons, true, false},
+            {"JKQTPErrorHalfBarsOutwards", JKQTPErrorHalfBarsOutwards, JKQTPErrorHalfBarsOutwards, false,true},
+            {"JKQTPErrorHalfBarsInwards", JKQTPErrorHalfBarsInwards, JKQTPErrorHalfBarsInwards, false,true},
+            {"JKQTPErrorHalfBarsAbove", JKQTPErrorHalfBarsAbove, JKQTPErrorHalfBarsAbove, false,true},
+            {"JKQTPErrorHalfBarsBelow", JKQTPErrorHalfBarsBelow, JKQTPErrorHalfBarsBelow, false,true},
+            {"JKQTPErrorIndicatorArrows", JKQTPErrorIndicatorArrows, JKQTPErrorIndicatorArrows, false, false},
+            {"JKQTPErrorIndicatorInwardArrows", JKQTPErrorIndicatorInwardArrows, JKQTPErrorIndicatorInwardArrows, false, false},
+            {"JKQTPErrorIndicatorBar", JKQTPErrorIndicatorBar, JKQTPErrorIndicatorBar, false, false},
+        };
+        for (const auto& d: plots) {
+            g->setDrawLine(std::get<3>(d));
+            g->setXErrorStyle(std::get<1>(d));
+            g->setYErrorStyle(std::get<2>(d));
+            plot.getXAxis()->setShowZeroAxis(std::get<4>(d));
+            plot.getYAxis()->setShowZeroAxis(std::get<4>(d));
+
+            plot.saveAsPixelImage(outputDir.absoluteFilePath(std::get<0>(d)+".png"), false, "png");
+        }
+
+
     }
     return EXIT_SUCCESS;
 }

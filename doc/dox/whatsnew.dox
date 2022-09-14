@@ -28,6 +28,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>FIXED plot-size calculation for filled graphs</li>
     <li>REORGANIZED: separated line-graphs from jkqtpscatter.h/.cpp into jkqtplines.h/.cpp</li>
     <li>IMPROVED: QT6-compatibility by removing deprecated warnings</li>
+    <li>IMPROVED/REWORKED: reworked JKQTPErrorPlotstyle and error indicator plotting so error-inidcators can be specified as ORed combination of flags from JKQTPErrorPlotstyleElements, added additional error indicator styles (half-bars, arrows...)</li>
     <li>NEW: JKQTPFilledCurveXGraph and JKQTPFilledCurveYGraph can now plot wiggle plots with different fill styles above and below the baseline (feature request <a href="https://github.com/jkriege2/JKQtPlotter/issues/68">#68 Wiggle Plots</a> from <a href="https://github.com/xichaoqiang">user:xichaoqiang</a>   </li>
     <li>NEW/BREAKING CHANGE: data tooltip can now also be shown when "just" moving the mouse (so far this was only possible when dragging the mouse with a button pressed). This also removes JKQtPlotter::getActMouseLeftAsToolTip() and adds JKQtPlotter::getActMouseMoveToolTip() instead! Also the default toolbars and context menus changed!</li>
     <li>NEW: new "seaborn" style for plots, see \ref jkqtpplotter_styling </li>

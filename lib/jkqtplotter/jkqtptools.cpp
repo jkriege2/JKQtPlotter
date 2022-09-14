@@ -192,24 +192,28 @@ JKQTPKeyLayout String2JKQTPKeyLayout(const QString& pos) {
 
 
 QString JKQTPErrorPlotstyle2String(JKQTPErrorPlotstyle pos) {
-    switch(pos) {
-        case JKQTPErrorBoxes: return "error_box";
-        case JKQTPErrorEllipses: return "error_ell";
-        case JKQTPErrorLines: return "error_lines";
-        case JKQTPErrorBars: return "error_bars";
-        case JKQTPErrorHalfBarsAbove: return "error_bars_half_above";
-        case JKQTPErrorHalfBarsBelow: return "error_bars_half_below";
-        case JKQTPErrorHalfBarsInwards: return "error_bars_half_inwards";
-        case JKQTPErrorHalfBarsOutwards: return "error_bars_half_outwards";
-        case JKQTPErrorSimpleBars: return "error_simplebars";
-        case JKQTPErrorPolygons: return "error_polygons";
-        case JKQTPErrorBarsLines: return "error_bars_lines";
-        case JKQTPErrorBarsPolygons: return "error_bars_polygons";
-        case JKQTPErrorSimpleBarsLines: return "error_simplebars_lines";
-        case JKQTPErrorSimpleBarsPolygons: return "error_simplebars_polygons";
-        case JKQTPNoError: return "error_none";
-    }
-    return "";
+    QString s="";
+    if (pos==JKQTPNoError) return "error_none";
+    if (pos.testFlag(JKQTPErrorSimpleBars)&&pos.testFlag(JKQTPErrorIndicatorBar)) JKQTPExtendString(s, "+", "error_bars");
+    else if (pos.testFlag(JKQTPErrorSimpleBars)&&pos.testFlag(JKQTPErrorIndicatorArrows)) JKQTPExtendString(s, "+", "error_arrows");
+    else if (pos.testFlag(JKQTPErrorSimpleBars)&&pos.testFlag(JKQTPErrorIndicatorInwardArrows)) JKQTPExtendString(s, "+", "error_inwardarrows");
+    else if (pos.testFlag(JKQTPErrorSimpleBars)) JKQTPExtendString(s, "+", "error_simplebars");
+
+    if (pos.testFlag(JKQTPErrorLines)) JKQTPExtendString(s, "+", "error_lines");
+    if (pos.testFlag(JKQTPErrorPolygons)) JKQTPExtendString(s, "+", "error_polygons");
+    if (pos.testFlag(JKQTPErrorEllipses)) JKQTPExtendString(s, "+", "error_ell");
+    if (pos.testFlag(JKQTPErrorBoxes)) JKQTPExtendString(s, "+", "error_box");
+
+    if (pos.testFlag(JKQTPErrorDirectionOutwards)) JKQTPExtendString(s, "+", "outwards");
+    if (pos.testFlag(JKQTPErrorDirectionInwards)) JKQTPExtendString(s, "+", "inwards");
+    if (pos.testFlag(JKQTPErrorDirectionAbove)) JKQTPExtendString(s, "+", "above");
+    if (pos.testFlag(JKQTPErrorDirectionBelow)) JKQTPExtendString(s, "+", "below");
+
+    if (!pos.testFlag(JKQTPErrorSimpleBars)&&pos.testFlag(JKQTPErrorIndicatorBar)) JKQTPExtendString(s, "+", "bars");
+    if (!pos.testFlag(JKQTPErrorSimpleBars)&&pos.testFlag(JKQTPErrorIndicatorArrows)) JKQTPExtendString(s, "+", "arrows");
+    if (!pos.testFlag(JKQTPErrorSimpleBars)&&pos.testFlag(JKQTPErrorIndicatorInwardArrows)) JKQTPExtendString(s, "+", "inwardarrows");
+
+    return s;
 }
 
 JKQTPErrorPlotstyle String2JKQTPErrorPlotstyle(const QString& pos) {
@@ -228,7 +232,27 @@ JKQTPErrorPlotstyle String2JKQTPErrorPlotstyle(const QString& pos) {
     if (s=="error_bars_half_below") return JKQTPErrorHalfBarsBelow;
     if (s=="error_bars_half_inwards") return JKQTPErrorHalfBarsInwards;
     if (s=="error_bars_half_outwards") return JKQTPErrorHalfBarsOutwards;
-    return JKQTPNoError;
+    const QStringList sl=s.split("+");
+    JKQTPErrorPlotstyle es=JKQTPNoError;
+    for (const QString& s: sl) {
+        if (s=="error_arrows") es|=JKQTPErrorArrows;
+        if (s=="error_inwardarrows") es|=JKQTPErrorInwardArrows;
+        if (s=="error_bars") es|=JKQTPErrorBars;
+        if (s=="error_simplebars") es|=JKQTPErrorSimpleBars;
+        if (s=="error_lines") es|=JKQTPErrorLines;
+        if (s=="error_polygons") es|=JKQTPErrorPolygons;
+        if (s=="error_ell" || s=="error_ellipses") es|=JKQTPErrorEllipses;
+        if (s=="error_box" || s=="error_boxes") es|=JKQTPErrorBoxes;
+        if (s=="outwards") es|=JKQTPErrorDirectionOutwards;
+        if (s=="inwards") es|=JKQTPErrorDirectionInwards;
+        if (s=="above") es|=JKQTPErrorDirectionAbove;
+        if (s=="below") es|=JKQTPErrorDirectionBelow;
+        if (s=="bars"||s=="bar") es|=JKQTPErrorIndicatorBar;
+        if (s=="arrow" || s=="arrows") es|=JKQTPErrorIndicatorArrows;
+        if (  s=="inwardarrows" || s=="inwardsarrows" || s=="inwardarrow" || s=="inwardsarrow"
+            ||s=="inward_arrows" || s=="inwards_arrows" || s=="inward_arrow" || s=="inwards_arrow") es|=JKQTPErrorIndicatorInwardArrows;
+    }
+    return es;
 }
 
 

@@ -1,7 +1,7 @@
 /*
     Copyright (c) 2008-2022 Jan W. Krieger (<jan@jkrieger.de>)
 
-    
+
 
     This software is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published by
@@ -44,6 +44,7 @@
 #include <stdexcept>
 #include <cctype>
 #include <QColor>
+#include <QFlags>
 #include "jkqtcommon/jkqtpstringtools.h"
 #include "jkqtcommon/jkqtpdebuggingtools.h"
 #include "jkqtcommon/jkqtpmathtools.h"
@@ -571,28 +572,42 @@ struct JKQTPLOTTER_LIB_EXPORT JKQTPGridPrintingItem {
 
 
 
+
 /** \brief plot styles for the error information
  * \ingroup jkqtplotter_basegraphserrors
  */
-enum JKQTPErrorPlotstyle {
-    JKQTPErrorEllipses=10,           /*!< \brief an ellipse spanned by the errors \image html JKQTPErrorEllipses.png */
-    JKQTPErrorBoxes=9,               /*!< \brief a box spanned by the errors \image html JKQTPErrorBoxes.png */
-    JKQTPErrorSimpleBarsPolygons=8,  /*!< \brief simplified error barsand polygons  for each data point \image html JKQTPErrorSimpleBarsPolygons.png */
-    JKQTPErrorSimpleBarsLines=7,     /*!< \brief simplified error bars and line for each data point \image html JKQTPErrorSimpleBarsLines.png */
-    JKQTPErrorSimpleBars=6,          /*!< \brief simplified error bars for each data point \image html JKQTPErrorSimpleBars.png */
-    JKQTPErrorLines=5,               /*!< \brief a second and third graph line above and below the actual data which indicates the error value \image html JKQTPErrorLines.png */
-    JKQTPErrorBars=4,                /*!< \brief error bars for each data point \image html JKQTPErrorBars.png */
-    JKQTPErrorHalfBarsOutwards=11,   /*!< \brief half error bars for each data point, pointing outwards \image html JKQTPErrorHalfBarsOutwards.png */
-    JKQTPErrorHalfBarsInwards=12,    /*!< \brief half error bars for each data point, pointing inwards \image html JKQTPErrorHalfBarsInwards.png */
-    JKQTPErrorHalfBarsAbove=13,      /*!< \brief half error bars for each data point, pointing up \image html JKQTPErrorHalfBarsAbove.png */
-    JKQTPErrorHalfBarsBelow=14,      /*!< \brief half error bars for each data point, pointing down \image html JKQTPErrorHalfBarsBelow.png */
-    JKQTPErrorPolygons=3,            /*!< \brief line error lines, but with filled range in between \image html JKQTPErrorPolygons.png */
-    JKQTPErrorBarsLines=2,           /*!< \brief error bars and lines for each data point \image html JKQTPErrorBarsLines.png */
-    JKQTPErrorBarsPolygons=1,        /*!< \brief error bars and polygons for each data point \image html JKQTPErrorBarsPolygons.png */
-    JKQTPNoError=0                   /*!< \brief don't show error information \image html JKQTPNoError.png */
+enum JKQTPErrorPlotstyleElements {
+    JKQTPNoError=0x00,                   /*!< \brief don't show error information \image html errorindicators/JKQTPNoError.png */
+    JKQTPErrorSimpleBars=0x01,          /*!< \brief simplified error bars for each data point \image html errorindicators/JKQTPErrorSimpleBars.png */
+    JKQTPErrorLines=0x04,               /*!< \brief a second and third graph line above and below the actual data which indicates the error value \image html errorindicators/JKQTPErrorLines.png */
+    JKQTPErrorPolygons=0x08,            /*!< \brief line error lines, but with filled range in between \image html errorindicators/JKQTPErrorPolygons.png */
+    JKQTPErrorEllipses=0x10,            /*!< \brief an ellipse spanned by the errors \image html errorindicators/JKQTPErrorEllipses.png */
+    JKQTPErrorBoxes=0x20,               /*!< \brief a box spanned by the errors \image html errorindicators/JKQTPErrorBoxes.png */
+
+    JKQTPErrorDirectionBoth=0x000,     /*!< \brief do not draw half error-bars, but in both directions (default) \image html errorindicators/JKQTPErrorBars.png */
+    JKQTPErrorDirectionOutwards=0x100, /*!< \brief used to specify the directon of half error bars: outwards pointing \image html errorindicators/JKQTPErrorHalfBarsOutwards.png */
+    JKQTPErrorDirectionInwards=0x200,  /*!< \brief used to specify the directon of half error bars: inwards pointing \image html errorindicators/JKQTPErrorHalfBarsInwards.png */
+    JKQTPErrorDirectionAbove=04200,    /*!< \brief used to specify the directon of half error bars: above pointing \image html errorindicators/JKQTPErrorHalfBarsAbove.png */
+    JKQTPErrorDirectionBelow=0x800,     /*!< \brief used to specify the directon of half error bars: below pointing \image html errorindicators/JKQTPErrorHalfBarsBelow.png */
+    JKQTPErrorIndicatorNone=0x0000,     /*!< \brief used to specify that error bars shall be un-decorated i.e. "simple error-bars" */
+    JKQTPErrorIndicatorBar=0x1000,      /*!< \brief used to specify that error bars shall be decorated by bars \image html errorindicators/JKQTPErrorIndicatorBar.png */
+    JKQTPErrorIndicatorArrows=0x2000,     /*!< \brief used to specify that error bars shall be decorated by arrows \image html errorindicators/JKQTPErrorIndicatorArrows.png */
+    JKQTPErrorIndicatorInwardArrows=0x4000,     /*!< \brief used to specify that error bars shall be decorated by arrows \image html errorindicators/JKQTPErrorIndicatorInwardArrows.png */
+
+    JKQTPErrorArrows=JKQTPErrorSimpleBars|JKQTPErrorIndicatorArrows,          /*!< \brief error bars decorated with arrows for each data point \image html errorindicators/JKQTPErrorArrows.png */
+    JKQTPErrorInwardArrows=JKQTPErrorSimpleBars|JKQTPErrorIndicatorInwardArrows,          /*!< \brief error bars decorated with inwards-pointing arrows for each data point \image html errorindicators/JKQTPErrorInwardArrows.png */
+    JKQTPErrorBars=JKQTPErrorSimpleBars|JKQTPErrorIndicatorBar,          /*!< \brief error bars for each data point \image html errorindicators/JKQTPErrorBars.png */
+    JKQTPErrorSimpleBarsPolygons=JKQTPErrorSimpleBars|JKQTPErrorPolygons,  /*!< \brief simplified error barsand polygons  for each data point \image html errorindicators/JKQTPErrorSimpleBarsPolygons.png */
+    JKQTPErrorSimpleBarsLines=JKQTPErrorSimpleBars|JKQTPErrorLines,     /*!< \brief simplified error bars and line for each data point \image html errorindicators/JKQTPErrorSimpleBarsLines.png */
+    JKQTPErrorHalfBarsOutwards=JKQTPErrorBars|JKQTPErrorDirectionOutwards,   /*!< \brief half error bars for each data point, pointing outwards \image html errorindicators/JKQTPErrorHalfBarsOutwards.png */
+    JKQTPErrorHalfBarsInwards=JKQTPErrorBars|JKQTPErrorDirectionInwards,    /*!< \brief half error bars for each data point, pointing inwards \image html errorindicators/JKQTPErrorHalfBarsInwards.png */
+    JKQTPErrorHalfBarsAbove=JKQTPErrorBars|JKQTPErrorDirectionAbove,      /*!< \brief half error bars for each data point, pointing up \image html errorindicators/JKQTPErrorHalfBarsAbove.png */
+    JKQTPErrorHalfBarsBelow=JKQTPErrorBars|JKQTPErrorDirectionBelow,      /*!< \brief half error bars for each data point, pointing down \image html errorindicators/JKQTPErrorHalfBarsBelow.png */
+    JKQTPErrorBarsLines=JKQTPErrorBars|JKQTPErrorLines,           /*!< \brief error bars and lines for each data point \image html errorindicators/JKQTPErrorBarsLines.png */
+    JKQTPErrorBarsPolygons=JKQTPErrorBars|JKQTPErrorPolygons,        /*!< \brief error bars and polygons for each data point \image html errorindicators/JKQTPErrorBarsPolygons.png */
 };
-
-
+Q_DECLARE_FLAGS(JKQTPErrorPlotstyle, JKQTPErrorPlotstyleElements)
+Q_DECLARE_OPERATORS_FOR_FLAGS(JKQTPErrorPlotstyle)
 
 
 /** \brief converts a JKQTPErrorPlotstyle variable into a human-readable string
