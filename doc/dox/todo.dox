@@ -33,7 +33,7 @@ This page lists several todos and wishes for future version of JKQTPlotter
     <li>graphs: add candlestick charts (financial, see https://en.m.wikipedia.org/wiki/Candlestick_chart)</li>
     <li>graphs: add OHLC charts (financial, see https://en.m.wikipedia.org/wiki/Open-high-low-close_chart)</li>
     <li>plot: refactor print preview/export preview code </li>
-    <li></li>
+    <li>graphs: add color palettes from Green's HELIX method, see <a href="https://articles.adsabs.harvard.edu/pdf/2011BASI...39..289G">https://articles.adsabs.harvard.edu/pdf/2011BASI...39..289G</a>, also see <a href="https://jiffyclub.github.io/palettable/cubehelix/">https://jiffyclub.github.io/palettable/cubehelix/</a></li>
     <li></li>
   </ul></li>
   <li>JKQTMathText:<ul>
