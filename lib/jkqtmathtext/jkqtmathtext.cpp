@@ -290,9 +290,9 @@ void JKQTMathText::saveSettings(QSettings& settings, const QString& group) const
     settings.setValue(group+ "matrix_yPadding_factor", matrix_yPadding_factor);
 }
 
-bool JKQTMathText::parse(const QString &markup, DefaultParserTypes markuptType, ParseOptions options)
+bool JKQTMathText::parse(const QString &markup, DefaultParserTypes markupType, ParseOptions options)
 {
-    if (markuptType==LatexParser) return parse<JKQTMathTextLatexParser>(markup, options);
+    if (markupType==LatexParser) return parse<JKQTMathTextLatexParser>(markup, options);
     return false;
 }
 

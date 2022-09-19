@@ -334,7 +334,7 @@ enum JKQTPLineDecoratorStyle {
     JKQTPDiamondDecorator,           /*!< \brief an open diamond tip \image html linedecorators/diamond.png */
     JKQTPDiamondDecoratorAndBar,           /*!< \brief an open diamond tip \image html linedecorators/diamond_bar.png */
     JKQTPFilledDiamondDecorator,     /*!< \brief a filled diamond tip \image html linedecorators/filled_diamond.png */
-    JKQTPFilledDiamondDecoratorAndBar,     /*!< \brief a filled diamond tip \image html linedecorators/filled_dimanond_bar.png */
+    JKQTPFilledDiamondDecoratorAndBar,     /*!< \brief a filled diamond tip \image html linedecorators/filled_diamond_bar.png */
     JKQTPHalfBarDecorator,            /*!< \brief a half vertical bar \image html linedecorators/half_bar.png */
     JKQTPHarpoonDecorator,            /*!< \brief an harpoon arrow \image html linedecorators/harpoon.png */
     JKQTPHarpoonDecoratorAndBar,            /*!< \brief an harpoon arrow, with vertical bar \image html linedecorators/harpoon_bar.png */

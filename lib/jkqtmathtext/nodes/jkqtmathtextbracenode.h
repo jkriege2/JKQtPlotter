@@ -85,9 +85,9 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextBraceNode: public JKQTMathTextSingleCh
         JKQTMathTextBraceType openbrace;
         /**\brief closing brace */
         JKQTMathTextBraceType closebrace;
-        /** \brief calculate the width of the braces, fills NodeSize::openbracewidth/NodeSize::closebracewidth and NodeSize::braceheight/NodeSize::closeheight in \a out, based on \a childSize
+        /** \brief calculate the width of the braces, fills JKQTMathTextBraceNode::NodeSize::openBraceWidth/JKQTMathTextBraceNode::NodeSize::closeBraceWidth and JKQTMathTextBraceNode::NodeSize::openBraceHeight/JKQTMathTextBraceNode::NodeSize::closeBraceHeight in \a out, based on \a childSize
          *
-         *  \param[out] out this function fills NodeSize::openbracewidth/NodeSize::closebracewidth and NodeSize::braceheight/NodeSize::closeheight in \a out
+         *  \param[out] out this function fills JKQTMathTextBraceNode::NodeSize::openBraceWidth/JKQTMathTextBraceNode::NodeSize::closeBraceWidth and JKQTMathTextBraceNode::NodeSize::openBraceHeight/JKQTMathTextBraceNode::NodeSize::closeBraceHeight in \a out
          *  \param painter a QPainter used for size-calculation/drawing
          *  \param currentEv font environment
          *  \param childSize size of the child node surrounded by the node

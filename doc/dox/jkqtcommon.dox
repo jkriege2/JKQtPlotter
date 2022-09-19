@@ -29,7 +29,7 @@ Offers diverse function to convert different datatypes (e.g. double, int, divers
 In many cases it makes sense to generate special QIcons to represent a certain property, enum entry, QBrush, QPen etc.
 This group assembles functions that do exactly that.
 
-\defgroup jkqtptools_qtwidgets Additional Widgets for
+\defgroup jkqtptools_qtwidgets Additional Qt Widgets
 \ingroup jkqtptools_jkqtcommon
 
 \defgroup jkqtptools_drawing Drawing & Graphics Tools

@@ -167,7 +167,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextPhantomNode: public JKQTMathTextInstru
             FMwidth, /*!< \brief implementes \c \\hphantom{CHILD} which is whitespace in the width of \c CHILD and height 0. */
             FMheight /*!< \brief implementes \c \\vphantom{CHILD} which is whitespace in the height of \c CHILD and width  0. */
         };
-        /** \bbrief convert a Mode into a LaTeX instruction name */
+        /** \brief convert a Mode into a LaTeX instruction name */
         static QString Mode2Instruction(Mode mode);
         explicit JKQTMathTextPhantomNode(JKQTMathText* parent, const QString& mode, JKQTMathTextNode* child);
         explicit JKQTMathTextPhantomNode(JKQTMathText* parent, Mode mode, JKQTMathTextNode* child);

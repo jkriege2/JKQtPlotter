@@ -105,7 +105,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextTextNode: public JKQTMathTextTextBaseN
          *  \param painter the QPainter to use for sizing/drawing
          *  \param currentEv the environment that defines the formatting of the text
          *  \param txt the text to split up
-         *  \param[out] textpart the input \A txt split up into sections
+         *  \param[out] textpart the input \a txt split up into sections
          *  \param[out] fontMode formating of each section in \a textpart
          */
         void splitTextForLayout(QPainter &painter, JKQTMathTextEnvironment currentEv, const QString& txt, QStringList& textpart, QList<FontMode>& fontMode) const;

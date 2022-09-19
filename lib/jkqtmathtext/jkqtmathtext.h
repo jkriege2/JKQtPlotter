@@ -209,7 +209,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
             LatexParser, /*!< \brief use the LaTeX parser from JKQTMathTextLatexParser */
             DefaultParser=LatexParser
         };
-        /** \brief parse the given math \a markup string with a parser derived from \a markuptType.
+        /** \brief parse the given math \a markup string with a parser derived from \a markupType.
          *
          *  \param markup the string of math markup
          *  \param markupType defines the language the \a markup is written in (and  is used to derive the parser to use)
@@ -217,7 +217,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
          *
          *  \returns \c true on success.
          */
-        bool parse(const QString &markup, DefaultParserTypes markuptType=DefaultParser, ParseOptions options=DefaultParseOptions);
+        bool parse(const QString &markup, DefaultParserTypes markupType=DefaultParser, ParseOptions options=DefaultParseOptions);
         /** \brief parse the given math \a markup string, using the given parser class \a TParser
          *
          *  \tparam TParser the  parser (deived from JKQTMathTextParser) to be used

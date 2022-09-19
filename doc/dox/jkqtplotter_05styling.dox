@@ -1,0 +1,77 @@
+/*!
+
+
+\defgroup jkqtpplotter_styling Styling System
+\ingroup jkqtplotter
+
+\image html stylesbanner.png
+
+JKQTPlotter (and JKQTBasePlotter) offer a styling system, which allows to easily define and transfer plot styling from one object to another.
+The system is based on a hirarchy of structs, which summarize properties, describing how a plot looks in general. The classes contained in this system are:
+  - JKQTPlotterStyle for JKQTPlotter: Defines e.g. basic user-interactions, the display options of the toolbar
+  - JKQTBasePlotterStyle for JKQTBasePlotter defines the appearance of the plot itself (colors, axis properties, key properties, default graph colors/styles, ...), contains JKQTPCoordinateAxisStyle instances to configrue the plot's coordinate axes
+  - JKQTPCoordinateAxisStyle for JKQTPCoordinateAxis defines the appearance of a coordinate axis (colors, axis properties, ...)
+  - JKQTPKeyStyle for the style of the key/legend in a JKQTBasePlotterStyle
+.
+
+In addition there are static methods that allow to manage a system-wide (actually program-instance wide) style that is applied to any new instance of JKQTPlotter and JKQTBasePlotter on construction:
+  - JKQTPGetSystemDefaultStyle() / JKQTPSetSystemDefaultStyle() allows to access the central instace of JKQTPlotterStyle (mainly properties/style of the GUI-parts and user-action bindings)
+  - JKQTPGetSystemDefaultBaseStyle() / JKQTPSetSystemDefaultBaseStyle() accesses the central instance of JKQTBasePlotterStyle (styles the actual plot/graphs with colors, axes styles, ...)
+.
+
+You can e.g. use these general methods to alter the styles for all JKQTPlotter instances, created in the future:
+\code{.cpp}
+    // load the system-wide default settings from an INI-file:
+    QSettings plotSettings("JKQTPlotterSettings.ini", QSettings::IniFormat);;
+    JKQTPGetSystemDefaultStyle().loadSettings(plotSettings);
+    JKQTPGetSystemDefaultBaseStyle().loadSettings(plotSettings);
+
+    // alter a system-wide default setting by hand (here: set color of zooming rect to red)
+    JKQTPGetSystemDefaultStyle().userActionColor=QColor("red");
+\endcode
+
+Several pre-made styles are available in the JKQTPlotter repository (<a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/">https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/</a>). 
+These are also linked into the JKQTPlotter library as Qt ressource into the subdirectory \c :/JKQTPlotter/styles/ . You can use them as follows:
+
+\code{.cpp}
+	QSettings plotSettings(":/JKQTPlotter/styles/blackandwhite.ini", QSettings::IniFormat);;
+    JKQTPGetSystemDefaultStyle().loadSettings(plotSettings);
+    JKQTPGetSystemDefaultBaseStyle().loadSettings(plotSettings);
+\endcode
+
+Here is a table with all available ready-made styles:
+<table>
+    <tr>
+      <th> Style-file
+      <th> Screenshot
+    <tr>
+      <td> <b> The Default Style </b>
+      <td> \image html default.ini.png
+    <tr>
+      <td> <a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/blackandwhite.ini"> \c :/JKQTPlotter/styles/blackandwhite.ini</a>
+      <td> \image html blackandwhite.ini.png
+    <tr>
+      <td> <a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/blueprint.ini"> \c :/JKQTPlotter/styles/blueprint.ini</a>
+      <td> \image html blueprint.ini.png
+    <tr>
+      <td> <a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/dark.ini"> \c :/JKQTPlotter/styles/dark.ini</a>
+      <td> \image html dark.ini.png
+    <tr>
+      <td> <a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/seaborn.ini"> \c :/JKQTPlotter/styles/seaborn.ini</a>
+      <td> \image html seaborn.ini.png
+    <tr>
+      <td> <a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/simple_gridandticks.ini"> \c :/JKQTPlotter/styles/simple_gridandticks.ini</a>
+      <td> \image html simple_gridandticks.ini.png
+    <tr>
+      <td> <a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/simple_axesoffset.ini"> \c :/JKQTPlotter/styles/simple_axesoffset.ini</a>
+      <td> \image html simple_axesoffset.ini.png
+    <tr>
+      <td> <a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/simple_axesoffset_plotbox.ini"> \c :/JKQTPlotter/styles/simple_axesoffset_plotbox.ini</a>
+      <td> \image html simple_axesoffset_plotbox.ini.png
+</table>
+
+\see For a detailed example, see \ref JKQTPlotterStyling
+
+
+  
+*/

@@ -74,9 +74,10 @@
  *
  * \par win32 implementation issues:
  * To implement this timer on windows systems I use two API calls from the windows kernel. They are:
- *   - <a href="http://msdn2.microsoft.com/en-us/library/ms644904.aspx">QueryPerformanceCounter()</a>
- *   - <a href="http://msdn2.microsoft.com/en-us/library/ms644905.aspx">QueryPerformanceFrequency()</a>
- * .
+ * <ul>
+ *   <li> <a href="http://msdn2.microsoft.com/en-us/library/ms644904.aspx">QueryPerformanceCounter()</a>
+ *   <li> <a href="http://msdn2.microsoft.com/en-us/library/ms644905.aspx">QueryPerformanceFrequency()</a>
+ * </ul>
  * \n
  * The first one is used to read times: In the start() method we simply save the current counter value to a variable.
  * In getTime() we can then again use QueryPerformanceCounter() to get the current counter value and then calculate

@@ -19,7 +19,7 @@
   \image html jkqtmathtext/jkqtmathtext_sqrt.png
   \image html jkqtmathtext/jkqtmathtext_OldEnglish.png
 
-  \defgroup jkqtmathtext_general General Information
+  \defgroup jkqtmathtext_general General Information on JKQTMathText
   \ingroup jkqtmathtext
 
   This group assembles general information around JKQTMathText. It explains the rendering model, lists the supported LaTeX-subset etc.

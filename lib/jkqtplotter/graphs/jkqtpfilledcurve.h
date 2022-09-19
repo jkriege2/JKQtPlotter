@@ -144,35 +144,35 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPFilledCurveXErrorGraph: public JKQTPFilledCurv
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
 
-        /** \copydoc JKQTPFilledCurveXGraph::yErrorSymmetric */
+        /** \copydoc JKQTPYGraphErrorData::yErrorSymmetric */
         inline void setValueErrorSymmetric(bool __value) {
             setYErrorSymmetric(__value);
         }
-        /** \copydoc JKQTPFilledCurveXGraph::yErrorSymmetric */
+        /** \copydoc JKQTPYGraphErrorData::yErrorSymmetric */
         inline bool getValueErrorSymmetric() const {
             return getYErrorSymmetric();
         }
-        /** \copydoc JKQTPFilledCurveXGraph::yErrorColumnLower */
+        /** \copydoc JKQTPYGraphErrorData::yErrorColumnLower */
         inline int getValueErrorColumnLower() const {
             return getYErrorColumnLower();
         }
-        /** \copydoc JKQTPFilledCurveXGraph::yErrorColumn */
+        /** \copydoc JKQTPYGraphErrorData::yErrorColumn */
         inline int getValueErrorColumn() const {
             return getYErrorColumn();
         }
-        /** \copydoc JKQTPFilledCurveXGraph::yErrorStyle */
+        /** \copydoc JKQTPYGraphErrorData::yErrorStyle */
         inline void setValueErrorStyle(JKQTPErrorPlotstyle  __value) {
             setYErrorStyle(__value);
         }
-        /** \copydoc JKQTPFilledCurveXGraph::yErrorStyle */
+        /** \copydoc JKQTPYGraphErrorData::yErrorStyle */
         inline JKQTPErrorPlotstyle getValueErrorStyle() const {
             return getYErrorStyle();
         }
-        /** \copydoc JKQTPFilledCurveXGraph::yErrorColumn */
+        /** \copydoc JKQTPYGraphErrorData::yErrorColumn */
         inline void setValueErrorColumn(int __value) {
             setYErrorColumn(__value);
         }
-        /** \copydoc JKQTPFilledCurveXGraph::yErrorColumnLower */
+        /** \copydoc JKQTPYGraphErrorData::yErrorColumnLower */
         inline void setValueErrorColumnLower(int __value) {
             setYErrorColumnLower(__value);
         }
@@ -260,35 +260,35 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPFilledCurveYErrorGraph: public JKQTPFilledCurv
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
 
 
-        /** \copydoc JKQTPFilledCurveXGraph::xErrorSymmetric */
+        /** \copydoc JKQTPXGraphErrorData::xErrorSymmetric */
         inline void setValueErrorSymmetric(bool __value) {
             setXErrorSymmetric(__value);
         }
-        /** \copydoc JKQTPFilledCurveXGraph::xErrorSymmetric */
+        /** \copydoc JKQTPXGraphErrorData::xErrorSymmetric */
         inline bool getValueErrorSymmetric() const {
             return getXErrorSymmetric();
         }
-        /** \copydoc JKQTPFilledCurveXGraph::xErrorColumnLower */
+        /** \copydoc JKQTPXGraphErrorData::xErrorColumnLower */
         inline int getValueErrorColumnLower() const {
             return getXErrorColumnLower();
         }
-        /** \copydoc JKQTPFilledCurveXGraph::xErrorColumn */
+        /** \copydoc JKQTPXGraphErrorData::xErrorColumn */
         inline int getValueErrorColumn() const {
             return getXErrorColumn();
         }
-        /** \copydoc JKQTPFilledCurveXGraph::xErrorStyle */
+        /** \copydoc JKQTPXGraphErrorData::xErrorStyle */
         inline void setValueErrorStyle(JKQTPErrorPlotstyle  __value) {
             setXErrorStyle(__value);
         }
-        /** \copydoc JKQTPFilledCurveXGraph::xErrorStyle */
+        /** \copydoc JKQTPXGraphErrorData::xErrorStyle */
         inline JKQTPErrorPlotstyle getValueErrorStyle() const {
             return getXErrorStyle();
         }
-        /** \copydoc JKQTPFilledCurveXGraph::xErrorColumn */
+        /** \copydoc JKQTPXGraphErrorData::xErrorColumn */
         inline void setValueErrorColumn(int __value) {
             setXErrorColumn(__value);
         }
-        /** \copydoc JKQTPFilledCurveXGraph::xErrorColumnLower */
+        /** \copydoc JKQTPXGraphErrorData::xErrorColumnLower */
         inline void setValueErrorColumnLower(int __value) {
             setXErrorColumnLower(__value);
         }

@@ -131,7 +131,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPPaintDeviceAdapter {
  *.
  *
  *
- *
  * \section jkqtplotter_base_systems_baseplotter Coordinate Systems and Transformations
  * These topics are discussed in the help for JKQTPCoordinateAxis. There is a set of coordinate transform
  * methods (x2p(), y2p(), p2x(), p2y() which only call the respective methods in xAxis and yAxis objects.
@@ -253,7 +252,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPPaintDeviceAdapter {
  *     \image html jkqtbaseplotter_synchronization_withgridprint.png "Printing with grid-printing-mode activated"
  *   - when you zoom/pan in one of the plots (e.g. using the mouse), the other plots will not adapt their
  *     axes to match the new area, but especially in cases as in the image above it would be beneficial,
- *     that tha x-axis of the plot at the bottom follows the x-axis of the plot above etc.<br>
+ *     that the x-axis of the plot at the bottom follows the x-axis of the plot above etc.<br>
  *     \image html jkqtbaseplotter_synchronization_nonsyncedxrange.png
  * .
  *
@@ -321,13 +320,60 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPPaintDeviceAdapter {
  *
  * \see See \ref JKQTPlotterMultiPlotLayout for an extensive example of the functionality.
  *
-
  *
  * \section jkqtplotter_base_userprops User Properties
  * There is a subset of options that describe how the user interacted with the plotter (export/print scaling factors etc, save directories,
  * other export settings, ...). These are not stored/loaded using saveSettings() and loadSettings(), but using saveUserSettings() and loadUserSettings().
  * These methods MAY (strictly optional and turned off by default) be called by saveSettings() and loadSettings(), if the property userSettigsFilename ( \copybrief userSettigsFilename )is
  * set (not-empty). In this case the suer settings are stored/loaded also everytime they are changed by the user or programmatically.
+ *
+ * \section jkqtplotter_usage_baseplotter JKQTBasePlotter Usage
+ *
+ * \subsection jkqtplotter_usage_baseplotter_in_widget JKQTBasePlotter as Basis for JKQTPlotter
+ *
+ * Most commonly this invisible plotter class is used as basis for the widget JKQTPlotter.
+ * \see JKQTPlotter
+ *
+ * \subsection jkqtplotter_usage_baseplotter_standalonw JKQTBasePlotter Standalone Usage
+ *
+ * But it is also possible to use it in a standalone fashion to generate plots without generating a window.
+ * Note that the baseplotter class still requires the \c widgets+gui modules of Qt, because it contains code to e.g.
+ * display pint or export preview dialogs!
+ *
+ * Here is an example of how to do this (it is taken from the command-line tool \ref JKQTPlotterDocImageRenderCmdLineTool):
+ *
+ * First we generate the JKQTBasePlotter object and add some data to the internal JKQTPDatastore
+ * \code
+ *   JKQTBasePlotter plot(true);
+ *   JKQTPDatastore* ds=plot.getDatastore();
+ *   size_t cx=ds->addCopiedColumn(QVector<double>{-1.5,-0.5,0.5,1.5,2.5},"x");
+ *   size_t cy=ds->addCopiedColumn(QVector<double>{-0.75,-0.3,-0.05,0.2,0.65},"y");
+ * \endcode
+ *
+ * Now we set the range of x/y plot coordinates ...
+ * \code
+ *   plot.setXY(-0.8,2.2,-0.5,0.7);
+ * \endcode
+ * and the size of the widget, i.e. the size of the plot in the windowing system.
+ * \code
+ *   plot.setWidgetSize(150,50);
+ * \endcode
+ * Now we can add graphs to the plotter, e.g.
+ * \code
+ *   JKQTPXYLineGraph* g=new JKQTPXYLineGraph(&plot);
+ *   g->setXColumn(cx);
+ *   g->setYColumn(cy);
+ *   plot.addGraph(g);
+ * \endcode
+ * Finally we store an image of the plot as PNG-file:
+ * \code
+ *   plot.saveAsPixelImage("output.png", false, "png");
+ * \endcode
+ * Alternatively you can obtain a QImage of the plot using grabPixelImage() or copy the
+ * image to the clipboard using copyPixelImage(). ALso storages as PDF and SVG is available via
+ * saveAsPDF() and saveAsSVG().
+ *
+ * With simlar code you can also integrate JKQTBasePlotter into your own widgets.
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         Q_OBJECT
@@ -362,7 +408,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         /** \brief class constructor
          *
          * if \a datastore_internal is \c true then the constructor will create an internal datastore object. The datastore
-         * will be managed (freed) by this class. If \a datastore_internal is \c false the class will use tha datastore provided
+         * will be managed (freed) by this class. If \a datastore_internal is \c false the class will use the datastore provided
          * in \a datast as an external datastore. You can modify this later by using useInternalDatastore() and useExternalDatastore().
          */
         explicit JKQTBasePlotter(bool datastore_internal, QObject* parent=nullptr, JKQTPDatastore* datast=nullptr);

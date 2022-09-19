@@ -106,33 +106,35 @@ JKQTPLOTTER_LIB_EXPORT void initJKQTPlotterResources();
  * \image html simpletest.png
  *
  * Starting from this basic example, you can observe several important principles:
- *   # Data is stored in an (internal) instance of JKQTPDatastore, which is accessible through
+ * <ol>
+ *   <li> Data is stored in an (internal) instance of JKQTPDatastore, which is accessible through
  *     JKQTPlotter::getDatastore().
  *     This datastore can either own its data (which is done here, as we copy the data into the store
  *     by calling JKQTPDatastore::addCopiedColumn(), or it can merely reference to the data (then
  *     data needs to be available as array of \c double values).
- *   # Naming conventions:
- *       - \b plot is the complete drawn image, including the axes, the graphs, the key and all other visual elements
- *       - <b>plot element</b> any sub element of the plot, e.g. a single coordinate axis, the key, but also any graph/curve
- *       - \b graph is a single curve/image/geometric element in the plot
- *       - <b>geometric element</b> is a special graph that does not represent a curve based on data from the JKQTPDatastore,
- *         but a single graphic element, like a rectangle/circle/line/..., some text, a single symbol
- *       - \b key is the legend of the plot
- *       - <b>coordinate axis</b> is each of the x- or y-axis (there might be addition axes, e.g. when showing a color-scale)
- *     .
- *   # Each graph is represented by a class derived from JKQTPPlotElement (in the example we instanciated a JKQTPXYLineGraph,
+ *   <li> Naming conventions (excerpt from \ref jkqtplotter_naming ):
+ *        <ul>
+ *           <li> \b plot is the complete drawn image, including the axes, the graphs, the key and all other visual elements
+ *           <li> <b>plot element</b> any sub element of the plot, e.g. a single coordinate axis, the key, but also any graph/curve
+ *           <li> \b graph is a single curve/image/geometric element in the plot
+ *           <li> <b>geometric element</b> is a special graph that does not represent a curve based on data from the JKQTPDatastore,
+ *                but a single graphic element, like a rectangle/circle/line/..., some text, a single symbol
+ *           <li> \b key is the legend of the plot
+ *           <li> <b>coordinate axis</b> is each of the x- or y-axis (there might be addition axes, e.g. when showing a color-scale)
+ *        </ul>
+ *   <li> Each graph is represented by a class derived from JKQTPPlotElement (in the example we instanciated a JKQTPXYLineGraph,
  *     which shows data as a scatter of symbols that may (or may not) be connected by a line).
  *     Creating the graph class does not yet add it to the plotter. To add it, call JKQTPlotter::addGraph(). Only
  *     after this sep, the graph is displayed. You can modify the apperance of the graph (e.g. colors,
  *     name in the key ...) by setting properties in the graph class instance.
- *   # You can auto-zoom the axis ranges of the plot by calling JKQTPlotter::zoomToFit(), or set them
+ *   <li> You can auto-zoom the axis ranges of the plot by calling JKQTPlotter::zoomToFit(), or set them
  *     exlicitly by calling JKQTPlotter::setXY(). The user can later zoom in/out by the mouse (and other means).
  *     You can limit this zoom range by setting an absolute axis range, calling e.g. JKQTPlotter::setAbsoluteXY().
  *     The the user cannot zoom farther out than the given range(s).
- *   # If you want to style the plot itself, you need to set properties of the underlying JKQTBasePloter instance, which
+ *   <li> If you want to style the plot itself, you need to set properties of the underlying JKQTBasePloter instance, which
  *     is accessible through JKQTPlotter::getPlotter(). If you want to style the coordinate axes, you can acces their
  *     representing objects by caling JKQTPlotter::getXAxis() or JKQTPlotter::getYAxis().
- * .
+ * </ol>
  *
  * \see \ref JKQTPlotterSimpleTest and \see JKQTPlotterQtCreator
  *

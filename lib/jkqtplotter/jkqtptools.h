@@ -573,8 +573,13 @@ struct JKQTPLOTTER_LIB_EXPORT JKQTPGridPrintingItem {
 
 
 
-/** \brief plot styles for the error information
+/** \brief specifies the plot styles for the error information, e.g. error bars, boxes, lines ...
  * \ingroup jkqtplotter_basegraphserrors
+ *
+ * \note This enum provides the elements for \ref JKQTPErrorPlotstyle, which is actually used
+ *       throughout the code.
+ *
+ * \see JKQTPErrorPlotstyle, JKQTPXGraphErrorData, JKQTPYGraphErrorData
  */
 enum JKQTPErrorPlotstyleElements {
     JKQTPNoError=0x00,                   /*!< \brief don't show error information \image html errorindicators/JKQTPNoError.png */
@@ -606,6 +611,13 @@ enum JKQTPErrorPlotstyleElements {
     JKQTPErrorBarsLines=JKQTPErrorBars|JKQTPErrorLines,           /*!< \brief error bars and lines for each data point \image html errorindicators/JKQTPErrorBarsLines.png */
     JKQTPErrorBarsPolygons=JKQTPErrorBars|JKQTPErrorPolygons,        /*!< \brief error bars and polygons for each data point \image html errorindicators/JKQTPErrorBarsPolygons.png */
 };
+/** \brief specifies the plot styles for the error information, e.g. error bars, boxes, lines ...
+ * \ingroup jkqtplotter_basegraphserrors
+ *
+ * \qFlagsNote{JKQTPErrorPlotstyle,JKQTPErrorPlotstyleElements}
+ *
+ * \see JKQTPErrorPlotstyleElements, JKQTPXGraphErrorData, JKQTPYGraphErrorData
+ */
 Q_DECLARE_FLAGS(JKQTPErrorPlotstyle, JKQTPErrorPlotstyleElements)
 Q_DECLARE_OPERATORS_FOR_FLAGS(JKQTPErrorPlotstyle)
 

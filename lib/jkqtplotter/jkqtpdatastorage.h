@@ -99,13 +99,13 @@ enum class JKQTPDatastoreItemFormat {
   *  as a 2D image. In the latter case, the data is assumed to be ordered in row-major ordering (i.e. row for row).
   *
   *  You can generate new columns e.g. by:
-  *    - addColumn() which either generates internally managed (and extensible) columns, or accepts a simple \c double* pointer
+  *  <ul>
+  *    <li> addColumn() which either generates internally managed (and extensible) columns, or accepts a simple \c double* pointer
   *      to external. In the latter case owner-ship may be transferred to the datastore, but can also retain externally.
-  *    - addImageColumn() adds a column that should be interpreted as an image with given width and height (i.e. a row-major
+  *    <li> addImageColumn() adds a column that should be interpreted as an image with given width and height (i.e. a row-major
   *      matrix with \c width columns and \c height rows.
-  *    - copyColumn() duplicates an existing column
-  *    - addCopiedColumn() copies an external dataset into the datastore. e.g. with code like:
-  *
+  *    <li> copyColumn() duplicates an existing column
+  *    <li> addCopiedColumn() copies an external dataset into the datastore. e.g. with code like:
   *        \code{.cpp}
   *           QVector<double> X, Y;
   *           const int Ndata=100;
@@ -119,17 +119,16 @@ enum class JKQTPDatastoreItemFormat {
   *          linegraph->setXColumn(datastore->addCopiedColumn(X, "x"));
   *          linegraph->setYColumn(datastore->addCopiedColumn(Y, "y"));
   *        \endcode
-  *
-  *   - addLinearColumn() adds a column with linearly increasing numbers (in a given range)
-  *   - addLogColumn() and addDecadeLogColumn() add columns with logarithmically spaced values
-  *   - addLinearGridColumns() adds two columns which represent x- and y- coordinates of points
+  *   <li> addLinearColumn() adds a column with linearly increasing numbers (in a given range)
+  *   <li> addLogColumn() and addDecadeLogColumn() add columns with logarithmically spaced values
+  *   <li> addLinearGridColumns() adds two columns which represent x- and y- coordinates of points
   *     on a rectangular grid (useful for calculating image data)
-  *   - addCalculatedColumn() calculates a column, based on row numbers and a C++ functor
-  *   - addColumnCalculatedFromColumn() calculates a column, based on another column data
-  *   - addCopiedMap() copies data from a std::map/QMap into two columns
-  *   - ... several more functions for specific cases exist.
-  *   - Also note that there are even library extensions that allow to import data directly from OpenCV matrices: JKQTPCopyCvMatToColumn()
-  * .
+  *   <li> addCalculatedColumn() calculates a column, based on row numbers and a C++ functor
+  *   <li> addColumnCalculatedFromColumn() calculates a column, based on another column data
+  *   <li> addCopiedMap() copies data from a std::map/QMap into two columns
+  *   <li> ... several more functions for specific cases exist.
+  *   <li> Also note that there are even library extensions that allow to import data directly from OpenCV matrices: JKQTPCopyCvMatToColumn()
+  * </ul>
   *
   * Of course columns can also be deleted by calling:
   *   - deleteColumn()

@@ -32,13 +32,20 @@
 */
 class JKQTCOMMON_LIB_EXPORT JKQTPEnhancedPainter : public QPainter {
     public:
-
+        /** \brief flags that are used to configure a JKQTPEnhancedPainter */
         enum PainterFlag { DefaultPaintMode = 0x00, /*!< \brief the default  mode, the JKQTPEnhancedPainter draws on a pixel-device */
                            VectorPainting   = 0x01, /*!< \brief if set, the JKQTPEnhancedPainter draws onto a vector-device, like a printer, PDF or SVG-output */
                          };
-        Q_ENUMS(PainterFlag)
-        Q_FLAGS(PainterFlags)
+        Q_ENUM(PainterFlag)
+        /** \brief specifies the plot styles for the error information, e.g. error bars, boxes, lines ...
+         * \ingroup jkqtplotter_basegraphserrors
+         *
+         * \qFlagsNote{JKQTPErrorPlotstyle,JKQTPErrorPlotstyleElements}
+         *
+         * \see JKQTPErrorPlotstyleElements, JKQTPXGraphErrorData, JKQTPYGraphErrorData
+         */
         Q_DECLARE_FLAGS(PainterFlags, PainterFlag)
+        Q_FLAG(PainterFlags)
 
         JKQTPEnhancedPainter(QPaintDevice* device);
         JKQTPEnhancedPainter();

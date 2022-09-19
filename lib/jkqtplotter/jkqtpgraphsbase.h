@@ -165,22 +165,23 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPPlotElement: public QObject {
                     You can use JKQTPIsOKFloat() to check whether a valid distance was returned!
 
 
-            Since tha graph base class does not have any knowledge about how to perform a hit test on you specific graph, there is only a
+            Since the graph base class does not have any knowledge about how to perform a hit test on you specific graph, there is only a
             very general implementation in this class, which does not actually search through the graph itself, but searches through
             extra data that hs to be written during draw() and is stored in m_hitTestData. The implentation this base-class only searches this
             list of points+metadata to implement a basic hit-test. If the list is empty, of no close-by points are found (default), then
             hitTest() will simply return \a NAN.
 
             When writing a new graph, you can therefore implement hitTest() in one of these ways:
-               # You simply fill m_hitTestData with appropriate data and rely on the implementation in JKQTPPlotElement to do the work for you:
+            <ol>
+               <li> You simply fill m_hitTestData with appropriate data and rely on the implementation in JKQTPPlotElement to do the work for you:
                  You then need to call clearHitTestData() at the start of your draw() function and whenever you draw a datapoint, you add
                  its location and metadata to the internal storage with addHitTestData()
-               # You derive from a graph class that already has an implementation. JKQTPXYGraph is an example of this. That class searches
+               <li> You derive from a graph class that already has an implementation. JKQTPXYGraph is an example of this. That class searches
                  through all x-/y-coordinates in the internally known columns and even takes into account possible graph errors in the label,
                  when the graph is also derived from JKQTPXGraphErrorData or JKQTPYGraphErrorData. This implementation therefore covers
                  most graph types pre-packaged with JKQTPlotter
-               # You implement the function from scratch
-            .
+               <li> You implement the function from scratch
+            </ol>
 
             \see addHitTestData(), clearHitTestData(), m_hitTestData, HitTestLocation
 

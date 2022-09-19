@@ -1,0 +1,51 @@
+/*!
+
+\defgroup jkqtpdatastorage Data Storage Classes/System
+\ingroup jkqtplotter
+
+The classes in this group implement a data storage system for use with the main plotter class.
+Basically a table of data is generated as a set of logical columns that may be bound to different
+data sources (internal or external memory arrays. Later on it is simply possible to plot graphs
+using the column number and the not a link to the actual data array, as the link is stored in these
+classes.
+
+\see \ref JKQTPlotterBasicJKQTPDatastore for a detailed description of how to use this class for data management!
+
+\defgroup jkqtpexternalinterfaces Interfaces To Other Libraries
+\ingroup jkqtpdatastorage
+
+
+\defgroup jkqtpinterfaceopencv OpenCV Interfaceing Tools
+\ingroup jkqtpexternalinterfaces
+
+Classes and functions in this group allow JKQTPlotter to directly work with <a href="https://opencv.org/">OpenCV</a> data structures.
+
+Examples:
+  - \ref JKQTPlotterImagePlotOpenCV  
+  - \ref JKQTPlotterImagePlotRGBOpenCV 
+.
+
+The OpenCV-binding itself is header-only, and NOT compiled into the JKQtPlotter libraries. Therefore you can simply include the header and use the facilities provided by it.
+
+The CMake-build system of JKQtPlotter (and its examples) is compatible with both OpenCV 3.4.x and 4.x and uses the standard `find_package(OpenCV)` facilities provided by OpenCV to compile and bind against that library. 
+If you want to build the OpenCV-based JKQtPlotter examples (see list above), you either have to ensure that CMake finds OpenCV by itself (i.e. somewhere in the default search paths), or you can set the CMake variable `OpenCV_DIR` so it points to the OpenCV directory before configuring JKQtPlotter.
+
+
+
+\defgroup jkqtpinterfacecimg CImg Interfaceing Tools
+\ingroup jkqtpexternalinterfaces
+
+Classes and functions in this group allow JKQTPlotter to directly work with <a href="http://cimg.eu/">CImg</a> data structures <a href="http://cimg.eu/reference/structcimg__library_1_1CImg.html">CImg&lt;T&gt></a>.
+
+Examples:
+  - \ref JKQTPlotterImagePlotCImg
+  - \ref JKQTPlotterImagePlotRGBCImg
+.
+
+The CImg-binding itself is header-only (as CImg is itself), and NOT compiled into the JKQtPlotter libraries. Therefore you can simply include the header and use the facilities provided by it.
+
+The CMake-build system of JKQtPlotter (and its examples) provides facilities to allow for `find_package(CImg)` to compile against that library. 
+If you want to build the CImg-based JKQtPlotter examples (see list above), you either have to ensure that CMake finds CImg by itself (i.e. somewhere in the default search paths, e.g. `CMAKE_INSTALL_PREFIX`), or you can set the CMake variable `CImg_DIR` so it points to the directory of the `CImg.h` file, or  before configuring JKQtPlotter.
+
+
+*/
