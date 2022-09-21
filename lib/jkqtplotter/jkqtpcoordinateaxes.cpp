@@ -21,6 +21,7 @@
 #include "jkqtplotter/jkqtpbaseplotter.h"
 #include "jkqtcommon/jkqtpdrawingtools.h"
 #include "jkqtcommon/jkqtpgeometrytools.h"
+#include "jkqtcommon/jkqtpmathtools.h"
 #include <QDebug>
 #include <QDateTime>
 #include <cfloat>
@@ -84,6 +85,7 @@ JKQTMathText* JKQTPCoordinateAxis::getParentMathText() {
 const JKQTMathText* JKQTPCoordinateAxis::getParentMathText() const {
     return parent->getMathText();
 }
+
 
 void JKQTPCoordinateAxis::clearAxisTickLabels() {
     tickLabels.clear();
@@ -360,11 +362,40 @@ double JKQTPCoordinateAxis::calcLogTickSpacing() {
 
 }
 
+QString JKQTPCoordinateAxis::floattostringWithFormat(const QLocale & loc, double data, char format, int past_comma, bool remove_trail0) const
+{
+    QString res=loc.toString(data, format, past_comma);
+    if (remove_trail0 && res.contains(QLocale::system().decimalPoint())) {
+        QString expo="";
+        const int expIdx=res.toLower().indexOf('e');
+        if (expIdx>=0) {
+            expo=res.mid(expIdx);
+            res=res.left(expIdx);
+        }
+        while (res.size()>0 && res[res.size()-1]=='0') {
+            res=res.left(res.size()-1);
+        }
+        if (res.size()>0 && res[res.size()-1]==loc.decimalPoint()) res=res.left(res.size()-1);
+        res=res+expo;
+    }
+    return res;
+
+}
+QString JKQTPCoordinateAxis::floattostringWithFormat(double data, char format, int past_comma, bool remove_trail0) const
+{
+    QLocale loc=QLocale::system();
+    loc.setNumberOptions(QLocale::OmitGroupSeparator);
+    return floattostringWithFormat(loc, data, format, past_comma, remove_trail0);
+}
 
 QString JKQTPCoordinateAxis::floattolabel(double data) const {
-    int past_comma=axisStyle.labelDigits;
+    const int past_comma=axisStyle.labelDigits;
+    return floattolabel(data, past_comma);
+}
+
+QString JKQTPCoordinateAxis::floattolabel(double data, int past_comma) const {
     const bool remove_trail0=true;
-    QLocale loc=QLocale::system();
+    QLocale loc= QLocale::system();
     loc.setNumberOptions(QLocale::OmitGroupSeparator);
 
     double belowIsZero=1e-300;
@@ -373,22 +404,60 @@ QString JKQTPCoordinateAxis::floattolabel(double data) const {
     }
 
     switch(axisStyle.labelType) {
-        case JKQTPCALTdefault: {
-                QString res=loc.toString(data, 'f', past_comma);
-                if (remove_trail0 && res.contains(QLocale::system().decimalPoint())) {
-                    while (res.size()>0 && res[res.size()-1]=='0') {
-                        res=res.left(res.size()-1);
-                    }
-                    if (res.size()>0 && res[res.size()-1]==loc.decimalPoint()) res=res.left(res.size()-1);
+        case JKQTPCALTcount:
+            return "";
+        case JKQTPCALTdefault:
+            return floattostringWithFormat(loc, data, 'f', past_comma, remove_trail0);
+        case JKQTPCALTscientific:
+            return floattostringWithFormat(loc, data, 'e', past_comma, remove_trail0);
+        case JKQTPCALTexponent:
+            return QString(jkqtp_floattolatexstr(data, past_comma, remove_trail0, belowIsZero, pow(10, -past_comma), pow(10, past_comma+1)).c_str());
+        case JKQTPCALTexponentCharacter:
+            return QString(jkqtp_floattolatexunitstr(data, past_comma, remove_trail0).c_str());
+        case JKQTPCALTintfrac:
+        case JKQTPCALTintsfrac:
+        case JKQTPCALTintslashfrac:
+        case JKQTPCALTfrac:
+        case JKQTPCALTsfrac:
+        case JKQTPCALTslashfrac: {
+            uint64_t num=0;
+            uint64_t denom=0;
+            uint64_t intpart=0;
+            int sign=+1;
+            const double powfac=pow(10,past_comma);
+            const double rounded=round(data*powfac)/powfac;
+            jkqtp_estimateFraction(rounded, sign, intpart, num, denom);
+            //std::cout<<"\n"<<data<<" => "<<rounded<<", "<<sign<<"*( "<<intpart<<" + "<<num<<"/"<<denom<<" )\n";
+            if (axisStyle.labelType==JKQTPCALTfrac || axisStyle.labelType==JKQTPCALTsfrac || axisStyle.labelType==JKQTPCALTslashfrac) {
+                if (intpart>0) {
+                    num=num+denom*intpart;
+                    intpart=0;
                 }
-                return res;
-            }; break;
-        case JKQTPCALTexponent: {
-                return QString(jkqtp_floattolatexstr(data, past_comma, remove_trail0, belowIsZero, pow(10, -past_comma), pow(10, past_comma+1)).c_str());
-            }; break;
-        case JKQTPCALTexponentCharacter: {
-                return QString(jkqtp_floattounitstr(data, past_comma, remove_trail0).c_str());
-            }; break;
+            }
+            //std::cout<<data<<" => "<<rounded<<", "<<sign<<"*( "<<intpart<<" + "<<num<<"/"<<denom<<" )\n";
+            QString res;
+            if (rounded==0.0 || (intpart==0 && num==0)) res= "0";
+            else {
+                if (intpart==0 && sign<0) res+="-";
+                if (intpart!=0) res+=QString::number(intpart);
+                if (num!=0) {
+                    if (denom==1) res=QString::number(num);
+                    else {
+                        if (axisStyle.labelType==JKQTPCALTfrac || axisStyle.labelType==JKQTPCALTintfrac) res+=QString("\\frac{%1}{%2}").arg(num).arg(denom);
+                        else if (axisStyle.labelType==JKQTPCALTsfrac || axisStyle.labelType==JKQTPCALTintsfrac) res+=QString("\\sfrac{%1}{%2}").arg(num).arg(denom);
+                        else {
+                            if (res.size()>0 && res[res.size()-1].isDigit()) {
+                                if (sign<0) res+="-";
+                                else res+="+";
+                            }
+                            res+=QString("%1/%2").arg(num).arg(denom);
+                        }
+                    }
+                }
+            }
+            //std::cout<<data<<" => "<<rounded<<", "<<res.toStdString()<<"\n";
+            return res;
+        }
         case JKQTPCALTdate: {
                 QDateTime dt;
                 dt.setMSecsSinceEpoch(uint64_t(data));
@@ -404,36 +473,8 @@ QString JKQTPCoordinateAxis::floattolabel(double data) const {
                 dt.setMSecsSinceEpoch(uint64_t(data));
                 return dt.toString(axisStyle.tickDateTimeFormat);
             }; break;
-        default:
-            return QString();
-            break;
     }
-
-    /*
-    axisStyle.tickTimeFormat
-    axisStyle.tickDateFormat
-    axisStyle.tickDateTimeFormat
-     **/
-
     return QString();
-}
-
-QString JKQTPCoordinateAxis::floattolabel(double data, int past_comma) const {
-    bool remove_trail0=true;
-    QLocale loc=QLocale::system();
-    loc.setNumberOptions(QLocale::OmitGroupSeparator);
-    if (axisStyle.labelType==JKQTPCALTdefault) {
-        QString res=loc.toString(data, 'f', past_comma);//QString::number(data, 'f', past_comma);
-        if (remove_trail0 && res.contains(QLocale::system().decimalPoint())) {
-            while (res.size()>0 && res[res.size()-1]=='0') {
-                res=res.left(res.size()-1);
-            }
-            if (res.size()>0 && res[res.size()-1]==loc.decimalPoint()) res=res.left(res.size()-1);
-        }
-        return res;
-    } else if (axisStyle.labelType==JKQTPCALTexponent) return QString(jkqtp_floattolatexstr(data, past_comma, remove_trail0, 1e-300, pow(10, -past_comma), pow(10, past_comma+1)).c_str());
-    else if (axisStyle.labelType==JKQTPCALTexponentCharacter) return QString(jkqtp_floattounitstr(data, past_comma, remove_trail0).c_str());
-    return "";
 }
 
 int JKQTPCoordinateAxis::calcLinearUnitDigits() {

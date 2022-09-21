@@ -439,13 +439,21 @@ JKQTPLOTTER_LIB_EXPORT JKQTPCADrawMode String2JKQTPCADrawMode(const QString& pos
  * \ingroup jkqtpplottersupprt */
 enum JKQTPCALabelType {
     JKQTPCALTdefault, /*!< \brief simply print the numbers \image html JKQTPCALTdefault.png */
-    JKQTPCALTexponentCharacter, /*!< \brief print the numbers and show a unit character, i.e. 5&mu; for \f$ 5\cdot 10^{-6} \f$ , \c 3k for \f$ 3\cdot 10^3 \f$ ...  */
+    JKQTPCALTscientific, /*!< \brief print the numbers in scientific notation, e.g. \c "1.23e-4" \image html JKQTPCALTscientific.png */
+    JKQTPCALTexponentCharacter, /*!< \brief print the numbers and show a unit character, i.e. 5&mu; for \f$ 5\cdot 10^{-6} \f$ , \c 3k for \f$ 3\cdot 10^3 \f$ ... \image html JKQTPCALTexponentCharacter.png */
     JKQTPCALTexponent, /*!< \brief show numbers in exponential for, e.g. \f$ 3\cdot 10^5 \f$ ... \image html JKQTPCALTexponent.png */
     JKQTPCALTdate, /*!< \brief show numbers as dates \image html JKQTPCALTdate.png */
     JKQTPCALTtime, /*!< \brief show numbers as times \image html JKQTPCALTtime.png*/
-    JKQTPCALTdatetime, /*!< \brief show numbers as times */
+    JKQTPCALTdatetime, /*!< \brief show numbers as times \image html JKQTPCALTdatetime.png */
+    JKQTPCALTfrac, /*!< \brief show numbers as fraction, the number is first rounded to the given precision and then a fraction is calculated and displayed like \$ \frac{1}{2} \f$ \image html JKQTPCALTfrac.png */
+    JKQTPCALTslashfrac, /*!< \brief show numbers as fraction, the number is first rounded to the given precision and then a fraction is calculated and displayed like \c 1/2 \image html JKQTPCALTslashfrac.png */
+    JKQTPCALTsfrac, /*!< \brief show numbers as fraction, the number is first rounded to the given precision and then a fraction is calculated and displayed using \c \\sfrac{1}{2} \f$ \image html JKQTPCALTsfrac.png */
+    JKQTPCALTintfrac, /*!< \brief show numbers as integral+fraction, the number is first rounded to the given precision and then a fraction is calculated and displayed like \$ \frac{1}{2} \f$ \image html JKQTPCALTintfrac.png */
+    JKQTPCALTintslashfrac, /*!< \brief show numbers as integral+fraction, the number is first rounded to the given precision and then a fraction is calculated and displayed like \c 1/2 \image html JKQTPCALTintslashfrac.png */
+    JKQTPCALTintsfrac, /*!< \brief show numbers as integral+fraction, the number is first rounded to the given precision and then a fraction is calculated and displayed using \c \\sfrac{1}{2} \f$ \image html JKQTPCALTintsfrac.png */
 
-    JKQTPCALTmax=JKQTPCALTdatetime
+    JKQTPCALTcount,
+    JKQTPCALTmax=JKQTPCALTcount-1
 };
 
 

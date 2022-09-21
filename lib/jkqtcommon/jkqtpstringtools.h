@@ -26,6 +26,7 @@
 #include <QLocale>
 #include <string>
 #include <QtGlobal>
+#include <limits>
 
 /** \brief converts a QT::PenStyle into a string
  * \ingroup jkqtptools_string
@@ -231,11 +232,15 @@ JKQTCOMMON_LIB_EXPORT std::string jkqtp_to_valid_variable_name(const std::string
 /** \brief convert a double to a string, encoding powers of ten as characters, e.g. \c jkqtp_floattounitstr(1000) will result in "1k"
  * \ingroup jkqtptools_string
  */
-JKQTCOMMON_LIB_EXPORT std::string jkqtp_floattounitstr(double data, int past_comma=5, bool remove_trail0=false);
+JKQTCOMMON_LIB_EXPORT std::string jkqtp_floattounitstr(double data, int past_comma=5, bool remove_trail0=false, double belowIsZero=std::numeric_limits<double>::min()*4);
+/** \brief convert a double to a LaTeX-encoded string, encoding powers of ten as characters, e.g. \c jkqtp_floattounitstr(1000) will result in "1k"
+ * \ingroup jkqtptools_string
+ */
+JKQTCOMMON_LIB_EXPORT std::string jkqtp_floattolatexunitstr(double data, int past_comma=5, bool remove_trail0=false, double belowIsZero=std::numeric_limits<double>::min()*4);
 /** \brief convert a double to a string, encoding powers of ten as exponent in LaTeX notation (e.g. <code>-1.23\\cdot 10^{-5}</code>)
  * \ingroup jkqtptools_string
  */
-JKQTCOMMON_LIB_EXPORT std::string jkqtp_floattolatexstr(double data, int past_comma=5, bool remove_trail0=false, double belowIsZero=1e-16, double minNoExponent=1e-3, double maxNoExponent=1e4, bool ensurePlusMinus=false);
+JKQTCOMMON_LIB_EXPORT std::string jkqtp_floattolatexstr(double data, int past_comma=5, bool remove_trail0=false, double belowIsZero=1e-16, double minNoExponent=1e-3, double maxNoExponent=1e4, bool ensurePlusMinus=false, const std::string& multOperator="\\times");
 /** \brief convert a double to a string, encoding powers of ten as exponent with HTML tags
  * \ingroup jkqtptools_string
  */

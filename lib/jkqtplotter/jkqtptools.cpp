@@ -101,18 +101,32 @@ QString JKQTPCALabelType2String(JKQTPCALabelType pos) {
         case JKQTPCALTtime: return "time";
         case JKQTPCALTdate: return "date";
         case JKQTPCALTdatetime: return "datetime";
+        case JKQTPCALTscientific: return "scientific";
+        case JKQTPCALTintfrac: return "intfrac";
+        case JKQTPCALTintsfrac: return "intsfrac";
+        case JKQTPCALTintslashfrac: return "intslashfrac";
+        case JKQTPCALTfrac: return "frac";
+        case JKQTPCALTsfrac: return "sfrac";
+        case JKQTPCALTslashfrac: return "slashfrac";
     }
     return "";
 }
 
 JKQTPCALabelType String2JKQTPCALabelType(const QString& pos) {
     QString s=pos.trimmed().toLower();
-    if (s=="default") return JKQTPCALTdefault;
+    if (s=="default" || s=="f") return JKQTPCALTdefault;
+    if (s=="scientifc" || s=="g") return JKQTPCALTscientific;
     if (s=="exponent_character") return JKQTPCALTexponentCharacter;
     if (s=="exponent") return JKQTPCALTexponent;
     if (s=="time") return JKQTPCALTtime;
     if (s=="date") return JKQTPCALTdate;
     if (s=="datetime") return JKQTPCALTdatetime;
+    if (s=="frac") return JKQTPCALTfrac;
+    if (s=="sfrac") return JKQTPCALTsfrac;
+    if (s=="slashfrac") return JKQTPCALTslashfrac;
+    if (s=="intfrac") return JKQTPCALTintfrac;
+    if (s=="intsfrac") return JKQTPCALTintsfrac;
+    if (s=="intslashfrac") return JKQTPCALTintslashfrac;
     return JKQTPCALTdefault;
 }
 

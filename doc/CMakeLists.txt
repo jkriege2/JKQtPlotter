@@ -114,6 +114,14 @@ if(JKQtPlotter_BUILD_TOOLS)
     )
     add_dependencies(JKQTPlotter_GenerateDocImages JKQTPlotter_GenerateDocImages_listerrorindicators)
 
+    add_custom_target(JKQTPlotter_GenerateDocImages_listaxislabeltype
+        COMMENT "Building JKQTPlotter Documentation Images: listaxislabeltype"
+        COMMAND ${JKQTPlotter_GenerateDocImages_COMMAND} --listaxislabeltype --background=lightgrey --iconsize=50 --outputdir="${JKQTPlotter_GenerateDocImages_OutputDir}/"
+        WORKING_DIRECTORY ${JKQtPlotter_QT_BINDIR}
+        DEPENDS jkqtplotter_doc_imagegenerator
+    )
+    add_dependencies(JKQTPlotter_GenerateDocImages JKQTPlotter_GenerateDocImages_listaxislabeltype)
+
 endif(JKQtPlotter_BUILD_TOOLS)
 
 

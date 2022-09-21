@@ -588,6 +588,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         const JKQTMathText* getParentMathText() const;
 
 
+        /** \brief convert a float to a string using \a format (\c f|e|E|g|G ) with given number of decimals after comma \a past_comma and optional removal of trailing zeros behind decimal separator \a remove_trail0. Uses current local, disables not use Group-Separator */
+        QString floattostringWithFormat(const QLocale & loc, double data, char format, int past_comma, bool remove_trail0=true) const;
+        /** \brief convert a float to a string using \a format (\c f|e|E|g|G ) with given number of decimals after comma \a past_comma and optional removal of trailing zeros behind decimal separator \a remove_trail0. Uses current local, disables not use Group-Separator */
+        QString floattostringWithFormat(double data, char format, int past_comma, bool remove_trail0=true) const;
         /** \brief convert a float to a tick label string */
         QString floattolabel(double data) const;
 

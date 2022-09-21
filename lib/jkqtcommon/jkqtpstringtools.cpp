@@ -170,22 +170,23 @@ std::string jkqtp_tolower(const std::string& s){
 };
 
 
- std::string jkqtp_floattounitstr(double data, int past_comma, bool remove_trail0){
-   if (data==0) return "0";
+ std::string jkqtp_floattounitstr(double data, int past_comma, bool remove_trail0, double belowIsZero){
+   if (fabs(data)<=belowIsZero) return "0";
    std::string form="%."+jkqtp_inttostr(past_comma)+"lf";
    std::string res=jkqtp_format(form,data);
-   if (fabs(data)>=1e3) res=jkqtp_format(form,data/1e3)+"k";
-   if (fabs(data)>=1e6) res=jkqtp_format(form,data/1e6)+"M";
-   if (fabs(data)>=1e9) res=jkqtp_format(form,data/1e9)+"G";
-   if (fabs(data)>=1e12) res=jkqtp_format(form,data/1e12)+"T";
-   if (fabs(data)>=1e15) res=jkqtp_format(form,data/1e15)+"P";
-   if (fabs(data)<1) res=jkqtp_format(form,data/1e-3)+"m";
-   if (fabs(data)<1e-3) res=jkqtp_format(form,data/1e-6)+"u";
-   if (fabs(data)<1e-6) res=jkqtp_format(form,data/1e-9)+"n";
-   if (fabs(data)<1e-9) res=jkqtp_format(form,data/1e-12)+"f";
+   std::string unit="";
+   if (fabs(data)>=1e3) {res=jkqtp_format(form,data/1e3); unit="k";}
+   if (fabs(data)>=1e6) {res=jkqtp_format(form,data/1e6); unit="M";}
+   if (fabs(data)>=1e9) {res=jkqtp_format(form,data/1e9); unit="G";}
+   if (fabs(data)>=1e12) {res=jkqtp_format(form,data/1e12); unit="T";}
+   if (fabs(data)>=1e15) {res=jkqtp_format(form,data/1e15); unit="P";}
+   if (fabs(data)<1) {res=jkqtp_format(form,data/1e-3); unit="m";}
+   if (fabs(data)<1e-3) {res=jkqtp_format(form,data/1e-6); unit="u";}
+   if (fabs(data)<1e-6) {res=jkqtp_format(form,data/1e-9); unit="n";}
+   if (fabs(data)<1e-9) {res=jkqtp_format(form,data/1e-12); unit="f";}
    if (fabs(data)==0) res=jkqtp_format(form,data);
    if (remove_trail0) {
-       if (data==0) return "0";
+       if (fabs(data)<=belowIsZero) return "0";
        if (res.find('.')==std::string::npos) return res;
        size_t i=res.size()-1;
        while (i>0 && res[i]=='0') {
@@ -194,10 +195,39 @@ std::string jkqtp_tolower(const std::string& s){
        if (res[i]=='.') i--; // remove decimal divider
        return res.erase(i+1);
    }
-   return res;
+   return res+unit;
  }
 
- std::string jkqtp_floattolatexstr(double data, int past_comma, bool remove_trail0, double belowIsZero, double minNoExponent, double maxNoExponent, bool ensurePlusMinus){
+
+ std::string jkqtp_floattolatexunitstr(double data, int past_comma, bool remove_trail0, double belowIsZero){
+   if (fabs(data)<=belowIsZero) return "0";
+   std::string form="%."+jkqtp_inttostr(past_comma)+"lf";
+   std::string res=jkqtp_format(form,data);
+   std::string unit="";
+   if (fabs(data)>=1e3) {res=jkqtp_format(form,data/1e3); unit="\\mathrm{k}";}
+   if (fabs(data)>=1e6) {res=jkqtp_format(form,data/1e6); unit="\\;\\mathrm{M}";}
+   if (fabs(data)>=1e9) {res=jkqtp_format(form,data/1e9); unit="\\;\\mathrm{G}";}
+   if (fabs(data)>=1e12) {res=jkqtp_format(form,data/1e12); unit="\\;\\mathrm{T}";}
+   if (fabs(data)>=1e15) {res=jkqtp_format(form,data/1e15); unit="\\;\\mathrm{P}";}
+   if (fabs(data)<1) {res=jkqtp_format(form,data/1e-3); unit="\\;\\mathrm{m}";}
+   if (fabs(data)<1e-3) {res=jkqtp_format(form,data/1e-6); unit="\\;\\mathrm{\\mu}";}
+   if (fabs(data)<1e-6) {res=jkqtp_format(form,data/1e-9); unit="\\;\\mathrm{n}";}
+   if (fabs(data)<1e-9) {res=jkqtp_format(form,data/1e-12); unit="\\;\\mathrm{f}";}
+   if (fabs(data)==0) res=jkqtp_format(form,data);
+   if (remove_trail0) {
+       if (fabs(data)<=belowIsZero) return "0";
+       if (res.find('.')==std::string::npos) return res+unit;
+       size_t i=res.size()-1;
+       while (i>0 && res[i]=='0') {
+           i--;
+       }
+       if (res[i]=='.') i--; // remove decimal divider
+       return res.erase(i+1)+unit;
+   }
+   return res+unit;
+ }
+
+ std::string jkqtp_floattolatexstr(double data, int past_comma, bool remove_trail0, double belowIsZero, double minNoExponent, double maxNoExponent, bool ensurePlusMinus, const std::string &multOperator){
    if ((belowIsZero>0) && (fabs(data)<belowIsZero)) {
        if (ensurePlusMinus) return "+\\rm{0}";
        else return "\\rm{0}";
@@ -214,7 +244,7 @@ std::string jkqtp_tolower(const std::string& s){
    if ((minNoExponent>fabs(data)) || (fabs(data)>maxNoExponent)) {
        std::string v=jkqtp_floattostr(data/pow(10.0, static_cast<double>(exp)), past_comma, remove_trail0);
        if (v!="1" && v!="10")  {
-           res=v+std::string("{\\times}10^{")+jkqtp_inttostr(exp)+"}";
+           res=v+std::string("{")+multOperator+std::string("}10^{")+jkqtp_inttostr(exp)+"}";
        } else {
            if (v=="10") exp=exp+1;
            res=std::string("10^{")+jkqtp_inttostr(exp)+"}";

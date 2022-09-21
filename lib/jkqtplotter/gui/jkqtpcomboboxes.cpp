@@ -345,10 +345,14 @@ JKQTPCALabelTypeComboBox::JKQTPCALabelTypeComboBox(QWidget *parent):
     setEditable(false);
     addLabelType(JKQTPCALTexponent, tr("exponent"), QIcon(":/JKQTPlotter/jkqtp_ticks_exp.png"));
     addLabelType(JKQTPCALTdefault, tr("default"), QIcon(":/JKQTPlotter/jkqtp_ticks_default.png"));
+    addLabelType(JKQTPCALTdefault, tr("scientific"), QIcon(":/JKQTPlotter/jkqtp_ticks_scientific.png"));
     addLabelType(JKQTPCALTexponentCharacter, tr("character"), QIcon(":/JKQTPlotter/jkqtp_ticks_expchar.png"));
     addLabelType(JKQTPCALTtime, tr("time"), QIcon(":/JKQTPlotter/jkqtp_ticks_time.png"));
     addLabelType(JKQTPCALTdate, tr("date"), QIcon(":/JKQTPlotter/jkqtp_ticks_date.png"));
     addLabelType(JKQTPCALTdatetime, tr("datetime"), QIcon(":/JKQTPlotter/jkqtp_ticks_datetime.png"));
+    addLabelType(JKQTPCALTfrac, tr("fraction"), QIcon(":/JKQTPlotter/jkqtp_ticks_frac.png"));
+    addLabelType(JKQTPCALTsfrac, tr("\\sfrac fraction"), QIcon(":/JKQTPlotter/jkqtp_ticks_sfrac.png"));
+    addLabelType(JKQTPCALTslashfrac, tr("slash fraction"), QIcon(":/JKQTPlotter/jkqtp_ticks_slashfrac.png"));
     setCurrentIndex(0);
 }
 
