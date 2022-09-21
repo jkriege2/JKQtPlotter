@@ -445,12 +445,12 @@ enum JKQTPCALabelType {
     JKQTPCALTdate, /*!< \brief show numbers as dates \image html JKQTPCALTdate.png */
     JKQTPCALTtime, /*!< \brief show numbers as times \image html JKQTPCALTtime.png*/
     JKQTPCALTdatetime, /*!< \brief show numbers as times \image html JKQTPCALTdatetime.png */
-    JKQTPCALTfrac, /*!< \brief show numbers as fraction, the number is first rounded to the given precision and then a fraction is calculated and displayed like \$ \frac{1}{2} \f$ \image html JKQTPCALTfrac.png */
+    JKQTPCALTfrac, /*!< \brief show numbers as fraction, the number is first rounded to the given precision and then a fraction is calculated and displayed like \f$ \frac{1}{2} \f$ \image html JKQTPCALTfrac.png */
     JKQTPCALTslashfrac, /*!< \brief show numbers as fraction, the number is first rounded to the given precision and then a fraction is calculated and displayed like \c 1/2 \image html JKQTPCALTslashfrac.png */
-    JKQTPCALTsfrac, /*!< \brief show numbers as fraction, the number is first rounded to the given precision and then a fraction is calculated and displayed using \c \\sfrac{1}{2} \f$ \image html JKQTPCALTsfrac.png */
-    JKQTPCALTintfrac, /*!< \brief show numbers as integral+fraction, the number is first rounded to the given precision and then a fraction is calculated and displayed like \$ \frac{1}{2} \f$ \image html JKQTPCALTintfrac.png */
+    JKQTPCALTsfrac, /*!< \brief show numbers as fraction, the number is first rounded to the given precision and then a fraction is calculated and displayed using \c \\sfrac{1}{2} \image html JKQTPCALTsfrac.png */
+    JKQTPCALTintfrac, /*!< \brief show numbers as integral+fraction, the number is first rounded to the given precision and then a fraction is calculated and displayed like \$ -3\frac{1}{2} \f$ \image html JKQTPCALTintfrac.png */
     JKQTPCALTintslashfrac, /*!< \brief show numbers as integral+fraction, the number is first rounded to the given precision and then a fraction is calculated and displayed like \c 1/2 \image html JKQTPCALTintslashfrac.png */
-    JKQTPCALTintsfrac, /*!< \brief show numbers as integral+fraction, the number is first rounded to the given precision and then a fraction is calculated and displayed using \c \\sfrac{1}{2} \f$ \image html JKQTPCALTintsfrac.png */
+    JKQTPCALTintsfrac, /*!< \brief show numbers as integral+fraction, the number is first rounded to the given precision and then a fraction is calculated and displayed using \c \\sfrac{1}{2}  \image html JKQTPCALTintsfrac.png */
 
     JKQTPCALTcount,
     JKQTPCALTmax=JKQTPCALTcount-1
