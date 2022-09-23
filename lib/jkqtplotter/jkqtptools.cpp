@@ -114,6 +114,7 @@ QString JKQTPCALabelType2String(JKQTPCALabelType pos) {
         case JKQTPCALTfrac: return "frac";
         case JKQTPCALTsfrac: return "sfrac";
         case JKQTPCALTslashfrac: return "slashfrac";
+        case JKQTPCALTprintf: return "printf";
         case JKQTPCALTcount: return "";
     }
     return "";
@@ -134,6 +135,7 @@ JKQTPCALabelType String2JKQTPCALabelType(const QString& pos) {
     if (s=="intfrac") return JKQTPCALTintfrac;
     if (s=="intsfrac") return JKQTPCALTintsfrac;
     if (s=="intslashfrac") return JKQTPCALTintslashfrac;
+    if (s=="printf" || s=="sprintf") return JKQTPCALTprintf;
     return JKQTPCALTdefault;
 }
 

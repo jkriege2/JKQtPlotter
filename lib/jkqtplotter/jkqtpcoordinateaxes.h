@@ -307,6 +307,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         inline QString getTickDateFormat() const { return this->axisStyle.tickDateFormat; }
         /** \copydoc JKQTPCoordinateAxisStyle::tickDateTimeFormat */
         inline QString getTickDateTimeFormat() const { return this->axisStyle.tickDateTimeFormat; }
+        /** \copydoc JKQTPCoordinateAxisStyle::tickPrintfFormat */
+        inline QString getTickPrintfFormat() const { return this->axisStyle.tickPrintfFormat; }
         /** \copydoc JKQTPCoordinateAxisStyle::tickMode */
         inline JKQTPLabelTickMode getTickMode() const { return this->axisStyle.tickMode; }
 
@@ -479,6 +481,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         /** \copydoc JKQTPCoordinateAxisStyle::tickDateTimeFormat */
         void setTickDateTimeFormat (const QString& __value);
 
+        /** \copydoc JKQTPCoordinateAxisStyle::tickPrintfFormat */
+        void setTickPrintfFormat(const QString& __value);
 
         /** \copydoc JKQTPCoordinateAxisStyle::tickLabelFontSize */
         void setTickLabelFontSize (double __value);

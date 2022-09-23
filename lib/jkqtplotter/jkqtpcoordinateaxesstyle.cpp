@@ -55,6 +55,7 @@ JKQTPCoordinateAxisStyle::JKQTPCoordinateAxisStyle():
     tickTimeFormat(QLocale().timeFormat(QLocale::NarrowFormat)),
     tickDateFormat(QLocale().dateFormat(QLocale::NarrowFormat)),
     tickDateTimeFormat(QLocale().dateTimeFormat(QLocale::NarrowFormat)),
+    tickPrintfFormat("%f"),
     minTicks(5),
     minorTicks(1),
     tickOutsideLength(3),
@@ -100,6 +101,7 @@ void JKQTPCoordinateAxisStyle::loadSettings(const QSettings &settings, const QSt
     tickTimeFormat = settings.value(group+"ticks/time_format", defaultStyle.tickTimeFormat).toString();
     tickDateFormat = settings.value(group+"ticks/date_format", defaultStyle.tickDateFormat).toString();
     tickDateTimeFormat = settings.value(group+"ticks/datetime_format", defaultStyle.tickDateTimeFormat).toString();
+    tickPrintfFormat = settings.value(group+"ticks/printf_format", defaultStyle.tickPrintfFormat).toString();
     minTicks = settings.value(group+"min_ticks", defaultStyle.minTicks).toUInt();
     minorTicks = settings.value(group+"minor_tick/count", defaultStyle.minorTicks).toUInt();
     tickOutsideLength = settings.value(group+"ticks/outside_length", defaultStyle.tickOutsideLength).toDouble();
@@ -151,6 +153,7 @@ void JKQTPCoordinateAxisStyle::saveSettings(QSettings &settings, const QString &
     settings.setValue(group+"ticks/type", JKQTPCALabelType2String(tickLabelType));
     settings.setValue(group+"ticks/date_format", tickDateFormat);
     settings.setValue(group+"ticks/datetime_format", tickDateTimeFormat);
+    settings.setValue(group+"ticks/printf_format", tickPrintfFormat);
     settings.setValue(group+"ticks/inside_length", tickInsideLength);
     settings.setValue(group+"ticks/label_distance", tickLabelDistance);
     settings.setValue(group+"ticks/label_font_size", tickLabelFontSize);

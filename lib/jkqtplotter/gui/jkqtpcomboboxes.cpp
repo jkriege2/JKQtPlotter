@@ -345,8 +345,9 @@ JKQTPCALabelTypeComboBox::JKQTPCALabelTypeComboBox(QWidget *parent):
     setEditable(false);
     addLabelType(JKQTPCALTexponent, tr("exponent"), QIcon(":/JKQTPlotter/jkqtp_ticks_exp.png"));
     addLabelType(JKQTPCALTdefault, tr("default"), QIcon(":/JKQTPlotter/jkqtp_ticks_default.png"));
-    addLabelType(JKQTPCALTdefault, tr("scientific"), QIcon(":/JKQTPlotter/jkqtp_ticks_scientific.png"));
+    addLabelType(JKQTPCALTscientific, tr("scientific"), QIcon(":/JKQTPlotter/jkqtp_ticks_scientific.png"));
     addLabelType(JKQTPCALTexponentCharacter, tr("character"), QIcon(":/JKQTPlotter/jkqtp_ticks_expchar.png"));
+    addLabelType(JKQTPCALTprintf, tr("printf"), QIcon(":/JKQTPlotter/jkqtp_ticks_printf.png"));
     addLabelType(JKQTPCALTtime, tr("time"), QIcon(":/JKQTPlotter/jkqtp_ticks_time.png"));
     addLabelType(JKQTPCALTdate, tr("date"), QIcon(":/JKQTPlotter/jkqtp_ticks_date.png"));
     addLabelType(JKQTPCALTdatetime, tr("datetime"), QIcon(":/JKQTPlotter/jkqtp_ticks_datetime.png"));

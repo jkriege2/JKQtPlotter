@@ -253,6 +253,11 @@ void doListAxisStyling(const QDir& outputDir, int iconsize, QColor backgroundCol
     plot.getYAxis()->setTickLabelType(JKQTPCALTdatetime);
     plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,0,iconsize*2.5,plot.getHeight()).save(outputDir.absoluteFilePath("JKQTPCALTdatetime.png"), "png");
 
+    plot.setY(-1,1);
+    plot.getYAxis()->setTickLabelType(JKQTPCALTprintf);
+    plot.getYAxis()->setTickPrintfFormat("y=%+.2f");
+    plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,0,iconsize*2.5,plot.getHeight()).save(outputDir.absoluteFilePath("JKQTPCALTprintf.png"), "png");
+
 
 
     plot.setXY(0,10,0,1);

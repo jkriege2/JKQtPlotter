@@ -55,7 +55,8 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: added new error indicator styles JKQTPErrorHalfBarsOutwards, JKQTPErrorHalfBarsInwards, JKQTPErrorHalfBarsAbove, JKQTPErrorHalfBarsBelow which are especially useful for barcharts</li>
     <li>NEW: Added signals JKQTBasePlotter::beforeExporting()/JKQTBasePlotter::afterExporting() and JKQTBasePlotterJKQTBasePlotter:beforePrinting()/JKQTBasePlotter::afterPrinting() which allow to modify the plot just before and just after an export/print</li>
     <li>NEW: Added new JKQTPCALabelType elements (JKQTPCALTfrac...), so axis label ticks can be displayed as fractions 1/2 instead of 0.5</li>
-    <li>NEW: Added new JKQTPCALabelType element JKQTPCALTscientific, so axis label ticks can be displayed as numbers in scientific notation like \c 1.2E-34 </li>
+    <li>NEW: Added new JKQTPCALabelType elements JKQTPCALTscientific, so axis label ticks can be displayed as numbers in scientific notation like \c 1.2E-34<br>
+                       JKQTPCALTprintf for general formatting with a printf-format string </li>
     <li>NEW: all elements of a coordinate axis may have their own color now </li>
   </ul></li>
   

@@ -445,6 +445,7 @@ enum JKQTPCALabelType {
     JKQTPCALTscientific, /*!< \brief print the numbers in scientific notation, e.g. \c "1.23e-4" \image html axisstyle/JKQTPCALTscientific.png */
     JKQTPCALTexponentCharacter, /*!< \brief print the numbers and show a unit character, i.e. 5&mu; for \f$ 5\cdot 10^{-6} \f$ , \c 3k for \f$ 3\cdot 10^3 \f$ ... \image html axisstyle/JKQTPCALTexponentCharacter.png */
     JKQTPCALTexponent, /*!< \brief show numbers in exponential for, e.g. \f$ 3\cdot 10^5 \f$ ... \image html axisstyle/JKQTPCALTexponent.png */
+    JKQTPCALTprintf, /*!< \brief generate axis label from an arbitrary "printf" formatting string (see e.g. https://en.wikipedia.org/wiki/Printf_format_string ). The only data parameter is the tick value as \c double The following image shows an example for \c "y=%+.2f": \image html axisstyle/JKQTPCALTprintf.png */
     JKQTPCALTdate, /*!< \brief show numbers as dates \image html axisstyle/JKQTPCALTdate.png */
     JKQTPCALTtime, /*!< \brief show numbers as times \image html axisstyle/JKQTPCALTtime.png*/
     JKQTPCALTdatetime, /*!< \brief show numbers as times \image html axisstyle/JKQTPCALTdatetime.png */

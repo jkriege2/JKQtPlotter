@@ -473,6 +473,9 @@ QString JKQTPCoordinateAxis::floattolabel(double data, int past_comma) const {
                 dt.setMSecsSinceEpoch(uint64_t(data));
                 return dt.toString(axisStyle.tickDateTimeFormat);
             }; break;
+        case JKQTPCALTprintf: {
+                return QString::asprintf(axisStyle.tickPrintfFormat.toLatin1().data(), data);
+            }; break;
     }
     return QString();
 }
@@ -799,6 +802,12 @@ void JKQTPCoordinateAxis::setTickDateFormat(const QString& __value) {
 
 void JKQTPCoordinateAxis::setTickDateTimeFormat(const QString& __value) {
     this->axisStyle.tickDateTimeFormat = __value;
+    this->paramsChanged=true;
+    redrawPlot();
+}
+
+void JKQTPCoordinateAxis::setTickPrintfFormat(const QString& __value) {
+    this->axisStyle.tickPrintfFormat = __value;
     this->paramsChanged=true;
     redrawPlot();
 }

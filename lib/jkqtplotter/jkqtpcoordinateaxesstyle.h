@@ -152,12 +152,14 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxisStyle {
         double lineWidthZeroAxis;
 
 
-        /** \brief format string for time tick labels, see see QDateTime::toString() documentation for details on format strings */
+        /** \brief format string for time tick labels, see  QDateTime::toString() documentation for details on format strings */
         QString tickTimeFormat;
-        /** \brief format string for date tick labels, see see QDateTime::toString() documentation for details on format strings */
+        /** \brief format string for date tick labels, see  QDateTime::toString() documentation for details on format strings */
         QString tickDateFormat;
-        /** \brief format string for datetime tick labels, see see QDateTime::toString() documentation for details on format strings */
+        /** \brief format string for datetime tick labels,  see QDateTime::toString() documentation for details on format strings */
         QString tickDateTimeFormat;
+        /** \brief format string for printf tick labels, see https://en.wikipedia.org/wiki/Printf_format_string documentation for details on format strings */
+        QString tickPrintfFormat;
 
 
 
