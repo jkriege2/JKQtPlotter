@@ -29,6 +29,8 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>REORGANIZED: separated line-graphs from jkqtpscatter.h/.cpp into jkqtplines.h/.cpp</li>
     <li>IMPROVED: QT6-compatibility by removing deprecated warnings</li>
     <li>IMPROVED/REWORKED: reworked JKQTPErrorPlotstyle and error indicator plotting so error-inidcators can be specified as ORed combination of flags from JKQTPErrorPlotstyleElements, added additional error indicator styles (half-bars, arrows...)</li>
+    <li>IMPROVED/REWORKED: reworked JKQTPCADrawMode and coordinate axis drawing so the draw mide can be specified as ORed combination of flags from JKQTPCADrawModeElements, added flags to draw arrows at the end of the axis line</li>
+    <li>IMPROVED/REWORKED: coordinate axis code was refactored</li>
     <li>NEW: JKQTPFilledCurveXGraph and JKQTPFilledCurveYGraph can now plot wiggle plots with different fill styles above and below the baseline (feature request <a href="https://github.com/jkriege2/JKQtPlotter/issues/68">#68 Wiggle Plots</a> from <a href="https://github.com/xichaoqiang">user:xichaoqiang</a>   </li>
     <li>NEW/BREAKING CHANGE: data tooltip can now also be shown when "just" moving the mouse (so far this was only possible when dragging the mouse with a button pressed). This also removes JKQtPlotter::getActMouseLeftAsToolTip() and adds JKQtPlotter::getActMouseMoveToolTip() instead! Also the default toolbars and context menus changed!</li>
     <li>NEW: new "seaborn" style for plots, see \ref jkqtpplotter_styling </li>
@@ -54,6 +56,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: Added signals JKQTBasePlotter::beforeExporting()/JKQTBasePlotter::afterExporting() and JKQTBasePlotterJKQTBasePlotter:beforePrinting()/JKQTBasePlotter::afterPrinting() which allow to modify the plot just before and just after an export/print</li>
     <li>NEW: Added new JKQTPCALabelType elements (JKQTPCALTfrac...), so axis label ticks can be displayed as fractions 1/2 instead of 0.5</li>
     <li>NEW: Added new JKQTPCALabelType element JKQTPCALTscientific, so axis label ticks can be displayed as numbers in scientific notation like \c 1.2E-34 </li>
+    <li>NEW: all elements of a coordinate axis may have their own color now </li>
   </ul></li>
   
   <li>JKQTMathText:<ul>

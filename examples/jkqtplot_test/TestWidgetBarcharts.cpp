@@ -22,7 +22,7 @@ TestWidgetBarcharts::TestWidgetBarcharts(QWidget *parent) :
     plotBarchart->getPlotter()->setPlotLabel(tr("\\textbf{bar charts}"));
     plotBarchart->setObjectName("plotBarchart");
     plotBarchart->getPlotter()->setUserSettigsFilename(QApplication::applicationDirPath()+"/usersettings.ini", "plot_peaks/");
-    plotBarchart->getPlotter()->getXAxis()->setLabelType(JKQTPCALTdate);
+    plotBarchart->getPlotter()->getXAxis()->setTickLabelType(JKQTPCALTdate);
     plotBarchart->getPlotter()->getXAxis()->setTickDateFormat("dd. MMM yyyy");
 
     barchartLayout->addWidget(plotBarchart);

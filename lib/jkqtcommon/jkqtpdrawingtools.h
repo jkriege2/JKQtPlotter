@@ -311,7 +311,10 @@ JKQTCOMMON_LIB_EXPORT void JKQTPPlotSymbol(QPaintDevice& paintDevice, double x, 
  *
  * \image html geo_arrow_tipsatlineend.png
  *
- * \see \ref JKQTPlotterGeometricArrows and \ref JKQTPlotterGeometricGraphs
+ *
+ * \see JKQTPPlotLineDecorator(), JKQTPPlotDecoratedLine(), JKQTPLineDecoratorStyle, JKQTPLineDecoratorStyleCalcDecoratorSize()
+ *
+ * \see \ref JKQTPlotterGeometricArrows and \ref JKQTPlotterGeometricGraphs for usage examples.
  */
 enum JKQTPLineDecoratorStyle {
     JKQTPNoDecorator=0,                /*!< \brief no decorator, i.e. a simple line-end \image html linedecorators/none.png */
@@ -368,8 +371,10 @@ JKQTCOMMON_LIB_EXPORT JKQTPLineDecoratorStyle String2JKQTPLineDecoratorStyle(con
     \param y y-coordinate of the decorator tip
     \param angle_rad angle of the line pointing to (x,y), given in radians, 0rad points to the right, >0rad is a counter-clockwise rotation, as calculated by atan2() from dx, dy of a line!
     \param style type of the decorator to plot, see JKQTPLineDecoratorStyle
-    \param size size of the decorator
+    \param size size of the decorator in pixels, the decorator fills at most the space \c x...x+size and \c y-size/2...y-size/2, but may be smaller (e.g. arrows are typically less high than the full \a size pixels ).
     \param[out] line_start optional output parameter: when drawing the line let it end here, not necessarily at (x,y)
+
+    \see JKQTPPlotLineDecorator(), JKQTPPlotDecoratedLine(), JKQTPLineDecoratorStyle, JKQTPLineDecoratorStyleCalcDecoratorSize()
    */
 template <class TPainter>
 inline void JKQTPPlotLineDecorator(TPainter& painter, double x, double y, double angle_rad, JKQTPLineDecoratorStyle style, double size, QPointF* line_start=nullptr);
@@ -384,11 +389,19 @@ inline void JKQTPPlotLineDecorator(TPainter& painter, double x, double y, double
     \param size1 size of the first decorator
     \param style2 type of the second decorator to plot, see JKQTPLineDecoratorStyle
     \param size2 size of the second decorator
+
+    \note a decorator fills at most the space \c x...x+size and \c y-size/2...y-size/2 (where \c size is \a size1 or \a size2), but may be smaller (e.g. arrows are typically less high than the full \c size pixels ).
+
+    \see JKQTPPlotLineDecorator(), JKQTPPlotDecoratedLine(), JKQTPLineDecoratorStyle, JKQTPLineDecoratorStyleCalcDecoratorSize()
    */
 template <class TPainter>
 inline void JKQTPPlotDecoratedLine(TPainter& painter, const QLineF& l, JKQTPLineDecoratorStyle style1, double size1, JKQTPLineDecoratorStyle style2, double size2);
 
-/** \brief calculates the tail decorator size from the line width \a line_width, using decoratorSizeFactor and a non-linear scaling function that levels off towards small \a line_width and increases sub-linearly for large ones, so the arrow heads to not grow too much */
+/*! \brief calculates the tail decorator size from the line width \a line_width, using decoratorSizeFactor and a non-linear scaling function that levels off towards small \a line_width and increases sub-linearly for large ones, so the arrow heads to not grow too much
+    \ingroup jkqtptools_drawing
+
+    \see JKQTPPlotLineDecorator(), JKQTPPlotDecoratedLine(), JKQTPLineDecoratorStyle, JKQTPLineDecoratorStyleCalcDecoratorSize()
+*/
 JKQTCOMMON_LIB_EXPORT double JKQTPLineDecoratorStyleCalcDecoratorSize(double line_width, double decoratorSizeFactor);
 
 

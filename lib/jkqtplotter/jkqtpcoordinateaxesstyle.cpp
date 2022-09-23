@@ -33,7 +33,7 @@ JKQTPCoordinateAxisStyle::JKQTPCoordinateAxisStyle():
     labelDigits(3),
     autoLabelDigits(true),
     minorTickLabelsEnabled(false),
-    labelType(JKQTPCALTexponent),
+    tickLabelType(JKQTPCALTexponent),
     tickMode(JKQTPLTMLinOrPower),
     labelPosition(JKQTPLabelCenter),
     labelFontSize(10),
@@ -43,9 +43,14 @@ JKQTPCoordinateAxisStyle::JKQTPCoordinateAxisStyle():
     minorTickLabelFullNumber(true),
     drawMode1(JKQTPCADMcomplete),
     drawMode2(JKQTPCADMLineTicks),
+    minorTickColor(QColor("black")),
+    minorTickLabelColor(QColor("black")),
     minorTickWidth(1),
+    tickColor(QColor("black")),
+    tickLabelColor(QColor("black")),
     tickWidth(1.5),
     lineWidth(1.5),
+    arrowSizeFactor(8),
     lineWidthZeroAxis(1.5),
     tickTimeFormat(QLocale().timeFormat(QLocale::NarrowFormat)),
     tickDateFormat(QLocale().dateFormat(QLocale::NarrowFormat)),
@@ -57,7 +62,8 @@ JKQTPCoordinateAxisStyle::JKQTPCoordinateAxisStyle():
     tickInsideLength(3),
     minorTickInsideLength(1.5),
     axisColor(QColor("black")),
-    tickLabelDistance(3),
+    labelColor(QColor("black")),
+    tickLabelDistance(4),
     labelDistance(5),
     tickLabelAngle(0),
     majorGridStyle(true),
@@ -85,6 +91,7 @@ void JKQTPCoordinateAxisStyle::loadSettings(const QSettings &settings, const QSt
     minorTickWidth = settings.value(group+"minor_tick/width", defaultStyle.minorTickWidth).toDouble();
     tickWidth = settings.value(group+"ticks/width", defaultStyle.tickWidth).toDouble();
     lineWidth = settings.value(group+"line_width", defaultStyle.lineWidth).toDouble();
+    arrowSizeFactor = settings.value(group+"arrow_size_factor", defaultStyle.arrowSizeFactor).toDouble();
     lineWidthZeroAxis = settings.value(group+"zero_line/line_width", defaultStyle.lineWidthZeroAxis).toDouble();
     labelFontSize = settings.value(group+"axis_label/font_size", defaultStyle.labelFontSize).toDouble();
     tickLabelFontSize = settings.value(group+"ticks/label_font_size", defaultStyle.tickLabelFontSize).toDouble();
@@ -102,8 +109,13 @@ void JKQTPCoordinateAxisStyle::loadSettings(const QSettings &settings, const QSt
     tickLabelDistance = settings.value(group+"ticks/label_distance", defaultStyle.tickLabelDistance).toDouble();
     labelDistance = settings.value(group+"axis_label/distance", defaultStyle.labelDistance).toDouble();
     labelPosition=String2JKQTPLabelPosition(settings.value(group+"axis_label/position", JKQTPLabelPosition2String(labelPosition)).toString());
-    labelType=String2JKQTPCALabelType(settings.value(group+"axis_label/type", JKQTPCALabelType2String(labelType)).toString());
+    tickLabelType=String2JKQTPCALabelType(settings.value(group+"ticks/type", JKQTPCALabelType2String(tickLabelType)).toString());
+    labelColor=jkqtp_String2QColor(settings.value(group+"axis_label/color", jkqtp_QColor2String(labelColor)).toString());
     axisColor=jkqtp_String2QColor(settings.value(group+"color", jkqtp_QColor2String(axisColor)).toString());
+    tickColor=jkqtp_String2QColor(settings.value(group+"ticks/color", jkqtp_QColor2String(tickColor)).toString());
+    minorTickColor=jkqtp_String2QColor(settings.value(group+"minor_tick/color", jkqtp_QColor2String(minorTickColor)).toString());
+    tickLabelColor=jkqtp_String2QColor(settings.value(group+"ticks/label_color", jkqtp_QColor2String(tickLabelColor)).toString());
+    minorTickLabelColor=jkqtp_String2QColor(settings.value(group+"minor_tick/label_color", jkqtp_QColor2String(minorTickLabelColor)).toString());
     drawMode1=String2JKQTPCADrawMode(settings.value(group+"draw_mode1", JKQTPCADrawMode2String(drawMode1)).toString());
     drawMode2=String2JKQTPCADrawMode(settings.value(group+"draw_mode2", JKQTPCADrawMode2String(drawMode2)).toString());
     tickMode=String2JKQTPLabelTickMode(settings.value(group+"ticks/mode", JKQTPLabelTickMode2String(tickMode)).toString());
@@ -120,34 +132,79 @@ void JKQTPCoordinateAxisStyle::saveSettings(QSettings &settings, const QString &
     settings.setValue(group+"draw_mode1", JKQTPCADrawMode2String(drawMode1));
     settings.setValue(group+"draw_mode2", JKQTPCADrawMode2String(drawMode2));
     settings.setValue(group+"line_width", lineWidth);
+    settings.setValue(group+"arrow_size_factor", arrowSizeFactor);
     settings.setValue(group+"axis_lines_offset", axisLineOffset);
     settings.setValue(group+"min_ticks", minTicks);
     settings.setValue(group+"axis_label/distance", labelDistance);
     settings.setValue(group+"axis_label/font_size", labelFontSize);
+    settings.setValue(group+"axis_label/color", jkqtp_QColor2String(labelColor));
     settings.setValue(group+"axis_label/position", JKQTPLabelPosition2String(labelPosition));
-    settings.setValue(group+"axis_label/type", JKQTPCALabelType2String(labelType));
     settings.setValue(group+"minor_tick/labels_enabled", minorTickLabelsEnabled);
     settings.setValue(group+"minor_tick/inside_length", minorTickInsideLength);
     settings.setValue(group+"minor_tick/label_font_size", minorTickLabelFontSize);
     settings.setValue(group+"minor_tick/label_full_number", minorTickLabelFullNumber);
+    settings.setValue(group+"minor_tick/label_color", jkqtp_QColor2String(minorTickLabelColor));
     settings.setValue(group+"minor_tick/outside_length", minorTickOutsideLength);
     settings.setValue(group+"minor_tick/width", minorTickWidth);
     settings.setValue(group+"minor_tick/count", minorTicks);
+    settings.setValue(group+"minor_tick/color", jkqtp_QColor2String(minorTickColor));
+    settings.setValue(group+"ticks/type", JKQTPCALabelType2String(tickLabelType));
     settings.setValue(group+"ticks/date_format", tickDateFormat);
     settings.setValue(group+"ticks/datetime_format", tickDateTimeFormat);
     settings.setValue(group+"ticks/inside_length", tickInsideLength);
     settings.setValue(group+"ticks/label_distance", tickLabelDistance);
     settings.setValue(group+"ticks/label_font_size", tickLabelFontSize);
+    settings.setValue(group+"ticks/label_color", jkqtp_QColor2String(tickLabelColor));
     settings.setValue(group+"ticks/mode", JKQTPLabelTickMode2String(tickMode));
     settings.setValue(group+"ticks/outside_length", tickOutsideLength);
     settings.setValue(group+"ticks/time_format", tickTimeFormat);
     settings.setValue(group+"ticks/width", tickWidth);
+    settings.setValue(group+"ticks/color", jkqtp_QColor2String(tickColor));
     settings.setValue(group+"zero_line/enabled", showZeroAxis);
     settings.setValue(group+"zero_line/line_width", lineWidthZeroAxis);
     settings.setValue(group+"zero_line/color",  jkqtp_QColor2String(colorZeroAxis));
     settings.setValue(group+"zero_line/style", jkqtp_QPenStyle2String(styleZeroAxis));
     majorGridStyle.saveSettings(settings, group+"grid/");
     minorGridStyle.saveSettings(settings, group+"minor_grid/");
+}
+
+QPen JKQTPCoordinateAxisStyle::getZeroAxisPen(JKQTPEnhancedPainter& painter, JKQTBasePlotter *parent) const
+{
+    QPen pmain(colorZeroAxis);
+    pmain.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidthZeroAxis*parent->getLineWidthMultiplier())));
+    pmain.setStyle(styleZeroAxis);
+    pmain.setCapStyle(Qt::SquareCap);
+    return pmain;
+}
+
+QPen JKQTPCoordinateAxisStyle::getAxisPen(JKQTPEnhancedPainter& painter, JKQTBasePlotter *parent) const {
+    QPen pmain(axisColor);
+    pmain.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
+    pmain.setStyle(Qt::SolidLine);
+    pmain.setCapStyle(Qt::SquareCap);
+    return pmain;
+}
+
+QPen JKQTPCoordinateAxisStyle::getTickPen(JKQTPEnhancedPainter &painter, JKQTBasePlotter *parent) const {
+    QPen ptick=getAxisPen(painter, parent);
+    ptick.setColor(tickColor);
+    ptick.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, tickWidth*parent->getLineWidthMultiplier())));
+    ptick.setCapStyle(Qt::FlatCap);
+    return ptick;
+}
+
+QPen JKQTPCoordinateAxisStyle::getMinorTickPen(JKQTPEnhancedPainter& painter, JKQTBasePlotter *parent) const {
+    QPen pmtick=getTickPen(painter, parent);
+    pmtick.setColor(minorTickColor);
+    pmtick.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, minorTickWidth*parent->getLineWidthMultiplier())));
+    pmtick.setCapStyle(Qt::FlatCap);
+    return pmtick;
+}
+
+double JKQTPCoordinateAxisStyle::getArrowSize(JKQTPEnhancedPainter &painter, JKQTBasePlotter *parent) const
+{
+    const QPen paxis=getAxisPen(painter, parent);
+    return JKQTPLineDecoratorStyleCalcDecoratorSize(paxis.widthF(), arrowSizeFactor);
 }
 
 

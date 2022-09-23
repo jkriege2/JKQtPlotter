@@ -250,7 +250,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         /** \copydoc userLogTickSpacing */
         inline double getUserLogTickSpacing() const { return this->userLogTickSpacing; }
         /** \copydoc JKQTPCoordinateAxisStyle::labelType */
-        inline JKQTPCALabelType getLabelType() const { return this->axisStyle.labelType; }
+        inline JKQTPCALabelType getTickLabelType() const { return this->axisStyle.tickLabelType; }
         /** \copydoc axisLabel */
         inline QString getAxisLabel() const { return this->axisLabel; }
         /** \copydoc JKQTPCoordinateAxisStyle::labelPosition */
@@ -271,10 +271,22 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         inline unsigned int getMinorTicks() const { return this->axisStyle.minorTicks; }
         /** \copydoc JKQTPCoordinateAxisStyle::tickOutsideLength */
         inline double getTickOutsideLength() const { return this->axisStyle.tickOutsideLength; }
+        /** \copydoc JKQTPCoordinateAxisStyle::arrowSizeFactor */
+        inline double getArrowSizeFactor() const { return this->axisStyle.arrowSizeFactor; }
         /** \copydoc JKQTPCoordinateAxisStyle::minorTickOutsideLength */
         inline double getMinorTickOutsideLength() const { return this->axisStyle.minorTickOutsideLength; }
         /** \copydoc JKQTPCoordinateAxisStyle::axisColor */
         inline QColor getAxisColor() const { return this->axisStyle.axisColor; }
+        /** \copydoc JKQTPCoordinateAxisStyle::labelColor */
+        inline QColor getLabelColor() const { return this->axisStyle.labelColor; }
+        /** \copydoc JKQTPCoordinateAxisStyle::minorTickColor */
+        inline QColor getMinorTickColor() const { return this->axisStyle.minorTickColor; }
+        /** \copydoc JKQTPCoordinateAxisStyle::minorTickLabelColor */
+        inline QColor getMinorTickLabelColor() const { return this->axisStyle.minorTickLabelColor; }
+        /** \copydoc JKQTPCoordinateAxisStyle::tickColor */
+        inline QColor getTickColor() const { return this->axisStyle.tickColor; }
+        /** \copydoc JKQTPCoordinateAxisStyle::tickLabelColor */
+        inline QColor getTickLabelColor() const { return this->axisStyle.tickLabelColor; }
         /** \copydoc JKQTPCoordinateAxisStyle::showZeroAxis */
         inline bool getShowZeroAxis() const { return this->axisStyle.showZeroAxis; }
         /** \copydoc JKQTPGridStyle::lineColor */
@@ -441,7 +453,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         void setUserLogTickSpacing (double __value);
 
         /** \copydoc JKQTPCoordinateAxisStyle::labelType */
-        void setLabelType (JKQTPCALabelType __value);
+        void setTickLabelType (JKQTPCALabelType __value);
 
         /** \copydoc JKQTPCoordinateAxisStyle::tickMode */
         void setTickMode (JKQTPLabelTickMode __value);
@@ -561,6 +573,18 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
 
         /** \copydoc JKQTPCoordinateAxisStyle::tickLabelAngle */
         void setTickLabelAngle(double __value);
+        /** \copydoc JKQTPCoordinateAxisStyle::arrowSizeFactor */
+        void setArrowSizeFactor(double f) ;
+        /** \copydoc JKQTPCoordinateAxisStyle::labelColor */
+        void setLabelColor(QColor c) ;
+        /** \copydoc JKQTPCoordinateAxisStyle::minorTickColor */
+        void setMinorTickColor(QColor c) ;
+        /** \copydoc JKQTPCoordinateAxisStyle::minorTickLabelColor */
+        void setMinorTickLabelColor(QColor c) ;
+        /** \copydoc JKQTPCoordinateAxisStyle::tickColor */
+        void setTickColor(QColor c);
+        /** \copydoc JKQTPCoordinateAxisStyle::tickLabelColor */
+        void setTickLabelColor(QColor c) ;
 
     protected:
         /** \brief indicates whether one of the parameters has changed sinse the last recalculation of tickSpacing ... */
@@ -742,6 +766,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         /** \brief calculates the maximum width and height (returned as QSize) of all tick labels.
          *         Ascent and descent may also be returned in the two additional pointer arguments- */
         QSizeF getMaxTickLabelSize(JKQTPEnhancedPainter& painter, double* ascent=nullptr, double* descent=nullptr);
+        /** \brief draw the axis line \a l (pointing from axismin to axismax) optionally decorated as specified by \a drawMode using JKQTPEnhancedPainter \a painter */
+        void drawAxisLine(JKQTPEnhancedPainter& painter, const QLineF& l, JKQTPCADrawMode drawMode) const;
 };
 
 
@@ -783,8 +809,36 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPVerticalAxis: public JKQTPCoordinateAxis {
         virtual double getParentOtheraxisOffset() const override;
 
     protected:
-        virtual void drawTickLabel1(JKQTPEnhancedPainter& painter, double xx, double yy, const QString &label, double fontSize) ;
-        virtual void drawTickLabel2(JKQTPEnhancedPainter& painter, double xx, double yy, const QString &label, double fontSize) ;
+        /** \brief draw a tick label on the left axis 1 with text \a label (with optional rotation) at ( \a xx , \a yy ) (in pixel)
+         *
+         *  \param painter the JKQTPEnhancedPainter used for drawing
+         *  \param xx the exact position of the tick in pixels
+         *  \param yy the exact position of the tick in pixels
+         *  \param labelOffset offset of the label from ( \a xx , \a yy ) in pt, this is typically equal to \c tickOuterLength+tickLabelDistance
+         *  \param label text to display
+         *  \param fontSize the fontSize of the label (in pt)
+         *  \param ascentMax maximum ascent of all tick labels
+         *  \param descentMax maximum descent of all tick labels
+         *  \param isMinor indicates whether  the axis tick is a minor tick
+         */
+        void drawTickLabel1(JKQTPEnhancedPainter& painter, double xx, double yy, double labelOffset, const QString &label, double fontSize, bool isMinor=false) ;
+        /** \brief draw a tick label on the right axis 2 with text \a label (with optional rotation) at ( \a xx , \a yy ) (in pixel)
+         *
+         *  \param painter the JKQTPEnhancedPainter used for drawing
+         *  \param xx the exact position of the tick in pixels
+         *  \param yy the exact position of the tick in pixels
+         *  \param labelOffset offset of the label from ( \a xx , \a yy ) in pt, this is typically equal to \c tickOuterLength+tickLabelDistance
+         *  \param label text to display
+         *  \param fontSize the fontSize of the label (in pt)
+         *  \param ascentMax maximum ascent of all tick labels
+         *  \param descentMax maximum descent of all tick labels
+         *  \param isMinor indicates whether  the axis tick is a minor tick
+         */
+        void drawTickLabel2(JKQTPEnhancedPainter& painter, double xx, double yy, double labelOffset, const QString &label, double fontSize, bool isMinor=false) ;
+        /** \brief draw the axis label using \a painter for axis 1 at \c x= \a left and \c y= \a bottom. \a labelMax is the maximum Size of all tick labels */
+        void drawAxisLabel1(JKQTPEnhancedPainter &painter, double left, double bottom, QSizeF labelMax);
+        /** \brief draw the axis label using \a painter for axis 2 at \c x= \a right and \c y= \a bottom. \a labelMax is the maximum Size of all tick labels */
+        void drawAxisLabel2(JKQTPEnhancedPainter &painter, double right, double bottom, QSizeF labelMax);
 };
 
 
@@ -871,9 +925,36 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPHorizontalAxis: public JKQTPCoordinateAxis {
         virtual double getParentOtheraxisOffset() const override;
 
     protected:
-
-        virtual void drawTickLabel1(JKQTPEnhancedPainter& painter, double xx, double yy, const QString &label, double fontSize, double ascentMax, double descentMax) ;
-        virtual void drawTickLabel2(JKQTPEnhancedPainter& painter, double xx, double yy, const QString &label, double fontSize, double ascentMax, double descentMax) ;
+        /** \brief draw a tick label on the lower axis 1 with text \a label (with optional rotation) at ( \a xx , \a yy ) (in pixel)
+         *
+         *  \param painter the JKQTPEnhancedPainter used for drawing
+         *  \param xx the exact position of the tick in pixels
+         *  \param yy the exact position of the tick in pixels
+         *  \param labelOffset offset of the label from ( \a xx , \a yy ) in pt, this is typically equal to \c tickOuterLength+tickLabelDistance
+         *  \param label text to display
+         *  \param fontSize the fontSize of the label (in pt)
+         *  \param ascentMax maximum ascent of all tick labels
+         *  \param descentMax maximum descent of all tick labels
+         *  \param isMinor indicates whether  the axis tick is a minor tick
+         */
+        void drawTickLabel1(JKQTPEnhancedPainter& painter, double xx, double yy, double labelOffset, const QString &label, double fontSize, double ascentMax, double descentMax, bool isMinor=false) ;
+        /** \brief draw a tick label on the upper axis 2 with text \a label (with optional rotation) at ( \a xx , \a yy ) (in pixel)
+         *
+         *  \param painter the JKQTPEnhancedPainter used for drawing
+         *  \param xx the exact position of the tick in pixels
+         *  \param yy the exact position of the tick in pixels
+         *  \param labelOffset offset of the label from ( \a xx , \a yy ) in pt, this is typically equal to \c tickOuterLength+tickLabelDistance
+         *  \param label text to display
+         *  \param fontSize the fontSize of the label (in pt)
+         *  \param ascentMax maximum ascent of all tick labels
+         *  \param descentMax maximum descent of all tick labels
+         *  \param isMinor indicates whether  the axis tick is a minor tick
+         */
+        void drawTickLabel2(JKQTPEnhancedPainter& painter, double xx, double yy, double labelOffset, const QString &label, double fontSize, double ascentMax, double descentMax, bool isMinor=false) ;
+        /** \brief draw the axis label using \a painter for axis 1 at \c x= \a left and \c y= \a bottom. \a labelMax is the maximum Size of all tick labels */
+        void drawAxisLabel1(JKQTPEnhancedPainter &painter, double left, double bottom, QSizeF labelMax);
+        /** \brief draw the axis label using \a painter for axis 2 at \c x= \a left and \c y= \a top. \a labelMax is the maximum Size of all tick labels */
+        void drawAxisLabel2(JKQTPEnhancedPainter &painter, double left, double top, QSizeF labelMax);
 
 };
 

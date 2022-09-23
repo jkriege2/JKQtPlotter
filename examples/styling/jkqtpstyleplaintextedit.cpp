@@ -484,8 +484,7 @@ void JKQTPStylePlainTextEdit::contextMenuEvent(QContextMenuEvent *event)
            submenu->setEnabled(true);
            QAction* act;
            JKQTPCADrawMode st;
-           for (int i=0; i<=static_cast<int>(JKQTPCADMmax); i++) {
-               st=static_cast<JKQTPCADrawMode>(i);
+           for (const JKQTPCADrawMode st : {JKQTPCADMnone,JKQTPCADMcomplete,JKQTPCADMcompleteMaxArrow,JKQTPCADMcompleteMinMaxArrow,JKQTPCADMLine,JKQTPCADMTicks,JKQTPCADMTickLabels,JKQTPCADMAxisLabel,JKQTPCADMLineTicksTickLabels,JKQTPCADMLineTicks,JKQTPCADMTicksTickLabelsAxisLabel,JKQTPCADMTicksTickLabels,JKQTPCADMTickLabelsAxisLabel}) {
                act=new QAction(JKQTPCADrawMode2String(st));
                connect(act, &QAction::triggered, std::bind(std::mem_fn(&JKQTPStylePlainTextEdit::changeCurrentLineValueTo), this, act->text()));
                submenu->addAction(act);

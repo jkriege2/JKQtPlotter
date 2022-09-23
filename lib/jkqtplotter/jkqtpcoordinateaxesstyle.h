@@ -107,7 +107,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxisStyle {
         /** \brief if \c true, the plotter displays minor axis labels as number between 1 and 10 in some cases */
         bool minorTickLabelsEnabled;
         /** \brief indicates how to draw the labels */
-        JKQTPCALabelType labelType;
+        JKQTPCALabelType tickLabelType;
 
         /** \brief mode of the major ticks */
         JKQTPLabelTickMode tickMode;
@@ -116,6 +116,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxisStyle {
         JKQTPLabelPosition labelPosition;
         /** \brief fontsize of the axis labels */
         double labelFontSize;
+        /** \brief color of the axis label */
+        QColor labelColor;
         /** \brief fontsize of the axis tick labels */
         double tickLabelFontSize;
         /** \brief fontsize of the minor axis tick labels */
@@ -130,12 +132,22 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxisStyle {
         JKQTPCADrawMode drawMode1;
         /** \brief draw mode of the secondary (right/top) axis */
         JKQTPCADrawMode drawMode2;
+        /** \brief color of minor ticks */
+        QColor minorTickColor;
+        /** \brief color of minor tick labels */
+        QColor minorTickLabelColor;
         /** \brief line width of minor ticks in pt */
         double minorTickWidth;
+        /** \brief color of axis ticks */
+        QColor tickColor;
+        /** \brief color of axis tick labels */
+        QColor tickLabelColor;
         /** \brief line width of ticks in pt */
         double tickWidth;
         /** \brief line width of axis in pt */
         double lineWidth;
+        /** \brief factor used to calculate the size of line arrows */
+        double arrowSizeFactor;
         /** \brief line width of 0-line in pt */
         double lineWidthZeroAxis;
 
@@ -184,6 +196,18 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxisStyle {
         Qt::PenStyle styleZeroAxis;
         /** \brief if non-zero, the line of the coordinate axis is moved outside the plot by this amount [pt]. This does not apply to the zero-axis! */
         double axisLineOffset;
+
+
+        /** \brief returns a QPen that can be used for drawing zero axis lines */
+        QPen getZeroAxisPen(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent) const;
+        /** \brief returns a QPen that can be used for drawing axis lines */
+        QPen getAxisPen(JKQTPEnhancedPainter &painter, JKQTBasePlotter* parent) const;
+        /** \brief returns a QPen that can be used for drawing axis tick lines */
+        QPen getTickPen(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent) const;
+        /** \brief returns a QPen that can be used for drawing minor axis tick lines */
+        QPen getMinorTickPen(JKQTPEnhancedPainter &painter, JKQTBasePlotter* parent) const;
+        /** \brief calculates the size of an arrow in pixels */
+        double getArrowSize(JKQTPEnhancedPainter &painter, JKQTBasePlotter* parent) const;
 };
 
 

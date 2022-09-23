@@ -86,7 +86,7 @@ int main(int argc, char* argv[])
     plot.getYAxis()->setDrawMinorGrid(true);
     //    usually axis ticks are shown as numbers 0.01, 0.1, 1, 10, ... You can also force the scientific
     //    power-of-10 notation, using:
-    plot.getYAxis()->setLabelType(JKQTPCALTexponent);
+    plot.getYAxis()->setTickLabelType(JKQTPCALTexponent);
     //    the number of digits in JKQTPCALTexponent determines which labels are drawn in standard-notation,
     //    as compared to power-notation (e.g. if set to 1, the labels 0.1=10^{-1}, 1, 10 are shown in
     //    standard notation, the rest in power-notation. This tweak improves readability)

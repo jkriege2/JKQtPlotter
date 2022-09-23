@@ -377,6 +377,8 @@ JKQTPCADrawModeComboBox::JKQTPCADrawModeComboBox(QWidget *parent):
 {
     setEditable(false);
     addDrawMode(JKQTPCADMcomplete, tr("complete"), QIcon(":/JKQTPlotter/jkqtp_axis_complete.png"));
+    addDrawMode(JKQTPCADMcompleteMaxArrow, tr("complete with max arrow"), QIcon(":/JKQTPlotter/jkqtp_axis_complete_maxarrow.png"));
+    addDrawMode(JKQTPCADMcompleteMinMaxArrow, tr("complete wih min&max arrows"), QIcon(":/JKQTPlotter/jkqtp_axis_complete_minmaxarrow.png"));
     addDrawMode(JKQTPCADMLineTicksTickLabels, tr("line+tick+labels"), QIcon(":/JKQTPlotter/jkqtp_axis_ticksandlabels.png"));
     addDrawMode(JKQTPCADMLineTicks, tr("line+tick"), QIcon(":/JKQTPlotter/jkqtp_axis_ticks.png"));
     addDrawMode(JKQTPCADMLine, tr("line"), QIcon(":/JKQTPlotter/jkqtp_axis_line.png"));

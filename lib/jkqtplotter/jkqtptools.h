@@ -385,42 +385,45 @@ JKQTPLOTTER_LIB_EXPORT QString JKQTPColorDerivationMode2String(JKQTPColorDerivat
 JKQTPLOTTER_LIB_EXPORT JKQTPColorDerivationMode String2JKQTPColorDerivationMode(const QString &mode);
 
 
-/** \brief display mode for an axis
- * \ingroup jkqtpplottersupprt */
-enum JKQTPCADrawMode {
-    JKQTPCADMcomplete=0, /*!< \brief draw axis with ticks, ticklabels and axis label */
-    JKQTPCADMLineTicksTickLabels, /*!< \brief draw axis with ticks, line and tick labels */
-    JKQTPCADMLineTicks, /*!< \brief draw axis with ticks and line */
-    JKQTPCADMLine, /*!< \brief draw axis as thick line */
-    JKQTPCADMTicksTickLabelsAxisLabel, /*!< \brief draw axis with ticks, tick labels and axisLabel */
-    JKQTPCADMTicksTickLabels, /*!< \brief draw axis with ticks and tick labels */
-    JKQTPCADMTickLabelsAxisLabel, /*!< \brief draw axis tick labels and axisLabel */
-    JKQTPCADMTickLabels, /*!< \brief draw axis tick labels */
-    JKQTPCADMTicks, /*!< \brief draw axis with ticks */
-    JKQTPCADMnone, /*!< \brief draw no axis */
+/** \brief drawing flags for a coordinate axis
+ * \ingroup jkqtpplottersupprt
+ *
+ * \note This enum provides the elements for \ref JKQTPCADrawMode, which is actually used
+ *       throughout the code.
+ *
+ * \see JKQTPCADrawMode, JKQTPCoordinateAxisStyle
+*/
+enum JKQTPCADrawModeElements {
+    JKQTPCADMLine=0x01, /*!< \brief draw axis as thick line  \image html axisstyle/JKQTPCADMLine.png */
+    JKQTPCADMTicks=0x02, /*!< \brief draw axis ticks  \image html axisstyle/JKQTPCADMTicks.png */
+    JKQTPCADMTickLabels=0x04, /*!< \brief draw axis tick labels  \image html axisstyle/JKQTPCADMTickLabels.png */
+    JKQTPCADMAxisLabel=0x08, /*!< \brief draw axis axis Label  \image html axisstyle/JKQTPCADMAxisLabel.png */
 
-    JKQTPCADMmax=JKQTPCADMnone
+    JKQTPCADMMaxArrow=0x0100, /*!< \brief an open arrow at the max-end of the axis  \image html axisstyle/JKQTPCADMMaxArrow.png */
+    JKQTPCADMMaxFilledArrow=0x0200, /*!< \brief draw a filled arrow at the max-end of the axis  \image html axisstyle/JKQTPCADMMaxFilledArrow.png */
+    JKQTPCADMMinArrow=0x1000, /*!< \brief an open arrow at the end of the axis at the min-end of the axis  \image html axisstyle/JKQTPCADMMinArrow.png */
+    JKQTPCADMMinFilledArrow=0x2000, /*!< \brief draw a filled arrow at the min-end of the axis  \image html axisstyle/JKQTPCADMMinFilledArrow.png */
+
+    JKQTPCADMLineTicksTickLabels=JKQTPCADMLine|JKQTPCADMTicks|JKQTPCADMTickLabels, /*!< \brief draw axis with ticks, line and tick labels  \image html axisstyle/JKQTPCADMLineTicksTickLabels.png */
+    JKQTPCADMLineTicks=JKQTPCADMLine|JKQTPCADMTicks, /*!< \brief draw axis with ticks and line  \image html axisstyle/JKQTPCADMLineTicks.png */
+    JKQTPCADMTicksTickLabelsAxisLabel=JKQTPCADMTicks|JKQTPCADMTickLabels|JKQTPCADMAxisLabel, /*!< \brief draw axis with ticks, tick labels and axisLabel  \image html axisstyle/JKQTPCADMTicksTickLabelsAxisLabel.png */
+    JKQTPCADMTicksTickLabels=JKQTPCADMTicks|JKQTPCADMTickLabels, /*!< \brief draw axis with ticks and tick labels  \image html axisstyle/JKQTPCADMTicksTickLabels.png */
+    JKQTPCADMTickLabelsAxisLabel=JKQTPCADMTickLabels|JKQTPCADMAxisLabel, /*!< \brief draw axis tick labels and axisLabel  \image html axisstyle/JKQTPCADMTickLabelsAxisLabel.png */
+    JKQTPCADMnone=0x0000, /*!< \brief draw no axis  \image html axisstyle/JKQTPCADMnone.png */
+    JKQTPCADMcomplete=JKQTPCADMLine|JKQTPCADMTicks|JKQTPCADMTickLabels|JKQTPCADMAxisLabel, /*!< \brief draw axis withline,  ticks, ticklabels and axis label  \image html axisstyle/JKQTPCADMcomplete.png */
+    JKQTPCADMcompleteMaxArrow=JKQTPCADMcomplete|JKQTPCADMMaxFilledArrow, /*!< \brief draw axis withline,  ticks, ticklabels and axis label and an arrow pointing to the max-side of the axis \image html axisstyle/JKQTPCADMcompleteMaxArrow.png */
+    JKQTPCADMcompleteMinMaxArrow=JKQTPCADMcomplete|JKQTPCADMMaxFilledArrow|JKQTPCADMMinFilledArrow, /*!< \brief draw axis withline,  ticks, ticklabels and axis label and arrows pointing to the min and max side of the axis  \image html axisstyle/JKQTPCADMcompleteMinMaxArrow.png */
 };
-
-/** \brief determines whether JKQTPCADrawMode has the line
- * \ingroup jkqtpplottersupprt
+/** \brief drawing mode for a coordinate axis
+ * \ingroup jkqtplotter_basegraphserrors
+ *
+ * \qFlagsNote{JKQTPCADrawMode,JKQTPCADrawModeElements}
+ *
+ * \see JKQTPCADrawModeElements, JKQTPCoordinateAxisStyle
  */
-JKQTPLOTTER_LIB_EXPORT bool JKQTPCADrawModeHasLine(JKQTPCADrawMode pos);
+Q_DECLARE_FLAGS(JKQTPCADrawMode, JKQTPCADrawModeElements)
+Q_DECLARE_OPERATORS_FOR_FLAGS(JKQTPCADrawMode)
 
-/** \brief determines whether JKQTPCADrawMode has ticks
- * \ingroup jkqtpplottersupprt
- */
-JKQTPLOTTER_LIB_EXPORT bool JKQTPCADrawModeHasTicks(JKQTPCADrawMode pos);
-
-/** \brief determines whether JKQTPCADrawMode has tick labels
- * \ingroup jkqtpplottersupprt
- */
-JKQTPLOTTER_LIB_EXPORT bool JKQTPCADrawModeHasTickLabels(JKQTPCADrawMode pos);
-
-/** \brief determines whether JKQTPCADrawMode has the axis label
- * \ingroup jkqtpplottersupprt
- */
-JKQTPLOTTER_LIB_EXPORT bool JKQTPCADrawModeHasAxisLabel(JKQTPCADrawMode pos);
 
 
 
@@ -438,19 +441,19 @@ JKQTPLOTTER_LIB_EXPORT JKQTPCADrawMode String2JKQTPCADrawMode(const QString& pos
 /** \brief display mode for the axis labels
  * \ingroup jkqtpplottersupprt */
 enum JKQTPCALabelType {
-    JKQTPCALTdefault, /*!< \brief simply print the numbers \image html JKQTPCALTdefault.png */
-    JKQTPCALTscientific, /*!< \brief print the numbers in scientific notation, e.g. \c "1.23e-4" \image html JKQTPCALTscientific.png */
-    JKQTPCALTexponentCharacter, /*!< \brief print the numbers and show a unit character, i.e. 5&mu; for \f$ 5\cdot 10^{-6} \f$ , \c 3k for \f$ 3\cdot 10^3 \f$ ... \image html JKQTPCALTexponentCharacter.png */
-    JKQTPCALTexponent, /*!< \brief show numbers in exponential for, e.g. \f$ 3\cdot 10^5 \f$ ... \image html JKQTPCALTexponent.png */
-    JKQTPCALTdate, /*!< \brief show numbers as dates \image html JKQTPCALTdate.png */
-    JKQTPCALTtime, /*!< \brief show numbers as times \image html JKQTPCALTtime.png*/
-    JKQTPCALTdatetime, /*!< \brief show numbers as times \image html JKQTPCALTdatetime.png */
-    JKQTPCALTfrac, /*!< \brief show numbers as fraction, the number is first rounded to the given precision and then a fraction is calculated and displayed like \f$ \frac{1}{2} \f$ \image html JKQTPCALTfrac.png */
-    JKQTPCALTslashfrac, /*!< \brief show numbers as fraction, the number is first rounded to the given precision and then a fraction is calculated and displayed like \c 1/2 \image html JKQTPCALTslashfrac.png */
-    JKQTPCALTsfrac, /*!< \brief show numbers as fraction, the number is first rounded to the given precision and then a fraction is calculated and displayed using \c \\sfrac{1}{2} \image html JKQTPCALTsfrac.png */
-    JKQTPCALTintfrac, /*!< \brief show numbers as integral+fraction, the number is first rounded to the given precision and then a fraction is calculated and displayed like \$ -3\frac{1}{2} \f$ \image html JKQTPCALTintfrac.png */
-    JKQTPCALTintslashfrac, /*!< \brief show numbers as integral+fraction, the number is first rounded to the given precision and then a fraction is calculated and displayed like \c 1/2 \image html JKQTPCALTintslashfrac.png */
-    JKQTPCALTintsfrac, /*!< \brief show numbers as integral+fraction, the number is first rounded to the given precision and then a fraction is calculated and displayed using \c \\sfrac{1}{2}  \image html JKQTPCALTintsfrac.png */
+    JKQTPCALTdefault=0, /*!< \brief simply print the numbers \image html axisstyle/JKQTPCALTdefault.png */
+    JKQTPCALTscientific, /*!< \brief print the numbers in scientific notation, e.g. \c "1.23e-4" \image html axisstyle/JKQTPCALTscientific.png */
+    JKQTPCALTexponentCharacter, /*!< \brief print the numbers and show a unit character, i.e. 5&mu; for \f$ 5\cdot 10^{-6} \f$ , \c 3k for \f$ 3\cdot 10^3 \f$ ... \image html axisstyle/JKQTPCALTexponentCharacter.png */
+    JKQTPCALTexponent, /*!< \brief show numbers in exponential for, e.g. \f$ 3\cdot 10^5 \f$ ... \image html axisstyle/JKQTPCALTexponent.png */
+    JKQTPCALTdate, /*!< \brief show numbers as dates \image html axisstyle/JKQTPCALTdate.png */
+    JKQTPCALTtime, /*!< \brief show numbers as times \image html axisstyle/JKQTPCALTtime.png*/
+    JKQTPCALTdatetime, /*!< \brief show numbers as times \image html axisstyle/JKQTPCALTdatetime.png */
+    JKQTPCALTfrac, /*!< \brief show numbers as fraction, the number is first rounded to the given precision and then a fraction is calculated and displayed like \f$ \frac{1}{2} \f$ \image html axisstyle/JKQTPCALTfrac.png */
+    JKQTPCALTslashfrac, /*!< \brief show numbers as fraction, the number is first rounded to the given precision and then a fraction is calculated and displayed like \c 1/2 \image html axisstyle/JKQTPCALTslashfrac.png */
+    JKQTPCALTsfrac, /*!< \brief show numbers as fraction, the number is first rounded to the given precision and then a fraction is calculated and displayed using \c \\sfrac{1}{2} \image html axisstyle/JKQTPCALTsfrac.png */
+    JKQTPCALTintfrac, /*!< \brief show numbers as integral+fraction, the number is first rounded to the given precision and then a fraction is calculated and displayed like \$ -3\frac{1}{2} \f$ \image html axisstyle/JKQTPCALTintfrac.png */
+    JKQTPCALTintslashfrac, /*!< \brief show numbers as integral+fraction, the number is first rounded to the given precision and then a fraction is calculated and displayed like \c 1/2 \image html axisstyle/JKQTPCALTintslashfrac.png */
+    JKQTPCALTintsfrac, /*!< \brief show numbers as integral+fraction, the number is first rounded to the given precision and then a fraction is calculated and displayed using \c \\sfrac{1}{2}  \image html axisstyle/JKQTPCALTintsfrac.png */
 
     JKQTPCALTcount,
     JKQTPCALTmax=JKQTPCALTcount-1

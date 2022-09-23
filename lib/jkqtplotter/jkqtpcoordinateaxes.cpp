@@ -156,7 +156,7 @@ void JKQTPCoordinateAxis::saveSettings(QSettings& settings, const QString& group
 }
 
 double JKQTPCoordinateAxis::calcLinearTickSpacing() {
-    if (axisStyle.labelType==JKQTPCALTdate) {
+    if (axisStyle.tickLabelType==JKQTPCALTdate) {
         QDateTime dt;
         dt.setMSecsSinceEpoch(0);
         //qDebug()<<"  dt="<<dt;
@@ -202,7 +202,7 @@ double JKQTPCoordinateAxis::calcLinearTickSpacing() {
         if (cnt>=1000) TickSpacing=width/static_cast<double>(axisStyle.minTicks);
         //qDebug()<<"TickSpacing="<<TickSpacing<<"   cnt="<<cnt;
         return TickSpacing;
-    } else if (axisStyle.labelType==JKQTPCALTdatetime) {
+    } else if (axisStyle.tickLabelType==JKQTPCALTdatetime) {
         QDateTime dt;
         dt.setMSecsSinceEpoch(0);
         //qDebug()<<"  dt="<<dt;
@@ -266,7 +266,7 @@ double JKQTPCoordinateAxis::calcLinearTickSpacing() {
         if (cnt>=1000) TickSpacing=width/static_cast<double>(axisStyle.minTicks);
         //qDebug()<<"TickSpacing="<<TickSpacing<<"   cnt="<<cnt;
         return TickSpacing;
-    } else if (axisStyle.labelType==JKQTPCALTtime) {
+    } else if (axisStyle.tickLabelType==JKQTPCALTtime) {
         QDateTime dt;
         dt.setMSecsSinceEpoch(0);
         //qDebug()<<"  dt="<<dt;
@@ -403,7 +403,7 @@ QString JKQTPCoordinateAxis::floattolabel(double data, int past_comma) const {
         belowIsZero=fabs(getMax()-getMin())*1e-6;
     }
 
-    switch(axisStyle.labelType) {
+    switch(axisStyle.tickLabelType) {
         case JKQTPCALTcount:
             return "";
         case JKQTPCALTdefault:
@@ -428,7 +428,7 @@ QString JKQTPCoordinateAxis::floattolabel(double data, int past_comma) const {
             const double rounded=round(data*powfac)/powfac;
             jkqtp_estimateFraction(rounded, sign, intpart, num, denom);
             //std::cout<<"\n"<<data<<" => "<<rounded<<", "<<sign<<"*( "<<intpart<<" + "<<num<<"/"<<denom<<" )\n";
-            if (axisStyle.labelType==JKQTPCALTfrac || axisStyle.labelType==JKQTPCALTsfrac || axisStyle.labelType==JKQTPCALTslashfrac) {
+            if (axisStyle.tickLabelType==JKQTPCALTfrac || axisStyle.tickLabelType==JKQTPCALTsfrac || axisStyle.tickLabelType==JKQTPCALTslashfrac) {
                 if (intpart>0) {
                     num=num+denom*intpart;
                     intpart=0;
@@ -438,13 +438,13 @@ QString JKQTPCoordinateAxis::floattolabel(double data, int past_comma) const {
             QString res;
             if (rounded==0.0 || (intpart==0 && num==0)) res= "0";
             else {
-                if (intpart==0 && sign<0) res+="-";
+                if (sign<0) res+="-";
                 if (intpart!=0) res+=QString::number(intpart);
                 if (num!=0) {
-                    if (denom==1) res=QString::number(num);
+                    if (denom==1) res+=QString::number(num);
                     else {
-                        if (axisStyle.labelType==JKQTPCALTfrac || axisStyle.labelType==JKQTPCALTintfrac) res+=QString("\\frac{%1}{%2}").arg(num).arg(denom);
-                        else if (axisStyle.labelType==JKQTPCALTsfrac || axisStyle.labelType==JKQTPCALTintsfrac) res+=QString("\\sfrac{%1}{%2}").arg(num).arg(denom);
+                        if (axisStyle.tickLabelType==JKQTPCALTfrac || axisStyle.tickLabelType==JKQTPCALTintfrac) res+=QString("\\frac{%1}{%2}").arg(num).arg(denom);
+                        else if (axisStyle.tickLabelType==JKQTPCALTsfrac || axisStyle.tickLabelType==JKQTPCALTintsfrac) res+=QString("\\sfrac{%1}{%2}").arg(num).arg(denom);
                         else {
                             if (res.size()>0 && res[res.size()-1].isDigit()) {
                                 if (sign<0) res+="-";
@@ -748,8 +748,8 @@ void JKQTPCoordinateAxis::setUserLogTickSpacing(double __value) {
     redrawPlot();
 }
 
-void JKQTPCoordinateAxis::setLabelType(JKQTPCALabelType __value) {
-    this->axisStyle.labelType = __value;
+void JKQTPCoordinateAxis::setTickLabelType(JKQTPCALabelType __value) {
+    this->axisStyle.tickLabelType = __value;
     this->paramsChanged=true;
     redrawPlot();
 }
@@ -990,6 +990,42 @@ void JKQTPCoordinateAxis::setTickLabelAngle(double __value) {
     redrawPlot();
 }
 
+void JKQTPCoordinateAxis::setArrowSizeFactor(double f)  {
+    axisStyle.arrowSizeFactor=f;
+    this->paramsChanged=true;
+    redrawPlot();
+}
+
+void JKQTPCoordinateAxis::setLabelColor(QColor c)  {
+    axisStyle.labelColor=c;
+    this->paramsChanged=true;
+    redrawPlot();
+}
+
+void JKQTPCoordinateAxis::setMinorTickColor(QColor c)  {
+    axisStyle.minorTickColor=c;
+    this->paramsChanged=true;
+    redrawPlot();
+}
+
+void JKQTPCoordinateAxis::setMinorTickLabelColor(QColor c)  {
+    axisStyle.minorTickLabelColor=c;
+    this->paramsChanged=true;
+    redrawPlot();
+}
+
+void JKQTPCoordinateAxis::setTickColor(QColor c)  {
+    axisStyle.tickColor=c;
+    this->paramsChanged=true;
+    redrawPlot();
+}
+
+void JKQTPCoordinateAxis::setTickLabelColor(QColor c)  {
+    axisStyle.tickLabelColor=c=c;
+    this->paramsChanged=true;
+    redrawPlot();
+}
+
 
 void JKQTPCoordinateAxis::setAbsoluteRange(double amin, double amax) {
     axisabsoultemin=std::min(amin, amax);
@@ -1073,7 +1109,6 @@ QSizeF JKQTPCoordinateAxis::getMaxTickLabelSize(JKQTPEnhancedPainter& painter, d
     QFont f;
     f.setFamily(JKQTMathTextFontSpecifier::fromFontSpec(getParent()->getCurrentPlotterStyle().defaultFontName).fontName());
     f.setPointSizeF(this->axisStyle.tickLabelFontSize*parent->getFontSizeMultiplier());
-    QFontMetricsF fm(f);
     bool first=true;
     int cnt=0;
     while (getNextLabel(x, label, first) && cnt<50) {
@@ -1096,7 +1131,16 @@ QSizeF JKQTPCoordinateAxis::getMaxTickLabelSize(JKQTPEnhancedPainter& painter, d
     }
 }
 
-
+void JKQTPCoordinateAxis::drawAxisLine(JKQTPEnhancedPainter& painter, const QLineF& l, JKQTPCADrawMode drawMode) const {
+    const double arrowSize=axisStyle.getArrowSize(painter, parent);
+    JKQTPLineDecoratorStyle st1=JKQTPNoDecorator, st2=JKQTPNoDecorator;
+    if (drawMode.testFlag(JKQTPCADMMinArrow)) st1=JKQTPArrow;
+    if (drawMode.testFlag(JKQTPCADMMinFilledArrow)) st1=JKQTPFilledArrow;
+    if (drawMode.testFlag(JKQTPCADMMaxArrow)) st2=JKQTPArrow;
+    if (drawMode.testFlag(JKQTPCADMMaxFilledArrow)) st2=JKQTPFilledArrow;
+    JKQTPPlotDecoratedLine(painter, l, st1, arrowSize,
+                                       st2, arrowSize);
+}
 
 
 
@@ -1127,39 +1171,41 @@ double JKQTPVerticalAxis::getParentPlotOffset() const {
 QSizeF JKQTPVerticalAxis::getSize1(JKQTPEnhancedPainter& painter) {
     if (axisStyle.drawMode1==JKQTPCADMnone) return QSize(0,0);
     double ptwidth=axisStyle.axisLineOffset;
+    const double arrowSize=(axisStyle.drawMode1.testAnyFlags(JKQTPCADMMinArrow|JKQTPCADMMinFilledArrow|JKQTPCADMMaxArrow|JKQTPCADMMaxFilledArrow))?(axisStyle.getArrowSize(painter, parent)/2.0):0.0;
     double labwidth=0;
-    if (JKQTPCADrawModeHasTicks(axisStyle.drawMode1)) ptwidth+=axisStyle.tickOutsideLength;
-    if (JKQTPCADrawModeHasTickLabels(axisStyle.drawMode1)) {
+    if (axisStyle.drawMode1.testFlag(JKQTPCADMTicks)) ptwidth+=axisStyle.tickOutsideLength;
+    if (axisStyle.drawMode1.testFlag(JKQTPCADMTickLabels)) {
         ptwidth+=axisStyle.tickLabelDistance;
         // find out the maximum width over all visible plot labels
         labwidth+=getMaxTickLabelSize(painter).width();
     }
-    if (JKQTPCADrawModeHasTickLabels(axisStyle.drawMode1)) {
+    if (axisStyle.drawMode1.testFlag(JKQTPCADMAxisLabel)) {
         ptwidth+=axisStyle.labelDistance;
         // find out size of axis label
         labwidth+=parent->getTextSizeSize(getParent()->getCurrentPlotterStyle().defaultFontName, axisStyle.labelFontSize*parent->getFontSizeMultiplier(), axisLabel, painter).height();
     }
 
-    return QSizeF(parent->pt2px(painter, ptwidth)+labwidth, getParentPlotWidth());
+    return QSizeF(qMax(parent->pt2px(painter, ptwidth)+labwidth, arrowSize), getParentPlotWidth());
 }
 
 QSizeF JKQTPVerticalAxis::getSize2(JKQTPEnhancedPainter& painter) {
     if (axisStyle.drawMode2==JKQTPCADMnone) return QSize(0,0);
     double ptwidth=axisStyle.axisLineOffset;
+    const double arrowSize=(axisStyle.drawMode1.testAnyFlags(JKQTPCADMMinArrow|JKQTPCADMMinFilledArrow|JKQTPCADMMaxArrow|JKQTPCADMMaxFilledArrow))?(axisStyle.getArrowSize(painter, parent)/2.0):0.0;
     double labwidth=0;
-    if (JKQTPCADrawModeHasTicks(axisStyle.drawMode2)) ptwidth+=axisStyle.tickOutsideLength;
-    if (JKQTPCADrawModeHasTickLabels(axisStyle.drawMode2)) {
+    if (axisStyle.drawMode2.testFlag(JKQTPCADMTicks)) ptwidth+=axisStyle.tickOutsideLength;
+    if (axisStyle.drawMode2.testFlag(JKQTPCADMTickLabels)) {
         ptwidth+=axisStyle.tickLabelDistance;
         // find out the maximum width over all visible plot labels
         labwidth+=getMaxTickLabelSize(painter).width();
     }
-    if (JKQTPCADrawModeHasTickLabels(axisStyle.drawMode2)) {
+    if (axisStyle.drawMode2.testFlag(JKQTPCADMAxisLabel)) {
         ptwidth+=axisStyle.labelDistance;
         // find out size of axis label
         labwidth+=parent->getTextSizeSize(getParent()->getCurrentPlotterStyle().defaultFontName, axisStyle.labelFontSize*parent->getFontSizeMultiplier(), axisLabel, painter).height();
     }
 
-    return QSizeF(parent->pt2px(painter, ptwidth)+labwidth, getParentPlotWidth());
+    return QSizeF(qMax(arrowSize, parent->pt2px(painter, ptwidth)+labwidth), getParentPlotWidth());
 }
 
 
@@ -1251,17 +1297,18 @@ void JKQTPVerticalAxis::drawGrids(JKQTPEnhancedPainter& painter) {
     //qDebug()<<"    end JKQTPVerticalAxis::drawGrids(";
 }
 
-void JKQTPVerticalAxis::drawTickLabel1(JKQTPEnhancedPainter &painter, double xx, double yy, const QString& label, double fontSize)
+void JKQTPVerticalAxis::drawTickLabel1(JKQTPEnhancedPainter &painter, double xx, double yy, double labelOffset, const QString& label, double fontSize, bool isMinor)
 {
     getParentMathText()->setFontSize(fontSize*parent->getFontSizeMultiplier());
     getParentMathText()->setFontSpecial(getParent()->getCurrentPlotterStyle().defaultFontName);
-    getParentMathText()->setFontColor(axisStyle.axisColor);
+    getParentMathText()->setFontColor(axisStyle.tickLabelColor);
+    if (isMinor) getParentMathText()->setFontColor(axisStyle.minorTickLabelColor);
 
     getParentMathText()->parse(label);
     double width, ascent, descent, strikeoutPos;
     getParentMathText()->getSizeDetail(painter, width, ascent, descent, strikeoutPos);
-    if (JKQTPCADrawModeHasTickLabels(axisStyle.drawMode1)) {
-        double lx=xx-parent->pt2px(painter, axisStyle.minorTickOutsideLength+axisStyle.tickLabelDistance)-width;
+    if (axisStyle.drawMode1.testFlag(JKQTPCADMTickLabels)) {
+        double lx=xx-parent->pt2px(painter, labelOffset)-width;
         if (axisStyle.tickLabelAngle==90) {
             painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
             painter.translate(lx+width-1.25*strikeoutPos, yy-width/2.0);
@@ -1291,18 +1338,19 @@ void JKQTPVerticalAxis::drawTickLabel1(JKQTPEnhancedPainter &painter, double xx,
     }
 }
 
-void JKQTPVerticalAxis::drawTickLabel2(JKQTPEnhancedPainter &painter, double xx, double yy, const QString &label, double fontSize)
+void JKQTPVerticalAxis::drawTickLabel2(JKQTPEnhancedPainter &painter, double xx, double yy, double labelOffset, const QString &label, double fontSize, bool isMinor)
 {
     getParentMathText()->setFontSize(fontSize*parent->getFontSizeMultiplier());
     getParentMathText()->setFontSpecial(getParent()->getCurrentPlotterStyle().defaultFontName);
-    getParentMathText()->setFontColor(axisStyle.axisColor);
+    getParentMathText()->setFontColor(axisStyle.tickLabelColor);
+    if (isMinor) getParentMathText()->setFontColor(axisStyle.minorTickLabelColor);
 
     getParentMathText()->parse(label);
     double width, ascent, descent, strikeoutPos;
     getParentMathText()->getSizeDetail(painter, width, ascent, descent, strikeoutPos);
 
-    if (JKQTPCADrawModeHasTickLabels(axisStyle.drawMode2)) {
-        double lx=xx+parent->pt2px(painter, axisStyle.tickOutsideLength+axisStyle.tickLabelDistance);
+    if (axisStyle.drawMode2.testFlag(JKQTPCADMTickLabels)) {
+        double lx=xx+parent->pt2px(painter, labelOffset);
         if (axisStyle.tickLabelAngle==90) {
             painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
             painter.translate(lx+descent, yy-width/2.0);
@@ -1333,6 +1381,99 @@ void JKQTPVerticalAxis::drawTickLabel2(JKQTPEnhancedPainter &painter, double xx,
     }
 }
 
+void JKQTPVerticalAxis::drawAxisLabel1(JKQTPEnhancedPainter &painter, double left, double bottom, QSizeF labelMax) {
+    double labelOffset=parent->pt2px(painter, axisStyle.labelDistance);
+    if (axisStyle.drawMode1.testFlag(JKQTPCADMTicks)) labelOffset+=parent->pt2px(painter, axisStyle.tickOutsideLength);
+    if (axisStyle.drawMode1.testFlag(JKQTPCADMTickLabels)) {
+        labelOffset+=parent->pt2px(painter, axisStyle.tickLabelDistance);
+        labelOffset+=labelMax.width();//+labelMax.height();
+    }
+
+
+    getParentMathText()->setFontSize(axisStyle.labelFontSize*parent->getFontSizeMultiplier());
+    getParentMathText()->setFontSpecial(getParent()->getCurrentPlotterStyle().defaultFontName);
+    getParentMathText()->setFontColor(axisStyle.labelColor);
+    getParentMathText()->parse(axisLabel);
+    const JKQTMathTextNodeSize labelsize=getParentMathText()->getSizeDetail(painter);
+
+
+    QRectF rect(0,0, getParentPlotWidth(), labelsize.overallHeight);//plotBorderLeft-30);
+    painter.save(); auto __finalpaintiner=JKQTPFinally([&painter]() {painter.restore();});
+    painter.translate(QPointF(left-labelOffset-rect.height(), bottom));
+    painter.rotate(-90);
+    //JKQTPEnhancedPainter::RenderHints h=painter.renderHints();
+    //painter.drawRect(rect);
+    //painter.drawEllipse(-4, -4, 8, 8);
+    switch(axisStyle.labelPosition) {
+        case JKQTPLabelMax:
+            getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignRight, rect, parent->getCurrentPlotterStyle().debugShowTextBoxes);
+            break;
+        case JKQTPLabelMin:
+            getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignLeft, rect, parent->getCurrentPlotterStyle().debugShowTextBoxes);
+            break;
+        case JKQTPLabelCenter:
+            getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignHCenter, rect, parent->getCurrentPlotterStyle().debugShowTextBoxes);
+            break;
+    }
+    if (getParent()->getCurrentPlotterStyle().debugShowRegionBoxes) {
+        painter.save(); auto __finalpaintinnerif=JKQTPFinally([&painter]() {painter.restore();});
+        QPen p("magenta");
+        QColor col=p.color(); col.setAlphaF(0.8f); p.setColor(col);
+        p.setWidthF(getParent()->getCurrentPlotterStyle().debugRegionLineWidth/2.0);
+        painter.setPen(p);
+        painter.setBrush(QBrush(QColor(Qt::transparent)));
+        painter.drawRect(rect);
+    }
+    painter.resetTransform();
+}
+
+void JKQTPVerticalAxis::drawAxisLabel2(JKQTPEnhancedPainter &painter, double right, double bottom, QSizeF labelMax) {
+    double labelOffset=parent->pt2px(painter, axisStyle.labelDistance);
+    if (axisStyle.drawMode2.testFlag(JKQTPCADMTicks)) labelOffset+=parent->pt2px(painter, axisStyle.tickOutsideLength);
+    if (axisStyle.drawMode2.testFlag(JKQTPCADMTickLabels)) {
+        labelOffset+=parent->pt2px(painter, axisStyle.tickLabelDistance);
+        labelOffset+=labelMax.width();//+labelMax.height();
+    }
+
+
+    getParentMathText()->setFontSize(axisStyle.labelFontSize*parent->getFontSizeMultiplier());
+    getParentMathText()->setFontSpecial(getParent()->getCurrentPlotterStyle().defaultFontName);
+    getParentMathText()->setFontColor(axisStyle.labelColor);
+    getParentMathText()->parse(axisLabel);
+    const JKQTMathTextNodeSize labelsize=getParentMathText()->getSizeDetail(painter);
+
+
+    QRectF rect(0,0, getParentPlotWidth(), labelsize.overallHeight);//plotBorderLeft-30);
+    painter.save(); auto __finalpaintinner=JKQTPFinally([&painter]() {painter.restore();});
+    painter.translate(QPointF(right+labelOffset, bottom));
+    painter.rotate(-90);
+
+    //JKQTPEnhancedPainter::RenderHints h=painter.renderHints();
+    //painter.drawRect(rect);
+    //painter.drawEllipse(-4, -4, 8, 8);
+    switch(axisStyle.labelPosition) {
+        case JKQTPLabelMax:
+            getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignRight, rect, parent->getCurrentPlotterStyle().debugShowTextBoxes);
+            break;
+        case JKQTPLabelMin:
+            getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignLeft, rect, parent->getCurrentPlotterStyle().debugShowTextBoxes);
+            break;
+        case JKQTPLabelCenter:
+            getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignHCenter, rect, parent->getCurrentPlotterStyle().debugShowTextBoxes);
+            break;
+    }
+    if (getParent()->getCurrentPlotterStyle().debugShowRegionBoxes) {
+        painter.save(); auto __finalpaintinnerif=JKQTPFinally([&painter]() {painter.restore();});
+        QPen p("magenta");
+        QColor col=p.color(); col.setAlphaF(0.8f); p.setColor(col);
+        p.setWidthF(getParent()->getCurrentPlotterStyle().debugRegionLineWidth/2.0);
+        painter.setPen(p);
+        painter.setBrush(QBrush(QColor(Qt::transparent)));
+        painter.drawRect(rect);
+    }
+    painter.resetTransform();
+}
+
 void JKQTPVerticalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaat(QString("JKQTPEnhancedPainter[%1]::drawAxes()").arg(objectName()));
@@ -1359,6 +1500,21 @@ void JKQTPVerticalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
     // move axes outside plot rectangle, if required
     left-=parent->pt2px(painter, axisStyle.axisLineOffset);
     right+=parent->pt2px(painter, axisStyle.axisLineOffset);
+
+
+    double ticklabelOffset1PT=axisStyle.tickLabelDistance; // offset of tick labels from axis 1
+    double minorticklabelOffset1PT=axisStyle.tickLabelDistance; // offset ofminor tick labels from axis 1
+    if (axisStyle.drawMode1.testFlag(JKQTPCADMTicks)) {
+        ticklabelOffset1PT+=axisStyle.tickOutsideLength;
+        minorticklabelOffset1PT+=axisStyle.minorTickOutsideLength;
+    }
+    double ticklabelOffset2PT=axisStyle.tickLabelDistance; // offset of tick labels from axis 2
+    double minorticklabelOffset2PT=axisStyle.tickLabelDistance; // offset ofminor tick labels from axis 2
+    if (axisStyle.drawMode2.testFlag(JKQTPCADMTicks)) {
+        ticklabelOffset2PT+=axisStyle.tickOutsideLength;
+        minorticklabelOffset2PT+=axisStyle.minorTickOutsideLength;
+    }
+
     //qDebug()<<"JKQTPVerticalAxis:";
     //qDebug()<<"    left="<<left;
     //qDebug()<<"    right="<<right;
@@ -1381,56 +1537,48 @@ void JKQTPVerticalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
     //qDebug()<<"drawing vertical axis ... range = ["<<axismin<<" .. "<<axismax<<"]\n";
 
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-    QPen pmain=painter.pen();
-    pmain.setColor(axisStyle.axisColor);
-    pmain.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, axisStyle.lineWidth*parent->getLineWidthMultiplier())));
-    pmain.setStyle(Qt::SolidLine);
-
-    QPen ptick=pmain;
-    ptick.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, axisStyle.tickWidth*parent->getLineWidthMultiplier())));
-
-    QPen pmtick=ptick;
-    pmtick.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, axisStyle.minorTickWidth*parent->getLineWidthMultiplier())));
+    const QPen pmain=axisStyle.getAxisPen(painter, parent);
+    const QPen ptick=axisStyle.getTickPen(painter, parent);
+    const QPen pmtick=axisStyle.getMinorTickPen(painter, parent);
 
     getParentMathText()->setFontSize(this->axisStyle.tickLabelFontSize*parent->getFontSizeMultiplier());
     getParentMathText()->setFontSpecial(getParent()->getCurrentPlotterStyle().defaultFontName);
     getParentMathText()->setFontColor(axisStyle.axisColor);
 
-    painter.setPen(pmain);
 
     // plot thick axis at y==0
-    if (axisStyle.showZeroAxis && (0>axismin) && (0<axismax)) {
+    if (axisStyle.showZeroAxis && (0>=axismin) && (0<=axismax)) {
         #ifdef JKQTBP_AUTOTIMER
             JKQTPAutoOutputTimer jkaati(QString("JKQTPEnhancedPainter[%1]::drawAxes(): 0Axis").arg(objectName()));
         #endif
-        QPen pmain1=pmain;
-        pmain1.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, axisStyle.lineWidthZeroAxis*parent->getLineWidthMultiplier())));
-        pmain1.setColor(axisStyle.colorZeroAxis);
-        pmain1.setStyle(axisStyle.styleZeroAxis);
+        const QPen pmain1=axisStyle.getZeroAxisPen(painter, parent);
         painter.setPen(pmain1);
-        QLineF l(left-parent->pt2px(painter, axisStyle.tickOutsideLength), x2p(0), right+parent->pt2px(painter, axisStyle.tickOutsideLength), x2p(0));
-        painter.drawLine(l);
-
-        painter.setPen(pmain);
+        const QLineF l(left-parent->pt2px(painter, axisStyle.tickOutsideLength), x2p(0), right+parent->pt2px(painter, axisStyle.tickOutsideLength), x2p(0));
+        if (l.length()>0) painter.drawLine(l);
     }
 
-    // draw thick axis lines, left and/or right
-    if ( JKQTPCADrawModeHasLine(axisStyle.drawMode1)) {
-        QLineF l(left, x2p(axismin), left, x2p(axismax));
-        painter.drawLine(l);
+    painter.setPen(pmain);
+    painter.setBrush(pmain.color());
+
+    // draw thick axis lines, left and/or right with optional arrows, but wihtou ticks
+    if ( axisStyle.drawMode1.testFlag(JKQTPCADMLine)) {
+        const QLineF l(left, x2p(axismin), left, x2p(axismax));
+        drawAxisLine(painter, l, axisStyle.drawMode1);
     }
-    if (JKQTPCADrawModeHasLine(axisStyle.drawMode2)) {
-        QLineF l(right, x2p(axismin), right, x2p(axismax));
-        painter.drawLine(l);
+    if (axisStyle.drawMode2.testFlag(JKQTPCADMLine)) {
+        const QLineF l(right, x2p(axismin), right, x2p(axismax));
+        drawAxisLine(painter, l, axisStyle.drawMode1);
     }
+    painter.setBrush(Qt::NoBrush);
 
     // plot minor and major ticks + tick labels
-    QSizeF labelMax=getMaxTickLabelSize(painter);
-    double x=tickStart;
+    const QSizeF labelMax=getMaxTickLabelSize(painter);
+    double y=tickStart;
     QString label="";
     bool first=true;
     // loop through all labels, as they are at the major ticks
     int cnt=0;
+    const double arrowFreeSpace=axisStyle.getArrowSize(painter, parent)*1.2;
 
     QVector<QLineF> lines_ptick, lines_ptick2;
     QVector<QLineF> lines_pmtick, lines_pmtick2;
@@ -1439,102 +1587,74 @@ void JKQTPVerticalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
         #ifdef JKQTBP_AUTOTIMER
             JKQTPAutoOutputTimer jkaatii(QString("JKQTPEnhancedPainter[%1]::drawAxes(): calcLabels").arg(objectName()));
         #endif
-        while (getNextLabel(x, label, first) && cnt<200) {
-            double mtdist=getNextLabelDistance(x)/static_cast<double>(axisStyle.minorTicks+1);
-
-            double xleft=-1000000;
-            double xx=x2p(x);
+        while (getNextLabel(y, label, first) && cnt<200) {
+            const double mtdist=getNextLabelDistance(y)/static_cast<double>(axisStyle.minorTicks+1); // distance of minor ticks
+            const double yy=x2p(y); // y tick position
             //qDebug()<<"   tick @ x="<<x<<"   label="<<label<<"   mtdist="<<mtdist;
+            if (!axisStyle.drawMode1.testAnyFlags(JKQTPCADMMinArrow|JKQTPCADMMinFilledArrow|JKQTPCADMMaxArrow|JKQTPCADMMaxFilledArrow)
+                    || (yy>top+arrowFreeSpace && yy<bottom-arrowFreeSpace)) {
 
-            if (JKQTPCADrawModeHasTicks(axisStyle.drawMode1)||JKQTPCADrawModeHasTickLabels(axisStyle.drawMode1)) {
-                //painter.setPen(ptick);
-                if ((x<=axismax) && (x>=axismin))  {
-                    QLineF l(left-parent->pt2px(painter, axisStyle.tickOutsideLength), xx, left+parent->pt2px(painter, axisStyle.tickInsideLength), xx);
-                    if (l.length()>0) lines_ptick.append(l);//painter.drawLine(l);
-                    //qDebug()<<"tick: "<<l;
+                // calculate tick lines for axis 1
+                if (axisStyle.drawMode1.testFlag(JKQTPCADMTicks)&&(y<=axismax) && (y>=axismin))  {
+                    const QLineF l(left-parent->pt2px(painter, axisStyle.tickOutsideLength), yy, left+parent->pt2px(painter, axisStyle.tickInsideLength), yy);
+                    if (l.length()>0) lines_ptick.append(l);
                 }
-                //painter.setPen(pmtick);
-                if ((tickLabels.size()<=0) && (axisStyle.minorTicks>0)) {
-                    double mx=x+mtdist;
-                    int minTickCnt=axisStyle.minorTicks;
-                    if (isLogAxis()) {
-                        if (mtdist>x) {
-                            mx=mtdist;
-                        } else {
-                            minTickCnt--;
-                            mx=2.0*mtdist;
-                        }
 
-                    }
-                    for (int i=0; i<minTickCnt; i++) {
-                        double mxx=x2p(mx);
-                        //if (logAxis) qDebug()<<i<<"  =>  "<<mx<<mxx<<apprLogTicks<<w<<minorTicks;
-                        if (mx<=axismax && mx>=axismin) {
-                            QLineF l(xleft=left-parent->pt2px(painter, axisStyle.minorTickOutsideLength), mxx, left+parent->pt2px(painter, axisStyle.minorTickInsideLength), mxx);
-                            if (l.length()>0) lines_pmtick.append(l);//painter.drawLine(l);
-                            //qDebug()<<"minortick: "<<l;
-                            double val= mx/pow(logAxisBase,floor(log(mx)/log(logAxisBase)));
+                // calculate tick lines for axis 2
+                if (axisStyle.drawMode2.testFlag(JKQTPCADMTicks)&&(y<=axismax) && (y>=axismin))  {
+                    const QLineF l(right+parent->pt2px(painter, axisStyle.tickOutsideLength), yy, right-parent->pt2px(painter, axisStyle.tickInsideLength), yy);
+                    if (l.length()>0) lines_ptick.append(l);
+                }
 
-                            if (axisStyle.minorTickLabelsEnabled&&JKQTPCADrawModeHasTickLabels(axisStyle.drawMode1)) {
-                                if (axisStyle.minorTickLabelFullNumber) val=mx;
-                                QString minorlabel=floattolabel(val);
-                                drawTickLabel1(painter, left, mxx, minorlabel, axisStyle.minorTickLabelFontSize);
-                                //drawTickLabel2(painter, right, xx, minorlabel, axisStyle.minorTickLabelFontSize);
+                // calculate minor ticks and draw minor tick labels
+                if (axisStyle.drawMode1.testFlag(JKQTPCADMTicks)||axisStyle.drawMode1.testFlag(JKQTPCADMTickLabels)||axisStyle.drawMode2.testFlag(JKQTPCADMTicks)||axisStyle.drawMode2.testFlag(JKQTPCADMTickLabels)) {
+                    // minor ticks only if no user-defined tickLabels were set and if minor ticks are actiavted (i.e. minorTicks>0)
+                    if ((tickLabels.size()<=0) && (axisStyle.minorTicks>0)) {
+                        double my=y+mtdist; // location of first minor tick
+                        int minTickCnt=axisStyle.minorTicks; // number of minor ticks
+                        if (isLogAxis()) {
+                            if (mtdist>y) {
+                                my=mtdist;
+                            } else {
+                                minTickCnt--;
+                                my=2.0*mtdist;
                             }
+
                         }
-                        mx=mx+mtdist;
+                        for (int i=0; i<minTickCnt; i++) {
+                            const double my_pix=x2p(my);
+                            //if (logAxis) qDebug()<<i<<"  =>  "<<mx<<mxx<<apprLogTicks<<w<<minorTicks;
+                            if (my<=axismax && my>=axismin) {
 
-                    }
-                }
-            }
-            if (JKQTPCADrawModeHasTicks(axisStyle.drawMode2)||JKQTPCADrawModeHasTickLabels(axisStyle.drawMode2)) {
-                //painter.setPen(ptick);
-                if (x<=axismax && x>=axismin) {
-                    QLineF l(right-parent->pt2px(painter, axisStyle.tickInsideLength), xx, right+parent->pt2px(painter, axisStyle.tickOutsideLength), xx);
-                    if (l.length()>0) lines_ptick2.append(l);//painter.drawLine(l);
-                    //qDebug()<<"tick2: "<<l;
+                                // calculate minor tick lines, axis 1
+                                if (axisStyle.minorTicks>0&&axisStyle.drawMode1.testFlag(JKQTPCADMTicks)) {
+                                    const QLineF l(left-parent->pt2px(painter, axisStyle.minorTickOutsideLength), my_pix, left+parent->pt2px(painter, axisStyle.minorTickInsideLength), my_pix);
+                                    if (l.length()>0) lines_pmtick.append(l);
+                                }
+                                // calculate minor tick lines, axis 2
+                                if (axisStyle.minorTicks>0&&axisStyle.drawMode2.testFlag(JKQTPCADMTicks)) {
+                                    const QLineF l(right+parent->pt2px(painter, axisStyle.minorTickOutsideLength), my_pix, right-parent->pt2px(painter, axisStyle.minorTickInsideLength), my_pix);
+                                    if (l.length()>0) lines_pmtick.append(l);
+                                }
 
-                }
-                //painter.setPen(pmtick);
-                if ((tickLabels.size()<=0) && (axisStyle.minorTicks>0)) {
-                    double mx=x+mtdist;
-                    int minTickCnt=axisStyle.minorTicks;
-                    if (isLogAxis()) {
-                        if (mtdist>x) {
-                            mx=mtdist;
-                        } else {
-                            minTickCnt--;
-                            mx=2.0*mtdist;
-                        }
-
-                    }
-                    for (int i=0; i<minTickCnt; i++) {
-                        double mxx=x2p(mx);
-                        if (mx<=axismax && mx>=axismin)  {
-                            QLineF l(right-parent->pt2px(painter, axisStyle.minorTickInsideLength), mxx, xleft=(right+parent->pt2px(painter, axisStyle.minorTickOutsideLength)), mxx);
-                            if (l.length()>0) lines_pmtick2.append(l);//painter.drawLine(l);
-                            //qDebug()<<"minortick2: "<<l;
-
-                            double val= mx/pow(logAxisBase,floor(log(mx)/log(logAxisBase)));
-
-                            if (axisStyle.minorTickLabelsEnabled) {
-                                if (axisStyle.minorTickLabelFullNumber&&JKQTPCADrawModeHasTickLabels(axisStyle.drawMode2)) val=mx;
-                                QString minorlabel=floattolabel(val);
-                                //drawTickLabel1(painter, left, xx, minorlabel, axisStyle.minorTickLabelFontSize);
-                                drawTickLabel2(painter, xleft, mxx, minorlabel, axisStyle.minorTickLabelFontSize);
+                                // draw minor tick label, axis 1
+                                if (axisStyle.minorTickLabelsEnabled&&axisStyle.minorTicks>0&&(axisStyle.drawMode1.testFlag(JKQTPCADMTickLabels)||axisStyle.drawMode2.testFlag(JKQTPCADMTickLabels))) {
+                                    double val= my/pow(logAxisBase,floor(log(my)/log(logAxisBase)));
+                                    if (axisStyle.minorTickLabelFullNumber) val=my;
+                                    const QString minorlabel=floattolabel(val);
+                                    if (axisStyle.drawMode1.testFlag(JKQTPCADMTickLabels)) drawTickLabel1(painter, left, my_pix, minorticklabelOffset1PT, minorlabel, axisStyle.minorTickLabelFontSize, true);
+                                    if (axisStyle.drawMode2.testFlag(JKQTPCADMTickLabels)) drawTickLabel2(painter, right, my_pix, minorticklabelOffset2PT, minorlabel, axisStyle.minorTickLabelFontSize, true);
+                                }
                             }
+                            my=my+mtdist;
                         }
-                        mx=mx+mtdist;
                     }
                 }
-            }
 
-            if ((label!="") && (x<=axismax && x>=axismin)) {
-
-
-                if (JKQTPCADrawModeHasTickLabels(axisStyle.drawMode1)) drawTickLabel1(painter, left, xx, label, this->axisStyle.tickLabelFontSize);
-                if (JKQTPCADrawModeHasTickLabels(axisStyle.drawMode2)) drawTickLabel2(painter, right, xx, label, this->axisStyle.tickLabelFontSize);
-
+                if (!label.isEmpty() && (y<=axismax && y>=axismin)) {
+                    if (axisStyle.drawMode1.testFlag(JKQTPCADMTickLabels)) drawTickLabel1(painter, left, yy, ticklabelOffset1PT, label, this->axisStyle.tickLabelFontSize, false);
+                    if (axisStyle.drawMode2.testFlag(JKQTPCADMTickLabels)) drawTickLabel2(painter, right, yy, ticklabelOffset2PT, label, this->axisStyle.tickLabelFontSize, false);
+                }
             }
             first=false;
             cnt++;
@@ -1544,103 +1664,32 @@ void JKQTPVerticalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
     #ifdef JKQTBP_AUTOTIMER
         JKQTPAutoOutputTimer jkaati(QString("JKQTPEnhancedPainter[%1]::drawAxes(): drawLines").arg(objectName()));
     #endif
-        painter.setPen(ptick);
-        painter.drawLines(lines_ptick);
-        painter.drawLines(lines_ptick2);
-        painter.setPen(pmtick);
-        painter.drawLines(lines_pmtick);
-        painter.drawLines(lines_pmtick2);
-        //qDebug()<<"left="<<left<<", right="<<right<<", top="<<top<<", bottom="<<bottom;
-        //qDebug()<<"ptick: "<<jkqtp_QColor2String(ptick.color())<<","<<jkqtp_QPenStyle2String(ptick.style())<<" lines_ptick.size="<<lines_ptick.size()<<", lines_ptick2.size="<<lines_ptick2.size();
-        //if (lines_ptick.size()>0) qDebug()<<"  lines_ptick[0]="<<lines_ptick[0];
-        //if (lines_ptick2.size()>0) qDebug()<<"  lines_ptick2[0]="<<lines_ptick2[0];
-        //qDebug()<<"pmtick: "<<jkqtp_QColor2String(pmtick.color())<<","<<jkqtp_QPenStyle2String(pmtick.style())<<" lines_pmtick.size="<<lines_pmtick.size()<<", lines_pmtick2.size="<<lines_pmtick2.size();
-        //if (lines_pmtick.size()>0) qDebug()<<"  lines_pmtick[0]="<<lines_pmtick[0];
-        //if (lines_pmtick2.size()>0) qDebug()<<"  lines_pmtick2[0]="<<lines_pmtick2[0];
+        if (axisStyle.drawMode1.testFlag(JKQTPCADMTicks)) {
+            painter.setPen(ptick);
+            painter.drawLines(lines_ptick);
+            painter.setPen(pmtick);
+            painter.drawLines(lines_pmtick);
+        }
+        if (axisStyle.drawMode2.testFlag(JKQTPCADMTicks)) {
+            painter.setPen(ptick);
+            painter.drawLines(lines_ptick2);
+            painter.setPen(pmtick);
+            painter.drawLines(lines_pmtick2);
+        }
     }
 
     // plot axis label
-    if (!axisLabel.isEmpty() && JKQTPCADrawModeHasAxisLabel(axisStyle.drawMode1)) {
-        #ifdef JKQTBP_AUTOTIMER
-            JKQTPAutoOutputTimer jkaati(QString("JKQTPEnhancedPainter[%1]::drawAxes(): axisLabel1").arg(objectName()));
-        #endif
-        getParentMathText()->setFontSize(axisStyle.labelFontSize*parent->getFontSizeMultiplier());
-        getParentMathText()->setFontSpecial(getParent()->getCurrentPlotterStyle().defaultFontName);
-        getParentMathText()->parse(axisLabel);
-        double width, ascent, descent, strikeoutPos;
-        getParentMathText()->getSizeDetail(painter, width, ascent, descent, strikeoutPos);
-
-
-        QRectF rect(0,0, getParentPlotWidth(), ascent+descent);//plotBorderLeft-30);
-        painter.save(); auto __finalpaintiner=JKQTPFinally([&painter]() {painter.restore();});
-        painter.translate(QPointF(left-parent->pt2px(painter, axisStyle.tickOutsideLength+axisStyle.tickLabelDistance+axisStyle.labelDistance)-descent-labelMax.width()-labelMax.height(), bottom));
-        painter.rotate(-90);
-        //JKQTPEnhancedPainter::RenderHints h=painter.renderHints();
-        //painter.drawRect(rect);
-        //painter.drawEllipse(-4, -4, 8, 8);
-        switch(axisStyle.labelPosition) {
-            case JKQTPLabelMax:
-                getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignRight, rect, parent->getCurrentPlotterStyle().debugShowTextBoxes);
-                break;
-            case JKQTPLabelMin:
-                getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignLeft, rect, parent->getCurrentPlotterStyle().debugShowTextBoxes);
-                break;
-            case JKQTPLabelCenter:
-                getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignHCenter, rect, parent->getCurrentPlotterStyle().debugShowTextBoxes);
-                break;
-        }
-        if (getParent()->getCurrentPlotterStyle().debugShowRegionBoxes) {
-            painter.save(); auto __finalpaintinnerif=JKQTPFinally([&painter]() {painter.restore();});
-            QPen p("magenta");
-            QColor col=p.color(); col.setAlphaF(0.8f); p.setColor(col);
-            p.setWidthF(getParent()->getCurrentPlotterStyle().debugRegionLineWidth/2.0);
-            painter.setPen(p);
-            painter.setBrush(QBrush(QColor(Qt::transparent)));
-            painter.drawRect(rect);
-
-        }
-        painter.resetTransform();
-
+    if (!axisLabel.isEmpty() && axisStyle.drawMode1.testFlag(JKQTPCADMAxisLabel)) {
+#ifdef JKQTBP_AUTOTIMER
+    JKQTPAutoOutputTimer jkaati(QString("JKQTPEnhancedPainter[%1]::drawAxes(): axisLabel1").arg(objectName()));
+#endif
+        drawAxisLabel1(painter, left, bottom, labelMax);
     }
-    if (!axisLabel.isEmpty() && JKQTPCADrawModeHasAxisLabel(axisStyle.drawMode2)) {
+    if (!axisLabel.isEmpty() && axisStyle.drawMode2.testFlag(JKQTPCADMAxisLabel)) {
         #ifdef JKQTBP_AUTOTIMER
             JKQTPAutoOutputTimer jkaati(QString("JKQTPEnhancedPainter[%1]::drawAxes(): axisLabel2").arg(objectName()));
         #endif
-        getParentMathText()->setFontSize(axisStyle.labelFontSize*parent->getFontSizeMultiplier());
-        getParentMathText()->setFontSpecial(getParent()->getCurrentPlotterStyle().defaultFontName);
-        getParentMathText()->parse(axisLabel);
-
-
-        QRectF rect(0,0, getParentPlotWidth(), getParentMathText()->getSize(painter).height());//plotBorderLeft-30);
-        painter.save(); auto __finalpaintinner=JKQTPFinally([&painter]() {painter.restore();});
-        painter.translate(QPointF(right+parent->pt2px(painter, axisStyle.tickOutsideLength+axisStyle.tickLabelDistance+axisStyle.labelDistance)+labelMax.width(), bottom));
-        painter.rotate(-90);
-        //JKQTPEnhancedPainter::RenderHints h=painter.renderHints();
-        //painter.drawRect(rect);
-        //painter.drawEllipse(-4, -4, 8, 8);
-        switch(axisStyle.labelPosition) {
-            case JKQTPLabelMax:
-                getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignRight, rect, parent->getCurrentPlotterStyle().debugShowTextBoxes);
-                break;
-            case JKQTPLabelMin:
-                getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignLeft, rect, parent->getCurrentPlotterStyle().debugShowTextBoxes);
-                break;
-            case JKQTPLabelCenter:
-                getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignHCenter, rect, parent->getCurrentPlotterStyle().debugShowTextBoxes);
-                break;
-        }
-        if (getParent()->getCurrentPlotterStyle().debugShowRegionBoxes) {
-            painter.save(); auto __finalpaintinnerif=JKQTPFinally([&painter]() {painter.restore();});
-            QPen p("magenta");
-            QColor col=p.color(); col.setAlphaF(0.8f); p.setColor(col);
-            p.setWidthF(getParent()->getCurrentPlotterStyle().debugRegionLineWidth/2.0);
-            painter.setPen(p);
-            painter.setBrush(QBrush(QColor(Qt::transparent)));
-            painter.drawRect(rect);
-
-        }
-        //painter.resetTransform();
-
+        drawAxisLabel2(painter, right, bottom, labelMax);
     }
 
 
@@ -1661,10 +1710,6 @@ void JKQTPVerticalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
 
     //qDebug()<<"    end JKQTPVerticalAxis::drawAxes(";
 }
-
-
-
-
 
 
 
@@ -1768,40 +1813,42 @@ double JKQTPHorizontalAxis::getParentPlotOffset() const {
 
 QSizeF JKQTPHorizontalAxis::getSize1(JKQTPEnhancedPainter& painter) {
     if (axisStyle.drawMode1==JKQTPCADMnone) return QSize(0,0);
-    double ptwidth=axisStyle.axisLineOffset;
-    double labwidth=0;
-    if (JKQTPCADrawModeHasTicks(axisStyle.drawMode1)) ptwidth+=axisStyle.tickOutsideLength;
-    if (JKQTPCADrawModeHasTickLabels(axisStyle.drawMode1)) {
-        ptwidth+=axisStyle.tickLabelDistance;
+    double ptheight=axisStyle.axisLineOffset;
+    const double arrowSize=(axisStyle.drawMode1.testAnyFlags(JKQTPCADMMinArrow|JKQTPCADMMinFilledArrow|JKQTPCADMMaxArrow|JKQTPCADMMaxFilledArrow))?(axisStyle.getArrowSize(painter, parent)/2.0):0.0;
+    double labheight=0;
+    if (axisStyle.drawMode1.testFlag(JKQTPCADMTicks)) ptheight+=axisStyle.tickOutsideLength;
+    if (axisStyle.drawMode1.testFlag(JKQTPCADMTickLabels)) {
+        ptheight+=axisStyle.tickLabelDistance;
         // find out the maximum width over all visible plot labels
-        labwidth+=getMaxTickLabelSize(painter).height();
+        labheight+=getMaxTickLabelSize(painter).height();
     }
-    if (JKQTPCADrawModeHasTickLabels(axisStyle.drawMode1)) {
-        ptwidth+=axisStyle.labelDistance;
+    if (axisStyle.drawMode1.testFlag(JKQTPCADMAxisLabel)) {
+        ptheight+=axisStyle.labelDistance;
         // find out size of axis label
-        labwidth+=parent->getTextSizeSize(getParent()->getCurrentPlotterStyle().defaultFontName, axisStyle.labelFontSize*parent->getFontSizeMultiplier(), axisLabel, painter).height();
+        labheight+=parent->getTextSizeSize(getParent()->getCurrentPlotterStyle().defaultFontName, axisStyle.labelFontSize*parent->getFontSizeMultiplier(), axisLabel, painter).height();
     }
 
-    return QSizeF(getParentPlotWidth(), parent->pt2px(painter, ptwidth)+labwidth);
+    return QSizeF(getParentPlotWidth(), qMax(arrowSize,parent->pt2px(painter, ptheight)+labheight));
 }
 
 QSizeF JKQTPHorizontalAxis::getSize2(JKQTPEnhancedPainter& painter) {
     if (axisStyle.drawMode2==JKQTPCADMnone) return QSize(0,0);
-    double ptwidth=axisStyle.axisLineOffset;
-    double labwidth=0;
-    if (JKQTPCADrawModeHasTicks(axisStyle.drawMode2)) ptwidth+=axisStyle.tickOutsideLength;
-    if (JKQTPCADrawModeHasTickLabels(axisStyle.drawMode2)) {
-        ptwidth+=axisStyle.tickLabelDistance;
+    double ptheight=axisStyle.axisLineOffset;
+    const double arrowSize=(axisStyle.drawMode1.testAnyFlags(JKQTPCADMMinArrow|JKQTPCADMMinFilledArrow|JKQTPCADMMaxArrow|JKQTPCADMMaxFilledArrow))?(axisStyle.getArrowSize(painter, parent)/2.0):0.0;
+    double labheight=0;
+    if (axisStyle.drawMode2.testFlag(JKQTPCADMTicks)) ptheight+=axisStyle.tickOutsideLength;
+    if (axisStyle.drawMode2.testFlag(JKQTPCADMTickLabels)) {
+        ptheight+=axisStyle.tickLabelDistance;
         // find out the maximum width over all visible plot labels
-        labwidth+=getMaxTickLabelSize(painter).height();
+        labheight+=getMaxTickLabelSize(painter).height();
     }
-    if (JKQTPCADrawModeHasTickLabels(axisStyle.drawMode2)) {
-        ptwidth+=axisStyle.labelDistance;
+    if (axisStyle.drawMode2.testFlag(JKQTPCADMAxisLabel)) {
+        ptheight+=axisStyle.labelDistance;
         // find out size of axis label
-        labwidth+=parent->getTextSizeSize(getParent()->getCurrentPlotterStyle().defaultFontName, axisStyle.labelFontSize*parent->getFontSizeMultiplier(), axisLabel, painter).height();
+        labheight+=parent->getTextSizeSize(getParent()->getCurrentPlotterStyle().defaultFontName, axisStyle.labelFontSize*parent->getFontSizeMultiplier(), axisLabel, painter).height();
     }
 
-    return QSizeF(getParentPlotWidth(), parent->pt2px(painter, ptwidth)+labwidth);
+    return QSizeF(getParentPlotWidth(), qMax(arrowSize,parent->pt2px(painter, ptheight)+labheight));
 }
 
 
@@ -1883,66 +1930,159 @@ void JKQTPHorizontalAxis::drawGrids(JKQTPEnhancedPainter& painter) {
 }
 
 
-void JKQTPHorizontalAxis::drawTickLabel1(JKQTPEnhancedPainter &painter, double xx, double yy, const QString &label, double fontSize, double ascentMax, double /*descentMax*/)
+void JKQTPHorizontalAxis::drawTickLabel1(JKQTPEnhancedPainter &painter, double xx, double yy, double labelOffset, const QString &label, double fontSize, double ascentMax, double /*descentMax*/, bool isMinor)
 {
     getParentMathText()->setFontSize(fontSize*parent->getFontSizeMultiplier());
     getParentMathText()->setFontSpecial(getParent()->getCurrentPlotterStyle().defaultFontName);
-    getParentMathText()->setFontColor(axisStyle.axisColor);
+    getParentMathText()->setFontColor(axisStyle.tickLabelColor);
+    if (isMinor) getParentMathText()->setFontColor(axisStyle.minorTickLabelColor);
 
     getParentMathText()->parse(label);
 
     double width, ascent, descent, strikeoutPos;
     getParentMathText()->getSizeDetail(painter, width, ascent, descent, strikeoutPos);
-    if (JKQTPCADrawModeHasTickLabels(axisStyle.drawMode1)) {
-        double lx0=yy+parent->pt2px(painter, axisStyle.tickOutsideLength+axisStyle.tickLabelDistance);
-        double lx=lx0+ascentMax;
+    if (axisStyle.drawMode1.testFlag(JKQTPCADMTickLabels)) {
+        const double ly0=yy+parent->pt2px(painter, labelOffset);
+        const double ly=ly0+ascentMax;
         if (axisStyle.tickLabelAngle!=0) {
             painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
             if (axisStyle.tickLabelAngle>0) {
-                painter.translate(xx-fabs(ascent*sin(axisStyle.tickLabelAngle/180.0*JKQTPSTATISTICS_PI)/2.0), lx0+fabs(ascent*cos(axisStyle.tickLabelAngle/180.0*JKQTPSTATISTICS_PI)));
+                painter.translate(xx-fabs(ascent*sin(axisStyle.tickLabelAngle/180.0*JKQTPSTATISTICS_PI)/2.0), ly0+fabs(ascent*cos(axisStyle.tickLabelAngle/180.0*JKQTPSTATISTICS_PI)));
                 painter.rotate(axisStyle.tickLabelAngle);
             } else {
-                painter.translate(xx+fabs(ascent*sin(fabs(axisStyle.tickLabelAngle)/180.0*JKQTPSTATISTICS_PI)/2.0)-width*fabs(cos(fabs(axisStyle.tickLabelAngle)/180.0*JKQTPSTATISTICS_PI)), lx0+ascent*fabs(cos(fabs(axisStyle.tickLabelAngle)/180.0*JKQTPSTATISTICS_PI))+fabs(width*sin(fabs(axisStyle.tickLabelAngle)/180.0*JKQTPSTATISTICS_PI)));
+                painter.translate(xx+fabs(ascent*sin(fabs(axisStyle.tickLabelAngle)/180.0*JKQTPSTATISTICS_PI)/2.0)-width*fabs(cos(fabs(axisStyle.tickLabelAngle)/180.0*JKQTPSTATISTICS_PI)), ly0+ascent*fabs(cos(fabs(axisStyle.tickLabelAngle)/180.0*JKQTPSTATISTICS_PI))+fabs(width*sin(fabs(axisStyle.tickLabelAngle)/180.0*JKQTPSTATISTICS_PI)));
                 painter.rotate(axisStyle.tickLabelAngle);
             }
             getParentMathText()->draw(painter, 0,0, parent->getCurrentPlotterStyle().debugShowTextBoxes);
 
         } else {
-            getParentMathText()->draw(painter, xx-width/2.0, lx, parent->getCurrentPlotterStyle().debugShowTextBoxes);
+            getParentMathText()->draw(painter, xx-width/2.0, ly, parent->getCurrentPlotterStyle().debugShowTextBoxes);
         }
     }
 }
 
-void JKQTPHorizontalAxis::drawTickLabel2(JKQTPEnhancedPainter &painter, double xx, double yy, const QString &label, double fontSize, double /*ascentMax*/, double descentMax)
+void JKQTPHorizontalAxis::drawTickLabel2(JKQTPEnhancedPainter &painter, double xx, double yy, double labelOffset, const QString &label, double fontSize, double /*ascentMax*/, double descentMax, bool isMinor)
 {
     getParentMathText()->setFontSize(fontSize*parent->getFontSizeMultiplier());
     getParentMathText()->setFontSpecial(getParent()->getCurrentPlotterStyle().defaultFontName);
-    getParentMathText()->setFontColor(axisStyle.axisColor);
+    getParentMathText()->setFontColor(axisStyle.tickLabelColor);
+    if (isMinor) getParentMathText()->setFontColor(axisStyle.minorTickLabelColor);
 
     getParentMathText()->parse(label);
-
     double width, ascent, descent, strikeoutPos;
     getParentMathText()->getSizeDetail(painter, width, ascent, descent, strikeoutPos);
-    if (JKQTPCADrawModeHasTickLabels(axisStyle.drawMode2)) {
-        double lx0=yy-parent->pt2px(painter, axisStyle.tickOutsideLength+axisStyle.tickLabelDistance);
-        double lx=lx0-descentMax;
+    if (axisStyle.drawMode2.testFlag(JKQTPCADMTickLabels)) {
+        const double ly0=yy-parent->pt2px(painter, labelOffset);
+        const double ly=ly0-descentMax;
         if (axisStyle.tickLabelAngle!=0) {
             painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
             if (axisStyle.tickLabelAngle>0) {
-                painter.translate(xx+fabs(descent*sin(axisStyle.tickLabelAngle/180.0*JKQTPSTATISTICS_PI)/2.0), lx0-fabs(descent*cos(axisStyle.tickLabelAngle/180.0*JKQTPSTATISTICS_PI)));
+                painter.translate(xx+fabs(descent*sin(axisStyle.tickLabelAngle/180.0*JKQTPSTATISTICS_PI)/2.0), ly0-fabs(descent*cos(axisStyle.tickLabelAngle/180.0*JKQTPSTATISTICS_PI)));
                 painter.rotate(-axisStyle.tickLabelAngle);
             } else {
-                painter.translate(xx-fabs(descent*sin(fabs(axisStyle.tickLabelAngle)/180.0*JKQTPSTATISTICS_PI)/2.0)-width*fabs(cos(fabs(axisStyle.tickLabelAngle)/180.0*JKQTPSTATISTICS_PI)), lx0-descent*fabs(cos(fabs(axisStyle.tickLabelAngle)/180.0*JKQTPSTATISTICS_PI))-fabs(width*sin(fabs(axisStyle.tickLabelAngle)/180.0*JKQTPSTATISTICS_PI)));
+                painter.translate(xx-fabs(descent*sin(fabs(axisStyle.tickLabelAngle)/180.0*JKQTPSTATISTICS_PI)/2.0)-width*fabs(cos(fabs(axisStyle.tickLabelAngle)/180.0*JKQTPSTATISTICS_PI)), ly0-descent*fabs(cos(fabs(axisStyle.tickLabelAngle)/180.0*JKQTPSTATISTICS_PI))-fabs(width*sin(fabs(axisStyle.tickLabelAngle)/180.0*JKQTPSTATISTICS_PI)));
                 painter.rotate(-axisStyle.tickLabelAngle);
             }
             getParentMathText()->draw(painter, 0,0, parent->getCurrentPlotterStyle().debugShowTextBoxes);
 
         } else {
-            getParentMathText()->draw(painter, xx-width/2.0, lx, parent->getCurrentPlotterStyle().debugShowTextBoxes);
+            getParentMathText()->draw(painter, xx-width/2.0, ly, parent->getCurrentPlotterStyle().debugShowTextBoxes);
         }
 
 
     }
+}
+
+
+void JKQTPHorizontalAxis::drawAxisLabel1(JKQTPEnhancedPainter &painter, double left, double bottom, QSizeF labelMax) {
+    double labelOffset=parent->pt2px(painter, axisStyle.labelDistance);
+    if (axisStyle.drawMode1.testFlag(JKQTPCADMTicks)) labelOffset+=parent->pt2px(painter, axisStyle.tickOutsideLength);
+    if (axisStyle.drawMode1.testFlag(JKQTPCADMTickLabels)) {
+        labelOffset+=parent->pt2px(painter, axisStyle.tickLabelDistance);
+        labelOffset+=labelMax.height();//+labelMax.height();
+    }
+
+
+    getParentMathText()->setFontSize(axisStyle.labelFontSize*parent->getFontSizeMultiplier());
+    getParentMathText()->setFontSpecial(getParent()->getCurrentPlotterStyle().defaultFontName);
+    getParentMathText()->setFontColor(axisStyle.labelColor);
+    getParentMathText()->parse(axisLabel);
+    double width, ascent, descent, strikeoutPos;
+    getParentMathText()->getSizeDetail(painter, width, ascent, descent, strikeoutPos);
+
+
+    QRectF rect(0,0, getParentPlotWidth(), ascent+descent);//plotBorderLeft-30);
+    painter.save(); auto __finalpaintinner=JKQTPFinally([&painter]() {painter.restore();});
+    painter.translate(QPointF(left, bottom+labelOffset));
+    //JKQTPEnhancedPainter::RenderHints h=painter.renderHints();
+    //painter.drawRect(rect);
+    //painter.drawEllipse(-4, -4, 8, 8);
+    switch(axisStyle.labelPosition) {
+        case JKQTPLabelMax:
+            getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignRight, rect, parent->getCurrentPlotterStyle().debugShowTextBoxes);
+            break;
+        case JKQTPLabelMin:
+            getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignLeft, rect, parent->getCurrentPlotterStyle().debugShowTextBoxes);
+            break;
+        case JKQTPLabelCenter:
+            getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignHCenter, rect, parent->getCurrentPlotterStyle().debugShowTextBoxes);
+            break;
+    }
+    if (getParent()->getCurrentPlotterStyle().debugShowRegionBoxes) {
+        painter.save(); auto __finalpaintinnerif=JKQTPFinally([&painter]() {painter.restore();});
+        QPen p("magenta");
+        QColor col=p.color(); col.setAlphaF(0.8f); p.setColor(col);
+        p.setWidthF(getParent()->getCurrentPlotterStyle().debugRegionLineWidth/2.0);
+        painter.setPen(p);
+        painter.setBrush(QBrush(QColor(Qt::transparent)));
+        painter.drawRect(rect);
+
+    }
+}
+
+void JKQTPHorizontalAxis::drawAxisLabel2(JKQTPEnhancedPainter &painter, double left, double top, QSizeF labelMax) {
+    double labelOffset=parent->pt2px(painter, axisStyle.labelDistance);
+    if (axisStyle.drawMode2.testFlag(JKQTPCADMTicks)) labelOffset+=parent->pt2px(painter, axisStyle.tickOutsideLength);
+    if (axisStyle.drawMode2.testFlag(JKQTPCADMTickLabels)) {
+        labelOffset+=parent->pt2px(painter, axisStyle.tickLabelDistance);
+        labelOffset+=labelMax.width();//+labelMax.height();
+    }
+
+
+    getParentMathText()->setFontSize(axisStyle.labelFontSize*parent->getFontSizeMultiplier());
+    getParentMathText()->setFontSpecial(getParent()->getCurrentPlotterStyle().defaultFontName);
+    getParentMathText()->setFontColor(axisStyle.labelColor);
+    getParentMathText()->parse(axisLabel);
+
+
+    QRectF rect(0,0, getParentPlotWidth(), getParentMathText()->getSize(painter).height());//plotBorderLeft-30);
+    painter.save(); auto __finalpaintinner=JKQTPFinally([&painter]() {painter.restore();});
+    painter.translate(QPointF(left, top-labelOffset-rect.height()));
+    //JKQTPEnhancedPainter::RenderHints h=painter.renderHints();
+    //painter.drawRect(rect);
+    //painter.drawEllipse(-4, -4, 8, 8);
+    switch(axisStyle.labelPosition) {
+        case JKQTPLabelMax:
+            getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignRight, rect, parent->getCurrentPlotterStyle().debugShowTextBoxes);
+            break;
+        case JKQTPLabelMin:
+            getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignLeft, rect, parent->getCurrentPlotterStyle().debugShowTextBoxes);
+            break;
+        case JKQTPLabelCenter:
+            getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignHCenter, rect, parent->getCurrentPlotterStyle().debugShowTextBoxes);
+            break;
+    }
+    if (getParent()->getCurrentPlotterStyle().debugShowRegionBoxes) {
+        painter.save(); auto __finalpaintinnerif=JKQTPFinally([&painter]() {painter.restore();});
+        QPen p("magenta");
+        QColor col=p.color(); col.setAlphaF(0.8f); p.setColor(col);
+        p.setWidthF(getParent()->getCurrentPlotterStyle().debugRegionLineWidth/2.0);
+        painter.setPen(p);
+        painter.setBrush(QBrush(QColor(Qt::transparent)));
+        painter.drawRect(rect);
+
+    }
+    //painter.resetTransform();
 }
 
 void JKQTPHorizontalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
@@ -1972,6 +2112,19 @@ void JKQTPHorizontalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
     top-=parent->pt2px(painter, axisStyle.axisLineOffset);
     bottom+=parent->pt2px(painter, axisStyle.axisLineOffset);
 
+    double ticklabelOffset1PT=axisStyle.tickLabelDistance; // offset of tick labels from axis 1
+    double minorticklabelOffset1PT=axisStyle.tickLabelDistance; // offset ofminor tick labels from axis 1
+    if (axisStyle.drawMode1.testFlag(JKQTPCADMTicks)) {
+        ticklabelOffset1PT+=axisStyle.tickOutsideLength;
+        minorticklabelOffset1PT+=axisStyle.minorTickOutsideLength;
+    }
+    double ticklabelOffset2PT=axisStyle.tickLabelDistance; // offset of tick labels from axis 2
+    double minorticklabelOffset2PT=axisStyle.tickLabelDistance; // offset ofminor tick labels from axis 2
+    if (axisStyle.drawMode2.testFlag(JKQTPCADMTicks)) {
+        ticklabelOffset2PT+=axisStyle.tickOutsideLength;
+        minorticklabelOffset2PT+=axisStyle.minorTickOutsideLength;
+    }
+
     //qDebug()<<"    left="<<left<<"\n";
     //qDebug()<<"    right="<<right<<"\n";
     //qDebug()<<"    top="<<top<<"\n";
@@ -1987,47 +2140,39 @@ void JKQTPHorizontalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
 
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
 
-    QPen pmain=painter.pen();
-    pmain.setColor(axisStyle.axisColor);
-    pmain.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, axisStyle.lineWidth*parent->getLineWidthMultiplier())));
-    pmain.setStyle(Qt::SolidLine);
-
-    QPen ptick=pmain;
-    ptick.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, axisStyle.tickWidth*parent->getLineWidthMultiplier())));
-
-    QPen pmtick=ptick;
-    pmtick.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, axisStyle.minorTickWidth*parent->getLineWidthMultiplier())));
+    const QPen pmain=axisStyle.getAxisPen(painter, parent);
+    const QPen ptick=axisStyle.getTickPen(painter, parent);
+    const QPen pmtick=axisStyle.getMinorTickPen(painter, parent);
 
     getParentMathText()->setFontSize(this->axisStyle.tickLabelFontSize*parent->getFontSizeMultiplier());
     getParentMathText()->setFontSpecial(getParent()->getCurrentPlotterStyle().defaultFontName);
     getParentMathText()->setFontColor(axisStyle.axisColor);
 
-    painter.setPen(pmain);
 
     // plot thick axis at y==0
     if (axisStyle.showZeroAxis && (0>axismin) && (0<axismax)) {
         #ifdef JKQTBP_AUTOTIMER
             JKQTPAutoOutputTimer jkaat(QString("JKQTPHorizontalAxis[%1]::drawAxes(): 0Axis").arg(objectName()));
         #endif
-        QPen pmain1=pmain;
-        pmain1.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, axisStyle.lineWidthZeroAxis*parent->getLineWidthMultiplier())));
-        pmain1.setColor(axisStyle.colorZeroAxis);
-        pmain1.setStyle(axisStyle.styleZeroAxis);
-        painter.setPen(pmain1);
-        QLineF l(x2p(0), bottom+parent->pt2px(painter, axisStyle.tickOutsideLength), x2p(0), top-parent->pt2px(painter, axisStyle.tickOutsideLength));
-        painter.drawLine(l);
-        painter.setPen(pmain);
+            const QPen pmain1=axisStyle.getZeroAxisPen(painter, parent);
+            painter.setPen(pmain1);
+        const QLineF l(x2p(0), bottom+parent->pt2px(painter, axisStyle.tickOutsideLength), x2p(0), top-parent->pt2px(painter, axisStyle.tickOutsideLength));
+        if (l.length()>0) painter.drawLine(l);
     }
 
+    painter.setPen(pmain);
+    painter.setBrush(pmain.color());
+
     // draw thick axis lines, left and/or right
-    if (JKQTPCADrawModeHasLine(axisStyle.drawMode1)) {
-        QLineF l(x2p(axismin), bottom, x2p(axismax), bottom);
-        painter.drawLine(l);
+    if (axisStyle.drawMode1.testFlag(JKQTPCADMLine)) {
+        const QLineF l(x2p(axismin), bottom, x2p(axismax), bottom);
+        drawAxisLine(painter, l, axisStyle.drawMode1);
     }
-    if (JKQTPCADrawModeHasLine(axisStyle.drawMode2)) {
-        QLineF l(x2p(axismin), top, x2p(axismax), top);
-        painter.drawLine(l);
+    if (axisStyle.drawMode2.testFlag(JKQTPCADMLine)) {
+        const QLineF l(x2p(axismin), top, x2p(axismax), top);
+        drawAxisLine(painter, l, axisStyle.drawMode2);
     }
+    painter.setBrush(Qt::NoBrush);
 
     // plot minor and major ticks + tick labels
     double ascentMax, descentMax;
@@ -2040,6 +2185,7 @@ void JKQTPHorizontalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
     QVector<QLineF> lines_ptick, lines_ptick2;
     QVector<QLineF> lines_pmtick, lines_pmtick2;
 
+    const double arrowFreeSpace=axisStyle.getArrowSize(painter, parent)*1.2;
 
     {
         #ifdef JKQTBP_AUTOTIMER
@@ -2047,20 +2193,26 @@ void JKQTPHorizontalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
         #endif
 
         while (getNextLabel(x, label, first) && cnt<200) {
-            double mtdist=getNextLabelDistance(x)/static_cast<double>(axisStyle.minorTicks+1);
+            const double mtdist=getNextLabelDistance(x)/static_cast<double>(axisStyle.minorTicks+1);
 
-            double xleft=-1000000;
-            double xx=x2p(x);
+            const double xx=x2p(x);
             //qDebug()<<"   tick @ x="<<x<<"   label="<<label<<"   mtdist="<<mtdist<<"   axisStyle.minorTicks="<<minorTicks;
 
-            if (JKQTPCADrawModeHasTicks(axisStyle.drawMode1)||JKQTPCADrawModeHasTickLabels(axisStyle.drawMode1)) {
-                //painter.setPen(ptick);
-                if (x<=axismax && x>=axismin)  {
-                    QLineF l(xx, bottom-parent->pt2px(painter, axisStyle.tickInsideLength), xx, bottom+parent->pt2px(painter, axisStyle.tickOutsideLength));
+            if (!axisStyle.drawMode1.testAnyFlags(JKQTPCADMMinArrow|JKQTPCADMMinFilledArrow|JKQTPCADMMaxArrow|JKQTPCADMMaxFilledArrow)
+                    || (xx>left+arrowFreeSpace && xx<right-arrowFreeSpace))
+            {
+
+                if (axisStyle.drawMode1.testFlag(JKQTPCADMTicks) && x<=axismax && x>=axismin)  {
+                    const QLineF l(xx, bottom-parent->pt2px(painter, axisStyle.tickInsideLength), xx, bottom+parent->pt2px(painter, axisStyle.tickOutsideLength));
                     if (l.length()>0) lines_ptick.append(l);//painter.drawLine(l);
                 }
+                if (axisStyle.drawMode2.testFlag(JKQTPCADMTicks) && x<=axismax && x>=axismin)  {
+                    const QLineF l(xx, top+parent->pt2px(painter, axisStyle.tickInsideLength), xx, top-parent->pt2px(painter, axisStyle.tickOutsideLength));
+                    if (l.length()>0) lines_ptick.append(l);//painter.drawLine(l);
+                }
+
                 //painter.setPen(pmtick);
-                if ((tickLabels.size()<=0) && (axisStyle.minorTicks>0)) {
+                if ((tickLabels.size()<=0) && (axisStyle.minorTicks>0) && (axisStyle.drawMode1.testFlag(JKQTPCADMTicks)||axisStyle.drawMode1.testFlag(JKQTPCADMTickLabels)||axisStyle.drawMode2.testFlag(JKQTPCADMTicks)||axisStyle.drawMode2.testFlag(JKQTPCADMTickLabels))) {
                     double mx=x+mtdist;
                     int minTickCnt=axisStyle.minorTicks;
                     if (isLogAxis()) {
@@ -2073,169 +2225,75 @@ void JKQTPHorizontalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
 
                     }
                     for (int i=0; i<minTickCnt; i++) {
-                        double mxx=x2p(mx);
+                        double mx_pix=x2p(mx);
 
                         if (mx<=axismax && mx>=axismin)  {
-                            QLineF l( mxx, bottom-parent->pt2px(painter, axisStyle.minorTickInsideLength), mxx, xleft=(bottom+parent->pt2px(painter, axisStyle.minorTickOutsideLength)));
-                            if (l.length()>0) lines_pmtick.append(l);//painter.drawLine(l);
-
-                            double val= mx/pow(logAxisBase,floor(log(mx)/log(logAxisBase)));
-
-                            if (axisStyle.minorTickLabelsEnabled && JKQTPCADrawModeHasTickLabels(axisStyle.drawMode1)) {
-                                if (axisStyle.minorTickLabelFullNumber) val=mx;
-                                QString minorlabel=floattolabel(val);
-                                drawTickLabel1(painter,  mxx, xleft, minorlabel, axisStyle.minorTickLabelFontSize, ascentMax, descentMax);
+                            // calculate minor tick lines, axis 1
+                            if (axisStyle.minorTicks>0&&axisStyle.drawMode1.testFlag(JKQTPCADMTicks)) {
+                                const QLineF l( mx_pix, bottom-parent->pt2px(painter, axisStyle.minorTickInsideLength), mx_pix, bottom+parent->pt2px(painter, axisStyle.minorTickOutsideLength));
+                                if (l.length()>0) lines_pmtick.append(l);
+                            }
+                            // calculate minor tick lines, axis 2
+                            if (axisStyle.minorTicks>0&&axisStyle.drawMode2.testFlag(JKQTPCADMTicks)) {
+                                const QLineF l( mx_pix, top+parent->pt2px(painter, axisStyle.minorTickInsideLength), mx_pix, top-parent->pt2px(painter, axisStyle.minorTickOutsideLength));
+                                if (l.length()>0) lines_pmtick.append(l);
                             }
 
-
+                            // draw minor tick label, axis 1
+                            if (axisStyle.minorTickLabelsEnabled&&axisStyle.minorTicks>0&&(axisStyle.drawMode1.testFlag(JKQTPCADMTickLabels)||axisStyle.drawMode2.testFlag(JKQTPCADMTickLabels))) {
+                                double val= mx/pow(logAxisBase,floor(log(mx)/log(logAxisBase)));
+                                if (axisStyle.minorTickLabelFullNumber) val=mx;
+                                QString minorlabel=floattolabel(val);
+                                if (axisStyle.drawMode1.testFlag(JKQTPCADMTickLabels)) drawTickLabel1(painter,  mx_pix, bottom, minorticklabelOffset1PT, minorlabel, axisStyle.minorTickLabelFontSize, ascentMax, descentMax, true);
+                                if (axisStyle.drawMode2.testFlag(JKQTPCADMTickLabels)) drawTickLabel2(painter,  mx_pix, top, minorticklabelOffset2PT, minorlabel, axisStyle.minorTickLabelFontSize, ascentMax, descentMax, true);
+                            }
                         }
                         mx=mx+mtdist;
                     }
                 }
-            }
-            if (JKQTPCADrawModeHasTicks(axisStyle.drawMode2)||JKQTPCADrawModeHasTickLabels(axisStyle.drawMode2)) {
-                painter.setPen(ptick);
-                if (x<=axismax && x>=axismin)  {
-                    QLineF l(xx, top-parent->pt2px(painter, axisStyle.tickOutsideLength), xx, top+parent->pt2px(painter, axisStyle.tickInsideLength));
-                    if (l.length()>0) lines_ptick2.append(l);//painter.drawLine(l);
-                }
-                painter.setPen(pmtick);
-                if ((tickLabels.size()<=0) && (axisStyle.minorTicks>0)) {
-                    double mx=x+mtdist;
-                    int minTickCnt=axisStyle.minorTicks;
-                    if (isLogAxis()) {
-                        if (mtdist>x) {
-                            mx=mtdist;
-                        } else {
-                            minTickCnt--;
-                            mx=2.0*mtdist;
-                        }
 
-                    }
-                    for (int i=0; i<minTickCnt; i++) {
-                        double mxx=x2p(mx);
-                        if (mx<=axismax && mx>=axismin)  {
-                            QLineF l( mxx, top-parent->pt2px(painter, axisStyle.minorTickOutsideLength), mxx, xleft=(top+parent->pt2px(painter, axisStyle.minorTickInsideLength)));
-                            if (l.length()>0) lines_pmtick2.append(l);//painter.drawLine(l);
+                if (!label.isEmpty() && (x<=axismax && x>=axismin)) {
+                    if (axisStyle.drawMode1.testFlag(JKQTPCADMTickLabels)) drawTickLabel1(painter, xx, bottom, ticklabelOffset1PT, label, this->axisStyle.tickLabelFontSize, ascentMax, descentMax, false);
+                    if (axisStyle.drawMode2.testFlag(JKQTPCADMTickLabels)) drawTickLabel2(painter, xx, top, ticklabelOffset2PT, label, this->axisStyle.tickLabelFontSize, ascentMax, descentMax, false);
 
-                            double val= mx/pow(logAxisBase,floor(log(mx)/log(logAxisBase)));
-
-                            if (axisStyle.minorTickLabelsEnabled && JKQTPCADrawModeHasTickLabels(axisStyle.drawMode2)) {
-                                if (axisStyle.minorTickLabelFullNumber) val=mx;
-                                QString minorlabel=floattolabel(val);
-                                drawTickLabel2(painter,  mxx, xleft, minorlabel, axisStyle.minorTickLabelFontSize, ascentMax, descentMax);
-                            }
-
-                        }
-                        mx=mx+mtdist;
-                    }
                 }
             }
 
-            if ((label!="") && (x<=axismax && x>=axismin)) {
-
-
-                if (JKQTPCADrawModeHasTickLabels(axisStyle.drawMode1)) drawTickLabel1(painter, xx, bottom, label, this->axisStyle.tickLabelFontSize, ascentMax, descentMax);
-                if (JKQTPCADrawModeHasTickLabels(axisStyle.drawMode2)) drawTickLabel2(painter, xx, top, label, this->axisStyle.tickLabelFontSize, ascentMax, descentMax);
-
-            }
             first=false;
             cnt++;
         }
     }
     {
-        #ifdef JKQTBP_AUTOTIMER
-            JKQTPAutoOutputTimer jkaati(QString("JKQTPHorizontalAxis[%1]::drawAxes(): drawLines").arg(objectName()));
-        #endif
-
-        painter.setPen(ptick);
-        painter.drawLines(lines_ptick);
-        painter.drawLines(lines_ptick2);
-        painter.setPen(pmtick);
-        painter.drawLines(lines_pmtick);
-        painter.drawLines(lines_pmtick2);
+    #ifdef JKQTBP_AUTOTIMER
+        JKQTPAutoOutputTimer jkaati(QString("JKQTPHorizontalAxis[%1]::drawAxes(): drawLines").arg(objectName()));
+    #endif
+        if (axisStyle.drawMode1.testFlag(JKQTPCADMTicks)) {
+            painter.setPen(ptick);
+            painter.drawLines(lines_ptick);
+            painter.setPen(pmtick);
+            painter.drawLines(lines_pmtick);
+        }
+        if (axisStyle.drawMode2.testFlag(JKQTPCADMTicks)) {
+            painter.setPen(ptick);
+            painter.drawLines(lines_ptick2);
+            painter.setPen(pmtick);
+            painter.drawLines(lines_pmtick2);
+        }
     }
 
     // plot axis label
-    if (!axisLabel.isEmpty() && JKQTPCADrawModeHasAxisLabel(axisStyle.drawMode1)) {
+    if (!axisLabel.isEmpty() && axisStyle.drawMode1.testFlag(JKQTPCADMAxisLabel)) {
         #ifdef JKQTBP_AUTOTIMER
             JKQTPAutoOutputTimer jkaati(QString("JKQTPHorizontalAxis[%1]::drawAxes(): axisLabel1").arg(objectName()));
         #endif
-        getParentMathText()->setFontSize(axisStyle.labelFontSize*parent->getFontSizeMultiplier());
-        getParentMathText()->setFontSpecial(getParent()->getCurrentPlotterStyle().defaultFontName);
-        getParentMathText()->parse(axisLabel);
-        double width, ascent, descent, strikeoutPos;
-        getParentMathText()->getSizeDetail(painter, width, ascent, descent, strikeoutPos);
-
-
-        QRectF rect(0,0, getParentPlotWidth(), ascent+descent);//plotBorderLeft-30);
-        painter.save(); auto __finalpaintinner=JKQTPFinally([&painter]() {painter.restore();});
-        painter.translate(QPointF(left, bottom+parent->pt2px(painter, axisStyle.tickOutsideLength+axisStyle.tickLabelDistance+axisStyle.labelDistance)+labelMax.height()));
-        //JKQTPEnhancedPainter::RenderHints h=painter.renderHints();
-        //painter.drawRect(rect);
-        //painter.drawEllipse(-4, -4, 8, 8);
-        switch(axisStyle.labelPosition) {
-            case JKQTPLabelMax:
-                getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignRight, rect, parent->getCurrentPlotterStyle().debugShowTextBoxes);
-                break;
-            case JKQTPLabelMin:
-                getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignLeft, rect, parent->getCurrentPlotterStyle().debugShowTextBoxes);
-                break;
-            case JKQTPLabelCenter:
-                getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignHCenter, rect, parent->getCurrentPlotterStyle().debugShowTextBoxes);
-                break;
-        }
-        if (getParent()->getCurrentPlotterStyle().debugShowRegionBoxes) {
-            painter.save(); auto __finalpaintinnerif=JKQTPFinally([&painter]() {painter.restore();});
-            QPen p("magenta");
-            QColor col=p.color(); col.setAlphaF(0.8f); p.setColor(col);
-            p.setWidthF(getParent()->getCurrentPlotterStyle().debugRegionLineWidth/2.0);
-            painter.setPen(p);
-            painter.setBrush(QBrush(QColor(Qt::transparent)));
-            painter.drawRect(rect);
-
-        }
-        //painter.resetTransform();
+        drawAxisLabel1(painter, left, bottom, labelMax);
 
     }
-    if (!axisLabel.isEmpty() && JKQTPCADrawModeHasAxisLabel(axisStyle.drawMode2)) {
+    if (!axisLabel.isEmpty() && axisStyle.drawMode2.testFlag(JKQTPCADMAxisLabel)) {
         #ifdef JKQTBP_AUTOTIMER
             JKQTPAutoOutputTimer jkaati(QString("JKQTPHorizontalAxis[%1]::drawAxes(): axisLabel2").arg(objectName()));
         #endif
-        getParentMathText()->setFontSize(axisStyle.labelFontSize*parent->getFontSizeMultiplier());
-        getParentMathText()->setFontSpecial(getParent()->getCurrentPlotterStyle().defaultFontName);
-        getParentMathText()->parse(axisLabel);
-
-
-        QRectF rect(0,0, getParentPlotWidth(), getParentMathText()->getSize(painter).height());//plotBorderLeft-30);
-        painter.save(); auto __finalpaintinner=JKQTPFinally([&painter]() {painter.restore();});
-        painter.translate(QPointF(left, top-parent->pt2px(painter, axisStyle.tickOutsideLength+axisStyle.tickLabelDistance+axisStyle.labelDistance)-labelMax.height()-rect.height()));
-        //JKQTPEnhancedPainter::RenderHints h=painter.renderHints();
-        //painter.drawRect(rect);
-        //painter.drawEllipse(-4, -4, 8, 8);
-        switch(axisStyle.labelPosition) {
-            case JKQTPLabelMax:
-                getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignRight, rect, parent->getCurrentPlotterStyle().debugShowTextBoxes);
-                break;
-            case JKQTPLabelMin:
-                getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignLeft, rect, parent->getCurrentPlotterStyle().debugShowTextBoxes);
-                break;
-            case JKQTPLabelCenter:
-                getParentMathText()->draw(painter, Qt::AlignBottom|Qt::AlignHCenter, rect, parent->getCurrentPlotterStyle().debugShowTextBoxes);
-                break;
-        }
-        if (getParent()->getCurrentPlotterStyle().debugShowRegionBoxes) {
-            painter.save(); auto __finalpaintinnerif=JKQTPFinally([&painter]() {painter.restore();});
-            QPen p("magenta");
-            QColor col=p.color(); col.setAlphaF(0.8f); p.setColor(col);
-            p.setWidthF(getParent()->getCurrentPlotterStyle().debugRegionLineWidth/2.0);
-            painter.setPen(p);
-            painter.setBrush(QBrush(QColor(Qt::transparent)));
-            painter.drawRect(rect);
-
-        }
-        //painter.resetTransform();
-
+        drawAxisLabel2(painter, left, top, labelMax);
     }
 
     if (getParent()->getCurrentPlotterStyle().debugShowRegionBoxes) {

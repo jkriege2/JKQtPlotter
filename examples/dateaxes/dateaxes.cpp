@@ -83,7 +83,7 @@ void drawWithDateAxis(JKQTPlotter& plot) {
     // set the title above the plot, use LaTeX instructions to make text bold
     plot.getPlotter()->setPlotLabel("\\textbf{Weather in Gelsenkirchen, 2017-2018}");
     // set x-axis date-time-axis
-    plot.getXAxis()->setLabelType(JKQTPCALTdatetime);
+    plot.getXAxis()->setTickLabelType(JKQTPCALTdatetime);
     plot.getXAxis()->setAxisLabel("Date");
     // set format string for date axis (e.g. Jan '18), see Documentation of QDateTime::toString()
     plot.getXAxis()->setTickDateTimeFormat("MMM ''yy");
@@ -150,7 +150,7 @@ void drawWithTimeAxis(JKQTPlotter& plot) {
     // set the title above the plot, use LaTeX instructions to make text bold
     plot.getPlotter()->setPlotLabel("\\textbf{Weather in Heidelberg, 14^{th} Oct 2018}");
     // set x-axis date-time-axis
-    plot.getXAxis()->setLabelType(JKQTPCALTtime);
+    plot.getXAxis()->setTickLabelType(JKQTPCALTtime);
     plot.getXAxis()->setAxisLabel("Time of Day");
     // set format string for time axis with 24-hour and minute only,
     // see QDateTime::toString() documentation for details on format strings

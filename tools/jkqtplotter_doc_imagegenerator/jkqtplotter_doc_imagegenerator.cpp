@@ -178,7 +178,7 @@ void doListErrorIndicators(const QDir& outputDir, int iconsize, QColor backgroun
     }
 }
 
-void doListJKQTPCALabelType(const QDir& outputDir, int iconsize, QColor backgroundColor) {
+void doListAxisStyling(const QDir& outputDir, int iconsize, QColor backgroundColor) {
     JKQTBasePlotter plot(true);
 
     plot.setXY(0,1,0.9,110);
@@ -192,65 +192,120 @@ void doListJKQTPCALabelType(const QDir& outputDir, int iconsize, QColor backgrou
     plot.getXAxis()->setDrawMode2(JKQTPCADMLine);
     plot.getXAxis()->setDrawGrid(false);
     plot.getYAxis()->setDrawMode1(JKQTPCADMLineTicksTickLabels);
-    plot.getYAxis()->setDrawMode2(JKQTPCADMnone);
+    plot.getYAxis()->setDrawMode2(JKQTPCADMLine);
     plot.getYAxis()->setAxisLabel("");
 
 
-    plot.getYAxis()->setLabelType(JKQTPCALTdefault);
+    plot.getYAxis()->setTickLabelType(JKQTPCALTdefault);
     plot.setY(0,110);
     plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,0,iconsize,plot.getHeight()).save(outputDir.absoluteFilePath("JKQTPCALTdefault.png"), "png");
 
     plot.setY(1e-6,1.1e3);
     plot.getYAxis()->setMinTicks(7);
-    plot.getYAxis()->setLabelType(JKQTPCALTexponentCharacter);
+    plot.getYAxis()->setTickLabelType(JKQTPCALTexponentCharacter);
     plot.getYAxis()->setLogAxis(true);
-    plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,0,iconsize*2,plot.getHeight()).save(outputDir.absoluteFilePath("JKQTPCALTexponentCharacter.png"), "png");
+    plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,0,iconsize,plot.getHeight()).save(outputDir.absoluteFilePath("JKQTPCALTexponentCharacter.png"), "png");
 
     plot.getYAxis()->setLogAxis(false);
-    plot.setY(-1.3, 1.55);
+    plot.getYAxis()->setDrawMode1(JKQTPCADMLineTicksTickLabels);
+    plot.getYAxis()->setDrawMode2(JKQTPCADMLineTicks);
+    plot.setY(-1.55, 1.55);
     plot.getYAxis()->setMinTicks(5);
-    plot.getYAxis()->setLabelType(JKQTPCALTintfrac);
-    plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,0,iconsize*2,plot.getHeight()).save(outputDir.absoluteFilePath("JKQTPCALTintfrac.png"), "png");
-    plot.getYAxis()->setLabelType(JKQTPCALTintsfrac);
-    plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,0,iconsize*2,plot.getHeight()).save(outputDir.absoluteFilePath("JKQTPCALTintsfrac.png"), "png");
-    plot.getYAxis()->setLabelType(JKQTPCALTintslashfrac);
-    plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,0,iconsize*2,plot.getHeight()).save(outputDir.absoluteFilePath("JKQTPCALTintslashfrac.png"), "png");
-    plot.getYAxis()->setLabelType(JKQTPCALTfrac);
-    plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,0,iconsize*2,plot.getHeight()).save(outputDir.absoluteFilePath("JKQTPCALTfrac.png"), "png");
-    plot.getYAxis()->setLabelType(JKQTPCALTsfrac);
-    plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,0,iconsize*2,plot.getHeight()).save(outputDir.absoluteFilePath("JKQTPCALTsfrac.png"), "png");
-    plot.getYAxis()->setLabelType(JKQTPCALTslashfrac);
-    plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,0,iconsize*2,plot.getHeight()).save(outputDir.absoluteFilePath("JKQTPCALTslashfrac.png"), "png");
+    plot.getYAxis()->setTickLabelType(JKQTPCALTintfrac);
+    plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,0,iconsize,plot.getHeight()).save(outputDir.absoluteFilePath("JKQTPCALTintfrac.png"), "png");
+    plot.getYAxis()->setTickLabelType(JKQTPCALTintsfrac);
+    plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,0,iconsize,plot.getHeight()).save(outputDir.absoluteFilePath("JKQTPCALTintsfrac.png"), "png");
+    plot.getYAxis()->setTickLabelType(JKQTPCALTintslashfrac);
+    plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,0,iconsize*1.2,plot.getHeight()).save(outputDir.absoluteFilePath("JKQTPCALTintslashfrac.png"), "png");
+    plot.getYAxis()->setTickLabelType(JKQTPCALTfrac);
+    plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,0,iconsize,plot.getHeight()).save(outputDir.absoluteFilePath("JKQTPCALTfrac.png"), "png");
+    plot.getYAxis()->setTickLabelType(JKQTPCALTsfrac);
+    plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,0,iconsize,plot.getHeight()).save(outputDir.absoluteFilePath("JKQTPCALTsfrac.png"), "png");
+    plot.getYAxis()->setTickLabelType(JKQTPCALTslashfrac);
+    plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,0,iconsize,plot.getHeight()).save(outputDir.absoluteFilePath("JKQTPCALTslashfrac.png"), "png");
 
+    plot.getYAxis()->setLogAxis(true);
     plot.setY(0.000008,100000);
     plot.getYAxis()->setMinTicks(4);
-    plot.getYAxis()->setLabelType(JKQTPCALTexponent);
-    plot.getYAxis()->setLogAxis(true);
+    plot.getYAxis()->setTickLabelType(JKQTPCALTexponent);
     plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,0,iconsize,plot.getHeight()).save(outputDir.absoluteFilePath("JKQTPCALTexponent.png"), "png");
 
+    plot.getYAxis()->setLogAxis(true);
     plot.setY(0.000008,100000);
     plot.getYAxis()->setMinTicks(4);
-    plot.getYAxis()->setLabelType(JKQTPCALTscientific);
-    plot.getYAxis()->setLogAxis(true);
-    plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,0,iconsize,plot.getHeight()).save(outputDir.absoluteFilePath("JKQTPCALTscientific.png"), "png");
+    plot.getYAxis()->setTickLabelType(JKQTPCALTscientific);
+    plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,0,iconsize*1.2,plot.getHeight()).save(outputDir.absoluteFilePath("JKQTPCALTscientific.png"), "png");
 
+    plot.getYAxis()->setLogAxis(false);
     plot.getYAxis()->setMinTicks(4);
     plot.setY(QDateTime(QDate(1999,10,1),QTime(0,0,0)).toMSecsSinceEpoch(),
               QDateTime(QDate(2000,2,1),QTime(0,0,0)).toMSecsSinceEpoch());
-    plot.getYAxis()->setLabelType(JKQTPCALTdate);
-    plot.getYAxis()->setLogAxis(false);
+    plot.getYAxis()->setTickLabelType(JKQTPCALTdate);
     plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,0,iconsize*2,plot.getHeight()).save(outputDir.absoluteFilePath("JKQTPCALTdate.png"), "png");
 
     plot.setY(QDateTime(QDate(2000,2,1),QTime(12,0,0)).toMSecsSinceEpoch(),
               QDateTime(QDate(2000,2,1),QTime(24,0,0)).toMSecsSinceEpoch());
-    plot.getYAxis()->setLabelType(JKQTPCALTtime);
+    plot.getYAxis()->setTickLabelType(JKQTPCALTtime);
     plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,0,iconsize*1.0,plot.getHeight()).save(outputDir.absoluteFilePath("JKQTPCALTtime.png"), "png");
 
     plot.setY(QDateTime(QDate(2010,10,1),QTime(12,0,0)).toMSecsSinceEpoch(),
               QDateTime(QDate(2010,10,2),QTime(12,0,0)).toMSecsSinceEpoch());
-    plot.getYAxis()->setLabelType(JKQTPCALTdatetime);
+    plot.getYAxis()->setTickLabelType(JKQTPCALTdatetime);
     plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,0,iconsize*2.5,plot.getHeight()).save(outputDir.absoluteFilePath("JKQTPCALTdatetime.png"), "png");
 
+
+
+    plot.setXY(0,10,0,1);
+    plot.setWidgetSize(iconsize*4,4*iconsize);
+    plot.setShowKey(false);
+    plot.setGrid(true);
+    plot.getXAxis()->setShowZeroAxis(false);
+    plot.getYAxis()->setShowZeroAxis(false);
+    plot.getXAxis()->setDrawMode1(JKQTPCADMLine);
+    plot.getXAxis()->setDrawMode2(JKQTPCADMLine);
+    plot.getYAxis()->setDrawMode1(JKQTPCADMLine);
+    plot.getYAxis()->setDrawMode2(JKQTPCADMLine);
+    plot.getXAxis()->setAxisLabel("axis label");
+
+    int imgheight;
+    plot.getYAxis()->setTickLabelType(JKQTPCALTdefault);
+    plot.getXAxis()->setDrawMode1(JKQTPCADMnone);
+    imgheight=iconsize; plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,plot.getHeight()-imgheight,plot.getWidth(),imgheight).save(outputDir.absoluteFilePath("JKQTPCADMnone.png"), "png");
+    plot.getXAxis()->setDrawMode1(JKQTPCADMLine);
+    imgheight=iconsize; plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,plot.getHeight()-imgheight,plot.getWidth(),imgheight).save(outputDir.absoluteFilePath("JKQTPCADMLine.png"), "png");
+    plot.getXAxis()->setDrawMode1(JKQTPCADMTicks);
+    imgheight=iconsize; plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,plot.getHeight()-imgheight,plot.getWidth(),imgheight).save(outputDir.absoluteFilePath("JKQTPCADMTicks.png"), "png");
+    plot.getXAxis()->setDrawMode1(JKQTPCADMTickLabels);
+    imgheight=iconsize; plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,plot.getHeight()-imgheight,plot.getWidth(),imgheight).save(outputDir.absoluteFilePath("JKQTPCADMTickLabels.png"), "png");
+    plot.getXAxis()->setDrawMode1(JKQTPCADMAxisLabel);
+    imgheight=iconsize; plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,plot.getHeight()-imgheight,plot.getWidth(),imgheight).save(outputDir.absoluteFilePath("JKQTPCADMAxisLabel.png"), "png");
+    plot.getXAxis()->setDrawMode1(JKQTPCADMLineTicksTickLabels);
+    imgheight=iconsize; plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,plot.getHeight()-imgheight,plot.getWidth(),imgheight).save(outputDir.absoluteFilePath("JKQTPCADMLineTicksTickLabels.png"), "png");
+    plot.getXAxis()->setDrawMode1(JKQTPCADMLineTicks);
+    imgheight=iconsize; plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,plot.getHeight()-imgheight,plot.getWidth(),imgheight).save(outputDir.absoluteFilePath("JKQTPCADMLineTicks.png"), "png");
+    plot.getXAxis()->setDrawMode1(JKQTPCADMTicksTickLabelsAxisLabel);
+    imgheight=iconsize; plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,plot.getHeight()-imgheight,plot.getWidth(),imgheight).save(outputDir.absoluteFilePath("JKQTPCADMTicksTickLabelsAxisLabel.png"), "png");
+    plot.getXAxis()->setDrawMode1(JKQTPCADMTicksTickLabels);
+    imgheight=iconsize; plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,plot.getHeight()-imgheight,plot.getWidth(),imgheight).save(outputDir.absoluteFilePath("JKQTPCADMTicksTickLabels.png"), "png");
+    plot.getXAxis()->setDrawMode1(JKQTPCADMTickLabelsAxisLabel);
+    imgheight=iconsize; plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,plot.getHeight()-imgheight,plot.getWidth(),imgheight).save(outputDir.absoluteFilePath("JKQTPCADMTickLabelsAxisLabel.png"), "png");
+    plot.getXAxis()->setDrawMode1(JKQTPCADMcomplete);
+    imgheight=iconsize; plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,plot.getHeight()-imgheight,plot.getWidth(),imgheight).save(outputDir.absoluteFilePath("JKQTPCADMcomplete.png"), "png");
+
+    plot.getYAxis()->setDrawMode1(JKQTPCADMnone);
+    plot.getYAxis()->setDrawMode2(JKQTPCADMnone);
+    plot.getXAxis()->setDrawMode1(JKQTPCADMLine|JKQTPCADMMaxArrow);
+    imgheight=iconsize; plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,plot.getHeight()-imgheight,plot.getWidth(),imgheight).save(outputDir.absoluteFilePath("JKQTPCADMMaxArrow.png"), "png");
+    plot.getXAxis()->setDrawMode1(JKQTPCADMLine|JKQTPCADMMaxFilledArrow);
+    imgheight=iconsize; plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,plot.getHeight()-imgheight,plot.getWidth(),imgheight).save(outputDir.absoluteFilePath("JKQTPCADMMaxFilledArrow.png"), "png");
+    plot.getXAxis()->setDrawMode1(JKQTPCADMLine|JKQTPCADMMinArrow);
+    imgheight=iconsize; plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,plot.getHeight()-imgheight,plot.getWidth(),imgheight).save(outputDir.absoluteFilePath("JKQTPCADMMinArrow.png"), "png");
+    plot.getXAxis()->setDrawMode1(JKQTPCADMLine|JKQTPCADMMinFilledArrow);
+    imgheight=iconsize; plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,plot.getHeight()-imgheight,plot.getWidth(),imgheight).save(outputDir.absoluteFilePath("JKQTPCADMMinFilledArrow.png"), "png");
+    plot.getXAxis()->setDrawMode1(JKQTPCADMLine|JKQTPCADMcompleteMaxArrow);
+    imgheight=iconsize; plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,plot.getHeight()-imgheight,plot.getWidth(),imgheight).save(outputDir.absoluteFilePath("JKQTPCADMcompleteMaxArrow.png"), "png");
+    plot.getXAxis()->setDrawMode1(JKQTPCADMLine|JKQTPCADMcompleteMinMaxArrow);
+    imgheight=iconsize; plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,plot.getHeight()-imgheight,plot.getWidth(),imgheight).save(outputDir.absoluteFilePath("JKQTPCADMcompleteMinMaxArrow.png"), "png");
 
 }
 
@@ -270,8 +325,8 @@ int main(int argc, char* argv[])
     parser.addOption(listlinedecoratorsOption);
     QCommandLineOption listerrorindicatorsOption("listerrorindicators", "generate example images for all error-indicators.");
     parser.addOption(listerrorindicatorsOption);
-    QCommandLineOption listaxislabeltypeOption("listaxislabeltype", "generate example images for JKQTPCALabelType.");
-    parser.addOption(listaxislabeltypeOption);
+    QCommandLineOption listaxisstylepropsOption("listaxisstyleprops", "generate example images for JKQTPCALabelType and other coordinate axis properties.");
+    parser.addOption(listaxisstylepropsOption);
     QCommandLineOption iconsizeOption("iconsize", "typical size of the generatued images.", "iconsize", "24");
     parser.addOption(iconsizeOption);
     QCommandLineOption backgroundOption("background", "background color.", "background", "white");
@@ -282,7 +337,7 @@ int main(int argc, char* argv[])
     const bool listsymbols=parser.isSet(listsymbolsOption);
     const bool listlinedecorators=parser.isSet(listlinedecoratorsOption);
     const bool listerrorindicators=parser.isSet(listerrorindicatorsOption);
-    const bool listaxislabeltype=parser.isSet(listaxislabeltypeOption);
+    const bool listaxisstyleprops=parser.isSet(listaxisstylepropsOption);
     const int iconsize=parser.value(iconsizeOption).toInt();
     const QColor backgroundColor = jkqtp_String2QColor(parser.value(backgroundOption));
 
@@ -290,8 +345,8 @@ int main(int argc, char* argv[])
 
     if (listsymbols) doListSymbols(outputDir, iconsize, backgroundColor);
     if (listlinedecorators) doListLineDecorators(outputDir, iconsize, backgroundColor);
-    if (listsymbols) doListErrorIndicators(outputDir, iconsize, backgroundColor);
-    if (listaxislabeltype) doListJKQTPCALabelType(outputDir, iconsize, backgroundColor);
+    if (listerrorindicators) doListErrorIndicators(outputDir, iconsize, backgroundColor);
+    if (listaxisstyleprops) doListAxisStyling(outputDir, iconsize, backgroundColor);
 
     return EXIT_SUCCESS;
 }

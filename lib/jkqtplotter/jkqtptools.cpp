@@ -39,36 +39,42 @@
 
 
 QString JKQTPCADrawMode2String(JKQTPCADrawMode pos) {
-    switch(pos) {
-        case JKQTPCADMcomplete: return "all";
-        case JKQTPCADMTicksTickLabelsAxisLabel: return "ticks+labels+axislabel";
-        case JKQTPCADMTicksTickLabels: return "ticks+labels";
-        case JKQTPCADMTicks: return "ticks";
-        case JKQTPCADMLineTicksTickLabels: return "line+ticks+labels";
-        case JKQTPCADMTickLabelsAxisLabel: return "labels+axislabel";
-        case JKQTPCADMTickLabels: return "labels";
-        case JKQTPCADMLineTicks: return "line+ticks";
-        case JKQTPCADMLine: return "line";
-        case JKQTPCADMnone: return "none";
-    }
-    return "";
+    if (pos==JKQTPCADMnone) return "none";
+    if (pos==JKQTPCADMcomplete) return "complete";
+    if (pos==JKQTPCADMcompleteMaxArrow) return "complete+max_filled_arrow";
+    if (pos==JKQTPCADMcompleteMinMaxArrow) return "complete+max_filled_arrow+min_filled_arrow";
+
+    QString s="";
+    if (pos.testFlag(JKQTPCADMLine)) JKQTPExtendString(s, "+", "line");
+    if (pos.testFlag(JKQTPCADMMaxArrow)) JKQTPExtendString(s, "+", "max_arrow");
+    if (pos.testFlag(JKQTPCADMMaxFilledArrow)) JKQTPExtendString(s, "+", "max_filled_arrow");
+    if (pos.testFlag(JKQTPCADMMinArrow)) JKQTPExtendString(s, "+", "min_arrow");
+    if (pos.testFlag(JKQTPCADMMinFilledArrow)) JKQTPExtendString(s, "+", "min_filled_arrow");
+    if (pos.testFlag(JKQTPCADMTicks)) JKQTPExtendString(s, "+", "ticks");
+    if (pos.testFlag(JKQTPCADMTickLabels)) JKQTPExtendString(s, "+", "labels");
+    if (pos.testFlag(JKQTPCADMAxisLabel)) JKQTPExtendString(s, "+", "axislabel");
+
+    return s;
 }
 
 
 
 JKQTPCADrawMode String2JKQTPCADrawMode(const QString& pos) {
-    QString s=pos.trimmed().toLower();
-    if (s=="all" || s=="complete" || s=="line+ticks+labels+axislabel") return JKQTPCADMcomplete;
-    if (s=="ticks+labels+axislabel") return JKQTPCADMTicksTickLabelsAxisLabel;
-    if (s=="labels+axislabel") return JKQTPCADMTickLabelsAxisLabel;
-    if (s=="ticks+labels") return JKQTPCADMTicksTickLabels;
-    if (s=="line+ticks+labels") return JKQTPCADMLineTicksTickLabels;
-    if (s=="labels") return JKQTPCADMTickLabels;
-    if (s=="line+ticks") return JKQTPCADMLineTicks;
-    if (s=="ticks") return JKQTPCADMTicks;
-    if (s=="line") return JKQTPCADMLine;
-    if (s=="none") return JKQTPCADMnone;
-    return JKQTPCADMnone;
+    QStringList slist=pos.trimmed().toLower().split('+');
+
+    JKQTPCADrawMode res=JKQTPCADMnone;
+    for (const QString& s: slist) {
+        if (s=="all" || s=="complete") res |= JKQTPCADMcomplete;
+        if (s=="labels" || s=="ticklabels") res |= JKQTPCADMTickLabels;
+        if (s=="axislabel") res |= JKQTPCADMAxisLabel;
+        if (s=="ticks") res |= JKQTPCADMTicks;
+        if (s=="line") res |= JKQTPCADMLine;
+        if (s=="max_arrow"||s=="maxarrow") res |= JKQTPCADMMaxArrow;
+        if (s=="max_filled_arrow"||s=="maxfilledarrow") res |= JKQTPCADMMaxFilledArrow;
+        if (s=="min_arrow"||s=="minarrow") res |= JKQTPCADMMinArrow;
+        if (s=="min_filled_arrow"||s=="minfilledarrow") res |= JKQTPCADMMinFilledArrow;
+    }
+    return res;
 }
 
 
@@ -108,6 +114,7 @@ QString JKQTPCALabelType2String(JKQTPCALabelType pos) {
         case JKQTPCALTfrac: return "frac";
         case JKQTPCALTsfrac: return "sfrac";
         case JKQTPCALTslashfrac: return "slashfrac";
+        case JKQTPCALTcount: return "";
     }
     return "";
 }
@@ -390,26 +397,6 @@ QString JKQTPMouseDragActions2String(JKQTPMouseDragActions act)
     return "unknown";
 }
 
-
-bool JKQTPCADrawModeHasLine(JKQTPCADrawMode pos)
-{
-    return (pos==JKQTPCADMcomplete) || (pos==JKQTPCADMLineTicksTickLabels) || (pos==JKQTPCADMLineTicks) || (pos==JKQTPCADMLine);
-}
-
-bool JKQTPCADrawModeHasTicks(JKQTPCADrawMode pos)
-{
-    return (pos==JKQTPCADMcomplete) || (pos==JKQTPCADMTicksTickLabelsAxisLabel) || (pos==JKQTPCADMLineTicks) || (pos==JKQTPCADMLineTicksTickLabels) || (pos==JKQTPCADMTicksTickLabels)|| (pos==JKQTPCADMTicks);
-}
-
-bool JKQTPCADrawModeHasTickLabels(JKQTPCADrawMode pos)
-{
-    return (pos==JKQTPCADMcomplete) || (pos==JKQTPCADMTicksTickLabelsAxisLabel) || (pos==JKQTPCADMLineTicksTickLabels) || (pos==JKQTPCADMTicksTickLabels) || (pos==JKQTPCADMTickLabels) || (pos==JKQTPCADMTickLabelsAxisLabel);
-}
-
-bool JKQTPCADrawModeHasAxisLabel(JKQTPCADrawMode pos)
-{
-    return (pos==JKQTPCADMcomplete) || (pos==JKQTPCADMTicksTickLabelsAxisLabel) || (pos==JKQTPCADMTickLabelsAxisLabel);
-}
 
 
 JKQTPColorDerivationMode::JKQTPColorDerivationMode(PredefinedModes mode):
