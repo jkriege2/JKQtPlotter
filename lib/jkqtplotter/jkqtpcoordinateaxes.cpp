@@ -1171,7 +1171,7 @@ double JKQTPVerticalAxis::getParentPlotOffset() const {
 QSizeF JKQTPVerticalAxis::getSize1(JKQTPEnhancedPainter& painter) {
     if (axisStyle.drawMode1==JKQTPCADMnone) return QSize(0,0);
     double ptwidth=axisStyle.axisLineOffset;
-    const double arrowSize=(axisStyle.drawMode1.testAnyFlags(JKQTPCADMMinArrow|JKQTPCADMMinFilledArrow|JKQTPCADMMaxArrow|JKQTPCADMMaxFilledArrow))?(axisStyle.getArrowSize(painter, parent)/2.0):0.0;
+    const double arrowSize=((axisStyle.drawMode1&(JKQTPCADMMinArrow|JKQTPCADMMinFilledArrow|JKQTPCADMMaxArrow|JKQTPCADMMaxFilledArrow))!=int(0))?(axisStyle.getArrowSize(painter, parent)/2.0):0.0;
     double labwidth=0;
     if (axisStyle.drawMode1.testFlag(JKQTPCADMTicks)) ptwidth+=axisStyle.tickOutsideLength;
     if (axisStyle.drawMode1.testFlag(JKQTPCADMTickLabels)) {
@@ -1191,7 +1191,7 @@ QSizeF JKQTPVerticalAxis::getSize1(JKQTPEnhancedPainter& painter) {
 QSizeF JKQTPVerticalAxis::getSize2(JKQTPEnhancedPainter& painter) {
     if (axisStyle.drawMode2==JKQTPCADMnone) return QSize(0,0);
     double ptwidth=axisStyle.axisLineOffset;
-    const double arrowSize=(axisStyle.drawMode1.testAnyFlags(JKQTPCADMMinArrow|JKQTPCADMMinFilledArrow|JKQTPCADMMaxArrow|JKQTPCADMMaxFilledArrow))?(axisStyle.getArrowSize(painter, parent)/2.0):0.0;
+    const double arrowSize=((axisStyle.drawMode2&(JKQTPCADMMinArrow|JKQTPCADMMinFilledArrow|JKQTPCADMMaxArrow|JKQTPCADMMaxFilledArrow))!=int(0))?(axisStyle.getArrowSize(painter, parent)/2.0):0.0;
     double labwidth=0;
     if (axisStyle.drawMode2.testFlag(JKQTPCADMTicks)) ptwidth+=axisStyle.tickOutsideLength;
     if (axisStyle.drawMode2.testFlag(JKQTPCADMTickLabels)) {
@@ -1591,7 +1591,7 @@ void JKQTPVerticalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
             const double mtdist=getNextLabelDistance(y)/static_cast<double>(axisStyle.minorTicks+1); // distance of minor ticks
             const double yy=x2p(y); // y tick position
             //qDebug()<<"   tick @ x="<<x<<"   label="<<label<<"   mtdist="<<mtdist;
-            if (!axisStyle.drawMode1.testAnyFlags(JKQTPCADMMinArrow|JKQTPCADMMinFilledArrow|JKQTPCADMMaxArrow|JKQTPCADMMaxFilledArrow)
+            if (!(((axisStyle.drawMode1&(JKQTPCADMMinArrow|JKQTPCADMMinFilledArrow|JKQTPCADMMaxArrow|JKQTPCADMMaxFilledArrow))!=int(0))||((axisStyle.drawMode2&(JKQTPCADMMinArrow|JKQTPCADMMinFilledArrow|JKQTPCADMMaxArrow|JKQTPCADMMaxFilledArrow))!=int(0)))
                     || (yy>top+arrowFreeSpace && yy<bottom-arrowFreeSpace)) {
 
                 // calculate tick lines for axis 1
@@ -1814,7 +1814,7 @@ double JKQTPHorizontalAxis::getParentPlotOffset() const {
 QSizeF JKQTPHorizontalAxis::getSize1(JKQTPEnhancedPainter& painter) {
     if (axisStyle.drawMode1==JKQTPCADMnone) return QSize(0,0);
     double ptheight=axisStyle.axisLineOffset;
-    const double arrowSize=(axisStyle.drawMode1.testAnyFlags(JKQTPCADMMinArrow|JKQTPCADMMinFilledArrow|JKQTPCADMMaxArrow|JKQTPCADMMaxFilledArrow))?(axisStyle.getArrowSize(painter, parent)/2.0):0.0;
+    const double arrowSize=((axisStyle.drawMode1&(JKQTPCADMMinArrow|JKQTPCADMMinFilledArrow|JKQTPCADMMaxArrow|JKQTPCADMMaxFilledArrow))!=int(0))?(axisStyle.getArrowSize(painter, parent)/2.0):0.0;
     double labheight=0;
     if (axisStyle.drawMode1.testFlag(JKQTPCADMTicks)) ptheight+=axisStyle.tickOutsideLength;
     if (axisStyle.drawMode1.testFlag(JKQTPCADMTickLabels)) {
@@ -1834,7 +1834,7 @@ QSizeF JKQTPHorizontalAxis::getSize1(JKQTPEnhancedPainter& painter) {
 QSizeF JKQTPHorizontalAxis::getSize2(JKQTPEnhancedPainter& painter) {
     if (axisStyle.drawMode2==JKQTPCADMnone) return QSize(0,0);
     double ptheight=axisStyle.axisLineOffset;
-    const double arrowSize=(axisStyle.drawMode1.testAnyFlags(JKQTPCADMMinArrow|JKQTPCADMMinFilledArrow|JKQTPCADMMaxArrow|JKQTPCADMMaxFilledArrow))?(axisStyle.getArrowSize(painter, parent)/2.0):0.0;
+    const double arrowSize=((axisStyle.drawMode2&(JKQTPCADMMinArrow|JKQTPCADMMinFilledArrow|JKQTPCADMMaxArrow|JKQTPCADMMaxFilledArrow))!=int(0))?(axisStyle.getArrowSize(painter, parent)/2.0):0.0;
     double labheight=0;
     if (axisStyle.drawMode2.testFlag(JKQTPCADMTicks)) ptheight+=axisStyle.tickOutsideLength;
     if (axisStyle.drawMode2.testFlag(JKQTPCADMTickLabels)) {
@@ -2198,7 +2198,7 @@ void JKQTPHorizontalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
             const double xx=x2p(x);
             //qDebug()<<"   tick @ x="<<x<<"   label="<<label<<"   mtdist="<<mtdist<<"   axisStyle.minorTicks="<<minorTicks;
 
-            if (!axisStyle.drawMode1.testAnyFlags(JKQTPCADMMinArrow|JKQTPCADMMinFilledArrow|JKQTPCADMMaxArrow|JKQTPCADMMaxFilledArrow)
+            if (!(((axisStyle.drawMode1&(JKQTPCADMMinArrow|JKQTPCADMMinFilledArrow|JKQTPCADMMaxArrow|JKQTPCADMMaxFilledArrow))!=int(0))||((axisStyle.drawMode2&(JKQTPCADMMinArrow|JKQTPCADMMinFilledArrow|JKQTPCADMMaxArrow|JKQTPCADMMaxFilledArrow))!=int(0)))
                     || (xx>left+arrowFreeSpace && xx<right-arrowFreeSpace))
             {
 
