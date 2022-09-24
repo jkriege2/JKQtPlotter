@@ -1,0 +1,154 @@
+/*!
+
+       
+  \defgroup jkqtplotter_general_usage Usage of JKQTPlotter
+  \ingroup jkqtplotter_general
+
+  \defgroup jkqtplotter_general_usage_jkqtbaseplotter Usage of JKQTBasePlotter Non-Visible Class
+  \ingroup jkqtplotter_general_usage
+
+  It is also possible to use it in a standalone fashion to generate plots without generating a window.
+  Note that the baseplotter class still requires the \c widgets+gui modules of Qt, because it contains code to e.g.
+  display pint or export preview dialogs!
+ 
+  Here is an example of how to do this (it is taken from the command-line tool \ref JKQTPlotterDocImageRenderCmdLineTool):
+ 
+  First we generate the JKQTBasePlotter object and add some data to the internal JKQTPDatastore
+  \code
+    JKQTBasePlotter plot(true);
+    JKQTPDatastore* ds=plot.getDatastore();
+    size_t cx=ds->addCopiedColumn(QVector<double>{-1.5,-0.5,0.5,1.5,2.5},"x");
+    size_t cy=ds->addCopiedColumn(QVector<double>{-0.75,-0.3,-0.05,0.2,0.65},"y");
+  \endcode
+ 
+  Now we set the range of x/y plot coordinates ...
+  \code
+    plot.setXY(-0.8,2.2,-0.5,0.7);
+  \endcode
+  and the size of the widget, i.e. the size of the plot in the windowing system.
+  \code
+    plot.setWidgetSize(150,50);
+  \endcode
+  Now we can add graphs to the plotter, e.g.
+  \code
+    JKQTPXYLineGraph* g=new JKQTPXYLineGraph(&plot);
+    g->setXColumn(cx);
+    g->setYColumn(cy);
+    plot.addGraph(g);
+  \endcode
+  Finally we store an image of the plot as PNG-file:
+  \code
+    plot.saveAsPixelImage("output.png", false, "png");
+  \endcode
+  Alternatively you can obtain a QImage of the plot using JKQTBasePlotter::grabPixelImage() or copy the
+  image to the clipboard using JKQTBasePlotter::copyPixelImage(). Also storages as PDF and SVG is available via
+  JKQTBasePlotter::saveAsPDF() and JKQTBasePlotter::saveAsSVG().
+ 
+  With simlar code you can also integrate JKQTBasePlotter into your own widgets.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  \defgroup jkqtplotter_general_usage_jkqtplotter Usage of JKQTPlotter Widget
+  \ingroup jkqtplotter_general_usage
+
+  JKQTPlotter is a plotter widget which wraps around a JKQTBasePlotter instanced that does the actual drawing.
+  A basic usage of JKQTPlotter looks like this:
+ 
+  \code{.cpp}
+      // create a new JKQTPlotter instance
+      JKQTPlotter* plot = new JKQTPlotter(parentWidget);
+ 
+      // fill two vectors with dtaa for a graph:
+      QVector<double> X, Y;
+      fillDataVectors(X, Y);
+ 
+      // make data available to the internal datastore of the plotter:
+      size_t columnX=plot->getDatastore()->addCopiedColumn(X, "x");
+      size_t columnY=plot->getDatastore()->addCopiedColumn(Y, "y");
+ 
+      // create a graph/curve, which displays the data
+      JKQTPXYLineGraph* graph1=new JKQTPXYLineGraph(plot);
+      graph1->setXColumn(columnX);
+      graph1->setYColumn(columnY);
+      graph1->setTitle(QObject::tr("graph title"));
+      plot->addGraph(graph1);
+ 
+      // autoscale the plot
+      plot->zoomToFit();
+      // alternatively set the axis dimension by hand:
+      plot->setXY(-10,10,-10,10);
+  \endcode
+ 
+  The result should look something like this:
+ 
+  \image html simpletest.png
+ 
+  Starting from this basic example, you can observe several important principles:
+  <ol>
+    <li> Data is stored in an (internal) instance of JKQTPDatastore, which is accessible through
+      JKQTPlotter::getDatastore().
+      This datastore can either own its data (which is done here, as we copy the data into the store
+      by calling JKQTPDatastore::addCopiedColumn(), or it can merely reference to the data (then
+      data needs to be available as array of \c double values).
+    <li> Naming conventions (excerpt from \ref jkqtplotter_naming ):
+         <ul>
+            <li> \b plot is the complete drawn image, including the axes, the graphs, the key and all other visual elements
+            <li> <b>plot element</b> any sub element of the plot, e.g. a single coordinate axis, the key, but also any graph/curve
+            <li> \b graph is a single curve/image/geometric element in the plot
+            <li> <b>geometric element</b> is a special graph that does not represent a curve based on data from the JKQTPDatastore,
+                 but a single graphic element, like a rectangle/circle/line/..., some text, a single symbol
+            <li> \b key is the legend of the plot
+            <li> <b>coordinate axis</b> is each of the x- or y-axis (there might be addition axes, e.g. when showing a color-scale)
+         </ul>
+    <li> Each graph is represented by a class derived from JKQTPPlotElement (in the example we instanciated a JKQTPXYLineGraph,
+      which shows data as a scatter of symbols that may (or may not) be connected by a line).
+      Creating the graph class does not yet add it to the plotter. To add it, call JKQTPlotter::addGraph(). Only
+      after this sep, the graph is displayed. You can modify the apperance of the graph (e.g. colors,
+      name in the key ...) by setting properties in the graph class instance.
+    <li> You can auto-zoom the axis ranges of the plot by calling JKQTPlotter::zoomToFit(), or set them
+      exlicitly by calling JKQTPlotter::setXY(). The user can later zoom in/out by the mouse (and other means).
+      You can limit this zoom range by setting an absolute axis range, calling e.g. JKQTPlotter::setAbsoluteXY().
+      The the user cannot zoom farther out than the given range(s).
+    <li> If you want to style the plot itself, you need to set properties of the underlying JKQTBasePloter instance, which
+      is accessible through JKQTPlotter::getPlotter(). If you want to style the coordinate axes, you can acces their
+      representing objects by caling JKQTPlotter::getXAxis() or JKQTPlotter::getYAxis().
+  </ol>
+ 
+  \see \ref JKQTPlotterSimpleTest and \see JKQTPlotterQtCreator
+
+  
+  
+ 
+
+
+  \defgroup jkqtplotter_general_usage_qtcreator How to use JKQTPlotter in the Qt Form Designer
+  \ingroup jkqtplotter_general_usage
+ 
+     
+   As JKQTPlotter is a standard Qt widget, you can also use it in Qt UI-files designed with the Qt From Designer (e.g. from within QTCreator).
+   For this to work you have to use the <a href="https://doc.qt.io/qt-6/designer-using-custom-widgets.html">Promote QWidget"-feature</a> of the form designer. The steps you need to take are detailed below:
+   <ol>
+     <li> add a new UI-file to your project and open it in the Form Editor. Then right-click the form and select `Promote Widgets ...`:
+  
+          \image html uidesigner_step1.png
+     </li>
+     <li> In the dialog that opens, you have to define `JKQTPlotter` as a promotion to `QWidget` as shown below. Finally store the settings by clicking `Add` and closing the dialog with `Close`.
+  
+          \image html uidesigner_step2.png
+     </li>
+     <li> Now you can add a `QWidget`from the side-bar to the form and then promote it to `JKQTPlotter`, by selecting and right-clicking the `QWidget` and then selecting `Promote To | JKQTPlotter`:
+  
+          \image html uidesigner_step3.png
+     </li>
+   </ol>
+  
+   \see \ref JKQTPlotterQtCreator <br> Also see \ref JKQTPlotterStyling for another example of using the Qt UI Designer with JKQTPlotter
+  
+*/
+
+
+

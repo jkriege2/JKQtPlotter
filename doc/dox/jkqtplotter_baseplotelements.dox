@@ -1,0 +1,22 @@
+/*!
+
+       
+  \defgroup jkqtplotter_general_basicplotelements Non-Graph Plot Elements
+  \ingroup jkqtplotter_general
+
+  \defgroup jkqtplotter_general_basicplotelements_coordinateaxes Coordinate Axes
+  \ingroup jkqtplotter_general_basicplotelements
+
+  \copydetails JKQTPCoordinateAxis
+ 
+ 
+ 
+  \defgroup jkqtplotter_general_basicplotelements_key Plot Key/Legend
+  \ingroup jkqtplotter_general_basicplotelements
+
+  
+  
+*/
+
+
+

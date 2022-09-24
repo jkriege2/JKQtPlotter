@@ -134,11 +134,11 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
 
 \subsection page_whatsnew_TRUNK_DOWNLOAD trunk: Download
 
-This release is available from:
-  - Source code branch: <a href="https://github.com/jkriege2/JKQtPlotter">https://github.com/jkriege2/JKQtPlotter</a>
-  - Source Code download (ZIP): <a href="https://github.com/jkriege2/JKQtPlotter/archive/master.zip">https://github.com/jkriege2/JKQtPlotter/archive/master.zip</a>
-  - Git-Link: <a href="https://github.com/jkriege2/JKQtPlotter.git">https://github.com/jkriege2/JKQtPlotter.git</a>
-.
+This release is available from<ul>
+  <li> Source code branch: <a href="https://github.com/jkriege2/JKQtPlotter">https://github.com/jkriege2/JKQtPlotter</a>
+  <li> Source Code download (ZIP): <a href="https://github.com/jkriege2/JKQtPlotter/archive/master.zip">https://github.com/jkriege2/JKQtPlotter/archive/master.zip</a>
+  <li> Git-Link: <a href="https://github.com/jkriege2/JKQtPlotter.git">https://github.com/jkriege2/JKQtPlotter.git</a>
+</ul>
 
  
 
@@ -152,7 +152,7 @@ Changes, compared to  \ref page_whatsnew_V2019_11 "v2019.11" include:
   <li> fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/38">#38: Buffer overflow</a>, thanks to <a href="https://github.com/zertyz">user:zertyz</a></li>
   <li> fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/43">#43: jkqtp_format() had undefined behaviour</a>, thanks to <a href="https://github.com/Makis42">user:Makis42</a></li>
   <li> fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/41">#41: Build error when JKQtPlotter_BUILD_INCLUDE_XITS_FONTS set to OFF </a>, thanks to <a href="https://github.com/smistad">user:smistad</a></li>
-  <li> fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/37">#37: CMake installs things into $PREFIX/doc/*.txt </a>, thanks to <a href="https://github.com/certik">user:certik</a></li>
+  <li> fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/37">#37: CMake installs things into $PREFIX/doc/ *.txt </a>, thanks to <a href="https://github.com/certik">user:certik</a></li>
   <li> fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/45">#45: Build error on mac jkqtfastplotter.cpp:342:28: Variable has incomplete type 'QPainterPath'</a>, thanks to <a href="https://github.com/abdedixit">user:abdedixit</a></li>
   <li> merged PR <a href="https://github.com/jkriege2/JKQtPlotter/pull/47">#47: Some minor build fixes</a>, thanks to <a href="https://github.com/patstew">user:patstew</a></li>
   <li> fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/issues/48">#48: Cannot \#include QPrintPreviewWidget</a>, thanks to <a href="https://github.com/schlenger">user:schlenger</a></li>
@@ -194,10 +194,10 @@ Changes, compared to  \ref page_whatsnew_V2019_11 "v2019.11" include:
 
 \subsection page_whatsnew_V4_0_0_DOWNLOAD V4.0.0: Download
 
-This release is available from:
-  - Source code branch: <a href="https://github.com/jkriege2/JKQtPlotter/tree/v4.0.0">https://github.com/jkriege2/JKQtPlotter/tree/v4.0.0</a>
-  - Latest Release/Tag: <a href="https://github.com/jkriege2/JKQtPlotter/releases/tag/v4.0.0">https://github.com/jkriege2/JKQtPlotter/releases/tag/v4.0.0</a> (2021-April-xx)
-.
+This release is available from<ul>
+  <li> Source code branch: <a href="https://github.com/jkriege2/JKQtPlotter/tree/v4.0.0">https://github.com/jkriege2/JKQtPlotter/tree/v4.0.0</a>
+  <li> Latest Release/Tag: <a href="https://github.com/jkriege2/JKQtPlotter/releases/tag/v4.0.0">https://github.com/jkriege2/JKQtPlotter/releases/tag/v4.0.0</a> (2021-April-xx)
+</ul>
 
 
 
@@ -264,10 +264,10 @@ Changes, compared to  \ref page_whatsnew_V2018_08 "v2018.08" include:
  
 \subsection page_whatsnew_V2019_11_DOWNLOAD v2019.11: Download
 
-This release is available from:
-  - Source code branch: <a href="https://github.com/jkriege2/JKQtPlotter/tree/v2019.11">https://github.com/jkriege2/JKQtPlotter/tree/v2019.11</a>
-  - Latest Release/Tag: <a href="https://github.com/jkriege2/JKQtPlotter/releases/tag/v2019.11.1">https://github.com/jkriege2/JKQtPlotter/releases/tag/v2019.11.1</a> (2019-Dec-05)
-.
+This release is available from<ul>
+  <li> Source code branch: <a href="https://github.com/jkriege2/JKQtPlotter/tree/v2019.11">https://github.com/jkriege2/JKQtPlotter/tree/v2019.11</a>
+  <li> Latest Release/Tag: <a href="https://github.com/jkriege2/JKQtPlotter/releases/tag/v2019.11.1">https://github.com/jkriege2/JKQtPlotter/releases/tag/v2019.11.1</a> (2019-Dec-05)
+</ul>
 
 
 
@@ -276,17 +276,17 @@ This release is available from:
 \section page_whatsnew_V2018_08 v2018.08: Minor Modifications (Final QuickFit3-compatible Version)
 
 \subsection page_whatsnew_V2018_08_OVERVIEW v2018.08: Overview
-This is the final version of JKQTPlotter, which is still compatible with the <a href="https://github.com/jkriege2/QuickFit3">QuickFit 3.0</a> code base. It contains minor changes as compared to \ref page_whatsnew_V2015_10 "v2015.10":
-  - new: added Qt data model to switch graphs on/off
-  - update: some improvements to test programs
-.
+This is the final version of JKQTPlotter, which is still compatible with the <a href="https://github.com/jkriege2/QuickFit3">QuickFit 3.0</a> code base. It contains minor changes as compared to \ref page_whatsnew_V2015_10 "v2015.10"<ul>
+  <li> new: added Qt data model to switch graphs on/off
+  <li> update: some improvements to test programs
+</ul>
 
 \subsection page_whatsnew_V2018_08_DOWNLOAD v2018.08: Download
 
-This release is available from:
-  - Source code branch: <a href="https://github.com/jkriege2/JKQtPlotter/tree/v2018.08">https://github.com/jkriege2/JKQtPlotter/tree/v2018.08</a>
-  - Latest Release/Tag: <a href="https://github.com/jkriege2/JKQtPlotter/releases/tag/v2018.08">https://github.com/jkriege2/JKQtPlotter/releases/tag/v2018.08</a> (2018-Aug-19)
-.
+This release is available from<ul>
+  <li> Source code branch: <a href="https://github.com/jkriege2/JKQtPlotter/tree/v2018.08">https://github.com/jkriege2/JKQtPlotter/tree/v2018.08</a>
+  <li> Latest Release/Tag: <a href="https://github.com/jkriege2/JKQtPlotter/releases/tag/v2018.08">https://github.com/jkriege2/JKQtPlotter/releases/tag/v2018.08</a> (2018-Aug-19)
+</ul>
 
 
 
@@ -302,10 +302,10 @@ This is the initial release of the library. It was developed initially as part o
 
 \subsection page_whatsnew_V2015_10_DOWNLOAD v2015.10: Download
 
-This release is available from:
-  - Source code branch: <a href="https://github.com/jkriege2/JKQtPlotter/tree/v2015.10">https://github.com/jkriege2/JKQtPlotter/tree/v2015.10</a>
-  - Latest Release/Tag: <a href="https://github.com/jkriege2/JKQtPlotter/releases/tag/v2015.10">https://github.com/jkriege2/JKQtPlotter/releases/tag/v2015.10</a> (2015-Oct-20)
-.
+This release is available from<ul>
+  <li> Source code branch: <a href="https://github.com/jkriege2/JKQtPlotter/tree/v2015.10">https://github.com/jkriege2/JKQtPlotter/tree/v2015.10</a>
+  <li> Latest Release/Tag: <a href="https://github.com/jkriege2/JKQtPlotter/releases/tag/v2015.10">https://github.com/jkriege2/JKQtPlotter/releases/tag/v2015.10</a> (2015-Oct-20)
+</ul>
 
 
 */

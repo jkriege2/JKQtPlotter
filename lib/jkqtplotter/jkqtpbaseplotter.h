@@ -334,46 +334,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPPaintDeviceAdapter {
  * Most commonly this invisible plotter class is used as basis for the widget JKQTPlotter.
  * \see JKQTPlotter
  *
- * \subsection jkqtplotter_usage_baseplotter_standalonw JKQTBasePlotter Standalone Usage
+ * \subsection jkqtplotter_usage_baseplotter_standalone JKQTBasePlotter Standalone Usage
  *
- * But it is also possible to use it in a standalone fashion to generate plots without generating a window.
- * Note that the baseplotter class still requires the \c widgets+gui modules of Qt, because it contains code to e.g.
- * display pint or export preview dialogs!
+ * \copydetails jkqtplotter_general_usage_jkqtplotter
  *
- * Here is an example of how to do this (it is taken from the command-line tool \ref JKQTPlotterDocImageRenderCmdLineTool):
- *
- * First we generate the JKQTBasePlotter object and add some data to the internal JKQTPDatastore
- * \code
- *   JKQTBasePlotter plot(true);
- *   JKQTPDatastore* ds=plot.getDatastore();
- *   size_t cx=ds->addCopiedColumn(QVector<double>{-1.5,-0.5,0.5,1.5,2.5},"x");
- *   size_t cy=ds->addCopiedColumn(QVector<double>{-0.75,-0.3,-0.05,0.2,0.65},"y");
- * \endcode
- *
- * Now we set the range of x/y plot coordinates ...
- * \code
- *   plot.setXY(-0.8,2.2,-0.5,0.7);
- * \endcode
- * and the size of the widget, i.e. the size of the plot in the windowing system.
- * \code
- *   plot.setWidgetSize(150,50);
- * \endcode
- * Now we can add graphs to the plotter, e.g.
- * \code
- *   JKQTPXYLineGraph* g=new JKQTPXYLineGraph(&plot);
- *   g->setXColumn(cx);
- *   g->setYColumn(cy);
- *   plot.addGraph(g);
- * \endcode
- * Finally we store an image of the plot as PNG-file:
- * \code
- *   plot.saveAsPixelImage("output.png", false, "png");
- * \endcode
- * Alternatively you can obtain a QImage of the plot using grabPixelImage() or copy the
- * image to the clipboard using copyPixelImage(). ALso storages as PDF and SVG is available via
- * saveAsPDF() and saveAsSVG().
- *
- * With simlar code you can also integrate JKQTBasePlotter into your own widgets.
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         Q_OBJECT

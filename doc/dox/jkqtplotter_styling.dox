@@ -2,7 +2,7 @@
 
 
 \defgroup jkqtpplotter_styling Styling System
-\ingroup jkqtplotter
+\ingroup jkqtplotter_general
 
 \image html stylesbanner.png
 
@@ -70,7 +70,8 @@ Here is a table with all available ready-made styles:
       <td> \image html simple_axesoffset_plotbox.ini.png
 </table>
 
-\see For a detailed example, see \ref JKQTPlotterStyling
+\see Classes are documented in \ref jkqtpplotter_styling_classes .
+     <br>See \ref JKQTPlotterStyling for a detailed example.
 
 
   

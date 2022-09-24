@@ -250,7 +250,7 @@ typedef QHash<Qt::KeyboardModifiers, JKQTPMouseMoveActions> JKQTPMouseMoveAction
 typedef JKQTPMouseMoveActionsHashMap::const_iterator JKQTPMouseMoveActionsHashMapIterator;
 
 /** \brief Specifies how a fill-color is derived from a given color
- * \ingroup jkqtpplotter_styling
+ * \ingroup jkqtpplotter_styling_classes
 
  */
 struct JKQTPLOTTER_LIB_EXPORT JKQTPColorDerivationMode {
@@ -342,7 +342,7 @@ public:
 };
 
 /** \brief use a JKQTPColorDerivationMode to derive a color from \a col as specified
- *  \ingroup jkqtpplotter_styling
+ *  \ingroup jkqtpplotter_styling_classes
  *
  *  \param mode the mode of how to modify the given color \a basecolor
  *  \param basecolor the color in which to base the derivation
@@ -352,7 +352,7 @@ public:
 JKQTPLOTTER_LIB_EXPORT QColor JKQTPGetDerivedColor(JKQTPColorDerivationMode mode, const QColor& basecolor);
 
 /** \brief construct a QColor, based on the given \a color, but with alpha set to the specified value \a alphaF
- *  \ingroup jkqtpplotter_styling
+ *  \ingroup jkqtpplotter_styling_classes
  *  \see QColorWithAlpha()
  */
 inline QColor QColorWithAlphaF(const QColor& color, qreal alphaF) {
@@ -362,7 +362,7 @@ inline QColor QColorWithAlphaF(const QColor& color, qreal alphaF) {
 }
 
 /** \brief construct a QColor, based on the given \a color, but with alpha set to the specified value \a alpha
- *  \ingroup jkqtpplotter_styling
+ *  \ingroup jkqtpplotter_styling_classes
  *  \see QColorWithAlphaF()
  */
 inline QColor QColorWithAlpha(const QColor& color, int alpha) {
@@ -372,13 +372,13 @@ inline QColor QColorWithAlpha(const QColor& color, int alpha) {
 }
 
 /** \brief convert a JKQTPColorDerivationMode to a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a>
- *  \ingroup jkqtpplotter_styling
+ *  \ingroup jkqtpplotter_styling_classes
  *
  *  \see String2JKQTPColorDerivationMode(), JKQTPColorDerivationMode
  */
 JKQTPLOTTER_LIB_EXPORT QString JKQTPColorDerivationMode2String(JKQTPColorDerivationMode mode);
 /** \brief convert a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a> (created by JKQTPColorDerivationMode2String() ) to JKQTPColorDerivationMode
- *  \ingroup jkqtpplotter_styling
+ *  \ingroup jkqtpplotter_styling_classes
  *
  *  \see JKQTPColorDerivationMode2String(), JKQTPColorDerivationMode
  */
@@ -452,7 +452,7 @@ enum JKQTPCALabelType {
     JKQTPCALTfrac, /*!< \brief show numbers as fraction, the number is first rounded to the given precision and then a fraction is calculated and displayed like \f$ \frac{1}{2} \f$ \image html axisstyle/JKQTPCALTfrac.png */
     JKQTPCALTslashfrac, /*!< \brief show numbers as fraction, the number is first rounded to the given precision and then a fraction is calculated and displayed like \c 1/2 \image html axisstyle/JKQTPCALTslashfrac.png */
     JKQTPCALTsfrac, /*!< \brief show numbers as fraction, the number is first rounded to the given precision and then a fraction is calculated and displayed using \c \\sfrac{1}{2} \image html axisstyle/JKQTPCALTsfrac.png */
-    JKQTPCALTintfrac, /*!< \brief show numbers as integral+fraction, the number is first rounded to the given precision and then a fraction is calculated and displayed like \$ -3\frac{1}{2} \f$ \image html axisstyle/JKQTPCALTintfrac.png */
+    JKQTPCALTintfrac, /*!< \brief show numbers as integral+fraction, the number is first rounded to the given precision and then a fraction is calculated and displayed like \f$ -3\frac{1}{2} \f$ \image html axisstyle/JKQTPCALTintfrac.png */
     JKQTPCALTintslashfrac, /*!< \brief show numbers as integral+fraction, the number is first rounded to the given precision and then a fraction is calculated and displayed like \c 1/2 \image html axisstyle/JKQTPCALTintslashfrac.png */
     JKQTPCALTintsfrac, /*!< \brief show numbers as integral+fraction, the number is first rounded to the given precision and then a fraction is calculated and displayed using \c \\sfrac{1}{2}  \image html axisstyle/JKQTPCALTintsfrac.png */
 

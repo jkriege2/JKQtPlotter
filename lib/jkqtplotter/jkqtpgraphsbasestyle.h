@@ -41,7 +41,7 @@ class JKQTBasePlotterStyle; // forward
 
 
 /** \brief Support Class for JKQTBasePlotter, which summarizes all properties that define the visual styling of graphs
- *  \ingroup jkqtpplotter_styling
+ *  \ingroup jkqtpplotter_styling_classes
  *
  *  \see JKQTBasePlotter, \ref jkqtpplotter_styling
  */
@@ -112,7 +112,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTGraphsSpecificStyleProperties {
 
 
  /** \brief Support Class for JKQTBasePlotter, which summarizes all properties that define the visual styling of geometric elements
- *  \ingroup jkqtpplotter_styling
+ *  \ingroup jkqtpplotter_styling_classes
  *
  *  \see JKQTBasePlotter, \ref jkqtpplotter_styling
  */
@@ -162,7 +162,7 @@ public:
 
 
  /** \brief Support Class for JKQTBasePlotter, which summarizes all properties that define the visual styling of annotation elements
- *  \ingroup jkqtpplotter_styling
+ *  \ingroup jkqtpplotter_styling_classes
  *
  *  \see JKQTBasePlotter, \ref jkqtpplotter_styling
  */
@@ -210,7 +210,7 @@ public:
 
 
 /** \brief Support Class for JKQTBasePlotter, which summarizes all properties that define the visual styling of a JKQTBasePlotter
- *  \ingroup jkqtpplotter_styling
+ *  \ingroup jkqtpplotter_styling_classes
  *
  *  \see JKQTBasePlotter, \ref jkqtpplotter_styling
  */

@@ -1,0 +1,13 @@
+
+/*!
+
+
+\defgroup jkqtpplotter_styling_classes Styling System Classes
+\ingroup jkqtplotter_classdoc
+
+This group assembles all classes that for the styling system of JKQTPlotter.
+
+\see \ref jkqtpplotter_styling
+
+  
+*/

@@ -6,7 +6,7 @@
  
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/graphs/jkqtpscatter.h"
+#include "jkqtplotter/graphs/jkqtplines.h"
 #include "jkqtpexampleapplication.h"
 
 

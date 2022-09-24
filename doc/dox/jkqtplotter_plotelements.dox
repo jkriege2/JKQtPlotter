@@ -1,0 +1,182 @@
+/*!
+
+       
+  \defgroup jkqtplotter_graphsgroup_classstructure Graphs
+  \ingroup jkqtplotter_general
+
+  \section jkqtplotter_graphsgroup_classstructure_basics Graph Class Structure
+
+  Each type of graph is represented by another class, which has to be derived from JKQTPPlotElement. This class provides a basic virtual interface
+  that allows JKQTPlotter to draw the graphs represented by them. This interface consists of these functions:
+    - JKQTPPlotElement::draw() draws the graph onto a given JKQTPEnhancedPainter (derived from <a href="http://doc.qt.io/qt-5/qpainter.html">QPainter</a>)
+    - JKQTPPlotElement::drawKeyMarker() draws the small marker image in the plot legend
+    - JKQTPPlotElement::getKeyLabelColor() returns a color for the legend entry for the graph
+    - JKQTPPlotElement::getXMinMax() returns the extent of the graph in x-direction (e.g. for auto-zooming)
+    - JKQTPPlotElement::getYMinMax() returns the extent of the graph in Y-direction (e.g. for auto-zooming)
+  .
+  In addition to these basic functions, there are additional functions that can be used to draw something outside the actual plot rectangle.
+  These are used to e.g. add color-scales to the side of the graph:
+    - JKQTPPlotElement::getOutsideSize() returns the amount of space required outside the plot rectangle
+    - JKQTPPlotElement::drawOutside() draws the elements outside the plot rectangle
+  .
+
+  Usually if writing a new graph, one would not directly
+  derive from JKQTPPlotElement, but from a cass in it's hirarchy of children. These children already provide certain facilities for certain types of graphs.
+
+  \dot
+    digraph
+    {
+     // LATEX_PDF_SIZE
+      bgcolor="transparent";
+      edge [fontname="FreeSans",fontsize="10",labelfontname="FreeSans",labelfontsize="10"];
+      node [fontname="FreeSans",fontsize="10"];
+      rankdir="LR";
+
+      {
+        rank=same;
+        JKQTPPlotElement [URL="\ref JKQTPPlotElement"];
+        noteJKQTPPlotElement [shape="note", color="lightyellow",style=filled,fontsize=8,label="base class for all\nelements drawn\nonto a plot"];
+        JKQTPPlotElement -> noteJKQTPPlotElement [style=dashed,arrowhead=none];
+      }
+
+      {
+        rank=same;
+        JKQTPGraph [URL="\ref JKQTPPlotElement"];
+        noteJKQTPGraph [shape="note", color="lightyellow",style=filled,fontsize=8,label="base class for all\nactual graphs"];
+        JKQTPGraph -> noteJKQTPGraph [style=dashed,arrowhead=none];
+      
+        JKQTPGeometricPlotElement [URL="\ref JKQTPGeometricPlotElement"];
+        noteJKQTPGeometricPlotElement [shape="note", color="lightyellow",style=filled,fontsize=8,label="base class for all\nnon-graph elements,\ne.g. geometric elements"];
+        JKQTPGeometricPlotElement -> noteJKQTPGeometricPlotElement [style=dashed,arrowhead=none];
+      
+        JKQTPPlotAnnotationElement [URL="\ref JKQTPPlotAnnotationElement"];
+        noteJKQTPPlotAnnotationElement [shape="note", color="lightyellow",style=filled,fontsize=8,label="base class for all\ngraph annotation elements,\ne.g. text, symbols, ranges ..."];
+        JKQTPPlotAnnotationElement -> noteJKQTPPlotAnnotationElement [style=dashed,arrowhead=none];
+      }
+
+
+      {
+        rank=same;
+
+        JKQTPXYGraph [URL="\ref JKQTPXYGraph"]
+        noteJKQTPXYGraph [shape="note", color="lightyellow",style=filled,fontsize=8,label="base class for all\ngraphs based on\n (x,y) data pairs"];
+        JKQTPXYGraph -> noteJKQTPXYGraph [style=dashed,arrowhead=none];
+      
+        JKQTPSingleColumnGraph [URL="\ref JKQTPSingleColumnGraph"]
+        noteJKQTPSingleColumnGraph [shape="note", color="lightyellow",style=filled,fontsize=8,label="base class for all\ngraphs based on only\n a single column of data"];
+        JKQTPSingleColumnGraph -> noteJKQTPSingleColumnGraph [style=dashed,arrowhead=none];
+      
+        JKQTPImageBase [URL="\ref JKQTPImageBase"]
+        noteJKQTPImageBase [shape="note", color="lightyellow",style=filled,fontsize=8,label="base class for all\ngraphs that represent \n2D images/matrices"];
+        JKQTPImageBase -> noteJKQTPImageBase [style=dashed,arrowhead=none];
+      }
+
+      {
+        rank=same;
+
+        JKQTPXYYGraph [URL="\ref JKQTPXYYGraph"]
+        noteJKQTPXYYGraph [shape="note", color="lightyellow",style=filled,fontsize=8,label="base class for all\ngraphs based on\n (x, y1, y2) data tripels"];
+        JKQTPXYYGraph -> noteJKQTPXYYGraph [style=dashed,arrowhead=none];
+
+        JKQTPXXYGraph [URL="\ref JKQTPXXYGraph"]
+        noteJKQTPXXYGraph [shape="note", color="lightyellow",style=filled,fontsize=8,label="base class for all\ngraphs based on\n (x1, x2, y) data tripels"];
+        JKQTPXXYGraph -> noteJKQTPXXYGraph [style=dashed,arrowhead=none];
+
+        JKQTPXYBaselineGraph [URL="\ref JKQTPXYBaselineGraph"]
+        noteJJKQTPXYBaselineGraph [shape="note", color="lightyellow",style=filled,fontsize=8,label="base class for all\ngraphs based on\n (x,y) data pairs and a baseline"];
+        JKQTPXYBaselineGraph -> noteJJKQTPXYBaselineGraph [style=dashed,arrowhead=none];
+      
+        JKQTPEvaluatedFunctionGraphBase [URL="\ref JKQTPEvaluatedFunctionGraphBase"]
+        noteJKQTPEvaluatedFunctionGraphBase [shape="note", color="lightyellow",style=filled,fontsize=8,label="base class for all\ngraphs that represent \ndynamically evaluated functions"];
+        JKQTPEvaluatedFunctionGraphBase -> noteJKQTPEvaluatedFunctionGraphBase [style=dashed,arrowhead=none];
+      
+        JKQTPMathImageBase [URL="\ref JKQTPMathImageBase"]
+        noteJKQTPMathImageBase [shape="note", color="lightyellow",style=filled,fontsize=8,label="base class for all\ndata-based images"];
+        JKQTPMathImageBase -> noteJKQTPMathImageBase [style=dashed,arrowhead=none];
+      }  
+
+      {
+        rank=same;
+
+        JKQTPBarGraphBase [URL="\ref JKQTPBarGraphBase"]
+        noteJKQTPBarGraphBase [shape="note", color="lightyellow",style=filled,fontsize=8,label="base class for all\nbarcharts"];
+        JKQTPBarGraphBase -> noteJKQTPBarGraphBase [style=dashed,arrowhead=none];
+
+        JKQTPFilledCurveGraphBase [URL="\ref JKQTPFilledCurveGraphBase"]
+        noteJKQTPFilledCurveGraphBase [shape="note", color="lightyellow",style=filled,fontsize=8,label="base class for all\nfilled graphs"];
+        JKQTPFilledCurveGraphBase -> noteJKQTPFilledCurveGraphBase [style=dashed,arrowhead=none];
+
+        JKQTPImpulsesGraphBase [URL="\ref JKQTPImpulsesGraphBase"]
+        noteJKQTPImpulsesGraphBase [shape="note", color="lightyellow",style=filled,fontsize=8,label="base class for all\nimpulse graphs"];
+        JKQTPImpulsesGraphBase -> noteJKQTPImpulsesGraphBase [style=dashed,arrowhead=none];
+      
+        JKQTPSpecialLineGraphBase [URL="\ref JKQTPSpecialLineGraphBase"]
+        noteJKQTPSpecialLineGraphBase [shape="note", color="lightyellow",style=filled,fontsize=8,label="base class for all\nspecial line graphs"];
+        JKQTPSpecialLineGraphBase -> noteJKQTPSpecialLineGraphBase [style=dashed,arrowhead=none];
+      
+        JKQTPBoxplotGraphBase [URL="\ref JKQTPBoxplotGraphBase"]
+        noteJKQTPBoxplotGraphBase [shape="note", color="lightyellow",style=filled,fontsize=8,label="base class for all\ngraphs that represent \na set of boxplots"];
+        JKQTPBoxplotGraphBase -> noteJKQTPBoxplotGraphBase [style=dashed,arrowhead=none];
+      
+        JKQTPRangeBase [URL="\ref JKQTPRangeBase"];
+        noteJKQTPRangeBase [shape="note", color="lightyellow",style=filled,fontsize=8,label="base class for all\nrange annotations"];
+        JKQTPRangeBase -> noteJKQTPRangeBase [style=dashed,arrowhead=none];
+      
+        JKQTPBoxplotElementBase [URL="\ref JKQTPBoxplotElementBase"]
+        noteJKQTPBoxplotElementBase [shape="note", color="lightyellow",style=filled,fontsize=8,label="base class for all\ngraphs that represent \na single boxplot"];
+        JKQTPBoxplotElementBase -> noteJKQTPBoxplotElementBase [style=dashed,arrowhead=none];
+      
+        JKQTPViolinplotElementBase [URL="\ref JKQTPViolinplotElementBase"]
+        noteJKQTPViolinplotElementBase [shape="note", color="lightyellow",style=filled,fontsize=8,label="base class for all\ngraphs that represent \na single violin plot"];
+        JKQTPViolinplotElementBase -> noteJKQTPViolinplotElementBase [style=dashed,arrowhead=none];
+      }  
+      
+      JKQTPPlotElement -> JKQTPGraph
+      JKQTPPlotElement -> JKQTPGeometricPlotElement
+      JKQTPPlotElement -> JKQTPPlotAnnotationElement
+      JKQTPPlotElement -> JKQTPRangeBase
+      JKQTPPlotElement -> JKQTPBoxplotElementBase
+      JKQTPPlotElement -> JKQTPViolinplotElementBase
+
+      JKQTPGraph -> JKQTPXYGraph
+      JKQTPGraph -> JKQTPSingleColumnGraph
+      JKQTPGraph -> JKQTPImageBase -> JKQTPMathImageBase
+      JKQTPGraph -> JKQTPEvaluatedFunctionGraphBase
+      JKQTPGraph -> JKQTPBoxplotGraphBase
+
+      JKQTPXYGraph -> JKQTPXYYGraph
+      JKQTPXYGraph -> JKQTPXXYGraph
+      JKQTPXYGraph -> JKQTPXYBaselineGraph
+      
+      JKQTPXYBaselineGraph -> JKQTPBarGraphBase
+      JKQTPXYBaselineGraph -> JKQTPFilledCurveGraphBase
+      JKQTPXYBaselineGraph -> JKQTPImpulsesGraphBase
+      JKQTPXYBaselineGraph -> JKQTPSpecialLineGraphBase
+
+    }
+  
+  \enddot
+
+  \section jkqtplotter_graphsgroup_classstructure_mixins Mix-In Classes for Graphs
+
+  \see \ref jkqtplotter_mixins
+
+  In addition there are mix-in classes that are used via multiple inheritance
+  that add additional features and properties to a graph. A prominent example are the classes for \ref jkqtplotter_basegraphserrors "error indicators".
+  With these there are usually two variants of one type of graph: One without error indicators and one with error indicators, e.g.:
+    - JKQTPXYLineGraph shows lines+symbols graphs made up from x/y-value pairs for each data point.
+    - JKQTPXYLineErrorGraph extends JKQTPXYLineGraph with error indicator drawing/properties provided by JKQTPXYGraphErrors
+  .
+  This approach allows to keep interfaces and appearance recognizeable over different graph classes and locates the source code
+  for a feature like error indicators in a single/in few class(es).
+
+  Another example of such a class is JKQTPColorPaletteStyleAndToolsMixin, which provides functions that allow to use color palettes. It is 
+  mainly used for the \ref jkqtplotter_imagelots "Image/Matrix graphs", but also by e.g. JKQTPXYParametrizedScatterGraph.
+
+
+  
+  
+*/
+
+
+

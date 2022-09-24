@@ -33,7 +33,7 @@
 
 
 /** \brief Support Class for JKQTPlotter, which summarizes all properties that define the visual styling of a JKQTPlotter
- *  \ingroup jkqtpplotter_styling
+ *  \ingroup jkqtpplotter_styling_classes
  *
  *  \see JKQTPlotter, \ref jkqtpplotter_styling
  */
@@ -158,14 +158,14 @@ public:
 
 
 /** \brief returns the system-wide default JKQTPlotterStyle
- *  \ingroup jkqtpplotter_styling
+ *  \ingroup jkqtpplotter_styling_classes
  *
  * \see JKQTPSetSystemDefaultStyle(), JKQTPGetSystemDefaultBaseStyle(), JKQTPSetSystemDefaultBaseStyle(), \ref jkqtpplotter_styling
  */
 JKQTPLOTTER_LIB_EXPORT JKQTPlotterStyle& JKQTPGetSystemDefaultStyle();
 
 /** \brief replaces the system-wide default JKQTPlotterStyle with the given \a newStyle
- *  \ingroup jkqtpplotter_styling
+ *  \ingroup jkqtpplotter_styling_classes
  *
  * \see JKQTPGetSystemDefaultStyle(), JKQTPGetSystemDefaultBaseStyle(), JKQTPSetSystemDefaultBaseStyle(), \ref jkqtpplotter_styling
  */

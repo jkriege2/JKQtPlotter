@@ -1,0 +1,346 @@
+
+
+/*!
+
+
+\defgroup jkqtplotter_elements Plot Element Classes
+\ingroup jkqtplotter_classdoc
+
+This group assembles all classes that represent different elements of a plot (managed by JKQTBasePlotter/JKQTPlotter).
+There are these major subgroups:
+  - \ref jkqtpbaseplotter_elements contains all non-graph objects, i.e. things like coordinate axes and so on
+  - \ref jkqtplotter_concretegraphs contains the actual graph classes
+.
+
+\defgroup jkqtpbaseplotter_elements Non-Graph Plot Elements
+\ingroup jkqtplotter_elements
+
+This group contains some tool classes that implement basic elements of the plot (coordinate axes, key, ...).
+These classes are used by JKQTPlotterBase to output the plot.
+
+
+
+\defgroup jkqtplotter_basegraphs Baseclasses for Graphs
+\ingroup jkqtplotter_elements
+
+\defgroup jkqtplotter_mixins Mix-in classes for Graphs
+\ingroup jkqtplotter_elements
+
+\defgroup jkqtplotter_basegraphserrors Mix-In Classes for Error Indicators
+\ingroup jkqtplotter_mixins
+
+\defgroup jkqtplotter_basegraphs_stylemixins Mix-In Classes for Plot Styling
+\ingroup jkqtplotter_mixins
+
+
+\defgroup jkqtplotter_concretegraphs Concrete Graph Classes
+\ingroup jkqtplotter_elements
+
+
+\defgroup jkqtplotter_linesymbolgraphs Line/Symbol Graphs
+\ingroup jkqtplotter_concretegraphs
+
+This group assembles graphs that show their data with symbols and optionally with connecting lines in diferent styles:
+<table>
+    <tr>
+      <th> Screenshot
+      <th> Classes
+    <tr>
+      <td>\image html beeswarmplot_small.png
+      <td> JKQTPSingleColumnSymbolsGraph
+    <tr>
+      <td>\image html JKQTPXYScatterGraph_small.png
+      <td> JKQTPXYScatterGraph, JKQTPXYScatterErrorGraph
+    <tr>
+      <td>\image html symbols_and_styles_small.png
+      <td> JKQTPXYLineGraph, JKQTPXYLineErrorGraph
+    <tr>
+      <td>\image html paramscatterplot_small.png
+      <td> JKQTPXYParametrizedScatterGraph, JKQTPXYParametrizedErrorScatterGraph
+    <tr>
+      <td>\image html stepplots_small.png
+      <td> JKQTPSpecialLineHorizontalGraph, JKQTPSpecialLineVerticalGraph
+</table>
+
+\defgroup jkqtplotter_linesymbolgraphs_simple Basic Line/Scatter Graphs
+\ingroup jkqtplotter_linesymbolgraphs
+
+<table>
+    <tr>
+      <th> Screenshot
+      <th> Classes
+    <tr>
+      <td>\image html beeswarmplot_small.png
+      <td> JKQTPSingleColumnSymbolsGraph
+    <tr>
+      <td>\image html symbols_and_styles_small.png
+      <td> JKQTPXYLineGraph, JKQTPXYLineErrorGraph
+    <tr>
+      <td>\image html stepplots_small.png
+      <td> JKQTPSpecialLineHorizontalGraph, JKQTPSpecialLineVerticalGraph
+</table>
+
+
+\defgroup jkqtplotter_linesymbolgraphs_param Parametrized Line/Scatter Graphs
+\ingroup jkqtplotter_linesymbolgraphs
+
+<table>
+    <tr>
+      <th> Screenshot
+      <th> Classes
+    <tr>
+      <td>\image html paramscatterplot_small.png
+      <td> JKQTPXYParametrizedScatterGraph, JKQTPXYParametrizedErrorScatterGraph
+</table>
+
+\defgroup jkqtplotter_filledgraphs Filled Polygon/Area Graphs
+\ingroup jkqtplotter_concretegraphs
+
+<table>
+    <tr>
+      <th> Screenshot
+      <th> Classes
+    <tr>
+      <td>\image html filledgraphs_small.png
+      <td> JKQTPFilledCurveXGraph, JKQTPFilledCurveYGraph
+    <tr>
+      <td>\image html JKQTPFilledCurveXErrorGraph_small.png
+      <td> JKQTPFilledCurveXErrorGraph, JKQTPFilledCurveYErrorGraph
+    <tr>
+      <td>\image html JKQTPfilledVerticalRangeGraph_WithLines_small.png
+      <td> JKQTPFilledVerticalRangeGraph, JKQTPFilledHorizontalRangeGraph
+</table>
+
+\defgroup jkqtplotter_functiongraphs Function Graphs
+\ingroup jkqtplotter_linesymbolgraphs
+
+<table>
+    <tr>
+      <th> Screenshot
+      <th> Classes
+    <tr>
+      <td>\image html functionplot_small.png
+      <td> JKQTPXFunctionLineGraph,  JKQTPYFunctionLineGraph
+    <tr>
+      <td>\image html evalcurve_small.png
+      <td> JKQTPXYFunctionLineGraph
+</table>
+
+\defgroup jkqtplotter_parsedFgraphs Parsed Function Graphs
+\ingroup jkqtplotter_linesymbolgraphs
+
+<table>
+    <tr>
+      <th> Screenshot
+      <th> Classes
+    <tr>
+      <td>\image html functionplot_small.png
+      <td> JKQTPXParsedFunctionLineGraph,  JKQTPYParsedFunctionLineGraph
+</table>
+
+\defgroup jkqtplotter_barssticks Barcharts, Impulse-Charts, ...
+\ingroup jkqtplotter_concretegraphs
+
+<table>
+    <tr>
+      <th> Screenshot
+      <th> Classes
+    <tr>
+      <td>\image html barchart_small.png
+      <td> JKQTPBarVerticalGraph,  JKQTPBarHorizontalGraph
+    <tr>
+      <td>\image html barchart_error_small.png
+      <td> JKQTPBarVerticalErrorGraph, JKQTPBarHorizontalErrorGraph
+    <tr>
+      <td>\image html JKQTPbarVerticalGraphStacked_small.png
+      <td> JKQTPBarVerticalStackableGraph, JKQTPBarHorizontalStackableGraph
+    <tr>
+      <td>\image html impulsesplot_small.png
+      <td> JKQTPImpulsesHorizontalGraph, JKQTPImpulsesVerticalGraph
+    <tr>
+      <td>\image html impulses_errors_small.png
+      <td> JKQTPImpulsesHorizontalErrorGraph, JKQTPImpulsesVerticalErrorGraph
+</table>
+
+\defgroup jkqtplotter_statgraphs Statistical Graphs (e.g. Boxplots ...)
+\ingroup jkqtplotter_concretegraphs
+
+<table>
+    <tr>
+      <th> Screenshot
+      <th> Classes
+    <tr>
+      <td>\image html boxplot_small.png
+      <td> JKQTPBoxplotVerticalGraph, JKQTPBoxplotHorizontalGraph
+    <tr>
+      <td>\image html JKQTPViolinplotVerticalElement_small.png
+      <td> JKQTPViolinplotVerticalElement, JKQTPViolinplotHorizontalElement
+</table>
+
+\see \ref jkqtptools_math_statistics_adaptors for shortcuts to calculate statistical properties of data and then adding a plot with the results.
+
+\defgroup jkqtplotter_geoplots Geometric Elements (Lines, Rectangles, ...)
+\ingroup jkqtplotter_concretegraphs
+
+<table>
+    <tr>
+      <th> Screenshot
+      <th> Classes
+    <tr>
+      <td>\image html symbol_filled_diamond.png
+      <td> JKQTPGeoSymbol
+    <tr>
+      <td>\image html geo_text_small.png
+      <td> JKQTPGeoText
+    <tr>
+      <td>\image html geo_line_small.png
+      <td> JKQTPGeoLine, JKQTPGeoInfiniteLine, JKQTPGeoPolyLines
+    <tr>
+      <td>\image html geo_arrows_small.png
+      <td> JKQTPGeoArrow
+    <tr>
+      <td>\image html geo_rect_small.png
+      <td> JKQTPGeoRectangle
+    <tr>
+      <td>\image html geo_polygon_small.png
+      <td> JKQTPGeoPolygon
+    <tr>
+      <td>\image html geo_ellipse_small.png
+      <td> JKQTPGeoEllipse
+    <tr>
+      <td>\image html geo_arc_small.png
+      <td> JKQTPGeoArc
+    <tr>
+      <td>\image html geo_pie_small.png
+      <td> JKQTPGeoPie
+    <tr>
+      <td>\image html geo_chords_small.png
+      <td> JKQTPGeoChord
+</table>
+
+Examples:
+  - \ref JKQTPlotterGeometricGraphs
+.
+
+\defgroup jkqtplotter_annotations Graph Annotations
+\ingroup jkqtplotter_concretegraphs
+
+<table>
+    <tr>
+      <th> Screenshot
+      <th> Classes
+    <tr>
+      <td>\image html symbol_filled_diamond.png
+      <td> JKQTPGeoSymbol
+    <tr>
+      <td>\image html geo_text_small.png
+      <td> JKQTPGeoText
+    <tr>
+      <td>\image html JKQTPHorizontalRange_small.png
+      <td> JKQTPHorizontalRange, JKQTPVerticalRange
+</table>
+
+Examples:
+  - \ref JKQTPlotterGeometricGraphs
+.
+
+\defgroup jkqtplotter_diverse Diverse Other Graphs (Ranges, ...)
+\ingroup jkqtplotter_concretegraphs
+
+<table>
+    <tr>
+      <th> Screenshot
+      <th> Classes
+    <tr>
+      <td>\image html JKQTPPeakStreamGraphY_small.png
+      <td> JKQTPPeakStreamGraph
+    <tr>
+      <td>\image html geo_boxplot_small.png
+      <td> JKQTPBoxplotVerticalElement, JKQTPBoxplotHorizontalElement
+    <tr>
+      <td>\image html JKQTPViolinplotVerticalElement_small.png
+      <td> JKQTPViolinplotVerticalElement, JKQTPViolinplotHorizontalElement
+</table>
+
+\defgroup jkqtplotter_imagelots Matrix/Image Plotting
+\ingroup jkqtplotter_concretegraphs
+
+<table>
+    <tr>
+      <th> Screenshot
+      <th> Classes
+    <tr>
+      <td>\image html rgbimageplot_qt_small.png
+      <td> JKQTPImage
+    <tr>
+      <td>\image html JKQTPMathImageBaseModifyNone_small.png
+      <td> JKQTPMathImage, JKQTPColumnMathImage
+    <tr>
+      <td>\image html rgbimageplots_small.png
+      <td> JKQTPRGBMathImage, JKQTPColumnRGBMathImage
+    <tr>
+      <td>\image html overlayimage_small.png
+      <td> JKQTPOverlayImage
+    <tr>
+      <td>\image html overlayimageenhanced_small.png
+      <td>  JKQTPOverlayImageEnhanced, JKQTPColumnOverlayImageEnhanced
+    <tr>
+      <td>\image html JKQTPColumnContourPlot_small.png
+      <td> JKQTPContourPlot, JKQTPColumnContourPlot
+</table>
+
+\defgroup jkqtplotter_imagelots_elements Image Graphs
+\ingroup jkqtplotter_imagelots
+
+
+<table>
+    <tr>
+      <th> Screenshot
+      <th> Classes
+    <tr>
+      <td>\image html rgbimageplot_qt_small.png
+      <td> JKQTPImage
+    <tr>
+      <td>\image html JKQTPMathImageBaseModifyNone_small.png
+      <td> JKQTPMathImage, JKQTPColumnMathImage
+    <tr>
+      <td>\image html rgbimageplot_cimg_small.png
+      <td> JKQTPRGBMathImage, JKQTPColumnRGBMathImage
+</table>
+
+\defgroup jkqtplotter_imagelots_overlays Image/Matrix Overlay Graphs
+\ingroup jkqtplotter_imagelots
+
+<table>
+    <tr>
+      <th> Screenshot
+      <th> Classes
+    <tr>
+      <td>\image html overlayimage_small.png
+      <td> JKQTPOverlayImage
+    <tr>
+      <td>\image html overlayimageenhanced_small.png
+      <td>  JKQTPOverlayImageEnhanced, JKQTPColumnOverlayImageEnhanced
+</table>
+
+\defgroup jkqtplotter_imagelots_tools Tool Functions & Classes for Image Drawing
+\ingroup jkqtplotter_imagelots
+
+\defgroup jkqtplotter_imagelots_tools_LUTS Tool Functions to Build Lookup-Tables for Palettes
+\ingroup jkqtplotter_imagelots_tools
+
+\defgroup jkqtplotter_imagelots_contour Contour Graphs (based on Image Data)
+\ingroup jkqtplotter_imagelots
+
+<table>
+    <tr>
+      <th> Screenshot
+      <th> Classes
+    <tr>
+      <td>\image html JKQTPColumnContourPlot_small.png
+      <td> JKQTPContourPlot, JKQTPColumnContourPlot
+</table>
+
+
+  
+*/

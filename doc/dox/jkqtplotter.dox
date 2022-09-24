@@ -10,9 +10,15 @@ A Qt based plotter for 2D scientific graphs. Main Plotting widget is JKQTPlotter
 This group assembles documentation of general principles and definitions behind the JKQTPlotter library.
 
 
+\defgroup jkqtplotter_classdoc Type/Class/Function Documentation
+\ingroup jkqtplotter
+
+This group assembles the documentation of the actual classes, types and functions in the JKQTPlotter library.
+
+
 
 \defgroup jkqtpplotterclasses Plotter Class & Plotter Widget
-\ingroup jkqtplotter
+\ingroup jkqtplotter_classdoc
 
 This group contains the actual plotter classes, that implement layout management code,
 coordinate system management an actual plotter widget ... 
@@ -24,10 +30,10 @@ There are two main classes:
 
 
 \defgroup jkqtpplottersupprt Support Classes and Functions
-\ingroup jkqtplotter
+\ingroup jkqtplotter_classdoc
 
 \defgroup jkqtpqtwidgetsttools Qt Widgets/Tools to work with JKQTPlotter
-\ingroup jkqtplotter
+\ingroup jkqtplotter_classdoc
 
 This group assembles several Qt widgets and tool classes that are linked to JKQTPlotter/JKQTBasePlotter and allow to build advanced GUIs for these (e.g. model/view access to internal data ...)
 

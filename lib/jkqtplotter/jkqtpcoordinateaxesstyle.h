@@ -31,7 +31,7 @@ class JKQTBasePlotterStyle; // forward
 
 
 /** \brief Support Class for JKQTPCoordinateAxis, and summarizes all properties that define the visual styling of a grid (minor or major), associated with a JKQTPCoordinateAxis
- *  \ingroup jkqtpplotter_styling
+ *  \ingroup jkqtpplotter_styling_classes
  *
  * \see JKQTPCoordinateAxis, \ref jkqtpplotter_styling
  *
@@ -71,7 +71,7 @@ public:
 
 
 /** \brief Support Class for JKQTPCoordinateAxis, which summarizes all properties that define the visual styling of a JKQTPCoordinateAxis
- *  \ingroup jkqtpplotter_styling
+ *  \ingroup jkqtpplotter_styling_classes
  *
  * \see JKQTPCoordinateAxis, \ref jkqtpplotter_styling
  *
@@ -215,7 +215,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxisStyle {
 
 /** \brief Support Class for JKQTPCoordinateAxis, which summarizes all properties that define the visual styling of a JKQTPCoordinateAxis
  *         used for colorbars outside the plot
- *  \ingroup jkqtpplotter_styling
+ *  \ingroup jkqtpplotter_styling_classes
  *
  * The major difference between this dervied version and the base JKQTPCoordinateAxisStyle are differently initialized members.
  * \see JKQTPCoordinateAxis, \ref jkqtpplotter_styling

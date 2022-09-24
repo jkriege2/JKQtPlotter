@@ -2330,12 +2330,7 @@ PREDEFINED             = DOXYGEN \
 # definition found in the source code.
 # This tag requires that the tag ENABLE_PREPROCESSING is set to YES.
 
-EXPAND_AS_DEFINED      = "
-JKQTCOMMON_LIB_EXPORT" \
-                         JKQTPLOTTER_LIB_EXPORT \
-                         JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT \
-                         JKQTFASTPLOTTER_LIB_EXPORT \
-                         JKQTMATHTEXT_LIB_EXPORT
+EXPAND_AS_DEFINED      =
 
 # If the SKIP_FUNCTION_MACROS tag is set to YES then doxygen's preprocessor will
 # remove all references to function-like macros that are alone on a line, have
@@ -2637,7 +2632,10 @@ DOT_PATH               =
 DOTFILE_DIRS           = doc/dot/ \
                          ./doc/dot/ \
                          doc/dot \
-                         ./doc/dot
+                         ./doc/dot \
+                         doc/dot \
+                         dot \
+                         ../dot
 
 # The MSCFILE_DIRS tag can be used to specify one or more directories that
 # contain msc files that are included in the documentation (see the \mscfile

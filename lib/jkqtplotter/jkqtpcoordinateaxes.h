@@ -39,7 +39,7 @@ class JKQTBasePlotter;
 /*! \brief this virtual class is the base for any type of coordinate axis, to be drawn by JKQTBasePlotter.
     \ingroup jkqtpbaseplotter_elements
 
-    This class implements all the functionality needed for a coordinate axis:
+    Class derived from JKQTPCoordinateAxis implements all the functionality needed for a coordinate axis:
       - transform world to screen coordinates and vice versa
       - draw the axis (implemented by child classes!) with these elements: axis lines, ticks, tick labels, axis label, x/y=0 axis
       - measure the axes in screen coordinates
@@ -263,7 +263,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         inline double getUserTickSpacing() const { return this->userTickSpacing; }
         /** \copydoc userLogTickSpacing */
         inline double getUserLogTickSpacing() const { return this->userLogTickSpacing; }
-        /** \copydoc JKQTPCoordinateAxisStyle::labelType */
+        /** \copydoc JKQTPCoordinateAxisStyle::tickLabelType */
         inline JKQTPCALabelType getTickLabelType() const { return this->axisStyle.tickLabelType; }
         /** \copydoc axisLabel */
         inline QString getAxisLabel() const { return this->axisLabel; }
@@ -472,7 +472,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         /** \copydoc userLogTickSpacing */
         void setUserLogTickSpacing (double __value);
 
-        /** \copydoc JKQTPCoordinateAxisStyle::labelType */
+        /** \copydoc JKQTPCoordinateAxisStyle::tickLabelType */
         void setTickLabelType (JKQTPCALabelType __value);
 
         /** \copydoc JKQTPCoordinateAxisStyle::tickMode */
@@ -867,8 +867,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPVerticalAxis: public JKQTPCoordinateAxis {
          *  \param labelOffset offset of the label from ( \a xx , \a yy ) in pt, this is typically equal to \c tickOuterLength+tickLabelDistance
          *  \param label text to display
          *  \param fontSize the fontSize of the label (in pt)
-         *  \param ascentMax maximum ascent of all tick labels
-         *  \param descentMax maximum descent of all tick labels
          *  \param isMinor indicates whether  the axis tick is a minor tick
          */
         void drawTickLabel1(JKQTPEnhancedPainter& painter, double xx, double yy, double labelOffset, const QString &label, double fontSize, bool isMinor=false) ;
@@ -880,8 +878,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPVerticalAxis: public JKQTPCoordinateAxis {
          *  \param labelOffset offset of the label from ( \a xx , \a yy ) in pt, this is typically equal to \c tickOuterLength+tickLabelDistance
          *  \param label text to display
          *  \param fontSize the fontSize of the label (in pt)
-         *  \param ascentMax maximum ascent of all tick labels
-         *  \param descentMax maximum descent of all tick labels
          *  \param isMinor indicates whether  the axis tick is a minor tick
          */
         void drawTickLabel2(JKQTPEnhancedPainter& painter, double xx, double yy, double labelOffset, const QString &label, double fontSize, bool isMinor=false) ;

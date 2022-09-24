@@ -9,7 +9,7 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 
 \section jkqtp_extut_jkqtplotter Examples&Tutorials for JKQTPlotter
 
-\subsection jkqtp_extut_plotstyles Different Plot Data Styles
+\subsection jkqtp_extut_plotstyles Examples for Different Plot Data Styles
 
 <table>
 <tr><th>Screenshot<th>Description<th>Notes
@@ -91,7 +91,7 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 </table>
 
 
-\subsection jkqtp_extut_geometric Geometric Forms, Arrows, Annotaions ...
+\subsection jkqtp_extut_geometric Examples for Geometric Forms, Arrows, Annotaions ...
 
 <table>
 <tr><th> Screenshot    <th> Description   <th> Notes         
@@ -106,7 +106,7 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
     <td> `JKQTPGeoEllipse`, `JKQTPGeoArc`, `JKQTPGeoChord`, `JKQTPGeoPie`
 </table>
 
-\subsection jkqtp_extut_keyaxesstyles  Styling the Plot, Keys, Axes, ...
+\subsection jkqtp_extut_keyaxesstyles  Examples for Styling the Plot, Keys, Axes, ...
 
 <table>
 <tr><th> Screenshot    <th> Description   <th> Notes         
@@ -129,7 +129,7 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 
 
 
-\subsection jkqtp_extut_plotimagedata Image data Plots
+\subsection jkqtp_extut_plotimagedata Examples for Image data Plots
 
 <table>
 <tr><th> Screenshot    <th> Description   <th> Notes  
@@ -170,7 +170,7 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 
  
 
-\subsection jkqtp_extut_guitools  GUI Tools
+\subsection jkqtp_extut_guitools  Examples for GUI Tools
 
 <table>
 <tr><th> Screenshot    <th> Description   <th> Notes  
@@ -183,7 +183,7 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 </table>
 
 
-\subsection jkqtp_extut_guitoolslayout  Layout & Styling
+\subsection jkqtp_extut_guitoolslayout  Examples for Layout & Styling
 
 <table>
 <tr><th> Screenshot    <th> Description   <th> Notes  
@@ -199,7 +199,7 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 </table>
 
 
-\subsection jkqtp_extut_datamanagement Data Management & Statistics
+\subsection jkqtp_extut_datamanagement Examples for Data Management & Statistics
 
 <table>
 <tr><th> Screenshot    <th> Description   <th> Notes  
@@ -241,7 +241,7 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 </table>
 
 	
-\subsection jkqtp_extut_cmake_build CMake Build System
+\subsection jkqtp_extut_cmake_build Examples for CMake Build System
 
 <table>
 <tr><th> Screenshot    <th> Description   <th> Notes  

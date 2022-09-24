@@ -1,0 +1,19 @@
+/*!
+  \defgroup jkqtpdatastorage Data Management and -storage
+  \ingroup jkqtplotter_general
+  
+  Data is stored in an (internal) instance of JKQTPDatastore, which is accessible through JKQTPlotter::getDatastore() or JKQTBasePlotter::getDatastore().
+  This datastore can either own its data (which is done here, as we copy the data into the store
+  e.g. by calling JKQTPDatastore::addCopiedColumn(), or it can merely reference to the data (then
+  data needs to be available as array of \c double values).
+  
+  In addition JKQTPDatastore provides different functions to add or edit the contained data. Amongst others it also provides a C++ StdLib-type iterator
+  interface to access the data. 
+    
+  \see \ref jkqtpdatastorage_classes and especially JKQTPDatastore, <br>
+       \ref jkqtp_extut_datamanagement 
+*/
+
+
+
+

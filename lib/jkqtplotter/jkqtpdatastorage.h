@@ -50,7 +50,7 @@ class JKQTPColumnBackInserter; // forward declaration
 
 
 /** \brief the types of data in one JKQTdatastoreItem
- * \ingroup jkqtpdatastorage
+ * \ingroup jkqtpdatastorage_classes
  *
  * \c JKQTPSingleColumn:
  * \verbatim
@@ -86,7 +86,7 @@ enum class JKQTPDatastoreItemFormat {
 };
 
 /** \brief This class manages data columns (with entries of type \c double ), used by JKQTPlotter/JKQTBasePlotter to represent data for plots
-  *  \ingroup jkqtpdatastorage
+  *  \ingroup jkqtpdatastorage_classes
   *
   *  \see \ref JKQTPlotterBasicJKQTPDatastore for a detailed description of how to use this class for data management!
   *
@@ -1434,7 +1434,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPDatastore{
 
 
 /** \brief internally stores information about one data column. See JKQTPDatastore for more information.
- * \ingroup jkqtpdatastorage
+ * \ingroup jkqtpdatastorage_classes
  * \internal
  *
  * \see JKQTPDatastore
@@ -1643,7 +1643,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPColumn {
 
 #pragma pack(push,1)
 /** \brief iterator over the data in the column of a JKQTPDatastore
- * \ingroup jkqtpdatastorage
+ * \ingroup jkqtpdatastorage_classes
  *
  * \see JKQTPColumn, JKQTPDatastore::begin(), JKQTPDatastore::end(), JKQTPDatastore, JKQTPConstColumnIterator
  */
@@ -1908,7 +1908,7 @@ class JKQTPColumnIterator {
 
 
 /** \brief iterator, which allows to insert into a column of a JKQTPDatastore
- * \ingroup jkqtpdatastorage
+ * \ingroup jkqtpdatastorage_classes
  *
  * \see JKQTPDatastore::backInserter(), JKQTPDatastore, http://www.cplusplus.com/reference/iterator/insert_iterator/
  */
@@ -1954,7 +1954,7 @@ class JKQTPColumnBackInserter {
 };
 
 /** \brief iterator over the data in the column of a JKQTPDatastore
- * \ingroup jkqtpdatastorage
+ * \ingroup jkqtpdatastorage_classes
  *
  * \see JKQTPColumn, JKQTPDatastore::begin(), JKQTPDatastore::end(), JKQTPDatastore, JKQTPColumnIterator
  */
@@ -2234,7 +2234,7 @@ class JKQTPColumnConstIterator {
 
 /** \brief this represents one chunk of memory which can represent one or more columns of data for JKQTBasePlotter.
  *         See JKQTPDatastore for more information.
- * \ingroup jkqtpdatastorage
+ * \ingroup jkqtpdatastorage_classes
  *
  * Each chunk of memory is pointed at by a simple double* pointer \c data. the memory layout of the memory layout of
  * the RAM segment pointed at by \c data is determined by the parameter \c dataformat:
@@ -2472,7 +2472,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPDatastoreItem {
 
 
 /** \brief     QAbstractTableModel descendent that allows to view data in a JKQTPDatastore
- * \ingroup jkqtpdatastorage
+ * \ingroup jkqtpdatastorage_classes
  *
  * \see JKQTPDatastore
  */

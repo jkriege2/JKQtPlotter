@@ -1,7 +1,8 @@
+
 /*!
 
-\defgroup jkqtpdatastorage Data Storage Classes/System
-\ingroup jkqtplotter
+\defgroup jkqtpdatastorage_classes Data Storage Classes
+\ingroup jkqtplotter_classdoc
 
 The classes in this group implement a data storage system for use with the main plotter class.
 Basically a table of data is generated as a set of logical columns that may be bound to different
@@ -9,10 +10,11 @@ data sources (internal or external memory arrays. Later on it is simply possible
 using the column number and the not a link to the actual data array, as the link is stored in these
 classes.
 
-\see \ref JKQTPlotterBasicJKQTPDatastore for a detailed description of how to use this class for data management!
+\see \ref jkqtpdatastorage 
+     <br>\ref JKQTPlotterBasicJKQTPDatastore for a detailed description of how to use this class for data management!
 
 \defgroup jkqtpexternalinterfaces Interfaces To Other Libraries
-\ingroup jkqtpdatastorage
+\ingroup jkqtpdatastorage_classes
 
 
 \defgroup jkqtpinterfaceopencv OpenCV Interfaceing Tools
