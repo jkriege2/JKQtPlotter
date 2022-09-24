@@ -312,6 +312,62 @@ void doListAxisStyling(const QDir& outputDir, int iconsize, QColor backgroundCol
     plot.getXAxis()->setDrawMode1(JKQTPCADMLine|JKQTPCADMcompleteMinMaxArrow);
     imgheight=iconsize; plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,plot.getHeight()-imgheight,plot.getWidth(),imgheight).save(outputDir.absoluteFilePath("JKQTPCADMcompleteMinMaxArrow.png"), "png");
 
+
+    plot.setXY(0.1,100,0.1,10);
+    plot.setWidgetSize(iconsize*4,4*iconsize);
+    plot.setShowKey(false);
+    plot.setGrid(true);
+    plot.getXAxis()->setLogAxis(true);
+    plot.getYAxis()->setLogAxis(false);
+    plot.getXAxis()->setShowZeroAxis(false);
+    plot.getYAxis()->setShowZeroAxis(false);
+    plot.getXAxis()->setDrawMode1(JKQTPCADMcomplete);
+    plot.getXAxis()->setDrawMode2(JKQTPCADMLine);
+    plot.getYAxis()->setDrawMode1(JKQTPCADMcomplete);
+    plot.getYAxis()->setDrawMode2(JKQTPCADMLine);
+    plot.getXAxis()->setAxisLabel("log. axis");
+    plot.getYAxis()->setAxisLabel("lin. axis");
+
+    plot.getXAxis()->setTickMode(JKQTPLTMLinOrPower);
+    plot.getYAxis()->setTickMode(JKQTPLTMLinOrPower);
+    plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,0,plot.getWidth(),plot.getHeight()).save(outputDir.absoluteFilePath("JKQTPLTMLinOrPower.png"), "png");
+
+    plot.getXAxis()->setTickMode(JKQTPLTMLin);
+    plot.getYAxis()->setTickMode(JKQTPLTMLin);
+    plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,0,plot.getWidth(),plot.getHeight()).save(outputDir.absoluteFilePath("JKQTPLTMLin.png"), "png");
+
+    plot.getXAxis()->setTickMode(JKQTPLTMPower);
+    plot.getYAxis()->setTickMode(JKQTPLTMPower);
+    plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,0,plot.getWidth(),plot.getHeight()).save(outputDir.absoluteFilePath("JKQTPLTMPower.png"), "png");
+
+
+
+    plot.setXY(0.1,10.0*JKQTPSTATISTICS_PI,0,2.1*JKQTPSTATISTICS_PI);
+    plot.setWidgetSize(iconsize*4,4*iconsize);
+    plot.setShowKey(false);
+    plot.setGrid(true);
+    plot.getXAxis()->setLogAxis(true);
+    plot.getYAxis()->setLogAxis(false);
+    plot.getXAxis()->setShowZeroAxis(false);
+    plot.getYAxis()->setShowZeroAxis(false);
+    plot.getXAxis()->setDrawMode1(JKQTPCADMcomplete);
+    plot.getXAxis()->setDrawMode2(JKQTPCADMLine);
+    plot.getYAxis()->setDrawMode1(JKQTPCADMcomplete);
+    plot.getYAxis()->setDrawMode2(JKQTPCADMLine);
+    plot.getXAxis()->setAxisLabel("log. axis");
+    plot.getYAxis()->setAxisLabel("lin. axis");
+    plot.getXAxis()->setMinTicks(5);
+    plot.getYAxis()->setMinTicks(3);
+    plot.getYAxis()->setTickLabelType(JKQTPCALTfrac);
+
+    plot.getXAxis()->setTickMode(JKQTPLTMLinOrPower);
+    plot.getYAxis()->setTickMode(JKQTPLTMLinOrPower);
+    plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,0,plot.getWidth(),plot.getHeight()).save(outputDir.absoluteFilePath("axis_unit_scaling_none.png"), "png");
+    plot.getXAxis()->setTickUnitFactor(JKQTPSTATISTICS_PI);
+    plot.getXAxis()->setTickUnitName("\\;\\pi");
+    plot.getYAxis()->setTickUnitFactor(JKQTPSTATISTICS_PI);
+    plot.getYAxis()->setTickUnitName("\\;\\pi");
+    plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,0,plot.getWidth(),plot.getHeight()).save(outputDir.absoluteFilePath("axis_unit_scaling_pi.png"), "png");
 }
 
 int main(int argc, char* argv[])

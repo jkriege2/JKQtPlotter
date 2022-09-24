@@ -56,6 +56,8 @@ JKQTPCoordinateAxis::JKQTPCoordinateAxis(JKQTBasePlotter* _parent):
     tickSpacing(0),
     tickSpacingLog(10),
     axisLabel(),
+    tickUnitFactor(1),
+    tickUnitName(""),
     axisPrefix(),
     scaleSign(1)
 {
@@ -403,17 +405,28 @@ QString JKQTPCoordinateAxis::floattolabel(double data, int past_comma) const {
         belowIsZero=fabs(getMax()-getMin())*1e-6;
     }
 
+    data=data/tickUnitFactor;
+
+    auto addTickUnit=[&](const QString& s) {
+        if (tickUnitName.isEmpty()) return s;
+        bool ok=false;
+        const double d=s.toDouble(&ok);
+        if (s=="0" || (ok && fabs(d)<1e-300)) return s;
+        if (s=="1" || (ok && d==1.0)) return tickUnitName;
+        return s+tickUnitName;
+    };
+
     switch(axisStyle.tickLabelType) {
         case JKQTPCALTcount:
             return "";
         case JKQTPCALTdefault:
-            return floattostringWithFormat(loc, data, 'f', past_comma, remove_trail0);
+            return addTickUnit(floattostringWithFormat(loc, data, 'f', past_comma, remove_trail0));
         case JKQTPCALTscientific:
-            return floattostringWithFormat(loc, data, 'e', past_comma, remove_trail0);
+            return addTickUnit(floattostringWithFormat(loc, data, 'e', past_comma, remove_trail0));
         case JKQTPCALTexponent:
-            return QString(jkqtp_floattolatexstr(data, past_comma, remove_trail0, belowIsZero, pow(10, -past_comma), pow(10, past_comma+1)).c_str());
+            return addTickUnit(QString(jkqtp_floattolatexstr(data, past_comma, remove_trail0, belowIsZero, pow(10, -past_comma), pow(10, past_comma+1)).c_str()));
         case JKQTPCALTexponentCharacter:
-            return QString(jkqtp_floattolatexunitstr(data, past_comma, remove_trail0).c_str());
+            return addTickUnit(QString(jkqtp_floattolatexunitstr(data, past_comma, remove_trail0).c_str()));
         case JKQTPCALTintfrac:
         case JKQTPCALTintsfrac:
         case JKQTPCALTintslashfrac:
@@ -443,16 +456,21 @@ QString JKQTPCoordinateAxis::floattolabel(double data, int past_comma) const {
                 if (num!=0) {
                     if (denom==1) res+=QString::number(num);
                     else {
-                        if (axisStyle.tickLabelType==JKQTPCALTfrac || axisStyle.tickLabelType==JKQTPCALTintfrac) res+=QString("\\frac{%1}{%2}").arg(num).arg(denom);
-                        else if (axisStyle.tickLabelType==JKQTPCALTsfrac || axisStyle.tickLabelType==JKQTPCALTintsfrac) res+=QString("\\sfrac{%1}{%2}").arg(num).arg(denom);
+                        if (axisStyle.tickLabelType==JKQTPCALTfrac || (axisStyle.tickLabelType==JKQTPCALTintfrac && intpart==0)) res+=QString("\\frac{%1}{%2}").arg(addTickUnit(QString::number(num))).arg(denom);
+                        else if (axisStyle.tickLabelType==JKQTPCALTintfrac) res=addTickUnit(res+QString("\\frac{%1}{%2}").arg(num).arg(denom));
+                        else if (axisStyle.tickLabelType==JKQTPCALTsfrac || (axisStyle.tickLabelType==JKQTPCALTintsfrac && intpart==0)) res+=QString("\\sfrac{%1}{%2}").arg(addTickUnit(QString::number(num))).arg(denom);
+                        else if (axisStyle.tickLabelType==JKQTPCALTintsfrac) res=addTickUnit(res+QString("\\sfrac{%1}{%2}").arg(num).arg(denom));
                         else {
                             if (res.size()>0 && res[res.size()-1].isDigit()) {
                                 if (sign<0) res+="-";
                                 else res+="+";
                             }
-                            res+=QString("%1/%2").arg(num).arg(denom);
+                            if (axisStyle.tickLabelType==JKQTPCALTintslashfrac)
+                            res=addTickUnit("("+res+QString("%1/%2").arg(num).arg(denom)+")");
                         }
                     }
+                } else {
+                    res=addTickUnit(res);
                 }
             }
             //std::cout<<data<<" => "<<rounded<<", "<<res.toStdString()<<"\n";
@@ -474,7 +492,7 @@ QString JKQTPCoordinateAxis::floattolabel(double data, int past_comma) const {
                 return dt.toString(axisStyle.tickDateTimeFormat);
             }; break;
         case JKQTPCALTprintf: {
-                return QString::asprintf(axisStyle.tickPrintfFormat.toLatin1().data(), data);
+                return QString::asprintf(axisStyle.tickPrintfFormat.toLatin1().data(), data, tickUnitName.toStdString().c_str());
             }; break;
     }
     return QString();
@@ -578,14 +596,16 @@ void JKQTPCoordinateAxis::calcPlotScaling(bool force) {
     // autoscaling for the logarithmic plots available
     if (axisStyle.tickMode==JKQTPLTMLinOrPower) {
         if (logAxis) {
-            tickSpacing=1;
+            tickSpacing=tickUnitFactor;
             tickSpacingLog=calcLogTickSpacing();
-            tickStart=pow(logAxisBase, floor(log(axismin)/log(logAxisBase)));
+            tickStart=pow(logAxisBase, floor(log(axismin/tickUnitFactor)/log(logAxisBase)))*tickUnitFactor;
         } else {
             if (autoAxisSpacing) {
                 // autoscaling linear x-axis
-                tickSpacingLog=10;
-                tickSpacing=calcLinearTickSpacing();
+                tickSpacingLog=10.0;
+                width/=tickUnitFactor;
+                tickSpacing=calcLinearTickSpacing()*tickUnitFactor;
+                width*=tickUnitFactor;
             } else {
                 // predefined scaling for linear x-axis
                 tickSpacing=userTickSpacing;
@@ -596,8 +616,10 @@ void JKQTPCoordinateAxis::calcPlotScaling(bool force) {
     } else if (axisStyle.tickMode==JKQTPLTMLin) {
         if (autoAxisSpacing) {
             // autoscaling linear x-axis
-            tickSpacingLog=10;
-            tickSpacing=calcLinearTickSpacing();
+            tickSpacingLog=10.0;
+            width/=tickUnitFactor;
+            tickSpacing=calcLinearTickSpacing()*tickUnitFactor;
+            width*=tickUnitFactor;
         } else {
             // predefined scaling for linear x-axis
             tickSpacing=userTickSpacing;
@@ -605,11 +627,10 @@ void JKQTPCoordinateAxis::calcPlotScaling(bool force) {
         }
         tickStart=floor(axismin/(tickSpacing))*tickSpacing;
     } else if (axisStyle.tickMode==JKQTPLTMPower) {
-        tickSpacing=1;
+        tickSpacing=1.0*tickUnitFactor;
         tickSpacingLog=calcLogTickSpacing();
-        tickStart=pow(logAxisBase, floor(log(axismin)/log(logAxisBase)));
+        tickStart=pow(logAxisBase, floor(log(axismin/tickUnitFactor)/log(logAxisBase)))*tickUnitFactor;
     }
-
 
     axisStyle.labelDigits=calcLinearUnitDigits();
 #ifdef SHOW_JKQTPLOTTER_DEBUG
@@ -772,6 +793,38 @@ void JKQTPCoordinateAxis::setAxisLabel(const QString& __value) {
     this->axisLabel = __value;
     this->paramsChanged=true;
     redrawPlot();
+}
+
+void JKQTPCoordinateAxis::setTickUnitName(const QString &__value)
+{
+    this->tickUnitName = __value;
+    this->paramsChanged=true;
+    redrawPlot();
+}
+
+void JKQTPCoordinateAxis::setTickUnitFactor(double __value)
+{
+    this->tickUnitFactor = __value;
+    this->paramsChanged=true;
+    redrawPlot();
+}
+
+void JKQTPCoordinateAxis::setTickUnit(double factor, const QString &name)
+{
+    this->tickUnitFactor = factor;
+    this->tickUnitName = name;
+    this->paramsChanged=true;
+    redrawPlot();
+}
+
+void JKQTPCoordinateAxis::setTickUnitPi()
+{
+    setTickUnit(JKQTPSTATISTICS_PI, "\\;\\pi");
+}
+
+void JKQTPCoordinateAxis::resetTickUnit()
+{
+    setTickUnit(1, "");
 }
 
 void JKQTPCoordinateAxis::setLabelPosition(JKQTPLabelPosition __value) {

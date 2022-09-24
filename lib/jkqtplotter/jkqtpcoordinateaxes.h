@@ -41,7 +41,7 @@ class JKQTBasePlotter;
 
     This class implements all the functionality needed for a coordinate axis:
       - transform world to screen coordinates and vice versa
-      - draw the axis (implemented by child classes!) with these elements: axis lines, JKQTPCoordinateAxisStyle::ticks, tick labels, axis label, x/y=0 axis
+      - draw the axis (implemented by child classes!) with these elements: axis lines, ticks, tick labels, axis label, x/y=0 axis
       - measure the axes in screen coordinates
       - load and save the settings to an ini file
     .
@@ -115,12 +115,11 @@ class JKQTBasePlotter;
     \see You can find example here: \ref JKQTPlotterImagePlotQImageRGB and \ref JKQTPlotterImagePlotRGBOpenCV
 
 
-    \section jkqtplotter_base_grids_baseelemenets Axis JKQTPCoordinateAxisStyle::Ticks and Grids
-
-    This section explains how this component draws the JKQTPCoordinateAxisStyle::ticks on coordinate axes and the grids that may be drawn below
+    \section jkqtplotter_base_grids_baseelemenets Axis Ticks and Grids
+    This section explains how this component draws the ticks on coordinate axes and the grids that may be drawn below
     the plots. In principle both - grids and axes - are drawn the same way, i.e. with the same step widths. There are
-    two types of JKQTPCoordinateAxisStyle::ticks and grids: The major and the minor JKQTPCoordinateAxisStyle::ticks/grids. The major JKQTPCoordinateAxisStyle::ticks also show a label that denotes the
-    value they represent. Between two major JKQTPCoordinateAxisStyle::ticks the axis shows \a JKQTPCoordinateAxisStyle::minorTicks  small JKQTPCoordinateAxisStyle::ticks that are not
+    two types of ticks and grids: The major and the minor ticks/grids. The major ticks also show a label that denotes the
+    value they represent. Between two major ticks the axis shows \a JKQTPCoordinateAxisStyle::minorTicks  small ticks that are not
     accompanied by a label. The next image shows an example of an axis:
 
       \image html plot_axis_ticksandlabels.png
@@ -135,21 +134,36 @@ class JKQTBasePlotter;
     For grids applies the same. There are two grids that are drawn in different styles (often the major grid is drawn
     thicker and darker than the minor grid).
 
-    The minor JKQTPCoordinateAxisStyle::ticks and grid lines are generated automatically, depending in the setting of \a JKQTPCoordinateAxisStyle::minorTicks.
-    These properties give the number of minor JKQTPCoordinateAxisStyle::ticks between two major JKQTPCoordinateAxisStyle::ticks, so if the major JKQTPCoordinateAxisStyle::ticks are at 1,2,3,... and you
-    want minor JKQTPCoordinateAxisStyle::ticks at 1.1, 1.2, 1.3,... then you will have to set \c JKQTPCoordinateAxisStyle::minorTicks=9 as there are nine JKQTPCoordinateAxisStyle::ticks between two major
-    JKQTPCoordinateAxisStyle::ticks. So the minor tick spacing is calculated as: \f[ \Delta\mbox{MinorTicks}=\frac{\Delta\mbox{ticks}}{\mbox{minorTicks}+1} \f]
+    The minor ticks and grid lines are generated automatically, depending in the setting of \a JKQTPCoordinateAxisStyle::minorTicks.
+    These properties give the number of minor ticks between two major ticks, so if the major ticks are at 1,2,3,... and you
+    want minor ticks at 1.1, 1.2, 1.3,... then you will have to set \c JKQTPCoordinateAxisStyle::minorTicks=9 as there are nine ticks between two major
+    ticks. So the minor tick spacing is calculated as: \f[ \Delta\mbox{MinorTicks}=\frac{\Delta\mbox{ticks}}{\mbox{minorTicks}+1} \f]
 
-    The same applies for logarithmic axes. If the major JKQTPCoordinateAxisStyle::ticks are at 1,10,100,... and you set \c JKQTPCoordinateAxisStyle::minorTicks=9 the program will
-    generate 9 equally spaced minor JKQTPCoordinateAxisStyle::ticks in between, so you have minor JKQTPCoordinateAxisStyle::ticks at 2,3,4,...,11,12,13,... This results in a standard
-    logarithmic axis. If you set \c JKQTPCoordinateAxisStyle::minorTicks=1 then you will get minor JKQTPCoordinateAxisStyle::ticks at 5,15,150,...
+    The same applies for logarithmic axes. If the major ticks are at 1,10,100,... and you set \c JKQTPCoordinateAxisStyle::minorTicks=9 the program will
+    generate 9 equally spaced minor ticks in between, so you have minor ticks at 2,3,4,...,11,12,13,... This results in a standard
+    logarithmic axis. If you set \c JKQTPCoordinateAxisStyle::minorTicks=1 then you will get minor ticks at 5,15,150,...
 
       \image html plot_logaxis_ticksandlabels.png
 
     The major tick-tick distances of linear axes may be calculated automatically in a way that the axis shows at least a given
-    number of JKQTPCoordinateAxisStyle::ticks \c JKQTPCoordinateAxisStyle::minTicks. The algorithm takes that tick spacing that will give a number of JKQTPCoordinateAxisStyle::ticks per axis
+    number of ticks \c JKQTPCoordinateAxisStyle::minTicks. The algorithm takes that tick spacing that will give a number of ticks per axis
     nearest but \c ">=" to the given \c JKQTPCoordinateAxisStyle::minTicks. The Algorithm is described in detail with the function
     calcLinearTickSpacing(). To activate this automatic tick spacing you have to set <code>autoAxisSpacing=true</code>.
+
+    \section jkqtplotter_coordinateaxes_tickscaling Axis Tick Units/Scaling
+    In some cases it is desired to put the axis ticks not at 1,2,3,... but rather at \f$ 1\pi \f$ , \f$ 2\pi \f$ , \f$ 3\pi \f$  or any other
+    unit than \f$ pi \f$ ,i.e.:
+
+      \image html axisstyle/axis_unit_scaling_none.png "no axis scaling (default case)"
+      \image html axisstyle/axis_unit_scaling_pi.png "pi-axis scaling (default case)"
+
+    You can use these methods to set such a factor:
+      - setTickUnitFactor() for the actual factor and setTickUnitName() for a name, added to the tick label
+      - setTickUnit() sets factor and name in one call
+      - setTickUnitPi() shortcut to set pi-scaling
+      - resetTickUnit() resets to no-scaling (default case)
+    .
+
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         Q_OBJECT
@@ -171,7 +185,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         virtual void saveSettings(QSettings& settings, const QString& group=QString("plots/axes/")) const;
 
 
-        /** \brief return x-pixel coordinate from time coordinate */
+        /** \brief return x-pixel coordinate from x coordinate */
         inline double x2p(double x) const {
             double r=0;
             if (logAxis) {
@@ -187,7 +201,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
             }
         }
 
-        /** \brief return time coordinate coordinate from x-pixel */
+        /** \brief return x coordinate from x-pixel */
         inline double p2x(double x) const {
             double xx=x;
             if (inverted) {
@@ -253,6 +267,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         inline JKQTPCALabelType getTickLabelType() const { return this->axisStyle.tickLabelType; }
         /** \copydoc axisLabel */
         inline QString getAxisLabel() const { return this->axisLabel; }
+        /** \copydoc tickUnitFactor */
+        inline double getTickUnitFactor() const { return this->tickUnitFactor; }
+        /** \copydoc tickUnitName */
+        inline QString getTickUnitName() const { return this->tickUnitName; }
         /** \copydoc JKQTPCoordinateAxisStyle::labelPosition */
         inline JKQTPLabelPosition getLabelPosition() const { return this->axisStyle.labelPosition; }
         /** \copydoc JKQTPCoordinateAxisStyle::labelFontSize */
@@ -465,6 +483,28 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         /** \copydoc axisLabel */
         void setAxisLabel (const QString& __value);
 
+        /** \copydoc tickUnitName */
+        void setTickUnitName(const QString& __value);
+
+        /** \copydoc tickUnitFactor */
+        void setTickUnitFactor(double __value);
+        /** \brief sets tickUnitFactor and tickUnitName in one call
+         *
+         *  \see calls setTickUnitName() and setTickUnitFactor()
+         */
+        void setTickUnit(double factor, const QString& name);
+        /** \brief sets pi-scaling for tickUnitFactor and tickUnitName in one call
+         *
+         *  \image html axisstyle/axis_unit_scaling_pi.png
+         *  \see calls setTickUnitName() and setTickUnitFactor()
+         */
+        void setTickUnitPi();
+        /** \brief resets tickUnitFactor and tickUnitName in one call
+         *
+         *  \see calls setTickUnit(), setTickUnitName() and setTickUnitFactor()
+         */
+        void resetTickUnit();
+
         /** \copydoc JKQTPCoordinateAxisStyle::labelPosition */
         void setLabelPosition (JKQTPLabelPosition __value);
 
@@ -627,9 +667,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         QString floattolabel(double data, int past_comma) const;
         /** \brief parent plotter class */
         JKQTBasePlotter* parent;
-        /** \brief current view: minimum of time axis */
+        /** \brief current view: minimum of axis */
         double axismin;
-        /** \brief current view: maximum of time axis */
+        /** \brief current view: maximum of axis */
         double axismax;
 
         /** \brief absoulte minimum of axis (axismin/axismax xan not be set below this) */
@@ -647,18 +687,18 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         /** \brief absolute minimum range width, feature switched off when <0 */
         double axisMinWidth;
 
-        /** \brief <b>calculated property:</b> width of plot on time axis (calculated by calcPlotScaling() )
+        /** \brief <b>calculated property:</b> width of plot on axis (calculated by calcPlotScaling() )
          *
          * \see calcPlotScaling(), calcTickSpacing()
          */
         double width;
 
-        /** \brief <b>calculated property:</b> time axis scaling factor (calculated by calcPlotScaling() )
+        /** \brief <b>calculated property:</b> axis scaling factor (calculated by calcPlotScaling() )
          *
          * \see calcPlotScaling(), calcTickSpacing()
          */
         double scale;
-        /** \brief <b>calculated property:</b> time axis offset (calculated by calcPlotScaling() )
+        /** \brief <b>calculated property:</b> axis offset (calculated by calcPlotScaling() )
          *
          * \see calcPlotScaling(), calcTickSpacing()
          */
@@ -708,6 +748,12 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
 
         /** \brief axis label of the axis */
         QString axisLabel;
+
+        /** \brief tick values are the actual x/y-coordiniate, divided by this value (e.g. pu \f$ \pi \f$ to have an axis with values <tt>0, pi, 2pi, 3pi ...</tt>) */
+        double tickUnitFactor;
+
+        /** \brief name of the factor tickUnitFactor. This string is used in tick-labels to write e.g. \c "2pi" instead of 6.28... */
+        QString tickUnitName;
 
 
         /** \brief calculates the tick spacing for a linear axis that spans \a awidth and that should

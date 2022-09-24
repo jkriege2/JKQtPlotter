@@ -585,7 +585,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         /** \brief clear all additional plotters for grid printing mode */
         void clearGridPrintingPlotters();
 
-        /** \brief return x-pixel coordinate from time coordinate */
+        /** \brief return x-pixel coordinate from x coordinate */
         inline double x2p(double x) const {
             return xAxis->x2p(x);
         }
@@ -595,12 +595,12 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
             return yAxis->x2p(y);
         }
 
-        /** \brief return time coordinate coordinate from x-pixel */
+        /** \brief return x coordinate from x-pixel */
         inline double p2x(double x) const {
             return xAxis->p2x(x);
         }
 
-        /** \brief return y coordinate coordinate from y-pixel */
+        /** \brief return y coordinate from y-pixel */
         inline double p2y(double y) const {
             return yAxis->p2x(y);
         }

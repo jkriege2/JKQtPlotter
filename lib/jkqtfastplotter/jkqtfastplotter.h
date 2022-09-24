@@ -424,7 +424,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter :
             }
         }
 
-        /** \brief return x coordinate coordinate from x-pixel */
+        /** \brief return x coordinate from x-pixel */
         inline double p2x(long x) {
             if (xAxisLog) {
                 return exp(JKQTPSTATISTICS_LN10*(static_cast<double>(x)-xOffset)/(xScale));
@@ -443,7 +443,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter :
             }
         }
 
-        /** \brief return y coordinate coordinate from y-pixel */
+        /** \brief return y coordinate from y-pixel */
         inline double p2y(long y) {
             if (yAxisLog) {
                 return exp(JKQTPSTATISTICS_LN10*(static_cast<double>(y)-yOffset)/(-1.0*yScale));
