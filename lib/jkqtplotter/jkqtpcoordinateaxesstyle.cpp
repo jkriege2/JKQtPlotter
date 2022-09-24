@@ -1,5 +1,6 @@
 #include "jkqtpcoordinateaxesstyle.h"
 #include "jkqtpbaseplotterstyle.h"
+#include "jkqtpbaseplotter.h"
 #include <QApplication>
 
 
