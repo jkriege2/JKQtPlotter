@@ -19,7 +19,6 @@
 
 #include "jkqtplotter/jkqtpgraphsbasestylingmixins.h"
 #include "jkqtplotter/jkqtpbaseplotter.h"
-#include "jkqtplotter/jkqtplotter.h"
 #include <QApplication>
 #include <QDebug>
 
@@ -55,6 +54,13 @@ JKQTPGraphLineStyleMixin::~JKQTPGraphLineStyleMixin()
 void JKQTPGraphLineStyleMixin::setLineColor(const QColor &__value)
 {
     m_linePen.setColor(__value);
+}
+
+void JKQTPGraphLineStyleMixin::setLineColor(const QColor &__value, double alpha)
+{
+    QColor c=__value;
+    c.setAlphaF(alpha);
+    setLineColor(c);
 }
 
 QColor JKQTPGraphLineStyleMixin::getLineColor() const
@@ -254,6 +260,12 @@ void JKQTPGraphSymbolStyleMixin::setSymbolColor(const QColor &__value)
     m_symbolColor=__value;
 }
 
+void JKQTPGraphSymbolStyleMixin::setSymbolColor(const QColor &__value, double alpha)
+{
+    m_symbolColor=__value;
+    m_symbolColor.setAlphaF(alpha);
+}
+
 QColor JKQTPGraphSymbolStyleMixin::getSymbolColor() const
 {
     return m_symbolColor;
@@ -264,9 +276,21 @@ void JKQTPGraphSymbolStyleMixin::setSymbolFillColor(const QColor &__value)
     m_symbolFillColor=__value;
 }
 
+void JKQTPGraphSymbolStyleMixin::setSymbolFillColor(const QColor &__value, double alpha)
+{
+    m_symbolFillColor=__value;
+    m_symbolFillColor.setAlphaF(alpha);
+}
+
 QColor JKQTPGraphSymbolStyleMixin::getSymbolFillColor() const
 {
     return m_symbolFillColor;
+}
+
+void JKQTPGraphSymbolStyleMixin::setSymbolAlpha(double alpha)
+{
+    m_symbolColor.setAlphaF(alpha);
+    m_symbolFillColor.setAlphaF(alpha);
 }
 
 void JKQTPGraphSymbolStyleMixin::setSymbolLineWidth(double __value)
@@ -404,6 +428,13 @@ void JKQTPGraphFillStyleMixin::setFillColor(const QColor &__value)
     m_fillBrush.setColor(m_fillColor);
 }
 
+void JKQTPGraphFillStyleMixin::setFillColor(const QColor &__value, double alpha)
+{
+    m_fillColor=__value;
+    m_fillColor.setAlphaF(alpha);
+    m_fillBrush.setColor(m_fillColor);
+}
+
 QColor JKQTPGraphFillStyleMixin::getFillColor() const
 {
     return m_fillBrush.color();
@@ -462,6 +493,12 @@ QBrush JKQTPGraphFillStyleMixin::getFillBrush(JKQTPEnhancedPainter &/*painter*/,
 void JKQTPGraphLineStyleMixin::setHighlightingLineColor(const QColor &__value)
 {
     m_highlightingLineColor=__value;
+}
+
+void JKQTPGraphLineStyleMixin::setHighlightingLineColor(const QColor &__value, double alpha)
+{
+    m_highlightingLineColor=__value;
+    m_highlightingLineColor.setAlphaF(alpha);
 }
 
 QColor JKQTPGraphLineStyleMixin::getHighlightingLineColor() const
@@ -536,6 +573,12 @@ QString JKQTPGraphTextStyleMixin::getTextFontName() const
 void JKQTPGraphTextStyleMixin::setTextColor(const QColor &__value)
 {
     m_textColor=__value;
+}
+
+void JKQTPGraphTextStyleMixin::setTextColor(const QColor &__value, double alpha)
+{
+    m_textColor=__value;
+    m_textColor.setAlphaF(alpha);
 }
 
 QColor JKQTPGraphTextStyleMixin::getTextColor() const

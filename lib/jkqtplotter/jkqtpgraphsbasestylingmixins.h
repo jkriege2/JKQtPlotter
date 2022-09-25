@@ -60,6 +60,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphLineStyleMixin {
 
         /** \brief set the color of the graph line */
         void setLineColor(const QColor & __value);
+        /** \brief set the color of the graph line */
+        void setLineColor(const QColor & __value, double alpha);
         /** \brief get the color of the graph line */
         QColor getLineColor() const;
 
@@ -117,6 +119,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphLineStyleMixin {
 
         /** \brief set the color of the graph line when highlighted */
         void setHighlightingLineColor(const QColor & __value);
+        /** \brief set the color of the graph line when highlighted */
+        void setHighlightingLineColor(const QColor & __value, double alpha);
         /** \brief get the color of the graph line when highlighted */
         QColor getHighlightingLineColor() const;
 
@@ -391,12 +395,19 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphSymbolStyleMixin {
         /** \brief set the color of the graph symbols */
         void setSymbolColor(const QColor & __value);
         /** \brief set the color of the graph symbols */
+        void setSymbolColor(const QColor & __value, double alpha);
+        /** \brief set the color of the graph symbols */
         QColor getSymbolColor() const;
 
         /** \brief set the color of filling of the graph symbols */
         void setSymbolFillColor(const QColor & __value);
         /** \brief set the color of filling of the graph symbols */
+        void setSymbolFillColor(const QColor & __value, double alpha);
+        /** \brief set the color of filling of the graph symbols */
         QColor getSymbolFillColor() const;
+
+        /** \brief set alpha-value of symbol outline and filling */
+        void setSymbolAlpha(double alpha);
 
         /** \brief set the line width of the graph symbol outline (in pt) */
         void setSymbolLineWidth(double __value);
@@ -532,6 +543,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphFillStyleMixin {
         /** \brief set the color of the graph filling */
         void setFillColor(const QColor & __value);
         /** \brief set the color of the graph filling */
+        void setFillColor(const QColor & __value, double alpha);
+        /** \brief set the color of the graph filling */
         QColor getFillColor() const;
 
         /** \brief set the color of the graph filling and sets fill style to Qt::TexturePattern */
@@ -643,6 +656,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphTextStyleMixin {
 
         /** \brief set the color of the text */
         void setTextColor(const QColor & __value);
+        /** \brief set the color of the text */
+        void setTextColor(const QColor & __value, double alpha);
         /** \brief set the color of the text */
         QColor getTextColor() const;
 
