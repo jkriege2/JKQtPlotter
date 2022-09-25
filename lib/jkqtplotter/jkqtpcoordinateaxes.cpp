@@ -1688,7 +1688,7 @@ void JKQTPVerticalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
         #endif
         const QPen pmain1=axisStyle.getZeroAxisPen(painter, parent);
         painter.setPen(pmain1);
-        const QLineF l(left-parent->pt2px(painter, axisStyle.tickOutsideLength), x2p(0), right+parent->pt2px(painter, axisStyle.tickOutsideLength), x2p(0));
+        const QLineF l(left, x2p(0), right, x2p(0));
         if (l.length()>0) painter.drawLine(l);
     }
 
@@ -2361,7 +2361,7 @@ void JKQTPHorizontalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
         #endif
             const QPen pmain1=axisStyle.getZeroAxisPen(painter, parent);
             painter.setPen(pmain1);
-        const QLineF l(x2p(0), bottom+parent->pt2px(painter, axisStyle.tickOutsideLength), x2p(0), top-parent->pt2px(painter, axisStyle.tickOutsideLength));
+        const QLineF l(x2p(0), bottom, x2p(0), top);
         if (l.length()>0) painter.drawLine(l);
     }
 
