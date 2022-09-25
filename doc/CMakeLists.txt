@@ -177,6 +177,7 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         rgbimageplot
         rgbimageplot_qt
         mandelbrot
+        geo_coordinateaxis0
         #speed
     )
 
@@ -198,6 +199,7 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         filledgraphs/JKQTPFilledCurveXGraph,JKQTPFilledCurveYGraph/--smallscreenshotplot
         filledgraphs_errors/JKQTPFilledCurveXErrorGraph,JKQTPFilledCurveYErrorGraph/--smallscreenshotplot
         evalcurve/JKQTPXYFunctionLineGraph/--smallscreenshotplot
+        geo_coordinateaxis0/JKQTPCoordinateAxisStyleDrawMode0
     )
 
 

@@ -44,6 +44,7 @@ JKQTPCoordinateAxisStyle::JKQTPCoordinateAxisStyle():
     minorTickLabelFullNumber(true),
     drawMode1(JKQTPCADMcomplete),
     drawMode2(JKQTPCADMLineTicks),
+    drawMode0(JKQTPCADMnone),
     minorTickColor(QColor("black")),
     minorTickLabelColor(QColor("black")),
     minorTickWidth(1),
@@ -111,19 +112,20 @@ void JKQTPCoordinateAxisStyle::loadSettings(const QSettings &settings, const QSt
     minorTickInsideLength = settings.value(group+"minor_tick/inside_length", defaultStyle.minorTickInsideLength).toDouble();
     tickLabelDistance = settings.value(group+"ticks/label_distance", defaultStyle.tickLabelDistance).toDouble();
     labelDistance = settings.value(group+"axis_label/distance", defaultStyle.labelDistance).toDouble();
-    labelPosition=String2JKQTPLabelPosition(settings.value(group+"axis_label/position", JKQTPLabelPosition2String(labelPosition)).toString());
-    tickLabelType=String2JKQTPCALabelType(settings.value(group+"ticks/type", JKQTPCALabelType2String(tickLabelType)).toString());
-    labelColor=jkqtp_String2QColor(settings.value(group+"axis_label/color", jkqtp_QColor2String(labelColor)).toString());
-    axisColor=jkqtp_String2QColor(settings.value(group+"color", jkqtp_QColor2String(axisColor)).toString());
-    tickColor=jkqtp_String2QColor(settings.value(group+"ticks/color", jkqtp_QColor2String(tickColor)).toString());
-    minorTickColor=jkqtp_String2QColor(settings.value(group+"minor_tick/color", jkqtp_QColor2String(minorTickColor)).toString());
-    tickLabelColor=jkqtp_String2QColor(settings.value(group+"ticks/label_color", jkqtp_QColor2String(tickLabelColor)).toString());
-    minorTickLabelColor=jkqtp_String2QColor(settings.value(group+"minor_tick/label_color", jkqtp_QColor2String(minorTickLabelColor)).toString());
-    drawMode1=String2JKQTPCADrawMode(settings.value(group+"draw_mode1", JKQTPCADrawMode2String(drawMode1)).toString());
-    drawMode2=String2JKQTPCADrawMode(settings.value(group+"draw_mode2", JKQTPCADrawMode2String(drawMode2)).toString());
-    tickMode=String2JKQTPLabelTickMode(settings.value(group+"ticks/mode", JKQTPLabelTickMode2String(tickMode)).toString());
-    colorZeroAxis=jkqtp_String2QColor(settings.value(group+"zero_line/color", jkqtp_QColor2String(colorZeroAxis)).toString());
-    styleZeroAxis=jkqtp_String2QPenStyle(settings.value(group+"zero_line/style", jkqtp_QPenStyle2String(styleZeroAxis)).toString());
+    labelPosition=String2JKQTPLabelPosition(settings.value(group+"axis_label/position", JKQTPLabelPosition2String(defaultStyle.labelPosition)).toString());
+    tickLabelType=String2JKQTPCALabelType(settings.value(group+"ticks/type", JKQTPCALabelType2String(defaultStyle.tickLabelType)).toString());
+    labelColor=jkqtp_String2QColor(settings.value(group+"axis_label/color", jkqtp_QColor2String(defaultStyle.labelColor)).toString());
+    axisColor=jkqtp_String2QColor(settings.value(group+"color", jkqtp_QColor2String(defaultStyle.axisColor)).toString());
+    tickColor=jkqtp_String2QColor(settings.value(group+"ticks/color", jkqtp_QColor2String(defaultStyle.tickColor)).toString());
+    minorTickColor=jkqtp_String2QColor(settings.value(group+"minor_tick/color", jkqtp_QColor2String(defaultStyle.minorTickColor)).toString());
+    tickLabelColor=jkqtp_String2QColor(settings.value(group+"ticks/label_color", jkqtp_QColor2String(defaultStyle.tickLabelColor)).toString());
+    minorTickLabelColor=jkqtp_String2QColor(settings.value(group+"minor_tick/label_color", jkqtp_QColor2String(defaultStyle.minorTickLabelColor)).toString());
+    drawMode1=String2JKQTPCADrawMode(settings.value(group+"draw_mode1", JKQTPCADrawMode2String(defaultStyle.drawMode1)).toString());
+    drawMode2=String2JKQTPCADrawMode(settings.value(group+"draw_mode2", JKQTPCADrawMode2String(defaultStyle.drawMode2)).toString());
+    drawMode0=String2JKQTPCADrawMode(settings.value(group+"draw_mode0", JKQTPCADrawMode2String(defaultStyle.drawMode0)).toString());
+    tickMode=String2JKQTPLabelTickMode(settings.value(group+"ticks/mode", JKQTPLabelTickMode2String(defaultStyle.tickMode)).toString());
+    colorZeroAxis=jkqtp_String2QColor(settings.value(group+"zero_line/color", jkqtp_QColor2String(defaultStyle.colorZeroAxis)).toString());
+    styleZeroAxis=jkqtp_String2QPenStyle(settings.value(group+"zero_line/style", jkqtp_QPenStyle2String(defaultStyle.styleZeroAxis)).toString());
     axisLineOffset = settings.value(group+"axis_lines_offset", defaultStyle.axisLineOffset).toDouble();
     majorGridStyle.loadSettings(settings, group+"grid/", defaultStyle.majorGridStyle);
     minorGridStyle.loadSettings(settings, group+"minor_grid/", defaultStyle.minorGridStyle);
@@ -134,6 +136,7 @@ void JKQTPCoordinateAxisStyle::saveSettings(QSettings &settings, const QString &
     settings.setValue(group+"color", jkqtp_QColor2String(axisColor));
     settings.setValue(group+"draw_mode1", JKQTPCADrawMode2String(drawMode1));
     settings.setValue(group+"draw_mode2", JKQTPCADrawMode2String(drawMode2));
+    settings.setValue(group+"draw_mode0", JKQTPCADrawMode2String(drawMode2));
     settings.setValue(group+"line_width", lineWidth);
     settings.setValue(group+"arrow_size_factor", arrowSizeFactor);
     settings.setValue(group+"axis_lines_offset", axisLineOffset);
@@ -233,4 +236,5 @@ void JKQTPColorbarCoordinateAxisStyle::initMembersForColorbars() {
     tickOutsideLength=0;
     minorTickOutsideLength=0;
     showZeroAxis=false;
+    drawMode0=JKQTPCADMnone;
 }

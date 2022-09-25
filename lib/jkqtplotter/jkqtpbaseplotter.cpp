@@ -458,7 +458,7 @@ void JKQTBasePlotter::setMaintainAspectRatio(bool value) {
 
 void JKQTBasePlotter::setMaintainAxisAspectRatio(bool value) {
     maintainAxisAspectRatio=value;
-    setAspectRatio(axisAspectRatio);
+    setAspectRatio(aspectRatio);
     redrawPlot();
 }
 

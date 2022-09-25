@@ -232,10 +232,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         /** \brief add a new tick label to the axis */
         void addAxisTickLabels(const double* x, const QString* label, int items);
 
-        /** \brief returns the size of the left/bottom axis in pt */
+        /** \brief returns the size of the left/bottom axis in pixels */
         virtual QSizeF getSize1(JKQTPEnhancedPainter& painter)=0;
 
-        /** \brief returns the size of the right/top axis in pt */
+        /** \brief returns the size of the right/top axis in pixels */
         virtual QSizeF getSize2(JKQTPEnhancedPainter& painter)=0;
 
         /** \brief draw axes  */
@@ -330,6 +330,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         /** \copydoc JKQTPCoordinateAxisStyle::tickMode */
         inline JKQTPLabelTickMode getTickMode() const { return this->axisStyle.tickMode; }
 
+        /** \copydoc JKQTPCoordinateAxisStyle::drawMode0 */
+        inline JKQTPCADrawMode getDrawMode0() const { return this->axisStyle.drawMode0; }
         /** \copydoc JKQTPCoordinateAxisStyle::drawMode1 */
         inline JKQTPCADrawMode getDrawMode1() const { return this->axisStyle.drawMode1; }
         /** \copydoc JKQTPCoordinateAxisStyle::drawMode2 */
@@ -439,6 +441,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         virtual bool getParentOtheraxisInverted() const=0;
         /** \brief pixel offset of (perpendicular) other axis (needed for grids) */
         virtual double getParentOtheraxisOffset() const=0;
+        /** \brief calls x2p() of the other axis (or returns \c NAN if the other axis does not exist */
+        virtual double parentOtherAxisX2P(double x) const =0;
 
     public slots:
         /** \brief set range of plot axis */
@@ -565,9 +569,13 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
 
         /** \copydoc JKQTPGridStyle::lineColor */
         void setGridColor(const QColor& __value);
+        /** \copydoc JKQTPGridStyle::lineColor */
+        void setGridColor(const QColor& __value, double alpha);
 
         /** \copydoc JKQTPGridStyle::lineColor */
         void setMinorGridColor(const QColor& __value);
+        /** \copydoc JKQTPGridStyle::lineColor */
+        void setMinorGridColor(const QColor& __value, double alpha);
 
         /** \copydoc JKQTPGridStyle::lineWidth */
         void setGridWidth (double __value);
@@ -584,6 +592,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
 
         /** \copydoc JKQTPCoordinateAxisStyle::drawMode1 */
         void setDrawMode1 (JKQTPCADrawMode __value);
+        /** \copydoc JKQTPCoordinateAxisStyle::drawMode0 */
+        void setDrawMode0 (JKQTPCADrawMode __value);
 
         /** \copydoc JKQTPCoordinateAxisStyle::drawMode2 */
         void setDrawMode2(JKQTPCADrawMode __value);
@@ -631,6 +641,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         void setTickLabelColor(QColor c) ;
 
     protected:
+        /** \brief returns the size of the zero axis in pixels, the first part of the return-value is the lhs size and the second part the rhs size */
+        virtual std::pair<QSizeF, QSizeF> getSize0(JKQTPEnhancedPainter& painter) ;
         /** \brief indicates whether one of the parameters has changed sinse the last recalculation of tickSpacing ... */
         bool paramsChanged;
         /** \brief can be used to switch off calcPlotScaling() temporarily, while modifying some properties
@@ -818,6 +830,11 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         QSizeF getMaxTickLabelSize(JKQTPEnhancedPainter& painter, double* ascent=nullptr, double* descent=nullptr);
         /** \brief draw the axis line \a l (pointing from axismin to axismax) optionally decorated as specified by \a drawMode using JKQTPEnhancedPainter \a painter */
         void drawAxisLine(JKQTPEnhancedPainter& painter, const QLineF& l, JKQTPCADrawMode drawMode) const;
+
+        /** \brief calculate the position of the zero-axis (and whether to draw  it or not) */
+        double getZeroAxisPos(bool*  drawZeroAxis=nullptr);
+
+
 };
 
 
@@ -827,6 +844,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
 /*! \brief implements a vertical axis, based on JKQTPCoordinateAxis (for most of documentation: see JKQTPCoordinateAxis).
     \ingroup jkqtpbaseplotter_elements
 
+    The positioning of the different axis elements depends on the psition of the "other" axis (here x-axis),
+    i.e. the corresponding vertical axis:
+
+    \image html JKQTPHorizontalAxisPositioning.png
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPVerticalAxis: public JKQTPCoordinateAxis {
         Q_OBJECT
@@ -835,30 +856,35 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPVerticalAxis: public JKQTPCoordinateAxis {
         /** \brief class constructor */
         JKQTPVerticalAxis(JKQTBasePlotter* parent);
 
-        /** \brief returns the size of the left/bottom axis in pt */
+        /** \brief returns the size of the left axis in pixels */
         virtual QSizeF getSize1(JKQTPEnhancedPainter& painter) override;
 
-        /** \brief returns the size of the right/top axis in pt */
+        /** \brief returns the size of the right axis in pixels */
         virtual QSizeF getSize2(JKQTPEnhancedPainter& painter) override;
 
-        /** \brief draw axes */
+        /** copydoc JKQTPCoordinateAxis::drawAxes() */
         virtual void drawAxes(JKQTPEnhancedPainter& painter) override;
 
-        /** \brief draw grids  */
+        /** copydoc JKQTPCoordinateAxis::drawGrids() */
         virtual void drawGrids(JKQTPEnhancedPainter& painter) override;
 
 
-        /** \brief width of the plot in the direction of the axis */
+        /** copydoc JKQTPCoordinateAxis::getParentPlotWidth() */
         virtual double getParentPlotWidth() const override;
-        /** \brief offset of the plot in the direction of the axis */
+        /** copydoc JKQTPCoordinateAxis::getParentPlotOffset() */
         virtual double getParentPlotOffset() const override;
-        /** \brief pixel of other (perpendicular) axis (needed for grids) */
+        /** copydoc JKQTPCoordinateAxis::getParentOtheraxisWidth() */
         virtual double getParentOtheraxisWidth() const override;
+        /** copydoc JKQTPCoordinateAxis::getParentOtheraxisInverted() */
         virtual bool getParentOtheraxisInverted() const override;
-        /** \brief pixel offset of (perpendicular) other axis (needed for grids) */
+        /** copydoc JKQTPCoordinateAxis::getParentOtheraxisOffset() */
         virtual double getParentOtheraxisOffset() const override;
+        /** copydoc JKQTPCoordinateAxis::parentOtherAxisX2P() */
+        virtual double parentOtherAxisX2P(double x) const override;
 
     protected:
+        /** copydoc JKQTPCoordinateAxis::getSize0() */
+        virtual std::pair<QSizeF,QSizeF> getSize0(JKQTPEnhancedPainter& painter) override;
         /** \brief draw a tick label on the left axis 1 with text \a label (with optional rotation) at ( \a xx , \a yy ) (in pixel)
          *
          *  \param painter the JKQTPEnhancedPainter used for drawing
@@ -882,16 +908,30 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPVerticalAxis: public JKQTPCoordinateAxis {
          */
         void drawTickLabel2(JKQTPEnhancedPainter& painter, double xx, double yy, double labelOffset, const QString &label, double fontSize, bool isMinor=false) ;
         /** \brief draw the axis label using \a painter for axis 1 at \c x= \a left and \c y= \a bottom. \a labelMax is the maximum Size of all tick labels */
-        void drawAxisLabel1(JKQTPEnhancedPainter &painter, double left, double bottom, QSizeF labelMax);
+        void drawAxisLabel1(JKQTPEnhancedPainter &painter, double left, double bottom, QSizeF labelMax, JKQTPCADrawMode drawMode);
         /** \brief draw the axis label using \a painter for axis 2 at \c x= \a right and \c y= \a bottom. \a labelMax is the maximum Size of all tick labels */
-        void drawAxisLabel2(JKQTPEnhancedPainter &painter, double right, double bottom, QSizeF labelMax);
+        void drawAxisLabel2(JKQTPEnhancedPainter &painter, double right, double bottom, QSizeF labelMax, JKQTPCADrawMode drawMode);
 };
 
 
 /*! \brief implements a position-indipendent vertical axis, based on JKQTPCoordinateAxis (for most of documentation: see JKQTPCoordinateAxis).
     \ingroup jkqtpbaseplotter_elements
 
-    This axis may be draw at a user-supplied position (used e.g. for color bar axes)
+
+    This axis may be draw at a user-supplied position (used e.g. for color bar axes).
+    The axis positioning parameters are supplied via the constructor,or setter methods.
+
+    \image html JKQTPVerticalIndependentAxisPositioning.png
+
+    Basically this class overwrites several virtual methods as follows:
+      - getParentPlotWidth() returns axisWidth, provided in the connstructor or via setParentPlotWidth()
+      - getParentPlotOffset() returns axisOffset, provided in the connstructor or via setParentPlotOffset()
+      - getParentOtheraxisWidth() returns otherAxisWidth, provided in the connstructor or via setParentPlotOtheraxisWidth()
+      - getParentOtheraxisOffset() returns otherAxisOffset, provided in the connstructor or via setParentPlotOtheraxisOffset()
+    .
+
+    If it is paired with another axis, the parameters of that axis have to be given explizitly in the constructor or with  setters.
+
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPVerticalIndependentAxis: public JKQTPVerticalAxis {
         Q_OBJECT
@@ -899,16 +939,19 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPVerticalIndependentAxis: public JKQTPVerticalA
     public:
         /** \brief class constructor */
         JKQTPVerticalIndependentAxis(double axisOffset, double axisWidth, double otherAxisOffset, double otherAxisWidth, JKQTBasePlotter* parent);
-         /** \brief width of the plot in the direction of the axis */
+
+        /** copydoc JKQTPCoordinateAxis::getParentPlotWidth() */
         virtual double getParentPlotWidth() const override;
-        /** \brief offset of the plot in the direction of the axis */
+        /** copydoc JKQTPCoordinateAxis::getParentPlotOffset() */
         virtual double getParentPlotOffset() const override;
-        /** \brief pixel of other (perpendicular) axis (needed for grids) */
+        /** copydoc JKQTPCoordinateAxis::getParentOtheraxisWidth() */
         virtual double getParentOtheraxisWidth() const override;
-        /** \brief returns whether the other axis is inverted */
+        /** copydoc JKQTPCoordinateAxis::getParentOtheraxisInverted() */
         virtual bool getParentOtheraxisInverted() const override;
-        /** \brief pixel offset of (perpendicular) other axis (needed for grids) */
+        /** copydoc JKQTPCoordinateAxis::getParentOtheraxisOffset() */
         virtual double getParentOtheraxisOffset() const override;
+        /** copydoc JKQTPCoordinateAxis::parentOtherAxisX2P() */
+        virtual double parentOtherAxisX2P(double x) const override;
     public slots:
         /** \brief set the axis offset */
         virtual void setAxisOffset(double __value) ;
@@ -939,6 +982,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPVerticalIndependentAxis: public JKQTPVerticalA
 /*! \brief implements a horizontal axis, based on JKQTPCoordinateAxis (for most of documentation: see JKQTPCoordinateAxis).
     \ingroup jkqtpbaseplotter_elements
 
+    The positioning of the different axis elements depends on the psition of the "other"  axis (here y-axis),
+    i.e. the corresponding vertical axis:
+
+    \image html JKQTPHorizontalAxisPositioning.png
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPHorizontalAxis: public JKQTPCoordinateAxis {
         Q_OBJECT
@@ -947,30 +994,35 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPHorizontalAxis: public JKQTPCoordinateAxis {
         /** \brief class constructor */
         JKQTPHorizontalAxis(JKQTBasePlotter* parent);
 
-        /** \brief returns the size of the left/bottom axis in pt */
+        /** \brief returns the size of the bottom axis in pixels */
         virtual QSizeF getSize1(JKQTPEnhancedPainter& painter) override;
 
-        /** \brief returns the size of the right/top axis in pt */
+        /** \brief returns the size of the top axis in pixels */
         virtual QSizeF getSize2(JKQTPEnhancedPainter& painter) override;
 
-        /** \brief draw axes */
+        /** copydoc JKQTPCoordinateAxis::drawAxes() */
         virtual void drawAxes(JKQTPEnhancedPainter& painter) override;
 
-        /** \brief draw grids  */
+        /** copydoc JKQTPCoordinateAxis::drawGrids() */
         virtual void drawGrids(JKQTPEnhancedPainter& painter) override;
 
-        /** \brief width of the plot in the direction of the axis */
+
+        /** copydoc JKQTPCoordinateAxis::getParentPlotWidth() */
         virtual double getParentPlotWidth() const override;
-        /** \brief offset of the plot in the direction of the axis */
+        /** copydoc JKQTPCoordinateAxis::getParentPlotOffset() */
         virtual double getParentPlotOffset() const override;
-        /** \brief pixel of other (perpendicular) axis (needed for grids) */
+        /** copydoc JKQTPCoordinateAxis::getParentOtheraxisWidth() */
         virtual double getParentOtheraxisWidth() const override;
-        /** \brief returns whether the other axis is inverted */
+        /** copydoc JKQTPCoordinateAxis::getParentOtheraxisInverted() */
         virtual bool getParentOtheraxisInverted() const override;
-        /** \brief pixel offset of (perpendicular) other axis (needed for grids) */
+        /** copydoc JKQTPCoordinateAxis::getParentOtheraxisOffset() */
         virtual double getParentOtheraxisOffset() const override;
+        /** copydoc JKQTPCoordinateAxis::parentOtherAxisX2P() */
+        virtual double parentOtherAxisX2P(double x) const override;
 
     protected:
+        /** copydoc JKQTPCoordinateAxis::getSize0() */
+        virtual std::pair<QSizeF, QSizeF> getSize0(JKQTPEnhancedPainter& painter) override;
         /** \brief draw a tick label on the lower axis 1 with text \a label (with optional rotation) at ( \a xx , \a yy ) (in pixel)
          *
          *  \param painter the JKQTPEnhancedPainter used for drawing
@@ -998,9 +1050,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPHorizontalAxis: public JKQTPCoordinateAxis {
          */
         void drawTickLabel2(JKQTPEnhancedPainter& painter, double xx, double yy, double labelOffset, const QString &label, double fontSize, double ascentMax, double descentMax, bool isMinor=false) ;
         /** \brief draw the axis label using \a painter for axis 1 at \c x= \a left and \c y= \a bottom. \a labelMax is the maximum Size of all tick labels */
-        void drawAxisLabel1(JKQTPEnhancedPainter &painter, double left, double bottom, QSizeF labelMax);
+        void drawAxisLabel1(JKQTPEnhancedPainter &painter, double left, double bottom, QSizeF labelMax, JKQTPCADrawMode drawMode);
         /** \brief draw the axis label using \a painter for axis 2 at \c x= \a left and \c y= \a top. \a labelMax is the maximum Size of all tick labels */
-        void drawAxisLabel2(JKQTPEnhancedPainter &painter, double left, double top, QSizeF labelMax);
+        void drawAxisLabel2(JKQTPEnhancedPainter &painter, double left, double top, QSizeF labelMax, JKQTPCADrawMode drawMode);
 
 };
 
@@ -1008,7 +1060,20 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPHorizontalAxis: public JKQTPCoordinateAxis {
 /*! \brief implements a position-indipendent horizontal axis, based on JKQTPCoordinateAxis (for most of documentation: see JKQTPCoordinateAxis).
     \ingroup jkqtpbaseplotter_elements
 
-    This axis may be draw at a user-supplied position (used e.g. for color bar axes)
+    This axis may be draw at a user-supplied position (used e.g. for color bar axes).
+    The axis positioning parameters are supplied via the constructor,or setter methods.
+
+    \image html JKQTPHorizontalIndependentAxisPositioning.png
+
+    Basically this class overwrites several virtual methods as follows:
+      - getParentPlotWidth() returns axisWidth, provided in the connstructor or via setParentPlotWidth()
+      - getParentPlotOffset() returns axisOffset, provided in the connstructor or via setParentPlotOffset()
+      - getParentOtheraxisWidth() returns otherAxisWidth, provided in the connstructor or via setParentPlotOtheraxisWidth()
+      - getParentOtheraxisOffset() returns otherAxisOffset, provided in the connstructor or via setParentPlotOtheraxisOffset()
+    .
+
+    If it is paired with another axis, the parameters of that axis have to be given explizitly in the constructor or with  setters.
+
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPHorizontalIndependentAxis: public JKQTPHorizontalAxis {
         Q_OBJECT
@@ -1016,6 +1081,19 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPHorizontalIndependentAxis: public JKQTPHorizon
     public:
         /** \brief class constructor */
         JKQTPHorizontalIndependentAxis(double axisOffset, double axisWidth, double otherAxisOffset, double otherAxisWidth, JKQTBasePlotter* parent);
+
+        /** copydoc JKQTPCoordinateAxis::getParentPlotWidth() */
+        virtual double getParentPlotWidth() const override;
+        /** copydoc JKQTPCoordinateAxis::getParentPlotOffset() */
+        virtual double getParentPlotOffset() const override;
+        /** copydoc JKQTPCoordinateAxis::getParentOtheraxisWidth() */
+        virtual double getParentOtheraxisWidth() const override;
+        /** copydoc JKQTPCoordinateAxis::getParentOtheraxisInverted() */
+        virtual bool getParentOtheraxisInverted() const override;
+        /** copydoc JKQTPCoordinateAxis::getParentOtheraxisOffset() */
+        virtual double getParentOtheraxisOffset() const override;
+        /** copydoc JKQTPCoordinateAxis::parentOtherAxisX2P() */
+        virtual double parentOtherAxisX2P(double x) const override;
     public slots:
         /** \brief set the axis offset */
         virtual void setAxisOffset(double __value);
@@ -1025,18 +1103,11 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPHorizontalIndependentAxis: public JKQTPHorizon
         virtual void setOtherAxisOffset(double __value);
         /** \brief set the other axis width */
         virtual void setOtherAxisWidth(double __value);
+        /** \brief set whether the other axis is inverted */
         virtual void setOtherAxisInverted(bool __value);
+
     protected:
-        /** \brief width of the plot in the direction of the axis */
-        virtual double getParentPlotWidth() const override;
-        /** \brief offset of the plot in the direction of the axis */
-        virtual double getParentPlotOffset() const override;
-        /** \brief pixel of other (perpendicular) axis (needed for grids) */
-        virtual double getParentOtheraxisWidth() const override;
-        /** \brief returns whether the other axis is inverted */
-        virtual bool getParentOtheraxisInverted() const override;
-        /** \brief pixel offset of (perpendicular) other axis (needed for grids) */
-        virtual double getParentOtheraxisOffset() const override;
+
 
         /** \brief the offset of the axis */
         double axisOffset;

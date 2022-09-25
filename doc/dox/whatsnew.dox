@@ -59,6 +59,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
                        JKQTPCALTprintf for general formatting with a printf-format string </li>
     <li>NEW: all elements of a coordinate axis may have their own color now </li>
     <li>NEW: added possibility to scale the axis ticks by a factor (e.g. pi) to generate axes with ticks <tt>0pi, 1pi, 2pi ...</tt> </li>
+    <li>NEW: added option to draw a zero axis to JKQTPCoordinateAxis, which draws an axis at the origin of the coordinate system  </li>
   </ul></li>
   
   <li>JKQTMathText:<ul>

@@ -314,7 +314,7 @@ void JKQTPGeoPolygon::draw(JKQTPEnhancedPainter& painter) {
         painter.setPen(getLinePen(painter, parent));
         painter.setBrush(getFillBrush(painter, parent));
         if ((getDrawMode()==DrawAsGraphicElement) || (getParent()->getXAxis()->isLinearAxis() && getParent()->getYAxis()->isLinearAxis())) {
-            painter.drawPolygon(points);
+            painter.drawPolygon(transform(points));
         } else {
             // for non-linear axes, a line might not be drawn as a line, so we need to segment the line (i.e. linear function in coordinate space)
             // and transform each node to draw the corresponding non-linear curve in pixel-space!

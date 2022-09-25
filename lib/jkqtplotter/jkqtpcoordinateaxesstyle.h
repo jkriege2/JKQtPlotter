@@ -73,7 +73,9 @@ public:
 /** \brief Support Class for JKQTPCoordinateAxis, which summarizes all properties that define the visual styling of a JKQTPCoordinateAxis
  *  \ingroup jkqtpplotter_styling_classes
  *
- * \see JKQTPCoordinateAxis, \ref jkqtpplotter_styling
+ *  \image html jkqtpcoordinateaxis1.png
+ *
+ *  \see JKQTPCoordinateAxis, \ref jkqtpplotter_styling
  *
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxisStyle {
@@ -132,6 +134,13 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxisStyle {
         JKQTPCADrawMode drawMode1;
         /** \brief draw mode of the secondary (right/top) axis */
         JKQTPCADrawMode drawMode2;
+        /** \brief draw mode of the zero axis
+         *
+         *  \image html JKQTPCoordinateAxisStyleDrawMode0.png
+         *
+         *  \see \ref JKQTPlotterGeometricCoordinateAxis0
+         */
+        JKQTPCADrawMode drawMode0;
         /** \brief color of minor ticks */
         QColor minorTickColor;
         /** \brief color of minor tick labels */
