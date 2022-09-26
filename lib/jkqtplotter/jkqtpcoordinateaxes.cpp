@@ -1291,7 +1291,7 @@ std::pair<QSizeF,QSizeF> JKQTPVerticalAxis::getSize0(JKQTPEnhancedPainter& paint
     const double top_offset=(zaxispos-top);
     const QSizeF s1(qMax(0.0,qMax(parent->pt2px(painter, ptwidth)+labwidth, arrowSize)-bottom_offset), getParentPlotWidth());
     const QSizeF s2(qMax(0.0,qMax(parent->pt2px(painter, ptwidth_r), arrowSize)-top_offset), getParentPlotWidth());
-    qDebug()<<"JKQTPVerticalAxis::getSize0():  s1="<<s1<<", s2="<<s2<<", bottom_offset="<<bottom_offset<<", top_offset="<<top_offset<<" top="<<top<<", bottom="<<bottom<<", zaxispos="<<zaxispos;
+    //qDebug()<<"JKQTPVerticalAxis::getSize0():  s1="<<s1<<", s2="<<s2<<", bottom_offset="<<bottom_offset<<", top_offset="<<top_offset<<" top="<<top<<", bottom="<<bottom<<", zaxispos="<<zaxispos;
     return std::pair<QSizeF,QSizeF>(s1,s2);
 }
 

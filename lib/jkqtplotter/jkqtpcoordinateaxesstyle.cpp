@@ -136,7 +136,7 @@ void JKQTPCoordinateAxisStyle::saveSettings(QSettings &settings, const QString &
     settings.setValue(group+"color", jkqtp_QColor2String(axisColor));
     settings.setValue(group+"draw_mode1", JKQTPCADrawMode2String(drawMode1));
     settings.setValue(group+"draw_mode2", JKQTPCADrawMode2String(drawMode2));
-    settings.setValue(group+"draw_mode0", JKQTPCADrawMode2String(drawMode2));
+    settings.setValue(group+"draw_mode0", JKQTPCADrawMode2String(drawMode0));
     settings.setValue(group+"line_width", lineWidth);
     settings.setValue(group+"arrow_size_factor", arrowSizeFactor);
     settings.setValue(group+"axis_lines_offset", axisLineOffset);
@@ -229,6 +229,7 @@ JKQTPColorbarCoordinateAxisStyle::JKQTPColorbarCoordinateAxisStyle(const JKQTBas
 }
 
 void JKQTPColorbarCoordinateAxisStyle::initMembersForColorbars() {
+    drawMode0=JKQTPCADMnone;
     drawMode1=JKQTPCADMLine;
     drawMode2=JKQTPCADMcomplete;
     minTicks=5;
@@ -236,5 +237,4 @@ void JKQTPColorbarCoordinateAxisStyle::initMembersForColorbars() {
     tickOutsideLength=0;
     minorTickOutsideLength=0;
     showZeroAxis=false;
-    drawMode0=JKQTPCADMnone;
 }
