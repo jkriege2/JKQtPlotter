@@ -102,6 +102,11 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarGraphBase: public JKQTPXYBaselineGraph, pub
         const JKQTPGraphFillStyleMixin& fillStyleBelow() const;
         /** \copydoc m_fillMode */
         FillMode getFillMode() const;
+        /** \copydoc rectRadiusAtValue */
+        double getRectRadiusAtValue() const;
+        /** \copydoc rectRadiusAtBaseline */
+        double getRectRadiusAtBaseline() const;
+
     public slots:
         /** \copydoc m_fillMode */
         void setFillMode(JKQTPBarGraphBase::FillMode mode);
@@ -122,6 +127,15 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarGraphBase: public JKQTPXYBaselineGraph, pub
         void setShift(double __value);
         /** \copydoc width */
         void setWidth(double __value);
+
+        /** \copydoc rectRadiusAtValue */
+        void setRectRadiusAtValue(double __value);
+        /** \copydoc rectRadiusAtBaseline */
+        void setRectRadiusAtBaseline(double __value);
+        /** \brief sets the corner radius of the bars for both ends */
+        void setRectRadius(double all);
+        /** \brief sets the corner radius of the bars for both ends */
+        void setRectRadius(double atValue, double atBaseline);
 
 
         /** \brief set outline and fill color at the same time
@@ -154,6 +168,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarGraphBase: public JKQTPXYBaselineGraph, pub
          *     \image html bargraph_basics.png
          */
         double shift;
+        /** \brief corner radius (in pt) for bars at the "value" end */
+        double rectRadiusAtValue;
+        /** \brief corner radius (in pt) for bars at the "baseline" end */
+        double rectRadiusAtBaseline;
         /** \brief specifies how the area of the graph is filles */
         FillMode m_fillMode;
         /** \brief if m_fillMode \c ==FillAboveAndBelowDifferently then this fill style is used below the baseline and

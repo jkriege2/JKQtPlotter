@@ -25,8 +25,6 @@
 #include <QDebug>
 #include <iostream>
 #include "jkqtplotter/jkqtptools.h"
-#include "jkqtplotter/graphs/jkqtpimage.h"
-#include "jkqtplotter/jkqtpbaseelements.h"
 #include "jkqtplotter/jkqtplotter.h"
 
 #define SmallestGreaterZeroCompare_xvsgz() if ((xvsgz>10.0*DBL_MIN)&&((smallestGreaterZero<10.0*DBL_MIN) || (xvsgz<smallestGreaterZero))) smallestGreaterZero=xvsgz;
@@ -37,11 +35,13 @@
 
 
 JKQTPBarGraphBase::JKQTPBarGraphBase(JKQTBasePlotter* parent):
-    JKQTPXYBaselineGraph(parent), width(0.9), shift(0), m_fillMode(FillMode::SingleFilling)
+    JKQTPXYBaselineGraph(parent), width(0.9), shift(0), m_fillMode(FillMode::SingleFilling),rectRadiusAtBaseline(0),rectRadiusAtValue(0)
 {
     initFillStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Barchart);
     initLineStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Barchart);
     m_fillStyleBelow.initFillStyleInvertedColor(this);
+    rectRadiusAtBaseline= parent->getCurrentPlotterStyle().graphsStyle.barchartStyle.defaultRectRadiusAtBaseline;
+    rectRadiusAtValue= parent->getCurrentPlotterStyle().graphsStyle.barchartStyle.defaultRectRadiusAtValue;
 }
 
 
@@ -155,6 +155,16 @@ const JKQTPGraphFillStyleMixin &JKQTPBarGraphBase::fillStyleBelow() const
 JKQTPBarGraphBase::FillMode JKQTPBarGraphBase::getFillMode() const
 {
     return m_fillMode;
+}
+
+double JKQTPBarGraphBase::getRectRadiusAtValue() const
+{
+    return rectRadiusAtValue;
+}
+
+double JKQTPBarGraphBase::getRectRadiusAtBaseline() const
+{
+    return rectRadiusAtBaseline;
 }
 
 void JKQTPBarGraphBase::setFillMode(FillMode mode)
@@ -271,3 +281,25 @@ bool JKQTPBarGraphBase::getPositionsMinMax(double &mmin, double &mmax, double &s
     return false;
 }
 
+
+void JKQTPBarGraphBase::setRectRadiusAtValue(double __value)
+{
+    rectRadiusAtValue=__value;
+}
+
+void JKQTPBarGraphBase::setRectRadiusAtBaseline(double __value)
+{
+    rectRadiusAtBaseline=__value;
+}
+
+void JKQTPBarGraphBase::setRectRadius(double all)
+{
+    setRectRadiusAtValue(all);
+    setRectRadiusAtBaseline(all);
+}
+
+void JKQTPBarGraphBase::setRectRadius(double atValue, double atBaseline)
+{
+    setRectRadiusAtValue(atValue);
+    setRectRadiusAtBaseline(atBaseline);
+}

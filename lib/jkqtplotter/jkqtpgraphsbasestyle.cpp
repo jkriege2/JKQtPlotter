@@ -194,10 +194,11 @@ void JKQTAnnotationsSpecificStyleProperties::saveSettings(QSettings &settings, c
 
 
 
+
 JKQTGraphsBaseStyle::JKQTGraphsBaseStyle(const JKQTBasePlotterStyle& parent):
     useAntiAliasingForGraphs(true),
     defaultGraphStyle(JKQTPPlotStyleType::Default, parent),
-    barchartStyle(JKQTPPlotStyleType::Barchart, parent),
+    barchartStyle(parent),
     boxplotStyle(JKQTPPlotStyleType::Boxplot, parent),
     filledStyle(JKQTPPlotStyleType::Filled, parent),
     impulseStyle(JKQTPPlotStyleType::Impulses, parent),
@@ -286,7 +287,7 @@ void JKQTGraphsBaseStyle::loadSettings(const QSettings &settings, const QString 
 
 
     defaultGraphStyle.loadSettings(settings, group+"graphs_base/", JKQTGraphsSpecificStyleProperties(JKQTPPlotStyleType::Default, parent));
-    barchartStyle.loadSettings(settings, group+"graphs_barchart/", JKQTGraphsSpecificStyleProperties(JKQTPPlotStyleType::Barchart, defaultGraphStyle));
+    barchartStyle.loadSettings(settings, group+"graphs_barchart/", JKQTBarchartSpecificStyleProperties(parent, defaultGraphStyle));
     boxplotStyle.loadSettings(settings, group+"graphs_boxplot/", JKQTGraphsSpecificStyleProperties(JKQTPPlotStyleType::Boxplot, defaultGraphStyle));
     filledStyle.loadSettings(settings, group+"graphs_filled/", JKQTGraphsSpecificStyleProperties(JKQTPPlotStyleType::Filled, defaultGraphStyle));
     impulseStyle.loadSettings(settings, group+"graphs_impulses/",JKQTGraphsSpecificStyleProperties(JKQTPPlotStyleType::Impulses,  defaultGraphStyle));
@@ -352,3 +353,37 @@ const JKQTGraphsSpecificStyleProperties &JKQTGraphsBaseStyle::getGraphStyleByTyp
     }
     return defaultGraphStyle;
 }
+
+
+JKQTBarchartSpecificStyleProperties::JKQTBarchartSpecificStyleProperties(const JKQTBasePlotterStyle& parent):
+    JKQTGraphsSpecificStyleProperties(JKQTPPlotStyleType::Barchart, parent),
+    defaultRectRadiusAtValue(0),
+    defaultRectRadiusAtBaseline(0)
+{
+
+}
+
+JKQTBarchartSpecificStyleProperties::JKQTBarchartSpecificStyleProperties(const JKQTBasePlotterStyle& parent, const JKQTGraphsSpecificStyleProperties &other):
+    JKQTGraphsSpecificStyleProperties(JKQTPPlotStyleType::Barchart, other),
+    defaultRectRadiusAtValue(0),
+    defaultRectRadiusAtBaseline(0)
+{
+
+}
+
+void JKQTBarchartSpecificStyleProperties::loadSettings(const QSettings &settings, const QString &group, const JKQTBarchartSpecificStyleProperties &defaultStyle)
+{
+    JKQTGraphsSpecificStyleProperties::loadSettings(settings, group, defaultStyle);
+    defaultRectRadiusAtValue=settings.value(group+"radius_at_value", defaultStyle.defaultRectRadiusAtValue).toDouble();
+    defaultRectRadiusAtBaseline=settings.value(group+"radius_at_baseline", defaultStyle.defaultRectRadiusAtBaseline).toDouble();
+}
+
+void JKQTBarchartSpecificStyleProperties::saveSettings(QSettings &settings, const QString &group) const
+{
+    JKQTGraphsSpecificStyleProperties::saveSettings(settings, group);
+    settings.setValue(group+"radius_at_value", defaultRectRadiusAtValue);
+    settings.setValue(group+"radius_at_baseline", defaultRectRadiusAtBaseline);
+
+}
+
+

@@ -69,6 +69,8 @@ class JKQTCOMMON_LIB_EXPORT JKQTPEnhancedPainter : public QPainter {
             drawPolylineFast(polyline.constData(), int(polyline.size()));
         }
 
+        /** \brief draw a rounded rect, where each corner has a separate radius */
+        void drawComplexRoundedRect(const QRectF& r, double rTopLeft, double rTopRight, double rBottomLeft, double rBottomRight, Qt::SizeMode mode = Qt::AbsoluteSize);
     protected:
         void initQEnhacedPainter();
     private:

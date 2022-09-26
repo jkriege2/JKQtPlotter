@@ -9,7 +9,6 @@ This page lists several todos and wishes for future version of JKQTPlotter
     <li>graph: matrix plots with boxes, labels, ...</li>
     <li>graph: text labels at positions/for graphs</li>
     <li>plot: secondary axes: independent and dependent (i.e. with transformation function from primary axis)</li>
-    <li>graphs: rounded rectangles for barcharts (also controllable by styles)</li>
     <li>graphs: matrix plots with symbols: symbol-type, color, size should be parametric, cf. scatter plots</li>
     <li>styling: color gradients as fill-styles in style-INIs</li>
     <li>styling: style.ini with glowing colors in dark background ("techno" or "cyberpunk")</li>
@@ -28,7 +27,6 @@ This page lists several todos and wishes for future version of JKQTPlotter
     <li>graphic elements: make coordinate systems selectable for all: x/y-axis, 0..1/0..1, topleft/topright... </li>
     <li>plot: reqork layouting of legends: there are some inconsistencies/too large gaps ...</li>
     <li>plot: legend positioning as combination of 3 values: inside|outside + left|center|right + top|vcenter|bottom</li>
-    <li>styling/plot: make axes more customizable, e.g. color for each element, font for each element ...</li>
     <li>plot: axes with symlog (see http://dx.doi.org/10.1088/0957-0233/24/2/027001) and logit (https://de.m.wikipedia.org/wiki/Logit) scaling? </li>
     <li>graphs: add candlestick charts (financial, see https://en.m.wikipedia.org/wiki/Candlestick_chart)</li>
     <li>graphs: add OHLC charts (financial, see https://en.m.wikipedia.org/wiki/Open-high-low-close_chart)</li>

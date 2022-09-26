@@ -112,13 +112,27 @@ void JKQTPBarVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
                 double yy=yv0;
 
                 //std::cout<<"delta="<<delta<<"   x="<<x<<" y="<<y<<"   xx="<<xx<<" yy="<<yy<<std::endl;
-                if (yy<y) { qSwap(y,yy); }
+                bool swapped=false;
+                if (yy<y) { qSwap(y,yy); swapped=true; }
                 if (JKQTPIsOKFloat(x) && JKQTPIsOKFloat(xx) && JKQTPIsOKFloat(y) && JKQTPIsOKFloat(yy)) {
                     if (yvdirect<getBaseline()) painter.setBrush(b_below);
                     else painter.setBrush(b);
                     painter.setPen(p);
                     const QRectF r(QPointF(x, y), QPointF(xx, yy));
-                    painter.drawRect(r);
+                    const double rAtBaseline=parent->pt2px(painter, rectRadiusAtBaseline);
+                    const double rAtValue=parent->pt2px(painter, rectRadiusAtValue);
+                    //qDebug()<<"r="<<r<<", rectRadiusAtBaseline="<<rectRadiusAtBaseline<<", rectRadiusAtValue="<<rectRadiusAtValue<<", rAtBaseline="<<rAtBaseline<<", rAtValue="<<rAtValue;
+                    if (rAtBaseline+rAtValue>=r.height()+2) {
+                        //qDebug()<<"drawRect";
+                        painter.drawRect(r);
+                    } else {
+                        //qDebug()<<"drawRoundRect swapped="<<swapped;
+                        if (swapped) {
+                            painter.drawComplexRoundedRect(r,rAtBaseline,rAtBaseline,rAtValue,rAtValue,Qt::AbsoluteSize);
+                        } else {
+                            painter.drawComplexRoundedRect(r,rAtValue,rAtValue,rAtBaseline,rAtBaseline,Qt::AbsoluteSize);
+                        }
+                    }
 
                 }
             }
@@ -312,16 +326,26 @@ void JKQTPBarHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
                     double y=transformY(yv+shift*delta+width*deltap);
                     double xx=transformX(xv);
                     double yy=transformY(yv+shift*delta-width*deltam);
-                    if (x>xx) { qSwap(x,xx); }
+                    bool swapped=false;
+                    if (x>xx) { qSwap(x,xx); swapped=true; }
                     //qDebug()<<"delta="<<delta<<"   x="<<x<<" y="<<y<<"   xx="<<xx<<" yy="<<yy;
                     //qDebug()<<"xv="<<xv<<"   x0="<<x0<<"   x="<<x<<"..."<<xx;
                     if (JKQTPIsOKFloat(x) && JKQTPIsOKFloat(xx) && JKQTPIsOKFloat(y) && JKQTPIsOKFloat(yy)) {
                         if (xvdirect<getBaseline()) painter.setBrush(b_below);
                         else painter.setBrush(b);
                         painter.setPen(p);
-                        QRectF r(QPointF(x, y), QPointF(xx, yy));
-                        painter.drawRect(r);
-                    }
+                        const QRectF r(QPointF(x, y), QPointF(xx, yy));
+                        const double rAtBaseline=parent->pt2px(painter, rectRadiusAtBaseline);
+                        const double rAtValue=parent->pt2px(painter, rectRadiusAtBaseline);
+                        if (rAtBaseline+rAtValue>r.width()+2) {
+                            painter.drawRect(r);
+                        } else {
+                            if (swapped) {
+                                painter.drawComplexRoundedRect(r,rAtBaseline,rAtValue,rAtBaseline,rAtValue,Qt::AbsoluteSize);
+                            } else {
+                                painter.drawComplexRoundedRect(r,rAtValue,rAtBaseline,rAtValue,rAtBaseline,Qt::AbsoluteSize);
+                            }
+                        }                    }
                 }
             }
         }

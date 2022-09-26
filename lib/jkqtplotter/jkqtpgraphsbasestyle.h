@@ -195,8 +195,6 @@ public:
          */
      void saveSettings(QSettings& settings, const QString& group) const;
 
-     /** \brief defines how to derive a text color for a new graph */
-     JKQTPColorDerivationMode textColorDerivationMode;
      /** \brief default text color in the plot */
      QColor defaultTextColor;
      /** \brief default font size in the plot [pt] */
@@ -207,6 +205,48 @@ public:
 
 };
 
+
+/** \brief Support Class for JKQTBasePlotter, which summarizes all properties that define the visual styling of barchart elements
+*  \ingroup jkqtpplotter_styling_classes
+*
+*  \see JKQTBasePlotter, \ref jkqtpplotter_styling
+*/
+class JKQTPLOTTER_LIB_EXPORT JKQTBarchartSpecificStyleProperties: public JKQTGraphsSpecificStyleProperties {
+#ifndef JKQTPLOTTER_WORKAROUND_QGADGET_BUG
+     Q_GADGET
+#endif
+public:
+    JKQTBarchartSpecificStyleProperties(const JKQTBasePlotterStyle& parent);
+    JKQTBarchartSpecificStyleProperties(const JKQTBasePlotterStyle& parent, const JKQTGraphsSpecificStyleProperties& other);
+    JKQTBarchartSpecificStyleProperties(const JKQTBarchartSpecificStyleProperties& other)=default;
+    JKQTBarchartSpecificStyleProperties(JKQTBarchartSpecificStyleProperties&& other)=default;
+    JKQTBarchartSpecificStyleProperties& operator=(const JKQTBarchartSpecificStyleProperties& other)=default;
+    JKQTBarchartSpecificStyleProperties& operator=(JKQTBarchartSpecificStyleProperties&& other)=default;
+
+
+    /** \brief loads the plot properties from a <a href="http://doc.qt.io/qt-5/qsettings.html")">QSettings</a> object
+        *
+        *  \param settings QSettings-object to read from
+        *  \param group Group in the QSettings-object to read from
+        *  \param defaultStyle If a setting cannot be found in \a settings, default values are taken from this object
+        *                      By default, this is a default-constructed object
+        */
+    void loadSettings(const QSettings &settings, const QString& group, const JKQTBarchartSpecificStyleProperties &defaultStyle);
+
+    /** \brief saves the plot properties into a <a href="http://doc.qt.io/qt-5/qsettings.html")">QSettings</a> object.
+        *
+        *  \param settings QSettings-object to save to
+        *  \param group Group in the QSettings-object to save to
+        */
+    void saveSettings(QSettings& settings, const QString& group) const;
+
+    /** \brief corner radius (in pt) for bars at the "value" end */
+    double defaultRectRadiusAtValue;
+    /** \brief corner radius (in pt) for bars at the "baseline" end */
+    double defaultRectRadiusAtBaseline;
+
+
+};
 
 
 /** \brief Support Class for JKQTBasePlotter, which summarizes all properties that define the visual styling of a JKQTBasePlotter
@@ -251,7 +291,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTGraphsBaseStyle {
 		/** \brief styling options for standard graphs */
         JKQTGraphsSpecificStyleProperties defaultGraphStyle;
         /** \brief styling options for bargraph graphs */
-        JKQTGraphsSpecificStyleProperties barchartStyle;
+        JKQTBarchartSpecificStyleProperties barchartStyle;
         /** \brief styling options for boxplots graphs */
         JKQTGraphsSpecificStyleProperties boxplotStyle;
         /** \brief styling options for filled graphs */
