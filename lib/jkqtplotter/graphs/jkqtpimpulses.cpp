@@ -66,6 +66,91 @@ bool JKQTPImpulsesGraphBase::getDrawSymbols() const
 }
 
 
+bool JKQTPImpulsesGraphBase::getValuesMinMax(double &mmin, double &mmax, double &smallestGreaterZero)
+{
+    mmin=0;
+    mmax=0;
+    smallestGreaterZero=0;
+    if (getBaseline()>0) {
+        smallestGreaterZero=getBaseline();
+        mmin=getBaseline();
+        mmax=getBaseline();
+    }
+
+    if (getKeyColumn()<0 || getValueColumn()<0) return false;
+
+    const size_t datacol=static_cast<size_t>(getValueColumn());
+
+    if (parent==nullptr) return false;
+
+    const JKQTPDatastore* datastore=parent->getDatastore();
+    int imin=0, imax=0;
+    if (getIndexRange(imin, imax)) {
+
+
+        for (int i=imin; i<imax; i++) {
+            double yv=getBaseline();
+            if (JKQTPIsOKFloat(yv)) {
+                if (yv>mmax) mmax=yv;
+                if (yv<mmin) mmin=yv;
+                double xvsgz;
+                xvsgz=yv; SmallestGreaterZeroCompare_xvsgz();
+            }
+            yv=datastore->get(datacol,static_cast<size_t>(i));
+            if (JKQTPIsOKFloat(yv)) {
+                if (yv>mmax) mmax=yv;
+                if (yv<mmin) mmin=yv;
+                double xvsgz;
+                xvsgz=yv; SmallestGreaterZeroCompare_xvsgz();
+            }
+        }
+        return true;
+    }
+    return false;
+}
+
+bool JKQTPImpulsesGraphBase::getPositionsMinMax(double &mmin, double &mmax, double &smallestGreaterZero)
+{
+    bool start=true;
+    mmin=0;
+    mmax=0;
+    smallestGreaterZero=0;
+
+    if (getKeyColumn()<0 || getValueColumn()<0) return false;
+
+    const size_t poscol=static_cast<size_t>(getKeyColumn());
+
+    if (parent==nullptr) return false;
+
+    const JKQTPDatastore* datastore=parent->getDatastore();
+    int imin=0, imax=0;
+    if (getIndexRange(imin, imax)) {
+        for (int i=imin; i<imax; i++) {
+            double xv=datastore->get(poscol,static_cast<size_t>(i));
+
+
+            if (JKQTPIsOKFloat(xv)) {
+
+                if (start || xv>mmax) mmax=xv;
+                if (start || xv<mmin) mmin=xv;
+                double xvsgz;
+                xvsgz=xv; SmallestGreaterZeroCompare_xvsgz();
+                xvsgz=xv; SmallestGreaterZeroCompare_xvsgz();
+                start=false;
+            }
+        }
+        return !start;
+    }
+    return false;
+}
+
+
+
+
+
+
+
+
 JKQTPImpulsesHorizontalGraph::JKQTPImpulsesHorizontalGraph(JKQTBasePlotter* parent):
     JKQTPImpulsesGraphBase(parent)
 {
@@ -144,6 +229,37 @@ void JKQTPImpulsesHorizontalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, 
     painter.drawLine(rect.left(), y, rect.right(), y);
 }
 
+int JKQTPImpulsesHorizontalGraph::getKeyColumn() const
+{
+    return getYColumn();
+}
+
+int JKQTPImpulsesHorizontalGraph::getValueColumn() const
+{
+    return getXColumn();
+}
+
+bool JKQTPImpulsesHorizontalGraph::getXMinMax(double &minx, double &maxx, double &smallestGreaterZero)
+{
+    return getValuesMinMax(minx, maxx, smallestGreaterZero);
+}
+
+bool JKQTPImpulsesHorizontalGraph::getYMinMax(double &miny, double &maxy, double &smallestGreaterZero)
+{
+    return getPositionsMinMax(miny, maxy, smallestGreaterZero);
+
+}
+
+void JKQTPImpulsesHorizontalGraph::setKeyColumn(int __value)
+{
+    setYColumn(__value);
+}
+
+void JKQTPImpulsesHorizontalGraph::setValueColumn(int __value)
+{
+    setXColumn(__value);
+}
+
 
 
 
@@ -175,6 +291,17 @@ void JKQTPImpulsesVerticalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QR
     painter.setPen(p);
     const int x=rect.left()+rect.width()/2.0;
     painter.drawLine(x, rect.bottom(), x, rect.top());
+
+}
+
+bool JKQTPImpulsesVerticalGraph::getXMinMax(double &minx, double &maxx, double &smallestGreaterZero)
+{
+    return getPositionsMinMax(minx, maxx, smallestGreaterZero);
+}
+
+bool JKQTPImpulsesVerticalGraph::getYMinMax(double &miny, double &maxy, double &smallestGreaterZero)
+{
+    return getValuesMinMax(miny, maxy, smallestGreaterZero);
 
 }
 
@@ -259,6 +386,107 @@ bool JKQTPImpulsesHorizontalErrorGraph::usesColumn(int c) const
     return JKQTPImpulsesHorizontalGraph::usesColumn(c)|| JKQTPXGraphErrors::errorUsesColumn(c);
 }
 
+bool JKQTPImpulsesHorizontalErrorGraph::getXMinMax(double &minx, double &maxx, double &smallestGreaterZero)
+{
+    if (xErrorColumn>=0 && xErrorStyle!=JKQTPNoError) {
+        minx=0;
+        maxx=0;
+        smallestGreaterZero=0;
+        if (getBaseline()>0) {
+            smallestGreaterZero=getBaseline();
+            minx=getBaseline();
+            maxx=getBaseline();
+        }
+
+        if (parent==nullptr) return false;
+
+        JKQTPDatastore* datastore=parent->getDatastore();
+        int imax=0;
+        int imin=0;
+        if (getIndexRange(imin, imax)) {
+
+
+            for (int i=imin; i<imax; i++) {
+                double yv=getBaseline();
+                if (JKQTPIsOKFloat(yv)) {
+                    if (yv>maxx) maxx=yv;
+                    if (yv<minx) minx=yv;
+                    double xvsgz;
+                    xvsgz=yv; SmallestGreaterZeroCompare_xvsgz();
+                }
+                yv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i))+datastore->get(static_cast<size_t>(xErrorColumn),static_cast<size_t>(i));
+                if (JKQTPIsOKFloat(yv)) {
+                    if (yv>maxx) maxx=yv;
+                    if (yv<minx) minx=yv;
+                    double xvsgz;
+                    xvsgz=yv; SmallestGreaterZeroCompare_xvsgz();
+                }
+                yv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i))-datastore->get(static_cast<size_t>(xErrorColumn),static_cast<size_t>(i));
+                if (JKQTPIsOKFloat(yv)) {
+                    if (yv>maxx) maxx=yv;
+                    if (yv<minx) minx=yv;
+                    double xvsgz;
+                    xvsgz=yv; SmallestGreaterZeroCompare_xvsgz();
+                }
+            }
+            return true;
+        }
+    } else {
+        return JKQTPImpulsesHorizontalGraph::getXMinMax(minx,maxx,smallestGreaterZero);
+    }
+    return false;
+}
+
+int JKQTPImpulsesHorizontalErrorGraph::getErrorColumn() const
+{
+    return getXErrorColumn();
+}
+
+int JKQTPImpulsesHorizontalErrorGraph::getErrorColumnLower() const
+{
+    return getXErrorColumnLower();
+}
+
+JKQTPErrorPlotstyle JKQTPImpulsesHorizontalErrorGraph::getErrorStyle() const
+{
+    return getXErrorStyle();
+}
+
+bool JKQTPImpulsesHorizontalErrorGraph::getErrorSymmetric() const
+{
+    return getXErrorSymmetric();
+}
+
+void JKQTPImpulsesHorizontalErrorGraph::setErrorSymmetric(bool __value)
+{
+    setXErrorSymmetric(__value);
+}
+
+void JKQTPImpulsesHorizontalErrorGraph::setErrorStyle(JKQTPErrorPlotstyle __value)
+{
+    setXErrorStyle(__value);
+}
+
+void JKQTPImpulsesHorizontalErrorGraph::setErrorColumn(size_t column)
+{
+    setXErrorColumn(column);
+}
+
+void JKQTPImpulsesHorizontalErrorGraph::setErrorColumn(int column)
+{
+    setXErrorColumn(column);
+}
+
+void JKQTPImpulsesHorizontalErrorGraph::setErrorColumnLower(int column)
+{
+    setXErrorColumnLower(column);
+}
+
+void JKQTPImpulsesHorizontalErrorGraph::setErrorColumnLower(size_t column)
+{
+    setXErrorColumnLower(column);
+}
+
 void JKQTPImpulsesHorizontalErrorGraph::drawErrorsAfter(JKQTPEnhancedPainter &painter)
 {
     if (sortData==JKQTPXYGraph::Unsorted) plotErrorIndicators(painter, parent, this, xColumn, yColumn);
@@ -278,10 +506,119 @@ JKQTPImpulsesVerticalErrorGraph::JKQTPImpulsesVerticalErrorGraph(JKQTPlotter *pa
 
 }
 
+int JKQTPImpulsesVerticalErrorGraph::getErrorColumn() const
+{
+    return getYErrorColumn();
+}
+
+int JKQTPImpulsesVerticalErrorGraph::getErrorColumnLower() const
+{
+    return getYErrorColumnLower();
+}
+
+JKQTPErrorPlotstyle JKQTPImpulsesVerticalErrorGraph::getErrorStyle() const
+{
+    return getYErrorStyle();
+}
+
+bool JKQTPImpulsesVerticalErrorGraph::getErrorSymmetric() const
+{
+    return getYErrorSymmetric();
+}
+
+void JKQTPImpulsesVerticalErrorGraph::setErrorSymmetric(bool __value)
+{
+    setYErrorSymmetric(__value);
+}
+
+void JKQTPImpulsesVerticalErrorGraph::setErrorStyle(JKQTPErrorPlotstyle __value)
+{
+    setYErrorStyle(__value);
+}
+
+void JKQTPImpulsesVerticalErrorGraph::setErrorColumn(size_t column)
+{
+    setYErrorColumn(column);
+}
+
+void JKQTPImpulsesVerticalErrorGraph::setErrorColumn(int column)
+{
+    setYErrorColumn(column);
+}
+
+void JKQTPImpulsesVerticalErrorGraph::setErrorColumnLower(int column)
+{
+    setYErrorColumnLower(column);
+}
+
+void JKQTPImpulsesVerticalErrorGraph::setErrorColumnLower(size_t column)
+{
+    setYErrorColumnLower(column);
+}
+
 bool JKQTPImpulsesVerticalErrorGraph::usesColumn(int c) const
 {
     return JKQTPImpulsesVerticalGraph::usesColumn(c)|| JKQTPYGraphErrors::errorUsesColumn(c);
 }
+
+bool JKQTPImpulsesVerticalErrorGraph::getYMinMax(double &miny, double &maxy, double &smallestGreaterZero)
+{
+    if (yErrorColumn>=0 && yErrorStyle!=JKQTPNoError) {
+        miny=0;
+        maxy=0;
+        smallestGreaterZero=0;
+        if (getBaseline()>0) {
+            smallestGreaterZero=getBaseline();
+            miny=getBaseline();
+            maxy=getBaseline();
+        }
+
+        if (parent==nullptr) return false;
+
+        JKQTPDatastore* datastore=parent->getDatastore();
+        int imax=0;
+        int imin=0;
+        if (getIndexRange(imin, imax)) {
+
+
+            for (int i=imin; i<imax; i++) {
+                double yv=getBaseline();
+                if (JKQTPIsOKFloat(yv)) {
+                    if (yv>maxy) maxy=yv;
+                    if (yv<miny) miny=yv;
+                    double xvsgz;
+                    xvsgz=yv; SmallestGreaterZeroCompare_xvsgz();
+                }
+                yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
+                if (JKQTPIsOKFloat(yv)) {
+                    if (yv>maxy) maxy=yv;
+                    if (yv<miny) miny=yv;
+                    double xvsgz;
+                    xvsgz=yv; SmallestGreaterZeroCompare_xvsgz();
+                }
+                yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i))+datastore->get(static_cast<size_t>(yErrorColumn),static_cast<size_t>(i));
+                if (JKQTPIsOKFloat(yv)) {
+                    if (yv>maxy) maxy=yv;
+                    if (yv<miny) miny=yv;
+                    double xvsgz;
+                    xvsgz=yv; SmallestGreaterZeroCompare_xvsgz();
+                }
+                yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i))-datastore->get(static_cast<size_t>(yErrorColumn),static_cast<size_t>(i));
+                if (JKQTPIsOKFloat(yv)) {
+                    if (yv>maxy) maxy=yv;
+                    if (yv<miny) miny=yv;
+                    double xvsgz;
+                    xvsgz=yv; SmallestGreaterZeroCompare_xvsgz();
+                }
+            }
+            return true;
+        }
+    } else {
+        return JKQTPImpulsesVerticalGraph::getYMinMax(miny,maxy,smallestGreaterZero);
+    }
+    return false;
+}
+
 
 void JKQTPImpulsesVerticalErrorGraph::drawErrorsAfter(JKQTPEnhancedPainter &painter)
 {

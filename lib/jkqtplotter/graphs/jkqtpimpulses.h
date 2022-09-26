@@ -30,6 +30,8 @@
 /** \brief This is a base class for all impulse graphs
  *  \ingroup jkqtplotter_barssticks
  *
+ *  \image html JKQTPImpulsesVerticalGraph.png
+ *
  *  \see JKQTPImpulsesHorizontalGraph, JKQTPImpulsesVerticalGraph
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPImpulsesGraphBase: public JKQTPXYBaselineGraph, public JKQTPGraphLineStyleMixin, public JKQTPGraphSymbolStyleMixin{
@@ -58,13 +60,25 @@ protected:
          * \image html impulsesplot_symbols.png
          */
     bool drawSymbols;
+
+    /** \brief get the maximum and minimum value in the impulse-elongation (i.e. value) direction of the graph
+     *
+     * The result is given in the two parameters which are call-by-reference parameters!
+     */
+    bool getValuesMinMax(double& mmin, double& mmax, double& smallestGreaterZero) ;
+    /** \brief get the maximum and minimum value of the impulse positions of the graph
+     *
+     * The result is given in the two parameters which are call-by-reference parameters!
+     */
+    bool getPositionsMinMax(double& mmin, double& mmax, double& smallestGreaterZero) ;
+
 };
 
 
-/** \brief This implements an impulse plot with impulses in direction of the X axis (i.e. from y=0 to y=f(x) )
+/** \brief This implements an impulse plot with horizontal impulses in direction of the X axis (i.e. from x=0 to x=f(y) )
  *  \ingroup jkqtplotter_barssticks
  *
- *  \image html plot_impulsesxplots.png
+ *  \image html JKQTPImpulsesHorizontalGraph.png
  *
  *  \see JKQTPImpulsesVerticalGraph, \ref JKQTPlotterImpulsePlots
  */
@@ -80,16 +94,32 @@ public:
     virtual void draw(JKQTPEnhancedPainter& painter) override;
     /** \brief plots a key marker inside the specified rectangle \a rect */
     virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
+    /** \brief returns the column used as "key" for the current graph (typically this call getXColumn(), but for horizontal graphs like filled curves or barcharts it may call getYColumn() ) */
+    virtual int getKeyColumn() const override;
+    /** \brief returns the column used as "value" for the current graph (typically this call getXColumn(), but for horizontal graphs like filled curves or barcharts it may call getYColumn() ) */
+    virtual int getValueColumn() const override;
+
+
+    /** \copydoc JKQTPXYGraph::getXMinMax() */
+    virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
+    /** \copydoc JKQTPXYGraph::getYMinMax() */
+    virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
+
+public slots:
+    /** \brief sets the column used as "key" for the current graph (typically this call setXColumn(), but for horizontal graphs like filled curves or barcharts it may call setYColumn() ) */
+    virtual void setKeyColumn(int __value) override;
+    /** \brief sets the column used as "value" for the current graph (typically this call setXColumn(), but for horizontal graphs like filled curves or barcharts it may call setYColumn() ) */
+    virtual void setValueColumn(int __value) override;
 
 protected:
 };
 
 
 
-/** \brief This implements an impulse plot with impulses in direction of the X axis (i.e. from x=0 to x=f(y) )
+/** \brief This implements an impulse plot with horizontal impulses in direction of the X axis (i.e. from x=0 to x=f(y) )
  *  \ingroup jkqtplotter_barssticks
  *
- *  \image html plot_impulsesxerrorsplots.png
+ *  \image html JKQTPImpulsesHorizontalErrorGraph.png
  *
  *  \see jkqtpstatAddXErrorImpulsesGraph(), JKQTPImpulsesHorizontalGraph, \ref JKQTPlotterImpulsePlots
  */
@@ -102,6 +132,33 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPImpulsesHorizontalErrorGraph: public JKQTPImpu
         /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int c) const override;
 
+        /** \copydoc JKQTPXYGraph::getXMinMax() */
+        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
+
+        /** \brief returns the column that contains the bar height errors */
+        int getErrorColumn() const;
+        /** \brief returns the column that contains the lower bar height errors */
+        int getErrorColumnLower() const;
+        /** \brief returns the error style of the bar */
+        JKQTPErrorPlotstyle getErrorStyle() const;
+        /** \brief returns whether the errors of the bars are symmetric */
+        bool getErrorSymmetric() const;
+
+    public slots:
+        /** \brief sets whether the errors of the bars are symmetric */
+        void setErrorSymmetric(bool __value);
+        /** \brief sets the error style of the bar */
+        void setErrorStyle(JKQTPErrorPlotstyle  __value);
+        /** \brief sets the column that contains the bar height errors */
+        void setErrorColumn(int column) ;
+
+        /** \brief sets the column that contains the bar height errors */
+        void setErrorColumn(size_t column) ;
+        /** \brief sets the column that contains the bar height errors */
+        void setErrorColumnLower(int column) ;
+
+        /** \brief sets the column that contains the bar height errors */
+        void setErrorColumnLower(size_t column) ;
     protected:
         /** \brief this function is used to plot error inidcators before plotting the graphs. */
         virtual void drawErrorsAfter(JKQTPEnhancedPainter& painter) override ;
@@ -114,9 +171,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPImpulsesHorizontalErrorGraph: public JKQTPImpu
 /*! \brief This implements an impulse plot with impulses in direction of the Y axis (i.e. from y=0 to y=f(x) )
     \ingroup jkqtplotter_barssticks
 
-    \image html plot_impulsesyplots.png
+    \image html JKQTPImpulsesVerticalGraph.png
+    \image html JKQTPImpulsesVerticalGraph_Symbols.png "generated by setting setDrawSymbols(true)"
 
-    \see \ref JKQTPlotterImpulsePlots
+    \see JKQTPImpulsesGraphBase, JKQTPImpulsesVerticalErrorGraph, \ref JKQTPlotterImpulsePlots
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPImpulsesVerticalGraph: public JKQTPImpulsesGraphBase {
         Q_OBJECT
@@ -130,6 +188,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPImpulsesVerticalGraph: public JKQTPImpulsesGra
         virtual void draw(JKQTPEnhancedPainter& painter) override;
         /** \brief plots a key marker inside the specified rectangle \a rect */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
+        /** \copydoc JKQTPXYGraph::getXMinMax() */
+        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
+        /** \copydoc JKQTPXYGraph::getYMinMax() */
+        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 };
 
 
@@ -137,7 +199,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPImpulsesVerticalGraph: public JKQTPImpulsesGra
 /*! \brief This implements an impulse plot with impulses in direction of the X axis (i.e. from x=0 to x=f(y) )
     \ingroup jkqtplotter_barssticks
 
-    \image html plot_impulsesyerrorsplots.png
+    \image html JKQTPImpulsesVerticalErrorGraph.png
 
     \see JKQTPImpulsesVerticalGraph, jkqtpstatAddYErrorImpulsesGraph(), \ref JKQTPlotterImpulsePlots
  */
@@ -150,7 +212,33 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPImpulsesVerticalErrorGraph: public JKQTPImpuls
         JKQTPImpulsesVerticalErrorGraph(JKQTPlotter* parent);
         /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int c) const override;
+        /** \copydoc JKQTPXYGraph::getYMinMax() */
+        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
+        /** \brief returns the column that contains the bar height errors */
+        int getErrorColumn() const;
+        /** \brief returns the column that contains the lower bar height errors */
+        int getErrorColumnLower() const;
+        /** \brief returns the error style of the bar */
+        JKQTPErrorPlotstyle getErrorStyle() const;
+        /** \brief returns whether the errors of the bars are symmetric */
+        bool getErrorSymmetric() const;
+
+    public slots:
+        /** \brief sets whether the errors of the bars are symmetric */
+        void setErrorSymmetric(bool __value);
+        /** \brief sets the error style of the bar */
+        void setErrorStyle(JKQTPErrorPlotstyle  __value);
+        /** \brief sets the column that contains the bar height errors */
+        void setErrorColumn(int column) ;
+
+        /** \brief sets the column that contains the bar height errors */
+        void setErrorColumn(size_t column) ;
+        /** \brief sets the column that contains the bar height errors */
+        void setErrorColumnLower(int column) ;
+
+        /** \brief sets the column that contains the bar height errors */
+        void setErrorColumnLower(size_t column);
     protected:
         /** \brief this function is used to plot error inidcators before plotting the graphs. */
         virtual void drawErrorsAfter(JKQTPEnhancedPainter& painter) override ;

@@ -104,7 +104,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTGraphsSpecificStyleProperties {
         JKQTPColorDerivationMode errorFillColorDerivationMode;
         /** \brief defines how to derive a symbol fill color for a new graph */
         JKQTPColorDerivationMode symbolFillColorDerivationMode;
-    protected:
+    private:
         /** \brief modifies some of the settings to match the defaults for the given JKQTPPlotStyleType (e.g. sets line-width for impulses ...) */
         void modifyForDefaultStyle(JKQTPPlotStyleType type);
 };

@@ -1015,6 +1015,7 @@ JKQTBasePlotter::JKQTPPen JKQTBasePlotter::getPlotStyle(int i, JKQTPPlotStyleTyp
     Qt::BrushStyle basebrushStyle=plotterStyle.graphsStyle.defaultGraphFillStyles[brushI];
     JKQTPGraphSymbols baseSymbol=plotterStyle.graphsStyle.defaultGraphSymbols[symbolI];
     QColor baseColor=plotterStyle.graphsStyle.defaultGraphColors[colorI];
+    double baseWidth=baseProps.defaultLineWidth;
     if (type==JKQTPPlotStyleType::Annotation || type==JKQTPPlotStyleType::Geometric) {
         baseColor=plotterStyle.graphsStyle.annotationStyle.defaultColor;
         basePenStyle=plotterStyle.graphsStyle.annotationStyle.defaultLineStyle;
@@ -1024,8 +1025,13 @@ JKQTBasePlotter::JKQTPPen JKQTBasePlotter::getPlotStyle(int i, JKQTPPlotStyleTyp
     if (type==JKQTPPlotStyleType::Barchart || type==JKQTPPlotStyleType::Boxplot || type==JKQTPPlotStyleType::Impulses) {
         basePenStyle=Qt::SolidLine;
     }
+    if (type==JKQTPPlotStyleType::Barchart) {
+        basebrushStyle=Qt::SolidPattern;
+    }
     if (type==JKQTPPlotStyleType::Boxplot) {
         basebrushStyle=Qt::SolidPattern;
+    }
+    if (type==JKQTPPlotStyleType::Impulses) {
     }
     const QColor lineColor=JKQTPGetDerivedColor(baseProps.graphColorDerivationMode, baseColor);
     const QColor errorColor=JKQTPGetDerivedColor(baseProps.errorColorDerivationMode, baseColor);
@@ -1035,7 +1041,7 @@ JKQTBasePlotter::JKQTPPen JKQTBasePlotter::getPlotStyle(int i, JKQTPPlotStyleTyp
     p.setSymbolType(baseSymbol);
     p.setFillStyle(basebrushStyle);
     p.setErrorFillStyle(Qt::SolidPattern);
-    p.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, baseProps.defaultLineWidth));
+    p.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, baseWidth));
     p.setFillColor(JKQTPGetDerivedColor(baseProps.fillColorDerivationMode, baseColor));
     p.setErrorLineColor(errorColor);
     p.setErrorFillColor(JKQTPGetDerivedColor(baseProps.errorFillColorDerivationMode, baseColor));

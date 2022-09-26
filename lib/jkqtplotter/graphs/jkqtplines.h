@@ -103,9 +103,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXYLineGraph: public JKQTPXYGraph, public JKQTP
 /*! \brief This implements xy line plots with x and y error indicators.
     \ingroup jkqtplotter_linesymbolgraphs_simple
 
-    \image html plot_errorbarlineplots.png
-    \image html plot_errorlinelineplots.png
-    \image html plot_errorpolygonlineplots.png
+    \image html JKQTPXYLineErrorGraph_JKQTPErrorBars.png "setYErrorStyle(JKQTPErrorBars)"
+    \image html JKQTPXYLineErrorGraph_JKQTPErrorLines.png "setYErrorStyle(JKQTPErrorLines)"
+    \image html JKQTPXYLineErrorGraph_JKQTPErrorPolygons.png "setYErrorStyle(JKQTPErrorPolygins;"
 
     \see jkqtpstatAddXYErrorLineGraph(), jkqtpstatAddXErrorLineGraph(), jkqtpstatAddYErrorLineGraph(), \ref JKQTPlotterErrorBarStyles, \ref JKQTPlotterBasicJKQTPDatastoreStatisticsGroupedStat
  */

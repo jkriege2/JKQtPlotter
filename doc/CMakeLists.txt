@@ -168,7 +168,7 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         imageplot_modifier
         imageplot_nodatastore
         imageplot_userpal/imageplot_userpal_program
-        impulsesplot
+        impulsesplot/impulsesplot,impulsesplot_symbols,impulsesplot_horizontal,errorbarstyles_impulses,errorbarstyles_impulses_horizontal
         parametriccurve/parametriccurve1,parametriccurve2
         paramscatterplot
         paramscatterplot_customsymbol
@@ -200,6 +200,9 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         filledgraphs_errors/JKQTPFilledCurveXErrorGraph,JKQTPFilledCurveYErrorGraph/--smallscreenshotplot
         evalcurve/JKQTPXYFunctionLineGraph/--smallscreenshotplot
         geo_coordinateaxis0/JKQTPCoordinateAxisStyleDrawMode0
+        impulsesplot/JKQTPImpulsesVerticalGraph,JKQTPImpulsesVerticalGraph_Symbols,JKQTPImpulsesHorizontalGraph,JKQTPImpulsesVerticalErrorGraph,JKQTPImpulsesHorizontalErrorGraph/--smallscreenshotplot
+        symbols_and_errors/JKQTPXYLineErrorGraph_JKQTPErrorBars,JKQTPXYLineErrorGraph_JKQTPErrorLines,JKQTPXYLineErrorGraph_JKQTPErrorPolygons/--iteratefunctorsteps--iteratefunctorsteps_suppressinitial--smallscreenshotplot
+        boxplot/JKQTPBoxplotVerticalGraph,JKQTPBoxplotHorizontalGraph/--iteratefunctorsteps--iteratefunctorsteps_suppressinitial--smallscreenshotplot
     )
 
 
@@ -226,6 +229,7 @@ if(JKQtPlotter_BUILD_EXAMPLES)
                 set(extra_command ${CMAKE_MATCH_3})
             endif()
         endif()
+
 
         set(loc_target_name JKQTPlotter_GenerateDocScreenshots_${example})
         set(dep_name jkqtptest_${example})
@@ -263,6 +267,10 @@ if(JKQtPlotter_BUILD_EXAMPLES)
                 set(extra_command ${CMAKE_MATCH_3})
             endif()
 
+        endif()
+
+        if (NOT extra_command STREQUAL "")
+            string(REPLACE "--" ";--" extra_command "${extra_command}")
         endif()
 
         set(loc_target_name JKQTPlotter_GenerateDocImages_${example})

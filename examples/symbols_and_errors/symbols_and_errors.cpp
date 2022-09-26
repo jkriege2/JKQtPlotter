@@ -68,7 +68,28 @@ int main(int argc, char* argv[])
 
     // show plotter and make it a decent size
     plot.show();
-    plot.resize(600/plot.devicePixelRatioF(),400/plot.devicePixelRatioF());
+    plot.resize(600/plot.devicePixelRatioF(),500/plot.devicePixelRatioF());
 
+    app.addExportStepFunctor([&]() {
+        plot.getXAxis()->setAxisLabel(QObject::tr("$x$-axis [mm]"));
+        plot.getYAxis()->setAxisLabel(QObject::tr("$y$-axis [mm]"));
+        plot.getXAxis()->setTickLabelFontSize(8);
+        plot.getYAxis()->setTickLabelFontSize(8);
+        graph1->setDrawLine(true);
+        graph1->setYErrorStyle(JKQTPErrorBars);
+        plot.redrawPlot();
+    });
+    app.addExportStepFunctor([&]() {
+        graph1->setSymbolType(JKQTPNoSymbol);
+        graph1->setDrawLine(true);
+        graph1->setYErrorStyle(JKQTPErrorLines);
+        plot.redrawPlot();
+    });
+    app.addExportStepFunctor([&]() {
+        graph1->setSymbolType(JKQTPNoSymbol);
+        graph1->setDrawLine(true);
+        graph1->setYErrorStyle(JKQTPErrorPolygons);
+        plot.redrawPlot();
+    });
     return app.exec();
 }

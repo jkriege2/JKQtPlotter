@@ -100,7 +100,7 @@ void doExample(const QString& title)
     // show plotter and make it a decent size
     plot->setWindowTitle(title);
     plot->show();
-    plot->resize(600,400);
+    plot->resize(600/plot->devicePixelRatioF(),550/plot->devicePixelRatioF());
 }
 
 int main(int argc, char* argv[])
