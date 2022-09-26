@@ -42,7 +42,7 @@
     The x position is given in posColumn. All other data are given in the medianColumn, minColumn, maxColumn,
     percentile25Column and percentile75Column.
 
-    \image html plot_boxplotvertical.png
+    \image html JKQTPBoxplotVerticalGraph.png
 
 
     The different features of a boxplot are:
@@ -136,7 +136,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBoxplotVerticalGraph: public JKQTPBoxplotGraph
     the x position is given in posColumn. All other data are given in the medianColumn, minColumn, maxColumn,
     percentile25Column and percentile75Column.
 
-    \image html plot_boxplothoricontal.png
+    \image html JKQTPBoxplotHorizontalGraph.png
 
     \note See the documentation of JKQTPBoxplotVerticalGraph for details on the properties of this class!
 

@@ -38,7 +38,7 @@
 /** \brief Base class for graphs representing a series of <a href="http://en.wikipedia.org/wiki/Box_plot">boxplot</a>, elements
  *  \ingroup jkqtplotter_statgraphs
  *
- *  \image html plot_boxplotvertical.png
+ *  \image html JKQTPBoxplotVerticalGraph.png
  *
  *
  *  The different features of a boxplot are:
