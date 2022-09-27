@@ -50,6 +50,9 @@
 #include "jkqtcommon/jkqtpmathtools.h"
 #include "jkqtcommon_statistics_and_math/jkqtpalgorithms.h"
 #include "jkqtcommon/jkqtpcodestructuring.h"
+#if __cplusplus >= 202002L
+# include <version>
+#endif
 
 
 
@@ -455,7 +458,10 @@ enum JKQTPCALabelType {
     JKQTPCALTintfrac, /*!< \brief show numbers as integral+fraction, the number is first rounded to the given precision and then a fraction is calculated and displayed like \f$ -3\frac{1}{2} \f$ \image html axisstyle/JKQTPCALTintfrac.png */
     JKQTPCALTintslashfrac, /*!< \brief show numbers as integral+fraction, the number is first rounded to the given precision and then a fraction is calculated and displayed like \c 1/2 \image html axisstyle/JKQTPCALTintslashfrac.png */
     JKQTPCALTintsfrac, /*!< \brief show numbers as integral+fraction, the number is first rounded to the given precision and then a fraction is calculated and displayed using \c \\sfrac{1}{2}  \image html axisstyle/JKQTPCALTintsfrac.png */
-
+#if defined(__cpp_lib_format) || DOXYGEN
+    JKQTPCALTformat, /*!< \brief generate axis label from an arbitrary "std::format" formatting string (see e.g. https://en.cppreference.com/w/cpp/utility/format/formatter#Standard_format_specification ). The first data parameter is the tick value as \c double an the second is tickUnitName as string. The following image shows an example for \c "\\texttt{{ y={:*^+8.1f}}}": \image html axisstyle/JKQTPCALTformat.png
+                                 \b NOte: This option is only available for C++20 and above, use the CMake option \c JKQtPlotter_ENABLED_CXX20=ON if your compiler supports this. */
+#endif
     JKQTPCALTcount,
     JKQTPCALTmax=JKQTPCALTcount-1
 };

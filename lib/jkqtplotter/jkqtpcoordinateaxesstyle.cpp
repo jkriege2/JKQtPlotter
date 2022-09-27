@@ -57,7 +57,12 @@ JKQTPCoordinateAxisStyle::JKQTPCoordinateAxisStyle():
     tickTimeFormat(QLocale().timeFormat(QLocale::NarrowFormat)),
     tickDateFormat(QLocale().dateFormat(QLocale::NarrowFormat)),
     tickDateTimeFormat(QLocale().dateTimeFormat(QLocale::NarrowFormat)),
-    tickPrintfFormat("%f"),
+    tickPrintfFormat("%f %s"),
+#if __cplusplus >= 202002L
+# ifdef __cpp_lib_format
+    tickFormatFormat("{}{}"),
+# endif
+#endif
     minTicks(5),
     minorTicks(1),
     tickOutsideLength(3),
@@ -104,6 +109,11 @@ void JKQTPCoordinateAxisStyle::loadSettings(const QSettings &settings, const QSt
     tickDateFormat = settings.value(group+"ticks/date_format", defaultStyle.tickDateFormat).toString();
     tickDateTimeFormat = settings.value(group+"ticks/datetime_format", defaultStyle.tickDateTimeFormat).toString();
     tickPrintfFormat = settings.value(group+"ticks/printf_format", defaultStyle.tickPrintfFormat).toString();
+#if __cplusplus >= 202002L
+# ifdef __cpp_lib_format
+    tickFormatFormat = settings.value(group+"ticks/format_format", defaultStyle.tickFormatFormat).toString();
+# endif
+#endif
     minTicks = settings.value(group+"min_ticks", defaultStyle.minTicks).toUInt();
     minorTicks = settings.value(group+"minor_tick/count", defaultStyle.minorTicks).toUInt();
     tickOutsideLength = settings.value(group+"ticks/outside_length", defaultStyle.tickOutsideLength).toDouble();
@@ -158,6 +168,11 @@ void JKQTPCoordinateAxisStyle::saveSettings(QSettings &settings, const QString &
     settings.setValue(group+"ticks/date_format", tickDateFormat);
     settings.setValue(group+"ticks/datetime_format", tickDateTimeFormat);
     settings.setValue(group+"ticks/printf_format", tickPrintfFormat);
+#if __cplusplus >= 202002L
+# ifdef __cpp_lib_format
+    settings.setValue(group+"ticks/format_format", tickFormatFormat);
+# endif
+#endif
     settings.setValue(group+"ticks/inside_length", tickInsideLength);
     settings.setValue(group+"ticks/label_distance", tickLabelDistance);
     settings.setValue(group+"ticks/label_font_size", tickLabelFontSize);

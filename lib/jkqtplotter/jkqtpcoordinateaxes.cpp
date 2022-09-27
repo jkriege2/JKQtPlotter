@@ -26,6 +26,12 @@
 #include <QDateTime>
 #include <cfloat>
 #include <QApplication>
+#if __cplusplus >= 202002L
+# include <version>
+# ifdef __cpp_lib_format
+#  include <format>
+# endif
+#endif
 
 
 //#undef SHOW_JKQTPLOTTER_DEBUG
@@ -494,6 +500,15 @@ QString JKQTPCoordinateAxis::floattolabel(double data, int past_comma) const {
         case JKQTPCALTprintf: {
                 return QString::asprintf(axisStyle.tickPrintfFormat.toLatin1().data(), data, tickUnitName.toStdString().c_str());
             }; break;
+#if __cplusplus >= 202002L
+# ifdef __cpp_lib_format
+    case JKQTPCALTformat: {
+            return QString::fromStdString(std::vformat(axisStyle.tickFormatFormat.toStdString(), std::make_format_args(data, tickUnitName.toStdString())));
+        }; break;
+        /** \copydoc JKQTPCoordinateAxisStyle::tickFormatFormat */
+        void setTickFormatFormat(const QString& __value);
+# endif
+#endif
     }
     return QString();
 }
@@ -864,6 +879,19 @@ void JKQTPCoordinateAxis::setTickPrintfFormat(const QString& __value) {
     this->paramsChanged=true;
     redrawPlot();
 }
+#if __cplusplus >= 202002L
+# ifdef __cpp_lib_format
+void JKQTPCoordinateAxis::setTickFormatFormat(const QString &__value)
+{
+    this->axisStyle.tickFormatFormat = __value;
+    this->paramsChanged=true;
+    redrawPlot();
+
+}
+# endif
+#endif
+
+
 
 void JKQTPCoordinateAxis::setTickLabelFontSize(double __value) {
     this->axisStyle.tickLabelFontSize = __value;
