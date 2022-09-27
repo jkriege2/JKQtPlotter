@@ -19,7 +19,7 @@
 
 
 #include "jkqtcommon/jkqtpenhancedpainter.h"
-
+#include <QPainterPath>
 
 
 JKQTPEnhancedPainter::JKQTPEnhancedPainter(QPaintDevice *device):
