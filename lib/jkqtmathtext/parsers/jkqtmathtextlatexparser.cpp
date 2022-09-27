@@ -386,10 +386,9 @@ JKQTMathTextNode *JKQTMathTextLatexParser::parse(const QString &text, JKQTMathTe
 {
     initStaticStructures();
     JKQTMathTextNode* parsedNode=nullptr;
-    QString ntext;
-    if (options.testFlag(JKQTMathText::StartWithMathMode)) ntext=QString("$")+text+QString("$");
-    if (options.testFlag(JKQTMathText::AddSpaceBeforeAndAfter)) ntext=QString("\\;")+text+QString("\\;");
-    else ntext=text;
+    QString ntext=text;
+    if (options.testFlag(JKQTMathText::StartWithMathMode)) ntext=QString("$")+ntext+QString("$");
+    if (options.testFlag(JKQTMathText::AddSpaceBeforeAndAfter)) ntext=QString("\\;")+ntext+QString("\\;");
 
 
     parseString=ntext;

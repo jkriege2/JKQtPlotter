@@ -574,7 +574,6 @@ QColor jkqtp_lookupQColorName(const QString &color) {
    if (col=="text") return QGuiApplication::palette().color(QPalette::Text);
    if (col=="brightttext") return QGuiApplication::palette().color(QPalette::BrightText);
    if (col=="base") return QGuiApplication::palette().color(QPalette::Base);
-   if (col=="window") return QGuiApplication::palette().color(QPalette::Window);
    if (col=="shadow") return QGuiApplication::palette().color(QPalette::Shadow);
    if (col=="highlight") return QGuiApplication::palette().color(QPalette::Highlight);
    if (col=="highlightedtext") return QGuiApplication::palette().color(QPalette::HighlightedText);

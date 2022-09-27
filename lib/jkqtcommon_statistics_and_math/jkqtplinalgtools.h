@@ -91,7 +91,7 @@
  *  \param mode if \c =='f' the mode \c std::fixed is used for output, otherwise \c std::scientific is used
 */
 template <class T>
-inline void jkqtplinalgPrintMatrix(T* matrix, long L, long C, int width=9, int precision=3, char mode='f') {
+inline void jkqtplinalgPrintMatrix(const T* matrix, long L, long C, int width=9, int precision=3, char mode='f') {
     for (long l=0; l<L; l++) {
         for (long c=0; c<C; c++) {
             if (c>0) std::cout<<", ";

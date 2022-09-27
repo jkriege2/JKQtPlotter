@@ -471,8 +471,10 @@ QString JKQTPCoordinateAxis::floattolabel(double data, int past_comma) const {
                                 if (sign<0) res+="-";
                                 else res+="+";
                             }
-                            if (axisStyle.tickLabelType==JKQTPCALTintslashfrac)
-                            res=addTickUnit("("+res+QString("%1/%2").arg(num).arg(denom)+")");
+                            if (axisStyle.tickLabelType==JKQTPCALTintslashfrac) {
+                                res+=QString("%1/%2").arg(num).arg(denom);
+                                if (intpart!=0 && !tickUnitName.isEmpty()) res="("+res+")";
+                            }
                         }
                     }
                 } else {
