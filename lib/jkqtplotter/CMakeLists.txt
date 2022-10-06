@@ -263,11 +263,11 @@ endif()
 
 # Installation
 if(JKQtPlotter_BUILD_SHARED_LIBS)
-    jkqtplotter_installlibrary(${libsh_name} ${libIncludeSubdir})
+    jkqtplotter_installlibrary(${libsh_name} ${libIncludeSubdir} "Shared")
 endif(JKQtPlotter_BUILD_SHARED_LIBS)
 
 if(JKQtPlotter_BUILD_STATIC_LIBS)
-    jkqtplotter_installlibrary(${lib_name} ${libIncludeSubdir})
+    jkqtplotter_installlibrary(${lib_name} ${libIncludeSubdir} "")
 endif(JKQtPlotter_BUILD_STATIC_LIBS)
 
 install(FILES ${HEADERS_BASE}
