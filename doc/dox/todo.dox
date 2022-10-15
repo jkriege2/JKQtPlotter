@@ -6,35 +6,42 @@ This page lists several todos and wishes for future version of JKQTPlotter
 
 <ul>
   <li>JKQTPlotter:<ul>
-    <li>graph: matrix plots with boxes, labels, ...</li>
-    <li>graph: text labels at positions/for graphs</li>
-    <li>plot: secondary axes: independent and dependent (i.e. with transformation function from primary axis)</li>
-    <li>graphs: matrix plots with symbols: symbol-type, color, size should be parametric, cf. scatter plots</li>
-    <li>styling: color gradients as fill-styles in style-INIs</li>
-    <li>styling: style.ini with glowing colors in dark background ("techno" or "cyberpunk")</li>
-    <li>plot: axis labels above/below/centered around tick</li>
-    <li>plot: elongated grid to left of tick labels</li>
-    <li>graphs: vector field graph (arrows), variant (x,y,dx,dy), (x,y,alpha,length), (x1,y1,x2,y2) ... different head/tail styles</li>
-    <li>graphs: gant-chart as simplufier vector field with (x,y1,y2) or (x1,x2,y), or (x,y,dx), (x,y,dy) ... different head/tail style</li>
-    <li>graphs: barchart/ranges chart with (x,y1,y2) or (x1,x2,y)</li>
-    <li>user interactions: dialog(s) to edit x/y-range</li>
-    <li>better styling/more styling options for data-tooltips</li>
-    <li>graphic elements: annotation graphic element with text positionable like legend, or with (0..1),(0..1)-coordinates within plot</li>
-    <li>graphic elements: cubic/bezier curves for graphic elements</li>
     <li>data management: allow for other datatypes than double, would be good to have, double, float, ints, bool, string ... as for images</li>
     <li>data management: binding  for the <a href="https://eigen.tuxfamily.org/index.php?title=Main_Page">Eigen library</a></li>
-    <li>user interactions: support for touch/pad gestures</li>
+    <li>graphic elements: annotation graphic element with text positionable like legend, or with (0..1),(0..1)-coordinates within plot</li>
+    <li>graphic elements: cubic/bezier curves for graphic elements</li>
     <li>graphic elements: make coordinate systems selectable for all: x/y-axis, 0..1/0..1, topleft/topright... </li>
-    <li>plot: reqork layouting of legends: there are some inconsistencies/too large gaps ...</li>
-    <li>plot: legend positioning as combination of 3 values: inside|outside + left|center|right + top|vcenter|bottom</li>
-    <li>plot: axes with symlog (see http://dx.doi.org/10.1088/0957-0233/24/2/027001) and logit (https://de.m.wikipedia.org/wiki/Logit) scaling? </li>
-    <li>graphs: add candlestick charts (financial, see https://en.m.wikipedia.org/wiki/Candlestick_chart)</li>
     <li>graphs: add OHLC charts (financial, see https://en.m.wikipedia.org/wiki/Open-high-low-close_chart)</li>
-    <li>plot: refactor print preview/export preview code </li>
+    <li>graphs: add candlestick charts (financial, see https://en.m.wikipedia.org/wiki/Candlestick_chart)</li>
     <li>graphs: add color palettes from Green's HELIX method, see <a href="https://articles.adsabs.harvard.edu/pdf/2011BASI...39..289G">https://articles.adsabs.harvard.edu/pdf/2011BASI...39..289G</a>, also see <a href="https://jiffyclub.github.io/palettable/cubehelix/">https://jiffyclub.github.io/palettable/cubehelix/</a></li>
+    <li>graphs: barchart/ranges chart with (x,y1,y2) or (x1,x2,y)</li>
+    <li>graphs: parametrized barcharts: color from dara</li>
+    <li>graphs: gant-chart as simplufier vector field with (x,y1,y2) or (x1,x2,y), or (x,y,dx), (x,y,dy) ... different head/tail style</li>
+    <li>graphs: matrix plots with boxes, labels, ...</li>
+    <li>graphs: matrix plots with symbols: symbol-type, color, size should be parametric, cf. scatter plots</li>
+    <li>graphs: text labels at positions/for graphs</li>
+    <li>graphs: vector field graph (arrows), variant (x,y,dx,dy), (x,y,alpha,length), (x1,y1,x2,y2) ... different head/tail styles</li>
+    <li>plot: axes with symlog (see http://dx.doi.org/10.1088/0957-0233/24/2/027001) and logit (https://de.m.wikipedia.org/wiki/Logit) scaling? </li>
+    <li>plot: axis labels above/below/centered around tick</li>
+    <li>plot: elongated grid to left of tick labels</li>
+    <li>plot: legend positioning as combination of 3 values: inside|outside + left|center|right + top|vcenter|bottom</li>
+    <li>plot: refactor print preview/export preview code </li>
+    <li>plot: reqork layouting of legends: there are some inconsistencies/too large gaps ...</li>
+    <li>plot: secondary axes: independent and dependent (i.e. with transformation function from primary axis)</li>
+    <li>sryling: better styling/more styling options for data-tooltips</li>
+    <li>styling: color gradients as fill-styles in style-INIs</li>
+    <li>styling: style.ini with glowing colors in dark background ("techno" or "cyberpunk")</li>
+    <li>user interactions: dialog(s) to edit x/y-range</li>
+    <li>user interactions: support for touch/pad gestures</li>
     <li></li>
   </ul></li>
   <li>JKQTMathText:<ul>
+    <li></li>
+  </ul></li>
+  <li>Math &amp; Statistics Library:<ul>
+    <li>add smoothing operations (running average, maybe LOWESS (https://de.wikipedia.org/wiki/Kernregression#Lokal_lineare_Kernregression) ...</li>
+    <li></li>
+    <li></li>
     <li></li>
   </ul></li>
 </ul>
