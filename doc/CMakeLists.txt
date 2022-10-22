@@ -143,6 +143,7 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         barchart/barchart,barchart_hor
         barchart_twocolor/barchart_twocolor,barchart_twocolor_hor
         barchart_errorbars/barchart_errorbars,barchart_errorbars_hor
+        barchart_functorfill/barchart_functorfill,barchart_functorfill_hor
         wiggleplots/wiggleplot_x,wiggleplot_y
         advplotstyling/advancedlineandfillstyling
         boxplot
@@ -194,6 +195,7 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         barchart/JKQTPBarVerticalGraph,JKQTPBarHorizontalGraph/--smallscreenshotplot
         barchart_twocolor/JKQTPBarVerticalGraphTwoColorFilling,JKQTPBarHorizontalGraphTwoColorFilling/--smallscreenshotplot
         barchart_errorbars/JKQTPBarVerticalErrorGraph,JKQTPBarHorizontalErrorGraph/--smallscreenshotplot
+        barchart_functorfill/JKQTPBarVerticalGraphFunctorFilling,JKQTPBarHorizontalGraphFunctorFilling/--smallscreenshotplot
         wiggleplots/JKQTPFilledCurveXGraph_wiggle,JKQTPFilledCurveYGraph_wiggle
         contourplot/JKQTPColumnContourPlot/--smallscreenshotplot
         filledgraphs/JKQTPFilledCurveXGraph,JKQTPFilledCurveYGraph/--smallscreenshotplot

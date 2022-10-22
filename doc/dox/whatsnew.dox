@@ -52,7 +52,6 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: added the option to register a custom symbol using JKQTPRegisterCustomGraphSymbol() </li>
     <li>NEW: added property drawLineInForeground to JKQTPXYLineGraph and JKQTPXYParametrizedScatterGraph</li>
     <li>NEW: added JKQTPXYGraph::setKeyColumn()/JKQTPXYGraph::getKeyColumn() and  JKQTPXYGraph::setValueColumn()/JKQTPXYGraph::getValueColumn() and corresponding functions in other classes. In most graph classes they point to xColumn for key and yColumn for values. These functions are virtual and overwritten in derived classes with horizontally oriented graphs, where they point to yColumn for key and yColumn for value. This way you can write generic code with classes for both orientations.</li>
-    <li>NEW: barcharts (derived from JKQTPBarGraphBase) can be configured to use different fill styles above and below the baseline, see JKQTPBarGraphBase::FillMode </li>
     <li>NEW: added new error indicator styles JKQTPErrorHalfBarsOutwards, JKQTPErrorHalfBarsInwards, JKQTPErrorHalfBarsAbove, JKQTPErrorHalfBarsBelow which are especially useful for barcharts</li>
     <li>NEW: Added signals JKQTBasePlotter::beforeExporting()/JKQTBasePlotter::afterExporting() and JKQTBasePlotterJKQTBasePlotter:beforePrinting()/JKQTBasePlotter::afterPrinting() which allow to modify the plot just before and just after an export/print</li>
     <li>NEW: Added new JKQTPCALabelType elements (JKQTPCALTfrac...), so axis label ticks can be displayed as fractions 1/2 instead of 0.5<br>
@@ -62,7 +61,9 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: all elements of a coordinate axis may have their own color now </li>
     <li>NEW: added possibility to scale the axis ticks by a factor (e.g. pi) to generate axes with ticks <tt>0pi, 1pi, 2pi ...</tt> </li>
     <li>NEW: added option to draw a zero axis to JKQTPCoordinateAxis, which draws an axis at the origin of the coordinate system  </li>
-    <li>NEW: barcharts may hav rounded corners now, via JKQTPBarGraphBase::setRectRadius()</li>
+    <li>NEW: barcharts (derived from JKQTPBarGraphBase) can be configured to use different fill styles above and below the baseline, see JKQTPBarGraphBase::FillMode </li>
+    <li>NEW: barcharts may have rounded corners now, via JKQTPBarGraphBase::setRectRadius()</li>
+    <li>NEW: barcharts can be colored by a user-specified functor</li>
   </ul></li>
   
   <li>JKQTMathText:<ul>

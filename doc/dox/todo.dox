@@ -15,12 +15,12 @@ This page lists several todos and wishes for future version of JKQTPlotter
     <li>graphs: add candlestick charts (financial, see https://en.m.wikipedia.org/wiki/Candlestick_chart)</li>
     <li>graphs: add color palettes from Green's HELIX method, see <a href="https://articles.adsabs.harvard.edu/pdf/2011BASI...39..289G">https://articles.adsabs.harvard.edu/pdf/2011BASI...39..289G</a>, also see <a href="https://jiffyclub.github.io/palettable/cubehelix/">https://jiffyclub.github.io/palettable/cubehelix/</a></li>
     <li>graphs: barchart/ranges chart with (x,y1,y2) or (x1,x2,y)</li>
-    <li>graphs: parametrized barcharts: color from dara</li>
     <li>graphs: gant-chart as simplufier vector field with (x,y1,y2) or (x1,x2,y), or (x,y,dx), (x,y,dy) ... different head/tail style</li>
     <li>graphs: matrix plots with boxes, labels, ...</li>
     <li>graphs: matrix plots with symbols: symbol-type, color, size should be parametric, cf. scatter plots</li>
     <li>graphs: text labels at positions/for graphs</li>
     <li>graphs: vector field graph (arrows), variant (x,y,dx,dy), (x,y,alpha,length), (x1,y1,x2,y2) ... different head/tail styles</li>
+    <li>graphs: waterfall charts (see https://en.wikipedia.org/wiki/Waterfall_chart)</li>
     <li>plot: axes with symlog (see http://dx.doi.org/10.1088/0957-0233/24/2/027001) and logit (https://de.m.wikipedia.org/wiki/Logit) scaling? </li>
     <li>plot: axis labels above/below/centered around tick</li>
     <li>plot: elongated grid to left of tick labels</li>

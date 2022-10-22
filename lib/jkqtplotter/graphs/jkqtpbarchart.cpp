@@ -25,8 +25,6 @@
 #include <QDebug>
 #include <iostream>
 #include "jkqtplotter/jkqtptools.h"
-#include "jkqtplotter/graphs/jkqtpimage.h"
-#include "jkqtplotter/jkqtpbaseelements.h"
 #include "jkqtplotter/jkqtplotter.h"
 
 #define SmallestGreaterZeroCompare_xvsgz() if ((xvsgz>10.0*DBL_MIN)&&((smallestGreaterZero<10.0*DBL_MIN) || (xvsgz<smallestGreaterZero))) smallestGreaterZero=xvsgz;
@@ -59,8 +57,7 @@ void JKQTPBarVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
     drawErrorsBefore(painter);
 
     const QPen p=getLinePenForRects(painter, parent);
-    const QBrush b=getFillBrush(painter, parent);
-    const QBrush b_below=(getFillMode()==FillMode::TwoColorFilling)?fillStyleBelow().getFillBrush(painter, parent):b;
+    const auto fillFunctor=std::bind(constructFillBrushFunctor(), std::placeholders::_1, std::placeholders::_2, std::ref(painter), this);
 
     int imax=0;
     int imin=0;
@@ -115,9 +112,14 @@ void JKQTPBarVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
                 bool swapped=false;
                 if (yy<y) { qSwap(y,yy); swapped=true; }
                 if (JKQTPIsOKFloat(x) && JKQTPIsOKFloat(xx) && JKQTPIsOKFloat(y) && JKQTPIsOKFloat(yy)) {
-                    if (yvdirect<getBaseline()) painter.setBrush(b_below);
-                    else painter.setBrush(b);
-                    painter.setPen(p);
+                    const QBrush b=fillFunctor(xv,yv);
+                    painter.setBrush(b);
+                    if (getFillMode()!=FillMode::SingleFilling) {
+                        QPen pl=p;
+                        pl.setColor(JKQTPGetDerivedColor(m_lineColorDerivationModeForSpecialFill,b.color()));
+                    } else {
+                        painter.setPen(p);
+                    }
                     const QRectF r(QPointF(x, y), QPointF(xx, yy));
                     const double rAtBaseline=parent->pt2px(painter, rectRadiusAtBaseline);
                     const double rAtValue=parent->pt2px(painter, rectRadiusAtValue);
@@ -150,35 +152,6 @@ bool JKQTPBarVerticalGraph::getYMinMax(double& miny, double& maxy, double& small
     return getValuesMinMax(miny, maxy, smallestGreaterZero);
 }
 
-int JKQTPBarVerticalGraph::getBarPositionColumn() const
-{
-    return xColumn;
-}
-
-int JKQTPBarVerticalGraph::getBarHeightColumn() const
-{
-    return yColumn;
-}
-
-void JKQTPBarVerticalGraph::setBarPositionColumn(int column)
-{
-    xColumn=column;
-}
-
-void JKQTPBarVerticalGraph::setBarPositionColumn(size_t column)
-{
-    xColumn=static_cast<int>(column);
-}
-
-void JKQTPBarVerticalGraph::setBarHeightColumn(int column)
-{
-    yColumn=column;
-}
-
-void JKQTPBarVerticalGraph::setBarHeightColumn(size_t column)
-{
-    yColumn=static_cast<int>(column);
-}
 
 bool JKQTPBarVerticalGraph::considerForAutoscaling(JKQTPBarGraphBase *other) const
 {
@@ -206,54 +179,25 @@ JKQTPBarHorizontalGraph::JKQTPBarHorizontalGraph(JKQTPlotter *parent):
 
 }
 
-int JKQTPBarHorizontalGraph::getBarPositionColumn() const
+
+int JKQTPBarHorizontalGraph::getKeyColumn() const
 {
     return yColumn;
 }
 
-int JKQTPBarHorizontalGraph::getBarHeightColumn() const
+int JKQTPBarHorizontalGraph::getValueColumn() const
 {
     return xColumn;
 }
 
-int JKQTPBarHorizontalGraph::getKeyColumn() const
-{
-    return getBarPositionColumn();
-}
-
-int JKQTPBarHorizontalGraph::getValueColumn() const
-{
-    return getBarHeightColumn();
-}
-
 void JKQTPBarHorizontalGraph::setKeyColumn(int __value)
 {
-    setBarPositionColumn(__value);
+    yColumn=__value;
 }
 
 void JKQTPBarHorizontalGraph::setValueColumn(int __value)
 {
-    setBarHeightColumn(__value);
-}
-
-void JKQTPBarHorizontalGraph::setBarPositionColumn(int column)
-{
-    yColumn=column;
-}
-
-void JKQTPBarHorizontalGraph::setBarPositionColumn(size_t column)
-{
-    yColumn=static_cast<int>(column);
-}
-
-void JKQTPBarHorizontalGraph::setBarHeightColumn(int column)
-{
-    xColumn=column;
-}
-
-void JKQTPBarHorizontalGraph::setBarHeightColumn(size_t column)
-{
-    xColumn=static_cast<int>(column);
+    xColumn=__value;
 }
 
 bool JKQTPBarHorizontalGraph::considerForAutoscaling(JKQTPBarGraphBase *other) const
@@ -272,8 +216,7 @@ void JKQTPBarHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
     drawErrorsBefore(painter);
 
     const QPen p=getLinePenForRects(painter, parent);
-    const QBrush b=getFillBrush(painter, parent);
-    const QBrush b_below=(getFillMode()==FillMode::TwoColorFilling)?fillStyleBelow().getFillBrush(painter, parent):b;
+    const auto fillFunctor=std::bind(constructFillBrushFunctor(), std::placeholders::_1, std::placeholders::_2, std::ref(painter), this);
 
     int imax=0;
     int imin=0;
@@ -331,9 +274,14 @@ void JKQTPBarHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
                     //qDebug()<<"delta="<<delta<<"   x="<<x<<" y="<<y<<"   xx="<<xx<<" yy="<<yy;
                     //qDebug()<<"xv="<<xv<<"   x0="<<x0<<"   x="<<x<<"..."<<xx;
                     if (JKQTPIsOKFloat(x) && JKQTPIsOKFloat(xx) && JKQTPIsOKFloat(y) && JKQTPIsOKFloat(yy)) {
-                        if (xvdirect<getBaseline()) painter.setBrush(b_below);
-                        else painter.setBrush(b);
-                        painter.setPen(p);
+                        const QBrush b=fillFunctor(yv,xv);
+                        painter.setBrush(b);
+                        if (getFillMode()!=FillMode::SingleFilling) {
+                            QPen pl=p;
+                            pl.setColor(JKQTPGetDerivedColor(m_lineColorDerivationModeForSpecialFill,b.color()));
+                        } else {
+                            painter.setPen(p);
+                        }
                         const QRectF r(QPointF(x, y), QPointF(xx, yy));
                         const double rAtBaseline=parent->pt2px(painter, rectRadiusAtBaseline);
                         const double rAtValue=parent->pt2px(painter, rectRadiusAtBaseline);
