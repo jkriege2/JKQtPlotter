@@ -47,7 +47,7 @@ class JKQTPDatastore;
 
 
 /*! \brief This implements xy line plots. This also alows to draw symbols at the data points.
-    \ingroup jkqtplotter_linesymbolgraphs_simple
+    \ingroup jkqtplotter_linesymbolgraphs_line
 
     \image html JKQTPXYLineGraph.png
 
@@ -101,7 +101,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXYLineGraph: public JKQTPXYGraph, public JKQTP
 
 
 /*! \brief This implements xy line plots with x and y error indicators.
-    \ingroup jkqtplotter_linesymbolgraphs_simple
+    \ingroup jkqtplotter_linesymbolgraphs_line
 
     \image html JKQTPXYLineErrorGraph_JKQTPErrorBars.png "setYErrorStyle(JKQTPErrorBars)"
     \image html JKQTPXYLineErrorGraph_JKQTPErrorLines.png "setYErrorStyle(JKQTPErrorLines)"

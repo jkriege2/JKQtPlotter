@@ -31,7 +31,7 @@
 
 
 /** \brief This is a base-class for all bar graphs with vertical or horizontal orientation (the orientation is implemented in dervied classes!)
- *  \ingroup jkqtplotter_barssticks
+ *  \ingroup jkqtplotter_barcharts
  *
  *  This class plots a bargraph. This image explains the parameters:
  *
@@ -49,12 +49,12 @@
  *
  *  \image html JKQTPBarVerticalGraph.png
  *
- *  You can also set FillMode::TwoColorFilling, which uses different fill styles for bars above and below
+ *  You can also set JKQTPBarGraphBase::FillMode::TwoColorFilling, which uses different fill styles for bars above and below
  *  the baseline of the graph:
  *
  *  \image html JKQTPBarVerticalGraphTwoColorFilling.png
  *
- *  If you use FillMode::FunctorFilling you can specify the fill style by a functor, e.g.
+ *  If you use JKQTPBarGraphBase::FillMode::FunctorFilling you can specify the fill style by a functor, e.g.
  *  \code
  *    graph->setFillMode(JKQTPBarGraphBase::FillMode::FunctorFilling);
  *    graph->setFillBrushFunctor(

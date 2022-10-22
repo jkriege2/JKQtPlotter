@@ -291,7 +291,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPPaintDeviceAdapter {
  * \see See \ref JKQTPlotterMultiPlotLayout for an extensive example of the functionality.
  *
  *
- * \subsection JKQTBASEPLOTTER_SYNCMULTIPLOT_GRIDPRINT Grid Printing/Desclaring Relations between Plots
+ * \subsection JKQTBASEPLOTTER_SYNCMULTIPLOT_GRIDPRINT Grid Printing/Declaring Relations between Plots
  *
  * Usually each JKQTPlotter/JKQTBasePlotter prints or exports only itself. But in many cases you might want to
  * add several plots that form a grid layout and also want to export them as one image/print them on one page.
@@ -334,9 +334,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPPaintDeviceAdapter {
  * Most commonly this invisible plotter class is used as basis for the widget JKQTPlotter.
  * \see JKQTPlotter
  *
- * \subsection jkqtplotter_usage_baseplotter_standalone JKQTBasePlotter Standalone Usage
+ * \subsection jkqtplotter_usage_baseplotter_standalone JKQTBasePlotter Standalone Usage (non-visible class)
  *
- * \copydetails jkqtplotter_general_usage_jkqtplotter
+ * \copydetails jkqtplotter_general_usage_jkqtbaseplotter
  *
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {

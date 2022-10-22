@@ -73,7 +73,7 @@ JKQTPLOTTER_LIB_EXPORT void initJKQTPlotterResources();
  *
  * \section  JKQTPLOTTER_BASICUSAGE Basic Usage of JKQTPlotter
  *
- * \copydetails jkqtplotter_general_usage_jkqtbaseplotter
+ * \copydetails jkqtplotter_general_usage_jkqtplotter
  *
  *
  * \section  JKQTPLOTTER_SYNCMULTIPLOT Synchronizing Several Plots

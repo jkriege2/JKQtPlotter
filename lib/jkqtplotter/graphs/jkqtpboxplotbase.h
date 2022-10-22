@@ -181,7 +181,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBoxplotGraphBase: public JKQTPGraph, public JK
 /** \brief Tbaseclass for a single <a href="http://en.wikipedia.org/wiki/Box_plot">(notched) boxplot</a> as a "geometric element",
  *         where the data is directly given to the object and not stored in a column, as in JKQTPBoxplotGraphBase
  *  \ingroup jkqtplotter_statgraphs
- *  \ingroup jkqtplotter_diverse
+ *  \ingroup jkqtplotter_statgraphs
  *
  *  The different features of a boxplot are:
  *

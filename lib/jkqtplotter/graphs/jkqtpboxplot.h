@@ -178,7 +178,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBoxplotHorizontalGraph: public JKQTPBoxplotGra
 /*! \brief This implements a single vertical <a href="http://en.wikipedia.org/wiki/Box_plot">(notched) boxplot</a> as a "geometric element",
            where the data is directly given to the object and not stored in a column, as in JKQTPBoxplotVerticalGraph
     \ingroup jkqtplotter_statgraphs
-    \ingroup jkqtplotter_diverse
+    \ingroup jkqtplotter_statgraphs
 
 
 
@@ -232,7 +232,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBoxplotVerticalElement: public JKQTPBoxplotEle
 /*! \brief This implements a horizontal <a href="http://en.wikipedia.org/wiki/Box_plot">(notched) boxplot</a> where the data is directly given to the
            object and not stored in a column, as in JKQTPBoxplotVerticalGraph
     \ingroup jkqtplotter_statgraphs
-    \ingroup jkqtplotter_diverse
+    \ingroup jkqtplotter_statgraphs
 
     the x position is given in pos. All other data are given in the median, min, max,
     percentile25 and percentile75.

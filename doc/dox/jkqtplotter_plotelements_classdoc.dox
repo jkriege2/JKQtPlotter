@@ -46,23 +46,30 @@ This group assembles graphs that show their data with symbols and optionally wit
       <th> Screenshot
       <th> Classes
     <tr>
+      <td>\image html symbols_and_styles_small.png
+      <td> JKQTPXYLineGraph, JKQTPXYLineErrorGraph
+    <tr>
+      <td>\image html stepplots_small.png
+      <td> JKQTPSpecialLineHorizontalGraph, JKQTPSpecialLineVerticalGraph
+</table>
+
+\defgroup jkqtplotter_linesymbolgraphs_scatter Scatter Graphs
+\ingroup jkqtplotter_linesymbolgraphs
+
+<table>
+    <tr>
+      <th> Screenshot
+      <th> Classes
+    <tr>
       <td>\image html beeswarmplot_small.png
       <td> JKQTPSingleColumnSymbolsGraph
     <tr>
       <td>\image html JKQTPXYScatterGraph_small.png
       <td> JKQTPXYScatterGraph, JKQTPXYScatterErrorGraph
-    <tr>
-      <td>\image html symbols_and_styles_small.png
-      <td> JKQTPXYLineGraph, JKQTPXYLineErrorGraph
-    <tr>
-      <td>\image html paramscatterplot_small.png
-      <td> JKQTPXYParametrizedScatterGraph, JKQTPXYParametrizedErrorScatterGraph
-    <tr>
-      <td>\image html stepplots_small.png
-      <td> JKQTPSpecialLineHorizontalGraph, JKQTPSpecialLineVerticalGraph
 </table>
 
-\defgroup jkqtplotter_linesymbolgraphs_simple Basic Line/Scatter Graphs
+
+\defgroup jkqtplotter_linesymbolgraphs_line Line Graphs
 \ingroup jkqtplotter_linesymbolgraphs
 
 <table>
@@ -70,9 +77,6 @@ This group assembles graphs that show their data with symbols and optionally wit
       <th> Screenshot
       <th> Classes
     <tr>
-      <td>\image html beeswarmplot_small.png
-      <td> JKQTPSingleColumnSymbolsGraph
-    <tr>
       <td>\image html symbols_and_styles_small.png
       <td> JKQTPXYLineGraph, JKQTPXYLineErrorGraph
     <tr>
@@ -81,7 +85,7 @@ This group assembles graphs that show their data with symbols and optionally wit
 </table>
 
 
-\defgroup jkqtplotter_linesymbolgraphs_param Parametrized Line/Scatter Graphs
+\defgroup jkqtplotter_linesymbolgraphs_param Bubble Charts / Parametrized Scatter Graphs
 \ingroup jkqtplotter_linesymbolgraphs
 
 <table>
@@ -92,6 +96,25 @@ This group assembles graphs that show their data with symbols and optionally wit
       <td>\image html paramscatterplot_small.png
       <td> JKQTPXYParametrizedScatterGraph, JKQTPXYParametrizedErrorScatterGraph
 </table>
+
+\defgroup jkqtplotter_functiongraphs Function Graphs
+\ingroup jkqtplotter_linesymbolgraphs
+
+<table>
+    <tr>
+      <th> Screenshot
+      <th> Classes
+    <tr>
+      <td>\image html functionplot_small.png
+      <td> JKQTPXFunctionLineGraph,  JKQTPYFunctionLineGraph
+    <tr>
+      <td>\image html functionplot_small.png
+      <td> JKQTPXParsedFunctionLineGraph,  JKQTPYParsedFunctionLineGraph
+    <tr>
+      <td>\image html evalcurve_small.png
+      <td> JKQTPXYFunctionLineGraph
+</table>
+
 
 \defgroup jkqtplotter_filledgraphs Filled Polygon/Area Graphs
 \ingroup jkqtplotter_concretegraphs
@@ -111,34 +134,7 @@ This group assembles graphs that show their data with symbols and optionally wit
       <td> JKQTPFilledVerticalRangeGraph, JKQTPFilledHorizontalRangeGraph
 </table>
 
-\defgroup jkqtplotter_functiongraphs Function Graphs
-\ingroup jkqtplotter_linesymbolgraphs
-
-<table>
-    <tr>
-      <th> Screenshot
-      <th> Classes
-    <tr>
-      <td>\image html functionplot_small.png
-      <td> JKQTPXFunctionLineGraph,  JKQTPYFunctionLineGraph
-    <tr>
-      <td>\image html evalcurve_small.png
-      <td> JKQTPXYFunctionLineGraph
-</table>
-
-\defgroup jkqtplotter_parsedFgraphs Parsed Function Graphs
-\ingroup jkqtplotter_linesymbolgraphs
-
-<table>
-    <tr>
-      <th> Screenshot
-      <th> Classes
-    <tr>
-      <td>\image html functionplot_small.png
-      <td> JKQTPXParsedFunctionLineGraph,  JKQTPYParsedFunctionLineGraph
-</table>
-
-\defgroup jkqtplotter_barssticks Barcharts, Impulse-Charts, ...
+\defgroup jkqtplotter_barcharts Barcharts
 \ingroup jkqtplotter_concretegraphs
 
 <table>
@@ -162,6 +158,22 @@ This group assembles graphs that show their data with symbols and optionally wit
       <td> JKQTPImpulsesHorizontalErrorGraph, JKQTPImpulsesVerticalErrorGraph
 </table>
 
+\defgroup jkqtplotter_sticks Impulse-Charts
+\ingroup jkqtplotter_concretegraphs
+
+<table>
+    <tr>
+      <th> Screenshot
+      <th> Classes
+    <tr>
+    <tr>
+      <td>\image html JKQTPImpulsesVerticalGraph_Symbols_small.png
+      <td> JKQTPImpulsesHorizontalGraph, JKQTPImpulsesVerticalGraph
+    <tr>
+      <td>\image html JKQTPImpulsesVerticalErrorGraph_small.png
+      <td> JKQTPImpulsesHorizontalErrorGraph, JKQTPImpulsesVerticalErrorGraph
+</table>
+
 \defgroup jkqtplotter_statgraphs Statistical Graphs (e.g. Boxplots ...)
 \ingroup jkqtplotter_concretegraphs
 
@@ -173,9 +185,12 @@ This group assembles graphs that show their data with symbols and optionally wit
       <td>\image html boxplot_small.png
       <td> JKQTPBoxplotVerticalGraph, JKQTPBoxplotHorizontalGraph
     <tr>
+      <td>\image html geo_boxplot_small.png
+      <td> JKQTPBoxplotVerticalElement, JKQTPBoxplotHorizontalElement
+    <tr>
       <td>\image html JKQTPViolinplotVerticalElement_small.png
       <td> JKQTPViolinplotVerticalElement, JKQTPViolinplotHorizontalElement
-</table>
+ /table>
 
 \see \ref jkqtptools_math_statistics_adaptors for shortcuts to calculate statistical properties of data and then adding a plot with the results.
 
@@ -244,7 +259,7 @@ Examples:
   - \ref JKQTPlotterGeometricGraphs
 .
 
-\defgroup jkqtplotter_diverse Diverse Other Graphs (Ranges, ...)
+\defgroup jkqtplotter_eventgraphs Event Graphs
 \ingroup jkqtplotter_concretegraphs
 
 <table>
@@ -254,12 +269,6 @@ Examples:
     <tr>
       <td>\image html JKQTPPeakStreamGraphY_small.png
       <td> JKQTPPeakStreamGraph
-    <tr>
-      <td>\image html geo_boxplot_small.png
-      <td> JKQTPBoxplotVerticalElement, JKQTPBoxplotHorizontalElement
-    <tr>
-      <td>\image html JKQTPViolinplotVerticalElement_small.png
-      <td> JKQTPViolinplotVerticalElement, JKQTPViolinplotHorizontalElement
 </table>
 
 \defgroup jkqtplotter_imagelots Matrix/Image Plotting
@@ -284,9 +293,6 @@ Examples:
     <tr>
       <td>\image html overlayimageenhanced_small.png
       <td>  JKQTPOverlayImageEnhanced, JKQTPColumnOverlayImageEnhanced
-    <tr>
-      <td>\image html JKQTPColumnContourPlot_small.png
-      <td> JKQTPContourPlot, JKQTPColumnContourPlot
 </table>
 
 \defgroup jkqtplotter_imagelots_elements Image Graphs
@@ -330,7 +336,7 @@ Examples:
 \ingroup jkqtplotter_imagelots_tools
 
 \defgroup jkqtplotter_imagelots_contour Contour Graphs (based on Image Data)
-\ingroup jkqtplotter_imagelots
+\ingroup jkqtplotter_concretegraphs
 
 <table>
     <tr>

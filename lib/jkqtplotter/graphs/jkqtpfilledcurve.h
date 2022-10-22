@@ -31,7 +31,7 @@
 
 
 /** \brief a Base class for filled curve graphs like e.g. JKQTPFilledCurveXGraph
- *  \ingroup jkqtplotter_linesymbolgraphs_simple
+ *  \ingroup jkqtplotter_filledgraphs
  *
  *  \image html filledgraphs.png
  *

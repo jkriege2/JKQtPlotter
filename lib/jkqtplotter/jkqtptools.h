@@ -654,7 +654,7 @@ JKQTPLOTTER_LIB_EXPORT JKQTPErrorPlotstyle String2JKQTPErrorPlotstyle(const QStr
 
 
 /** \brief plot styles for the error information
- * \ingroup jkqtplotter_linesymbolgraphs_simple
+ * \ingroup jkqtplotter_linesymbolgraphs_line
  *
  * \see JKQTPSpecialLineTypeComboBox
  */
@@ -668,12 +668,12 @@ enum JKQTPSpecialLineType {
 
 
 /** \brief converts a JKQTPSpecialLineType variable into a human-readable string
- * \ingroup jkqtplotter_linesymbolgraphs_simple
+ * \ingroup jkqtplotter_linesymbolgraphs_line
  */
 JKQTPLOTTER_LIB_EXPORT QString JKQTPSpecialLineType2String(JKQTPSpecialLineType pos);
 
 /** \brief converts a String into a JKQTPSpecialLineType
- * \ingroup jkqtplotter_linesymbolgraphs_simple
+ * \ingroup jkqtplotter_linesymbolgraphs_line
  */
 JKQTPLOTTER_LIB_EXPORT JKQTPSpecialLineType String2JKQTPSpecialLineType(const QString& pos);
 

@@ -32,7 +32,7 @@
 
 /*! \brief plots a 1-column set of data-values with symbols onto a JKQtPlotter/JKQtBasePlotter. the data from the single column
            is either interpreted as x- or y-values and the missing coordinate is taken from a fixed value position.
-    \ingroup jkqtplotter_linesymbolgraphs_simple
+    \ingroup jkqtplotter_linesymbolgraphs_scatter
 
     The first coordinate of the data is taken from dataColumn i.e.
       - the x-values if dataDirection==DataDirection::X

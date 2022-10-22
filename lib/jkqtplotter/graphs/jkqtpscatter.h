@@ -46,7 +46,7 @@ class JKQTPDatastore;
 
 
 /*! \brief This implements xy scatter plots. This also alows to draw symbols at the data points.
-    \ingroup jkqtplotter_linesymbolgraphs_simple
+    \ingroup jkqtplotter_linesymbolgraphs_scatter
 
     \image html JKQTPXYScatterGraph.png
 
@@ -87,7 +87,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXYScatterGraph: public JKQTPXYGraph, public JK
 
 
 /*! \brief This implements xy scatter plots with x and y error indicators.
-    \ingroup jkqtplotter_linesymbolgraphs_simple
+    \ingroup jkqtplotter_linesymbolgraphs_scatter
 
     \image html JKQTPXYScatterErrorGraph.png
 

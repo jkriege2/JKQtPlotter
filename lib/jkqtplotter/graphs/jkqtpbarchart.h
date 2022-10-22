@@ -33,7 +33,7 @@
 
 
 /*! \brief This implements a bar graph with bars starting at \f$ yoverride \f$ to \f$ y=f(x) \f$
-    \ingroup jkqtplotter_barssticks
+    \ingroup jkqtplotter_barcharts
 
     This class plots a bargraph. This image explains the parameters:
 
@@ -57,10 +57,21 @@
 
     \image html JKQTPBarVerticalGraphTwoColorFilling.png
 
-    You can use JKQTPlotter::addHorizontalBargraph() to add a series of bargraphs, where the width and shift are determined
-    automatically. The y-columns are given as a QVector<int> to this function.
+   If you use JKQTPBarGraphBase::FillMode::FunctorFilling you can specify the fill style by a functor, e.g.
+   \code
+     graph->setFillMode(JKQTPBarGraphBase::FillMode::FunctorFilling);
+     graph->setFillBrushFunctor(
+       [](double key, double value) {
+         return QBrush(QColor::fromHsvF(key/12.0, 1.0, 1.0));
+       }
+     );
+   \endcode
 
-    \see JKQTPBarHorizontalGraph, \ref JKQTPlotterBarcharts, jkqtpstatAddHHistogram1D(), jkqtpstatAddHHistogram1DAutoranged()
+   The result may look like this:
+
+   \image html JKQTPBarVerticalGraphFunctorFilling.png
+
+   \see JKQTPBarHorizontalGraph, \ref JKQTPlotterBarcharts, jkqtpstatAddHHistogram1D(), jkqtpstatAddHHistogram1DAutoranged()
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPBarVerticalGraph: public JKQTPBarGraphBase {
         Q_OBJECT
@@ -96,7 +107,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarVerticalGraph: public JKQTPBarGraphBase {
 
 /*! \brief This implements a bar graph with bars starting at \f$ yoverride \f$ to \f$ y=f(x) \f$
  *         and error indicator
- *  \ingroup jkqtplotter_barssticks
+ *  \ingroup jkqtplotter_barcharts
  *
  *  This works much the same as JKQTPBarHorizontalGraph. Here is an example output:
  *  \image html JKQTPBarVerticalErrorGraph.png
@@ -154,7 +165,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarVerticalErrorGraph: public JKQTPBarVertical
 
 
 /*! \brief This implements a bar graph with bars starting at \f$ xoverride \f$ to \f$ x=f(y) \f$
-    \ingroup jkqtplotter_barssticks
+    \ingroup jkqtplotter_barcharts
 
     This works much the same as JKQTPBarHorizontalGraph. Here is an example output:
 
@@ -164,6 +175,21 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarVerticalErrorGraph: public JKQTPBarVertical
     the baseline of the graph:
 
     \image html JKQTPBarHorizontalGraphTwoColorFilling.png
+
+   If you use JKQTPBarGraphBase::FillMode::FunctorFilling you can specify the fill style by a functor, e.g.
+   \code
+     graph->setFillMode(JKQTPBarGraphBase::FillMode::FunctorFilling);
+     graph->setFillBrushFunctor(
+       [](double key, double value) {
+         return QBrush(QColor::fromHsvF(key/12.0, 1.0, 1.0));
+       }
+     );
+   \endcode
+
+   The result may look like this:
+
+   \image html JKQTPBarHorizontalGraphFunctorFilling.png
+
 
     \see \ref JKQTPlotterBarcharts, jkqtpstatAddVHistogram1D(), jkqtpstatAddVHistogram1DAutoranged()
  */
@@ -208,7 +234,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarHorizontalGraph: public JKQTPBarGraphBase {
 
 /*! \brief This implements a bar graph with bars starting at \f$ xoverride \f$ to \f$ x=f(y) \f$
  *         and error indicator
- *  \ingroup jkqtplotter_barssticks
+ *  \ingroup jkqtplotter_barcharts
  *
  *  This works much the same as JKQTPBarHorizontalGraph. Here is an example output:
  *  \image html JKQTPBarHorizontalErrorGraph.png
@@ -277,9 +303,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarHorizontalErrorGraph: public JKQTPBarHorizo
 
 /*! \brief This implements a bar graph with bars starting at \f$ yoverride \f$ to \f$ y=f(x) \f$
  *         Optionally several graphs of this type may be stacked on top of each other
- *  \ingroup jkqtplotter_barssticks
+ *  \ingroup jkqtplotter_barcharts
  *
  *  Draw stacked barcharts by connecting several plots by calling \c setStackedParent(belowPlot) for each plot
+ *
  *  \image html JKQTPBarVerticalGraphStacked.png
  *
  * \see JKQTPBarVerticalGraph, \ref JKQTPlotterStackedBarChart
@@ -325,9 +352,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarVerticalStackableGraph: public JKQTPBarVert
 
 /*! \brief This implements a bar graph with bars starting at \f$ yoverride \f$ to \f$ y=f(x) \f$
  *         Optionally several graphs of this type may be stacked on top of each other
- *  \ingroup jkqtplotter_barssticks
+ *  \ingroup jkqtplotter_barcharts
  *
  *  Draw stacked barcharts by connecting several plots by calling \c setStackedParent(belowPlot) for each plot
+ *
  *  \image html JKQTPBarHorizontalGraphStacked.png
  *
  *

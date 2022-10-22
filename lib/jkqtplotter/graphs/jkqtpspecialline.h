@@ -44,7 +44,7 @@ class JKQTPDatastore;
 
 
 /** \brief a Base class for special line graphs (steps ...) like e.g. JKQTPSpecialLineHorizontalGraph
- *  \ingroup jkqtplotter_linesymbolgraphs_simple
+ *  \ingroup jkqtplotter_linesymbolgraphs_line
  *
  *  \image html stepplots.png
  *
@@ -88,7 +88,7 @@ protected:
 
 
 /** \brief This implements a step plot with values \f$ \left(x, f(x) \right) \f$
- *  \ingroup jkqtplotter_linesymbolgraphs_simple
+ *  \ingroup jkqtplotter_linesymbolgraphs_line
  *
  *  \image html stepplots.png
  *
@@ -112,7 +112,7 @@ protected:
 
 
 /*! \brief This implements a step plot with values \f$ \left(f(y), y \right) \f$
-    \ingroup jkqtplotter_linesymbolgraphs_simple
+    \ingroup jkqtplotter_linesymbolgraphs_line
 
     \image html stepplots_vertical.png
 
