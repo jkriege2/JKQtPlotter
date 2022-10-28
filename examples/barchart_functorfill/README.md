@@ -11,7 +11,7 @@ The source code of the main application is (see [`barchart_functorfill.cpp`](htt
     size_t columnV=ds->addColumnCalculatedFromColumn(columnK, [](double x) { return 5.0+x; }, "v");
 
     // 3. create graph in the plot, which plots the dataset:
-    JKQTPBarGraphBase* graph=new TCHART(&plot);
+    JKQTPBarVerticalGraph* graph=new JKQTPBarVerticalGraph(&plot);
     graph->setKeyColumn(columnK);
     graph->setValueColumn(columnV);
     // set FunctorFilling fill Mode

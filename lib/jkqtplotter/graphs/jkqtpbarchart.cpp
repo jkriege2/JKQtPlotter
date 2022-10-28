@@ -121,21 +121,26 @@ void JKQTPBarVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
                         painter.setPen(p);
                     }
                     const QRectF r(QPointF(x, y), QPointF(xx, yy));
-                    const double rAtBaseline=parent->pt2px(painter, rectRadiusAtBaseline);
-                    const double rAtValue=parent->pt2px(painter, rectRadiusAtValue);
-                    //qDebug()<<"r="<<r<<", rectRadiusAtBaseline="<<rectRadiusAtBaseline<<", rectRadiusAtValue="<<rectRadiusAtValue<<", rAtBaseline="<<rAtBaseline<<", rAtValue="<<rAtValue;
-                    if (rAtBaseline+rAtValue>=r.height()+2) {
-                        //qDebug()<<"drawRect";
-                        painter.drawRect(r);
+                    if (usesCustomDrawFunctor()) {
+                        if (m_customDrawFunctor) {
+                            m_customDrawFunctor(painter, r, QPointF(xv,yv), Qt::Vertical, this);
+                        }
                     } else {
-                        //qDebug()<<"drawRoundRect swapped="<<swapped;
-                        if (swapped) {
-                            painter.drawComplexRoundedRect(r,rAtBaseline,rAtBaseline,rAtValue,rAtValue,Qt::AbsoluteSize);
+                        const double rAtBaseline=parent->pt2px(painter, rectRadiusAtBaseline);
+                        const double rAtValue=parent->pt2px(painter, rectRadiusAtValue);
+                        //qDebug()<<"r="<<r<<", rectRadiusAtBaseline="<<rectRadiusAtBaseline<<", rectRadiusAtValue="<<rectRadiusAtValue<<", rAtBaseline="<<rAtBaseline<<", rAtValue="<<rAtValue;
+                        if (rAtBaseline+rAtValue>=r.height()+2) {
+                            //qDebug()<<"drawRect";
+                            painter.drawRect(r);
                         } else {
-                            painter.drawComplexRoundedRect(r,rAtValue,rAtValue,rAtBaseline,rAtBaseline,Qt::AbsoluteSize);
+                            //qDebug()<<"drawRoundRect swapped="<<swapped;
+                            if (swapped) {
+                                painter.drawComplexRoundedRect(r,rAtBaseline,rAtBaseline,rAtValue,rAtValue,Qt::AbsoluteSize);
+                            } else {
+                                painter.drawComplexRoundedRect(r,rAtValue,rAtValue,rAtBaseline,rAtBaseline,Qt::AbsoluteSize);
+                            }
                         }
                     }
-
                 }
             }
         }
@@ -283,17 +288,24 @@ void JKQTPBarHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
                             painter.setPen(p);
                         }
                         const QRectF r(QPointF(x, y), QPointF(xx, yy));
-                        const double rAtBaseline=parent->pt2px(painter, rectRadiusAtBaseline);
-                        const double rAtValue=parent->pt2px(painter, rectRadiusAtBaseline);
-                        if (rAtBaseline+rAtValue>r.width()+2) {
-                            painter.drawRect(r);
-                        } else {
-                            if (swapped) {
-                                painter.drawComplexRoundedRect(r,rAtBaseline,rAtValue,rAtBaseline,rAtValue,Qt::AbsoluteSize);
-                            } else {
-                                painter.drawComplexRoundedRect(r,rAtValue,rAtBaseline,rAtValue,rAtBaseline,Qt::AbsoluteSize);
+                        if (usesCustomDrawFunctor()) {
+                            if (m_customDrawFunctor) {
+                                m_customDrawFunctor(painter, r, QPointF(xv,yv), Qt::Horizontal, this);
                             }
-                        }                    }
+                        } else {
+                            const double rAtBaseline=parent->pt2px(painter, rectRadiusAtBaseline);
+                            const double rAtValue=parent->pt2px(painter, rectRadiusAtBaseline);
+                            if (rAtBaseline+rAtValue>r.width()+2) {
+                                painter.drawRect(r);
+                            } else {
+                                if (swapped) {
+                                    painter.drawComplexRoundedRect(r,rAtBaseline,rAtValue,rAtBaseline,rAtValue,Qt::AbsoluteSize);
+                                } else {
+                                    painter.drawComplexRoundedRect(r,rAtValue,rAtBaseline,rAtValue,rAtBaseline,Qt::AbsoluteSize);
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

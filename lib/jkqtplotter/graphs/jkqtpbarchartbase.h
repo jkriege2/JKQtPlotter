@@ -68,6 +68,27 @@
  *
  *  \image html JKQTPBarVerticalGraphFunctorFilling.png
  *
+ *  You can also completely customize the drawing by defining a custom draw functor:
+ *  \code
+ *    graph->setCustomDrawingFunctor(
+ *      [](JKQTPEnhancedPainter& painter, const QRectF& bar_px, const QPointF& datapoint, Qt::Orientation orientation, JKQTPBarGraphBase* graph) {
+ *        // draw the bar (if required), pen and brush are already set properly
+ *        painter.drawRect(bar_px);
+ *        // now we can add some decoration or replace the instruction above:
+ *        // ........
+ *      }
+ *    );
+ *    // enable usage of cutom draw functor
+ *    graph->setUseCustomDrawFunctor(true);
+ *  \endcode
+ *
+ *  See \ref JKQTPlotterBarchartsCustomDrawFunctor for a detailed example.
+ *
+ *  The result may look like this:
+ *
+ *  \image html JKQTPBarVerticalGraphCustomDrawFunctor.png
+
+ *
  *  \see JKQTPBarHorizontalGraph, JKQTPBarVerticalGraph
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPBarGraphBase: public JKQTPXYBaselineGraph, public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin {
@@ -83,6 +104,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarGraphBase: public JKQTPXYBaselineGraph, pub
          *  \see setFillBrushFunctor(), getFillBrushFunctor()
          */
         typedef std::function<QBrush(double key, double value)> SimpleFillBrushFunctor;
+
+        /** \brief functor for custom drawing of bars */
+        typedef std::function<void(JKQTPEnhancedPainter& painter, const QRectF& bar_px, const QPointF& datapoint, Qt::Orientation orientation, JKQTPBarGraphBase* graph)> CustomDrawingFunctor;
         /** \brief specifies how the area below the graph is filled
          *
          *  \see setFillMode(), getFillMode(), fillStyleBelow(), \ref JKQTPlotterWigglePlots
@@ -137,6 +161,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarGraphBase: public JKQTPXYBaselineGraph, pub
         const FillBrushFunctor& getFillBrushFunctor() const;
         /** \copydoc m_lineColorDerivationModeForSpecialFill */
         JKQTPColorDerivationMode getLineColorDerivationModeForSpecialFill() const;
+        /** \copydoc m_useCustomDrawFunctor */
+        bool usesCustomDrawFunctor() const;
 
     public slots:
         /** \copydoc m_fillMode */
@@ -151,6 +177,13 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarGraphBase: public JKQTPXYBaselineGraph, pub
         void setFillBrushFunctor(const JKQTPBarGraphBase::SimpleFillBrushFunctor& f);
         /** \copydoc m_fillBrushFunctor */
         void setFillBrushFunctor(JKQTPBarGraphBase::SimpleFillBrushFunctor&& f);
+
+        /** \copydoc m_customDrawFunctor */
+        void setCustomDrawingFunctor(JKQTPBarGraphBase::CustomDrawingFunctor&& f);
+        /** \copydoc m_customDrawFunctor */
+        void setCustomDrawingFunctor(const JKQTPBarGraphBase::CustomDrawingFunctor& f);
+        /** \copydoc m_useCustomDrawFunctor */
+        void setUseCustomDrawFunctor(bool enabled);
 
         /** \brief finds all bar charts of the same orientation and determines width and shift, so they stand side by side
          *
@@ -263,6 +296,36 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarGraphBase: public JKQTPXYBaselineGraph, pub
          *  \see setFillBrushFunctor(), getFillBrushFunctor(), m_fillMode
          */
         FillBrushFunctor m_fillBrushFunctor;
+        /** \brief this allows to provide custom drawing code for the bars.
+         *         It is called for every visible bar if activated by \c setUseCustomDrawFunctor(true) .
+         *
+         *  Here is an example for a custom draw functor:
+         *  \code
+         *    graph->setCustomDrawingFunctor(
+         *      [](JKQTPEnhancedPainter& painter, const QRectF& bar_px, const QPointF& datapoint, Qt::Orientation orientation, JKQTPBarGraphBase* graph) {
+         *        // draw the bar (if required), pen and brush are already set properly
+         *        painter.drawRect(bar_px);
+         *        // now we can add some decoration or replace the instruction above:
+         *        // ........
+         *      }
+         *    );
+         *    // enable usage of cutom draw functor
+         *    graph->setUseCustomDrawFunctor(true);
+         *  \endcode
+         *
+         *
+         *  The result may look like this:
+         *
+         *  \image html JKQTPBarVerticalGraphCustomDrawFunctor.png
+         *
+         *  \see CustomDrawingFunctor, m_useCustomDrawFunctor, setUseCustomDrawFunctor(), \ref JKQTPlotterBarchartsCustomDrawFunctor for a detailed example
+         */
+        CustomDrawingFunctor m_customDrawFunctor;
+        /** \brief enabled custom drawing by m_customDrawFunctor
+         *
+         *  \see m_customDrawFunctor
+         */
+        bool m_useCustomDrawFunctor;
 
         /** \brief returns a FillBrushFunctor that is appropriate for the currently selected m_fillMode */
         virtual FillBrushFunctor constructFillBrushFunctor() const;

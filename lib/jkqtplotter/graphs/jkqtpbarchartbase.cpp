@@ -38,6 +38,7 @@ JKQTPBarGraphBase::JKQTPBarGraphBase(JKQTBasePlotter* parent):
     JKQTPXYBaselineGraph(parent),
     width(0.9), shift(0),
     m_fillMode(FillMode::SingleFilling),
+    m_useCustomDrawFunctor(false),
     m_lineColorDerivationModeForSpecialFill(parent->getCurrentPlotterStyle().graphsStyle.barchartStyle.graphColorDerivationMode),
     rectRadiusAtBaseline(0),rectRadiusAtValue(0)
 {
@@ -57,7 +58,6 @@ JKQTPBarGraphBase::JKQTPBarGraphBase(JKQTPlotter* parent):
 void JKQTPBarGraphBase::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     QPen p=getLinePenForRects(painter, parent);
-    QPen np(Qt::NoPen);
     QBrush b=getFillBrush(painter, parent);
     //int y=rect.top()+rect.height()/2.0;
     painter.setPen(p);
@@ -242,6 +242,21 @@ void JKQTPBarGraphBase::setFillBrushFunctor(SimpleFillBrushFunctor &&f) {
     m_fillBrushFunctor=SimpleFillBrushFunctorAdaptor(std::forward<SimpleFillBrushFunctor>(f));
 }
 
+void JKQTPBarGraphBase::setCustomDrawingFunctor(CustomDrawingFunctor &&f)
+{
+    m_customDrawFunctor=std::forward<CustomDrawingFunctor>(f);
+}
+
+void JKQTPBarGraphBase::setCustomDrawingFunctor(const CustomDrawingFunctor &f)
+{
+    m_customDrawFunctor=f;
+}
+
+void JKQTPBarGraphBase::setUseCustomDrawFunctor(bool enabled)
+{
+    m_useCustomDrawFunctor=enabled;
+}
+
 double JKQTPBarGraphBase::getParentStackedMax(int /*index*/) const
 {
     return getBaseline();
@@ -382,4 +397,9 @@ void JKQTPBarGraphBase::setLineColorDerivationModeForSpecialFill(const JKQTPColo
 JKQTPColorDerivationMode JKQTPBarGraphBase::getLineColorDerivationModeForSpecialFill() const
 {
     return m_lineColorDerivationModeForSpecialFill;
+}
+
+bool JKQTPBarGraphBase::usesCustomDrawFunctor() const
+{
+    return m_useCustomDrawFunctor;
 }

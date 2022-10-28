@@ -71,6 +71,26 @@
 
    \image html JKQTPBarVerticalGraphFunctorFilling.png
 
+
+   You can also completely customize the drawing by defining a custom draw functor:
+   \code
+     graph->setCustomDrawingFunctor(
+       [](JKQTPEnhancedPainter& painter, const QRectF& bar_px, const QPointF& datapoint, Qt::Orientation orientation, JKQTPBarGraphBase* graph) {
+         // draw the bar (if required), pen and brush are already set properly
+         painter.drawRect(bar_px);
+         // now we can add some decoration or replace the instruction above:
+         // ........
+       }
+     );
+     // enable usage of cutom draw functor
+     graph->setUseCustomDrawFunctor(true);
+   \endcode
+
+   See \ref JKQTPlotterBarchartsCustomDrawFunctor for a detailed example.
+   The result may look like this:
+
+   \image html JKQTPBarVerticalGraphCustomDrawFunctor.png
+
    \see JKQTPBarHorizontalGraph, \ref JKQTPlotterBarcharts, jkqtpstatAddHHistogram1D(), jkqtpstatAddHHistogram1DAutoranged()
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPBarVerticalGraph: public JKQTPBarGraphBase {
@@ -190,6 +210,24 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarVerticalErrorGraph: public JKQTPBarVertical
 
    \image html JKQTPBarHorizontalGraphFunctorFilling.png
 
+   You can also completely customize the drawing by defining a custom draw functor:
+   \code
+     graph->setCustomDrawingFunctor(
+       [](JKQTPEnhancedPainter& painter, const QRectF& bar_px, const QPointF& datapoint, Qt::Orientation orientation, JKQTPBarGraphBase* graph) {
+         // draw the bar (if required), pen and brush are already set properly
+         painter.drawRect(bar_px);
+         // now we can add some decoration or replace the instruction above:
+         // ........
+       }
+     );
+     // enable usage of cutom draw functor
+     graph->setUseCustomDrawFunctor(true);
+   \endcode
+
+   See \ref JKQTPlotterBarchartsCustomDrawFunctor for a detailed example.
+   The result may look like this:
+
+   \image html JKQTPBarHorizontalGraphCustomDrawFunctor.png
 
     \see \ref JKQTPlotterBarcharts, jkqtpstatAddVHistogram1D(), jkqtpstatAddVHistogram1DAutoranged()
  */

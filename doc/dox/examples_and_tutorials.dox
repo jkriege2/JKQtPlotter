@@ -46,8 +46,11 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 <tr><td> \image html barchart_twocolor_small.png
     <td> \subpage JKQTPlotterBarchartsTwoColorFilling
     <td> `JKQTPBarVerticalGraph` <br> JKQTPDatastore::addColumnCalculatedFromColumn()
-<tr><td> \image html barchart_functorfill_small.png
+<tr><td> \image html barchart_customdrawfunctor_small.png
     <td> \subpage JKQTPlotterBarchartsFunctorFilling
+    <td> `JKQTPBarVerticalGraph` <br> JKQTPDatastore::addColumnCalculatedFromColumn()
+<tr><td> \image html barchart_functorfill_small.png
+    <td> \subpage JKQTPlotterBarchartsCustomDrawFunctor
     <td> `JKQTPBarVerticalGraph` <br> JKQTPDatastore::addColumnCalculatedFromColumn()
 <tr><td> \image html stackedbars_small.png
     <td> \subpage JKQTPlotterStackedBarChart
