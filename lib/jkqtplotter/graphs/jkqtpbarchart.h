@@ -32,7 +32,7 @@
 #include "jkqtplotter/graphs/jkqtpbarchartbase.h"
 
 
-/*! \brief This implements a bar graph with bars starting at \f$ yoverride \f$ to \f$ y=f(x) \f$
+/*! \brief This implements a vertical bar graph with bars between \f$ y=\mbox{baseline} \f$ and \f$ y=f(x) \f$
     \ingroup jkqtplotter_barcharts
 
     This class plots a bargraph. This image explains the parameters:
@@ -125,7 +125,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarVerticalGraph: public JKQTPBarGraphBase {
 
 };
 
-/*! \brief This implements a bar graph with bars starting at \f$ yoverride \f$ to \f$ y=f(x) \f$
+/*! \brief This implements a vertical bar graph with bars between \f$ y=\mbox{baseline} \f$ and \f$ y=f(x) \f$
  *         and error indicator
  *  \ingroup jkqtplotter_barcharts
  *
@@ -184,7 +184,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarVerticalErrorGraph: public JKQTPBarVertical
 
 
 
-/*! \brief This implements a bar graph with bars starting at \f$ xoverride \f$ to \f$ x=f(y) \f$
+/*! \brief This implements a horizontal bar graph with bars between \f$ x=\mbox{baseline} \f$ and \f$ x=f(y) \f$
     \ingroup jkqtplotter_barcharts
 
     This works much the same as JKQTPBarHorizontalGraph. Here is an example output:
@@ -270,7 +270,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarHorizontalGraph: public JKQTPBarGraphBase {
 
 
 
-/*! \brief This implements a bar graph with bars starting at \f$ xoverride \f$ to \f$ x=f(y) \f$
+/*! \brief This implements a horizontal bar graph with bars between \f$ x=\mbox{baseline} \f$ and \f$ x=f(y) \f$
  *         and error indicator
  *  \ingroup jkqtplotter_barcharts
  *
@@ -339,7 +339,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarHorizontalErrorGraph: public JKQTPBarHorizo
 
 
 
-/*! \brief This implements a bar graph with bars starting at \f$ yoverride \f$ to \f$ y=f(x) \f$
+/*! \brief This implements a vertical bar graph with bars between \f$ y=\mbox{baseline} \f$ and \f$ y=f(x) \f$
  *         Optionally several graphs of this type may be stacked on top of each other
  *  \ingroup jkqtplotter_barcharts
  *
@@ -388,7 +388,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarVerticalStackableGraph: public JKQTPBarVert
 
 
 
-/*! \brief This implements a bar graph with bars starting at \f$ yoverride \f$ to \f$ y=f(x) \f$
+/*! \brief This implements a horizontal bar graph with bars between \f$ x=\mbox{baseline} \f$ and \f$ x=f(y) \f$
  *         Optionally several graphs of this type may be stacked on top of each other
  *  \ingroup jkqtplotter_barcharts
  *
