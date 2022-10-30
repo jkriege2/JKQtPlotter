@@ -67,9 +67,11 @@ int main(int argc, char* argv[])
 
     // 8. show plotter and make it a decent size
     plot.show();
-    plot.resize(800/plot.devicePixelRatioF(),600/plot.devicePixelRatioF());
+    plot.resize(400/plot.devicePixelRatioF(),300/plot.devicePixelRatioF());
     plot.setWindowTitle("JKQTPImage");
 
-
+    app.addExportStepFunctor([&]() {
+        plot.getYAxis()->setInverted(false);
+    });
     return app.exec();
 }

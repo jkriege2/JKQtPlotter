@@ -25,7 +25,7 @@ The source code of the main application is (see [`rgbimageplot_qt.cpp`](https://
 ```
 The result looks like this:
 
-![imageplot](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/rgbimageplot_qt.png)
+![imageplot](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/rgbimageplot_qt_upsidedown.png)
 
 
 The image is upside-down, because computer images use a coordinate system with 0 at the top-left (left-handed coordinate system) and the JKQTPlotter has its 0 at the bottom-left (right-handed coordinate system).
@@ -37,7 +37,7 @@ You can modify the program above to display the image in the correct orientation
 ```
 This will reorient the y-axis to point from top to bottom (for increasing positive coordinates):
 
-![imageplot](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/rgbimageplot_qt_updisdedown.png)
+![imageplot](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/rgbimageplot_qt.png)
 
 
 

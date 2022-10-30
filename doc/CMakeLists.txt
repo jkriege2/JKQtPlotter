@@ -177,7 +177,7 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         #paramscatterplot_image
         parsedfunctionplot
         rgbimageplot
-        rgbimageplot_qt
+        rgbimageplot_qt/rgbimageplot_qt,rgbimageplot_qt_upsidedown/--iteratefunctorsteps
         mandelbrot
         geo_coordinateaxis0
         #speed
@@ -219,6 +219,8 @@ if(JKQtPlotter_BUILD_EXAMPLES)
 
 
     foreach(ex ${JKQTPlotter_GenerateDocScreenshots_From})
+        set(example ${ex})
+        set(basename ${ex})
         string(REGEX MATCH "(.+)/(.+)" dummy ${ex})
         set(extra_command "")
         if(CMAKE_MATCH_1 STREQUAL "" OR CMAKE_MATCH_2 STREQUAL "")
@@ -227,11 +229,18 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         else()
             set(example ${CMAKE_MATCH_1})
             set(basename ${CMAKE_MATCH_2})
+            set(CMAKE_MATCH_3 "")
+            string(REGEX MATCH "(.+)/(.*)/(.+)" dummy ${ex})
             if(NOT (CMAKE_MATCH_3 STREQUAL ""))
                 set(example ${CMAKE_MATCH_1})
                 set(basename ${CMAKE_MATCH_2})
                 set(extra_command ${CMAKE_MATCH_3})
             endif()
+
+        endif()
+
+        if (NOT extra_command STREQUAL "")
+            string(REPLACE "--" ";--" extra_command "${extra_command}")
         endif()
 
 
