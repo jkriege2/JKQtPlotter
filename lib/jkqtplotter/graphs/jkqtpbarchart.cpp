@@ -61,6 +61,9 @@ void JKQTPBarVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
 
     int imax=0;
     int imin=0;
+    double left=-1e6;
+    double right=1e6;
+    bool firstXY=true;
     if (getIndexRange(imin, imax)) {
         painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
 
@@ -121,6 +124,14 @@ void JKQTPBarVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
                         painter.setPen(p);
                     }
                     const QRectF r(QPointF(x, y), QPointF(xx, yy));
+                    if (firstXY) {
+                        left=r.left();
+                        right=r.right();
+                    } else {
+                        left=qMin(left, r.left());
+                        right=qMax(right, r.right());
+                    }
+                    firstXY=false;
                     if (usesCustomDrawFunctor()) {
                         if (m_customDrawFunctor) {
                             m_customDrawFunctor(painter, r, QPointF(xv,yv), Qt::Vertical, this);
@@ -143,6 +154,12 @@ void JKQTPBarVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
                     }
                 }
             }
+        }
+
+        if (getDrawBaseline() && left!=right && !hasStackParent()) {
+            painter.setPen(baselineStyle().getLinePen(painter, parent));
+            const double yb=transformY(getBaseline());
+            if (JKQTPIsOKFloat(yb)) painter.drawLine(left, yb, right, yb);
         }
 
     }
@@ -225,6 +242,9 @@ void JKQTPBarHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
 
     int imax=0;
     int imin=0;
+    double top=0;
+    double bottom=0;
+    bool firstXY=true;
     if (getIndexRange(imin, imax)) {
 
         double x0=transformX(0);
@@ -288,6 +308,14 @@ void JKQTPBarHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
                             painter.setPen(p);
                         }
                         const QRectF r(QPointF(x, y), QPointF(xx, yy));
+                        if (firstXY) {
+                            top=r.top();
+                            bottom=r.bottom();
+                        } else {
+                            top=qMin(top, r.top());
+                            bottom=qMax(bottom, r.bottom());
+                        }
+                        firstXY=false;
                         if (usesCustomDrawFunctor()) {
                             if (m_customDrawFunctor) {
                                 m_customDrawFunctor(painter, r, QPointF(xv,yv), Qt::Horizontal, this);
@@ -308,6 +336,11 @@ void JKQTPBarHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
                     }
                 }
             }
+        }
+        if (getDrawBaseline() && top!=bottom && !hasStackParent()) {
+            painter.setPen(baselineStyle().getLinePen(painter, parent));
+            const double xb=transformX(getBaseline());
+            if (JKQTPIsOKFloat(xb)) painter.drawLine(xb,top,xb,bottom);
         }
     }
     drawErrorsAfter(painter);

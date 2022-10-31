@@ -65,6 +65,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: barcharts may have rounded corners now, via JKQTPBarGraphBase::setRectRadius()</li>
     <li>NEW: barcharts can be colored by a user-specified functor</li>
     <li>NEW: you can provide a custom draw functor to barcharts to completely customize their look</li>
+    <li>NEW: barcharts and impulse graphs may now draw their baseline as stylable line (default: off)</li>
   </ul></li>
   
   <li>JKQTMathText:<ul>

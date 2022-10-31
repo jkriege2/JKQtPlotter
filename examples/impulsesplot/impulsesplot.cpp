@@ -80,7 +80,7 @@ int main(int argc, char* argv[])
 
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
     JKQTPlotter plot;
-    drawPlot<JKQTPImpulsesVerticalGraph>(plot);
+    auto grV=drawPlot<JKQTPImpulsesVerticalGraph>(plot);
     plot.setWindowTitle("1: JKQTPImpulsesVerticalGraph");
 
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
@@ -94,7 +94,7 @@ int main(int argc, char* argv[])
     grS->setSymbolSize(12);
 
     JKQTPlotter plotH;
-    drawPlot<JKQTPImpulsesHorizontalGraph>(plotH);
+    auto grH=drawPlot<JKQTPImpulsesHorizontalGraph>(plotH);
     plotH.setWindowTitle("3: JKQTPImpulsesHorizontalGraph");
     plotH.resize(400/plot.devicePixelRatioF(),600/plot.devicePixelRatioF());
 
@@ -109,6 +109,35 @@ int main(int argc, char* argv[])
     grEH->setLineWidth(4);
     plotEH.resize(400/plot.devicePixelRatioF(),600/plot.devicePixelRatioF());
 
+    app.addExportStepFunctor([&]() {
+        grV->setDrawBaseline(false);
+        grS->setDrawBaseline(false);
+        grH->setDrawBaseline(false);
+        grE->setDrawBaseline(false);
+        grEH->setDrawBaseline(false);
+
+        plot.getXAxis()->setShowZeroAxis(false);
+        plot.getYAxis()->setShowZeroAxis(false);
+
+        plotE.getXAxis()->setShowZeroAxis(false);
+        plotE.getYAxis()->setShowZeroAxis(false);
+
+        plotEH.getXAxis()->setShowZeroAxis(false);
+        plotEH.getYAxis()->setShowZeroAxis(false);
+
+        plotH.getXAxis()->setShowZeroAxis(false);
+        plotH.getYAxis()->setShowZeroAxis(false);
+
+        plotS.getXAxis()->setShowZeroAxis(false);
+        plotS.getYAxis()->setShowZeroAxis(false);
+    });
+    app.addExportStepFunctor([&]() {
+        grV->setDrawBaseline(true);
+        grS->setDrawBaseline(true);
+        grH->setDrawBaseline(true);
+        grE->setDrawBaseline(true);
+        grEH->setDrawBaseline(true);
+    });
 
     return app.exec();
 }

@@ -195,10 +195,9 @@ int JKQTPExampleApplication::exec()
                 QWidget* w=widgets[i];
                 if (w->isVisible()) {
                     saveWidget(w, iVisible);
+                    iVisible++;
                 }
-
             }
-            iVisible++;
         }
         return 0;
     } else if (saveScreenshot||saveSmallScreenshot||saveScreenshotPlot||saveSmallScreenshotPlot) {

@@ -163,6 +163,12 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarGraphBase: public JKQTPXYBaselineGraph, pub
         JKQTPColorDerivationMode getLineColorDerivationModeForSpecialFill() const;
         /** \copydoc m_useCustomDrawFunctor */
         bool usesCustomDrawFunctor() const;
+        /** \copydoc m_drawBaseline */
+        bool getDrawBaseline() const;
+        /** \copydoc m_baselineStyle */
+        JKQTPGraphLineStyleMixin &baselineStyle();
+        /** \copydoc m_baselineStyle */
+        const JKQTPGraphLineStyleMixin& baselineStyle() const;
 
     public slots:
         /** \copydoc m_fillMode */
@@ -201,6 +207,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarGraphBase: public JKQTPXYBaselineGraph, pub
         void setShift(double __value);
         /** \copydoc width */
         void setWidth(double __value);
+        /** \copydoc m_drawBaseline */
+        void setDrawBaseline(bool __value);
 
         /** \copydoc rectRadiusAtValue */
         void setRectRadiusAtValue(double __value);
@@ -249,6 +257,20 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarGraphBase: public JKQTPXYBaselineGraph, pub
         double rectRadiusAtValue;
         /** \brief corner radius (in pt) for bars at the "baseline" end */
         double rectRadiusAtBaseline;
+        /** \brief if m_drawBaseline \c ==true then this style is used to draw the baseline
+         *
+         *  \see baselineStyle() , setDrawBaseline() , m_drawBaseline
+         */
+        JKQTPGraphLineStyleMixin m_baselineStyle;
+        /** \brief indicates whether to draw a line with style m_baselineStyle at the baseline-value
+         *
+         *  \image html JKQTPBarVerticalGraphBaseline.png "setDrawBaseline(true);"
+         *
+         *  \image html JKQTPBarVerticalGraphNoBaseline.png "setDrawBaseline(false);"
+         *
+         *  \see baselineStyle() , setDrawBaseline() , m_baselineStyle
+         */
+        bool m_drawBaseline;
         /** \brief specifies how the area of the graph is filles
          *
          *  \note If any fill style other than FillStyle::SingleFill is used, the peroperty m_lineColorDerivationModeForSpecialFill

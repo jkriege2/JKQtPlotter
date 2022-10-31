@@ -193,7 +193,7 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         stackedbars/JKQTPbarVerticalGraphStacked,JKQTPbarHorizontalGraphStacked/--smallscreenshotplot
         scatter/JKQTPXYScatterGraph,JKQTPXYScatterErrorGraph/--smallscreenshotplot
         simpletest/JKQTPXYLineGraph/--smallscreenshotplot
-        barchart/JKQTPBarVerticalGraph,JKQTPBarHorizontalGraph/--smallscreenshotplot
+        barchart/JKQTPBarVerticalGraph,JKQTPBarHorizontalGraph,JKQTPBarVerticalGraphNoBaseline,JKQTPBarHorizontalGraphNoBaseline,JKQTPBarVerticalGraphBaseline,JKQTPBarHorizontalGraphBaseline/--iteratefunctorsteps--smallscreenshotplot
         barchart_twocolor/JKQTPBarVerticalGraphTwoColorFilling,JKQTPBarHorizontalGraphTwoColorFilling/--smallscreenshotplot
         barchart_errorbars/JKQTPBarVerticalErrorGraph,JKQTPBarHorizontalErrorGraph/--smallscreenshotplot
         barchart_functorfill/JKQTPBarVerticalGraphFunctorFilling,JKQTPBarHorizontalGraphFunctorFilling/--smallscreenshotplot
@@ -204,7 +204,7 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         filledgraphs_errors/JKQTPFilledCurveXErrorGraph,JKQTPFilledCurveYErrorGraph/--smallscreenshotplot
         evalcurve/JKQTPXYFunctionLineGraph/--smallscreenshotplot
         geo_coordinateaxis0/JKQTPCoordinateAxisStyleDrawMode0
-        impulsesplot/JKQTPImpulsesVerticalGraph,JKQTPImpulsesVerticalGraph_Symbols,JKQTPImpulsesHorizontalGraph,JKQTPImpulsesVerticalErrorGraph,JKQTPImpulsesHorizontalErrorGraph/--smallscreenshotplot
+        impulsesplot/JKQTPImpulsesVerticalGraph,JKQTPImpulsesVerticalGraph_Symbols,JKQTPImpulsesHorizontalGraph,JKQTPImpulsesVerticalErrorGraph,JKQTPImpulsesHorizontalErrorGraph,JKQTPImpulsesVerticalGraphNoBaseline,JKQTPImpulsesVerticalGraph_SymbolsNoBaseline,JKQTPImpulsesHorizontalGraphNoBaseline,JKQTPImpulsesVerticalErrorGraphNoBaseline,JKQTPImpulsesHorizontalErrorGraphNoBaseline,JKQTPImpulsesVerticalGraphBaseline,JKQTPImpulsesVerticalGraph_SymbolsBaseline,JKQTPImpulsesHorizontalGraphBaseline,JKQTPImpulsesVerticalErrorGraphBaseline,JKQTPImpulsesHorizontalErrorGraphBaseline/--iteratefunctorsteps--smallscreenshotplot
         symbols_and_errors/JKQTPXYLineErrorGraph_JKQTPErrorBars,JKQTPXYLineErrorGraph_JKQTPErrorLines,JKQTPXYLineErrorGraph_JKQTPErrorPolygons/--iteratefunctorsteps--iteratefunctorsteps_suppressinitial--smallscreenshotplot
         boxplot/JKQTPBoxplotVerticalGraph,JKQTPBoxplotHorizontalGraph/--iteratefunctorsteps--iteratefunctorsteps_suppressinitial--smallscreenshotplot
     )

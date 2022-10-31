@@ -125,6 +125,24 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphLineStyleMixin {
         QColor getHighlightingLineColor() const;
 
 
+
+
+        /** \brief returns the linewidth for drawing lines in a key entry with \a keyRect for the symbol, using \a painter and \a parent  . */
+        double getKeyLineWidthPx(JKQTPEnhancedPainter &painter, const QRectF &keyRect, const JKQTBasePlotter *parent) const;
+
+        /** \brief constructs a QPen from the line styling properties */
+        QPen getLinePen(JKQTPEnhancedPainter &painter, JKQTBasePlotter* parent) const;
+        /** \brief constructs a QPen from the line styling properties, suitable for drawing rectangles with sharp edges */
+        QPen getLinePenForRects(JKQTPEnhancedPainter &painter, JKQTBasePlotter* parent) const;
+        /** \brief constructs a QPen from the line styling properties */
+        QPen getHighlightingLinePen(JKQTPEnhancedPainter &painter, JKQTBasePlotter* parent) const;
+        /** \brief constructs a QPen from the line styling properties, suitable for drawing rectangle with sharp corners */
+        QPen getHighlightingLinePenForRects(JKQTPEnhancedPainter &painter, JKQTBasePlotter* parent) const;
+        /** \brief constructs a QPen from the line styling properties, but uses getKeyLineWidthPx() for the width, i.e. constructs a pen for drawing lines in key-symbols */
+        QPen getKeyLinePen(JKQTPEnhancedPainter &painter, const QRectF &rect, JKQTBasePlotter *parent) const;
+
+
+
 #ifndef JKQTPLOTTER_WORKAROUND_QGADGET_BUG
         Q_PROPERTY(QColor highlightingLineColor MEMBER m_highlightingLineColor READ getHighlightingLineColor WRITE setHighlightingLineColor)
         Q_PROPERTY(QColor lineColor MEMBER m_lineColor READ getLineColor WRITE setLineColor)
@@ -139,19 +157,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphLineStyleMixin {
         /** \brief line pen for the highlighted look */
         QColor m_highlightingLineColor;
     protected:
-        /** \brief returns the linewidth for drawing lines in a key entry with \a keyRect for the symbol, using \a painter and \a parent  . */
-        double getKeyLineWidthPx(JKQTPEnhancedPainter &painter, const QRectF &keyRect, const JKQTBasePlotter *parent) const;
-
-        /** \brief constructs a QPen from the line styling properties */
-        QPen getLinePen(JKQTPEnhancedPainter &painter, JKQTBasePlotter* parent) const;
-        /** \brief constructs a QPen from the line styling properties, suitable for drawing rectangles with sharp edges */
-        QPen getLinePenForRects(JKQTPEnhancedPainter &painter, JKQTBasePlotter* parent) const;
-        /** \brief constructs a QPen from the line styling properties */
-        QPen getHighlightingLinePen(JKQTPEnhancedPainter &painter, JKQTBasePlotter* parent) const;
-        /** \brief constructs a QPen from the line styling properties, suitable for drawing rectangle with sharp corners */
-        QPen getHighlightingLinePenForRects(JKQTPEnhancedPainter &painter, JKQTBasePlotter* parent) const;
-        /** \brief constructs a QPen from the line styling properties, but uses getKeyLineWidthPx() for the width, i.e. constructs a pen for drawing lines in key-symbols */
-        QPen getKeyLinePen(JKQTPEnhancedPainter &painter, const QRectF &rect, JKQTBasePlotter *parent) const;
 };
 
 

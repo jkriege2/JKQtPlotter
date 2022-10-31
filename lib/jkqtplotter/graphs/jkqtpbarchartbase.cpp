@@ -40,11 +40,15 @@ JKQTPBarGraphBase::JKQTPBarGraphBase(JKQTBasePlotter* parent):
     m_fillMode(FillMode::SingleFilling),
     m_useCustomDrawFunctor(false),
     m_lineColorDerivationModeForSpecialFill(parent->getCurrentPlotterStyle().graphsStyle.barchartStyle.graphColorDerivationMode),
-    rectRadiusAtBaseline(0),rectRadiusAtValue(0)
+    rectRadiusAtBaseline(0),rectRadiusAtValue(0),
+    m_drawBaseline(parent->getCurrentPlotterStyle().graphsStyle.barchartStyle.drawBaseline)
 {
     initFillStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Barchart);
     initLineStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Barchart);
     m_fillStyleBelow.initFillStyleInvertedColor(this);
+    m_baselineStyle.setLineColor(parent->getCurrentPlotterStyle().xAxisStyle.colorZeroAxis);
+    m_baselineStyle.setLineStyle(Qt::SolidLine);
+    m_baselineStyle.setLineWidth(parent->getCurrentPlotterStyle().xAxisStyle.lineWidthZeroAxis);
     rectRadiusAtBaseline= parent->getCurrentPlotterStyle().graphsStyle.barchartStyle.defaultRectRadiusAtBaseline;
     rectRadiusAtValue= parent->getCurrentPlotterStyle().graphsStyle.barchartStyle.defaultRectRadiusAtValue;
 }
@@ -165,6 +169,26 @@ double JKQTPBarGraphBase::getShift() const
 void JKQTPBarGraphBase::setWidth(double __value)
 {
     this->width = __value;
+}
+
+void JKQTPBarGraphBase::setDrawBaseline(bool __value)
+{
+    m_drawBaseline=__value;
+}
+
+bool JKQTPBarGraphBase::getDrawBaseline() const
+{
+    return this->m_drawBaseline;
+}
+
+JKQTPGraphLineStyleMixin &JKQTPBarGraphBase::baselineStyle()
+{
+    return m_baselineStyle;
+}
+
+const JKQTPGraphLineStyleMixin &JKQTPBarGraphBase::baselineStyle() const
+{
+    return m_baselineStyle;
 }
 
 double JKQTPBarGraphBase::getWidth() const

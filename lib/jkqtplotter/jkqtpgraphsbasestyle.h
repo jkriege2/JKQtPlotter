@@ -244,11 +244,53 @@ public:
     double defaultRectRadiusAtValue;
     /** \brief corner radius (in pt) for bars at the "baseline" end */
     double defaultRectRadiusAtBaseline;
+    /** \brief indicates whether to draw a baseline (style is derived from axis style) */
+    bool drawBaseline;
 
 
 };
 
 
+
+/** \brief Support Class for JKQTBasePlotter, which summarizes all properties that define the visual styling of impulse/stick graph elements
+*  \ingroup jkqtpplotter_styling_classes
+*
+*  \see JKQTBasePlotter, \ref jkqtpplotter_styling
+*/
+class JKQTPLOTTER_LIB_EXPORT JKQTImpulseSpecificStyleProperties: public JKQTGraphsSpecificStyleProperties {
+#ifndef JKQTPLOTTER_WORKAROUND_QGADGET_BUG
+     Q_GADGET
+#endif
+public:
+    JKQTImpulseSpecificStyleProperties(const JKQTBasePlotterStyle& parent);
+    JKQTImpulseSpecificStyleProperties(const JKQTBasePlotterStyle& parent, const JKQTGraphsSpecificStyleProperties& other);
+    JKQTImpulseSpecificStyleProperties(const JKQTImpulseSpecificStyleProperties& other)=default;
+    JKQTImpulseSpecificStyleProperties(JKQTImpulseSpecificStyleProperties&& other)=default;
+    JKQTImpulseSpecificStyleProperties& operator=(const JKQTImpulseSpecificStyleProperties& other)=default;
+    JKQTImpulseSpecificStyleProperties& operator=(JKQTImpulseSpecificStyleProperties&& other)=default;
+
+
+    /** \brief loads the plot properties from a <a href="http://doc.qt.io/qt-5/qsettings.html")">QSettings</a> object
+        *
+        *  \param settings QSettings-object to read from
+        *  \param group Group in the QSettings-object to read from
+        *  \param defaultStyle If a setting cannot be found in \a settings, default values are taken from this object
+        *                      By default, this is a default-constructed object
+        */
+    void loadSettings(const QSettings &settings, const QString& group, const JKQTImpulseSpecificStyleProperties &defaultStyle);
+
+    /** \brief saves the plot properties into a <a href="http://doc.qt.io/qt-5/qsettings.html")">QSettings</a> object.
+        *
+        *  \param settings QSettings-object to save to
+        *  \param group Group in the QSettings-object to save to
+        */
+    void saveSettings(QSettings& settings, const QString& group) const;
+
+    /** \brief indicates whether to draw a baseline (style is derived from axis style) */
+    bool drawBaseline;
+
+
+};
 /** \brief Support Class for JKQTBasePlotter, which summarizes all properties that define the visual styling of a JKQTBasePlotter
  *  \ingroup jkqtpplotter_styling_classes
  *
@@ -297,7 +339,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTGraphsBaseStyle {
         /** \brief styling options for filled graphs */
         JKQTGraphsSpecificStyleProperties filledStyle;
         /** \brief styling options for impulses graphs */
-        JKQTGraphsSpecificStyleProperties impulseStyle;
+        JKQTImpulseSpecificStyleProperties impulseStyle;
         /** \brief styling options for geometric elements */
         JKQTGeometricSpecificStyleProperties geometricStyle;
 		/** \brief styling options for annotation elements */

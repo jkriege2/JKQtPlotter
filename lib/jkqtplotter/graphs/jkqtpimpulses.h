@@ -30,7 +30,11 @@
 /** \brief This is a base class for all impulse graphs
  *  \ingroup jkqtplotter_sticks
  *
- *  \image html JKQTPImpulsesVerticalGraph.png
+ *  \image html JKQTPImpulsesVerticalGraph.png "default style for impulse graphs"
+ *
+ *  \image html JKQTPImpulsesVerticalGraph_Symbols.png  "setDrawSymbols(true);"
+ *
+ *  \image html JKQTPImpulsesVerticalGraphBaseline.png "setDrawBaseline(true);"
  *
  *  \see JKQTPImpulsesHorizontalGraph, JKQTPImpulsesVerticalGraph
  */
@@ -45,6 +49,13 @@ public:
     virtual QColor getKeyLabelColor() const override;
     /** \copydoc drawSymbols */
     bool getDrawSymbols() const;
+    /** \copydoc m_drawBaseline */
+    bool getDrawBaseline() const;
+    /** \copydoc m_baselineStyle */
+    JKQTPGraphLineStyleMixin &baselineStyle();
+    /** \copydoc m_baselineStyle */
+    const JKQTPGraphLineStyleMixin& baselineStyle() const;
+
 
 public slots:
     /** \brief color of symbols and impulses in one call  */
@@ -52,14 +63,29 @@ public slots:
 
     /** \copydoc drawSymbols */
     void setDrawSymbols(bool __value);
+    /** \copydoc m_drawBaseline */
+    void setDrawBaseline(bool __value);
 
 protected:
 
     /** \brief indicates whether to draw symbols at the top of the impulse
-         *
-         * \image html impulsesplot_symbols.png
-         */
+     *
+     * \image html JKQTPImpulsesVerticalGraph_Symbols.png "setDrawSymbols(true)"
+     */
     bool drawSymbols;
+    /** \brief if m_drawBaseline \c ==true then this style is used to draw the baseline
+     *
+     *  \see baselineStyle() , setDrawBaseline() , m_drawBaseline
+     */
+    JKQTPGraphLineStyleMixin m_baselineStyle;
+    /** \brief indicates whether to draw a line with style m_baselineStyle at the baseline-value
+     *
+     * \image html JKQTPImpulsesVerticalGraphBaseline.png "setDrawBaseline(true);"
+     * \image html JKQTPImpulsesVerticalGraphNoBaseline.png "setDrawBaseline(false);"
+     *
+     *  \see baselineStyle() , setDrawBaseline() , m_baselineStyle
+     */
+    bool m_drawBaseline;
 
     /** \brief get the maximum and minimum value in the impulse-elongation (i.e. value) direction of the graph
      *
