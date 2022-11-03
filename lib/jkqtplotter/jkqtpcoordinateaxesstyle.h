@@ -89,7 +89,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxisStyle {
     public:
         JKQTPCoordinateAxisStyle();
 
-        JKQTPCoordinateAxisStyle(const JKQTBasePlotterStyle& baseStyle);
+        explicit JKQTPCoordinateAxisStyle(const JKQTBasePlotterStyle& baseStyle);
 
 
         /** \brief loads the plot properties from a <a href="http://doc.qt.io/qt-5/qsettings.html")">QSettings</a> object
@@ -250,7 +250,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPColorbarCoordinateAxisStyle: public JKQTPCoord
         JKQTPColorbarCoordinateAxisStyle();
 
         /** \copydoc JKQTPCoordinateAxisStyle::JKQTPCoordinateAxisStyle(const JKQTBasePlotterStyle&) */
-        JKQTPColorbarCoordinateAxisStyle(const JKQTBasePlotterStyle& baseStyle);
+        explicit JKQTPColorbarCoordinateAxisStyle(const JKQTBasePlotterStyle& baseStyle);
     private:
         /** \brief modifies the members to match the requirements of colorbar axes */
         void initMembersForColorbars();

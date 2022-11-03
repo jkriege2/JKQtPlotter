@@ -40,7 +40,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPKeyStyle  {
         Q_GADGET
     public:
         JKQTPKeyStyle();
-        JKQTPKeyStyle(const JKQTBasePlotterStyle& baseStyle);
+        explicit JKQTPKeyStyle(const JKQTBasePlotterStyle& baseStyle);
 
 
         /** \brief loads the plot properties from a <a href="http://doc.qt.io/qt-5/qsettings.html")">QSettings</a> object

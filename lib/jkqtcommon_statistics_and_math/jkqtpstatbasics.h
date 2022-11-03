@@ -69,7 +69,7 @@ inline double jkqtpstatAverage(InputIt first, InputIt last, size_t* Noutput=null
         }
     }
     if (Noutput) *Noutput=NN;
-    if (NN<=0) return JKQTP_DOUBLE_NAN;
+    if (NN==0) return JKQTP_DOUBLE_NAN;
     else return sum/static_cast<double>(NN);
 }
 
@@ -112,7 +112,7 @@ inline double jkqtpstatWeightedAverage(InputIt first, InputIt last, InputWeightI
         }
     }
     if (Noutput) *Noutput=NN;
-    if (NN<=0) return JKQTP_DOUBLE_NAN;
+    if (NN==0) return JKQTP_DOUBLE_NAN;
     else return sum/sumW;
 }
 
@@ -191,7 +191,7 @@ inline void jkqtpstatMinMax(InputIt first, InputIt last, double& min, double& ma
             NN++;
         }
     }
-    if (NN<=0) {
+    if (NN==0) {
         min=JKQTP_DOUBLE_NAN;
         max=JKQTP_DOUBLE_NAN;
     }
@@ -327,7 +327,7 @@ inline double jkqtpstatModifiedSum(InputIt first, InputIt last, FF modifierFunct
         }
     }
     if (Noutput) *Noutput=NN;
-    if (NN<=0) return 0;
+    if (NN==0) return 0;
     else return sum;
 }
 
@@ -482,7 +482,7 @@ inline double jkqtpstatVariance(InputIt first, InputIt last, double* averageOut=
         }
     }
     if (averageOut) {
-        if (NN<=0) *averageOut=JKQTP_DOUBLE_NAN;
+        if (NN==0) *averageOut=JKQTP_DOUBLE_NAN;
         else *averageOut=sum/static_cast<double>(NN);
     }
     if (Noutput) *Noutput=NN;
@@ -556,7 +556,7 @@ inline double jkqtpstatWeightedVariance(InputIt first, InputIt last, InputWeight
     }
     if (averageOut) *averageOut=avg;
     if (Noutput) *Noutput=NN;
-    if (NN<=0) return 0;
+    if (NN==0) return 0;
     else return sum2/sumW;
 }
 
@@ -626,7 +626,7 @@ inline double jkqtpstatSkewness(InputIt first, InputIt last, double* averageOut=
     }
     if (averageOut) *averageOut=avg;
     if (Noutput) *Noutput=NN;
-    if (NN<=0) return 0;
+    if (NN==0) return 0;
     const double down=jkqtp_cube(sum2/double(NN));
     return sum3/double(NN)/sqrt(down);
 }
@@ -669,7 +669,7 @@ inline double jkqtpstatCentralMoment(InputIt first, InputIt last, int order, dou
     }
     if (averageOut) *averageOut=avg;
     if (Noutput) *Noutput=NN;
-    if (NN<=0) return 0;
+    if (NN==0) return 0;
     return sum/double(NN);
 }
 
@@ -708,7 +708,7 @@ inline double jkqtpstatMoment(InputIt first, InputIt last, int order, size_t* No
         }
     }
     if (Noutput) *Noutput=NN;
-    if (NN<=0) return 0;
+    if (NN==0) return 0;
     return sum/double(NN);
 }
 
@@ -755,14 +755,14 @@ inline double jkqtpstatCorrelationCoefficient(InputIt1 first1, InputIt1 last1, I
     }
     if (Noutput) *Noutput=NN;
     if (averageOut1) {
-        if (NN<=0) *averageOut1=JKQTP_DOUBLE_NAN;
+        if (NN==0) *averageOut1=JKQTP_DOUBLE_NAN;
         else *averageOut1=xbar/static_cast<double>(NN);
     }
     if (averageOut2) {
-        if (NN<=0) *averageOut2=JKQTP_DOUBLE_NAN;
+        if (NN==0) *averageOut2=JKQTP_DOUBLE_NAN;
         else *averageOut2=ybar/static_cast<double>(NN);
     }
-    if (NN<=0) return JKQTP_DOUBLE_NAN;
+    if (NN==0) return JKQTP_DOUBLE_NAN;
 
     xbar=xbar/NN;
     ybar=ybar/NN;

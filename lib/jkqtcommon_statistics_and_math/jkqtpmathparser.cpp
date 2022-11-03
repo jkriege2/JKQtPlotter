@@ -1384,7 +1384,9 @@ std::string JKQTPMathParser::readDelim(char delimiter){
             } else {
                 break;
             }
-        } else if ((*program) && (ch!=delimiter)) res=res+ch;
+        } else {
+            res=res+ch;
+        }
     }
 
     return res;

@@ -2789,7 +2789,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPRGBImageOverlayPlot: public JKQTFPPlot {
          */
         JKQTFPRGBImageOverlayPlot(JKQTFastPlotter* parent, void* imageRed, JKQTFPImageFormat imageFormat, int width, int height, double xmin, double xmax, double ymin, double ymax) ;
         JKQTFPRGBImageOverlayPlot(JKQTFastPlotter* parent, void* imageRed, JKQTFPImageFormat imageFormat, int width, int height);
-        JKQTFPRGBImageOverlayPlot(JKQTFastPlotter* parent);
+        explicit JKQTFPRGBImageOverlayPlot(JKQTFastPlotter* parent);
 
         /** \brief draw the graph */
         virtual void drawGraph(QPainter& painter) override;

@@ -653,7 +653,6 @@ void JKQTPlotter::paintUserAction() {
                         QVector<QString> txts;
                         QVector<QColor> colors;
                         const int txtoffset=4;
-                        QString txt;
                         double ascent=0,descent=0,strikeout=0,width=0;
                         getPlotter()->getMathText()->setFontSize(plotterStyle.userActionFontSize);
                         getPlotter()->getMathText()->setFontSpecial(plotterStyle.userActionFontName);
@@ -1373,7 +1372,7 @@ void JKQTPlotter::synchronizeToMaster(JKQTPlotter *master, JKQTBasePlotter::Sync
     if (masterPlotterX) disconnect(masterPlotterX->getPlotter(), SIGNAL(plotScalingRecalculated()), this, SLOT(masterPlotScalingRecalculated()));
     if (masterPlotterY) disconnect(masterPlotterY->getPlotter(), SIGNAL(plotScalingRecalculated()), this, SLOT(masterPlotScalingRecalculated()));
 
-    plotter->synchronizeToMaster(master->getPlotter(), synchronizeDirection, synchronizeAxisLength, synchronizeZoomingMasterToSlave, synchronizeZoomingSlaveToMaster);
+    if (master) plotter->synchronizeToMaster(master->getPlotter(), synchronizeDirection, synchronizeAxisLength, synchronizeZoomingMasterToSlave, synchronizeZoomingSlaveToMaster);
 
     if (synchronizeDirection==JKQTBasePlotter::sdXAxis || synchronizeDirection==JKQTBasePlotter::sdXYAxes) {
         masterPlotterX=master;

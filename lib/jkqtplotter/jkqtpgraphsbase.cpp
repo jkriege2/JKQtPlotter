@@ -1034,6 +1034,106 @@ void JKQTPXYBaselineGraph::setBaseline(double __value)
     m_baseline=__value;
 }
 
+bool JKQTPXYBaselineGraph::getMinMaxWithBaseline(int dataColumn, double &minv, double &maxv, double &smallestGreaterZero)
+{
+    minv=0;
+    maxv=0;
+    smallestGreaterZero=0;
+    if (getBaseline()>0) {
+        smallestGreaterZero=getBaseline();
+        minv=getBaseline();
+        maxv=getBaseline();
+    }
+
+    if (parent==nullptr) return false;
+
+    JKQTPDatastore* datastore=parent->getDatastore();
+    int imax=0;
+    int imin=0;
+    if (getIndexRange(imin, imax)) {
+
+
+        for (int i=imin; i<imax; i++) {
+            double yv=getBaseline();
+            if (JKQTPIsOKFloat(yv)) {
+                if (yv>maxv) maxv=yv;
+                if (yv<minv) minv=yv;
+                double xvsgz;
+                xvsgz=yv; SmallestGreaterZeroCompare_xvsgz();
+            }
+            yv=datastore->get(static_cast<size_t>(dataColumn),static_cast<size_t>(i));
+            if (JKQTPIsOKFloat(yv)) {
+                if (yv>maxv) maxv=yv;
+                if (yv<minv) minv=yv;
+                double xvsgz;
+                xvsgz=yv; SmallestGreaterZeroCompare_xvsgz();
+            }
+        }
+        return true;
+    }
+    return false;
+}
+
+bool JKQTPXYBaselineGraph::getMinMaxWithErrorsAndBaseline(int dataColumn, int errorColumn, int errorColumnLower, bool errorSymmetric, double &minv, double &maxv, double &smallestGreaterZero)
+{
+    bool start=false;
+    minv=getBaseline();
+    maxv=getBaseline();
+    smallestGreaterZero=0;
+    if (getBaseline()>0) {
+        smallestGreaterZero=getBaseline();
+        minv=getBaseline();
+        maxv=getBaseline();
+    }
+
+    if (parent==nullptr) return false;
+
+    const JKQTPDatastore* datastore=parent->getDatastore();
+    int imax=0;
+    int imin=0;
+    if (getIndexRange(imin, imax)) {
+
+
+        for (int i=imin; i<imax; i++) {
+            const double yv=datastore->get(static_cast<size_t>(dataColumn),static_cast<size_t>(i))+getErrorU(i, datastore, errorColumn);
+            const double yvv=datastore->get(static_cast<size_t>(dataColumn),static_cast<size_t>(i))-getErrorL(i, datastore, errorColumn, errorColumnLower, errorSymmetric);
+            if (JKQTPIsOKFloat(yv) && JKQTPIsOKFloat(yvv) ) {
+                if (start || yv>maxv) maxv=yv;
+                if (start || yv<minv) minv=yv;
+                double xvsgz;
+                xvsgz=yv; SmallestGreaterZeroCompare_xvsgz();
+                if (start || yvv>maxv) maxv=yvv;
+                if (start || yvv<minv) minv=yvv;
+                xvsgz=yvv; SmallestGreaterZeroCompare_xvsgz();
+                start=false;
+            }
+        }
+        return !start;
+    }
+    return false;
+}
+
+double JKQTPXYBaselineGraph::getErrorU(int i, const JKQTPDatastore *ds, int xErrorColumn) const
+{
+    if (ds && xErrorColumn>=0 && i>=0 && i<static_cast<int>(ds->getRows(xErrorColumn))) {
+        return ds->get(xErrorColumn, static_cast<size_t>(i));
+    }
+    return 0.0;
+}
+
+double JKQTPXYBaselineGraph::getErrorL(int i, const JKQTPDatastore *ds, int xErrorColumn, int xErrorColumnLower, bool xErrorSymmetric) const
+{
+    if (ds) {
+        if (xErrorSymmetric) {
+            if (xErrorColumn>=0 && i>=0 && i<static_cast<int>(ds->getRows(xErrorColumn))) return ds->get(xErrorColumn, static_cast<size_t>(i));
+        } else {
+            if (xErrorColumnLower>=0 && i>=0 && i<static_cast<int>(ds->getRows(xErrorColumnLower))) return ds->get(xErrorColumnLower, static_cast<size_t>(i));
+        }
+    }
+    return 0.0;
+}
+
+
 JKQTPPlotAnnotationElement::JKQTPPlotAnnotationElement(JKQTBasePlotter *parent):
     JKQTPPlotElement(parent)
 {

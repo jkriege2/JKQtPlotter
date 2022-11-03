@@ -688,12 +688,24 @@ public slots:
     void setBaseline(double __value);
 
 protected:
+    /** \brief can be called by JKQTPGraph::getXMinMax() or JKQTPGraph::getYMinMax() calculates min/max/... for data from the given column, including the baseline */
+    bool getMinMaxWithBaseline(int dataColumn, double &minv, double &maxv, double &smallestGreaterZero);
+    /** \brief can be called by JKQTPGraph::getXMinMax() or JKQTPGraph::getYMinMax() calculates min/max/... for data from the given column, including the baseline and an optional error */
+    bool getMinMaxWithErrorsAndBaseline(int dataColumn, int errorColumn, int errorColumnLower, bool errorSymmetric, double &minv, double &maxv, double &smallestGreaterZero);
+
 
     /** \brief baseline of the plot (NOTE: 0 is interpreted as until plot border in log-mode!!!)
      *
      * \image html impulsesplot_baseline.png
      */
     double m_baseline;
+
+private:
+    /** \brief returns the upper error for the i-th datapoint, read from datastore \a ds */
+    double getErrorU(int i, const JKQTPDatastore* ds, int xErrorColumn) const;
+    /** \brief returns the lower error for the i-th datapoint, read from datastore \a ds */
+    double getErrorL(int i, const JKQTPDatastore *ds, int xErrorColumn, int xErrorColumnLower, bool xErrorSymmetric) const;
+
 };
 
 

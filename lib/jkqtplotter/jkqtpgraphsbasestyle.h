@@ -121,7 +121,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTGeometricSpecificStyleProperties: public JKQTGr
       Q_GADGET
 #endif
 public:
-     JKQTGeometricSpecificStyleProperties(const JKQTBasePlotterStyle& parent);
+     explicit JKQTGeometricSpecificStyleProperties(const JKQTBasePlotterStyle& parent);
      JKQTGeometricSpecificStyleProperties(const JKQTBasePlotterStyle& parent, const JKQTGraphsSpecificStyleProperties& other);
      JKQTGeometricSpecificStyleProperties(JKQTPPlotStyleType type, const JKQTBasePlotterStyle& parent);
      JKQTGeometricSpecificStyleProperties(JKQTPPlotStyleType type, const JKQTGraphsSpecificStyleProperties& other, const JKQTBasePlotterStyle &parent);
@@ -171,7 +171,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTAnnotationsSpecificStyleProperties: public JKQT
       Q_GADGET
 #endif
 public:
-     JKQTAnnotationsSpecificStyleProperties(const JKQTBasePlotterStyle& parent);
+     explicit JKQTAnnotationsSpecificStyleProperties(const JKQTBasePlotterStyle& parent);
      JKQTAnnotationsSpecificStyleProperties(const JKQTBasePlotterStyle& parent, const JKQTGraphsSpecificStyleProperties& other);
      JKQTAnnotationsSpecificStyleProperties(const JKQTAnnotationsSpecificStyleProperties& other)=default;
      JKQTAnnotationsSpecificStyleProperties(JKQTAnnotationsSpecificStyleProperties&& other)=default;
@@ -216,7 +216,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBarchartSpecificStyleProperties: public JKQTGra
      Q_GADGET
 #endif
 public:
-    JKQTBarchartSpecificStyleProperties(const JKQTBasePlotterStyle& parent);
+    explicit JKQTBarchartSpecificStyleProperties(const JKQTBasePlotterStyle& parent);
     JKQTBarchartSpecificStyleProperties(const JKQTBasePlotterStyle& parent, const JKQTGraphsSpecificStyleProperties& other);
     JKQTBarchartSpecificStyleProperties(const JKQTBarchartSpecificStyleProperties& other)=default;
     JKQTBarchartSpecificStyleProperties(JKQTBarchartSpecificStyleProperties&& other)=default;
@@ -262,7 +262,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTImpulseSpecificStyleProperties: public JKQTGrap
      Q_GADGET
 #endif
 public:
-    JKQTImpulseSpecificStyleProperties(const JKQTBasePlotterStyle& parent);
+    explicit JKQTImpulseSpecificStyleProperties(const JKQTBasePlotterStyle& parent);
     JKQTImpulseSpecificStyleProperties(const JKQTBasePlotterStyle& parent, const JKQTGraphsSpecificStyleProperties& other);
     JKQTImpulseSpecificStyleProperties(const JKQTImpulseSpecificStyleProperties& other)=default;
     JKQTImpulseSpecificStyleProperties(JKQTImpulseSpecificStyleProperties&& other)=default;
@@ -301,7 +301,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTGraphsBaseStyle {
       Q_GADGET
 #endif
     public:
-        JKQTGraphsBaseStyle(const JKQTBasePlotterStyle& parent);
+        explicit JKQTGraphsBaseStyle(const JKQTBasePlotterStyle& parent);
 
 
 
