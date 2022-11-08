@@ -96,3 +96,7 @@ With [CMake](https://cmake.org/) you can easily build JKQTPlotter and all its ex
     $ cmake --build . --config "Debug"
 ```
 
+
+## Stargazers over time
+
+[![Stargazers over time](https://starchart.cc/jkriege2/JKQtPlotter.svg)](https://starchart.cc/jkriege2/JKQtPlotter)
