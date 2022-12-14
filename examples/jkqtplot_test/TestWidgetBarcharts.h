@@ -31,9 +31,9 @@ class TestWidgetBarcharts : public QWidget
     public:
         explicit TestWidgetBarcharts(QWidget *parent = 0);
         
-    signals:
+    Q_SIGNALS:
         
-    public slots:
+    public Q_SLOTS:
 
 
         void setBarchartLogLog(bool checked);

@@ -76,6 +76,7 @@ function(JKQtCommon_setDefaultLibOptions TARGETNAME)
       # COMPILER-SETTINGS FOR MS VISUAL C++
       target_compile_options(${TARGETNAME} PUBLIC /EHsc)
       target_compile_definitions(${TARGETNAME} PUBLIC NOMINMAX)
+      target_compile_definitions(${TARGETNAME} PRIVATE QT_NO_SIGNALS_SLOTS_KEYWORDS)
     endif()
     target_include_directories(${TARGETNAME} PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/../>

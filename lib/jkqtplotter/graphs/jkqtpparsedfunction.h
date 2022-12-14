@@ -67,7 +67,7 @@ public:
     /** \copydoc dependentVariableName */
     QString getDependentVariableName() const;
 
-public slots:
+public Q_SLOTS:
     /** \copydoc errorFunction */
     void setErrorFunction(const QString & __value);
     /** \copydoc function */

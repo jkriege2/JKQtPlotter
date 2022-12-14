@@ -17,7 +17,7 @@ class FormWithJKQTPlotter : public QWidget
     public:
         explicit FormWithJKQTPlotter(QWidget *parent = nullptr);
         ~FormWithJKQTPlotter();
-    protected slots:
+    protected Q_SLOTS:
         void on_chkLogX_toggled(bool checked);
         void on_chkLogY_toggled(bool checked);
         void on_btnReplot_clicked();

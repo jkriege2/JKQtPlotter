@@ -35,9 +35,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPEnhancedDoubleSpinBox : public QDoubleSpinBox 
     public:
         JKQTPEnhancedDoubleSpinBox(QWidget* parent=nullptr);
         ~JKQTPEnhancedDoubleSpinBox();
-    signals:
+    Q_SIGNALS:
         void editingFinished(double value);
-    protected slots:
+    protected Q_SLOTS:
         void intEditingFinished();
 };
 
@@ -53,9 +53,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPEnhancedSpinBox : public QSpinBox {
     public:
         JKQTPEnhancedSpinBox(QWidget* parent=nullptr);
         ~JKQTPEnhancedSpinBox();
-    signals:
+    Q_SIGNALS:
         void editingFinished(int value);
-    protected slots:
+    protected Q_SLOTS:
         void intEditingFinished();
 };
 

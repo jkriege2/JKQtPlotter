@@ -44,7 +44,7 @@ class JKQTPLOTTER_LIB_EXPORT JKVanishQToolBar: public QToolBar {
         JKVanishQToolBar(QWidget* parent=nullptr);
         /** \brief is the auto-vanishing feature of this toolbar activated? */
         bool doesToolbarVanish() const;
-    public slots:
+    public Q_SLOTS:
         /** \brief enable or disable the auto-vanishing feature of this toolbar  */
         void setToolbarVanishesEnabled(bool __value);
     protected:

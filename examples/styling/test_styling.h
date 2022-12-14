@@ -18,7 +18,7 @@ class TestStyling : public QMainWindow
         explicit TestStyling(QWidget *parent = nullptr);
         ~TestStyling();
 
-    protected slots:
+    protected Q_SLOTS:
         void on_btnUpdate_clicked();
         void on_btnLoad_clicked(const QString &filename=QString());
         void on_btnSave_clicked();

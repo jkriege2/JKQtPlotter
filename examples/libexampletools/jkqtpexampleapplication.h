@@ -15,7 +15,7 @@ public:
     virtual ~JKQTPExampleApplication();
     void addExportStepFunctor(const std::function<void(void)>& f);
     int exec();
-public slots:
+public Q_SLOTS:
     void notifyReadyForScreenshot();
 protected:
     bool waitForScreenshotReady;

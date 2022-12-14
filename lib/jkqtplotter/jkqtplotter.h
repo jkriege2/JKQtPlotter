@@ -881,7 +881,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
             plotter->copyPixelImage(showPreview);
         }
 
-    public slots:
+    public Q_SLOTS:
         /** \brief set the current plot magnification */
         void setMagnification(double m);
         /** \brief sets x/ymin and x/ymax to the supplied values and replots the graph (zoom operation!) */
@@ -1196,7 +1196,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
          * \see setX(), setX(), zoomToFit(), setAbsoluteXY(), JKQTBasePlotter::setXY()
          */
          inline void setXY(double xminn, double xmaxx, double yminn, double ymaxx) { plotter->setXY(xminn, xmaxx, yminn, ymaxx); }
-    signals:
+    Q_SIGNALS:
         /** \brief emitted whenever the mouse moves
          *
          * \param x x-position of the mouse (in plot coordinates)
@@ -1287,7 +1287,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
          * \param newymax end of the selected x-range (in plot coordinates)
          * \param sender JKQTPlotter sending this event
          *
-         * This signal is designed to be connected to these slots: synchronizeXAxis(), synchronizeYAxis(), synchronizeXYAxis()
+         * This signal is designed to be connected to these Q_SLOTS: synchronizeXAxis(), synchronizeYAxis(), synchronizeXYAxis()
          */
         void zoomChangedLocally(double newxmin, double newxmax, double newymin, double newymax, JKQTPlotter* sender);
 
@@ -1297,7 +1297,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
          * \param new_height new height of the widget (in pixels)
          * \param sender JKQTPlotter sending this event
          *
-         * This signal is designed to be connected to these slots: synchronizeXAxis(), synchronizeYAxis(), synchronizeXYAxis()
+         * This signal is designed to be connected to these Q_SLOTS: synchronizeXAxis(), synchronizeYAxis(), synchronizeXYAxis()
          */
         void widgetResized(int new_width, int new_height, JKQTPlotter* sender);
 
@@ -1677,7 +1677,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
         /** \brief action that activates the pan view tool (override!)  */
         QAction* actMouseLeftAsPanView;
 
-    protected slots:
+    protected Q_SLOTS:
         /** \brief while the window is resized, the plot is only redrawn after a restartable delay, implemented by this function and resizeTimer
         * \internal
         * \see resizeTimer

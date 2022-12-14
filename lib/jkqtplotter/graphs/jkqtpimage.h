@@ -94,7 +94,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPImageBase: public JKQTPGraph {
         double getWidth() const;
         /** \copydoc height */
         double getHeight() const;
-    public slots:
+    public Q_SLOTS:
 
         /** \copydoc x */
         void setX(double __value);
@@ -407,7 +407,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPImage: public JKQTPImageBase {
         virtual void setParent(JKQTBasePlotter* parent) override;
         /** \copydoc JKQTPImageBase::setTitle() */
         virtual void setTitle(const QString& title) override;
-    public slots:
+    public Q_SLOTS:
         /** \brief saves the image (asking the user for a filename, if \a filename is empty)
          *
          * \param filename name of the file that should be create (if empty, a file save dialog is shown)
@@ -564,7 +564,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase, public J
     public:
         /** \copydoc JKQTPImageBase::setTitle() */
         virtual void setTitle(const QString& title) override;
-    public slots:
+    public Q_SLOTS:
         /** \brief saves the image (asking the user for a filename, if \a filename is empty)
          *
          * \param filename name of the file that should be create (if empty, a file save dialog is shown)

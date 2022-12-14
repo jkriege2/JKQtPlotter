@@ -450,7 +450,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         /** \brief calls x2p() of the other axis (or returns \c NAN if the other axis does not exist */
         virtual double parentOtherAxisX2P(double x) const =0;
 
-    public slots:
+    public Q_SLOTS:
         /** \brief set range of plot axis */
         void setRange(double amin, double amax);
         /** \brief set absolute range of plot axis */
@@ -963,7 +963,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPVerticalIndependentAxis: public JKQTPVerticalA
         virtual double getParentOtheraxisOffset() const override;
         /** copydoc JKQTPCoordinateAxis::parentOtherAxisX2P() */
         virtual double parentOtherAxisX2P(double x) const override;
-    public slots:
+    public Q_SLOTS:
         /** \brief set the axis offset */
         virtual void setAxisOffset(double __value) ;
         /** \brief set the axis width */
@@ -1105,7 +1105,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPHorizontalIndependentAxis: public JKQTPHorizon
         virtual double getParentOtheraxisOffset() const override;
         /** copydoc JKQTPCoordinateAxis::parentOtherAxisX2P() */
         virtual double parentOtherAxisX2P(double x) const override;
-    public slots:
+    public Q_SLOTS:
         /** \brief set the axis offset */
         virtual void setAxisOffset(double __value);
         /** \brief set the axis width */

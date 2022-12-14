@@ -110,7 +110,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPPlotElement: public QObject {
         Q_PROPERTY(bool visible READ isVisible WRITE setVisible)
         Q_PROPERTY(QString title READ getTitle WRITE setTitle)
         Q_PROPERTY(bool highlighted READ isHighlighted WRITE setHighlighted)
-    public slots:
+    public Q_SLOTS:
         /** \brief sets whether the graph is visible in the plot  */
         void setVisible(bool __value);
         /** \brief sets whether the graph is drawn in a highlighted style in the plot  */
@@ -469,7 +469,7 @@ public:
     DrawMode getDrawMode() const;
 
     Q_PROPERTY(DrawMode drawMode READ getDrawMode WRITE setDrawMode)
-public slots:
+public Q_SLOTS:
     /** \copybrief m_drawMode
          *
          *  \param mode the DrawMode to use from now on
@@ -514,7 +514,7 @@ public:
     /** \brief default wirtual destructor */
     virtual ~JKQTPPlotAnnotationElement() ;
 
-public slots:
+public Q_SLOTS:
 
 protected:
 
@@ -600,7 +600,7 @@ public:
      * \see See JKQTPPlotElement::hitTest() for details on the function definition!
      */
     virtual double hitTest(const QPointF &posSystem, QPointF* closestSpotSystem=nullptr, QString* label=nullptr, HitTestMode mode=HitTestXY) const override;
-public slots:
+public Q_SLOTS:
     /** \brief sets xColumn and yColumn at the same time */
     void setXYColumns(size_t xCol, size_t yCol);
     /** \brief sets xColumn and yColumn at the same time */
@@ -683,7 +683,7 @@ public:
     double getBaseline() const;
 
     Q_PROPERTY(double baseline READ getBaseline WRITE setBaseline)
-public slots:
+public Q_SLOTS:
     /** \copydoc m_baseline */
     void setBaseline(double __value);
 
@@ -740,7 +740,7 @@ public:
     virtual double hitTest(const QPointF &posSystem, QPointF* closestSpotSystem=nullptr, QString* label=nullptr, HitTestMode mode=HitTestXY) const override;
 
     Q_PROPERTY(int yColumn2 READ getYColumn2 WRITE setYColumn2)
-public slots:
+public Q_SLOTS:
     /** \brief sets xColumn, yColumn and yColumn2 at the same time */
     void setXYYColumns(size_t xCol, size_t yCol, size_t y2Col);
     /** \brief sets xColumn, yColumn and yColumn2 at the same time */
@@ -801,7 +801,7 @@ public:
     virtual double hitTest(const QPointF &posSystem, QPointF* closestSpotSystem=nullptr, QString* label=nullptr, HitTestMode mode=HitTestXY) const override;
 
     Q_PROPERTY(int xColumn2 READ getXColumn2 WRITE setXColumn2)
-public slots:
+public Q_SLOTS:
     /** \brief sets xColumn, yColumn and xColumn2 at the same time */
     void setXXYColumns(size_t xCol, size_t x2Col, size_t yCol);
     /** \brief sets xColumn, yColumn and xColumn2 at the same time */
@@ -883,7 +883,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPSingleColumnGraph: public JKQTPGraph {
         Q_PROPERTY(int dataColumn READ getDataColumn WRITE setDataColumn)
         Q_PROPERTY(DataDirection dataDirection READ getDataDirection WRITE setDataDirection)
 
-    public slots:
+    public Q_SLOTS:
         /** \copydoc dataColumn */
         void setDataColumn(int __value);
         /** \copydoc dataColumn */

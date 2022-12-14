@@ -17,9 +17,9 @@ class TestMain : public QWidget {
         explicit TestMain(QWidget *parent = 0);
         virtual ~TestMain();
         
-    signals:
+    Q_SIGNALS:
         
-    public slots:
+    public Q_SLOTS:
         void enableRed(bool enabled);
         void enableGreen(bool enabled);
         void enableBlue(bool enabled);

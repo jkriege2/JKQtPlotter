@@ -22,7 +22,7 @@ class TestForm : public QWidget
         explicit TestForm(QWidget *parent = 0);
         ~TestForm();
         
-    public slots:
+    public Q_SLOTS:
         void updateMath();
     private:
         Ui::TestForm *ui;

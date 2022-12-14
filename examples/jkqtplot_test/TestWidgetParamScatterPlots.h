@@ -31,9 +31,9 @@ class TestWidgetParamScatterPlots : public QWidget
     public:
         explicit TestWidgetParamScatterPlots(QWidget *parent = 0);
         
-    signals:
+    Q_SIGNALS:
         
-    public slots:
+    public Q_SLOTS:
 
         void setPSPSymmErrors(bool checked);
 

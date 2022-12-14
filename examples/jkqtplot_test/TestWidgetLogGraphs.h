@@ -29,9 +29,9 @@ class TestWidgetLogGraphs : public QWidget
     public:
         explicit TestWidgetLogGraphs(QWidget *parent = 0);
         
-    signals:
+    Q_SIGNALS:
         
-    public slots:
+    public Q_SLOTS:
 
 
     protected:

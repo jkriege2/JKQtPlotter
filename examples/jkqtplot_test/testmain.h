@@ -16,9 +16,9 @@ class TestMain : public QTabWidget
     public:
         explicit TestMain(QWidget *parent = 0);
         
-    signals:
+    Q_SIGNALS:
         
-    public slots:
+    public Q_SLOTS:
 
 
     protected:

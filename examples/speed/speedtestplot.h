@@ -36,7 +36,7 @@ class SpeedTestPlot: public JKQTPlotter {
         SpeedTestPlot();
 
         virtual ~SpeedTestPlot();
-    protected slots:
+    protected Q_SLOTS:
         void plotNewData();
         void updateDataSize(size_t newSize, bool updatePlots=true);
         static double addOutlier(double prob, double height);

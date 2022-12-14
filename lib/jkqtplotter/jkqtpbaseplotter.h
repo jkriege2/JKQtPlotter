@@ -1109,7 +1109,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
          *  \see axisAspectRatio, setXY(), setX(), setY()
          */
         void correctXYRangeForAspectRatio(double &xminn, double &xmaxx, double &yminn, double &ymaxx) const;
-    signals:
+    Q_SIGNALS:
         /** \brief signal: emitted whenever the user selects a new x-y zoom range (by mouse) */
         void zoomChangedLocally(double newxmin, double newxmax, double newymin, double newymax, JKQTBasePlotter* sender);
 
@@ -1155,7 +1155,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         void afterPrinting();
 
 
-    public slots:
+    public Q_SLOTS:
 
 
         /** \brief sets the width of the plot widget
@@ -1746,7 +1746,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         double getPaintMagnification() const;
 
 
-    protected slots:
+    protected Q_SLOTS:
         /** \brief internal function for print/export preview
          * \internal
          */

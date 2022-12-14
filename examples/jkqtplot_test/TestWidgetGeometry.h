@@ -29,9 +29,9 @@ class TestWidgetGeometry : public QWidget
     public:
         explicit TestWidgetGeometry(QWidget *parent = 0);
         
-    signals:
+    Q_SIGNALS:
         
-    public slots:
+    public Q_SLOTS:
 
 
     protected:

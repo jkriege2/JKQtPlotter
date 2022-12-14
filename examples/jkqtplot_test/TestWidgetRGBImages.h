@@ -32,9 +32,9 @@ class TestWidgetRGBImages : public QWidget
     public:
         explicit TestWidgetRGBImages(QWidget *parent = 0);
         
-    signals:
+    Q_SIGNALS:
         
-    public slots:
+    public Q_SLOTS:
         void setRGBColorBars(bool checked);
 
         void setRGBMode1(int mode);
