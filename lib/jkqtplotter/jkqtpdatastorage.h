@@ -2307,7 +2307,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPDatastoreItem {
     /** \brief if \c isValid() : resize the row to have \a rows_new rows */
     inline void resize(size_t rows_new) {
         JKQTPASSERT(isVector());
-        datavec.resize(rows_new);
+        datavec.resize(static_cast<int>(rows_new));
         rows=static_cast<size_t>(datavec.size());
         data=datavec.data();
     }
