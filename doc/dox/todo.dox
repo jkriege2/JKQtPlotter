@@ -21,6 +21,8 @@ This page lists several todos and wishes for future version of JKQTPlotter
     <li>graphs: text labels at positions/for graphs</li>
     <li>graphs: vector field graph (arrows), variant (x,y,dx,dy), (x,y,alpha,length), (x1,y1,x2,y2) ... different head/tail styles</li>
     <li>graphs: waterfall charts (see https://en.wikipedia.org/wiki/Waterfall_chart)</li>
+    <li>graphs: parametrized variant of JKQTPSingleColumnSymbolsGraph (beeswarm plots etz.) where each symbol may have a color given by a second column</li> 
+    <li>graphs: option for JKQTPSingleColumnSymbolsGraph (beeswarm plots etz.) to have a distribution only on one side of the center (left or right)</li> 
     <li>plot: axes with symlog (see http://dx.doi.org/10.1088/0957-0233/24/2/027001) and logit (https://de.m.wikipedia.org/wiki/Logit) scaling? </li>
     <li>plot: axis labels above/below/centered around tick</li>
     <li>plot: elongated grid to left of tick labels</li>
