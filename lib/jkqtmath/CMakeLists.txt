@@ -1,11 +1,14 @@
 cmake_minimum_required(VERSION 3.15)
 
-set(libBasename JKQTCommonStatisticsAndMath)
-set(libIncludeSubdir jkqtcommon_statistics_and_math)
+set(libBasename JKQTMath)
+set(oldlibBasename JKQTCommonStatisticsAndMath)
+set(libIncludeSubdir jkqtmath)
 
 if(JKQtPlotter_BUILD_SHARED_LIBS)
     set(libsh_name ${libBasename}SharedLib)
     set(libsh_name_decorated ${libsh_name}${JKQtPlotter_LIBNAME_ADDITION})
+    set(oldlibsh_name ${oldlibBasename}SharedLib)
+    set(oldlibsh_name_decorated ${oldlibsh_name}${JKQtPlotter_LIBNAME_ADDITION})
     set(${libBasename}_SHARED_LIBRARY ${libsh_name_decorated}  CACHE STRING "name of static library for ${libBasename}" FORCE)
     message( STATUS "-- Building ${libsh_name}" )
 endif(JKQtPlotter_BUILD_SHARED_LIBS)
@@ -13,6 +16,8 @@ endif(JKQtPlotter_BUILD_SHARED_LIBS)
 if(JKQtPlotter_BUILD_STATIC_LIBS)
     set(lib_name ${libBasename}Lib)
     set(lib_name_decorated ${lib_name}${JKQtPlotter_LIBNAME_ADDITION})
+    set(oldlib_name ${oldlibBasename}Lib)
+    set(oldlib_name_decorated ${oldlib_name}${JKQtPlotter_LIBNAME_ADDITION})
     set(${libBasename}_STATIC_LIBRARY ${lib_name_decorated}  CACHE STRING "name of static library for ${libBasename}" FORCE)
     message( STATUS "-- Building ${lib_name}" )
 endif(JKQtPlotter_BUILD_STATIC_LIBS)
@@ -34,8 +39,8 @@ set(SOURCES
 )
 
 set(HEADERS
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtcommon_statistics_and_math_imexport.h>
-  $<INSTALL_INTERFACE:jkqtcommon_statistics_and_math_imexport.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtmath_imexport.h>
+  $<INSTALL_INTERFACE:jkqtmath_imexport.h>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpalgorithms.h>
   $<INSTALL_INTERFACE:jkqtpalgorithms.h>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtplinalgtools.h>
@@ -82,8 +87,8 @@ function(JKQtCommon_setDefaultLibOptions TARGETNAME)
     )
     # precomiled headers to speed up compilation
     if (JKQtPlotter_BUILD_WITH_PRECOMPILED_HEADERS)
-      target_precompile_headers(${TARGETNAME} PRIVATE ${CMAKE_CURRENT_LIST_DIR}/private/jkqtcommon_statistics_and_math_precomp.h)
-      target_sources(${TARGETNAME} PRIVATE ${CMAKE_CURRENT_LIST_DIR}/private/jkqtcommon_statistics_and_math_precomp.h)
+      target_precompile_headers(${TARGETNAME} PRIVATE ${CMAKE_CURRENT_LIST_DIR}/private/jkqtmath_precomp.h)
+      target_sources(${TARGETNAME} PRIVATE ${CMAKE_CURRENT_LIST_DIR}/private/jkqtmath_precomp.h)
     endif(JKQtPlotter_BUILD_WITH_PRECOMPILED_HEADERS)
 endfunction()
 
@@ -92,13 +97,14 @@ if(JKQtPlotter_BUILD_SHARED_LIBS)
     add_library(${libsh_name} SHARED ${SOURCES}  ${HEADERS} )
     JKQtCommon_setDefaultLibOptions(${libsh_name})
     set_property(TARGET ${libsh_name} PROPERTY OUTPUT_NAME  "${libsh_name_decorated}")
-    target_compile_definitions(${libsh_name} PUBLIC JKQTCOMMON_STATISTICS_AND_MATH_LIB_IN_DLL)
-    target_compile_definitions(${libsh_name} PRIVATE JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT_LIBRARY)
+    target_compile_definitions(${libsh_name} PUBLIC jkqtmath_LIB_IN_DLL)
+    target_compile_definitions(${libsh_name} PRIVATE jkqtmath_LIB_EXPORT_LIBRARY)
     target_link_libraries(${libsh_name} PUBLIC JKQTCommonSharedLib)
     set_target_properties(${libsh_name} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS "ON")
     write_basic_package_version_file(${CMAKE_CURRENT_BINARY_DIR}/${libsh_name}Version.cmake 
                                      VERSION ${PROJECT_VERSION} 
                                      COMPATIBILITY AnyNewerVersion )    
+    add_library(${oldlibsh_name} ALIAS ${libsh_name})
 endif()
 
 if(JKQtPlotter_BUILD_STATIC_LIBS)
@@ -109,6 +115,7 @@ if(JKQtPlotter_BUILD_STATIC_LIBS)
     write_basic_package_version_file(${CMAKE_CURRENT_BINARY_DIR}/${lib_name}Version.cmake
                                      VERSION ${PROJECT_VERSION} 
                                      COMPATIBILITY AnyNewerVersion )    
+    add_library(${oldlib_name} ALIAS ${oldlib_name})
 endif()
 
 

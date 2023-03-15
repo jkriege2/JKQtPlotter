@@ -7,7 +7,7 @@
 #include "jkqtpexampleapplication.h"
 #include "speedtestplot.h"
 #include "jkqtplotter/graphs/jkqtpscatter.h"
-#include "jkqtcommon_statistics_and_math/jkqtpstatisticstools.h"
+#include "jkqtmath/jkqtpstatisticstools.h"
 
 SpeedTestPlot::SpeedTestPlot():
     JKQTPlotter(), NDATA(500), dx(1.0/500.0*4.0*JKQTPSTATISTICS_PI), x0(0)

@@ -17,7 +17,7 @@ win32-msvc*: DEFINES += NOMINMAX
 
 
 include(../../../lib/jkqtcommon.pri)
-include(../../../lib/jkqtcommon_statistics_and_math.pri)
+include(../../../lib/jkqtmath.pri)
 include(../../../lib/jkqtmathtext.pri)
 include(../../../lib/jkqtfastplotter.pri)
 include(../../../lib/jkqtplotter.pri)

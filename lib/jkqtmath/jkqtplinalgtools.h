@@ -35,8 +35,8 @@
 #include <ostream>
 #include <iomanip>
 #include <sstream>
-#include "jkqtcommon_statistics_and_math/jkqtcommon_statistics_and_math_imexport.h"
-#include "jkqtcommon_statistics_and_math/jkqtparraytools.h"
+#include "jkqtmath/jkqtmath_imexport.h"
+#include "jkqtmath/jkqtparraytools.h"
 #include "jkqtcommon/jkqtpmathtools.h"
 #include "jkqtcommon/jkqtpstringtools.h"
 

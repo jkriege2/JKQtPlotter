@@ -48,7 +48,7 @@
 #include "jkqtcommon/jkqtpstringtools.h"
 #include "jkqtcommon/jkqtpdebuggingtools.h"
 #include "jkqtcommon/jkqtpmathtools.h"
-#include "jkqtcommon_statistics_and_math/jkqtpalgorithms.h"
+#include "jkqtmath/jkqtpalgorithms.h"
 #include "jkqtcommon/jkqtpcodestructuring.h"
 #if __cplusplus >= 202002L
 # include <version>

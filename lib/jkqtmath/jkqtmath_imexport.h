@@ -1,5 +1,5 @@
-#ifndef jkqtcommon_statistics_and_math_IMPORT_H
-#define jkqtcommon_statistics_and_math_IMPORT_H
+#ifndef jkqtmath_IMPORT_H
+#define jkqtmath_IMPORT_H
 
 /*
     Copyright (c) 2008-2022 Jan W. Krieger (<jan@jkrieger.de>)
@@ -23,19 +23,19 @@
 
 
 
-/*! \def JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT
-    \ingroup jkqtcommon_statistics_and_math_libfacilities
+/*! \def jkqtmath_LIB_EXPORT
+    \ingroup jkqtmath_libfacilities
 
-    This define allows to export functions and classes from the jkqtcommon_statistics_and_math-library when building a dynamic/shared library.
+    This define allows to export functions and classes from the jkqtmath-library when building a dynamic/shared library.
     Usage is as follows:
     \code
-        #include "jkqtcommon_statistics_and_math_imexport/jkqtcommon_statistics_and_math_imexport.h"
+        #include "jkqtmath_imexport/jkqtmath_imexport.h"
 
-        class JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT exportedClassName {
+        class jkqtmath_LIB_EXPORT exportedClassName {
            ...
         };
 
-        JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT void exportedFunctionName();
+        jkqtmath_LIB_EXPORT void exportedFunctionName();
     \endcode
     
     These macros append the appropriate \c Q_DECL_EXPORT and \c Q_DECL_IMPORT
@@ -45,11 +45,11 @@
     Note that these attributes are only necessary on windows systems!
     
     These macros are controlled by two other macros:
-      - \c JKQTCOMMON_STATISTICS_AND_MATH_LIB_IN_DLL declares that the application should link against a shared version of 
-                                 JKQTCommonStatisticsAndMath, i.e. \c JKQTCommonStatisticsAndMathSharedLib_XYZ .
+      - \c jkqtmath_LIB_IN_DLL declares that the application should link against a shared version of 
+                                 JKQTMath, i.e. \c JKQTMathSharedLib_XYZ .
                                  This needs to be defined while compiling the library and while compiling 
-                                 any application linking against  \c JKQTCommonStatisticsAndMathSharedLib_XYZ. 
-      - \c JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT_LIBRARY is only defined while compiling JKQTCommonStatisticsAndMath into \c JKQTCommonStatisticsAndMathSharedLib_XYZ
+                                 any application linking against  \c JKQTMathSharedLib_XYZ. 
+      - \c jkqtmath_LIB_EXPORT_LIBRARY is only defined while compiling JKQTMath into \c JKQTMathSharedLib_XYZ
                                  and ensures thet the symbols are exported. If it is not defined (e.g. while 
                                  compiling an application), the symbols are imported
     .  
@@ -58,45 +58,45 @@
 
 // necessary to add this define to the Doxygen autodoc!!!
 #ifdef DOXYGEN
-#  define JKQTCOMMON_STATISTICS_AND_MATH_LIB_IN_DLL
+#  define jkqtmath_LIB_IN_DLL
 #endif
-/*! \def JKQTCOMMON_STATISTICS_AND_MATH_LIB_IN_DLL
-    \ingroup jkqtcommon_statistics_and_math_libfacilities
+/*! \def jkqtmath_LIB_IN_DLL
+    \ingroup jkqtmath_libfacilities
     \brief declares that the application should link against a shared version of 
-           JKQTCommonStatisticsAndMath, i.e. \c JKQTCommonStatisticsAndMathSharedLib_XYZ .
+           JKQTMath, i.e. \c JKQTMathSharedLib_XYZ .
            This needs to be defined while compiling the library and while compiling 
-           any application linking against  \c JKQTCommonStatisticsAndMathSharedLib_XYZ. 
+           any application linking against  \c JKQTMathSharedLib_XYZ. 
 */
 
 // necessary to add this define to the Doxygen autodoc!!!
 #ifdef DOXYGEN
-#  define JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT_LIBRARY
+#  define jkqtmath_LIB_EXPORT_LIBRARY
 #endif
-/*! \def JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT_LIBRARY
-    \ingroup jkqtcommon_statistics_and_math_libfacilities
-    \brief is only defined while compiling JKQTCommonStatisticsAndMath into \c JKQTCommonStatisticsAndMathSharedLib_XYZ
+/*! \def jkqtmath_LIB_EXPORT_LIBRARY
+    \ingroup jkqtmath_libfacilities
+    \brief is only defined while compiling JKQTMath into \c JKQTMathSharedLib_XYZ
            and ensures thet the symbols are exported. If it is not defined (e.g. while 
            compiling an application), the symbols are imported
 */
 
 #include <QtCore/QtGlobal>
-#  ifdef JKQTCOMMON_STATISTICS_AND_MATH_LIB_IN_DLL
-#    ifndef JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT
-#      ifdef JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT_LIBRARY
+#  ifdef jkqtmath_LIB_IN_DLL
+#    ifndef jkqtmath_LIB_EXPORT
+#      ifdef jkqtmath_LIB_EXPORT_LIBRARY
           /* We are building this library */
-#        define JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT Q_DECL_EXPORT
+#        define jkqtmath_LIB_EXPORT Q_DECL_EXPORT
 #      else
           /* We are using this library */
-#        define JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT Q_DECL_IMPORT
+#        define jkqtmath_LIB_EXPORT Q_DECL_IMPORT
 #      endif
 #    endif
 #  else
-#    ifndef JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT
-#      define JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT
+#    ifndef jkqtmath_LIB_EXPORT
+#      define jkqtmath_LIB_EXPORT
 #    endif
 #  endif
 
 
 
-#endif // jkqtcommon_statistics_and_math_IMPORT_H
+#endif // jkqtmath_IMPORT_H
 

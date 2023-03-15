@@ -34,12 +34,12 @@
 #include <ostream>
 #include <iomanip>
 #include <sstream>
-#include "jkqtcommon_statistics_and_math/jkqtcommon_statistics_and_math_imexport.h"
-#include "jkqtcommon_statistics_and_math/jkqtplinalgtools.h"
-#include "jkqtcommon_statistics_and_math/jkqtparraytools.h"
+#include "jkqtmath/jkqtmath_imexport.h"
+#include "jkqtmath/jkqtplinalgtools.h"
+#include "jkqtmath/jkqtparraytools.h"
 #include "jkqtcommon/jkqtpdebuggingtools.h"
-#include "jkqtcommon_statistics_and_math/jkqtpstatbasics.h"
-#include "jkqtcommon_statistics_and_math/jkqtpstatpoly.h"
+#include "jkqtmath/jkqtpstatbasics.h"
+#include "jkqtmath/jkqtpstatpoly.h"
 
 
 
@@ -278,37 +278,37 @@ enum class JKQTPStatRegressionModelType {
 /*! \brief Generates functors \c f(x,a,b) for the models from JKQTPStatRegressionModelType in \a type
     \ingroup jkqtptools_math_statistics_regression
     */
-JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT std::function<double(double, double, double)> jkqtpStatGenerateRegressionModel(JKQTPStatRegressionModelType type);
+jkqtmath_LIB_EXPORT std::function<double(double, double, double)> jkqtpStatGenerateRegressionModel(JKQTPStatRegressionModelType type);
 
 /*! \brief Generates a LaTeX string for the models from JKQTPStatRegressionModelType in \a type
     \ingroup jkqtptools_math_statistics_regression
     */
-JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT QString jkqtpstatRegressionModel2Latex(JKQTPStatRegressionModelType type, double a, double b);
+jkqtmath_LIB_EXPORT QString jkqtpstatRegressionModel2Latex(JKQTPStatRegressionModelType type, double a, double b);
 
 /*! \brief Generates functors \c f(x) for the models from JKQTPStatRegressionModelType in \a type and binds the parameter values \a and \a b to the returned function
     \ingroup jkqtptools_math_statistics_regression
     */
-JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT std::function<double(double)> jkqtpStatGenerateRegressionModel(JKQTPStatRegressionModelType type, double a, double b);
+jkqtmath_LIB_EXPORT std::function<double(double)> jkqtpStatGenerateRegressionModel(JKQTPStatRegressionModelType type, double a, double b);
 
 /*! \brief Generates the transformation function for x-data (\c result.first ) and y-data (\c result.second ) for each regression model in JKQTPStatRegressionModelType in \a type
     \ingroup jkqtptools_math_statistics_regression
     \internal
     */
-JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT std::pair<std::function<double(double)>,std::function<double(double)> > jkqtpStatGenerateTransformation(JKQTPStatRegressionModelType type);
+jkqtmath_LIB_EXPORT std::pair<std::function<double(double)>,std::function<double(double)> > jkqtpStatGenerateTransformation(JKQTPStatRegressionModelType type);
 
 
 /*! \brief Generates the transformation function for a-parameter (offset, \c result.first : transform, \c result.second : back-transform) for each regression model in JKQTPStatRegressionModelType in \a type
     \ingroup jkqtptools_math_statistics_regression
     \internal
     */
-JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT std::pair<std::function<double(double)>,std::function<double(double)> > jkqtpStatGenerateParameterATransformation(JKQTPStatRegressionModelType type);
+jkqtmath_LIB_EXPORT std::pair<std::function<double(double)>,std::function<double(double)> > jkqtpStatGenerateParameterATransformation(JKQTPStatRegressionModelType type);
 
 
 /*! \brief Generates the transformation function for b-parameter (slope, \c result.first : transform, \c result.second : back-transform) for each regression model in JKQTPStatRegressionModelType in \a type
     \ingroup jkqtptools_math_statistics_regression
     \internal
     */
-JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT std::pair<std::function<double(double)>,std::function<double(double)> > jkqtpStatGenerateParameterBTransformation(JKQTPStatRegressionModelType type);
+jkqtmath_LIB_EXPORT std::pair<std::function<double(double)>,std::function<double(double)> > jkqtpStatGenerateParameterBTransformation(JKQTPStatRegressionModelType type);
 
 
 /*! \brief calculate the linear regression coefficients for a given data range \a firstX / \a firstY ... \a lastX / \a lastY where the model is defined by \a type

@@ -2,8 +2,8 @@
  * it is not intended for external use!
  */
 
-#ifndef jkqtcommon_statistics_and_math_precomp_H
-#define jkqtcommon_statistics_and_math_precomp_H
+#ifndef jkqtmath_precomp_H
+#define jkqtmath_precomp_H
 
 /*
     Copyright (c) 2008-2022 Jan W. Krieger (<jan@jkrieger.de>)
@@ -46,12 +46,12 @@
 #include <string>
 #include <utility>
 #include <vector>
-#include "jkqtcommon_statistics_and_math/jkqtplinalgtools.h"
-#include "jkqtcommon_statistics_and_math/jkqtpstatbasics.h"
-#include "jkqtcommon_statistics_and_math/jkqtparraytools.h"
-#include "jkqtcommon_statistics_and_math/jkqtpalgorithms.h"
+#include "jkqtmath/jkqtplinalgtools.h"
+#include "jkqtmath/jkqtpstatbasics.h"
+#include "jkqtmath/jkqtparraytools.h"
+#include "jkqtmath/jkqtpalgorithms.h"
 #include "jkqtcommon/jkqtpmathtools.h"
 #include "jkqtcommon/jkqtpstringtools.h"
 #include "jkqtcommon/jkqtpdebuggingtools.h"
 
-#endif // jkqtcommon_statistics_and_math_precomp_H
+#endif // jkqtmath_precomp_H

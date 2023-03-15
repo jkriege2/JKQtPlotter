@@ -34,9 +34,9 @@
 #include <ostream>
 #include <iomanip>
 #include <sstream>
-#include "jkqtcommon_statistics_and_math/jkqtcommon_statistics_and_math_imexport.h"
-#include "jkqtcommon_statistics_and_math/jkqtplinalgtools.h"
-#include "jkqtcommon_statistics_and_math/jkqtparraytools.h"
+#include "jkqtmath/jkqtmath_imexport.h"
+#include "jkqtmath/jkqtplinalgtools.h"
+#include "jkqtmath/jkqtparraytools.h"
 #include "jkqtcommon/jkqtpdebuggingtools.h"
 
 
@@ -1019,7 +1019,7 @@ inline void jkqtpstat5NumberStatisticsAndOutliers(InputIt first, InputIt last, O
     \ingroup jkqtptools_math_statistics_basic
     \see https://en.wikipedia.org/wiki/Five-number_summary, jkqtpstat5NumberStatistics()
 */
-struct JKQTCOMMON_STATISTICS_AND_MATH_LIB_EXPORT JKQTPStat5NumberStatistics {
+struct jkqtmath_LIB_EXPORT JKQTPStat5NumberStatistics {
         JKQTPStat5NumberStatistics();
 
         /** \brief minimum value */

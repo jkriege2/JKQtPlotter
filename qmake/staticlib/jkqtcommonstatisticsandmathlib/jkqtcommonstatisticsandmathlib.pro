@@ -1,7 +1,7 @@
 # uncomment this line to prevent linking in of the XITS fonts
 #DEFINES += NO_XITS_FONTS
-TARGET = jkqtcommonstatisticsandmathlib
-CONFIG (debug, debug|release): TARGET = jkqtcommonstatisticsandmathlib_debug
+TARGET = jkqtmathlib
+CONFIG (debug, debug|release): TARGET = jkqtmathlib_debug
 
 TEMPLATE = lib
 CONFIG += staticlib

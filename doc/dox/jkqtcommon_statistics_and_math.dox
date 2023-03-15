@@ -1,16 +1,16 @@
 /*!
 
 
-\defgroup jkqtcommon_statistics_and_math JKQTCommonStatisticsAndMath: Special Math and Statistics Utilities
+\defgroup jkqtmath JKQTMath: Special Math and Statistics Utilities
 
-This summarizes all functions from JKQTCommonStatisticsAndMath-library, which provides special and advanced math and statistics tools, mostly used by JKQtPlotter.
+This summarizes all functions from JKQTMath-library, which provides special and advanced math and statistics tools, mostly used by JKQtPlotter.
 
 
 \defgroup jkqtptools_algorithms General Algorithms (Sorting ...)
-\ingroup jkqtcommon_statistics_and_math
+\ingroup jkqtmath
 
 \defgroup jkqtptools_math_parser Parser/Evaluator for Mathematical Expressions
-\ingroup jkqtcommon_statistics_and_math
+\ingroup jkqtmath
 
 In this group there are classes that form a parser and evluator for mathematical expressions.
 In the context of the sequencer program this is a tool class that can be used by the classes
@@ -19,19 +19,19 @@ in the project. E.g. used by JKQTPXParsedFunctionLineGraph, JKQTPYParsedFunction
 
 
 \defgroup jkqtptools_math_array Data Array Tools
-\ingroup jkqtcommon_statistics_and_math
+\ingroup jkqtmath
 
 Functions in this group form the basis for the statistics  (\ref jkqtptools_math_statistics ) and linear algebra libraries  (\ref jkqtptools_math_linalg ), by providing allocation and freeing of (aligned) memory arrays.
 
 \see JKQTPlotterBasicJKQTPDatastoreStatistics
 
 \defgroup jkqtptools_math_linalg Linear Algebra Tools
-\ingroup jkqtcommon_statistics_and_math
+\ingroup jkqtmath
 
 This group assembles a basic set of linear algebra methods, including matrix inversion, which are required e.g. by the statistics library (\ref jkqtptools_math_statistics )
 
 \defgroup jkqtptools_math_statistics Statistical Computations
-\ingroup jkqtcommon_statistics_and_math
+\ingroup jkqtmath
 
 This group contains a statistics library, which offers several basic methods and is based on an iterator interface:
   - \ref jkqtptools_math_statistics_basic
@@ -99,8 +99,8 @@ All statistics functions use all values in the given range and convert each valu
 
 
 
-\defgroup jkqtcommon_statistics_and_math_libfacilities Library Facilities for JKQTCommonStatisticsAndMath
-\ingroup jkqtcommon_statistics_and_math
+\defgroup jkqtmath_libfacilities Library Facilities for JKQTMath
+\ingroup jkqtmath
 
 
 */

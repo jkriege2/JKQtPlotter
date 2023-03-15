@@ -34,7 +34,7 @@
 #include <ostream>
 #include <iomanip>
 #include <sstream>
-#include "jkqtcommon_statistics_and_math/jkqtcommon_statistics_and_math_imexport.h"
+#include "jkqtmath/jkqtmath_imexport.h"
 
 
 #ifdef _OPENMP

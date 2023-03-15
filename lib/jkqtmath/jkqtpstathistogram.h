@@ -34,11 +34,11 @@
 #include <ostream>
 #include <iomanip>
 #include <sstream>
-#include "jkqtcommon_statistics_and_math/jkqtcommon_statistics_and_math_imexport.h"
-#include "jkqtcommon_statistics_and_math/jkqtplinalgtools.h"
-#include "jkqtcommon_statistics_and_math/jkqtparraytools.h"
+#include "jkqtmath/jkqtmath_imexport.h"
+#include "jkqtmath/jkqtplinalgtools.h"
+#include "jkqtmath/jkqtparraytools.h"
 #include "jkqtcommon/jkqtpdebuggingtools.h"
-#include "jkqtcommon_statistics_and_math/jkqtpstatbasics.h"
+#include "jkqtmath/jkqtpstatbasics.h"
 
 
 

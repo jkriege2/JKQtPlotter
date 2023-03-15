@@ -15,10 +15,11 @@ This page lists release notes for the different version of JKQTPlotter
 Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
 <ul>
   <li>General:<ul>
+    <li>BREAKING: renamed library JKQTCommonStatisticsAndMath to JKQTMath. <i>Note: A CMake-ALIAS-Library JKQTCommonStatisticsAndMath was also added to ease transition for users</i></li>
     <li>CLEANUP (BREAKING) of library structure</li>
     <li>NEW: Using precompiled headers in CMake-build to speed up build times</li>
-    <li>NEW/BREAKING: split jkqtcommon into basic tools and jkqtcommon_statistics_and_math for advanced math tools not used by all libs</li>
-    <li>NEW: When using a MSVC compiler, the generated PDB files are installed to \c CMAKE_INSTALL_PREFIX/bin/ </li>
+    <li>NEW/BREAKING: split jkqtcommon into basic tools and jkqtmath for advanced math tools not used by all libs</li>
+    <li>NEW: When using a MSVC compiler, the generated PDB files are installed to \c CMAKE_INSTALL_PREFIX/bin/ </li>    
   </ul></li>
   <li>JKQTPlotter:<ul>
     <li>FIXED issue described in <a href="https://github.com/jkriege2/JKQtPlotter/pull/62">#62: Fix custom labels draw, because giving exactly two label-strings did not display all of them</a>, thanks to <a href="https://github.com/FalsinSoft">user:FalsinSoft</a></li>

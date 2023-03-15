@@ -10,7 +10,7 @@
 #include "jkqtplotter/graphs/jkqtpviolinplot.h"
 #include "jkqtplotter/graphs/jkqtpsinglecolumnsymbols.h"
 #include "jkqtplotter/graphs/jkqtpstatisticsadaptors.h"
-#include "jkqtcommon_statistics_and_math/jkqtpstatisticstools.h"
+#include "jkqtmath/jkqtpstatisticstools.h"
 #include <random>
 #include <cmath>
 
