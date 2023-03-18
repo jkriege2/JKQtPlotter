@@ -30,7 +30,7 @@ jobs:
           sudo apt-get update
           sudo apt-get update --fix-missing
           sudo apt-get install -f
-          sudo apt -y install build-essential doxygen graphviz doxygen-latex clang libclang-dev libclang-cpp	fonts-freefont-ttf
+          sudo apt -y install build-essential doxygen graphviz doxygen-latex libclang-common-10-dev libclang-10-dev	fonts-freefont-ttf
       
       - name: Update Doxygen to 1.9.3
         run: |
