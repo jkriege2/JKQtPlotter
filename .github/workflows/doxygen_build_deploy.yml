@@ -30,13 +30,10 @@ jobs:
           sudo apt-get update
           sudo apt-get update --fix-missing
           sudo apt-get install -f
-          sudo apt search ".*clang.*"
-          sudo apt search ".*qt5.*"
-          sudo apt search ".*qt6.*"
           sudo apt -y install build-essential doxygen graphviz doxygen-latex libclang-common-10-dev libclang-10-dev	fonts-freefont-ttf
           doxygen -v
       
-      - name: Update Doxygen to 1.9.3
+      - name: Update Doxygen to 1.9.6
         run: |
           currDir=`pwd`
           cd $GITHUB_WORKSPACE
