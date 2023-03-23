@@ -128,10 +128,10 @@ void JKQTPSpecialLineHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
     QPen ph=getHighlightingLinePen(painter, parent);
     QPen np(Qt::NoPen);
     QBrush b=getFillBrush(painter, parent);
-    const double xmin=transformX(parent->getXAxis()->getMin());
-    const double xmax=transformX(parent->getXAxis()->getMax());
-    const double ymin=transformY(parent->getYAxis()->getMin());
-    const double ymax=transformY(parent->getYAxis()->getMax());
+    const double xmin=transformX(getXAxis()->getMin());
+    const double xmax=transformX(getXAxis()->getMax());
+    const double ymin=transformY(getYAxis()->getMin());
+    const double ymax=transformY(getYAxis()->getMax());
     const auto symType=getSymbolType();
     const double symbolSize=parent->pt2px(painter, getSymbolSize());
     const QMarginsF clipMargins=(symType==JKQTPNoSymbol)?QMarginsF(0,0,0,0):QMarginsF(symbolSize,symbolSize,symbolSize,symbolSize);
@@ -149,9 +149,9 @@ void JKQTPSpecialLineHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
         double xold=-1;
         double yold=-1;
         double y0=transformY(getBaseline());
-        if (parent->getYAxis()->isLogAxis()) {
-            if (getBaseline()>0 && getBaseline()>parent->getYAxis()->getMin()) y0=transformY(getBaseline());
-            else y0=transformY(parent->getYAxis()->getMin());
+        if (getYAxis()->isLogAxis()) {
+            if (getBaseline()>0 && getBaseline()>getYAxis()->getMin()) y0=transformY(getBaseline());
+            else y0=transformY(getYAxis()->getMin());
         }
         bool firstPoint=true;
         intSortData();
@@ -336,10 +336,10 @@ void JKQTPSpecialLineVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
     QPen ph=getHighlightingLinePen(painter, parent);
     QPen np(Qt::NoPen);
     QBrush b=getFillBrush(painter, parent);
-    const double xmin=transformX(parent->getXAxis()->getMin());
-    const double xmax=transformX(parent->getXAxis()->getMax());
-    const double ymin=transformY(parent->getYAxis()->getMin());
-    const double ymax=transformY(parent->getYAxis()->getMax());
+    const double xmin=transformX(getXAxis()->getMin());
+    const double xmax=transformX(getXAxis()->getMax());
+    const double ymin=transformY(getYAxis()->getMin());
+    const double ymax=transformY(getYAxis()->getMax());
     const auto symType=getSymbolType();
     const double symbolSize=parent->pt2px(painter, getSymbolSize());
     const QMarginsF clipMargins=(symType==JKQTPNoSymbol)?QMarginsF(0,0,0,0):QMarginsF(symbolSize,symbolSize,symbolSize,symbolSize);
@@ -357,9 +357,9 @@ void JKQTPSpecialLineVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
         double xold=-1;
         double yold=-1;
         double x0=transformX(getBaseline());
-        if (parent->getXAxis()->isLogAxis()) {
-            if (getBaseline()>0 && getBaseline()>parent->getXAxis()->getMin()) x0=transformX(getBaseline());
-            else x0=transformX(parent->getXAxis()->getMin());
+        if (getXAxis()->isLogAxis()) {
+            if (getBaseline()>0 && getBaseline()>getXAxis()->getMin()) x0=transformX(getBaseline());
+            else x0=transformX(getXAxis()->getMin());
         }
         bool first=false;
         intSortData();

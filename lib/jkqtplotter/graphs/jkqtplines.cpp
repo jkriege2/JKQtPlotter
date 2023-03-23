@@ -78,10 +78,10 @@ void JKQTPXYLineGraph::draw(JKQTPEnhancedPainter& painter) {
         const QPen p=getLinePen(painter, parent);
         const QPen penSelection=getHighlightingLinePen(painter, parent);
         const auto symType=getSymbolType();
-        const double xmin=transformX(parent->getXAxis()->getMin());
-        const double xmax=transformX(parent->getXAxis()->getMax());
-        const double ymin=transformY(parent->getYAxis()->getMin());
-        const double ymax=transformY(parent->getYAxis()->getMax());
+        const double xmin=transformX(getXAxis()->getMin());
+        const double xmax=transformX(getXAxis()->getMax());
+        const double ymin=transformY(getYAxis()->getMin());
+        const double ymax=transformY(getYAxis()->getMax());
         const double symbolSize=parent->pt2px(painter, getSymbolSize());
         const QMarginsF clipMargins=(symType==JKQTPNoSymbol)?QMarginsF(0,0,0,0):QMarginsF(symbolSize,symbolSize,symbolSize,symbolSize);
         const QRectF cliprect=QRectF(qMin(xmin,xmax),qMin(ymin,ymax),fabs(xmax-xmin),fabs(ymax-ymin))+clipMargins;
@@ -108,7 +108,7 @@ void JKQTPXYLineGraph::draw(JKQTPEnhancedPainter& painter) {
                     //if (isHighlighted() && getSymbolType()!=JKQTPNoSymbol) {
                         //JKQTPPlotSymbol(painter, x, y, JKQTPFilledCircle, parent->pt2px(painter, symbolSize*1.5), parent->pt2px(painter, symbolWidth*parent->getLineWidthMultiplier()), penSelection.color(), penSelection.color(),getSymbolFont());
                     //}
-                    if ((!parent->getXAxis()->isLogAxis() || xv>0.0) && (!parent->getYAxis()->isLogAxis() || yv>0.0) ) {
+                    if ((!getXAxis()->isLogAxis() || xv>0.0) && (!getYAxis()->isLogAxis() || yv>0.0) ) {
                         if (symType!=JKQTPNoSymbol && cliprect.contains(x,y)) {
                             if (drawLineInForeground) plotStyledSymbol(parent, painter, x, y);
                             else symbols.push_back({x,y});

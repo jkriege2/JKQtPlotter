@@ -160,6 +160,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotterStyle {
         JKQTPCoordinateAxisStyle xAxisStyle;
         /** \brief style of the y-axis of the main coordinate system */
         JKQTPCoordinateAxisStyle yAxisStyle;
+        /** \brief separation between two seondary axes in pt */
+        double secondaryAxisSeparation;
         /** \brief style of the coordinate axes used to display colorbars in the right */
         JKQTPColorbarCoordinateAxisStyle rightColorbarAxisStyle;
         /** \brief style of the coordinate axes used to display colorbars at the top */

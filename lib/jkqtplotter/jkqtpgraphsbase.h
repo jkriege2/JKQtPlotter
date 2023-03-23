@@ -208,16 +208,16 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPPlotElement: public QObject {
 
 
 
-        /** \brief tool routine that transforms an x-coordinate (plot coordinate --> pixels) for this plot element */
+        /** \brief tool routine that transforms an x-coordinate (plot coordinate --> pixels) for this plot element, uses the axis referenced in xAxisRef */
         double transformX(double x) const;
 
-        /** \brief tool routine that transforms a y-coordinate (plot coordinate --> pixels) for this plot element */
+        /** \brief tool routine that transforms a y-coordinate (plot coordinate --> pixels) for this plot element, uses the axis referenced in yAxisRef */
         double transformY(double y) const;
 
-        /** \brief tool routine that backtransforms an x-coordinate (pixels --> plot coordinate) for this plot element */
+        /** \brief tool routine that backtransforms an x-coordinate (pixels --> plot coordinate) for this plot element, uses the axis referenced in xAxisRef */
         double backtransformX(double x) const;
 
-        /** \brief tool routine that backtransforms a y-coordinate (pixels --> plot coordinate) for this plot element */
+        /** \brief tool routine that backtransforms a y-coordinate (pixels --> plot coordinate) for this plot element, uses the axis referenced in yAxisRef */
         double backtransformY(double y) const;
 
 
@@ -254,6 +254,31 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPPlotElement: public QObject {
         /** \brief transform all y-coordinates in a vector \a x */
         QVector<double> transformY(const QVector<double>& x) const;
 
+        /** \copydoc xAxisRef */
+        void setXAxis(JKQTPCoordinateAxisRef ref);
+        /** \copydoc xAxisRef */
+        JKQTPCoordinateAxisRef getXAxisRef() const;
+        /** \copydoc yAxisRef */
+        void setYAxis(JKQTPCoordinateAxisRef ref);
+        /** \copydoc yAxisRef */
+        JKQTPCoordinateAxisRef getYAxisRef() const;
+        /** \brief returns the actual x-Axis-object from the parent plotter, referenced in xAxisRef */
+        /** \brief returns the actual x-Axis-object from the parent plotter, referenced in xAxisRef */
+        inline const JKQTPCoordinateAxis* getXAxis() const {
+            return parent->getXAxis(xAxisRef);
+        }
+        /** \brief returns the actual y-Axis-object from the parent plotter, referenced in yAxisRef */
+        inline const JKQTPCoordinateAxis* getYAxis() const {
+            return parent->getYAxis(yAxisRef);
+        }
+        /** \brief set the coordinate axes to use for this plot element
+         *
+         *  \see xAxisRef, yAxisRef, transformX(), transformY()
+         */
+        void setAxes(JKQTPCoordinateAxisRef ref);
+
+        Q_PROPERTY(JKQTPCoordinateAxisRef xAxisRef READ getXAxisRef WRITE setXAxis)
+        Q_PROPERTY(JKQTPCoordinateAxisRef yAxisRef READ getYAxisRef WRITE setYAxis)
 
     protected:
 
@@ -356,6 +381,11 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPPlotElement: public QObject {
         bool highlighted;
         /** \brief internal storage for the used parent plot style */
         int parentPlotStyle;
+        /** \brief indicates which coordinate axis to use for coordinate transforms in x-direction */
+        JKQTPCoordinateAxisRef xAxisRef;
+        /** \brief indicates which coordinate axis to use for coordinate transforms in y-direction */
+        JKQTPCoordinateAxisRef yAxisRef;
+
 
 
         /** \brief dataset with graph-points and associated data fro the function hitTest()

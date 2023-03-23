@@ -224,12 +224,12 @@ void JKQTPEvaluatedFunctionWithErrorsGraphDrawingBase::drawXGraph(JKQTPEnhancedP
 
 
         double y0=transformY(0);
-        if (parent->getYAxis()->isLogAxis()) y0=transformY(parent->getYAxis()->getMin());
+        if (getYAxis()->isLogAxis()) y0=transformY(getYAxis()->getMin());
         bool first=false;
         QPolygonF filledPolygon, linePolygon, errorLineTop, errorLineBottom;
         QList<QPointF> epTop, epBottom;
-        double yami=qMin(transformY(parent->getYAxis()->getMin()),transformY(parent->getYAxis()->getMax()));
-        double yama=qMax(transformY(parent->getYAxis()->getMin()),transformY(parent->getYAxis()->getMax()));
+        double yami=qMin(transformY(getYAxis()->getMin()),transformY(getYAxis()->getMax()));
+        double yama=qMax(transformY(getYAxis()->getMin()),transformY(getYAxis()->getMax()));
         double dypix=fabs(yama-yami);
         yami=yami-2.0*dypix;
         yama=yama+2.0*dypix;
@@ -351,12 +351,12 @@ void JKQTPEvaluatedFunctionWithErrorsGraphDrawingBase::drawYGraph(JKQTPEnhancedP
 
 
         double x0=transformX(0);
-        if (parent->getXAxis()->isLogAxis()) x0=transformX(parent->getXAxis()->getMin());
+        if (getXAxis()->isLogAxis()) x0=transformX(getXAxis()->getMin());
         bool first=false;
         QPolygonF filledPolygon, linePolygon, errorLineTop, errorLineBottom;
         QList<QPointF> epTop, epBottom;
-        double xami=qMin(transformY(parent->getXAxis()->getMin()),transformY(parent->getXAxis()->getMax()));
-        double xama=qMax(transformY(parent->getXAxis()->getMin()),transformY(parent->getXAxis()->getMax()));
+        double xami=qMin(transformY(getXAxis()->getMin()),transformY(getXAxis()->getMax()));
+        double xama=qMax(transformY(getXAxis()->getMin()),transformY(getXAxis()->getMax()));
         double dxpix=fabs(xama-xami);
         xami=xami-2.0*dxpix;
         xama=xama+2.0*dxpix;

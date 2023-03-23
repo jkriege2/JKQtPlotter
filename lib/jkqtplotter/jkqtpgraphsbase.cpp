@@ -34,7 +34,7 @@
 #define SmallestGreaterZeroCompare_xvsgz() if ((xvsgz>10.0*DBL_MIN)&&((smallestGreaterZero<10.0*DBL_MIN) || (xvsgz<smallestGreaterZero))) smallestGreaterZero=xvsgz;
 
 JKQTPPlotElement::JKQTPPlotElement(JKQTBasePlotter* parent):
-    QObject(parent)
+    QObject(parent), xAxisRef(JKQTPPrimaryAxis), yAxisRef(JKQTPPrimaryAxis)
 {
     title="";
     visible=true;
@@ -225,18 +225,18 @@ double JKQTPPlotElement::hitTest(const QPointF & posSystem, QPointF* closestSpot
 }
 
 double JKQTPPlotElement::transformX(double x) const {
-    return parent->getXAxis()->x2p(x);
+    return getXAxis()->x2p(x);
 }
 
 double JKQTPPlotElement::transformY(double y) const {
-    return parent->getYAxis()->x2p(y);
+    return getYAxis()->x2p(y);
 }
 
 QVector<double> JKQTPPlotElement::transformX(const QVector<double>& x) const {
     QVector<double> res;
     res.resize(x.size());
     for (int i=0; i<x.size(); i++) {
-        res[i]=parent->getXAxis()->x2p(x[i]);
+        res[i]=getXAxis()->x2p(x[i]);
     }
     return res;
 }
@@ -245,18 +245,38 @@ QVector<double> JKQTPPlotElement::transformY(const QVector<double>& y) const {
     QVector<double> res;
     res.resize(y.size());
     for (int i=0; i<y.size(); i++) {
-        res[i]=parent->getYAxis()->x2p(y[i]);
+        res[i]=getYAxis()->x2p(y[i]);
     }
     return res;
 }
 
+void JKQTPPlotElement::setXAxis(JKQTPCoordinateAxisRef ref)
+{
+    xAxisRef=ref;
+}
+
+void JKQTPPlotElement::setYAxis(JKQTPCoordinateAxisRef ref)
+{
+    yAxisRef=ref;
+}
+
+JKQTPCoordinateAxisRef JKQTPPlotElement::getXAxisRef() const
+{
+    return xAxisRef;
+}
+
+JKQTPCoordinateAxisRef JKQTPPlotElement::getYAxisRef() const
+{
+    return yAxisRef;
+}
+
 
 double JKQTPPlotElement::backtransformX(double x) const {
-    return parent->getXAxis()->p2x(x);
+    return getXAxis()->p2x(x);
 }
 
 double JKQTPPlotElement::backtransformY(double y) const {
-    return parent->getYAxis()->p2x(y);
+    return getYAxis()->p2x(y);
 }
 
 

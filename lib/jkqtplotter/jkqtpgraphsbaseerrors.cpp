@@ -272,10 +272,10 @@ void JKQTPGraphErrorStyleMixin::intPlotXYErrorIndicators(JKQTPEnhancedPainter& p
     if (!visX&&!visY) return;
     //std::cout<<"   JKQTPGraphErrors::intPlotXYErrorIndicators(p, "<<parent<<", "<<xColumn<<", "<<yColumn<<", "<<xErrorColumn<<", "<<yErrorColumn<<", ...)\n";
 
-    const double xmin=parentGraph->transformX(parent->getXAxis()->getMin());
-    const double xmax=parentGraph->transformX(parent->getXAxis()->getMax());
-    const double ymin=parentGraph->transformY(parent->getYAxis()->getMin());
-    const double ymax=parentGraph->transformY(parent->getYAxis()->getMax());
+    const double xmin=parentGraph->transformX(parentGraph->getXAxis()->getMin());
+    const double xmax=parentGraph->transformX(parentGraph->getXAxis()->getMax());
+    const double ymin=parentGraph->transformY(parentGraph->getYAxis()->getMin());
+    const double ymax=parentGraph->transformY(parentGraph->getYAxis()->getMax());
     const QMarginsF clipMargins(50,50,50,50);
     const QRectF cliprect=QRectF(qMin(xmin,xmax),qMin(ymin,ymax),fabs(xmax-xmin),fabs(ymax-ymin))+clipMargins;
 

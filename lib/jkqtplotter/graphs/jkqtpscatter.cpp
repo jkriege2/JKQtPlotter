@@ -78,10 +78,10 @@ void JKQTPXYScatterGraph::draw(JKQTPEnhancedPainter& painter) {
         //qDebug()<<"JKQTPXYScatterGraph::draw(): "<<2;
 
         const auto symType=getSymbolType();
-        const double xmin=transformX(parent->getXAxis()->getMin());
-        const double xmax=transformX(parent->getXAxis()->getMax());
-        const double ymin=transformY(parent->getYAxis()->getMin());
-        const double ymax=transformY(parent->getYAxis()->getMax());
+        const double xmin=transformX(getXAxis()->getMin());
+        const double xmax=transformX(getXAxis()->getMax());
+        const double ymin=transformY(getYAxis()->getMin());
+        const double ymax=transformY(getYAxis()->getMax());
         const double symbolSize=parent->pt2px(painter, getSymbolSize());
         const QMarginsF clipMargins=(symType==JKQTPNoSymbol)?QMarginsF(0,0,0,0):QMarginsF(symbolSize,symbolSize,symbolSize,symbolSize);
         const QRectF cliprect=QRectF(qMin(xmin,xmax),qMin(ymin,ymax),fabs(xmax-xmin),fabs(ymax-ymin))+clipMargins;
@@ -102,7 +102,7 @@ void JKQTPXYScatterGraph::draw(JKQTPEnhancedPainter& painter) {
                     //if (isHighlighted() && getSymbolType()!=JKQTPNoSymbol) {
                         //JKQTPPlotSymbol(painter, x, y, JKQTPFilledCircle, parent->pt2px(painter, symbolSize*1.5), parent->pt2px(painter, symbolWidth*parent->getLineWidthMultiplier()), penSelection.color(), penSelection.color());
                     //}
-                    if ((!parent->getXAxis()->isLogAxis() || xv>0.0) && (!parent->getYAxis()->isLogAxis() || yv>0.0) ) {
+                    if ((!getXAxis()->isLogAxis() || xv>0.0) && (!getYAxis()->isLogAxis() || yv>0.0) ) {
                         if (symType!=JKQTPNoSymbol && cliprect.contains(x,y)) plotStyledSymbol(parent, painter, x, y);
                     }
                 }
@@ -364,7 +364,7 @@ void JKQTPXYParametrizedScatterGraph::draw(JKQTPEnhancedPainter &painter)
                         linewidths<<lineW;
                     }
 
-                    if ((!parent->getXAxis()->isLogAxis() || xv>0.0) && (!parent->getYAxis()->isLogAxis() || yv>0.0) ) {
+                    if ((!getXAxis()->isLogAxis() || xv>0.0) && (!getYAxis()->isLogAxis() || yv>0.0) ) {
                         if (isHighlighted() && getSymbolType()!=JKQTPNoSymbol && symbolColumn<0) {
                             JKQTPPlotSymbol(painter, x, y, JKQTPFilledCircle,symbSize*1.25, parent->pt2px(painter, getSymbolLineWidth()*parent->getLineWidthMultiplier()), penSelection.color(), penSelection.color(),getSymbolFont());
                         } else {

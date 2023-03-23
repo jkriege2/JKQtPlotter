@@ -48,16 +48,10 @@
 #ifdef QFWIDLIB_LIBRARY
 #  include "qftools.h"
 #endif
-#include "jkqtplotter/graphs/jkqtpboxplot.h"
-#include "jkqtplotter/graphs/jkqtpbarchart.h"
-#include "jkqtplotter/graphs/jkqtpfilledcurve.h"
-#include "jkqtplotter/graphs/jkqtpspecialline.h"
-#include "jkqtplotter/graphs/jkqtpimpulses.h"
-#include "jkqtplotter/graphs/jkqtpscatter.h"
-#include "jkqtplotter/graphs/jkqtpgeometric.h"
 #include "jkqtplotter/graphs/jkqtpimage.h"
 #include "jkqtplotter/graphs/jkqtpimagergb.h"
 #include "jkqtmathtext/jkqtmathtext.h"
+#include <algorithm>
 
 static QString globalUserSettigsFilename="";
 static QString globalUserSettigsPrefix="";
@@ -302,6 +296,15 @@ JKQTBasePlotter::~JKQTBasePlotter(){
     if (datastoreInternal && datastore!=nullptr) delete datastore;
     delete xAxis;
     delete yAxis;
+    for (const auto& ax: qAsConst(secondaryYAxis)) {
+        delete ax;
+    }
+    secondaryYAxis.clear();
+    for (const auto& ax: qAsConst(secondaryXAxis)) {
+        delete ax;
+    }
+    secondaryXAxis.clear();
+
 }
 
 void JKQTBasePlotter::setGrid(bool val) {
@@ -345,8 +348,8 @@ void JKQTBasePlotter::setMinorGridStyle(Qt::PenStyle __value)
 }
 
 void JKQTBasePlotter::setShowZeroAxes(bool showX, bool showY) {
-    getXAxis()->setShowZeroAxis(showX);
-    getYAxis()->setShowZeroAxis(showY);
+    xAxis->setShowZeroAxis(showX);
+    yAxis->setShowZeroAxis(showY);
 }
 
 void JKQTBasePlotter::setShowZeroAxes(bool showXY) {
@@ -410,10 +413,10 @@ void JKQTBasePlotter::initSettings() {
     gridPrintingCurrentY=0;
 
 
-    internalPlotBorderLeft_notIncludingOutsidePlotSections=internalPlotBorderLeft=plotterStyle.plotBorderLeft;
-    internalPlotBorderRight_notIncludingOutsidePlotSections=internalPlotBorderRight=plotterStyle.plotBorderRight;
-    internalPlotBorderTop_notIncludingOutsidePlotSections=internalPlotBorderTop=plotterStyle.plotBorderTop;
-    internalPlotBorderBottom_notIncludingOutsidePlotSections=internalPlotBorderBottom=plotterStyle.plotBorderBottom;
+    internalPlotBorderLeft_notIncludingAxisAndOutsidePlotSections=internalPlotBorderLeft_notIncludingOutsidePlotSections=internalPlotBorderLeft=plotterStyle.plotBorderLeft;
+    internalPlotBorderRight_notIncludingAxisAndOutsidePlotSections=internalPlotBorderRight_notIncludingOutsidePlotSections=internalPlotBorderRight=plotterStyle.plotBorderRight;
+    internalPlotBorderTop_notIncludingAxisAndOutsidePlotSections=internalPlotBorderTop_notIncludingOutsidePlotSections=internalPlotBorderTop=plotterStyle.plotBorderTop;
+    internalPlotBorderBottom_notIncludingAxisAndOutsidePlotSections=internalPlotBorderBottom_notIncludingOutsidePlotSections=internalPlotBorderBottom=plotterStyle.plotBorderBottom;
 
     //plotWidth=700;
     //plotHeight=150;
@@ -434,14 +437,18 @@ void JKQTBasePlotter::initSettings() {
 
 void JKQTBasePlotter::zoomIn(double factor) {
     //std::cout<<(double)event->delta()/120.0<<":   "<<factor<<std::endl;
-    double xmin=p2x(static_cast<long>(round(static_cast<double>(internalPlotWidth)/2.0-static_cast<double>(internalPlotWidth)/(2.0*factor))));
-    double xmax=p2x(static_cast<long>(round(static_cast<double>(internalPlotWidth)/2.0+static_cast<double>(internalPlotWidth)/(2.0*factor))));
-    double ymin=p2y(static_cast<long>(round(static_cast<double>(internalPlotHeight)/2.0+static_cast<double>(internalPlotHeight)/(2.0*factor))));
-    double ymax=p2y(static_cast<long>(round(static_cast<double>(internalPlotHeight)/2.0-static_cast<double>(internalPlotHeight)/(2.0*factor))));
 
+    for (auto ax: getXAxes(true)) {
+        const double xmin=ax->p2x(static_cast<long>(round(static_cast<double>(internalPlotWidth)/2.0-static_cast<double>(internalPlotWidth)/(2.0*factor))));
+        const double xmax=ax->p2x(static_cast<long>(round(static_cast<double>(internalPlotWidth)/2.0+static_cast<double>(internalPlotWidth)/(2.0*factor))));
+        ax->setRange(xmin, xmax);
+    }
+    for (auto ax: getYAxes(true)) {
+        const double ymin=ax->p2x(static_cast<long>(round(static_cast<double>(internalPlotHeight)/2.0+static_cast<double>(internalPlotHeight)/(2.0*factor))));
+        const double ymax=ax->p2x(static_cast<long>(round(static_cast<double>(internalPlotHeight)/2.0-static_cast<double>(internalPlotHeight)/(2.0*factor))));
+        ax->setRange(ymin, ymax);
+    }
 
-    xAxis->setRange(xmin, xmax);
-    yAxis->setRange(ymin, ymax);
     if (emitPlotSignals) emit plotUpdated();
     if (emitSignals) emit zoomChangedLocally(xAxis->getMin(), xAxis->getMax(), yAxis->getMin(), yAxis->getMax(), this);
 }
@@ -721,22 +728,36 @@ void JKQTBasePlotter::correctXYRangeForAspectRatio(double& xminn, double& xmaxx,
 }
 
 
-void JKQTBasePlotter::setXY(double xminn, double xmaxx, double yminn, double ymaxx) {
+void JKQTBasePlotter::setXY(double xminn, double xmaxx, double yminn, double ymaxx, bool affectsSecondaryAxes) {
 
     correctXYRangeForAspectRatio(xminn, xmaxx, yminn, ymaxx);
+
+    const double xminpix=xAxis->x2p(xminn);
+    const double xmaxpix=xAxis->x2p(xmaxx);
+    const double yminpix=yAxis->x2p(yminn);
+    const double ymaxpix=yAxis->x2p(ymaxx);
 
     xAxis->setRange(xminn, xmaxx);
     yAxis->setRange(yminn, ymaxx);
 
+    if (affectsSecondaryAxes) {
+        for (auto ax: getXAxes(false)) {
+            ax->setRange(ax->p2x(xminpix), ax->p2x(xmaxpix));
+        }
+        for (auto ax: getYAxes(false)) {
+            ax->setRange(ax->p2x(yminpix), ax->p2x(ymaxpix));
+        }
+    }
+
     if (emitSignals) emit zoomChangedLocally(xAxis->getMin(), xAxis->getMax(), yAxis->getMin(), yAxis->getMax(), this);
 }
 
-void JKQTBasePlotter::setX(double xminn, double xmaxx){
-    setXY(xminn, xmaxx, yAxis->getMin(), yAxis->getMax());
+void JKQTBasePlotter::setX(double xminn, double xmaxx, bool affectsSecondaryAxes){
+    setXY(xminn, xmaxx, yAxis->getMin(), yAxis->getMax(), affectsSecondaryAxes);
 }
 
-void JKQTBasePlotter::setY(double yminn, double ymaxx) {
-    setXY(xAxis->getMin(), xAxis->getMax(), yminn, ymaxx);
+void JKQTBasePlotter::setY(double yminn, double ymaxx, bool affectsSecondaryAxes) {
+    setXY(xAxis->getMin(), xAxis->getMax(), yminn, ymaxx, affectsSecondaryAxes);
 }
 
 void JKQTBasePlotter::setAbsoluteX(double xminn, double xmaxx) {
@@ -820,7 +841,7 @@ void JKQTBasePlotter::calcPlotScaling(JKQTPEnhancedPainter& painter){
 
     /*if (displayMousePosition) {
         QFontMetrics fm=fontMetrics();
-        QString test="�Aquator";
+        QString test="Aquator";
         int labelHeight=fm.size(Qt::TextSingleLine, test).height()*1.5;
         //if (mousePosLabel!=nullptr) labelHeight=mousePosLabel->height();
         internalPlotBorderTop=internalPlotBorderTop+(labelHeight-plotBorderTop)*1.1;
@@ -837,14 +858,26 @@ void JKQTBasePlotter::calcPlotScaling(JKQTPEnhancedPainter& painter){
     s=yAxis->getSize2(painter);
     internalPlotBorderRight+=s.width();
 
+    internalPlotBorderTop_notIncludingAxisAndOutsidePlotSections=internalPlotBorderTop;
+    internalPlotBorderLeft_notIncludingAxisAndOutsidePlotSections=internalPlotBorderLeft;
+    internalPlotBorderBottom_notIncludingAxisAndOutsidePlotSections=internalPlotBorderBottom;
+    internalPlotBorderRight_notIncludingAxisAndOutsidePlotSections=internalPlotBorderRight;
+
+
+    // read size required by secondary axes
+    for (const auto& ax: qAsConst(secondaryYAxis)) {
+        internalPlotBorderLeft+=ax->getSize1(painter).width()+plotterStyle.secondaryAxisSeparation;
+        internalPlotBorderRight+=ax->getSize2(painter).width()+plotterStyle.secondaryAxisSeparation;
+    }
+    for (const auto& ax: qAsConst(secondaryXAxis)) {
+        internalPlotBorderBottom+=ax->getSize1(painter).height()+plotterStyle.secondaryAxisSeparation;
+        internalPlotBorderTop+=ax->getSize2(painter).height()+plotterStyle.secondaryAxisSeparation;
+    }
+
     internalPlotBorderTop_notIncludingOutsidePlotSections=internalPlotBorderTop;
     internalPlotBorderLeft_notIncludingOutsidePlotSections=internalPlotBorderLeft;
     internalPlotBorderBottom_notIncludingOutsidePlotSections=internalPlotBorderBottom;
     internalPlotBorderRight_notIncludingOutsidePlotSections=internalPlotBorderRight;
-
-
-
-
 
     // read additional space required by graphs
     for (int i=0; i<graphs.size(); i++) {
@@ -925,8 +958,9 @@ void JKQTBasePlotter::calcPlotScaling(JKQTPEnhancedPainter& painter){
     }
 
 
-    xAxis->calcPlotScaling(true);
-    yAxis->calcPlotScaling(true);
+    for (auto ax: getAxes(true)) {
+        ax->calcPlotScaling(true);
+    }
 
     ////////////////////////////////////////////////////////////////////
     // ENSURE ASPECT RATIO OF PLOT 1x1 PIXELS (if activated)
@@ -948,8 +982,9 @@ void JKQTBasePlotter::calcPlotScaling(JKQTPEnhancedPainter& painter){
         }
         xAxis->setRange(xmid-newPlotWidth/2.0, xmid+newPlotWidth/2.0);
         yAxis->setRange(ymid-newPlotHeight/2.0, ymid+newPlotHeight/2.0);
-        xAxis->calcPlotScaling(true);
-        yAxis->calcPlotScaling(true);
+        for (auto ax: getAxes(true)) {
+            ax->calcPlotScaling(true);
+        }
     }
 
 
@@ -963,8 +998,10 @@ void JKQTBasePlotter::drawSystemGrid(JKQTPEnhancedPainter& painter) {
     JKQTPAutoOutputTimer jkaaot("JKQTBasePlotter::drawSystemGrid");
 #endif
     //qDebug()<<"start JKQTBasePlotter::drawSystemGrid";
-    xAxis->drawGrids(painter);
-    yAxis->drawGrids(painter);
+    for (auto ax: getAxes(true)) {
+        ax->drawGrids(painter);
+    }
+
     //qDebug()<<"  end JKQTBasePlotter::drawSystemGrid";
 }
 
@@ -972,9 +1009,24 @@ void JKQTBasePlotter::drawSystemXAxis(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot("JKQTBasePlotter::drawSystemXAxis");
 #endif
-    //qDebug()<<"start JKQTBasePlotter::drawSystemXAxis";
+    //qDebug()<<"start JKQTBasePlotter::drawSystemXAxis";    
     xAxis->drawAxes(painter);
     //qDebug()<<"  end JKQTBasePlotter::drawSystemXAxis";
+
+    if (secondaryXAxis.size()>0) {
+        double ibMove1=xAxis->getSize1(painter).height();
+        if (ibMove1>0) ibMove1+=plotterStyle.secondaryAxisSeparation;
+        double ibMove2=xAxis->getSize2(painter).height();
+        if (ibMove2>0) ibMove1+=plotterStyle.secondaryAxisSeparation;
+
+        for (auto& ax: secondaryXAxis) {
+            ax->drawAxes(painter, ibMove1, ibMove2);
+            const double add1=ax->getSize1(painter).height();
+            const double add2=ax->getSize2(painter).height();
+            if (add1>0) ibMove1+=add1+plotterStyle.secondaryAxisSeparation;
+            if (add2>0) ibMove2+=add2+plotterStyle.secondaryAxisSeparation;
+        }
+    }
 }
 
 void JKQTBasePlotter::drawSystemYAxis(JKQTPEnhancedPainter& painter) {
@@ -984,6 +1036,21 @@ void JKQTBasePlotter::drawSystemYAxis(JKQTPEnhancedPainter& painter) {
     //qDebug()<<"start JKQTBasePlotter::drawSystemYAxis";
     yAxis->drawAxes(painter);
     //qDebug()<<"  end JKQTBasePlotter::drawSystemYAxis";
+
+    if (secondaryYAxis.size()>0) {
+        double ibMove1=yAxis->getSize1(painter).width();
+        if (ibMove1>0) ibMove1+=plotterStyle.secondaryAxisSeparation;
+        double ibMove2=yAxis->getSize2(painter).width();
+        if (ibMove2>0) ibMove1+=plotterStyle.secondaryAxisSeparation;
+
+        for (auto& ax: secondaryYAxis) {
+            ax->drawAxes(painter, ibMove1, ibMove2);
+            const double add1=ax->getSize1(painter).width();
+            const double add2=ax->getSize2(painter).width();
+            if (add1>0) ibMove1+=add1+plotterStyle.secondaryAxisSeparation;
+            if (add2>0) ibMove2+=add2+plotterStyle.secondaryAxisSeparation;
+        }
+    }
 }
 
 
@@ -1332,6 +1399,12 @@ void JKQTBasePlotter::drawPlot(JKQTPEnhancedPainter& painter) {
         p.setStyle(Qt::DotLine);
         painter.setPen(p);
         painter.drawRect(QRectF(internalPlotBorderLeft_notIncludingOutsidePlotSections, internalPlotBorderTop_notIncludingOutsidePlotSections, widgetWidth-internalPlotBorderLeft_notIncludingOutsidePlotSections-internalPlotBorderRight_notIncludingOutsidePlotSections, widgetHeight-internalPlotBorderTop_notIncludingOutsidePlotSections-internalPlotBorderBottom_notIncludingOutsidePlotSections));
+        p.setColor(QColor("goldenrod"));
+        col=p.color(); col.setAlphaF(0.8f); p.setColor(col);
+        p.setWidthF(plotterStyle.debugRegionLineWidth);
+        p.setStyle(Qt::DotLine);
+        painter.setPen(p);
+        painter.drawRect(QRectF(internalPlotBorderLeft_notIncludingAxisAndOutsidePlotSections, internalPlotBorderTop_notIncludingAxisAndOutsidePlotSections, widgetWidth-internalPlotBorderLeft_notIncludingAxisAndOutsidePlotSections-internalPlotBorderRight_notIncludingAxisAndOutsidePlotSections, widgetHeight-internalPlotBorderTop_notIncludingAxisAndOutsidePlotSections-internalPlotBorderBottom_notIncludingAxisAndOutsidePlotSections));
         p.setColor(QColor("yellow"));
         col=p.color(); col.setAlphaF(0.8f); p.setColor(col);
         p.setWidthF(plotterStyle.debugRegionLineWidth);
@@ -2439,6 +2512,11 @@ void JKQTBasePlotter::drawNonGrid(JKQTPEnhancedPainter& painter, const QPoint& p
     emitPlotSignals=oldEmitPlotSignals;
 }
 
+void JKQTBasePlotter::updateSecondaryAxes()
+{
+
+}
+
 void JKQTBasePlotter::setEmittingPlotSignalsEnabled(bool __value)
 {
     this->emitPlotSignals = __value;
@@ -3227,20 +3305,95 @@ const JKQTMathText *JKQTBasePlotter::getMathText() const {
     return &mathText;
 }
 
-JKQTPHorizontalAxis *JKQTBasePlotter::getXAxis() {
-    return xAxis;
+JKQTPHorizontalAxisBase *JKQTBasePlotter::getXAxis(JKQTPCoordinateAxisRef axis) {
+    if (axis==JKQTPPrimaryAxis) return xAxis;
+    else return secondaryXAxis[axis];
 }
 
-JKQTPVerticalAxis *JKQTBasePlotter::getYAxis() {
-    return yAxis;
+JKQTPVerticalAxisBase *JKQTBasePlotter::getYAxis(JKQTPCoordinateAxisRef axis) {
+    if (axis==JKQTPPrimaryAxis) return yAxis;
+    else return secondaryYAxis[axis];
 }
 
-const JKQTPHorizontalAxis *JKQTBasePlotter::getXAxis() const {
-    return xAxis;
+const JKQTPHorizontalAxisBase *JKQTBasePlotter::getXAxis(JKQTPCoordinateAxisRef axis) const {
+    if (axis==JKQTPPrimaryAxis) return xAxis;
+    else return secondaryXAxis[axis];
 }
 
-const JKQTPVerticalAxis *JKQTBasePlotter::getYAxis() const {
-    return yAxis;
+const JKQTPVerticalAxisBase *JKQTBasePlotter::getYAxis(JKQTPCoordinateAxisRef axis) const {
+    if (axis==JKQTPPrimaryAxis) return yAxis;
+    else return secondaryYAxis[axis];
+}
+
+bool JKQTBasePlotter::hasXAxis(JKQTPCoordinateAxisRef axis) const
+{
+    return secondaryXAxis.contains(axis);
+}
+
+bool JKQTBasePlotter::hasYAxis(JKQTPCoordinateAxisRef axis) const
+{
+    return secondaryYAxis.contains(axis);
+}
+
+QSet<JKQTPCoordinateAxisRef> JKQTBasePlotter::getAvailableXAxisRefs(bool includePrimary) const
+{
+    QSet<JKQTPCoordinateAxisRef> res(secondaryXAxis.keyBegin(),secondaryXAxis.keyEnd());
+    if (includePrimary) res.insert(JKQTPPrimaryAxis);
+        return res;
+}
+
+QSet<JKQTPCoordinateAxisRef> JKQTBasePlotter::getAvailableYAxisRefs(bool includePrimary) const
+{
+    QSet<JKQTPCoordinateAxisRef> res(secondaryYAxis.keyBegin(),secondaryYAxis.keyEnd());
+    if (includePrimary) res.insert(JKQTPPrimaryAxis);
+    return res;
+}
+
+QMap<JKQTPCoordinateAxisRef, JKQTPHorizontalAxisBase *> JKQTBasePlotter::getXAxes(bool includePrimary)
+{
+    QMap<JKQTPCoordinateAxisRef, JKQTPHorizontalAxisBase *> res=secondaryXAxis;
+    if (includePrimary) res[JKQTPPrimaryAxis]=xAxis;
+    return res;
+}
+
+QMap<JKQTPCoordinateAxisRef, JKQTPVerticalAxisBase *> JKQTBasePlotter::getYAxes(bool includePrimary)
+{
+    QMap<JKQTPCoordinateAxisRef, JKQTPVerticalAxisBase *> res=secondaryYAxis;
+    if (includePrimary) res[JKQTPPrimaryAxis]=yAxis;
+    return res;
+}
+
+QList<JKQTPCoordinateAxis *> JKQTBasePlotter::getAxes(bool includePrimaries)
+{
+  QList<JKQTPCoordinateAxis *> res;
+  if (includePrimaries) res<<xAxis<<yAxis;
+  for (auto& ax: secondaryXAxis) res<<ax;
+  for (auto& ax: secondaryYAxis) res<<ax;
+  return res;
+}
+
+JKQTPCoordinateAxisRef JKQTBasePlotter::addSecondaryXAxis(JKQTPHorizontalAxisBase *axis)
+{
+    const auto keys=secondaryXAxis.keys();
+    JKQTPCoordinateAxisRef ref=JKQTPSecondaryAxis;
+    if (keys.size()>0) {
+        ref=static_cast<JKQTPCoordinateAxisRef>(static_cast<int>(*std::max_element(keys.begin(), keys.end()))+1);
+    }
+    secondaryXAxis[ref]=axis;
+    axis->setParent(this);
+    return ref;
+}
+
+JKQTPCoordinateAxisRef JKQTBasePlotter::addSecondaryYAxis(JKQTPVerticalAxisBase *axis)
+{
+    const auto keys=secondaryYAxis.keys();
+    JKQTPCoordinateAxisRef ref=JKQTPSecondaryAxis;
+    if (keys.size()>0) {
+        ref=static_cast<JKQTPCoordinateAxisRef>(static_cast<int>(*std::max_element(keys.begin(), keys.end()))+1);
+    }
+    secondaryYAxis[ref]=axis;
+    axis->setParent(this);
+    return ref;
 }
 
 QAction *JKQTBasePlotter::getActionSavePlot() const {
@@ -4565,13 +4718,14 @@ void JKQTBasePlotter::saveUserSettings() const
 
 
 
-void JKQTBasePlotter::getGraphsXMinMax(double& minx, double& maxx, double& smallestGreaterZero) {
+bool JKQTBasePlotter::getGraphsXMinMax(double& minx, double& maxx, double& smallestGreaterZero, const PlotElementPreciate& predicate) {
     bool start=true;
     minx=0;
     maxx=0;
     smallestGreaterZero=0;
+    size_t count=0;
     for (int i=0; i<graphs.size(); i++) {
-        if (graphs[i]->isVisible()) {
+        if (graphs[i]->isVisible() && predicate(graphs[i])) {
 
             double gminx=0;
             double gmaxx=0;
@@ -4589,6 +4743,7 @@ void JKQTBasePlotter::getGraphsXMinMax(double& minx, double& maxx, double& small
                 //std::cout<<"         "<<i<<": gminx="<<gminx<<"  gmaxx="<<gmaxx<<"   minx="<<minx<<" maxx="<<maxx<<std::endl;
 
                 start=false;
+                count++;
             } else {
                 //std::cout<<"      -> "<<i<<": "<<graphs[i]->getTitle().toStdString()<<": FALSE"<<std::endl;
             }
@@ -4596,15 +4751,17 @@ void JKQTBasePlotter::getGraphsXMinMax(double& minx, double& maxx, double& small
             //std::cout<<"      -> "<<i<<": "<<graphs[i]->getTitle().toStdString()<<": INVISIBLE"<<std::endl;
         }
     }
+    return count>0;
 }
 
-void JKQTBasePlotter::getGraphsYMinMax(double& miny, double& maxy, double& smallestGreaterZero) {
+bool JKQTBasePlotter::getGraphsYMinMax(double& miny, double& maxy, double& smallestGreaterZero, const PlotElementPreciate &predicate) {
     bool start=true;
     miny=0;
     maxy=0;
     smallestGreaterZero=0;
+    size_t count=0;
     for (int i=0; i<graphs.size(); i++) {
-        if (graphs[i]->isVisible()) {
+        if (graphs[i]->isVisible() && predicate(graphs[i])) {
             double gminy=0;
             double gmaxy=0;
             double gsmallestGreaterZero=0;
@@ -4618,105 +4775,82 @@ void JKQTBasePlotter::getGraphsYMinMax(double& miny, double& maxy, double& small
                 xvsgz=gminy; if ((xvsgz>10.0*DBL_MIN)&&((smallestGreaterZero<10.0*DBL_MIN) || (xvsgz<smallestGreaterZero))) smallestGreaterZero=xvsgz;
 
                 start=false;
+                count++;
             }
         }
     }
+    return count>0;
 }
 
 
 void JKQTBasePlotter::zoomToFit(bool zoomX, bool zoomY, bool includeX0, bool includeY0, double scaleX, double scaleY) {
    // std::cout<<"JKQTBasePlotter::zoomToFit():\n";
     if (graphs.size()<=0) return;
-    if (zoomX) {
-        double xxmin=0;
-        double xxmax=0;
-        double xsmallestGreaterZero=0;
-        getGraphsXMinMax(xxmin, xxmax, xsmallestGreaterZero);
-        //std::cout<<"   xxmin="<<xxmin<<"   xxmax="<<xxmax<<std::endl;
+    auto calcLocScaling=[](JKQTPCoordinateAxis* axis, double &xxmin, double&xxmax, double&xsmallestGreaterZero, bool include0, double scale) -> bool {
         if (JKQTPIsOKFloat(xxmin) && JKQTPIsOKFloat(xxmax)) {
             bool doScale=true;
             if (fabs(xxmin-xxmax)<1e-305) {
-                xxmin=xAxis->getMin();
-                xxmax=xAxis->getMax();
+                xxmin=axis->getMin();
+                xxmax=axis->getMax();
                 doScale=false;
             }
-            if (xAxis->isLogAxis()) {
+            if (axis->isLogAxis()) {
                 if ((xxmin<=1e-305)&&(xxmax<=1e-305)) {xxmin=0.1; xxmax=1.0; }
                 else if ((xxmin<=1e-305)&&(xxmax>0)) {
                     if (xsmallestGreaterZero>10.0*DBL_MIN) xxmin=xsmallestGreaterZero;
-                    else xxmin=xxmax/xAxis->getLogAxisBase();
+                    else xxmin=xxmax/axis->getLogAxisBase();
                 }
                 if (doScale) {
-                    double d=scaleX*(log(xxmax)-log(xxmin));  // new width
+                    double d=scale*(log(xxmax)-log(xxmin));  // new width
                     double c=(log(xxmax)+log(xxmin))/2.0;     // center of interval
                     xxmin=exp(c-d/2.0);
                     xxmax=exp(c+d/2.0);
                 }
             } else if (doScale) {
-                double d=scaleX*(xxmax-xxmin);  // new width
+                double d=scale*(xxmax-xxmin);  // new width
                 double c=(xxmax+xxmin)/2.0;     // center of interval
                 xxmin=c-d/2.0;
                 xxmax=c+d/2.0;
             }
-            if (includeX0 && !xAxis->isLogAxis()) {
+            if (include0 && !axis->isLogAxis()) {
                 if (xxmin>0) xxmin=0;
                 else if (xxmax<0) xxmax=0;
             }
-            //std::cout<<"   => xxmin="<<xxmin<<"   xxmax="<<xxmax<<std::endl;
+
             if (JKQTPIsOKFloat(xxmin) && JKQTPIsOKFloat(xxmax)) {
-                setX(xxmin, xxmax);
+                axis->setRange(xxmin, xxmax);
             } else if (!JKQTPIsOKFloat(xxmin) && JKQTPIsOKFloat(xxmax)) {
-                setX(getXMin(), xxmax);
+                axis->setRange(axis->getMin(), xxmax);
             } else if (JKQTPIsOKFloat(xxmin) && !JKQTPIsOKFloat(xxmax)) {
-                setX(xxmin, getXMax());
+                axis->setRange(xxmin, axis->getMax());
+            }
+            return doScale;
+        }
+        return false;
+    };
+
+    if (zoomX) {
+        const auto axes=getXAxes();
+        for (auto it=axes.begin(); it!=axes.end(); ++it) {
+            double xxmin=0;
+            double xxmax=0;
+            double xsmallestGreaterZero=0;
+            if (getGraphsXMinMax(xxmin, xxmax, xsmallestGreaterZero, filterPlotElementByXAxis(it.key()))) {
+                calcLocScaling(it.value(), xxmin, xxmax, xsmallestGreaterZero, includeX0, scaleX);
             }
         }
     }
 
     if (zoomY) {
-        double yymin=0;
-        double yymax=0;
-        double ysmallestGreaterZero=0;
-        getGraphsYMinMax(yymin, yymax, ysmallestGreaterZero);
-        //std::cout<<"   yymin="<<yymin<<"   yymax="<<yymax<<std::endl;
-        bool doScale=true;
-        if (fabs(yymin-yymax)<1e-305) {
-            yymin=yAxis->getMin();
-            yymax=yAxis->getMax();
-            doScale=false;
-        }
-        if (yAxis->getLogAxis()) {
-            if ((yymin<=1e-305)&&(yymax<=1e-305)) {yymin=0.1; yymax=1.0; }
-            else if ((yymin<=1e-305)&&(yymax>0)) {
-                if (ysmallestGreaterZero>10.0*DBL_MIN) yymin=ysmallestGreaterZero;
-                else yymin=yymax/yAxis->getLogAxisBase();
+        const auto axes=getYAxes();
+        for (auto it=axes.begin(); it!=axes.end(); ++it) {
+            double xxmin=0;
+            double xxmax=0;
+            double xsmallestGreaterZero=0;
+            if (getGraphsYMinMax(xxmin, xxmax, xsmallestGreaterZero, filterPlotElementByYAxis(it.key()))) {
+                calcLocScaling(it.value(), xxmin, xxmax, xsmallestGreaterZero, includeY0, scaleY);
             }
-            if (doScale) {
-                double d=scaleY*(log(yymax)-log(yymin));  // new width
-                double c=(log(yymax)+log(yymin))/2.0;     // center of interval
-                yymin=exp(c-d/2.0);
-                yymax=exp(c+d/2.0);
-            }
-        } else if (doScale) {
-            double d=scaleY*(yymax-yymin);  // new width
-            double c=(yymax+yymin)/2.0;     // center of interval
-            yymin=c-d/2.0;
-            yymax=c+d/2.0;
         }
-        if (includeY0 && !yAxis->getLogAxis()) {
-            if (yymin>0) yymin=0;
-            else if (yymax<0) yymax=0;
-        }
-        //std::cout<<"   => yymin="<<yymin<<"   yymax="<<yymax<<std::endl;
-
-        if (JKQTPIsOKFloat(yymin) && JKQTPIsOKFloat(yymax)) {
-            setY(yymin, yymax);
-        } else if (!JKQTPIsOKFloat(yymin) && JKQTPIsOKFloat(yymax)) {
-            setY(getYMin(), yymax);
-        } else if (JKQTPIsOKFloat(yymin) && !JKQTPIsOKFloat(yymax)) {
-            setY(yymin, getYMax());
-        }
-
     }
     //std::cout<<"end of zoomToFit\n";
     //setXY(xxmin, xxmax, yymin, yymax);
@@ -5075,8 +5209,9 @@ void JKQTBasePlotter::showPlotData() {
 void JKQTBasePlotter::setEmittingSignalsEnabled(bool enabled)
 {
     emitSignals=enabled;
-    xAxis->setDoUpdateScaling(enabled);
-    yAxis->setDoUpdateScaling(enabled);
+    for (auto ax: getAxes(true)) {
+        ax->setDoUpdateScaling(enabled);
+    }
 }
 
 
@@ -5295,3 +5430,7 @@ void JKQTBasePlotter::JKQTPPen::setSymbolType(JKQTPGraphSymbols symbol)
 {
     m_symbol=symbol;
 }
+
+bool JKQTBasePlotter::filterPlotElementByXAxis::operator()(const JKQTPPlotElement *el) const { return el->getXAxisRef()==ref; }
+
+bool JKQTBasePlotter::filterPlotElementByYAxis::operator()(const JKQTPPlotElement *el) const { return el->getYAxisRef()==ref; }

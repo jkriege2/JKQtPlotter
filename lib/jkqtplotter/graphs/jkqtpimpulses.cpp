@@ -206,9 +206,9 @@ void JKQTPImpulsesHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
         if (getIndexRange(imin, imax)) {
 
             double x0=transformX(getBaseline());
-            if (parent->getXAxis()->isLogAxis()) {
-                if (getBaseline()>0 && getBaseline()>parent->getXAxis()->getMin()) x0=transformX(getBaseline());
-                else x0=transformX(parent->getXAxis()->getMin());
+            if (getXAxis()->isLogAxis()) {
+                if (getBaseline()>0 && getBaseline()>getXAxis()->getMin()) x0=transformX(getBaseline());
+                else x0=transformX(getXAxis()->getMin());
             }
 
             QVector<QLineF> lines;
@@ -364,9 +364,9 @@ void JKQTPImpulsesVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
 
 
             double y0=transformY(getBaseline());
-            if (parent->getYAxis()->isLogAxis()) {
-                if (getBaseline()>0 && getBaseline()>parent->getYAxis()->getMin()) y0=transformY(getBaseline());
-                else y0=transformY(parent->getYAxis()->getMin());
+            if (getYAxis()->isLogAxis()) {
+                if (getBaseline()>0 && getBaseline()>getYAxis()->getMin()) y0=transformY(getBaseline());
+                else y0=transformY(getYAxis()->getMin());
             }
             QVector<QLineF> lines;
             QVector<QPointF> points;

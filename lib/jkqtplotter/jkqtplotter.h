@@ -697,13 +697,13 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
         int getMouseLastClickY() const;
 
         /** \brief returns the coordinate axis object for the x-axis \see JKQTBasePlotter::getXAxis() */
-        inline JKQTPHorizontalAxis* getXAxis() { return plotter->getXAxis(); }
+        inline JKQTPHorizontalAxisBase* getXAxis(JKQTPCoordinateAxisRef axis=JKQTPPrimaryAxis) { return plotter->getXAxis(axis); }
         /** \brief returns the coordinate axis object for the y-axis \see JKQTBasePlotter::getYAxis()  */
-        inline JKQTPVerticalAxis* getYAxis() { return plotter->getYAxis(); }
+        inline JKQTPVerticalAxisBase* getYAxis(JKQTPCoordinateAxisRef axis=JKQTPPrimaryAxis) { return plotter->getYAxis(axis); }
         /** \brief returns the coordinate axis object for the x-axis as a const pointer \see JKQTBasePlotter::getXAxis()  */
-        inline const JKQTPHorizontalAxis* getXAxis() const { return plotter->getXAxis(); }
+        inline const JKQTPHorizontalAxisBase* getXAxis(JKQTPCoordinateAxisRef axis=JKQTPPrimaryAxis) const { return plotter->getXAxis(axis); }
         /** \brief returns the coordinate axis object for the y-axis as a const pointer \see JKQTBasePlotter::getYAxis()  */
-        inline const JKQTPVerticalAxis* getYAxis() const { return plotter->getYAxis(); }
+        inline const JKQTPVerticalAxisBase* getYAxis(JKQTPCoordinateAxisRef axis=JKQTPPrimaryAxis) const { return plotter->getYAxis(axis); }
 
        /** \brief returns the \a i -th graph (of type JKQTPPlotElement) in this plotter instance \see JKQTBasePlotter::getGraph() */
         inline JKQTPPlotElement* getGraph(size_t i) { return plotter->getGraph(i); }
@@ -1185,6 +1185,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
          *  \param xmaxx absolute maximum of x-axis
          *  \param yminn absolute minimum of y-axis
          *  \param ymaxx absolute maximum of y-axis
+         *  \param affectsSecondaryAxes if \c true, the secondary axes are affectedtoo, by using a relative zooming scheme,
+         *                              i.e. if a major axis range shrinks by 50%, also the secondary ranges shrink by 50%
+         *                              [default: \c false]
+         *
          *
          * \note You cannot expand the ranges outside the absolute ranges set e.g. by setAbsoluteXY()!
          *       Also the range will be limited to possible values (e.g. to positive values if you use
@@ -1195,7 +1199,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
          *
          * \see setX(), setX(), zoomToFit(), setAbsoluteXY(), JKQTBasePlotter::setXY()
          */
-         inline void setXY(double xminn, double xmaxx, double yminn, double ymaxx) { plotter->setXY(xminn, xmaxx, yminn, ymaxx); }
+         inline void setXY(double xminn, double xmaxx, double yminn, double ymaxx, bool affectsSecondaryAxes=false) { plotter->setXY(xminn, xmaxx, yminn, ymaxx, affectsSecondaryAxes); }
     signals:
         /** \brief emitted whenever the mouse moves
          *

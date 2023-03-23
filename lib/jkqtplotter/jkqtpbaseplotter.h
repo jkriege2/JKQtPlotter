@@ -93,6 +93,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPPaintDeviceAdapter {
         virtual QPaintDevice* createPaintdeviceMM(const QString& filename, double widthMM, double heightMM) const;
 };
 
+
 /** \brief base class for 2D plotter classes (used by the plotter widget JKQTPlotter)
  * \ingroup jkqtpplotterclasses
  *
@@ -137,11 +138,48 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPPaintDeviceAdapter {
  *
  *
  * \section jkqtplotter_base_grids_baseplotter Axis Ticks and Grids
- *    - The plotting of coordinate axes and grids, as well as coordinate transforms is done by
- *      JKQTPCoordinateAxis descendents (see documentation there)
- *  .
+ *
+ * \subsection jkqtplotter_base_grids_baseplotter_majoraxes Major Coordinate Axes
+ *
+ *  JKQTBasePlotter - by default - has two major axes: A horizontal x-axis and a vertical y-axis.
+ *
+ *  The plotting of coordinate axes and grids, as well as coordinate transforms is done by
+ *  JKQTPCoordinateAxis descendents (see documentation there).
+ *
  *  If you want to set the axis properties, use getXAxis() or getYAxis() to get a pointer to the axis objects which then
  *  may be used to set the axis properties.
+ *
+ * \subsection jkqtplotter_base_grids_baseplotter_secondaryaxes Secondary Coordinate Axes
+ *
+ * In addition a plot may contain secondary axes, as shown below:
+ *
+ * \image html JKQTBasePlotter_addSecondaryYAxis.png
+ *
+ * You can add additional x-axes using addSecondaryXAxis() and y-axes using addSecondaryYAxis().
+ * These functions return a JKQTPCoordinateAxisRef, which can be used to reference these axes, when
+ * calling function like getXAxis() here the default-parameter call getXAxis(JKQTPPrimaryAxis) returns
+ * the primary axis (JKQTPPrimaryAxis may be omitted) and calling getXAxis(JKQTPSecondaryAxis) will return
+ * the first secondary axis and so on.
+ *
+ * In graphs (derived from JKQTPPlotElement) you can use JKQTPPlotElement::setXAxis() and JKQTPPlotElement::setYAxis()
+ * with a JKQTPCoordinateAxisRef as parameter to tell plots to use another axis.
+ *
+ * Using a JKQTPCoordinateAxisRef instead of a pointer to a JKQTPCoordinateAxis allows to exchange the axes in the plot,
+ * while not breaking the graphs.
+ *
+ * Here is a code example of how to use secondary axes:
+ *  \code
+ *    // construct a new x-axis-object
+ *    JKQTPHorizontalAxisBase* secXAxis=new JKQTPHorizontalAxis(plot.getPlotter(), JKQTPPrimaryAxis)
+ *    // add it to the plot
+ *    auto xAxisRef2=plot.getPlotter()->addSecondaryXAxis(secXAxis);
+ *    // ... now you can access it:
+ *    plot.getXAxis(xAxisRef2)->setShowZeroAxis(false);
+ *    // ... and use it for graphs:
+ *    graph2->setXAxis(xAxisRef2);
+ *  \endcode
+ *
+ *  \see addSecondaryXAxis(), addSecondaryYAxis(), getXAxis(), getYAxis()
  *
  *
  * \section jkqtbaseplotter_appearance_and_style Appearance & Styling of the Graph
@@ -656,6 +694,13 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
          */
         void drawNonGrid(JKQTPEnhancedPainter& painter, const QPoint& pos=QPoint(0,0));
 
+        /** \brief updates the secondary axes
+         *
+         *  The plot may contain (in addition to its primary axes) also secondary axes, that depend in their
+         *  scaling (min,max, ...) on the primmary axes of the plot. This function updates/recalculates the
+         *  scaling of these axes.
+         */
+        void updateSecondaryAxes();
         /** \brief emit plotUpdated() */
         void redrawPlot() { if (emitPlotSignals) emit plotUpdated(); }
 
@@ -826,17 +871,98 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         JKQTMathText* getMathText();
         /** \brief returns the internal JKQTMathText, used to render text with LaTeX markup */
         const JKQTMathText *getMathText() const;
-        /** \brief returns the x-axis objet of the plot */
-        JKQTPHorizontalAxis *getXAxis();
-        /** \brief returns the y-axis objet of the plot */
-        JKQTPVerticalAxis* getYAxis();
-        /** \brief returns the x-axis objet of the plot */
-        const JKQTPHorizontalAxis* getXAxis() const;
-        /** \brief returns the y-axis objet of the plot */
-        const JKQTPVerticalAxis *getYAxis() const;
+        /** \brief returns the x-axis objet of the plot
+         *
+         *  \see \ref jkqtplotter_base_grids_baseplotter
+         */
+        JKQTPHorizontalAxisBase *getXAxis(JKQTPCoordinateAxisRef axis=JKQTPPrimaryAxis);
+        /** \brief returns the y-axis objet of the plot
+         *
+         *  \see \ref jkqtplotter_base_grids_baseplotter
+         */
+        JKQTPVerticalAxisBase* getYAxis(JKQTPCoordinateAxisRef axis=JKQTPPrimaryAxis);
+        /** \brief returns the x-axis objet of the plot
+         *
+         *  \see \ref jkqtplotter_base_grids_baseplotter
+         */
+        const JKQTPHorizontalAxisBase* getXAxis(JKQTPCoordinateAxisRef axis=JKQTPPrimaryAxis) const;
+        /** \brief returns the y-axis objet of the plot
+         *
+         *  \see \ref jkqtplotter_base_grids_baseplotter
+         */
+        const JKQTPVerticalAxisBase *getYAxis(JKQTPCoordinateAxisRef axis=JKQTPPrimaryAxis) const;
+        /** \brief returns whether an x-axis \a axis is registered with the plotter
+         *
+         *  \note For \a axis \c ==JKQTPPrimaryAxis this function returns always \c true
+         */
+        bool hasXAxis(JKQTPCoordinateAxisRef axis=JKQTPPrimaryAxis) const;
+        /** \brief returns whether a y-axis \a axis is registered with the plotter
+         *
+         *  \note For \a axis \c ==JKQTPPrimaryAxis this function returns always \c true
+         */
+        bool hasYAxis(JKQTPCoordinateAxisRef axis=JKQTPPrimaryAxis) const;
+        /** \brief returns the set of available x-axes (including the primary, if \c true is given as parameter) */
+        QSet<JKQTPCoordinateAxisRef> getAvailableXAxisRefs(bool includePrimary=false) const;
+        /** \brief returns the set of available y-axes (including the primary, if \c true is given as parameter) */
+        QSet<JKQTPCoordinateAxisRef> getAvailableYAxisRefs(bool includePrimary=false) const;
+        /** \brief returns all available x-axes */
+        QMap<JKQTPCoordinateAxisRef, JKQTPHorizontalAxisBase*> getXAxes(bool includePrimary=true);
+        /** \brief returns all available y-axes */
+        QMap<JKQTPCoordinateAxisRef, JKQTPVerticalAxisBase*> getYAxes(bool includePrimary=true);
+        /** \brief returns all available x- or y-axes */
+        QList<JKQTPCoordinateAxis*> getAxes(bool includePrimaries=true);
 
+        /** \brief adds a secondary x-axis
+         *
+         *  \params axis the JKQTPHorizontalAxisBase object to add
+         *  \returns a reference to this axis
+         *
+         *  Usage is simple:
+         *  \code
+         *    // construct a new x-axis-object
+         *    JKQTPHorizontalAxisBase* secXAxis=new JKQTPHorizontalAxis(plot.getPlotter(), JKQTPPrimaryAxis)
+         *    // add it to the plot
+         *    auto xAxisRef2=plot.getPlotter()->addSecondaryXAxis(secXAxis);
+         *    // ... now you can access it:
+         *    plot.getXAxis(xAxisRef2)->setShowZeroAxis(false);
+         *    // ... and use it for graphs:
+         *    graph2->setXAxis(xAxisRef2);
+         *  \endcode
+         *
+         *
+         *  Here is an example output:
+         *
+         *  \image html JKQTBasePlotter_addSecondaryXAxis.png
+         *
+         *  \see \ref jkqtplotter_base_grids_baseplotter_secondaryaxes , \subpage JKQTPlotterSecondaryAxes
+         */
+        JKQTPCoordinateAxisRef addSecondaryXAxis(JKQTPHorizontalAxisBase* axis);
+        /** \brief adds a secondary y-axis
+         *
+         *  \params axis the JKQTPVerticalAxisBase object to add
+         *  \returns a reference to this axis
+         *
+         *  Usage is simple:
+         *  \code
+         *    // construct a new y-axis-object
+         *    JKQTPVerticalAxisBase* secYAxis=new JKQTPVerticalAxis(plot.getPlotter(), JKQTPPrimaryAxis)
+         *    // add it to the plot
+         *    auto yAxisRef2=plot.getPlotter()->addSecondaryYAxis(secYAxis);
+         *    // ... now you can access it:
+         *    plot.getYAxis(yAxisRef2)->setShowZeroAxis(false);
+         *    // ... and use it for graphs:
+         *    graph2->setYAxis(yAxisRef2);
+         *  \endcode
+         *
+         *  Here is an example output:
+         *
+         *  \image html JKQTBasePlotter_addSecondaryYAxis.png
+         *
+         *  \see \ref jkqtplotter_base_grids_baseplotter_secondaryaxes , \subpage JKQTPlotterSecondaryAxes
+         */
+        JKQTPCoordinateAxisRef addSecondaryYAxis(JKQTPVerticalAxisBase* axis);
 
-        /** \copydoc actSavePlot */ 
+        /** \copydoc actSavePlot */
         QAction* getActionSavePlot() const;
         /** \copydoc actSaveData */ 
         QAction* getActionSaveData() const;
@@ -953,22 +1079,62 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
             }
         }
 
+        /** \brief Functor which can be used as filter predicate for getGraphsXMinMax() or getGraphsYMinMax()
+         *
+         *  \see getGraphsXMinMax(), getGraphsYMinMax(), allPlotElements
+         */
+        typedef std::function<bool(const JKQTPPlotElement*)> PlotElementPreciate;
+
+        /** \brief Functor which does not apply any filter to JKQTPPlotElement, e.g. in getGraphsXMinMax() or getGraphsYMinMax()
+         *
+         *  \see getGraphsXMinMax(), getGraphsYMinMax(), PlotElementPreciate
+         */
+        struct JKQTPLOTTER_LIB_EXPORT allPlotElements {
+            inline bool operator()(const JKQTPPlotElement*) const { return true; };
+        };
+        /** \brief filter functor which accepts only those JKQTPPlotElement where JKQTPPlotElement::getXAxisRef()
+         *         returns the JKQTPCoordinateAxisRef supplied to the constructor, e.g. in getGraphsXMinMax() or getGraphsYMinMax()
+         *
+         *  \see getGraphsXMinMax(), getGraphsYMinMax(), PlotElementPreciate
+         */
+        struct JKQTPLOTTER_LIB_EXPORT filterPlotElementByXAxis {
+            inline explicit filterPlotElementByXAxis(JKQTPCoordinateAxisRef ref_): ref(ref_) {};
+            inline bool operator()(const JKQTPPlotElement* el) const;
+        private:
+            JKQTPCoordinateAxisRef ref;
+        };
+        /** \brief filter functor which accepts only those JKQTPPlotElement where JKQTPPlotElement::getYAxisRef()
+         *         returns the JKQTPCoordinateAxisRef supplied to the constructor, e.g. in getGraphsXMinMax() or getGraphsYMinMax()
+         *
+         *  \see getGraphsXMinMax(), getGraphsYMinMax(), PlotElementPreciate
+         */
+        struct JKQTPLOTTER_LIB_EXPORT filterPlotElementByYAxis {
+            inline explicit filterPlotElementByYAxis(JKQTPCoordinateAxisRef ref_): ref(ref_) {};
+            inline bool operator()(const JKQTPPlotElement* el) const;
+        private:
+            JKQTPCoordinateAxisRef ref;
+        };
         /** \brief get the maximum and minimum x-value over all graphs in the plot
          *  \param[out] minx smallest x value
          *  \param[out] maxx largest x value
          *  \param[out] smallestGreaterZero smallest data point which is >0 (needed for scaling of logarithmic axes)
+         *  \param predicate a PlotElementPreciate, which can be used to limit the JKQTPPlotElement to be evaluated
+         *  \returns \c true if at least one matching graph was found and evaluated succcessfully
          *
          * The result is given in the two parameters which are call-by-reference parameters!
          */
-        void getGraphsXMinMax(double& minx, double& maxx, double& smallestGreaterZero);
+        bool getGraphsXMinMax(double& minx, double& maxx, double& smallestGreaterZero, const PlotElementPreciate &predicate=allPlotElements());
         /** \brief get the maximum and minimum y-value over all graphs in the plot
          *  \param[out] miny smallest y value
          *  \param[out] maxy largest y value
          *  \param[out] smallestGreaterZero smallest data point which is >0 (needed for scaling of logarithmic axes)
+         *  \param predicate a PlotElementPreciate, which can be used to limit the JKQTPPlotElement to be evaluated
+         *  \returns \c true if at least one matching graph was found and evaluated succcessfully
          *
          * The result is given in the two parameters which are call-by-reference parameters!
          */
-        void getGraphsYMinMax(double& miny, double& maxy, double& smallestGreaterZero);
+        bool getGraphsYMinMax(double& miny, double& maxy, double& smallestGreaterZero, const PlotElementPreciate &predicate=allPlotElements());
+
 
 
         /** \brief denotes, which axes to synchronize in synchronizeToMaster() */
@@ -1226,6 +1392,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
          *
          *  \param xminn absolute minimum of x-axis
          *  \param xmaxx absolute maximum of x-axis
+         *  \param affectsSecondaryAxes if \c true, the secondary axes are affectedtoo, by using a relative zooming scheme,
+         *                              i.e. if a major axis range shrinks by 50%, also the secondary ranges shrink by 50%
+         *                              [default: \c false]
          *
          * \note You cannot expand the x-range outside the absolute x-range set e.g. by setAbsoluteX()!
          *       Also the range will be limited to possible values (e.g. to positive values if you use
@@ -1236,12 +1405,15 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
          *
          * \see setY(), setXY(), zoomToFit(), setAbsoluteXY(), JKQTPlotter::setY()
          */
-        void setX(double xminn, double xmaxx);
+        void setX(double xminn, double xmaxx, bool affectsSecondaryAxes=false);
 
         /** \brief sets the y-range of the plot (minimum and maximum y-value on the y-axis)
          *
          *  \param yminn absolute minimum of y-axis
          *  \param ymaxx absolute maximum of y-axis
+         *  \param affectsSecondaryAxes if \c true, the secondary axes are affectedtoo, by using a relative zooming scheme,
+         *                              i.e. if a major axis range shrinks by 50%, also the secondary ranges shrink by 50%
+         *                              [default: \c false]
          *
          * \note You cannot expand the y-range outside the absolute y-range set e.g. by setAbsoluteY()!
          *       Also the range will be limited to possible values (e.g. to positive values if you use
@@ -1252,7 +1424,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
          *
          * \see setX(), setXY(), zoomToFit(), setAbsoluteXY(), JKQTPlotter::setX()
          */
-        void setY(double yminn, double ymaxx);
+        void setY(double yminn, double ymaxx, bool affectsSecondaryAxes=false);
 
         /** \brief sets the x- and y-range of the plot (minimum and maximum values on the x-/y-axis)
          *
@@ -1260,6 +1432,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
          *  \param xmaxx absolute maximum of x-axis
          *  \param yminn absolute minimum of y-axis
          *  \param ymaxx absolute maximum of y-axis
+         *  \param affectsSecondaryAxes if \c true, the secondary axes are affectedtoo, by using a relative zooming scheme,
+         *                              i.e. if a major axis range shrinks by 50%, also the secondary ranges shrink by 50%
+         *                              [default: \c false]
          *
          * \note You cannot expand the ranges outside the absolute ranges set e.g. by setAbsoluteXY()!
          *       Also the range will be limited to possible values (e.g. to positive values if you use
@@ -1270,7 +1445,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
          *
          * \see setX(), setX(), zoomToFit(), setAbsoluteXY(), JKQTPlotter::setXY()
          */
-        void setXY(double xminn, double xmaxx, double yminn, double ymaxx);
+        void setXY(double xminn, double xmaxx, double yminn, double ymaxx, bool affectsSecondaryAxes=false);
 
         /** \brief sets absolutely limiting x-range of the plot
          *
@@ -1873,8 +2048,12 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
 
         /** \brief object used for the x-axis */
         JKQTPHorizontalAxis* xAxis;
+        /** \brief objects used a secondary x-axes */
+        QMap<JKQTPCoordinateAxisRef, JKQTPHorizontalAxisBase*> secondaryXAxis;
         /** \brief object used for the y-axis */
         JKQTPVerticalAxis* yAxis;
+        /** \brief objects used a secondary y-axes */
+        QMap<JKQTPCoordinateAxisRef, JKQTPVerticalAxisBase*> secondaryYAxis;
 
         /** \brief filename for the ini file in which to save the user settings
          *  \see jkqtplotter_base_userprops
@@ -2030,6 +2209,40 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
          * \note This property is an intermediate storage for calculated values. Do not change directly!
           */
         double internalPlotBorderRight_notIncludingOutsidePlotSections;
+
+
+        /** \brief <b>calculated value:</b> free space between widget top border and (plot+drawOutside) top border (including coordinate axes)
+         * \internal
+         *
+         * \image html plot_widget_orientation.png
+         *
+         * \note This property is an intermediate storage for calculated values. Do not change directly!
+         */
+        double internalPlotBorderTop_notIncludingAxisAndOutsidePlotSections;
+        /** \brief <b>calculated value:</b> free space between widget left border and (plot+drawOutside) left border (including coordinate axes)
+         * \internal
+         *
+         * \image html plot_widget_orientation.png
+         *
+         * \note This property is an intermediate storage for calculated values. Do not change directly!
+          */
+        double internalPlotBorderLeft_notIncludingAxisAndOutsidePlotSections;
+        /** \brief <b>calculated value:</b> free space between widget right border and (plot+drawOutside) right border (including coordinate axes)
+         * \internal
+         *
+         * \image html plot_widget_orientation.png
+         *
+         * \note This property is an intermediate storage for calculated values. Do not change directly!
+          */
+        double internalPlotBorderBottom_notIncludingAxisAndOutsidePlotSections;
+        /** \brief <b>calculated value:</b> free space between widget bottom border and (plot+drawOutside) bottom border (including coordinate axes)
+         * \internal
+         *
+         * \image html plot_widget_orientation.png
+         *
+         * \note This property is an intermediate storage for calculated values. Do not change directly!
+          */
+        double internalPlotBorderRight_notIncludingAxisAndOutsidePlotSections;
 
         /** \brief <b>calculated value:</b> plot width in pixel inside the widget (calculated by calcPlotScaling() from plotBorderLeft, plotBorderRight and widgetWidth)
          *

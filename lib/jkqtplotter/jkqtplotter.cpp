@@ -796,7 +796,7 @@ void JKQTPlotter::mouseMoveEvent ( QMouseEvent * event ) {
                 } else {
                     zoomRect.translate(mouseDragRectXStartPixel-mouseDragRectXEndPixel, mouseDragRectYStartPixel-mouseDragRectYEndPixel);
                 }
-                setXY(plotter->p2x(zoomRect.left()), plotter->p2x(zoomRect.right()), plotter->p2y(zoomRect.bottom()), plotter->p2y(zoomRect.top()));
+                setXY(plotter->p2x(zoomRect.left()), plotter->p2x(zoomRect.right()), plotter->p2y(zoomRect.bottom()), plotter->p2y(zoomRect.top()), true);
             }
 
         } else {
@@ -900,7 +900,7 @@ void JKQTPlotter::mouseReleaseEvent ( QMouseEvent * event ){
                 plotter->correctXYRangeForAspectRatio(xmin,xmax,ymin,ymax);
 
                 emit zoomChangedLocally(xmin, xmax, ymin, ymax, this);
-                plotter->setXY(xmin, xmax, ymin, ymax);
+                plotter->setXY(xmin, xmax, ymin, ymax, true);
             } else if (currentMouseDragAction.mode==jkqtpmdaPanPlotOnRelease) {
                 QRectF zoomRect= QRectF(QPointF(plotter->x2p(getXAxis()->getMin()),plotter->y2p(getYAxis()->getMax())), QPointF(plotter->x2p(getXAxis()->getMax()),plotter->y2p(getYAxis()->getMin())));
                 if  ( (mouseLastClickX/magnification<plotter->getInternalPlotBorderLeft()) || (mouseLastClickX/magnification>plotter->getPlotWidth()+plotter->getInternalPlotBorderLeft()) ) {
@@ -910,7 +910,7 @@ void JKQTPlotter::mouseReleaseEvent ( QMouseEvent * event ){
                 } else {
                     zoomRect.translate(mouseDragRectXStartPixel-mouseDragRectXEndPixel, mouseDragRectYStartPixel-mouseDragRectYEndPixel);
                 }
-                setXY(plotter->p2x(zoomRect.left()), plotter->p2x(zoomRect.right()), plotter->p2y(zoomRect.bottom()), plotter->p2y(zoomRect.top()));
+                setXY(plotter->p2x(zoomRect.left()), plotter->p2x(zoomRect.right()), plotter->p2y(zoomRect.bottom()), plotter->p2y(zoomRect.top()), true);
             } else if (currentMouseDragAction.mode==jkqtpmdaDrawRectangleForEvent) {
                 emit userRectangleFinished(x1, y1, x2-x1, y2-y1, event->modifiers());
             } else if (currentMouseDragAction.mode==jkqtpmdaDrawCircleForEvent) {
@@ -962,7 +962,7 @@ void JKQTPlotter::mouseDoubleClickEvent ( QMouseEvent * event ){
                 ymin=getYMin();
                 ymax=getYMax();
             }
-            plotter->setXY(xmin, xmax, ymin, ymax);
+            plotter->setXY(xmin, xmax, ymin, ymax, true);
             update();
         } else if (itAction.value()==JKQTPMouseDoubleClickActions::jkqtpdcaClickMovesViewport) {
             QRectF zoomRect= QRectF(QPointF(plotter->x2p(getXAxis()->getMin()),plotter->y2p(getYAxis()->getMax())), QPointF(plotter->x2p(getXAxis()->getMax()),plotter->y2p(getYAxis()->getMin())));
@@ -973,7 +973,7 @@ void JKQTPlotter::mouseDoubleClickEvent ( QMouseEvent * event ){
             } else {
                 zoomRect.moveCenter(QPointF(event->pos().x(), event->pos().y()));
             }
-            setXY(plotter->p2x(zoomRect.left()), plotter->p2x(zoomRect.right()), plotter->p2y(zoomRect.bottom()), plotter->p2y(zoomRect.top()));
+            setXY(plotter->p2x(zoomRect.left()), plotter->p2x(zoomRect.right()), plotter->p2y(zoomRect.bottom()), plotter->p2y(zoomRect.top()), true);
         }
     }
 
@@ -1037,7 +1037,7 @@ void JKQTPlotter::wheelEvent ( QWheelEvent * event ) {
                 ymin=getYMin();
                 ymax=getYMax();
             }
-            plotter->setXY(xmin, xmax, ymin, ymax);
+            plotter->setXY(xmin, xmax, ymin, ymax, true);
         } else if (itAction.value()==JKQTPMouseWheelActions::jkqtpmwaPanByWheel) {
         //} else if (act==JKQTPMouseWheelActions::jkqtpmwaPanByWheel) {
             //qDebug()<<"wheelEvent("<<event->modifiers()<<"):PanByWheel";
@@ -1059,7 +1059,7 @@ void JKQTPlotter::wheelEvent ( QWheelEvent * event ) {
             } else {
                 zoomRect.translate(d.x(), d.y());
             }
-            setXY(plotter->p2x(zoomRect.left()), plotter->p2x(zoomRect.right()), plotter->p2y(zoomRect.bottom()), plotter->p2y(zoomRect.top()));
+            setXY(plotter->p2x(zoomRect.left()), plotter->p2x(zoomRect.right()), plotter->p2y(zoomRect.bottom()), plotter->p2y(zoomRect.top()), true);
         }
     }
 

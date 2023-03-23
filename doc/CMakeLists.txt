@@ -180,6 +180,7 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         rgbimageplot_qt/rgbimageplot_qt,rgbimageplot_qt_upsidedown/--iteratefunctorsteps
         mandelbrot
         geo_coordinateaxis0
+        second_axis/second_axis,second_axis_hor
         #speed
     )
 
@@ -207,6 +208,7 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         impulsesplot/JKQTPImpulsesVerticalGraph,JKQTPImpulsesVerticalGraph_Symbols,JKQTPImpulsesHorizontalGraph,JKQTPImpulsesVerticalErrorGraph,JKQTPImpulsesHorizontalErrorGraph,JKQTPImpulsesVerticalGraphNoBaseline,JKQTPImpulsesVerticalGraph_SymbolsNoBaseline,JKQTPImpulsesHorizontalGraphNoBaseline,JKQTPImpulsesVerticalErrorGraphNoBaseline,JKQTPImpulsesHorizontalErrorGraphNoBaseline,JKQTPImpulsesVerticalGraphBaseline,JKQTPImpulsesVerticalGraph_SymbolsBaseline,JKQTPImpulsesHorizontalGraphBaseline,JKQTPImpulsesVerticalErrorGraphBaseline,JKQTPImpulsesHorizontalErrorGraphBaseline/--iteratefunctorsteps--smallscreenshotplot
         symbols_and_errors/JKQTPXYLineErrorGraph_JKQTPErrorBars,JKQTPXYLineErrorGraph_JKQTPErrorLines,JKQTPXYLineErrorGraph_JKQTPErrorPolygons/--iteratefunctorsteps--iteratefunctorsteps_suppressinitial--smallscreenshotplot
         boxplot/JKQTPBoxplotVerticalGraph,JKQTPBoxplotHorizontalGraph/--iteratefunctorsteps--iteratefunctorsteps_suppressinitial--smallscreenshotplot
+        second_axis/JKQTBasePlotter_addSecondaryYAxis,JKQTBasePlotter_addSecondaryXAxis
     )
 
 

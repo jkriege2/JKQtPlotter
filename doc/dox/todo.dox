@@ -29,7 +29,6 @@ This page lists several todos and wishes for future version of JKQTPlotter
     <li>plot: legend positioning as combination of 3 values: inside|outside + left|center|right + top|vcenter|bottom</li>
     <li>plot: refactor print preview/export preview code </li>
     <li>plot: rework layouting of legends: there are some inconsistencies/too large gaps ...</li>
-    <li>plot: secondary axes: independent and dependent (i.e. with transformation function from primary axis)</li>
     <li>sryling: better styling/more styling options for data-tooltips</li>
     <li>styling: color gradients as fill-styles in style-INIs</li>
     <li>styling: style.ini with glowing colors in dark background ("techno" or "cyberpunk")</li>

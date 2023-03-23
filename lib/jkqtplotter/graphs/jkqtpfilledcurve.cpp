@@ -146,10 +146,10 @@ void JKQTPFilledCurveXGraph::draw(JKQTPEnhancedPainter& painter) {
         double xold=-1;
         //double yold=-1;
         double y0=transformY(getBaseline());
-        if (parent->getYAxis()->isLogAxis()) {
-            y0=transformY(parent->getYAxis()->getMin());
-            if (getBaseline()>0 && getBaseline()>parent->getYAxis()->getMin()) y0=transformY(getBaseline());
-            else y0=transformY(parent->getYAxis()->getMin());
+        if (getYAxis()->isLogAxis()) {
+            y0=transformY(getYAxis()->getMin());
+            if (getBaseline()>0 && getBaseline()>getYAxis()->getMin()) y0=transformY(getBaseline());
+            else y0=transformY(getYAxis()->getMin());
         }
         bool subsequentItem=false;
         intSortData();
@@ -270,9 +270,9 @@ void JKQTPFilledCurveYGraph::draw(JKQTPEnhancedPainter &painter)
         //double xold=-1;
         double yold=-1;
         double x0=transformX(getBaseline());
-        if (parent->getXAxis()->isLogAxis()) {
-            if (getBaseline()>0 && getBaseline()>parent->getXAxis()->getMin()) x0=transformX(getBaseline());
-            else x0=transformX(parent->getXAxis()->getMin());
+        if (getXAxis()->isLogAxis()) {
+            if (getBaseline()>0 && getBaseline()>getXAxis()->getMin()) x0=transformX(getBaseline());
+            else x0=transformX(getXAxis()->getMin());
         }
         bool first=false;
         intSortData();

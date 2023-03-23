@@ -132,7 +132,7 @@ void JKQTPGeoRectangle::draw(JKQTPEnhancedPainter& painter) {
     QPolygonF poly=getPolygon();
     reserveHitTestData(poly.size());
     QPolygonF rect;
-    if ((getDrawMode()==DrawAsGraphicElement) || (getParent()->getXAxis()->isLinearAxis() && getParent()->getYAxis()->isLinearAxis())) {
+    if ((getDrawMode()==DrawAsGraphicElement) || (getXAxis()->isLinearAxis() && getYAxis()->isLinearAxis())) {
         rect=transform(poly);
     } else {
         auto fTransform=std::bind([](const JKQTPGeometricPlotElement* plot, const QPointF& p) { return plot->transform(p); }, this, std::placeholders::_1);
@@ -313,7 +313,7 @@ void JKQTPGeoPolygon::draw(JKQTPEnhancedPainter& painter) {
         painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
         painter.setPen(getLinePen(painter, parent));
         painter.setBrush(getFillBrush(painter, parent));
-        if ((getDrawMode()==DrawAsGraphicElement) || (getParent()->getXAxis()->isLinearAxis() && getParent()->getYAxis()->isLinearAxis())) {
+        if ((getDrawMode()==DrawAsGraphicElement) || (getXAxis()->isLinearAxis() && getYAxis()->isLinearAxis())) {
             painter.drawPolygon(transform(points));
         } else {
             // for non-linear axes, a line might not be drawn as a line, so we need to segment the line (i.e. linear function in coordinate space)

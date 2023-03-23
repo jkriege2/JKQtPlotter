@@ -115,7 +115,7 @@ if(JKQtPlotter_BUILD_STATIC_LIBS)
     write_basic_package_version_file(${CMAKE_CURRENT_BINARY_DIR}/${lib_name}Version.cmake
                                      VERSION ${PROJECT_VERSION} 
                                      COMPATIBILITY AnyNewerVersion )    
-    add_library(${oldlib_name} ALIAS ${oldlib_name})
+    add_library(${oldlib_name} ALIAS ${lib_name})
 endif()
 
 

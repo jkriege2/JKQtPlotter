@@ -18,6 +18,7 @@
            derived from JKQTPPlotAnnotationElement
       <li> \b key is the legend of the plot, showing a list of the graphs, each represented by a <b>entry marker</b> (showing the graphs color/symbol/...) and a <b>entry title</b>.
       <li> <b>coordinate axis</b> is each of the x- or y-axis (there might be addition axes, e.g. when showing a color-scale). Each coordinate axis is composed from several elements: the axis line itself, an <b>axis label</b>, axis <b> ticks</b> and corresponding <b>tick labels</b> (major and a second set of minor ticks in between are available)
+      <li> <b>secondary coordinate axis</b> you can add additional secondary x- and y-axes to a plot, which are shown stacked, beside the plot.
       <li> <b>zero axis</b>: a pair of axes through  the origin \c x=0 and \c y=0 of the coordinate system
       <li> \b grid a grid of horizontal/vertical lines, drawn behind the graph and providing visual guidance for the viewer of the graph. The grid is actually a part of the coordinate axes, as the lines are positioned at the same position as the axis ticks
       <li> <b>minor grid</b> in addition to the grid, corresponding to the major axis ticks, you can add additional lines that correspond to the minor axis ticks

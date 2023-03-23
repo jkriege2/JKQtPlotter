@@ -68,9 +68,9 @@ void JKQTPBarVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
         painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
 
     //    double x0=transformX(0);
-    //    if (parent->getXAxis()->isLogAxis()) x0=transformX(parent->getXAxis()->getMin());
+    //    if (getXAxis()->isLogAxis()) x0=transformX(getXAxis()->getMin());
         double y0=transformY(0);
-        if (parent->getYAxis()->isLogAxis()) y0=transformY(parent->getYAxis()->getMin());
+        if (getYAxis()->isLogAxis()) y0=transformY(getYAxis()->getMin());
         double delta=1;
         double deltap=0;
         double deltam=0;
@@ -248,9 +248,9 @@ void JKQTPBarHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
     if (getIndexRange(imin, imax)) {
 
         double x0=transformX(0);
-        if (parent->getXAxis()->isLogAxis()) x0=transformX(parent->getXAxis()->getMin());
+        if (getXAxis()->isLogAxis()) x0=transformX(getXAxis()->getMin());
     //    double y0=transformY(0);
-    //    if (parent->getYAxis()->isLogAxis()) y0=transformY(parent->getYAxis()->getMin());
+    //    if (getYAxis()->isLogAxis()) y0=transformY(getYAxis()->getMin());
         {
             painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
             intSortData();
