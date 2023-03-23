@@ -3337,14 +3337,20 @@ bool JKQTBasePlotter::hasYAxis(JKQTPCoordinateAxisRef axis) const
 
 QSet<JKQTPCoordinateAxisRef> JKQTBasePlotter::getAvailableXAxisRefs(bool includePrimary) const
 {
-    QSet<JKQTPCoordinateAxisRef> res(secondaryXAxis.keyBegin(),secondaryXAxis.keyEnd());
+    QSet<JKQTPCoordinateAxisRef> res;
+    for (auto it=secondaryXAxis.begin(); it!=secondaryXAxis.end(); ++it) {
+        res.insert(it.key());
+    }
     if (includePrimary) res.insert(JKQTPPrimaryAxis);
         return res;
 }
 
 QSet<JKQTPCoordinateAxisRef> JKQTBasePlotter::getAvailableYAxisRefs(bool includePrimary) const
 {
-    QSet<JKQTPCoordinateAxisRef> res(secondaryYAxis.keyBegin(),secondaryYAxis.keyEnd());
+    QSet<JKQTPCoordinateAxisRef> res;
+    for (auto it=secondaryYAxis.begin(); it!=secondaryYAxis.end(); ++it) {
+        res.insert(it.key());
+    }
     if (includePrimary) res.insert(JKQTPPrimaryAxis);
     return res;
 }

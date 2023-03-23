@@ -131,5 +131,6 @@ If we set seondary axes for the x-axis instead of the y-axis, i.e. use
     // ...
 ```
 we get a plot like this:
+
 ![second_axis_hor](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/second_axis_hor.png)
 
