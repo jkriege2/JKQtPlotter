@@ -1,4 +1,5 @@
-# Example (JKQTPlotter): Barchart With Two-Color Fill-Mode {#JKQTPlotterBarchartsTwoColorFilling}
+# Example (JKQTPlotter): Secondary Axes {#JKQTPlotterSecondaryAxes}
+
 This project (see [`second_axis`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/second_axis) shows how to plot with multiple axes.
 
 The source code of the main application is (see [`second_axis.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/second_axis/second_axis.cpp).
