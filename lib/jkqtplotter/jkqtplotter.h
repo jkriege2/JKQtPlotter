@@ -696,119 +696,147 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
          */
         int getMouseLastClickY() const;
 
-        /** \brief returns the coordinate axis object for the x-axis \see JKQTBasePlotter::getXAxis() */
+        /** \copydoc JKQTBasePlotter::getXAxis()   */
         inline JKQTPHorizontalAxisBase* getXAxis(JKQTPCoordinateAxisRef axis=JKQTPPrimaryAxis) { return plotter->getXAxis(axis); }
-        /** \brief returns the coordinate axis object for the y-axis \see JKQTBasePlotter::getYAxis()  */
+        /** \copydoc JKQTBasePlotter::getYAxis()   */
         inline JKQTPVerticalAxisBase* getYAxis(JKQTPCoordinateAxisRef axis=JKQTPPrimaryAxis) { return plotter->getYAxis(axis); }
-        /** \brief returns the coordinate axis object for the x-axis as a const pointer \see JKQTBasePlotter::getXAxis()  */
+        /** \copydoc JKQTBasePlotter::getXAxis()   */
         inline const JKQTPHorizontalAxisBase* getXAxis(JKQTPCoordinateAxisRef axis=JKQTPPrimaryAxis) const { return plotter->getXAxis(axis); }
-        /** \brief returns the coordinate axis object for the y-axis as a const pointer \see JKQTBasePlotter::getYAxis()  */
+        /** \copydoc JKQTBasePlotter::getYAxis()   */
         inline const JKQTPVerticalAxisBase* getYAxis(JKQTPCoordinateAxisRef axis=JKQTPPrimaryAxis) const { return plotter->getYAxis(axis); }
 
-       /** \brief returns the \a i -th graph (of type JKQTPPlotElement) in this plotter instance \see JKQTBasePlotter::getGraph() */
-        inline JKQTPPlotElement* getGraph(size_t i) { return plotter->getGraph(i); }
 
-        /** \brief returns the number of graphs \see JKQTBasePlotter::getGraphCount() */
+
+
+        /** \copydoc JKQTBasePlotter::beginGraphs() */
+        inline typename JKQTBasePlotter::GraphsConstIterator cbeginGraphs() const  {
+            return plotter->cendGraphs();
+        }
+        /** \copydoc JKQTBasePlotter::endGraphs() */
+        inline typename JKQTBasePlotter::GraphsConstIterator cendGraphs() const {
+            return plotter->cendGraphs();
+        }
+
+        /** \copydoc JKQTBasePlotter::beginGraphs() */
+        inline typename JKQTBasePlotter::GraphsConstIterator beginGraphs() const  {
+            return plotter->endGraphs();
+        }
+        /** \copydoc JKQTBasePlotter::endGraphs() */
+        inline typename JKQTBasePlotter::GraphsConstIterator endGraphs() const {
+            return plotter->endGraphs();
+        }
+        /** \copydoc JKQTBasePlotter::beginGraphs() */
+        inline typename JKQTBasePlotter::GraphsIterator beginGraphs()  {
+            return plotter->endGraphs();
+        }
+        /** \copydoc JKQTBasePlotter::endGraphs() */
+        inline typename JKQTBasePlotter::GraphsIterator endGraphs()  {
+            return plotter->endGraphs();
+        }
+        /** \copydoc JKQTBasePlotter::modifyGraphs() */
+        inline void modifyGraphs(const std::function<void(JKQTPPlotElement*)>& func) {
+            plotter->modifyGraphs(func);
+        }
+        /** \copydoc JKQTBasePlotter::sortGraphs() */
+        inline void sortGraphs(const std::function<bool(const JKQTPPlotElement* , const JKQTPPlotElement* )>& compareLess) {
+            plotter->sortGraphs(compareLess);
+        }
+        /** \copydoc JKQTBasePlotter::getGraphs()   */
+        inline const typename JKQTBasePlotter::GraphsList& getGraphs() const {
+            return plotter->getGraphs();
+        }
+        /** \copydoc JKQTBasePlotter::getGraphs()   */
+        inline typename JKQTBasePlotter::GraphsList& getGraphs()  {
+            return plotter->getGraphs();
+        }
+        /** \copydoc JKQTBasePlotter::getGraph()   */
+        inline JKQTPPlotElement* getGraph(size_t i) { return plotter->getGraph(i); }
+        /** \copydoc JKQTBasePlotter::getGraph()   */
+        inline const JKQTPPlotElement* getGraph(size_t i) const { return plotter->getGraph(i); }
+
+        /** \copydoc JKQTBasePlotter::getGraphCount()   */
         inline size_t getGraphCount() { return plotter->getGraphCount(); }
 
-        /** \brief remove the i-th graph \see JKQTBasePlotter::deleteGraph() */
+        /** \copydoc JKQTBasePlotter::deleteGraph()   */
         inline void deleteGraph(size_t i, bool deletegraph=true) { plotter->deleteGraph(i, deletegraph); }
 
-        /** \brief returns \c true, if the given graph is present \see JKQTBasePlotter::containsGraph() */
+        /** \copydoc JKQTBasePlotter::containsGraph()   */
         inline bool containsGraph(JKQTPPlotElement* gr) { return plotter->containsGraph(gr); }
 
-        /** \brief remove the given graph, if it is contained \see JKQTBasePlotter::deleteGraph() */
+        /** \copydoc JKQTBasePlotter::deleteGraph()   */
         inline void deleteGraph(JKQTPPlotElement* gr, bool deletegraph=true) { plotter->deleteGraph(gr, deletegraph);  }
 
-        /** \brief remove all plots
-         *
-         *  \param deleteGraphs if set \c true (default) the graph objects will also be deleted
-         *
-         *  \see JKQTBasePlotter::clearGraphs()
-         */
+        /** \copydoc JKQTBasePlotter::clearGraphs()   */
         inline void clearGraphs(bool deleteGraphs=true) { plotter->clearGraphs(deleteGraphs); }
 
-        /** \brief add a new graph, returns it's position in the graphs list
-         *
-         * \param gr graph object (of type JKQTPPlotElement) to be added. \b Note: The JKQTPlotter takes ownership of graph \a gr .
-         * \return ID of the added graph object \a gr in the internal list of graphs
-         *
-         *  \see JKQTBasePlotter::addGraph()
-         */
-        inline size_t addGraph(JKQTPPlotElement* gr) { return plotter->addGraph(gr); }
+        /** \copydoc JKQTBasePlotter::addGraph()   */
+        inline void addGraph(JKQTPPlotElement* gr) { plotter->addGraph(gr); }
+        /** \copydoc JKQTBasePlotter::addGraphOnTop()   */
+        inline void addGraphOnTop(JKQTPPlotElement* gr) { plotter->addGraphOnTop(gr); }
+        /** \copydoc JKQTBasePlotter::addGraphAtBotom()   */
+        inline void addGraphAtBottom(JKQTPPlotElement* gr) { plotter->addGraphAtBottom(gr); }
 
-        /** \brief move the given graph to the top, or add it, if it is not yet contained
-         *
-         * \param gr graph object (of type JKQTPPlotElement) to be moved (needs to be containing to the JKQTPlotter already!)
-         * \return ID of the added graph object \a gr in the internal list of graphs
-         *
-         *  \see JKQTBasePlotter::moveGraphTop()
-         */
-        inline size_t moveGraphTop(JKQTPPlotElement* gr) { return plotter->moveGraphTop(gr); }
+        /** \copydoc JKQTBasePlotter::moveGraphTop()   */
+        inline void moveGraphTop(JKQTPPlotElement* gr) {  plotter->moveGraphTop(gr); }
 
-        /** \brief move the given graph to the top, or add it, if it is not yet contained
-         *
-         * \param gr graph object (of type JKQTPPlotElement) to be moved (needs to be containing to the JKQTPlotter already!)
-         * \return ID of the added graph object \a gr in the internal list of graphs
-         *
-         *  \see JKQTBasePlotter::moveGraphBottom()
-         */
-        inline size_t moveGraphBottom(JKQTPPlotElement* gr) { return plotter->moveGraphBottom(gr); }
+        /** \copydoc JKQTBasePlotter::moveGraphBottom()   */
+        inline void moveGraphBottom(JKQTPPlotElement* gr) {  plotter->moveGraphBottom(gr); }
 
-        /** \brief add a new graphs from a QVector<JKQTPPlotElement*>, QList<JKQTPPlotElement*>, std::vector<JKQTPPlotElement*> ... or any standard-iterateable container with JKQTPPlotElement*-items
-         *
-         *  \tparam TJKQTPGraphContainer a container type with default C++-sytle iterator interface
-         *                               (i.e. methods \c begin() and \c end() and an iterator, which may be
-         *                               moved to the next element with the operator \c ++ .
-         *  \param gr Container of type TJKQTPGraphContainer, which contains the graphs \b Note: The JKQTPlotter takes ownership of graphs in \a gr .
-         *  \param[out] graphIDsOut optional output parameter, the vector will contain the IDs of each graph added to theis plot
-         *
-         *  \see JKQTBasePlotter::addGraphs()
-         */
+        /** \copydoc JKQTBasePlotter::moveGraphUp()   */
+        inline void moveGraphUp(JKQTPPlotElement* gr) {  plotter->moveGraphUp(gr); }
+
+        /** \copydoc JKQTBasePlotter::moveGraphDown()   */
+        inline void moveGraphDown(JKQTPPlotElement* gr) {  plotter->moveGraphDown(gr); }
+
+        /** \copydoc JKQTBasePlotter::moveGraphTop()   */
+        inline void moveGraphTop(int idx) {  plotter->moveGraphTop(idx); }
+
+        /** \copydoc JKQTBasePlotter::moveGraphBottom()   */
+        inline void moveGraphBottom(int idx) {  plotter->moveGraphBottom(idx); }
+
+        /** \copydoc JKQTBasePlotter::moveGraphUp()   */
+        inline void moveGraphUp(int idx) {  plotter->moveGraphUp(idx); }
+
+        /** \copydoc JKQTBasePlotter::moveGraphDown()   */
+        inline void moveGraphDown(int idx) {  plotter->moveGraphDown(idx); }
+
+        /** \copydoc JKQTBasePlotter::addGraphs()   */
         template <class TJKQTPGraphContainer>
         inline void addGraphs(const TJKQTPGraphContainer& gr, QVector<size_t>* graphIDsOut=nullptr) { plotter->addGraphs(gr, graphIDsOut); }
 
 
-        /** \brief returns the current x-axis min  \see JKQTBasePlotter::getYAxis() */
+        /** \copydoc JKQTBasePlotter::getXMin()   */
         inline double getXMin() const {return plotter->getXMin(); }
-
-        /** \brief returns the current x-axis max  \see JKQTBasePlotter::getYAxis() */
+        /** \copydoc JKQTBasePlotter::getXMax()   */
         inline double getXMax() const {return plotter->getXMax(); }
-
-        /** \brief returns the current y-axis min  \see JKQTBasePlotter::getYAxis() */
+        /** \copydoc JKQTBasePlotter::getYMin()   */
         inline double getYMin() const {return plotter->getYMin(); }
-
-        /** \brief returns the current y-axis max  \see JKQTBasePlotter::getYAxis() */
+        /** \copydoc JKQTBasePlotter::getYMax()   */
         inline double getYMax() const {return plotter->getYMax(); }
-
-
-
-        /** \brief returns the absolute x-axis min */
+        /** \copydoc JKQTBasePlotter::getAbsoluteXMin()   */
         inline double getAbsoluteXMin() const {return plotter->getAbsoluteXMin(); }
-        /** \brief returns the absolute x-axis max */
+        /** \copydoc JKQTBasePlotter::getAbsoluteXMax()   */
         inline double getAbsoluteXMax() const {return plotter->getAbsoluteXMax(); }
-
-        /** \brief returns the absolute y-axis min */
+        /** \copydoc JKQTBasePlotter::getAbsoluteYMin()   */
         inline double getAbsoluteYMin() const {return plotter->getAbsoluteYMin(); }
-
-        /** \brief returns the absolute y-axis max */
+        /** \copydoc JKQTBasePlotter::getAbsoluteYMax()   */
         inline double getAbsoluteYMax() const {return plotter->getAbsoluteYMax(); }
 
         /** \brief returns the current magnification factor */
         inline double getMagnification() const { return magnification; }
 
-        /** \brief gets the next unused style id, i.e. the smalles number >=0 which is not contained in usedStyles */
+        /** \copydoc JKQTBasePlotter::getNextStyle()   */
         inline int getNextStyle() {
             return getPlotter()->getNextStyle();
         }
 
-        /** \brief returns a QPen object for the i-th plot style */
+        /** \copydoc JKQTBasePlotter::getPlotStyle()   */
         inline JKQTBasePlotter::JKQTPPen getPlotStyle(int i) const {
             return getConstplotter()->getPlotStyle(i);
         }
 
 
-        /** \brief font size for key labels [in points] */
+        /** \copydoc JKQTBasePlotter::getKeyFontSize()   */
         inline double getKeyFontSize() const {
             return getConstplotter()->getKeyFontSize();
         }
@@ -872,11 +900,11 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
         /** \brief \copydoc actMouseLeftAsPanView */
         const QAction *getActMouseLeftAsPanView() const;
 
-        /** \brief save the current plot as a pixel image into a QImage with the given size */
+        /** \copydoc JKQTBasePlotter::grabPixelImage()   */
         inline QImage grabPixelImage(QSize size=QSize(), bool showPreview=false) {
             return plotter->grabPixelImage(size,showPreview);
         }
-        /** \brief copy the current plot as a pixel+svg image to the clipboard */
+        /** \copydoc JKQTBasePlotter::copyPixelImage()   */
         inline void copyPixelImage(bool showPreview=true) {
             plotter->copyPixelImage(showPreview);
         }
@@ -889,17 +917,12 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
             plotter->zoom(nxmin, nxmax, nymin, nymax);
         }
 
-        /** \brief sets whether to plot grid lines or not
-         *
-         * \image html jkqtplotter_gridvisible.png "Grid visible"
-         * \image html jkqtplotter_gridinvisible.png "Grid invisible"
-         * */
-        inline void setGrid(bool val) {
+        /** \copydoc JKQTBasePlotter::setGrid()   */
+         inline void setGrid(bool val) {
             plotter->setGrid(val);
         }
 
-        /** \brief sets the color of all Major grid lines
-         * */
+        /** \copydoc JKQTBasePlotter::setGridColor()   */
         inline void setGridColor(QColor color) {
             plotter->setGridColor(color);
         }

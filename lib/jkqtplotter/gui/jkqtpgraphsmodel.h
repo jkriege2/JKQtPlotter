@@ -37,7 +37,7 @@ class JKQTBasePlotter; // forward
   * \image html JKQTPgraphsModel.png
   *
   */
-class JKQTPGraphsModel : public QAbstractTableModel
+class JKQTPLOTTER_LIB_EXPORT JKQTPGraphsModel : public QAbstractTableModel
 {
     Q_OBJECT
 public:

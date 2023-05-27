@@ -407,6 +407,11 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
 
 
 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/** @name Konstruktion and Destruction */
+/**@{*/
+
         /** \brief class constructor
          *
          * if \a datastore_internal is \c true then the constructor will create an internal datastore object. The datastore
@@ -419,19 +424,20 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
 
         /** \brief class destructor */
         virtual ~JKQTBasePlotter();
+/**@}*/
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/** @name Plot Data Storage/Management (JKQTPDatastore) */
+/**@{*/
 
         /** \brief returns a pointer to the datastore used by this object */
         inline JKQTPDatastore* getDatastore() { return datastore; }
 
-        /** \brief returns model representing all Plots in this plotter and showing their visible/invisible state */
-        inline JKQTPGraphsModel* getPlotsModel() { return m_plotsModel; }
 
 
         /** \brief returns a pointer to the datastore used by this object */
         inline const JKQTPDatastore* getDatastore() const { return datastore; }
-
-        /** \brief returns model representing all Plots in this plotter and showing their visible/invisible state */
-        inline const JKQTPGraphsModel* getPlotsModel() const { return m_plotsModel; }
 
         /** \brief tells the plotter object to use the given external datastore.
          *
@@ -456,11 +462,256 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
          *         the lather case */
         void forceInternalDatastore();
 
-        /** \brief returns whether this class emits signals, like zoomChangedLocally() or beforePlotScalingRecaluclate() */
-        bool isEmittingSignalsEnabled()const;
-        /** \brief specifies whether this class emits signals, like zoomChangedLocally() or beforePlotScalingRecaluclate() */
-        void setEmittingSignalsEnabled(bool enabled);
 
+        /** \brief save the current plot data as a Comma Separated Values (CSV) file
+         *
+         * \param filename the file to save to, if \a filename is empty, a file open dialog will be shown
+         * \param decimalSeparator decimal separator for outpu
+         * \param commentInitializer line-start for comment lines
+         */
+        void saveAsCSV(const QString& filename, const QString& decimalSeparator, const QString& commentInitializer);
+
+        /** \brief save the current plot data as a Semicolon Separated Values (SSV) file
+         *
+         * \param filename the file to save to, if \a filename is empty, a file open dialog will be shown
+         * \param decimalSeparator decimal separator for outpu
+         * \param commentInitializer line-start for comment lines
+         */
+        void saveAsSemicolonSV(const QString& filename, const QString& decimalSeparator, const QString& commentInitializer);        /** \brief save the current plot data as a Tabulator Separated Values (CSV) file
+         *
+         * \param filename the file to save to, if \a filename is empty, a file open dialog will be shown
+         * \param decimalSeparator decimal separator for outpu
+         * \param commentInitializer line-start for comment lines
+         */
+        void saveAsTabSV(const QString& filename, const QString& decimalSeparator, const QString& commentInitializer);
+
+/**@}*/
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/** @name Graphs Management */
+/**@{*/
+
+        typedef QVector<JKQTPPlotElement*> GraphsList;
+        typedef QVector<JKQTPPlotElement*>::iterator GraphsIterator;
+        typedef QVector<JKQTPPlotElement*>::const_iterator GraphsConstIterator;
+
+        /** \brief returns model representing all Plots in this plotter and showing their visible/invisible state */
+        inline const JKQTPGraphsModel* getPlotsModel() const { return m_plotsModel; }
+
+        /** \brief returns model representing all Plots in this plotter and showing their visible/invisible state */
+        inline JKQTPGraphsModel* getPlotsModel() { return m_plotsModel; }
+
+
+
+        /** \brief returns description of i'th graph
+         *
+         *  \note If you modify the returned graph, a replot may not happen, so call redrawPlot() if the plotter is e.g. embedded in a visible widget to cause a redrawing of the plot!
+         */
+        JKQTPPlotElement* getGraph(size_t i);
+        /** \brief returns description of i'th graph */
+        const JKQTPPlotElement* getGraph(size_t i) const;
+
+        /** \brief returns the number of graphs */
+        size_t getGraphCount() const;
+
+        /** \brief remove the i-th graph */
+        void deleteGraph(size_t i, bool deletegraph=true);
+
+        /** \brief remove the given graph, if it is contained */
+        void deleteGraph(JKQTPPlotElement* gr, bool deletegraph=true);
+
+        /** \brief returns a const list of all graphs */
+        inline const GraphsList& getGraphs() const {
+            return graphs;
+        }
+
+        /** \brief returns a list of all graphs
+         *
+         *  \note If you modify the graphs or change their position, a replot may not happen, so call redrawPlot() if the plotter is e.g. embedded in a visible widget to cause a redrawing of the plot!
+          */
+        inline GraphsList& getGraphs()  {
+            return graphs;
+        }
+
+        /** \brief returns a const iterator to the first graph */
+        inline GraphsConstIterator beginGraphs() const {
+            return graphs.cbegin();
+        }
+        /** \brief returns a const iterator behind the last graph */
+        inline GraphsConstIterator endGraphs() const {
+            return graphs.cend();
+        }
+        /** \brief returns a const iterator to the first graph */
+        inline GraphsConstIterator cbeginGraphs() const {
+            return graphs.begin();
+        }
+        /** \brief returns a const iterator behind the last graph */
+        inline GraphsConstIterator cendGraphs() const {
+            return graphs.end();
+        }
+        /** \brief returns an iterator to the first graph
+         *
+         *  \note If you modify the graphs or change their position, a replot may not happen, so call redrawPlot() if the plotter is e.g. embedded in a visible widget to cause a redrawing of the plot!
+         */
+        inline GraphsIterator beginGraphs()  {
+            return graphs.begin();
+        }
+        /** \brief returns an iterator behind the last graph
+         *
+         *  \note If you modify the graphs or change their position, a replot may not happen, so call redrawPlot() if the plotter is e.g. embedded in a visible widget to cause a redrawing of the plot!
+         */
+        inline GraphsIterator endGraphs()  {
+            return graphs.end();
+        }
+        /** \brief add a new graph at the end of the graphs, if the graph is already in the plot, it is moved to the end of the list
+         *
+         * \param gr graph object (of type JKQTPPlotElement) to be added. \b Note: The JKQTPlotter takes ownership of graph \a gr .
+         *
+         * \note the added graph is drawn ABOVE/AFTER all other graphs.
+         */
+        size_t addGraphOnTop(JKQTPPlotElement* gr);
+        inline size_t addGraph(JKQTPPlotElement* gr) { return addGraphOnTop(gr); }
+        /** \brief add a new graph before all other graphs (i.e. at the top of the list of graphs), if the graph is already in the plot, it is moved to the top
+         *
+         * \param gr graph object (of type JKQTPPlotElement) to be added. \b Note: The JKQTPlotter takes ownership of graph \a gr .
+         *
+         * \note the added graph is drawn BELOW/BEFORE all other graphs.
+         */
+        size_t addGraphAtBottom(JKQTPPlotElement* gr);
+
+        /** \brief returns \c true, if the given graph is in this plot */
+        bool containsGraph(const JKQTPPlotElement *gr) const;
+
+        /** \brief move the given graph \a gr to the end of all graphs, so it is drawn  */
+        void moveGraphTop(const JKQTPPlotElement* gr);
+        /** \brief move the given graph \a gr to the bottom of all graphs */
+        void moveGraphBottom(const JKQTPPlotElement* gr);
+        /** \brief move the given graph to the top */
+        void moveGraphTop(int idx);
+        /** \brief move the given graph to the top */
+        void moveGraphBottom(int idx);
+        /** \brief returns the index of the given graph \a gr in the graphs list, or -1 if it was not found */
+        int indexOfGraph(const JKQTPPlotElement* gr) const;
+
+        /** \brief move the given graph \a gr one item up (i.e. it is drawn later/higher in the z-stack) */
+        void moveGraphUp(const JKQTPPlotElement* gr);
+        /** \brief move the given graph \a gr one item down (i.e. it is drawn earlier/lower in the z-stack) */
+        void moveGraphDown(const JKQTPPlotElement* gr);
+        /** \brief move the graph at position \a idx one item up (i.e. it is drawn later/higher in the z-stack) */
+        void moveGraphUp(int idx);
+        /** \brief move the graph at position \a idx one item down (i.e. it is drawn earlier/lower in the z-stack) */
+        void moveGraphDown(int idx);
+
+        /** \brief  add a new graphs from a QVector<JKQTPPlotElement*>, QList<JKQTPPlotElement*>, std::vector<JKQTPPlotElement*> ... or any standard-iterateable container with JKQTPPlotElement*-items
+         *
+         *  \tparam TJKQTPGraphContainer a container type with default C++-sytle iterator interface
+         *                               (i.e. methods \c begin() and \c end() and an iterator, which may be
+         *                               moved to the next element with the operator \c ++ .
+         *  \param gr Container of type TJKQTPGraphContainer, which contains the graphs \b Note: The JKQTPlotter takes ownership of graphs in \a gr .
+         *  \param[out] graphIDsOut optional output parameter, the vector will contain the IDs of each graph added to theis plot
+         */
+        template <class TJKQTPGraphContainer>
+        inline void addGraphs(const TJKQTPGraphContainer& gr, QVector<size_t>* graphIDsOut=nullptr) {
+            for (auto it=gr.begin(); it!=gr.end(); ++it) {
+                const auto id=addGraph(*it);
+                if (graphIDsOut) graphIDsOut->push_back(id);
+            }
+        }
+        /** \brief apply functor \a func to all graphs in the plotter. After completing the operation, the graph is updated */
+        void modifyGraphs(const std::function<void(JKQTPPlotElement*)>& func);
+        /** \brief sort the graphs, using functor \a compareLess to find whether a first graph shall be before (i.e. less) than a second graph. After completing the operation, the graph is updated */
+        void sortGraphs(const std::function<bool(const JKQTPPlotElement* , const JKQTPPlotElement* )>& compareLess);
+
+    public slots:
+        /** \brief remove all plots
+         *
+         *  \param deleteGraphs if set \c true (default) the graph objects will also be deleted
+         */
+        void clearGraphs(bool deleteGraphs=true);
+
+
+        /** \brief set all graphs in the plotter invisible
+         *
+         * \see setAllGraphsVisible(), setGraphVisible(), JKQTPPlotElement::setVisible()  */
+        void setAllGraphsInvisible();
+        /** \brief set all graphs in the plotter visible
+         *
+         * \see setAllGraphsInvisible(), setGraphVisible(), JKQTPPlotElement::setVisible() */
+        void setAllGraphsVisible();
+        /** \brief switch visibility of the \a i -th graph to \a visible
+         *
+         * \see setAllGraphsInvisible(), setAllGraphsVisible(), JKQTPPlotElement::setVisible() */
+        void setGraphVisible(int i, bool visible=true);
+        /** \brief switch visibility of the \a i -th graph to \a visible
+         *
+         * \see setAllGraphsInvisible(), setAllGraphsVisible(), JKQTPPlotElement::setVisible() */
+        void setGraphInvisible(int i);
+
+    public:
+
+        /** \brief Functor which can be used as filter predicate for getGraphsXMinMax() or getGraphsYMinMax()
+         *
+         *  \see getGraphsXMinMax(), getGraphsYMinMax(), allPlotElements
+         */
+        typedef std::function<bool(const JKQTPPlotElement*)> PlotElementPreciate;
+
+        /** \brief Functor which does not apply any filter to JKQTPPlotElement, e.g. in getGraphsXMinMax() or getGraphsYMinMax()
+         *
+         *  \see getGraphsXMinMax(), getGraphsYMinMax(), PlotElementPreciate
+         */
+        struct JKQTPLOTTER_LIB_EXPORT allPlotElements {
+            inline bool operator()(const JKQTPPlotElement*) const { return true; };
+        };
+        /** \brief filter functor which accepts only those JKQTPPlotElement where JKQTPPlotElement::getXAxisRef()
+         *         returns the JKQTPCoordinateAxisRef supplied to the constructor, e.g. in getGraphsXMinMax() or getGraphsYMinMax()
+         *
+         *  \see getGraphsXMinMax(), getGraphsYMinMax(), PlotElementPreciate
+         */
+        struct JKQTPLOTTER_LIB_EXPORT filterPlotElementByXAxis {
+            inline explicit filterPlotElementByXAxis(JKQTPCoordinateAxisRef ref_): ref(ref_) {};
+            inline bool operator()(const JKQTPPlotElement* el) const;
+        private:
+            JKQTPCoordinateAxisRef ref;
+        };
+        /** \brief filter functor which accepts only those JKQTPPlotElement where JKQTPPlotElement::getYAxisRef()
+         *         returns the JKQTPCoordinateAxisRef supplied to the constructor, e.g. in getGraphsXMinMax() or getGraphsYMinMax()
+         *
+         *  \see getGraphsXMinMax(), getGraphsYMinMax(), PlotElementPreciate
+         */
+        struct JKQTPLOTTER_LIB_EXPORT filterPlotElementByYAxis {
+            inline explicit filterPlotElementByYAxis(JKQTPCoordinateAxisRef ref_): ref(ref_) {};
+            inline bool operator()(const JKQTPPlotElement* el) const;
+        private:
+            JKQTPCoordinateAxisRef ref;
+        };
+        /** \brief get the maximum and minimum x-value over all graphs in the plot
+         *  \param[out] minx smallest x value
+         *  \param[out] maxx largest x value
+         *  \param[out] smallestGreaterZero smallest data point which is >0 (needed for scaling of logarithmic axes)
+         *  \param predicate a PlotElementPreciate, which can be used to limit the JKQTPPlotElement to be evaluated
+         *  \returns \c true if at least one matching graph was found and evaluated succcessfully
+         *
+         * The result is given in the two parameters which are call-by-reference parameters!
+         */
+        bool getGraphsXMinMax(double& minx, double& maxx, double& smallestGreaterZero, const PlotElementPreciate &predicate=allPlotElements());
+        /** \brief get the maximum and minimum y-value over all graphs in the plot
+         *  \param[out] miny smallest y value
+         *  \param[out] maxy largest y value
+         *  \param[out] smallestGreaterZero smallest data point which is >0 (needed for scaling of logarithmic axes)
+         *  \param predicate a PlotElementPreciate, which can be used to limit the JKQTPPlotElement to be evaluated
+         *  \returns \c true if at least one matching graph was found and evaluated succcessfully
+         *
+         * The result is given in the two parameters which are call-by-reference parameters!
+         */
+        bool getGraphsYMinMax(double& miny, double& maxy, double& smallestGreaterZero, const PlotElementPreciate &predicate=allPlotElements());
+/**@}*/
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/** @name Plot Styling & Settings Management */
+/**@{*/
 
         /** \brief loads all the plot properties from a <a href="http://doc.qt.io/qt-5/qsettings.html")">QSettings</a> object */
         void loadSettings(const QSettings& settings, const QString& group=QString("plots/"));
@@ -508,104 +759,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         /** \brief saves the plot user properties into a <a href="http://doc.qt.io/qt-5/qsettings.html")">QSettings</a> object. */
         void saveUserSettings(QSettings& settings, const QString& group=QString("plots_user/")) const;
 
-        /** \brief gets the width of the plot widget */
-        int getWidth();
-
-        /** \brief gets the width of the plot widget */
-        int getHeight();
-
-
-        /** \brief returns the current x-axis min */
-        double getXMin() const;
-
-        /** \brief returns the current x-axis max */
-        double getXMax() const;
-
-        /** \brief returns the current y-axis min */
-        double getYMin() const;
-
-        /** \brief returns the current y-axis max */
-        double getYMax() const;
-
-
-
-        /** \brief returns the given size in Didot points (0.376 mm) to pixels (with given dots per inch) */
-        inline double didot2px(double pt, double dpi) const {
-            return dpi/25.4*0.376*pt;
-        }
-        /** \brief returns the given size in Didot points (0.376 mm) to pixels (with dpi from painter) */
-        inline double didot2px(double pt, JKQTPEnhancedPainter& painter) const {
-            return didot2px(pt, painter.device()->logicalDpiX());
-        }
-        /** \brief returns the given size in Didot points (0.376 mm) to pixels (with dpi from painter) */
-        inline double didot2px(JKQTPEnhancedPainter& painter, double pt) const {
-            return didot2px(pt, painter.device()->logicalDpiX());
-        }
-
-        /** \brief returns the given size in DTP points points (1/72inch = 0.353mm) to pixels (with given dots per inch) */
-        inline double pt2px(double pt, double dpi) const {
-            return dpi*pt/72.0;
-        }
-        /** \brief returns the given size in DTP points points (1/72inch = 0.353mm) to pixels (with given dots per inch) */
-        inline double pt2px(double pt, JKQTPEnhancedPainter& painter) const {
-            return pt2px(pt, painter.device()->logicalDpiX());
-        }
-        /** \brief returns the given size in DTP points points (1/72inch = 0.353mm) to pixels (with given dots per inch) */
-        inline double pt2px(JKQTPEnhancedPainter& painter, double pt) const {
-            return pt2px(pt, painter.device()->logicalDpiX());
-        }
-
-        /** \brief returns the given size in millimeters to pixels (with given dots per inch) */
-        inline double mm2px(double mm, double dpi) const {
-            return dpi*mm/25.4;
-        }
-        /** \brief returns the given size in millimeters to pixels (with given dots per inch) */
-        inline double mm2px(double mm, JKQTPEnhancedPainter& painter) const {
-            return mm2px(mm, painter.device()->logicalDpiX());
-        }
-        /** \brief returns the given size in millimeters to pixels (with given dots per inch) */
-        inline double mm2px(JKQTPEnhancedPainter& painter, double mm) const {
-            return mm2px(mm, painter.device()->logicalDpiX());
-        }
-
-        /** \brief returns the absolute x-axis min */
-        double getAbsoluteXMin() const;
-
-        /** \brief returns the absolute x-axis max */
-        double getAbsoluteXMax() const;
-
-        /** \brief returns the absolute y-axis min */
-        double getAbsoluteYMin() const;
-
-        /** \brief returns the absolute y-axis max */
-        double getAbsoluteYMax() const;
-
-
-        /** \brief add a new plotter for grid printing mode */
-        void addGridPrintingPlotter(size_t x, size_t y, JKQTBasePlotter* plotter);
-
-        /** \brief clear all additional plotters for grid printing mode */
-        void clearGridPrintingPlotters();
-
-        /** \brief return x-pixel coordinate from x coordinate */
-        inline double x2p(double x) const {
-            return xAxis->x2p(x);
-        }
-
-        /** \brief return y-pixel coordinate from y coordinate */
-        inline double y2p(double y) const {
-            return yAxis->x2p(y);
-        }
-
-        /** \brief return x coordinate from x-pixel */
-        inline double p2x(double x) const {
-            return xAxis->p2x(x);
-        }
-
-        /** \brief return y coordinate from y-pixel */
-        inline double p2y(double y) const {
-            return yAxis->p2x(y);
-        }
 
         /** \brief gets the next unused style id, i.e. the smalles number >=0 which is not contained in usedStyles */
         int getNextStyle();
@@ -670,6 +823,157 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         /** \brief returns a QPen object for the i-th plot style */
         JKQTPPen getPlotStyle(int i, JKQTPPlotStyleType type=JKQTPPlotStyleType::Default) const;
 
+/**@}*/
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/** @name Utilities: Unit Trannsforms */
+/**@{*/
+
+
+        /** \brief returns the given size in Didot points (0.376 mm) to pixels (with given dots per inch) */
+        inline double didot2px(double pt, double dpi) const {
+            return dpi/25.4*0.376*pt;
+        }
+        /** \brief returns the given size in Didot points (0.376 mm) to pixels (with dpi from painter) */
+        inline double didot2px(double pt, JKQTPEnhancedPainter& painter) const {
+            return didot2px(pt, painter.device()->logicalDpiX());
+        }
+        /** \brief returns the given size in Didot points (0.376 mm) to pixels (with dpi from painter) */
+        inline double didot2px(JKQTPEnhancedPainter& painter, double pt) const {
+            return didot2px(pt, painter.device()->logicalDpiX());
+        }
+
+        /** \brief returns the given size in DTP points points (1/72inch = 0.353mm) to pixels (with given dots per inch) */
+        inline double pt2px(double pt, double dpi) const {
+            return dpi*pt/72.0;
+        }
+        /** \brief returns the given size in DTP points points (1/72inch = 0.353mm) to pixels (with given dots per inch) */
+        inline double pt2px(double pt, JKQTPEnhancedPainter& painter) const {
+            return pt2px(pt, painter.device()->logicalDpiX());
+        }
+        /** \brief returns the given size in DTP points points (1/72inch = 0.353mm) to pixels (with given dots per inch) */
+        inline double pt2px(JKQTPEnhancedPainter& painter, double pt) const {
+            return pt2px(pt, painter.device()->logicalDpiX());
+        }
+
+        /** \brief returns the given size in millimeters to pixels (with given dots per inch) */
+        inline double mm2px(double mm, double dpi) const {
+            return dpi*mm/25.4;
+        }
+        /** \brief returns the given size in millimeters to pixels (with given dots per inch) */
+        inline double mm2px(double mm, JKQTPEnhancedPainter& painter) const {
+            return mm2px(mm, painter.device()->logicalDpiX());
+        }
+        /** \brief returns the given size in millimeters to pixels (with given dots per inch) */
+        inline double mm2px(JKQTPEnhancedPainter& painter, double mm) const {
+            return mm2px(mm, painter.device()->logicalDpiX());
+        }
+
+        /** \brief return x-pixel coordinate from x coordinate, using the primary axis */
+        inline double x2p(double x) const {
+            return xAxis->x2p(x);
+        }
+
+        /** \brief return y-pixel coordinate from y coordinate, using the primary axis */
+        inline double y2p(double y) const {
+            return yAxis->x2p(y);
+        }
+
+        /** \brief return x coordinate from x-pixel, using the primary axis */
+        inline double p2x(double x) const {
+            return xAxis->p2x(x);
+        }
+
+        /** \brief return y coordinate from y-pixel, using the primary axis */
+        inline double p2y(double y) const {
+            return yAxis->p2x(y);
+        }
+/**@}*/
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/** @name Access to Plot Properties */
+/**@{*/
+
+
+        /** \brief gets the width of the plot widget */
+        int getWidth();
+
+        /** \brief gets the width of the plot widget */
+        int getHeight();
+
+
+        /** \brief returns the current x-axis min of the primary x-axis
+         *
+         *  \see JKQTPCoordinateAxis::getMin()
+         */
+        double getXMin() const;
+
+        /** \brief returns the current x-axis max of the primary x-axis
+         *
+         *  \see JKQTPCoordinateAxis::getMax()
+         */
+        double getXMax() const;
+
+        /** \brief returns the current y-axis min of the primary y-axis
+         *
+         *  \see JKQTPCoordinateAxis::getMin()
+         */
+        double getYMin() const;
+
+        /** \brief returns the current y-axis max of the primary y-axis
+         *
+         *  \see JKQTPCoordinateAxis::getMax()
+         */
+        double getYMax() const;
+
+
+
+
+        /** \brief returns the absolute x-axis min of the primary x-axis. This is the lowest allowed value the the axis min/max.
+         *
+         *  \see JKQTPCoordinateAxis::getAbsoluteMin()
+         */
+        double getAbsoluteXMin() const;
+
+        /** \brief returns the absolute x-axis max of the primary x-axis  This is the highest allowed value the the axis min/max.
+         *
+         *  \see JKQTPCoordinateAxis::getAbsoluteMax()
+         */
+        double getAbsoluteXMax() const;
+
+        /** \brief returns the absolute y-axis min of the primary y-axis  This is the lowest allowed value the the axis min/max.
+         *
+         *  \see JKQTPCoordinateAxis::getAbsoluteMin()
+         */
+        double getAbsoluteYMin() const;
+
+        /** \brief returns the absolute y-axis max of the primary y-axis  This is the highest allowed value the the axis min/max.
+         *
+         *  \see JKQTPCoordinateAxis::getAbsoluteMax()
+         */
+        double getAbsoluteYMax() const;
+
+
+        /** \brief add a new plotter for grid printing mode */
+        void addGridPrintingPlotter(size_t x, size_t y, JKQTBasePlotter* plotter);
+
+        /** \brief clear all additional plotters for grid printing mode */
+        void clearGridPrintingPlotters();
+
+/**@}*/
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/** @name Drawing Functions */
+/**@{*/
+
         /*! \brief draw the contained graph (including grid prints) into the given JKQTPEnhancedPainter
             \param painter JKQTPEnhancedPainter to which the plot should be drawn
             \param rect rectangle to plot into
@@ -694,20 +998,19 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
          */
         void drawNonGrid(JKQTPEnhancedPainter& painter, const QPoint& pos=QPoint(0,0));
 
-        /** \brief updates the secondary axes
-         *
-         *  The plot may contain (in addition to its primary axes) also secondary axes, that depend in their
-         *  scaling (min,max, ...) on the primmary axes of the plot. This function updates/recalculates the
-         *  scaling of these axes.
-         */
-        void updateSecondaryAxes();
-        /** \brief emit plotUpdated() */
-        void redrawPlot() { if (emitPlotSignals) emit plotUpdated(); }
+
+        /** \brief emit plotUpdated(), which can be used by e.g. a widget class to update the displayed plot */
+        inline void redrawPlot() { if (emitPlotSignals) emit plotUpdated(); }
 
         /** \brief controls, whether the signals plotUpdated() are emitted */
         void setEmittingPlotSignalsEnabled(bool __value);
         /** \brief returns, whether the signals plotUpdated() are emitted */
         bool isEmittingPlotSignalsEnabled() const;
+        /** \brief returns whether this class emits signals, like zoomChangedLocally() or beforePlotScalingRecaluclate() */
+        bool isEmittingSignalsEnabled()const;
+        /** \brief specifies whether this class emits signals, like zoomChangedLocally() or beforePlotScalingRecaluclate() */
+        void setEmittingSignalsEnabled(bool enabled);
+
 
         /** \copydoc JKQTBasePlotterStyle::plotBorderTop  */
         int getPlotBorderTop() const;
@@ -794,6 +1097,19 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         double getDefaultTextSize() const;
         /** \copydoc JKQTBasePlotterStyle::defaultFontName */
         QString getDefaultTextFontName() const;
+        /** \copydoc fontSizePrintMultiplier */
+        void setFontSizePrintMultiplier(double __value);
+        /** \copydoc fontSizePrintMultiplier */
+        double getFontSizePrintMultiplier() const;
+        /** \copydoc lineWidthPrintMultiplier */
+        void setLineWidthPrintMultiplier(double __value);
+        /** \copydoc lineWidthPrintMultiplier */
+        double getLineWidthPrintMultiplier() const;
+        /** \copydoc fontSizeMultiplier */
+        double getFontSizeMultiplier() const;
+        /** \copydoc lineWidthMultiplier */
+        double getLineWidthMultiplier() const;
+
         /** \brief if set \c true (default: \c false ) the JKQTBasePlotter draws colored rectangles to indicate the different regions in the plot (border, axes, ...)
          *
          *
@@ -961,6 +1277,30 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
          *  \see \ref jkqtplotter_base_grids_baseplotter_secondaryaxes , \subpage JKQTPlotterSecondaryAxes
          */
         JKQTPCoordinateAxisRef addSecondaryYAxis(JKQTPVerticalAxisBase* axis);
+        /** \brief updates the secondary axes
+         *
+         *  The plot may contain (in addition to its primary axes) also secondary axes, that depend in their
+         *  scaling (min,max, ...) on the primmary axes of the plot. This function updates/recalculates the
+         *  scaling of these axes.
+         */
+        void updateSecondaryAxes();
+
+
+        /** \brief takes a new axis range \a xminn ... \a xmaxx and \a yminn ... \a ymaxx and corrects the values to match the currently set axisAspectRatio
+         *
+         *  This function is used by setXY(), setX(), setY().
+         *
+         *  \see axisAspectRatio, setXY(), setX(), setY()
+         */
+        void correctXYRangeForAspectRatio(double &xminn, double &xmaxx, double &yminn, double &ymaxx) const;
+
+/**@}*/
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/** @name QActions Management */
+/**@{*/
 
         /** \copydoc actSavePlot */
         QAction* getActionSavePlot() const;
@@ -1003,138 +1343,20 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
          */
         void deregisterAdditionalAction(QAction* act);
 
+
+
+/**@}*/
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/** @name Master/Slave Plot Synchronization */
+/**@{*/
+
         /** \copydoc masterSynchronizeWidth */ 
         bool getMasterSynchronizeWidth() const;
         /** \copydoc masterSynchronizeHeight */ 
         bool getMasterSynchronizeHeight() const;
-        /** \copydoc fontSizePrintMultiplier */ 
-        void setFontSizePrintMultiplier(double __value);
-        /** \copydoc fontSizePrintMultiplier */ 
-        double getFontSizePrintMultiplier() const;
-        /** \copydoc lineWidthPrintMultiplier */ 
-        void setLineWidthPrintMultiplier(double __value);
-        /** \copydoc lineWidthPrintMultiplier */ 
-        double getLineWidthPrintMultiplier() const;
-        /** \copydoc fontSizeMultiplier */ 
-        double getFontSizeMultiplier() const;
-        /** \copydoc lineWidthMultiplier */ 
-        double getLineWidthMultiplier() const;
-
-
-        /** \brief returns description of i'th graph */
-        JKQTPPlotElement* getGraph(size_t i);
-
-        /** \brief returns the number of graphs */
-        size_t getGraphCount();
-
-        /** \brief remove the i-th graph */
-        void deleteGraph(size_t i, bool deletegraph=true);
-
-        /** \brief remove the given graph, if it is contained */
-        void deleteGraph(JKQTPPlotElement* gr, bool deletegraph=true);
-
-        /** \brief remove all plots
-         *
-         *  \param deleteGraphs if set \c true (default) the graph objects will also be deleted
-         */
-        void clearGraphs(bool deleteGraphs=true);
-
-        /** \brief set all graphs in the plotter invisible
-         *
-         * \see setAllGraphsVisible(), setGraphVisible(), JKQTPPlotElement::setVisible()  */
-        void setAllGraphsInvisible();
-        /** \brief set all graphs in the plotter visible
-         *
-         * \see setAllGraphsInvisible(), setGraphVisible(), JKQTPPlotElement::setVisible() */
-        void setAllGraphsVisible();
-        /** \brief switch visibility of the \a i -th graph to \a visible
-         *
-         * \see setAllGraphsInvisible(), setAllGraphsVisible(), JKQTPPlotElement::setVisible() */
-        void setGraphVisible(int i, bool visible=true);
-
-        /** \brief add a new graph, returns it's position in the graphs list, if the graph is already in the plot, this returns the index in the list */
-        size_t addGraph(JKQTPPlotElement* gr);
-
-        /** \brief returns \c true, if the given graph is in this plot */
-        bool containsGraph(JKQTPPlotElement* gr) const;
-
-        /** \brief move the given graph to the top, or add it, if it is not yet contained */
-        size_t moveGraphTop(JKQTPPlotElement* gr);
-        /** \brief move the given graph to the top, or add it, if it is not yet contained */
-        size_t moveGraphBottom(JKQTPPlotElement* gr);
-
-        /** \brief  add a new graphs from a QVector<JKQTPPlotElement*>, QList<JKQTPPlotElement*>, std::vector<JKQTPPlotElement*> ... or any standard-iterateable container with JKQTPPlotElement*-items
-         *
-         *  \tparam TJKQTPGraphContainer a container type with default C++-sytle iterator interface
-         *                               (i.e. methods \c begin() and \c end() and an iterator, which may be
-         *                               moved to the next element with the operator \c ++ .
-         *  \param gr Container of type TJKQTPGraphContainer, which contains the graphs \b Note: The JKQTPlotter takes ownership of graphs in \a gr .
-         *  \param[out] graphIDsOut optional output parameter, the vector will contain the IDs of each graph added to theis plot
-         */
-        template <class TJKQTPGraphContainer>
-        inline void addGraphs(const TJKQTPGraphContainer& gr, QVector<size_t>* graphIDsOut=nullptr) {
-            for (auto it=gr.begin(); it!=gr.end(); ++it) {
-                const size_t g=addGraph(*it);
-                if (graphIDsOut) graphIDsOut->push_back(g);
-            }
-        }
-
-        /** \brief Functor which can be used as filter predicate for getGraphsXMinMax() or getGraphsYMinMax()
-         *
-         *  \see getGraphsXMinMax(), getGraphsYMinMax(), allPlotElements
-         */
-        typedef std::function<bool(const JKQTPPlotElement*)> PlotElementPreciate;
-
-        /** \brief Functor which does not apply any filter to JKQTPPlotElement, e.g. in getGraphsXMinMax() or getGraphsYMinMax()
-         *
-         *  \see getGraphsXMinMax(), getGraphsYMinMax(), PlotElementPreciate
-         */
-        struct JKQTPLOTTER_LIB_EXPORT allPlotElements {
-            inline bool operator()(const JKQTPPlotElement*) const { return true; };
-        };
-        /** \brief filter functor which accepts only those JKQTPPlotElement where JKQTPPlotElement::getXAxisRef()
-         *         returns the JKQTPCoordinateAxisRef supplied to the constructor, e.g. in getGraphsXMinMax() or getGraphsYMinMax()
-         *
-         *  \see getGraphsXMinMax(), getGraphsYMinMax(), PlotElementPreciate
-         */
-        struct JKQTPLOTTER_LIB_EXPORT filterPlotElementByXAxis {
-            inline explicit filterPlotElementByXAxis(JKQTPCoordinateAxisRef ref_): ref(ref_) {};
-            inline bool operator()(const JKQTPPlotElement* el) const;
-        private:
-            JKQTPCoordinateAxisRef ref;
-        };
-        /** \brief filter functor which accepts only those JKQTPPlotElement where JKQTPPlotElement::getYAxisRef()
-         *         returns the JKQTPCoordinateAxisRef supplied to the constructor, e.g. in getGraphsXMinMax() or getGraphsYMinMax()
-         *
-         *  \see getGraphsXMinMax(), getGraphsYMinMax(), PlotElementPreciate
-         */
-        struct JKQTPLOTTER_LIB_EXPORT filterPlotElementByYAxis {
-            inline explicit filterPlotElementByYAxis(JKQTPCoordinateAxisRef ref_): ref(ref_) {};
-            inline bool operator()(const JKQTPPlotElement* el) const;
-        private:
-            JKQTPCoordinateAxisRef ref;
-        };
-        /** \brief get the maximum and minimum x-value over all graphs in the plot
-         *  \param[out] minx smallest x value
-         *  \param[out] maxx largest x value
-         *  \param[out] smallestGreaterZero smallest data point which is >0 (needed for scaling of logarithmic axes)
-         *  \param predicate a PlotElementPreciate, which can be used to limit the JKQTPPlotElement to be evaluated
-         *  \returns \c true if at least one matching graph was found and evaluated succcessfully
-         *
-         * The result is given in the two parameters which are call-by-reference parameters!
-         */
-        bool getGraphsXMinMax(double& minx, double& maxx, double& smallestGreaterZero, const PlotElementPreciate &predicate=allPlotElements());
-        /** \brief get the maximum and minimum y-value over all graphs in the plot
-         *  \param[out] miny smallest y value
-         *  \param[out] maxy largest y value
-         *  \param[out] smallestGreaterZero smallest data point which is >0 (needed for scaling of logarithmic axes)
-         *  \param predicate a PlotElementPreciate, which can be used to limit the JKQTPPlotElement to be evaluated
-         *  \returns \c true if at least one matching graph was found and evaluated succcessfully
-         *
-         * The result is given in the two parameters which are call-by-reference parameters!
-         */
-        bool getGraphsYMinMax(double& miny, double& maxy, double& smallestGreaterZero, const PlotElementPreciate &predicate=allPlotElements());
-
 
 
         /** \brief denotes, which axes to synchronize in synchronizeToMaster() */
@@ -1191,37 +1413,14 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         /** \brief switches any synchronization off, that has been created by synchronizeToMaster() */
         void resetMasterSynchronization(SynchronizationDirection synchronizeDirection=sdXYAxes);
 
+/**@}*/
 
 
 
 
-
-
-
-        /** \brief save the current plot data as a Comma Separated Values (CSV) file
-         *
-         * \param filename the file to save to, if \a filename is empty, a file open dialog will be shown
-         * \param decimalSeparator decimal separator for outpu
-         * \param commentInitializer line-start for comment lines
-         */
-        void saveAsCSV(const QString& filename, const QString& decimalSeparator, const QString& commentInitializer);
-
-        /** \brief save the current plot data as a Semicolon Separated Values (SSV) file
-         *
-         * \param filename the file to save to, if \a filename is empty, a file open dialog will be shown
-         * \param decimalSeparator decimal separator for outpu
-         * \param commentInitializer line-start for comment lines
-         */
-        void saveAsSemicolonSV(const QString& filename, const QString& decimalSeparator, const QString& commentInitializer);        /** \brief save the current plot data as a Tabulator Separated Values (CSV) file
-         *
-         * \param filename the file to save to, if \a filename is empty, a file open dialog will be shown
-         * \param decimalSeparator decimal separator for outpu
-         * \param commentInitializer line-start for comment lines
-         */
-        void saveAsTabSV(const QString& filename, const QString& decimalSeparator, const QString& commentInitializer);
-
-
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/** @name Utilities: (math-markup) Text Sizing */
+/**@{*/
         /** \brief internal tool class for text sizes
          *   \ingroup jkqtpplottersupprt
          *  \internal */
@@ -1266,15 +1465,11 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
          * \internal
          */
         QSizeF getTextSizeSize(const QString& fontName, double fontSize, const QString& text,  QPainter &painter);
+/**@}*/
 
 
-        /** \brief takes a new axis range \a xminn ... \a xmaxx and \a yminn ... \a ymaxx and corrects the values to match the currently set axisAspectRatio
-         *
-         *  This function is used by setXY(), setX(), setY().
-         *
-         *  \see axisAspectRatio, setXY(), setX(), setY()
-         */
-        void correctXYRangeForAspectRatio(double &xminn, double &xmaxx, double &yminn, double &ymaxx) const;
+
+
     signals:
         /** \brief signal: emitted whenever the user selects a new x-y zoom range (by mouse) */
         void zoomChangedLocally(double newxmin, double newxmax, double newymin, double newymax, JKQTBasePlotter* sender);
@@ -1488,7 +1683,11 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         /** \brief sets x/ymin and x/ymax to the supplied values and replots the graph (zoom operation!) */
         void zoom(double nxmin, double nxmax, double nymin, double nymax);
 
-        /** \brief sets whether to plot grid lines or not */
+        /** \brief sets whether to plot grid lines or not
+        *
+        * \image html jkqtplotter_gridvisible.png "Grid visible"
+        * \image html jkqtplotter_gridinvisible.png "Grid invisible"
+        */
         void setGrid(bool val);
 
         /** \brief sets the color of all Major grid lines
@@ -1871,7 +2070,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         void drawSystemXAxis(JKQTPEnhancedPainter& painter);
         /** \brief plot the x coordinate axis (incl. labels) */
         void drawSystemYAxis(JKQTPEnhancedPainter& painter);
-        /** \brief plot the graphs */
+        /** \brief plot the graphs in the order they appear in the list graphs, i.e. initially the order of the addGraph() calls. So the graph at the end of the list is drawn ON TOP. */
         void drawGraphs(JKQTPEnhancedPainter& painter);
         /** \brief plot a key */
         void drawKey(JKQTPEnhancedPainter& painter);
@@ -2330,7 +2529,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
 
 
         /** \brief a vector that contains all graphs to be plottet in the system */
-        QList<JKQTPPlotElement*> graphs;
+        GraphsList graphs;
 
 
 

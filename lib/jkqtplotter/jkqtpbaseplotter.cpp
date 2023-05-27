@@ -372,7 +372,7 @@ void JKQTBasePlotter::useAsInternalDatastore(JKQTPDatastore* newStore){
     }
     datastore=newStore;
     datastoreInternal=true;
-    if (emitPlotSignals) emit plotUpdated();
+    redrawPlot();
 }
 
 void JKQTBasePlotter::useInternalDatastore(){
@@ -380,7 +380,7 @@ void JKQTBasePlotter::useInternalDatastore(){
         datastore=new JKQTPDatastore();
         datastoreInternal=true;
     }
-    if (emitPlotSignals) emit plotUpdated();
+    redrawPlot();
 }
 
 void JKQTBasePlotter::forceInternalDatastore(){
@@ -390,7 +390,7 @@ void JKQTBasePlotter::forceInternalDatastore(){
     }
     datastore=new JKQTPDatastore();
     datastoreInternal=true;
-    if (emitPlotSignals) emit plotUpdated();
+    redrawPlot();
 }
 
 bool JKQTBasePlotter::isEmittingSignalsEnabled() const {
@@ -427,7 +427,7 @@ void JKQTBasePlotter::initSettings() {
 
     plotLabel="";
 
-    if (emitPlotSignals) emit plotUpdated();
+    redrawPlot();
 }
 
 
@@ -449,7 +449,7 @@ void JKQTBasePlotter::zoomIn(double factor) {
         ax->setRange(ymin, ymax);
     }
 
-    if (emitPlotSignals) emit plotUpdated();
+    redrawPlot();
     if (emitSignals) emit zoomChangedLocally(xAxis->getMin(), xAxis->getMax(), yAxis->getMin(), yAxis->getMax(), this);
 }
 
@@ -478,7 +478,7 @@ void JKQTBasePlotter::zoom(double nxmin, double nxmax, double nymin, double nyma
 
     xAxis->setRange(xmin, xmax);
     yAxis->setRange(ymin, ymax);
-    if (emitPlotSignals) emit plotUpdated();
+    redrawPlot();
     if (emitSignals) emit zoomChangedLocally(xAxis->getMin(), xAxis->getMax(), yAxis->getMin(), yAxis->getMax(), this);
 }
 
@@ -486,7 +486,7 @@ void JKQTBasePlotter::setWidgetSize(int wid, int heigh) {
     widgetWidth=wid;
     widgetHeight=heigh;
 
-    if (emitPlotSignals) emit plotUpdated();
+    redrawPlot();
 }
 
 int JKQTBasePlotter::getWidth() {
@@ -544,12 +544,12 @@ void JKQTBasePlotter::clearGridPrintingPlotters() {
 
 void JKQTBasePlotter::setWidgetWidth(int wid) {
     widgetWidth=wid;
-    if (emitPlotSignals) emit plotUpdated();
+    redrawPlot();
 }
 
 void JKQTBasePlotter::setWidgetHeight(int heigh) {
     widgetHeight=heigh;
-    if (emitPlotSignals) emit plotUpdated();
+    redrawPlot();
 }
 
 void JKQTBasePlotter::saveSettings(QSettings& settings, const QString& group) const{
@@ -611,7 +611,7 @@ void JKQTBasePlotter::propagateStyle() {
         }
     }
     emitPlotSignals=old;
-    if (emitPlotSignals) emit plotUpdated();
+    redrawPlot();
 }
 
 void JKQTBasePlotter::loadCurrentPlotterStyle(const QSettings &settings, const QString &group)
@@ -703,7 +703,7 @@ void JKQTBasePlotter::loadSettings(const QSettings &settings, const QString& gro
 
     loadUserSettings();
 
-    if (emitPlotSignals) emit plotUpdated();
+    redrawPlot();
 }
 
 
@@ -4205,31 +4205,31 @@ void JKQTBasePlotter::setPlotBorder(int left, int right, int top, int bottom){
     plotterStyle.plotBorderBottom=bottom;
     plotterStyle.plotBorderRight=right;
     //updateGeometry();
-    if (emitPlotSignals) emit plotUpdated();
+    redrawPlot();
 }
 
 void JKQTBasePlotter::setPlotBorderLeft(int left)
 {
     plotterStyle.plotBorderLeft=left;
-    if (emitPlotSignals) emit plotUpdated();
+    redrawPlot();
 }
 
 void JKQTBasePlotter::setPlotBorderRight(int right)
 {
     plotterStyle.plotBorderRight=right;
-    if (emitPlotSignals) emit plotUpdated();
+    redrawPlot();
 }
 
 void JKQTBasePlotter::setPlotBorderTop(int top)
 {
     plotterStyle.plotBorderTop=top;
-    if (emitPlotSignals) emit plotUpdated();
+    redrawPlot();
 }
 
 void JKQTBasePlotter::setPlotBorderBottom(int bottom)
 {
     plotterStyle.plotBorderBottom=bottom;
-    if (emitPlotSignals) emit plotUpdated();
+    redrawPlot();
 }
 
 void JKQTBasePlotter::synchronizeToMaster(JKQTBasePlotter* master, SynchronizationDirection synchronizeDirection, bool synchronizeAxisLength, bool synchronizeZoomingMasterToSlave, bool synchronizeZoomingSlaveToMaster) {
@@ -4874,7 +4874,11 @@ JKQTPPlotElement* JKQTBasePlotter::getGraph(size_t i) {
     return graphs[static_cast<int>(i)];
 };
 
-size_t JKQTBasePlotter::getGraphCount() {
+const JKQTPPlotElement* JKQTBasePlotter::getGraph(size_t i) const {
+    return graphs[static_cast<int>(i)];
+};
+
+size_t JKQTBasePlotter::getGraphCount() const {
     return static_cast<size_t>(graphs.size());
 };
 
@@ -4883,18 +4887,18 @@ void JKQTBasePlotter::deleteGraph(size_t i, bool deletegraph) {
     JKQTPPlotElement* g=graphs[static_cast<int>(i)];
     graphs.removeAt(static_cast<int>(i));
     if (deletegraph && g) delete g;
-    if (emitPlotSignals) emit plotUpdated();
+    redrawPlot();
 };
 
 void JKQTBasePlotter::deleteGraph(JKQTPPlotElement* gr, bool deletegraph) {
-    int i=graphs.indexOf(gr);
+    int i=indexOfGraph(gr);
     while (i>=0) {
         graphs.removeAt(i);
-        i=graphs.indexOf(gr);
+        i=indexOfGraph(gr);
     }
 
     if (deletegraph && gr) delete gr;
-    if (emitPlotSignals) emit plotUpdated();
+    redrawPlot();
 }
 
 void JKQTBasePlotter::clearGraphs(bool deleteGraphs) {
@@ -4904,7 +4908,7 @@ void JKQTBasePlotter::clearGraphs(bool deleteGraphs) {
     }
     graphs.clear();
     usedStyles.clear();
-    if (emitPlotSignals) emit plotUpdated();
+    redrawPlot();
 }
 
 void JKQTBasePlotter::setAllGraphsInvisible()
@@ -4913,7 +4917,7 @@ void JKQTBasePlotter::setAllGraphsInvisible()
         JKQTPPlotElement* g=graphs[i];
         g->setVisible(false);
     }
-    if (emitPlotSignals) emit plotUpdated();
+    redrawPlot();
 }
 
 void JKQTBasePlotter::setAllGraphsVisible()
@@ -4922,14 +4926,19 @@ void JKQTBasePlotter::setAllGraphsVisible()
         JKQTPPlotElement* g=graphs[i];
         g->setVisible(true);
     }
-    if (emitPlotSignals) emit plotUpdated();
+    redrawPlot();
 }
 
 void JKQTBasePlotter::setGraphVisible(int i, bool visible)
 {
     JKQTPPlotElement* g=graphs.value(i, nullptr);
     if (g) g->setVisible(visible);
-    if (emitPlotSignals) emit plotUpdated();
+    redrawPlot();
+}
+
+void JKQTBasePlotter::setGraphInvisible(int i)
+{
+    setGraphVisible(i, false);
 }
 
 void JKQTBasePlotter::setOnlyGraphVisible(int gr)
@@ -4940,7 +4949,7 @@ void JKQTBasePlotter::setOnlyGraphVisible(int gr)
     }
     JKQTPPlotElement* g=graphs.value(gr, nullptr);
     if (g) g->setVisible(true);
-    if (emitPlotSignals) emit plotUpdated();
+    redrawPlot();
 }
 
 void JKQTBasePlotter::setOnlyNthGraphsVisible(int start, int n)
@@ -4953,53 +4962,122 @@ void JKQTBasePlotter::setOnlyNthGraphsVisible(int start, int n)
         JKQTPPlotElement* g=graphs.value(i, nullptr);
         if (g) g->setVisible(true);
     }
-    if (emitPlotSignals) emit plotUpdated();
+    redrawPlot();
 }
 
-size_t JKQTBasePlotter::addGraph(JKQTPPlotElement* gr) {
+size_t JKQTBasePlotter::addGraphOnTop(JKQTPPlotElement* gr) {
     gr->setParent(this);
-    for (int i=0; i<graphs.size(); i++) {
-        if (graphs[i]==gr) return static_cast<size_t>(i);
+    const int indexGR=indexOfGraph(gr);
+    if (indexGR>=0) {
+        graphs.removeAt(indexGR);
     }
     graphs.push_back(gr);
-    if (emitPlotSignals) emit plotUpdated();
-    return static_cast<size_t>(graphs.size()-1);
-};
-
-size_t JKQTBasePlotter::moveGraphTop(JKQTPPlotElement* gr) {
-    gr->setParent(this);
-    for (int i=0; i<graphs.size(); i++) {
-        if (graphs[i]==gr) {
-            if (i<graphs.size()-1) {
-                graphs.removeAt(i);
-                graphs.push_back(gr);
-            }
-            return static_cast<size_t>(graphs.size()-1);
-        }
-    }
-    graphs.push_back(gr);
-    if (emitPlotSignals) emit plotUpdated();
+    redrawPlot();
     return static_cast<size_t>(graphs.size()-1);
 }
 
-size_t JKQTBasePlotter::moveGraphBottom(JKQTPPlotElement *gr)
-{
+size_t JKQTBasePlotter::addGraphAtBottom(JKQTPPlotElement* gr) {
     gr->setParent(this);
-    for (int i=0; i<graphs.size(); i++) {
-        if (graphs[i]==gr) {
-            if (i<graphs.size()-1) {
-                graphs.removeAt(i);
-                graphs.push_front(gr);
-            }
-            return 0;
-        }
+    const int indexGR=indexOfGraph(gr);
+    if (indexGR>=0) {
+        graphs.removeAt(indexGR);
     }
     graphs.push_front(gr);
-    if (emitPlotSignals) emit plotUpdated();
-    return static_cast<size_t>(graphs.size()-1);
+    redrawPlot();
+    return static_cast<size_t>(0);
+
+}
+
+void JKQTBasePlotter::moveGraphTop(int idx) {
+    if (idx>=0 && idx<graphs.size()) {
+        JKQTPPlotElement* g=graphs[idx];
+        graphs.removeAt(idx);
+        graphs.push_back(g);
+        redrawPlot();
+    } else {
+        throw std::out_of_range("index out of range in JKQTBasePlotter::moveGraphTop()");
+    }
+}
+
+void JKQTBasePlotter::moveGraphBottom(int idx)
+{
+    if (idx>=0 && idx<graphs.size()) {
+        JKQTPPlotElement* g=graphs[idx];
+        graphs.removeAt(idx);
+        graphs.push_front(g);
+        redrawPlot();
+    } else {
+        throw std::out_of_range("index out of range in JKQTBasePlotter::moveGraphBottom()");
+    }
+}
+
+int JKQTBasePlotter::indexOfGraph(const JKQTPPlotElement *gr) const
+{
+    for (int i=0; i<graphs.size(); i++) {
+        if (graphs[i]==gr) return i;
+    }
+    return -1;
+}
+
+void JKQTBasePlotter::moveGraphUp(int idx)
+{
+    if (idx>=0 && idx<graphs.size()) {
+        if (idx+1<graphs.size()) {
+            graphs.move(idx, idx+1);
+            redrawPlot();
+        }
+    } else {
+        throw std::out_of_range("index out of range in JKQTBasePlotter::moveGraphUp()");
+    }
+}
+
+void JKQTBasePlotter::moveGraphDown(int idx)
+{
+    if (idx>=0 && idx<graphs.size()) {
+        if (idx-1>=0) {
+            graphs.move(idx-1, idx);
+            redrawPlot();
+        }
+    } else {
+        throw std::out_of_range("index out of range in JKQTBasePlotter::moveGraphDown()");
+    }
+}
+
+void JKQTBasePlotter::moveGraphUp(const JKQTPPlotElement *gr) {
+    moveGraphUp(indexOfGraph(gr));
+}
+
+void JKQTBasePlotter::moveGraphDown(const JKQTPPlotElement *gr)
+{
+    moveGraphDown(indexOfGraph(gr));
+}
+
+void JKQTBasePlotter::moveGraphTop(const JKQTPPlotElement *gr) {
+    moveGraphTop(indexOfGraph(gr));
+}
+
+void JKQTBasePlotter::moveGraphBottom(const JKQTPPlotElement *gr)
+{
+    moveGraphBottom(indexOfGraph(gr));
+}
+
+void JKQTBasePlotter::modifyGraphs(const std::function<void (JKQTPPlotElement *)> &func)
+{
+    if (!func) return;
+    for (int i=0; i<graphs.size(); i++) {
+        func(graphs[i]);
+    }
+    redrawPlot();
+}
+
+void JKQTBasePlotter::sortGraphs(const std::function<bool (const JKQTPPlotElement *, const JKQTPPlotElement *)> &compareLess)
+{
+    if (!compareLess) return;
+    std::sort(graphs.begin(), graphs.end(), compareLess);
+    redrawPlot();
 };
 
-bool JKQTBasePlotter::containsGraph(JKQTPPlotElement* gr) const {
+bool JKQTBasePlotter::containsGraph(const JKQTPPlotElement* gr) const {
     for (int i=0; i<graphs.size(); i++) {
         if (graphs[i]==gr) {
             return true;
