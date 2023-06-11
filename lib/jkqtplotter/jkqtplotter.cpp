@@ -1066,7 +1066,7 @@ void JKQTPlotter::wheelEvent ( QWheelEvent * event ) {
 
     event->accept();
 
-    emit plotMouseWheelOperated(plotter->p2x(wheel_x), plotter->p2x(wheel_y), event->modifiers(), event->angleDelta().x(), event->angleDelta().y());
+    emit plotMouseWheelOperated(plotter->p2x(wheel_x/magnification), plotter->p2y((wheel_y-getPlotYOffset())/magnification), event->modifiers(), event->angleDelta().x(), event->angleDelta().y());
 
     updateCursor();
     currentMouseDragAction.clear();

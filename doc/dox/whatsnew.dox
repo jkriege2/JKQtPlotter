@@ -29,6 +29,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>FIXED: styling was not properly applied to coordinate axes of colorbars outside the plot</li>
     <li>FIXED issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/73">#73: Symbol thickness differs in actual plot and legend</a>, thanks to <a href="https://github.com/sim186">user:sim186</a></li>
     <li>FIXED plot-size calculation for filled graphs</li>
+    <li>FIXED issue #98: Signal JKQTPlotter::plotMouseWheelOperated() was called with wrong x/y-position-coordinates, thanks to <a href="https://github.com/fpalazzolo">user:fpalazzolo</a> for reporting this bug<li>
     <li>REORGANIZED: separated line-graphs from jkqtpscatter.h/.cpp into jkqtplines.h/.cpp</li>
     <li>IMPROVED: QT6-compatibility by removing deprecated warnings</li>
     <li>IMPROVED/REWORKED: reworked JKQTPErrorPlotstyle and error indicator plotting so error-inidcators can be specified as ORed combination of flags from JKQTPErrorPlotstyleElements, added additional error indicator styles (half-bars, arrows...)</li>
