@@ -28,7 +28,6 @@
 #include <QtGui>
 #endif
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/graphs/jkqtpscatter.h"
 #include "jkqtplotter.h"
 
 
