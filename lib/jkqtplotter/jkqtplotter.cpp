@@ -1010,65 +1010,104 @@ void JKQTPlotter::wheelEvent ( QWheelEvent * event ) {
     const double wheel_x=event->position().x();
     const double wheel_y=event->position().y();
 #else
-    const int wheel_x=event->pos().x();
-    const int wheel_y=event->pos().y();
+    const double wheel_x=event->pos().x();
+    const double wheel_y=event->pos().y();
 #endif
-
-    //qDebug()<<"wheelEvent("<<event->modifiers()<<"): plotterStyle.registeredMouseWheelActions="<<plotterStyle.registeredMouseWheelActions;
+    const QPoint angleDelta=event->angleDelta();
+    QRectF zoomRect= QRectF(QPointF(plotter->x2p(getXAxis()->getMin()),plotter->y2p(getYAxis()->getMax())), QPointF(plotter->x2p(getXAxis()->getMax()),plotter->y2p(getYAxis()->getMin())));
+    //qDebug()<<"wheelEvent: "<<event->type()<<", "<<event->modifiers()<<", "<<angleDelta<<", "<<event->pixelDelta()<<", "<<event->inverted()<<", "<<event->source()<<", "<<event->buttons();
     bool foundIT=false;
     auto itAction=findMatchingMouseWheelAction(event->modifiers(), &foundIT);
-    //qDebug()<<"wheelEvent("<<event->modifiers()<<"): plotterStyle.registeredMouseWheelActions="<<plotterStyle.registeredMouseWheelActions;
-    //qDebug()<<"wheelEvent("<<event->modifiers()<<"): itAction="<<itAction.key()<<","<<itAction.value()<<"  !=end:"<<(itAction!=plotterStyle.registeredMouseWheelActions.end())<<"  ==end:"<<(itAction==plotterStyle.registeredMouseWheelActions.end());
+
+    enum {
+        acZoom,
+        acPan,
+        acNone
+    } acTodo=acNone;
+    QPointF d(0,0); // for acPan, the shift of the ROI
+    double factor=1; // for zooming, the zoom-factor
 
     if (foundIT) {
         if (itAction.value()==JKQTPMouseWheelActions::jkqtpmwaZoomByWheel) {
-        //if (act==JKQTPMouseWheelActions::jkqtpmwaZoomByWheel) {
-            //qDebug()<<"wheelEvent("<<event->modifiers()<<"):ZoomByWheel";
-            const double factor=pow(2.0, 1.0*static_cast<double>(event->angleDelta().y())/120.0)*2.0;
-            double xmin=plotter->p2x(static_cast<double>(wheel_x)/magnification-static_cast<double>(plotter->getPlotWidth())/factor);
-            double xmax=plotter->p2x(static_cast<double>(wheel_x)/magnification+static_cast<double>(plotter->getPlotWidth())/factor);
-            double ymin=plotter->p2y(static_cast<double>(wheel_y)/magnification-static_cast<double>(getPlotYOffset())+static_cast<double>(plotter->getPlotHeight())/factor);
-            double ymax=plotter->p2y(static_cast<double>(wheel_y)/magnification-static_cast<double>(getPlotYOffset())-static_cast<double>(plotter->getPlotHeight())/factor);
-            if  ( (wheel_x/magnification<plotter->getInternalPlotBorderLeft()) || (wheel_x/magnification>plotter->getPlotWidth()+plotter->getInternalPlotBorderLeft()) ) {
-                xmin=getXMin();
-                xmax=getXMax();
-            } else if (((wheel_y-getPlotYOffset())/magnification<plotter->getInternalPlotBorderTop()) || ((wheel_y-getPlotYOffset())/magnification>plotter->getPlotHeight()+plotter->getInternalPlotBorderTop()) ) {
-                ymin=getYMin();
-                ymax=getYMax();
+            acTodo=acZoom;
+            if (abs(angleDelta.y())>30 && angleDelta.x()==0) {
+                factor=pow(2.0, 1.0*static_cast<double>(angleDelta.y())/120.0);
+            } else if (abs(angleDelta.x())>30 && angleDelta.y()==0) {
+                factor=pow(2.0, 1.0*static_cast<double>(angleDelta.x())/120.0);
             }
-            plotter->setXY(xmin, xmax, ymin, ymax, true);
-        } else if (itAction.value()==JKQTPMouseWheelActions::jkqtpmwaPanByWheel) {
-        //} else if (act==JKQTPMouseWheelActions::jkqtpmwaPanByWheel) {
-            //qDebug()<<"wheelEvent("<<event->modifiers()<<"):PanByWheel";
-            QRectF zoomRect= QRectF(QPointF(plotter->x2p(getXAxis()->getMin()),plotter->y2p(getYAxis()->getMax())), QPointF(plotter->x2p(getXAxis()->getMax()),plotter->y2p(getYAxis()->getMin())));
-            QPointF d=QPointF(event->angleDelta().x()/120.0*zoomRect.width()/10.0,
-                              event->angleDelta().y()/120.0*zoomRect.height()/10.0);
-            if (d.x()<-100) d.setX(-100);
-            if (d.x()>100) d.setX(100);
-            if (d.y()<-100) d.setY(-100);
-            if (d.y()>100) d.setY(100);
-            if (d.x()>=0 && d.x()<10) d.setX(10);
-            if (d.x()<0 && d.x()>-10) d.setX(-10);
-            if (d.y()>=0 && d.y()<10) d.setY(10);
-            if (d.y()<0 && d.y()>-10) d.setY(-10);
-            if  ( (wheel_x/magnification<plotter->getInternalPlotBorderLeft()) || (wheel_x/magnification>plotter->getPlotWidth()+plotter->getInternalPlotBorderLeft()) ) {
-                zoomRect.translate(0, d.y());
-            } else if (((wheel_y-getPlotYOffset())/magnification<plotter->getInternalPlotBorderTop()) || ((wheel_y-getPlotYOffset())/magnification>plotter->getPlotHeight()+plotter->getInternalPlotBorderTop()) ) {
-                zoomRect.translate(d.x(), 0);
+        } else if (itAction.value()==JKQTPMouseWheelActions::jkqtpmwaZoomByWheelAndTrackpadPan) {
+            if (abs(angleDelta.x())<30 && abs(angleDelta.y())<30) {
+                // this heuristics recognizes pan-gestures on a track-pad.
+                // These are converted by Qt to wheelEvents with small angleDelta()-Values
+                // typical angleDelta values are 120 (1/10 degree) or above, here we use 30
+                // to accomodate for finer resolved mouse-wheels
+                //
+                // unfortunately there is no other way to distinguish these cases, as Qt does not transport
+                // the source of the QWheelEvent!
+                acTodo=acPan;
+                d=angleDelta;
             } else {
-                zoomRect.translate(d.x(), d.y());
+                acTodo=acZoom;
+                if (abs(angleDelta.y())>30 && angleDelta.x()==0) {
+                    factor=pow(2.0, 1.0*static_cast<double>(angleDelta.y())/120.0);
+                } else if (abs(angleDelta.x())>30 && angleDelta.y()==0) {
+                    factor=pow(2.0, 1.0*static_cast<double>(angleDelta.x())/120.0);
+                }
             }
-            setXY(plotter->p2x(zoomRect.left()), plotter->p2x(zoomRect.right()), plotter->p2y(zoomRect.bottom()), plotter->p2y(zoomRect.top()), true);
+        } else if (itAction.value()==JKQTPMouseWheelActions::jkqtpmwaPanByWheel) {
+            acTodo=acPan;
+            d=QPointF(angleDelta.x()/120.0*zoomRect.width()/10.0,
+                              angleDelta.y()/120.0*zoomRect.height()/10.0);
+            // maximum shoft is 100 Pixels in either direction
+            d.setX(jkqtp_bounded<double>(-100, d.x(), 100));
+            d.setY(jkqtp_bounded<double>(-100, d.y(), 100));
+            // minimmum shift is 10 pixels, unles |shift|<1
+            if (d.x()>=1 && d.x()<10) d.setX(10);
+            if (d.x()<=-1 && d.x()>-10) d.setX(-10);
+            if (d.y()>=1 && d.y()<10) d.setY(10);
+            if (d.y()<=-1 && d.y()>-10) d.setY(-10);
         }
     }
 
 
+    //qDebug()<<" action: "<<acTodo<<" factor="<<factor<<" d="<<d;
+    if (acTodo==acZoom && factor!=1.0) {
+        double xmin=plotter->p2x(static_cast<double>(wheel_x)/magnification-static_cast<double>(plotter->getPlotWidth()*0.5)/factor);
+        double xmax=plotter->p2x(static_cast<double>(wheel_x)/magnification+static_cast<double>(plotter->getPlotWidth()*0.5)/factor);
+        double ymin=plotter->p2y(static_cast<double>(wheel_y)/magnification-static_cast<double>(getPlotYOffset())+static_cast<double>(plotter->getPlotHeight()*0.5)/factor);
+        double ymax=plotter->p2y(static_cast<double>(wheel_y)/magnification-static_cast<double>(getPlotYOffset())-static_cast<double>(plotter->getPlotHeight()*0.5)/factor);
+        if  ( (wheel_x/magnification<plotter->getInternalPlotBorderLeft()) || (wheel_x/magnification>plotter->getPlotWidth()+plotter->getInternalPlotBorderLeft()) ) {
+            xmin=getXMin();
+            xmax=getXMax();
+        } else if (((wheel_y-getPlotYOffset())/magnification<plotter->getInternalPlotBorderTop()) || ((wheel_y-getPlotYOffset())/magnification>plotter->getPlotHeight()+plotter->getInternalPlotBorderTop()) ) {
+            ymin=getYMin();
+            ymax=getYMax();
+        }
+        //qDebug()<<"  zoom: factor="<<factor;
+        plotter->setXY(xmin, xmax, ymin, ymax, true);
+    } else if (acTodo==acPan && (d.x()!=0 || d.y()!=0)) {
+        //qDebug()<<"  pan: d="<<d;
+        if  ( (wheel_x/magnification<plotter->getInternalPlotBorderLeft()) || (wheel_x/magnification>plotter->getPlotWidth()+plotter->getInternalPlotBorderLeft()) ) {
+            zoomRect.translate(0, d.y());
+        } else if (((wheel_y-getPlotYOffset())/magnification<plotter->getInternalPlotBorderTop()) || ((wheel_y-getPlotYOffset())/magnification>plotter->getPlotHeight()+plotter->getInternalPlotBorderTop()) ) {
+            zoomRect.translate(d.x(), 0);
+        } else {
+            zoomRect.translate(d.x(), d.y());
+        }
+        setXY(plotter->p2x(zoomRect.left()), plotter->p2x(zoomRect.right()), plotter->p2y(zoomRect.bottom()), plotter->p2y(zoomRect.top()), true);
+    }
+
     event->accept();
 
-    emit plotMouseWheelOperated(plotter->p2x(wheel_x/magnification), plotter->p2y((wheel_y-getPlotYOffset())/magnification), event->modifiers(), event->angleDelta().x(), event->angleDelta().y());
+    emit plotMouseWheelOperated(plotter->p2x(wheel_x/magnification), plotter->p2y((wheel_y-getPlotYOffset())/magnification), event->modifiers(), angleDelta.x(), angleDelta.y());
 
     updateCursor();
     currentMouseDragAction.clear();
+}
+
+bool JKQTPlotter::event(QEvent* event) {
+    //qDebug()<<"event: "<<event->type()<<", "<<event->isAccepted();
+    return QWidget::event(event);
 }
 
 int JKQTPlotter::getPlotYOffset() {

@@ -211,6 +211,7 @@ TestUserInteraction::TestUserInteraction(QWidget *parent) :
     layForm->addRow("mouse action: mouse wheel, no modifiers", cmbMouseWheelAction);
     cmbMouseWheelAction->addItem("jkqtpmwaZoomByWheel");
     cmbMouseWheelAction->addItem("jkqtpmwaPanByWheel");
+    cmbMouseWheelAction->addItem("jkqtpmwaZoomByWheelAndTrackpadPan");
     cmbMouseWheelAction->addItem("NoAction");
     cmbMouseWheelAction->setCurrentIndex(0);
     connect(cmbMouseWheelAction, SIGNAL(currentIndexChanged(int)), this, SLOT(setMouseWheelNoModAction(int)));

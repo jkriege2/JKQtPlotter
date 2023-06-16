@@ -331,6 +331,7 @@ JKQTPMouseWheelActions String2JKQTPMouseWheelActions(const QString &act)
     QString s=act.trimmed().toLower();
     if (s=="jkqtpmwazoombywheel"||s=="zoombywheel" ||s=="zoom") return jkqtpmwaZoomByWheel;
     if (s=="jkqtpmwapanbywheel"||s=="panbywheel"||s=="pan") return jkqtpmwaPanByWheel;
+    if (s=="jkqtpmwazoombywheelandtrackpadpan"||s=="zoombywheelortrackpan"||s=="zoomortrackpan") return jkqtpmwaZoomByWheelAndTrackpadPan;
     return jkqtpmwaZoomByWheel;
 
 }
@@ -339,6 +340,7 @@ QString JKQTPMouseWheelActions2String(JKQTPMouseWheelActions act)
 {
     if (act==jkqtpmwaZoomByWheel) return "zoom";
     if (act==jkqtpmwaPanByWheel) return "pan";
+    if (act==jkqtpmwaZoomByWheelAndTrackpadPan) return "zoomortrackpan";
     return "unknown";
 }
 

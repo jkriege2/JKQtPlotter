@@ -1,7 +1,6 @@
 #include "jkqtplotterstyle.h"
 #include <QApplication>
 #include <QDebug>
-#include "jkqtcommon/jkqttools.h"
 #include "jkqtplotter/jkqtptools.h"
 
 JKQTPlotterStyle::JKQTPlotterStyle():
@@ -32,7 +31,8 @@ JKQTPlotterStyle::JKQTPlotterStyle():
     registeredMouseDragActionModes[qMakePair<Qt::MouseButton, Qt::KeyboardModifiers>(Qt::LeftButton, Qt::NoModifier)]=JKQTPMouseDragActions::jkqtpmdaZoomByRectangle;
     registeredMouseDragActionModes[qMakePair<Qt::MouseButton, Qt::KeyboardModifiers>(Qt::LeftButton, Qt::ControlModifier)]=JKQTPMouseDragActions::jkqtpmdaPanPlotOnMove;
     registeredMouseDoubleClickActions[qMakePair<Qt::MouseButton, Qt::KeyboardModifiers>(Qt::LeftButton, Qt::NoModifier)]=JKQTPMouseDoubleClickActions::jkqtpdcaClickMovesViewport;
-    registeredMouseWheelActions[Qt::NoModifier]=JKQTPMouseWheelActions::jkqtpmwaZoomByWheel;
+    registeredMouseWheelActions[Qt::NoModifier]=JKQTPMouseWheelActions::jkqtpmwaZoomByWheelAndTrackpadPan;
+    registeredMouseWheelActions[Qt::ControlModifier]=JKQTPMouseWheelActions::jkqtpmwaZoomByWheel;
     //qDebug()<<"JKQTPlotterStyle(): registeredMouseWheelActions="<<registeredMouseWheelActions;
 }
 
@@ -124,13 +124,13 @@ void JKQTPlotterStyle::loadSettings(const QSettings &settings, const QString &gr
             id=readID(k, group+"actions/mouse_wheel");
             if (id>=0) {
                 auto modifiers=jkqtp_String2KeyboardModifiers(settings.value(group+"actions/mouse_wheel"+QString::number(id)+"/modifiers", Qt::NoModifier).toString());
-                auto action=String2JKQTPMouseWheelActions(settings.value(group+"actions/mouse_wheel"+QString::number(id)+"/action", jkqtpmwaZoomByWheel).toString());
+                auto action=String2JKQTPMouseWheelActions(settings.value(group+"actions/mouse_wheel"+QString::number(id)+"/action", jkqtpmwaZoomByWheelAndTrackpadPan).toString());
                 registeredMouseWheelActions[modifiers]=action;
             }
             id=readID(k, group+"actions/mouse_move");
             if (id>=0) {
                 auto modifiers=jkqtp_String2KeyboardModifiers(settings.value(group+"actions/mouse_move"+QString::number(id)+"/modifiers", Qt::NoModifier).toString());
-                auto action=String2JKQTPMouseMoveActions(settings.value(group+"actions/mouse_move"+QString::number(id)+"/action", jkqtpmwaZoomByWheel).toString());
+                auto action=String2JKQTPMouseMoveActions(settings.value(group+"actions/mouse_move"+QString::number(id)+"/action", jkqtpmmaToolTipForClosestDataPoint).toString());
                 registeredMouseMoveActions[modifiers]=action;
             }
         }

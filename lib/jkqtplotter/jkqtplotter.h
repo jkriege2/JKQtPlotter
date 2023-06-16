@@ -1704,7 +1704,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
         /** \brief action that activates the pan view tool (override!)  */
         QAction* actMouseLeftAsPanView;
 
-    protected slots:
+        virtual bool event(QEvent *event) override;
+protected slots:
         /** \brief while the window is resized, the plot is only redrawn after a restartable delay, implemented by this function and resizeTimer
         * \internal
         * \see resizeTimer
