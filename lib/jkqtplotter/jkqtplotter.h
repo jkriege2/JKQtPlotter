@@ -1418,6 +1418,19 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
         /** \brief the currently executed MouseMoveActions */
         QSet<JKQTPMouseMoveActions> currentMouseMoveAction;
 
+        enum class WheelActionType {
+            Zoom,
+            Pan,
+            None
+        };
+
+        /** \brief storage for last WheelActionType (used in wheelAction() to distinguish trackpad-pan ations in mode jkqtpmwaZoomByWheelAndTrackpadPan) */
+        WheelActionType lastWheelActionType;
+        /** \brief storage for timestammp of the last QWheelEvent (used in wheelAction() to distinguish trackpad-pan ations in mode jkqtpmwaZoomByWheelAndTrackpadPan) */
+        quint64 lastWheelActionTimestamp;
+        /** \brief max. time between two QWheelEvents that are recognized as one series */
+        const quint64 maxWheelEventSeriesTimestampDifference;
+
         /** \brief searches JKQTPlotterStyle::registeredMouseActionModes for a matching action, returns in \a found whether an action was found */
         JKQTPMouseDragActionsHashMapIterator findMatchingMouseDragAction(Qt::MouseButton button, Qt::KeyboardModifiers modifiers, bool *found=nullptr) const;
 
