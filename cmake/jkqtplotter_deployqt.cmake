@@ -1,24 +1,6 @@
 function(jkqtplotter_deployqt TARGET_NAME)
     #use windeploy
     if (WIN32)
-        get_target_property(_qmake_executable Qt${QT_VERSION_MAJOR}::qmake IMPORTED_LOCATION)
-        get_filename_component(_qt_bin_dir "${_qmake_executable}" DIRECTORY)
-        find_program(WINDEPLOYQT_ENV_SETUP qtenv2.bat HINTS "${_qt_bin_dir}")
-        if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-          find_program(WINDEPLOYQT_EXECUTABLE NAMES windeployqt.debug.bat HINTS "${_qt_bin_dir}")
-        else()
-          find_program(WINDEPLOYQT_EXECUTABLE NAMES windeployqt HINTS "${_qt_bin_dir}")
-        endif()
-        if (NOT EXISTS ${WINDEPLOYQT_EXECUTABLE})
-          find_program(WINDEPLOYQT_EXECUTABLE NAMES windeployqt HINTS "${_qt_bin_dir}")
-        endif()
-        if (NOT EXISTS ${WINDEPLOYQT_EXECUTABLE})
-          find_program(WINDEPLOYQT_EXECUTABLE NAMES windeployqt.exe HINTS "${_qt_bin_dir}")
-        endif()
-
-
-
-
         # install system runtime lib
         include( InstallRequiredSystemLibraries )
         if( CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS )
@@ -27,7 +9,7 @@ function(jkqtplotter_deployqt TARGET_NAME)
 
         get_filename_component(CMAKE_CXX_COMPILER_BINPATH ${CMAKE_CXX_COMPILER} DIRECTORY )
         add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-            COMMAND "${WINDEPLOYQT_ENV_SETUP}" && "${WINDEPLOYQT_EXECUTABLE}" \"$<TARGET_FILE:${TARGET_NAME}>\"
+            COMMAND "${CMAKE_COMMAND}" -E env PATH="${JKQtPlotter_QT_BINDIR}" "${JKQtPlotter_WINDEPLOYQT_EXECUTABLE}" \"$<TARGET_FILE:${TARGET_NAME}>\" --verbose 0 --no-translations --no-compiler-runtime
             COMMENT "Running windeployqt ... "
         )
     endif(WIN32)
