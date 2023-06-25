@@ -23,6 +23,9 @@ Offers diverse function to convert different datatypes (e.g. double, int, divers
 \defgroup jkqtptools_qt Tools around Qt's clasess
 \ingroup jkqtptools_jkqtcommon
 
+\defgroup jkqtptools_concurrency Tools, Templates and Classes for Concurrency
+\ingroup jkqtptools_jkqtcommon
+
 \defgroup jkqtptools_icons Special QIcon generation
 \ingroup jkqtptools_jkqtcommon
 
