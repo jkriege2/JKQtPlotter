@@ -59,10 +59,6 @@ public:
         m_data=std::move(other.m_data);
     }
 
-    /** \brief creates and returns a Locker-Object for this class, which is already locked */
-    inline Locker get_lock() {
-        return Locker(*this);
-    }
     /** \brief locks the internal mutex until unlock() is called,
      *
      *  \note Use Locker instances to actually lock, using a RAII-idiom, as this is safer than doing this by hand!

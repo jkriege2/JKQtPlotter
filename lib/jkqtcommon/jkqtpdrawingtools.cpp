@@ -552,16 +552,18 @@ QList<QPolygonF> JKQTPSimplifyPolyLines(const QList<QPolygonF> &lines_in, double
 }
 
 
-QVector<JKQTPCustomGraphSymbolFunctor> JKQTPlotterDrawingTools::JKQTPCustomGraphSymbolStore=QVector<JKQTPCustomGraphSymbolFunctor>();
+JKQTPSynchronized<QVector<JKQTPCustomGraphSymbolFunctor> > JKQTPlotterDrawingTools::JKQTPCustomGraphSymbolStore=QVector<JKQTPCustomGraphSymbolFunctor>();
 
 JKQTPGraphSymbols JKQTPRegisterCustomGraphSymbol(JKQTPCustomGraphSymbolFunctor&& f)
 {
-    JKQTPlotterDrawingTools::JKQTPCustomGraphSymbolStore.push_back(std::move(f));
-    return static_cast<JKQTPGraphSymbols>(static_cast<uint64_t>(JKQTPFirstCustomSymbol)+static_cast<uint64_t>(JKQTPlotterDrawingTools::JKQTPCustomGraphSymbolStore.size()-1));
+    JKQTPlotterDrawingTools::SymbolsLocker lock(JKQTPlotterDrawingTools::JKQTPCustomGraphSymbolStore);
+    JKQTPlotterDrawingTools::JKQTPCustomGraphSymbolStore->push_back(std::move(f));
+    return static_cast<JKQTPGraphSymbols>(static_cast<uint64_t>(JKQTPFirstCustomSymbol)+static_cast<uint64_t>(JKQTPlotterDrawingTools::JKQTPCustomGraphSymbolStore->size()-1));
 }
 
 JKQTPGraphSymbols JKQTPRegisterCustomGraphSymbol(const JKQTPCustomGraphSymbolFunctor& f)
 {
-    JKQTPlotterDrawingTools::JKQTPCustomGraphSymbolStore.push_back(f);
-    return static_cast<JKQTPGraphSymbols>(static_cast<uint64_t>(JKQTPFirstCustomSymbol)+static_cast<uint64_t>(JKQTPlotterDrawingTools::JKQTPCustomGraphSymbolStore.size()-1));
+    JKQTPlotterDrawingTools::SymbolsLocker lock(JKQTPlotterDrawingTools::JKQTPCustomGraphSymbolStore);
+    JKQTPlotterDrawingTools::JKQTPCustomGraphSymbolStore->push_back(f);
+    return static_cast<JKQTPGraphSymbols>(static_cast<uint64_t>(JKQTPFirstCustomSymbol)+static_cast<uint64_t>(JKQTPlotterDrawingTools::JKQTPCustomGraphSymbolStore->size()-1));
 }

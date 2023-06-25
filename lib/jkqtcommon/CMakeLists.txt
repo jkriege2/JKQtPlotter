@@ -26,6 +26,7 @@ set(SOURCES
   ${CMAKE_CURRENT_LIST_DIR}/jkqtpstringtools.cpp
   ${CMAKE_CURRENT_LIST_DIR}/jkqtpcodestructuring.cpp
   ${CMAKE_CURRENT_LIST_DIR}/jkqtpbasicimagetools.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/jkqtpconcurrencytools.cpp
   ${CMAKE_CURRENT_LIST_DIR}/jkqtpgeometrytools.cpp
   ${CMAKE_CURRENT_LIST_DIR}/jkqtpdrawingtools.cpp
   ${CMAKE_CURRENT_LIST_DIR}/jkqtpenhancedpainter.cpp
@@ -59,6 +60,8 @@ set(HEADERS
   $<INSTALL_INTERFACE:jkqtpicons.h>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpgeometrytools.h>
   $<INSTALL_INTERFACE:jkqtpgeometrytools.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpconcurrencytools.h>
+  $<INSTALL_INTERFACE:jkqtpconcurrencytools.h>
 )
 
 include(CMakePackageConfigHelpers)

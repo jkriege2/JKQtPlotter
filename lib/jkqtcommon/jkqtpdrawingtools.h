@@ -43,6 +43,7 @@
 #include <QDataStream>
 #include <ostream>
 #include "jkqtcommon/jkqtpmathtools.h"
+#include "jkqtcommon/jkqtpconcurrencytools.h"
 #include "jkqtcommon/jkqtpcodestructuring.h"
 
 class JKQTPEnhancedPainter; // forward
@@ -85,7 +86,8 @@ struct JKQTPlotterDrawingTools {
      * \ingroup jkqtptools_drawing
      * \internal
      */
-    static JKQTCOMMON_LIB_EXPORT QVector<JKQTPCustomGraphSymbolFunctor> JKQTPCustomGraphSymbolStore;
+    static JKQTCOMMON_LIB_EXPORT JKQTPSynchronized<QVector<JKQTPCustomGraphSymbolFunctor> > JKQTPCustomGraphSymbolStore;
+    typedef JKQTPSynchronized<QVector<JKQTPCustomGraphSymbolFunctor> >::Locker SymbolsLocker;
 };
 
 
@@ -219,7 +221,7 @@ inline JKQTPGraphSymbols operator+(JKQTPGraphSymbols a, const QChar& b) {
 }
 
 
-/** \brief register a JKQTPCustomGraphSymbolFunctor that draws a custom symbol.Returns an ID that allows to access the symbol!
+/** \brief register a JKQTPCustomGraphSymbolFunctor that draws a custom symbol.Returns an ID that allows to access the symbol!, <b>thread-safe</b>
  * \ingroup jkqtptools_drawing
  *
  * The functor is stored in the global/static store JKQTPlotterDrawingTools::JKQTPCustomGraphSymbolStore, i.e. these are available throughout the runtime of the program
@@ -228,7 +230,7 @@ inline JKQTPGraphSymbols operator+(JKQTPGraphSymbols a, const QChar& b) {
  */
 JKQTCOMMON_LIB_EXPORT JKQTPGraphSymbols JKQTPRegisterCustomGraphSymbol(JKQTPCustomGraphSymbolFunctor&&);
 
-/** \brief register a JKQTPCustomGraphSymbolFunctor that draws a custom symbol.Returns an ID that allows to access the symbol!
+/** \brief register a JKQTPCustomGraphSymbolFunctor that draws a custom symbol.Returns an ID that allows to access the symbol!, <b>thread-safe</b>
  * \ingroup jkqtptools_drawing
  *
  * The functor is stored in the global/static store JKQTPlotterDrawingTools::JKQTPCustomGraphSymbolStore, i.e. these are available throughout the runtime of the program
@@ -264,7 +266,7 @@ inline QDataStream& operator>>(QDataStream& str, JKQTPGraphSymbols& s) {
     return str;
 }
 
-/*! \brief plot the specified symbol at pixel position x,y
+/*! \brief plot the specified symbol at pixel position x,y, <b>thread-safe</b>
    \ingroup jkqtptools_drawing
 
     \tparam TPainter Type of \a painter: A class like JKQTPEnhancedPainter or <a href="http://doc.qt.io/qt-5/qpainter.html">QPainter</a>
@@ -282,7 +284,7 @@ inline QDataStream& operator>>(QDataStream& str, JKQTPGraphSymbols& s) {
 template <class TPainter>
 inline void JKQTPPlotSymbol(TPainter& painter, double x, double y, JKQTPGraphSymbols symbol, double size, double symbolLineWidth, QColor color, QColor fillColor, QFont symbolFont);
 
-/*! \brief plot the specified symbol at pixel position x,y
+/*! \brief plot the specified symbol at pixel position x,y, <b>thread-safe</b>
    \ingroup jkqtptools_drawing
 
     \param paintDevice the paint device to draw on
@@ -580,9 +582,35 @@ inline void JKQTPDrawTooltip(TPainter& painter, double x, double y, const QRectF
 
 
 
+/*! \brief return the consecutive ccordinates of the tips of a N-tipped star on a circle of radius 1.
+           Inner tips are on a irle of radius \a inner_radius.
+    \ingroup jkqtptools_drawing
+    */
+template <int N>
+inline std::array<QPointF, N*2> JKQTPGetStarCoordinates(double inner_radius=0.5) {
+    std::array<QPointF, N*2> star_coords;
+    const double angle=360.0/double(N)/180.0*JKQTPSTATISTICS_PI;
+    for (int i=0; i<N; i++) {
+        const double a=(static_cast<double>(i)+0.5)*angle;
+        star_coords[i*2]=QPointF(sin(a),cos(a));
+        star_coords[i*2+1]=QPointF(inner_radius*sin(a+angle/2.0),inner_radius*cos(a+angle/2.0));
+    }
+    return star_coords;
+}
 
-
-
+/** \brief internal datastructure used in JKQTPPlotSymbol() to precalculate certain data only once per runtime
+ *  \ingroup jkqtptools_drawing
+ *  \internal
+*/
+struct JKQTPSymbolPathsInternnal {
+    inline JKQTPSymbolPathsInternnal(): pathsrotation(0) {};
+    QPainterPath paths;
+    QPainterPath filledpaths;
+    QVector<QLineF> lines;
+    QPolygonF polygons;
+    QPolygonF filledpolygons;
+    qreal pathsrotation;
+};
 
 
 template <class TPainter>
@@ -601,237 +629,192 @@ inline void JKQTPPlotSymbol(TPainter& painter, double x, double y, JKQTPGraphSym
     const QBrush b=QBrush(fillColor, Qt::SolidPattern);
 
 
-    static bool pathsInitialized=false;
-    static std::array<QPainterPath, JKQTPSymbolCount> paths;
-    static std::array<QPainterPath, JKQTPSymbolCount> filledpaths;
-    static std::array<QVector<QLineF>, JKQTPSymbolCount> lines;
-    static std::array<QPolygonF, JKQTPSymbolCount> polygons;
-    static std::array<QPolygonF, JKQTPSymbolCount> filledpolygons;
-    static std::array<qreal, JKQTPSymbolCount> pathsrotation;
-    if (!pathsInitialized) {
+    static std::vector<JKQTPSymbolPathsInternnal> all_paths = []() {
+        // this functor is called the the static variable symbolData is initialized, but only once per runtimme (guaranteed by C++)
+        std::vector<JKQTPSymbolPathsInternnal> all_paths;
+        all_paths.resize(JKQTPSymbolCount);
+
         // calculate star cordinates as static values
-        static double s45=fabs(cos(45.0/180.0*JKQTPSTATISTICS_PI));
-        static int star5_items=0;
-        static double star5cordsx[10];
-        static double star5cordsy[10];
-        if (star5_items==0) {
-            star5_items=5;
-            double angle=360.0/double(star5_items)/180.0*JKQTPSTATISTICS_PI;
-            for (int i=0; i<star5_items; i++) {
-                double a=(static_cast<double>(i)+0.5)*angle;
-                star5cordsx[i*2]=sin(a);
-                star5cordsx[i*2+1]=0.5*sin(a+angle/2.0);
-                star5cordsy[i*2]=cos(a);
-                star5cordsy[i*2+1]=0.5*cos(a+angle/2.0);
-            }
-        }
-        static int star6_items=0;
-        static double star6cordsx[12];
-        static double star6cordsy[12];
-        if (star6_items==0) {
-            star6_items=6;
-            double angle=360.0/double(star6_items)/180.0*JKQTPSTATISTICS_PI;
-            for (int i=0; i<star6_items; i++) {
-                double a=(static_cast<double>(i)+0.5)*angle;
-                star6cordsx[i*2]=sin(a);
-                star6cordsx[i*2+1]=0.5*sin(a+angle/2.0);
-                star6cordsy[i*2]=cos(a);
-                star6cordsy[i*2+1]=0.5*cos(a+angle/2.0);
-            }
-        }
-        static int star8_items=0;
-        static double star8cordsx[16];
-        static double star8cordsy[16];
-        if (star8_items==0) {
-            star8_items=8;
-            double angle=360.0/double(star8_items)/180.0*JKQTPSTATISTICS_PI;
-            for (int i=0; i<star8_items; i++) {
-                double a=(static_cast<double>(i)+0.5)*angle;
-                star8cordsx[i*2]=sin(a);
-                star8cordsx[i*2+1]=0.5*sin(a+angle/2.0);
-                star8cordsy[i*2]=cos(a);
-                star8cordsy[i*2+1]=0.5*cos(a+angle/2.0);
-            }
-        }
+        const double s45=fabs(cos(45.0/180.0*JKQTPSTATISTICS_PI));
+        const auto star5cords=JKQTPGetStarCoordinates<5>(0.5);
+        const auto star6cords=JKQTPGetStarCoordinates<6>(0.5);
+        const auto star8cords=JKQTPGetStarCoordinates<8>(0.5);
 
-        pathsrotation.fill(0);
-        paths[JKQTPCross].moveTo(-0.5,-0.5);
-        paths[JKQTPCross].lineTo(0.5,0.5);
-        paths[JKQTPCross].moveTo(-0.5,+0.5);
-        paths[JKQTPCross].lineTo(+0.5,-0.5);
-        paths[JKQTPPlus].moveTo(-0.5,0);
-        paths[JKQTPPlus].lineTo(0.5,0);
-        paths[JKQTPPlus].moveTo(0,+0.5);
-        paths[JKQTPPlus].lineTo(0,-0.5);
-        paths[JKQTPCircle].addEllipse(QPointF(0,0), 0.5, 0.5);
-        filledpaths[JKQTPFilledCircle]=paths[JKQTPCircle];
-        paths[JKQTPCircleCross].addEllipse(QPointF(0,0), 0.5, 0.5);
-        paths[JKQTPCircleCross].moveTo(-0.5*s45,-0.5*s45);
-        paths[JKQTPCircleCross].lineTo(0.5*s45,0.5*s45);
-        paths[JKQTPCircleCross].moveTo(-0.5*s45,+0.5*s45);
-        paths[JKQTPCircleCross].lineTo(+0.5*s45,-0.5*s45);
-        paths[JKQTPCirclePlus].addEllipse(QPointF(0,0), 0.5, 0.5);
-        paths[JKQTPCirclePlus].moveTo(-0.5,0);
-        paths[JKQTPCirclePlus].lineTo(0.5,0);
-        paths[JKQTPCirclePlus].moveTo(0,+0.5);
-        paths[JKQTPCirclePlus].lineTo(0,-0.5);
-        paths[JKQTPCirclePeace].addEllipse(QPointF(0,0), 0.5, 0.5);
-        paths[JKQTPCirclePeace].moveTo(0,-0.5);
-        paths[JKQTPCirclePeace].lineTo(0, 0.5);
-        paths[JKQTPCirclePeace].moveTo(0,0);
-        paths[JKQTPCirclePeace].lineTo(0.5*s45,0.5*s45);
-        paths[JKQTPCirclePeace].moveTo(0,0);
-        paths[JKQTPCirclePeace].lineTo(-0.5*s45,0.5*s45);
-        paths[JKQTPPeace].moveTo(0,-0.5);
-        paths[JKQTPPeace].lineTo(0, 0.5);
-        paths[JKQTPPeace].moveTo(0,0);
-        paths[JKQTPPeace].lineTo(0.5*s45,0.5*s45);
-        paths[JKQTPPeace].moveTo(0,0);
-        paths[JKQTPPeace].lineTo(-0.5*s45,0.5*s45);
-        paths[JKQTPTarget].addEllipse(QPointF(0,0), 0.33333, 0.33333);
-        paths[JKQTPTarget].moveTo(QPointF(0,-0.5));
-        paths[JKQTPTarget].lineTo(QPointF(0,0.5));
-        paths[JKQTPTarget].moveTo(QPointF(-0.5,0));
-        paths[JKQTPTarget].lineTo(QPointF(0.5,0));
-        paths[JKQTPFemale].addEllipse(-0.25,-0.5,0.5,0.5);
-        paths[JKQTPFemale].moveTo(0,0);
-        paths[JKQTPFemale].lineTo(0,0.5);
-        paths[JKQTPFemale].moveTo(-0.5/3.0,0.5/2.0);
-        paths[JKQTPFemale].lineTo(0.5/3.0,0.5/2.0);
-        paths[JKQTPMale].addEllipse(QRectF(-0.5/2.0, -0.5/2.0, 0.5, 0.5));
-        paths[JKQTPMale].moveTo(QPointF(+0.5/2.0*cos(45.0/180.0*JKQTPSTATISTICS_PI),-0.5/2.0*cos(45.0/180.0*JKQTPSTATISTICS_PI)));
-        paths[JKQTPMale].lineTo(QPointF(+0.5,-0.5));
-        paths[JKQTPMale].moveTo(QPointF(+0.5-0.5/2.0,-0.5));
-        paths[JKQTPMale].lineTo(QPointF(+0.5,-0.5));
-        paths[JKQTPMale].lineTo(QPointF(+0.5,-0.5+0.5/2.0));
-        paths[JKQTPRect].addRect(-0.5,-0.5, 1,1);
-        filledpaths[JKQTPFilledRect]=paths[JKQTPRect];
-        paths[JKQTPRectCross].addRect(-0.5,-0.5, 1,1);
-        paths[JKQTPRectCross].moveTo(-0.5,-0.5);
-        paths[JKQTPRectCross].lineTo(0.5,0.5);
-        paths[JKQTPRectCross].moveTo(-0.5,+0.5);
-        paths[JKQTPRectCross].lineTo(+0.5,-0.5);
-        paths[JKQTPRectPlus].addRect(-0.5,-0.5, 1,1);
-        paths[JKQTPRectPlus].moveTo(-0.5,0);
-        paths[JKQTPRectPlus].lineTo(0.5,0);
-        paths[JKQTPRectPlus].moveTo(0,+0.5);
-        paths[JKQTPRectPlus].lineTo(0,-0.5);
-        paths[JKQTPCurvedTriangle].moveTo(0,0-0.5);
-        paths[JKQTPCurvedTriangle].quadTo(0-1.0/10.0,0+1.0/4.0, 0-0.5,0+0.5);
-        paths[JKQTPCurvedTriangle].quadTo(0,0+1.0/4.0, 0+0.5,0+0.5);
-        paths[JKQTPCurvedTriangle].quadTo(0+1.0/10.0,0+1.0/4.0, 0,0-0.5);
-        filledpaths[JKQTPFilledCurvedTriangle]=paths[JKQTPCurvedTriangle];
+        all_paths[JKQTPCross].paths.moveTo(-0.5,-0.5);
+        all_paths[JKQTPCross].paths.lineTo(0.5,0.5);
+        all_paths[JKQTPCross].paths.moveTo(-0.5,+0.5);
+        all_paths[JKQTPCross].paths.lineTo(+0.5,-0.5);
+        all_paths[JKQTPPlus].paths.moveTo(-0.5,0);
+        all_paths[JKQTPPlus].paths.lineTo(0.5,0);
+        all_paths[JKQTPPlus].paths.moveTo(0,+0.5);
+        all_paths[JKQTPPlus].paths.lineTo(0,-0.5);
+        all_paths[JKQTPCircle].paths.addEllipse(QPointF(0,0), 0.5, 0.5);
+        all_paths[JKQTPFilledCircle].filledpaths=all_paths[JKQTPCircle].paths;
+        all_paths[JKQTPCircleCross].paths.addEllipse(QPointF(0,0), 0.5, 0.5);
+        all_paths[JKQTPCircleCross].paths.moveTo(-0.5*s45,-0.5*s45);
+        all_paths[JKQTPCircleCross].paths.lineTo(0.5*s45,0.5*s45);
+        all_paths[JKQTPCircleCross].paths.moveTo(-0.5*s45,+0.5*s45);
+        all_paths[JKQTPCircleCross].paths.lineTo(+0.5*s45,-0.5*s45);
+        all_paths[JKQTPCirclePlus].paths.addEllipse(QPointF(0,0), 0.5, 0.5);
+        all_paths[JKQTPCirclePlus].paths.moveTo(-0.5,0);
+        all_paths[JKQTPCirclePlus].paths.lineTo(0.5,0);
+        all_paths[JKQTPCirclePlus].paths.moveTo(0,+0.5);
+        all_paths[JKQTPCirclePlus].paths.lineTo(0,-0.5);
+        all_paths[JKQTPCirclePeace].paths.addEllipse(QPointF(0,0), 0.5, 0.5);
+        all_paths[JKQTPCirclePeace].paths.moveTo(0,-0.5);
+        all_paths[JKQTPCirclePeace].paths.lineTo(0, 0.5);
+        all_paths[JKQTPCirclePeace].paths.moveTo(0,0);
+        all_paths[JKQTPCirclePeace].paths.lineTo(0.5*s45,0.5*s45);
+        all_paths[JKQTPCirclePeace].paths.moveTo(0,0);
+        all_paths[JKQTPCirclePeace].paths.lineTo(-0.5*s45,0.5*s45);
+        all_paths[JKQTPPeace].paths.moveTo(0,-0.5);
+        all_paths[JKQTPPeace].paths.lineTo(0, 0.5);
+        all_paths[JKQTPPeace].paths.moveTo(0,0);
+        all_paths[JKQTPPeace].paths.lineTo(0.5*s45,0.5*s45);
+        all_paths[JKQTPPeace].paths.moveTo(0,0);
+        all_paths[JKQTPPeace].paths.lineTo(-0.5*s45,0.5*s45);
+        all_paths[JKQTPTarget].paths.addEllipse(QPointF(0,0), 0.33333, 0.33333);
+        all_paths[JKQTPTarget].paths.moveTo(QPointF(0,-0.5));
+        all_paths[JKQTPTarget].paths.lineTo(QPointF(0,0.5));
+        all_paths[JKQTPTarget].paths.moveTo(QPointF(-0.5,0));
+        all_paths[JKQTPTarget].paths.lineTo(QPointF(0.5,0));
+        all_paths[JKQTPFemale].paths.addEllipse(-0.25,-0.5,0.5,0.5);
+        all_paths[JKQTPFemale].paths.moveTo(0,0);
+        all_paths[JKQTPFemale].paths.lineTo(0,0.5);
+        all_paths[JKQTPFemale].paths.moveTo(-0.5/3.0,0.5/2.0);
+        all_paths[JKQTPFemale].paths.lineTo(0.5/3.0,0.5/2.0);
+        all_paths[JKQTPMale].paths.addEllipse(QRectF(-0.5/2.0, -0.5/2.0, 0.5, 0.5));
+        all_paths[JKQTPMale].paths.moveTo(QPointF(+0.5/2.0*cos(45.0/180.0*JKQTPSTATISTICS_PI),-0.5/2.0*cos(45.0/180.0*JKQTPSTATISTICS_PI)));
+        all_paths[JKQTPMale].paths.lineTo(QPointF(+0.5,-0.5));
+        all_paths[JKQTPMale].paths.moveTo(QPointF(+0.5-0.5/2.0,-0.5));
+        all_paths[JKQTPMale].paths.lineTo(QPointF(+0.5,-0.5));
+        all_paths[JKQTPMale].paths.lineTo(QPointF(+0.5,-0.5+0.5/2.0));
+        all_paths[JKQTPRect].paths.addRect(-0.5,-0.5, 1,1);
+        all_paths[JKQTPFilledRect].filledpaths=all_paths[JKQTPRect].paths;
+        all_paths[JKQTPRectCross].paths.addRect(-0.5,-0.5, 1,1);
+        all_paths[JKQTPRectCross].paths.moveTo(-0.5,-0.5);
+        all_paths[JKQTPRectCross].paths.lineTo(0.5,0.5);
+        all_paths[JKQTPRectCross].paths.moveTo(-0.5,+0.5);
+        all_paths[JKQTPRectCross].paths.lineTo(+0.5,-0.5);
+        all_paths[JKQTPRectPlus].paths.addRect(-0.5,-0.5, 1,1);
+        all_paths[JKQTPRectPlus].paths.moveTo(-0.5,0);
+        all_paths[JKQTPRectPlus].paths.lineTo(0.5,0);
+        all_paths[JKQTPRectPlus].paths.moveTo(0,+0.5);
+        all_paths[JKQTPRectPlus].paths.lineTo(0,-0.5);
+        all_paths[JKQTPCurvedTriangle].paths.moveTo(0,0-0.5);
+        all_paths[JKQTPCurvedTriangle].paths.quadTo(0-1.0/10.0,0+1.0/4.0, 0-0.5,0+0.5);
+        all_paths[JKQTPCurvedTriangle].paths.quadTo(0,0+1.0/4.0, 0+0.5,0+0.5);
+        all_paths[JKQTPCurvedTriangle].paths.quadTo(0+1.0/10.0,0+1.0/4.0, 0,0-0.5);
+        all_paths[JKQTPFilledCurvedTriangle].filledpaths=all_paths[JKQTPCurvedTriangle].paths;
 
-        paths[JKQTPDownCurvedTriangle]=paths[JKQTPCurvedTriangle];
-        pathsrotation[JKQTPDownCurvedTriangle]=180.0;
-        filledpaths[JKQTPFilledDownCurvedTriangle]=paths[JKQTPDownCurvedTriangle];
-        pathsrotation[JKQTPFilledDownCurvedTriangle]=180.0;
+        all_paths[JKQTPDownCurvedTriangle].paths=all_paths[JKQTPCurvedTriangle].paths;
+        all_paths[JKQTPDownCurvedTriangle].pathsrotation=180.0;
+        all_paths[JKQTPFilledDownCurvedTriangle].filledpaths=all_paths[JKQTPDownCurvedTriangle].paths;
+        all_paths[JKQTPFilledDownCurvedTriangle].pathsrotation=180.0;
 
-        paths[JKQTPLeftCurvedTriangle]=paths[JKQTPCurvedTriangle];
-        pathsrotation[JKQTPLeftCurvedTriangle]=-90.0;
-        filledpaths[JKQTPFilledLeftCurvedTriangle]=paths[JKQTPLeftCurvedTriangle];
-        pathsrotation[JKQTPFilledLeftCurvedTriangle]=-90.0;
+        all_paths[JKQTPLeftCurvedTriangle].paths=all_paths[JKQTPCurvedTriangle].paths;
+        all_paths[JKQTPLeftCurvedTriangle].pathsrotation=-90.0;
+        all_paths[JKQTPFilledLeftCurvedTriangle].filledpaths=all_paths[JKQTPLeftCurvedTriangle].paths;
+        all_paths[JKQTPFilledLeftCurvedTriangle].pathsrotation=-90.0;
 
-        paths[JKQTPRightCurvedTriangle]=paths[JKQTPCurvedTriangle];
-        pathsrotation[JKQTPRightCurvedTriangle]=90.0;
-        filledpaths[JKQTPFilledRightCurvedTriangle]=paths[JKQTPRightCurvedTriangle];
-        pathsrotation[JKQTPFilledRightCurvedTriangle]=90.0;
+        all_paths[JKQTPRightCurvedTriangle].paths=all_paths[JKQTPCurvedTriangle].paths;
+        all_paths[JKQTPRightCurvedTriangle].pathsrotation=90.0;
+        all_paths[JKQTPFilledRightCurvedTriangle].filledpaths=all_paths[JKQTPRightCurvedTriangle].paths;
+        all_paths[JKQTPFilledRightCurvedTriangle].pathsrotation=90.0;
 
         {
             QPolygonF poly;
-            painter.setBrush(QColor(Qt::transparent));
             poly<<QPointF(0.0, 0.0-0.5)<<QPointF(0.0+0.5, 0.0)<<QPointF(0.0, 0.0+0.5)<<QPointF(0.0-0.5, 0.0);
             poly<<poly[0];
-            paths[JKQTPDiamondPlus].addPolygon(poly);
-            paths[JKQTPDiamondPlus].moveTo(poly[0]);
-            paths[JKQTPDiamondPlus].lineTo(poly[2]);
-            paths[JKQTPDiamondPlus].moveTo(poly[1]);
-            paths[JKQTPDiamondPlus].lineTo(poly[3]);
+            all_paths[JKQTPDiamondPlus].paths.addPolygon(poly);
+            all_paths[JKQTPDiamondPlus].paths.moveTo(poly[0]);
+            all_paths[JKQTPDiamondPlus].paths.lineTo(poly[2]);
+            all_paths[JKQTPDiamondPlus].paths.moveTo(poly[1]);
+            all_paths[JKQTPDiamondPlus].paths.lineTo(poly[3]);
         }
         {
             QPolygonF poly;
-            painter.setBrush(QColor(Qt::transparent));
             poly<<QPointF(0.0, 0.0-0.5)<<QPointF(0.0+0.5, 0.0)<<QPointF(0.0, 0.0+0.5)<<QPointF(0.0-0.5, 0.0);
             poly<<poly[0];
-            paths[JKQTPDiamondCross].addPolygon(poly);
-            paths[JKQTPDiamondCross].moveTo((poly[0]+poly[1])/2.0);
-            paths[JKQTPDiamondCross].lineTo((poly[2]+poly[3])/2.0);
-            paths[JKQTPDiamondCross].moveTo((poly[1]+poly[2])/2.0);
-            paths[JKQTPDiamondCross].lineTo((poly[3]+poly[0])/2.0);
+            all_paths[JKQTPDiamondCross].paths.addPolygon(poly);
+            all_paths[JKQTPDiamondCross].paths.moveTo((poly[0]+poly[1])/2.0);
+            all_paths[JKQTPDiamondCross].paths.lineTo((poly[2]+poly[3])/2.0);
+            all_paths[JKQTPDiamondCross].paths.moveTo((poly[1]+poly[2])/2.0);
+            all_paths[JKQTPDiamondCross].paths.lineTo((poly[3]+poly[0])/2.0);
         }
 
 
-        for (int i=0; i<star8_items*2; i+=2) {
-            paths[JKQTPAsterisc8].moveTo(star8cordsx[i]*0.5, star8cordsy[i]*0.5);
-            paths[JKQTPAsterisc8].lineTo(0,0);
+        for (int i=0; i<star8cords.size(); i+=2) {
+            all_paths[JKQTPAsterisc8].paths.moveTo(star8cords[i].x()*0.5, star8cords[i].y()*0.5);
+            all_paths[JKQTPAsterisc8].paths.lineTo(0,0);
         }
-        for (int i=0; i<star6_items*2; i+=2) {
-            paths[JKQTPAsterisc6].moveTo(star6cordsx[i]*0.5, star6cordsy[i]*0.5);
-            paths[JKQTPAsterisc6].lineTo(0,0);
+        for (int i=0; i<star6cords.size(); i+=2) {
+            all_paths[JKQTPAsterisc6].paths.moveTo(star6cords[i].x()*0.5, star6cords[i].y()*0.5);
+            all_paths[JKQTPAsterisc6].paths.lineTo(0,0);
         }
-        for (int i=0; i<star5_items*2; i+=2) {
-            paths[JKQTPAsterisc].moveTo(star5cordsx[i]*0.5, star5cordsy[i]*0.5);
-            paths[JKQTPAsterisc].lineTo(0,0);
+        for (int i=0; i<star5cords.size(); i+=2) {
+            all_paths[JKQTPAsterisc].paths.moveTo(star5cords[i].x()*0.5, star5cords[i].y()*0.5);
+            all_paths[JKQTPAsterisc].paths.lineTo(0,0);
         }
 
-        polygons[JKQTPRectTriangle]<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0, 0.0-0.5)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0+0.5, 0.0-0.5)<<QPointF(0.0+0.5, 0.0+0.5);
-        polygons[JKQTPRectDownTriangle]<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0, 0.0+0.5)<<QPointF(0.0+0.5, 0.0-0.5)<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0-0.5);
-        polygons[JKQTPRectLeftTriangle]<<QPointF(0.0+0.5, 0.0-0.5)<<QPointF(0.0-0.5, 0.0)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0+0.5, 0.0-0.5)<<QPointF(0.0+0.5, 0.0+0.5);
-        polygons[JKQTPRectRightTriangle]<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0+0.5, 0.0)<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0-0.5)<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0-0.5, 0.0+0.5);
-        polygons[JKQTPTriangle]<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0, 0.0-0.5);
-        filledpolygons[JKQTPFilledTriangle]=polygons[JKQTPTriangle];
-        polygons[JKQTPDownTriangle]<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0+0.5, 0.0-0.5)<<QPointF(0.0, 0.0+0.5);
-        filledpolygons[JKQTPFilledDownTriangle]=polygons[JKQTPDownTriangle];
-        polygons[JKQTPLeftTriangle]<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0-0.5, 0.0)<<QPointF(0.0+0.5, 0.0-0.5);
-        filledpolygons[JKQTPFilledLeftTriangle]=polygons[JKQTPLeftTriangle];
-        polygons[JKQTPRightTriangle]<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0)<<QPointF(0.0-0.5, 0.0-0.5);
-        filledpolygons[JKQTPFilledRightTriangle]=polygons[JKQTPRightTriangle];
-        for (int i=0; i<star5_items*2; i++) {
-            polygons[JKQTPstar]<<QPointF(0.0+star5cordsx[i]*0.5, 0.0+star5cordsy[i]*0.5);
-            filledpolygons[JKQTPFilledStar]<<QPointF(0.0+star5cordsx[i]*0.5, 0.0+star5cordsy[i]*0.5);
+        all_paths[JKQTPRectTriangle].polygons<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0, 0.0-0.5)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0+0.5, 0.0-0.5)<<QPointF(0.0+0.5, 0.0+0.5);
+        all_paths[JKQTPRectDownTriangle].polygons<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0, 0.0+0.5)<<QPointF(0.0+0.5, 0.0-0.5)<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0-0.5);
+        all_paths[JKQTPRectLeftTriangle].polygons<<QPointF(0.0+0.5, 0.0-0.5)<<QPointF(0.0-0.5, 0.0)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0+0.5, 0.0-0.5)<<QPointF(0.0+0.5, 0.0+0.5);
+        all_paths[JKQTPRectRightTriangle].polygons<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0+0.5, 0.0)<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0-0.5)<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0-0.5, 0.0+0.5);
+        all_paths[JKQTPTriangle].polygons<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0, 0.0-0.5);
+        all_paths[JKQTPFilledTriangle].filledpolygons=all_paths[JKQTPTriangle].polygons;
+        all_paths[JKQTPDownTriangle].polygons<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0+0.5, 0.0-0.5)<<QPointF(0.0, 0.0+0.5);
+        all_paths[JKQTPFilledDownTriangle].filledpolygons=all_paths[JKQTPDownTriangle].polygons;
+        all_paths[JKQTPLeftTriangle].polygons<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0-0.5, 0.0)<<QPointF(0.0+0.5, 0.0-0.5);
+        all_paths[JKQTPFilledLeftTriangle].filledpolygons=all_paths[JKQTPLeftTriangle].polygons;
+        all_paths[JKQTPRightTriangle].polygons<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0)<<QPointF(0.0-0.5, 0.0-0.5);
+        all_paths[JKQTPFilledRightTriangle].filledpolygons=all_paths[JKQTPRightTriangle].polygons;
+        for (int i=0; i<star5cords.size(); i++) {
+            all_paths[JKQTPstar].polygons<<QPointF(0.0+star5cords[i].x()*0.5, 0.0+star5cords[i].y()*0.5);
+            all_paths[JKQTPFilledStar].filledpolygons<<QPointF(0.0+star5cords[i].x()*0.5, 0.0+star5cords[i].y()*0.5);
             if (i%2==0) {
-                polygons[JKQTPPentagon]<<QPointF(0.0+star5cordsx[i]*0.5, 0.0+star5cordsy[i]*0.5);
-                filledpolygons[JKQTPFilledPentagon]<<QPointF(0.0+star5cordsx[i]*0.5, 0.0+star5cordsy[i]*0.5);
+                all_paths[JKQTPPentagon].polygons<<QPointF(0.0+star5cords[i].x()*0.5, 0.0+star5cords[i].y()*0.5);
+                all_paths[JKQTPFilledPentagon].filledpolygons<<QPointF(0.0+star5cords[i].x()*0.5, 0.0+star5cords[i].y()*0.5);
             }
         }
-        for (int i=0; i<star6_items*2; i+=2) {
-            polygons[JKQTPHexagon]<<QPointF(0.0+star6cordsx[i]*0.5, 0.0+star6cordsy[i]*0.5);
-            filledpolygons[JKQTPFilledHexagon]<<QPointF(0.0+star6cordsx[i]*0.5, 0.0+star6cordsy[i]*0.5);
+        for (int i=0; i<star6cords.size(); i+=2) {
+            all_paths[JKQTPHexagon].polygons<<QPointF(0.0+star6cords[i].x()*0.5, 0.0+star6cords[i].y()*0.5);
+            all_paths[JKQTPFilledHexagon].filledpolygons<<QPointF(0.0+star6cords[i].x()*0.5, 0.0+star6cords[i].y()*0.5);
         }
-        for (int i=0; i<star8_items*2; i+=2) {
-            polygons[JKQTPOctagon]<<QPointF(0.0+star8cordsx[i]*0.5, 0.0+star8cordsy[i]*0.5);
-            filledpolygons[JKQTPFilledOctagon]<<QPointF(0.0+star8cordsx[i]*0.5, 0.0+star8cordsy[i]*0.5);
+        for (int i=0; i<star8cords.size(); i+=2) {
+            all_paths[JKQTPOctagon].polygons<<QPointF(0.0+star8cords[i].x()*0.5, 0.0+star8cords[i].y()*0.5);
+            all_paths[JKQTPFilledOctagon].filledpolygons<<QPointF(0.0+star8cords[i].x()*0.5, 0.0+star8cords[i].y()*0.5);
         }
-        polygons[JKQTPDiamond]<<QPointF(0.0, 0.0-0.5)<<QPointF(0.0+0.5, 0.0)<<QPointF(0.0, 0.0+0.5)<<QPointF(0.0-0.5, 0.0);
-        filledpolygons[JKQTPFilledDiamond]=polygons[JKQTPDiamond];
-        polygons[JKQTPHourglass]<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0+0.5, 0.0-0.5);
-        filledpolygons[JKQTPFilledHourglass]=polygons[JKQTPHourglass];
-        polygons[JKQTPHorizontalHourglass]<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0-0.5);
-        filledpolygons[JKQTPFilledHorizontalHourglass]=polygons[JKQTPHorizontalHourglass];
-        polygons[JKQTPSantaClauseHouse]<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0-1.0/6.0)<<QPointF(0.0-0.5, 0.0-1.0/6.0)<<QPointF(0.0, 0.0-0.5)<<QPointF(0.0+0.5, 0.0-1.0/6.0)<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0-0.5, 0.0-1.0/6.0)<<QPointF(0.0+0.5, 0.0+0.5);
-        filledpolygons[JKQTPFilledSantaClauseHouse]=polygons[JKQTPSantaClauseHouse];
-        polygons[JKQTPUpDownTriangle]<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0, 0.0+0.5)<<QPointF(0.0+0.5, 0.0-0.5)<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0, 0.0+0.5)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0, 0.0-0.5)<<QPointF(0.0-0.5, 0.0+0.5);
-        filledpolygons[JKQTPFilledUpDownTriangle]=polygons[JKQTPUpDownTriangle];
+        all_paths[JKQTPDiamond].polygons<<QPointF(0.0, 0.0-0.5)<<QPointF(0.0+0.5, 0.0)<<QPointF(0.0, 0.0+0.5)<<QPointF(0.0-0.5, 0.0);
+        all_paths[JKQTPFilledDiamond].filledpolygons=all_paths[JKQTPDiamond].polygons;
+        all_paths[JKQTPHourglass].polygons<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0+0.5, 0.0-0.5);
+        all_paths[JKQTPFilledHourglass].filledpolygons=all_paths[JKQTPHourglass].polygons;
+        all_paths[JKQTPHorizontalHourglass].polygons<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0-0.5);
+        all_paths[JKQTPFilledHorizontalHourglass].filledpolygons=all_paths[JKQTPHorizontalHourglass].polygons;
+        all_paths[JKQTPSantaClauseHouse].polygons<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0-1.0/6.0)<<QPointF(0.0-0.5, 0.0-1.0/6.0)<<QPointF(0.0, 0.0-0.5)<<QPointF(0.0+0.5, 0.0-1.0/6.0)<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0-0.5, 0.0-1.0/6.0)<<QPointF(0.0+0.5, 0.0+0.5);
+        all_paths[JKQTPFilledSantaClauseHouse].filledpolygons=all_paths[JKQTPSantaClauseHouse].polygons;
+        all_paths[JKQTPUpDownTriangle].polygons<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0, 0.0+0.5)<<QPointF(0.0+0.5, 0.0-0.5)<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0, 0.0+0.5)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0, 0.0-0.5)<<QPointF(0.0-0.5, 0.0+0.5);
+        all_paths[JKQTPFilledUpDownTriangle].filledpolygons=all_paths[JKQTPUpDownTriangle].polygons;
 
 
-        lines[JKQTPTripod]<<QLineF(0.0, 0.0-0.5, 0.0, 0.0)
+        all_paths[JKQTPTripod].lines<<QLineF(0.0, 0.0-0.5, 0.0, 0.0)
             <<QLineF(0.0, 0.0, 0.0-s45, 0.0+s45)
             <<QLineF(0.0, 0.0, 0.0+s45, 0.0+s45);
 
-        lines[JKQTPDownTripod]<<QLineF(0.0, 0.0+0.5, 0.0, 0.0)
+        all_paths[JKQTPDownTripod].lines<<QLineF(0.0, 0.0+0.5, 0.0, 0.0)
             <<QLineF(0.0, 0.0, 0.0-s45, 0.0-s45)
             <<QLineF(0.0, 0.0, 0.0+s45, 0.0-s45);
 
-        lines[JKQTPLeftTripod]<<QLineF(0.0-0.5, 0.0, 0.0, 0.0)
+        all_paths[JKQTPLeftTripod].lines<<QLineF(0.0-0.5, 0.0, 0.0, 0.0)
             <<QLineF(0.0, 0.0, 0.0+s45, 0.0-s45)
             <<QLineF(0.0, 0.0, 0.0+s45, 0.0+s45);
 
-        lines[JKQTPRightTripod]<<QLineF(0.0+0.5, 0.0, 0.0, 0.0)
+        all_paths[JKQTPRightTripod].lines<<QLineF(0.0+0.5, 0.0, 0.0, 0.0)
             <<QLineF(0.0, 0.0, 0.0-s45, 0.0-s45)
             <<QLineF(0.0, 0.0, 0.0-s45, 0.0+s45);
 
-        pathsInitialized=true;
-    }
+        return all_paths;
+    }();
 
     painter.setBrush(QColor(Qt::transparent));
     painter.setPen(p);
@@ -866,8 +849,8 @@ inline void JKQTPPlotSymbol(TPainter& painter, double x, double y, JKQTPGraphSym
                 painter.scale(symbolSize,symbolSize);
                 painter.setBrush(QColor(Qt::transparent));
                 painter.setPen(pDescaled);
-                if (pathsrotation[symbol]!=0.0) painter.rotate(pathsrotation[symbol]);
-                painter.drawPath(paths[symbol]);
+                if (all_paths[symbol].pathsrotation!=0.0) painter.rotate(all_paths[symbol].pathsrotation);
+                painter.drawPath(all_paths[symbol].paths);
             break;
 
 
@@ -882,8 +865,8 @@ inline void JKQTPPlotSymbol(TPainter& painter, double x, double y, JKQTPGraphSym
                 painter.scale(symbolSize,symbolSize);
                 painter.setBrush(b);
                 painter.setPen(pDescaled);
-                if (pathsrotation[symbol]!=0.0) painter.rotate(pathsrotation[symbol]);
-                painter.drawPath(filledpaths[symbol]);
+                if (all_paths[symbol].pathsrotation!=0.0) painter.rotate(all_paths[symbol].pathsrotation);
+                painter.drawPath(all_paths[symbol].filledpaths);
 
             break;
 
@@ -910,8 +893,8 @@ inline void JKQTPPlotSymbol(TPainter& painter, double x, double y, JKQTPGraphSym
                 painter.scale(symbolSize,symbolSize);
                 painter.setBrush(QColor(Qt::transparent));
                 painter.setPen(pDescaled);
-                if (pathsrotation[symbol]!=0.0) painter.rotate(pathsrotation[symbol]);
-                painter.drawConvexPolygon(polygons[symbol]);
+                if (all_paths[symbol].pathsrotation!=0.0) painter.rotate(all_paths[symbol].pathsrotation);
+                painter.drawConvexPolygon(all_paths[symbol].polygons);
             break;
 
 
@@ -933,8 +916,8 @@ inline void JKQTPPlotSymbol(TPainter& painter, double x, double y, JKQTPGraphSym
                 painter.scale(symbolSize,symbolSize);
                 painter.setBrush(b);
                 painter.setPen(pDescaled);
-                if (pathsrotation[symbol]!=0.0) painter.rotate(pathsrotation[symbol]);
-                painter.drawConvexPolygon(filledpolygons[symbol]);
+                if (all_paths[symbol].pathsrotation!=0.0) painter.rotate(all_paths[symbol].pathsrotation);
+                painter.drawConvexPolygon(all_paths[symbol].filledpolygons);
             break;
 
 
@@ -947,8 +930,8 @@ inline void JKQTPPlotSymbol(TPainter& painter, double x, double y, JKQTPGraphSym
             painter.scale(symbolSize,symbolSize);
             painter.setBrush(QColor(Qt::transparent));
             painter.setPen(pDescaled);
-            if (pathsrotation[symbol]!=0.0) painter.rotate(pathsrotation[symbol]);
-            painter.drawLines(lines[symbol]);
+            if (all_paths[symbol].pathsrotation!=0.0) painter.rotate(all_paths[symbol].pathsrotation);
+            painter.drawLines(all_paths[symbol].lines);
         break;
 
 
@@ -999,14 +982,16 @@ inline void JKQTPPlotSymbol(TPainter& painter, double x, double y, JKQTPGraphSym
         painter.drawPath(path);
     }
     if (symbol>=JKQTPFirstCustomSymbol) {
+        JKQTPlotterDrawingTools::SymbolsLocker lock(JKQTPlotterDrawingTools::JKQTPCustomGraphSymbolStore);
         const int idx(static_cast<int>(symbol-JKQTPFirstCustomSymbol));
-        if (idx>=0 && idx<JKQTPlotterDrawingTools::JKQTPCustomGraphSymbolStore.size()) {
+        if (idx>=0 && idx<JKQTPlotterDrawingTools::JKQTPCustomGraphSymbolStore->size()) {
             painter.setPen(p);
             painter.translate(QPointF(x,y));
             painter.scale(symbolSize,symbolSize);
             painter.setBrush(b);
             painter.setPen(pDescaled);
-            JKQTPlotterDrawingTools::JKQTPCustomGraphSymbolStore[idx].operator()(painter);
+            const auto functor=JKQTPlotterDrawingTools::JKQTPCustomGraphSymbolStore->at(idx);
+            functor(painter);
         }
     }
 }
