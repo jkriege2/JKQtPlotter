@@ -162,7 +162,7 @@ for:
       - sh: echo QT_DIR=$QT_DIR
       - sh: echo Qt5_DIR=$Qt5_DIR
       - sh: echo PATH=$PATH
-      - sh: sudo apt-get update -y
+      #- sh: sudo apt-get update -y
       # Install OpenCV
       - sh: |
             if [ "$USE_CMAKE" = true ]; then 
