@@ -155,10 +155,7 @@ for:
       - sh: export Qt5_DIR=$QTDIR/lib/cmake
       - sh: sudo ls /etc/apt/sources.list.d/
       #- sh: sudo rm /etc/apt/sources.list.d/github_git-lfs.list
-      #- sh: sudo apt update -qq
-      - sh: sudo apt-get update -yy
-      - sh: sudo apt-get upgrade -yy
-      - sh: sudo apt-get update -yy
+      - sh: sudo apt update -yy --allow-releaseinfo-change
       - sh: if [ "$INSTALL_QMAKE5" = true ]; then sudo apt install -y build-essential git mesa-common-dev libglu1-mesa-dev qt5-qmake cmake; fi            
       - sh: if [ "$INSTALL_QMAKE5" = false ]; then sudo apt install -y build-essential git mesa-common-dev libglu1-mesa-dev cmake; fi            
       - sh: echo QTDIR=$QTDIR
