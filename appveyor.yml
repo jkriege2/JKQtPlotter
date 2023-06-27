@@ -162,6 +162,7 @@ for:
       - sh: echo QT_DIR=$QT_DIR
       - sh: echo Qt5_DIR=$Qt5_DIR
       - sh: echo PATH=$PATH
+      - sh: sudo apt-get upgrade -yy
       - sh: sudo apt-get update -yy
       # Install OpenCV
       - sh: |
