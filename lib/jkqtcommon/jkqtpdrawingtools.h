@@ -744,15 +744,15 @@ inline void JKQTPPlotSymbol(TPainter& painter, double x, double y, JKQTPGraphSym
         }
 
 
-        for (int i=0; i<star8cords.size(); i+=2) {
+        for (size_t i=0; i<star8cords.size(); i+=2) {
             all_paths[JKQTPAsterisc8].paths.moveTo(star8cords[i].x()*0.5, star8cords[i].y()*0.5);
             all_paths[JKQTPAsterisc8].paths.lineTo(0,0);
         }
-        for (int i=0; i<star6cords.size(); i+=2) {
+        for (size_t i=0; i<star6cords.size(); i+=2) {
             all_paths[JKQTPAsterisc6].paths.moveTo(star6cords[i].x()*0.5, star6cords[i].y()*0.5);
             all_paths[JKQTPAsterisc6].paths.lineTo(0,0);
         }
-        for (int i=0; i<star5cords.size(); i+=2) {
+        for (size_t i=0; i<star5cords.size(); i+=2) {
             all_paths[JKQTPAsterisc].paths.moveTo(star5cords[i].x()*0.5, star5cords[i].y()*0.5);
             all_paths[JKQTPAsterisc].paths.lineTo(0,0);
         }
@@ -769,7 +769,7 @@ inline void JKQTPPlotSymbol(TPainter& painter, double x, double y, JKQTPGraphSym
         all_paths[JKQTPFilledLeftTriangle].filledpolygons=all_paths[JKQTPLeftTriangle].polygons;
         all_paths[JKQTPRightTriangle].polygons<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0)<<QPointF(0.0-0.5, 0.0-0.5);
         all_paths[JKQTPFilledRightTriangle].filledpolygons=all_paths[JKQTPRightTriangle].polygons;
-        for (int i=0; i<star5cords.size(); i++) {
+        for (size_t i=0; i<star5cords.size(); i++) {
             all_paths[JKQTPstar].polygons<<QPointF(0.0+star5cords[i].x()*0.5, 0.0+star5cords[i].y()*0.5);
             all_paths[JKQTPFilledStar].filledpolygons<<QPointF(0.0+star5cords[i].x()*0.5, 0.0+star5cords[i].y()*0.5);
             if (i%2==0) {
@@ -777,11 +777,11 @@ inline void JKQTPPlotSymbol(TPainter& painter, double x, double y, JKQTPGraphSym
                 all_paths[JKQTPFilledPentagon].filledpolygons<<QPointF(0.0+star5cords[i].x()*0.5, 0.0+star5cords[i].y()*0.5);
             }
         }
-        for (int i=0; i<star6cords.size(); i+=2) {
+        for (size_t i=0; i<star6cords.size(); i+=2) {
             all_paths[JKQTPHexagon].polygons<<QPointF(0.0+star6cords[i].x()*0.5, 0.0+star6cords[i].y()*0.5);
             all_paths[JKQTPFilledHexagon].filledpolygons<<QPointF(0.0+star6cords[i].x()*0.5, 0.0+star6cords[i].y()*0.5);
         }
-        for (int i=0; i<star8cords.size(); i+=2) {
+        for (size_t i=0; i<star8cords.size(); i+=2) {
             all_paths[JKQTPOctagon].polygons<<QPointF(0.0+star8cords[i].x()*0.5, 0.0+star8cords[i].y()*0.5);
             all_paths[JKQTPFilledOctagon].filledpolygons<<QPointF(0.0+star8cords[i].x()*0.5, 0.0+star8cords[i].y()*0.5);
         }
