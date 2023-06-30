@@ -76,15 +76,10 @@ bool JKQTMathTextTextBaseNode::toHtml(QString &html, JKQTMathTextEnvironment cur
 QHash<QChar, uint32_t> JKQTMathTextTextNode::blackboardUnicodeTable=QHash<QChar, uint32_t>();
 
 void JKQTMathTextTextNode::fillStaticTables() {
+    static std::mutex sMutex;
+    std::lock_guard<std::mutex> lock(sMutex);
     if (blackboardUnicodeTable.size()>0) return;
 
-    blackboardUnicodeTable['C']=0x2102;
-    blackboardUnicodeTable['H']=0x210D;
-    blackboardUnicodeTable['N']=0x2115;
-    blackboardUnicodeTable['P']=0x2119;
-    blackboardUnicodeTable['Q']=0x211A;
-    blackboardUnicodeTable['R']=0x211D;
-    blackboardUnicodeTable['Z']=0x2124;
 
     for (const QChar ch: QString("ABDEFGIJKLMOSTUVWXYZ")) {
         blackboardUnicodeTable[ch]=0x1D538+(ch.unicode()-QChar('A').unicode());
@@ -95,6 +90,14 @@ void JKQTMathTextTextNode::fillStaticTables() {
     for (const QChar ch: QString("0123456789")) {
         blackboardUnicodeTable[ch]=0x1D7D8+(ch.unicode()-QChar('0').unicode());
     }
+
+    blackboardUnicodeTable['C']=0x2102;
+    blackboardUnicodeTable['H']=0x210D;
+    blackboardUnicodeTable['N']=0x2115;
+    blackboardUnicodeTable['P']=0x2119;
+    blackboardUnicodeTable['Q']=0x211A;
+    blackboardUnicodeTable['R']=0x211D;
+    blackboardUnicodeTable['Z']=0x2124;
 }
 
 JKQTMathTextTextNode::JKQTMathTextTextNode(JKQTMathText* _parent, const QString& textIn, bool addWhitespace, bool stripInnerWhitepace):

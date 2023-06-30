@@ -38,6 +38,7 @@ const int JKQTPImageTools::LUTSIZE = 256;
 
 QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::global_jkqtpimagetools_lutstore = JKQTPImageTools::getDefaultLUTs();
 int JKQTPImageTools::global_next_userpalette = JKQTPMathImageFIRST_REGISTERED_USER_PALETTE;
+std::mutex JKQTPImageTools::lutMutex = std::mutex();
 
 
 
@@ -2648,6 +2649,7 @@ bool JKQTPImagePlot_QPairCompareFirst(const QPair<T1, T2> &s1, const QPair<T1, T
 }
 
 QStringList JKQTPImageTools::getPredefinedPalettes()  {
+    std::lock_guard<std::mutex> lock(JKQTPImageTools::lutMutex);
     static QStringList sl;
 
     if (sl.size()!=JKQTPImageTools::global_jkqtpimagetools_lutstore.size()) {
@@ -2665,6 +2667,7 @@ QStringList JKQTPImageTools::getPredefinedPalettes()  {
 
 
 QStringList JKQTPImageTools::getPredefinedPalettesMachineReadable()  {
+    std::lock_guard<std::mutex> lock(JKQTPImageTools::lutMutex);
     static QStringList sl;
 
     if (sl.size()!=JKQTPImageTools::global_jkqtpimagetools_lutstore.size()) {
@@ -2686,6 +2689,7 @@ QStringList JKQTPImageTools::getPredefinedPalettesMachineReadable()  {
 
 QString JKQTPImageTools::JKQTPMathImageColorPalette2String(JKQTPMathImageColorPalette p)
 {
+    std::lock_guard<std::mutex> lock(JKQTPImageTools::lutMutex);
     auto it=JKQTPImageTools::global_jkqtpimagetools_lutstore.find(p);
     if (it==JKQTPImageTools::global_jkqtpimagetools_lutstore.end()) return QString::number(static_cast<int>(p));
     else {
@@ -2696,6 +2700,7 @@ QString JKQTPImageTools::JKQTPMathImageColorPalette2String(JKQTPMathImageColorPa
 
 JKQTPMathImageColorPalette JKQTPImageTools::String2JKQTPMathImageColorPalette(const QString &p)
 {
+    std::lock_guard<std::mutex> lock(JKQTPImageTools::lutMutex);
     for (auto it=JKQTPImageTools::global_jkqtpimagetools_lutstore.begin(); it!=JKQTPImageTools::global_jkqtpimagetools_lutstore.end(); ++it) {
         if (QString::compare(p, it.value().name, Qt::CaseInsensitive)==0) {
             return static_cast<JKQTPMathImageColorPalette>(it.key());
@@ -2807,6 +2812,7 @@ QIcon JKQTPImageTools::GetPaletteIcon(JKQTPMathImageColorPalette palette)  {
 
 int JKQTPImageTools::registerPalette(const QString &name, const JKQTPImageTools::LUTType &paletteLut, const QString &nameT)
 {
+    std::lock_guard<std::mutex> lock(JKQTPImageTools::lutMutex);
     int id=JKQTPImageTools::global_next_userpalette++;
     JKQTPImageTools::global_jkqtpimagetools_lutstore[id].name=name;
     JKQTPImageTools::global_jkqtpimagetools_lutstore[id].nameT=((nameT.size()>0)?nameT:name);

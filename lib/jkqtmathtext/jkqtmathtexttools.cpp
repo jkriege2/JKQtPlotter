@@ -21,7 +21,6 @@
 
 #include "jkqtmathtext/jkqtmathtexttools.h"
 #include "jkqtmathtext/jkqtmathtext.h"
-#include "jkqtcommon/jkqtpcodestructuring.h"
 #include "jkqtcommon/jkqtpstringtools.h"
 #include <cmath>
 #include <QFontMetricsF>
@@ -35,6 +34,8 @@
 void initJKQTMathTextResources()
 {
     static bool initialized=false;
+    static std::mutex mutex_initialized;
+    std::lock_guard<std::mutex> lock(mutex_initialized);
     if (!initialized) {
 #ifdef JKQTMATHTEXT_COMPILED_WITH_XITS
         Q_INIT_RESOURCE(xits);
@@ -249,6 +250,8 @@ JKQTMathTextFontSpecifier JKQTMathTextFontSpecifier::getXITSFamilies()
     }
 
     static JKQTMathTextFontSpecifier fontSpec;
+    static std::mutex fontSpecMutex;
+    std::lock_guard<std::mutex> lock(fontSpecMutex);
     if (fontSpec.m_fontName.isEmpty() && fontSpec.m_mathFontName.isEmpty()) {
         fontSpec.m_transformOnOutput=false;
         for (int i=0; i<fontFamilies.size(); i++) {
@@ -287,6 +290,8 @@ JKQTMathTextFontSpecifier JKQTMathTextFontSpecifier::getASANAFamilies()
 
 
     static JKQTMathTextFontSpecifier fontSpec;
+    static std::mutex fontSpecMutex;
+    std::lock_guard<std::mutex> lock(fontSpecMutex);
     if (fontSpec.m_fontName.isEmpty() && fontSpec.m_mathFontName.isEmpty()) {
         fontSpec.m_transformOnOutput=false;
         for (int i=0; i<fontFamilies.size(); i++) {
@@ -318,6 +323,8 @@ JKQTMathTextFontSpecifier JKQTMathTextFontSpecifier::getSTIXFamilies()
     static QStringList textNames{"STIX", "STIXGeneral", "STIX General"};
 
     static JKQTMathTextFontSpecifier fontSpec;
+    static std::mutex fontSpecMutex;
+    std::lock_guard<std::mutex> lock(fontSpecMutex);
     if (fontSpec.m_fontName.isEmpty() && fontSpec.m_mathFontName.isEmpty()) {
         fontSpec.m_transformOnOutput=false;
 #if (QT_VERSION<QT_VERSION_CHECK(6, 0, 0))
@@ -376,6 +383,8 @@ JKQTMathTextFontSpecifier JKQTMathTextFontSpecifier::getFIRAFamilies()
     }
 
     static JKQTMathTextFontSpecifier fontSpec;
+    static std::mutex fontSpecMutex;
+    std::lock_guard<std::mutex> lock(fontSpecMutex);
     if (fontSpec.m_fontName.isEmpty() && fontSpec.m_mathFontName.isEmpty()) {
         fontSpec.m_transformOnOutput=false;
         for (int i=0; i<fontFamilies.size(); i++) {
@@ -404,6 +413,8 @@ JKQTMathTextFontSpecifier JKQTMathTextFontSpecifier::getFIRAFamilies()
 JKQTMathTextFontSpecifier JKQTMathTextFontSpecifier::getAppFontFamilies()
 {
     static JKQTMathTextFontSpecifier fontSpec;
+    static std::mutex fontSpecMutex;
+    std::lock_guard<std::mutex> lock(fontSpecMutex);
     if (fontSpec.m_fontName.isEmpty() && fontSpec.m_mathFontName.isEmpty()) {
 #if (QT_VERSION<QT_VERSION_CHECK(6, 0, 0))
         QFontDatabase fdb;
@@ -444,6 +455,8 @@ JKQTMathTextFontSpecifier JKQTMathTextFontSpecifier::getAppFontFamilies()
 JKQTMathTextFontSpecifier JKQTMathTextFontSpecifier::getAppFontSFFamilies()
 {
     static JKQTMathTextFontSpecifier fontSpec;
+    static std::mutex fontSpecMutex;
+    std::lock_guard<std::mutex> lock(fontSpecMutex);
     if (fontSpec.m_fontName.isEmpty() && fontSpec.m_mathFontName.isEmpty()) {
         const QFont f=QGuiApplication::font().family();
         QFont testFnt;
@@ -927,8 +940,8 @@ bool JKQTMathTextTBRDataH::operator==(const JKQTMathTextTBRDataH &other) const
 
 QRectF JKQTMathTextGetTightBoundingRect(const QFont &fm, const QString &text, QPaintDevice *pd)
 {
-    static QList<JKQTMathTextTBRData> JKQTMathText_tbrs=QList<JKQTMathTextTBRData>();
-    static QHash<JKQTMathTextTBRDataH, QRectF> JKQTMathText_tbrh=QHash<JKQTMathTextTBRDataH, QRectF>();
+    thread_local QList<JKQTMathTextTBRData> JKQTMathText_tbrs=QList<JKQTMathTextTBRData>();
+    thread_local QHash<JKQTMathTextTBRDataH, QRectF> JKQTMathText_tbrh=QHash<JKQTMathTextTBRDataH, QRectF>();
 
     JKQTMathTextTBRDataH  dh(fm, text, pd);
     if (pd) {

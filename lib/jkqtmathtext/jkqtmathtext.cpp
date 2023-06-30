@@ -46,6 +46,7 @@
 #include <QFontMetricsF>
 #include <QDebug>
 #include <QFontDatabase>
+#include <mutex>
 #include <typeinfo>
 #include <QPainterPath>
 
@@ -63,6 +64,7 @@ QString JKQTMathText::init_caligraphicFont="decorative";
 QString JKQTMathText::init_blackboardFont="blackboard";
 QString JKQTMathText::init_fracturFont="fraktur";
 bool JKQTMathText::s_firstStart=true;
+std::mutex JKQTMathText::s_mutex=std::mutex();
 
 
 
@@ -126,7 +128,7 @@ JKQTMathText::JKQTMathText(QObject* parent, bool useFontsForGUI):
 
 
 
-
+    std::lock_guard<std::mutex> lock(s_mutex);
     if (s_firstStart) {
         //t0=std::chrono::high_resolution_clock::now();
 

@@ -39,6 +39,8 @@ QHash<QString, JKQTMathTextFracNode::FracType> JKQTMathTextFracNode::instruction
 
 void JKQTMathTextFracNode::fillInstructions()
 {
+    static std::mutex sMutex;
+    std::lock_guard<std::mutex> lock(sMutex);
     if (instructions.size()>0) return;
     instructions["frac"]=MTFMfrac;
     instructions["dfrac"] = MTFMdfrac;

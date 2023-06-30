@@ -28,6 +28,7 @@
 #include <cfloat>
 #include <stdint.h>
 #include <QColor>
+#include <mutex>
 #include <vector>
 #include "jkqtcommon/jkqtcommon_imexport.h"
 #include "jkqtcommon/jkqtpmathtools.h"
@@ -482,6 +483,9 @@ struct JKQTPImageTools {
             \see registerPalette() registerPalettesFromFile()
             */
         static JKQTCOMMON_LIB_EXPORT int global_next_userpalette;
+        /** \brief Mutex to protect global_jkqtpimagetools_lutstore and global_next_userpalette */
+        static JKQTCOMMON_LIB_EXPORT std::mutex lutMutex;
+
 
         /*! \brief returns data of the default LUTs, used to initialize global_jkqtpimagetools_lutstore
             \internal

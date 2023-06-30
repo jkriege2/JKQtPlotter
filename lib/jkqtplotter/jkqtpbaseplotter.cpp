@@ -53,15 +53,18 @@
 #include "jkqtmathtext/jkqtmathtext.h"
 #include <algorithm>
 
-static QString globalUserSettigsFilename="";
-static QString globalUserSettigsPrefix="";
-static QList<JKQTPPaintDeviceAdapter*> jkqtpPaintDeviceAdapters;
-static QList<JKQTPSaveDataAdapter*> jkqtpSaveDataAdapters;
+QString JKQTBasePlotter::globalUserSettigsFilename="";
+QString JKQTBasePlotter::globalUserSettigsPrefix="";
+std::mutex JKQTBasePlotter::globalUserSettingsMutex = std::mutex();
+JKQTPSynchronized<QList<JKQTPPaintDeviceAdapter*>> JKQTBasePlotter::jkqtpPaintDeviceAdapters;
+JKQTPSynchronized<QList<JKQTPSaveDataAdapter*>> JKQTBasePlotter::jkqtpSaveDataAdapters;
 
 
 
 void initJKQTBasePlotterResources()
 {
+    static std::mutex sMutex;
+    std::lock_guard<std::mutex> lock(sMutex);
     Q_INIT_RESOURCE(jkqtpbaseplotter);
     initJKQTMathTextResources();
 }
@@ -69,30 +72,34 @@ void initJKQTBasePlotterResources()
 
 void JKQTBasePlotter::setDefaultJKQTBasePrinterUserSettings(QString userSettigsFilename, const QString& userSettigsPrefix)
 {
+    std::lock_guard<std::mutex> lock(globalUserSettingsMutex);
     globalUserSettigsFilename=userSettigsFilename;
     globalUserSettigsPrefix=userSettigsPrefix;
 }
 
 void JKQTBasePlotter::registerPaintDeviceAdapter(JKQTPPaintDeviceAdapter *adapter)
 {
-    jkqtpPaintDeviceAdapters.append(adapter);
+    JKQTPSynchronized<QList<JKQTPPaintDeviceAdapter*>>::Locker lock(jkqtpPaintDeviceAdapters);
+    jkqtpPaintDeviceAdapters.get().append(adapter);
 }
 
 void JKQTBasePlotter::deregisterPaintDeviceAdapter(JKQTPPaintDeviceAdapter *adapter)
 {
-    if (jkqtpPaintDeviceAdapters.contains(adapter)) jkqtpPaintDeviceAdapters.removeAll(adapter);
+    JKQTPSynchronized<QList<JKQTPPaintDeviceAdapter*>>::Locker lock(jkqtpPaintDeviceAdapters);
+    if (jkqtpPaintDeviceAdapters.get().contains(adapter)) jkqtpPaintDeviceAdapters.get().removeAll(adapter);
 }
 
 bool JKQTBasePlotter::registerSaveDataAdapter(JKQTPSaveDataAdapter *adapter)
 {
     if (adapter){
+        JKQTPSynchronized<QList<JKQTPSaveDataAdapter*>>::Locker lock(jkqtpSaveDataAdapters);
         QString format=adapter->getFilter();
-        for (int i=0; i<jkqtpSaveDataAdapters.size(); i++) {
-            if (jkqtpSaveDataAdapters[i] && jkqtpSaveDataAdapters[i]->getFilter()==format) {
+        for (int i=0; i<jkqtpSaveDataAdapters.get().size(); i++) {
+            if (jkqtpSaveDataAdapters.get()[i] && jkqtpSaveDataAdapters.get()[i]->getFilter()==format) {
                 return false;
             }
         }
-        jkqtpSaveDataAdapters.append(adapter);
+        jkqtpSaveDataAdapters.get().append(adapter);
         return true;
     }
     return false;
@@ -100,9 +107,15 @@ bool JKQTBasePlotter::registerSaveDataAdapter(JKQTPSaveDataAdapter *adapter)
 
 bool JKQTBasePlotter::deregisterSaveDataAdapter(JKQTPSaveDataAdapter *adapter)
 {
-    if (jkqtpSaveDataAdapters.contains(adapter)) jkqtpSaveDataAdapters.removeAll(adapter);
+    JKQTPSynchronized<QList<JKQTPSaveDataAdapter*>>::Locker lock(jkqtpSaveDataAdapters);
+    if (jkqtpSaveDataAdapters.get().contains(adapter)) jkqtpSaveDataAdapters.get().removeAll(adapter);
     return true;
 }
+
+
+
+
+
 
 JKQTBasePlotter::textSizeData JKQTBasePlotter::getTextSizeDetail(const QFont &fm, const QString &text, QPainter& painter)
 {
@@ -111,6 +124,7 @@ JKQTBasePlotter::textSizeData JKQTBasePlotter::getTextSizeDetail(const QFont &fm
 
 JKQTBasePlotter::textSizeData JKQTBasePlotter::getTextSizeDetail(const QString &fontName, double fontSize, const QString &text, QPainter& painter)
 {
+    thread_local QHash<JKQTBasePlotter::textSizeKey, JKQTBasePlotter::textSizeData> s_TextSizeDataCache;
     JKQTBasePlotter::textSizeKey  dh(fontName, fontSize, text, painter.device());
     if (s_TextSizeDataCache.contains(dh)) return s_TextSizeDataCache[dh];
     JKQTBasePlotter::textSizeData d;
@@ -185,8 +199,11 @@ JKQTBasePlotter::JKQTBasePlotter(bool datastore_internal, QObject* parent, JKQTP
     lineWidthPrintMultiplier=1;
     fontSizeMultiplier=1;
     lineWidthMultiplier=1;
-    userSettigsFilename=globalUserSettigsFilename;
-    userSettigsPrefix=globalUserSettigsPrefix;
+    {
+        std::lock_guard<std::mutex> lock(globalUserSettingsMutex);
+        userSettigsFilename=globalUserSettigsFilename;
+        userSettigsPrefix=globalUserSettigsPrefix;
+    }
 #ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
     currentPrinter=QPrinterInfo::defaultPrinter().printerName();
 #endif
@@ -3599,9 +3616,12 @@ void JKQTBasePlotter::saveData(const QString& filename, const QString &format) {
     fileformats<<tr("Matlab Script (*.m)");
     fileformatIDs<<"m";
 
-    for (int i=0; i<jkqtpSaveDataAdapters.size(); i++) {
-        fileformats<<jkqtpSaveDataAdapters[i]->getFilter();
-        fileformatIDs<<QString("custom%1").arg(i);
+    {
+        JKQTPSynchronized<QList<JKQTPSaveDataAdapter*>>::Locker lock(jkqtpSaveDataAdapters);
+        for (int i=0; i<jkqtpSaveDataAdapters.get().size(); i++) {
+            fileformats<<jkqtpSaveDataAdapters.get()[i]->getFilter();
+            fileformatIDs<<QString("custom%1").arg(i);
+        }
     }
 
 
@@ -3665,10 +3685,11 @@ void JKQTBasePlotter::saveData(const QString& filename, const QString &format) {
             QString fidx=fmt;
             fidx=fidx.remove(0,6);
             int idx=fidx.toInt();
-            if (idx>=0 && idx<jkqtpSaveDataAdapters.size() && jkqtpSaveDataAdapters[idx]) {
+            JKQTPSynchronized<QList<JKQTPSaveDataAdapter*>>::Locker lock(jkqtpSaveDataAdapters);
+            if (idx>=0 && idx<jkqtpSaveDataAdapters.get().size() && jkqtpSaveDataAdapters.get()[idx]) {
                 QStringList cn;
                 QList<QVector<double> > dataset=datastore->getData(&cn);
-                jkqtpSaveDataAdapters[idx]->saveJKQTPData(fn, dataset, cn);
+                jkqtpSaveDataAdapters.get()[idx]->saveJKQTPData(fn, dataset, cn);
             }
         }
     }
@@ -3849,8 +3870,11 @@ void JKQTBasePlotter::saveImage(const QString& filename, bool displayPreview) {
     filt<<tr("TIFF Image [Qt] (*.tif *.tiff)");
     filt<<tr("JPEG Image [Qt] (*.jpg *.jpeg)");
     const int filtStartSize=filt.size();
-    for (int i=0; i<jkqtpPaintDeviceAdapters.size(); i++) {
-        filt<<jkqtpPaintDeviceAdapters[i]->getFilter();
+    {
+        JKQTPSynchronized<QList<JKQTPPaintDeviceAdapter*>>::Locker lock(jkqtpPaintDeviceAdapters);
+        for (int i=0; i<jkqtpPaintDeviceAdapters.get().size(); i++) {
+            filt<<jkqtpPaintDeviceAdapters.get()[i]->getFilter();
+        }
     }
     int qtwritersidx=filt.size();
     QList<QByteArray> writerformats=QImageWriter::supportedImageFormats();
@@ -3874,12 +3898,14 @@ void JKQTBasePlotter::saveImage(const QString& filename, bool displayPreview) {
     saveUserSettings();
     if (!fn.isEmpty()) {
         int filtID=filt.indexOf(selFormat);
-        bool isWithSpecialDeviceAdapter=filtID>=filtStartSize && filtID<filtStartSize+jkqtpPaintDeviceAdapters.size();
+        JKQTPSynchronized<QList<JKQTPPaintDeviceAdapter*>>::Locker lock(jkqtpPaintDeviceAdapters);
+
+        bool isWithSpecialDeviceAdapter=filtID>=filtStartSize && filtID<filtStartSize+jkqtpPaintDeviceAdapters.get().size();
         int adapterID=filtID-filtStartSize;
         QString e=QFileInfo(filename).suffix().toLower();
         if (!isWithSpecialDeviceAdapter) {
-            for (int i=0; i<jkqtpPaintDeviceAdapters.size(); i++) {
-                if (jkqtpPaintDeviceAdapters[i]->getFileExtension().contains(e)) {
+            for (int i=0; i<jkqtpPaintDeviceAdapters.get().size(); i++) {
+                if (jkqtpPaintDeviceAdapters.get()[i]->getFileExtension().contains(e)) {
                     adapterID=i;
                     isWithSpecialDeviceAdapter=true;
                     break;
@@ -3897,7 +3923,7 @@ void JKQTBasePlotter::saveImage(const QString& filename, bool displayPreview) {
             return;
         }
 #endif
-        if (isWithSpecialDeviceAdapter && adapterID>=0 && adapterID<jkqtpPaintDeviceAdapters.size()) {
+        if (isWithSpecialDeviceAdapter && adapterID>=0 && adapterID<jkqtpPaintDeviceAdapters.get().size()) {
             QString tempFM="";
             if (QFile::exists(fn)) {
 #ifdef QFWIDLIB_LIBRARY
@@ -3916,10 +3942,10 @@ void JKQTBasePlotter::saveImage(const QString& filename, bool displayPreview) {
             emit beforeExporting();; auto __finalpaint=JKQTPFinally([&]() { emit afterExporting();});
 
             gridPrintingCalc();
-            QPaintDevice* paintDevice=jkqtpPaintDeviceAdapters[adapterID]->createPaintdevice(fn, jkqtp_roundTo<int>(gridPrintingSize.width()), jkqtp_roundTo<int>(gridPrintingSize.height()));
+            QPaintDevice* paintDevice=jkqtpPaintDeviceAdapters.get()[adapterID]->createPaintdevice(fn, jkqtp_roundTo<int>(gridPrintingSize.width()), jkqtp_roundTo<int>(gridPrintingSize.height()));
 
 #ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
-            if (!printpreviewNew(paintDevice, jkqtpPaintDeviceAdapters[adapterID]->getSetAbsolutePaperSize(), jkqtpPaintDeviceAdapters[adapterID]->getPrintSizeXInMM(), jkqtpPaintDeviceAdapters[adapterID]->getPrintSizeYInMM(), displayPreview)) {
+            if (!printpreviewNew(paintDevice, jkqtpPaintDeviceAdapters.get()[adapterID]->getSetAbsolutePaperSize(), jkqtpPaintDeviceAdapters.get()[adapterID]->getPrintSizeXInMM(), jkqtpPaintDeviceAdapters.get()[adapterID]->getPrintSizeYInMM(), displayPreview)) {
                 delete paintDevice;
 
 
@@ -3932,7 +3958,7 @@ void JKQTBasePlotter::saveImage(const QString& filename, bool displayPreview) {
             {
 #endif
                 delete paintDevice;
-                paintDevice=jkqtpPaintDeviceAdapters[adapterID]->createPaintdeviceMM(fn,printSizeX_Millimeter,printSizeY_Millimeter);
+                paintDevice=jkqtpPaintDeviceAdapters.get()[adapterID]->createPaintdeviceMM(fn,printSizeX_Millimeter,printSizeY_Millimeter);
                 printpreviewPaintRequestedNewPaintDevice(paintDevice);
                 delete paintDevice;
             }
@@ -5299,7 +5325,6 @@ void JKQTBasePlotter::setEmittingSignalsEnabled(bool enabled)
 }
 
 
-QHash<JKQTBasePlotter::textSizeKey, JKQTBasePlotter::textSizeData> JKQTBasePlotter::s_TextSizeDataCache=QHash<JKQTBasePlotter::textSizeKey, JKQTBasePlotter::textSizeData>();
 
 JKQTBasePlotter::textSizeKey::textSizeKey(const QFont &f, const QString &text, QPaintDevice *pd):
     text(), f(), ldpiX(0), ldpiY(0), pdpiX(0), pdpiY(0)

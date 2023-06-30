@@ -169,6 +169,9 @@ QHash<QString, JKQTMathTextBoxInstructionNode::InstructionProperties> JKQTMathTe
 
 void JKQTMathTextBoxInstructionNode::fillInstructions()
 {
+    static std::mutex sMutex;
+    std::lock_guard<std::mutex> lock(sMutex);
+    if (instructions.size()>0) return;
 
     {
         InstructionProperties i(InstructionProperties::NoModification,

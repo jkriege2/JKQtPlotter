@@ -23,15 +23,15 @@
 #include <QApplication>
 
 
-
-
-int JKQTPAutoOutputTimer::global_indent=0;
+namespace JKQTPAutoOutputTimer_private {
+    thread_local int global_indent=0;
+}
 
 JKQTPAutoOutputTimer::JKQTPAutoOutputTimer(const QString& _message) :
     QElapsedTimer(),message(_message),indent()
 {
-    this->indent=QString(global_indent, QLatin1Char(' '));
-    global_indent+=4;
+    this->indent=QString(JKQTPAutoOutputTimer_private::global_indent, QLatin1Char(' '));
+    JKQTPAutoOutputTimer_private::global_indent+=4;
 #if QT_VERSION >= 0x040800
     qDebug()<<this->indent<<"TIMER_START:  "<<message;
 #else
@@ -47,7 +47,7 @@ JKQTPAutoOutputTimer::~JKQTPAutoOutputTimer()
     #else
         qDebug()<<this->indent<<"TIMER_END:  "<<message<<"    DUR: "<<double(elapsed())/1.0e3<<"ms";
     #endif
-    global_indent-=4;
+    JKQTPAutoOutputTimer_private::global_indent-=4;
 
 }
 

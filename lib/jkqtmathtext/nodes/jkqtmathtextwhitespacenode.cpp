@@ -138,6 +138,8 @@ QHash<QString, JKQTMathTextWhitespaceNode::WhitespaceProps> JKQTMathTextWhitespa
 
 void JKQTMathTextWhitespaceNode::fillSupportedInstructions()
 {
+    static std::mutex sMutex;
+    std::lock_guard<std::mutex> lock(sMutex);
     if (supportedInstructions.size()==0) {
         supportedInstructions[" "]=WhitespaceProps(WSTthicker, 1);
         supportedInstructions["nbsp"]=WhitespaceProps(WSTNonbreaking, 1);
@@ -427,6 +429,9 @@ QHash<QString, JKQTMathTextPhantomNode::Mode> JKQTMathTextPhantomNode::instructi
 
 void JKQTMathTextPhantomNode::fillInstructions()
 {
+    static std::mutex sMutex;
+    std::lock_guard<std::mutex> lock(sMutex);
+    if (instructions.size()>0) return;
     instructions["phantom"] = FMwidthAndHeight;
     instructions["hphantom"] = FMwidth;
     instructions["vphantom"] = FMheight;

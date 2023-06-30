@@ -144,6 +144,9 @@ QHash<QString, JKQTMathTextSimpleInstructionNode::InstructionProperties> JKQTMat
 
 void JKQTMathTextSimpleInstructionNode::fillInstructions()
 {
+    static std::mutex sMutex;
+    std::lock_guard<std::mutex> lock(sMutex);
+    if (instructions.size()>0) return;
     {
         InstructionProperties i([](const QStringList& parameters) -> QString {
             bool ok=false;

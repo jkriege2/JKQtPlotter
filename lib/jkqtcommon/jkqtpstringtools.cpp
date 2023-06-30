@@ -523,7 +523,7 @@ static const struct RGBData {
 static const int rgbTblSize = sizeof(rgbTbl) / sizeof(RGBData);
 
 const QStringList& jkqtp_listNamedColors() {
-    static QStringList sl;
+    thread_local QStringList sl;
     if (sl.size()==0) {
         sl.reserve(rgbTblSize);
         for (int i=0; i<rgbTblSize; i++) {

@@ -62,7 +62,7 @@ class JKQTCOMMON_LIB_EXPORT JKQTPAutoOutputTimer : public QElapsedTimer
     protected:
         QString message;
         QString indent;
-        static int global_indent;
+
 
 };
 

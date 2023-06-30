@@ -60,6 +60,8 @@ QHash<QString,double> JKQTMathTextLatexParser::big_instructions_family;
 // define some static sets for easy character lookup/identificattion
 void JKQTMathTextLatexParser::initStaticStructures()
 {
+    static std::mutex sMutex;
+    std::lock_guard<std::mutex> lock(sMutex);
     if (accentLetters.size()==0) {
         auto fAddUml=[](const QString& cmd, const QChar& letter, const QChar& ch) {
             QString i;

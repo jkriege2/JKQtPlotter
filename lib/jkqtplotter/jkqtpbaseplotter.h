@@ -28,6 +28,7 @@
 #include "jkqtmathtext/jkqtmathtext.h"
 #include "jkqtplotter/jkqtpbaseelements.h"
 #include "jkqtcommon/jkqtpenhancedpainter.h"
+#include "jkqtcommon/jkqtpconcurrencytools.h"
 #include "jkqtplotter/gui/jkqtpenhancedspinboxes.h"
 
 #include <QObject>
@@ -2032,8 +2033,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
          */
         void enableDebugShowTextBoxes(bool enabled=true);
     protected:
-        /** \brief this is a cache for JKQTBasePlotter::textSizeData calculated with JKQTBasePlotter::getTextSizeDetail() */
-        static QHash<JKQTBasePlotter::textSizeKey, JKQTBasePlotter::textSizeData> s_TextSizeDataCache;
 
 
 
@@ -2595,6 +2594,11 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         bool emitPlotSignals;
 
 
+        static QString globalUserSettigsFilename;
+        static QString globalUserSettigsPrefix;
+        static std::mutex globalUserSettingsMutex;
+        static JKQTPSynchronized<QList<JKQTPPaintDeviceAdapter*>> jkqtpPaintDeviceAdapters;
+        static JKQTPSynchronized<QList<JKQTPSaveDataAdapter*>> jkqtpSaveDataAdapters;
 
 
 

@@ -40,6 +40,7 @@
 #include <QPixmap>
 #include <type_traits>
 #include <memory>
+#include <mutex>
 
 
 class JKQTMathTextNode; // forward
@@ -1069,6 +1070,8 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         static QString init_fracturFont;
         /** \brief used to check for the first construction of a JKQTMathText ... if \c true several static variables are initialized in the constructor */
         static bool s_firstStart;
+        /** \brief mutex to protect the static members */
+        static std::mutex s_mutex;
 };
 
 

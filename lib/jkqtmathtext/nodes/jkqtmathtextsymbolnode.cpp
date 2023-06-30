@@ -491,6 +491,8 @@ QHash<QString, JKQTMathTextSymbolNode::SymbolFullProps> JKQTMathTextSymbolNode::
 
 void JKQTMathTextSymbolNode::fillSymbolTables()
 {
+    static std::mutex sMutex;
+    std::lock_guard<std::mutex> lock(sMutex);
     if (symbols.size()>0) return; // tables have already been filled! So nothing to do here
 
     /**************************************************************************************
