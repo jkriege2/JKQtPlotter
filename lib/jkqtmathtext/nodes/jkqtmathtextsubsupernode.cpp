@@ -49,11 +49,15 @@ JKQTMathTextNodeSize JKQTMathTextSuperscriptNode::getSizeWithSpecialPlacement(QP
     JKQTMathTextNodeSize s;
     JKQTMathTextEnvironment ev=currentEv;
     ev.fontSize=ev.fontSize*parentMathText->getSubsuperSizeFactor();
-    const QFontMetricsF fm(currentEv.getFont(parentMathText), painter.device());
-    const QRectF tbr_of_letterM=JKQTMathTextGetTightBoundingRect(currentEv.getFont(parentMathText), "M", painter.device());
+    const QFont fnt=currentEv.getFont(parentMathText);
+    const QFontMetricsF fm(fnt, painter.device());
+    //const QRectF tbr_of_letterM=JKQTMathTextGetTightBoundingRect(currentEv.getFont(parentMathText), "M", painter.device());
     const JKQTMathTextNodeSize cs=getChild()->getSize(painter, ev);
     const double childDescent=cs.getDescent();
-    double shiftToChildBottom=parentMathText->getSuperShiftFactor()*fm.xHeight();
+    const QRectF tbr=JKQTMathTextGetTightBoundingRect(fnt, "x", painter.device());
+    const double xh=tbr.height();
+
+    double shiftToChildBottom=parentMathText->getSuperShiftFactor()*xh;//fm.xHeight();
 
     if (prevNodeSizeForSpecialPlacement!=nullptr) {
         const double modifiedShift=prevNodeSizeForSpecialPlacement->baselineHeight-childDescent-parentMathText->getSpecialSuperShiftFactor()*cs.baselineHeight-childDescent;
@@ -78,11 +82,14 @@ double JKQTMathTextSuperscriptNode::drawWithSpecialPlacement(QPainter& painter, 
     ev.fontSize=ev.fontSize*parentMathText->getSubsuperSizeFactor();
 
     const JKQTMathTextNodeSize cs=getChild()->getSize(painter, ev);
-
-    const QFontMetricsF fm(currentEv.getFont(parentMathText), painter.device());
+    const QFont fnt=currentEv.getFont(parentMathText);
+    const QFontMetricsF fm(fnt, painter.device());
+    const QRectF tbr=JKQTMathTextGetTightBoundingRect(fnt, "x", painter.device());
+    const double xh=tbr.height();
+    //qDebug()<<"x="<<x<<" prevNodeSizeForSpecialPlacement="<<prevNodeSizeForSpecialPlacement<<" font="<<currentEv.getFont(parentMathText);
     //QRectF tbr_of_letterM=JKQTMathTextGetTightBoundingRect(currentEv.getFont(parentMathText), "M", painter.device());
     const double childDescent=cs.overallHeight-cs.baselineHeight;
-    double shiftToChildBottom=parentMathText->getSuperShiftFactor()*fm.xHeight();
+    double shiftToChildBottom=parentMathText->getSuperShiftFactor()*xh;//fm.xHeight();
 
     if (prevNodeSizeForSpecialPlacement!=nullptr) {
         const double modifiedShift=prevNodeSizeForSpecialPlacement->baselineHeight-childDescent-parentMathText->getSpecialSuperShiftFactor()*cs.baselineHeight-childDescent;
