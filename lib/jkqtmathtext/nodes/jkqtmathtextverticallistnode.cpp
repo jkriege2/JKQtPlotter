@@ -76,7 +76,7 @@ JKQTMathTextVerticalListNode::LayoutInfo JKQTMathTextVerticalListNode::calcLayou
     QList<double> ysFromFirstLine; // y-position of each line, where the first line is always at y=0 (i.e. ysFromFirstLine[0]==0)
     double y=0;
     for (int i=0; i<nodes.size(); i++) {
-        const QFontMetricsF fm(currentEv.getFont(parentMathText));
+        const QFontMetricsF fm(currentEv.getFont(parentMathText), painter.device());
         const double linespacing=fm.lineSpacing()*lineSpacingFactor;
         const double fleading=fm.leading();
         const double synLeading=fm.lineWidth();

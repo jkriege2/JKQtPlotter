@@ -134,7 +134,7 @@ JKQTMathTextVerbatimNode::LayoutInfo JKQTMathTextVerbatimNode::calcLayout(QPaint
     QFont f=currentEv.getFont(parentMathText);
     f.setStyleStrategy(QFont::PreferDefault);
     f.setFixedPitch(true);
-    const QFontMetricsF fm(f);
+    const QFontMetricsF fm(f, painter.device());
     const double linespacing=fm.lineSpacing()*lineSpacingFactor;
     const double fleading=fm.leading();
     const double synLeading=fm.lineWidth();

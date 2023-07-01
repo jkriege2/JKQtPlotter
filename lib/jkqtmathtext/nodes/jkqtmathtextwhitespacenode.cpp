@@ -126,7 +126,7 @@ JKQTMathTextNodeSize JKQTMathTextWhitespaceNode::getSizeInternal(QPainter &paint
 {
     JKQTMathTextNodeSize s;
     const double singelWidthPIX=Type2PixelWidth(whitespace.type, currentEv, painter.device());
-    const QFontMetricsF fm(currentEv.getFont(parentMathText));
+    const QFontMetricsF fm(currentEv.getFont(parentMathText), painter.device());
     s.width=singelWidthPIX*static_cast<double>(whitespace.count);
     s.baselineHeight=0;
     s.overallHeight=0;
@@ -270,7 +270,7 @@ double JKQTMathTextEmptyBoxNode::Units2PixelWidth(double value, Units unit, JKQT
         //qDebug()<<"em="<<em<<"pix";
         return value*em;
     } else if (unit==EBUex) {
-        const double ex=fm.xHeight();
+        const double ex=JKQTMathTextGetTightBoundingRect(f, "x", pd).height();
         //qDebug()<<"ex="<<ex<<"pix";
         return value*ex;
     } else {

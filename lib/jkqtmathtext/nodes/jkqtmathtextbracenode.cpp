@@ -88,7 +88,7 @@ double JKQTMathTextBraceNode::draw(QPainter& painter, double x, double y, JKQTMa
 
     const NodeSize nodesize=getSizeInternalAndBrace(painter, currentEv);
     doDrawBoxes(painter, x, y, nodesize);
-    const QFontMetricsF fm(currentEv.getFont(parentMathText));
+    const QFontMetricsF fm(currentEv.getFont(parentMathText), painter.device());
 
     const double lw=fm.lineWidth();
 
@@ -108,8 +108,8 @@ double JKQTMathTextBraceNode::draw(QPainter& painter, double x, double y, JKQTMa
     const double angle_centerwidth=lw*1.55;
     {
         bool showOpeningBrace=true;
-        const double xbrace1=xnew+lw;
-        const double xbrace2=xnew+qMin(paren_fraction*nodesize.openBraceWidth, nodesize.openBraceWidth-lw/2.0);
+        const double xbrace1=xnew+lw*2.0;
+        const double xbrace2=xnew+qMin(paren_fraction*nodesize.openBraceWidth, nodesize.openBraceWidth-lw);
         const double xbraceC=xnew+nodesize.openBraceWidth/2.0;
         if (openbrace==MTBTParenthesis) {
             QPainterPath path;
@@ -236,8 +236,8 @@ double JKQTMathTextBraceNode::draw(QPainter& painter, double x, double y, JKQTMa
 
     {
         bool showClosingBrace=true;
-        const double xbrace1=qMax(xnew+nodesize.closeBraceWidth-paren_fraction*nodesize.closeBraceWidth, xnew+lw/2.0);
-        const double xbrace2=xnew+nodesize.closeBraceWidth-lw;
+        const double xbrace1=qMax(xnew+nodesize.closeBraceWidth-paren_fraction*nodesize.closeBraceWidth, xnew+lw);
+        const double xbrace2=xnew+nodesize.closeBraceWidth-lw*2.0;
         const double xbraceC=xnew+nodesize.closeBraceWidth/2.0;
         painter.setPen(p);
         if (closebrace==MTBTParenthesis) {
@@ -487,6 +487,7 @@ QSizeF JKQTMathTextBraceNode::calcBraceSize(const QFontMetricsF &fm, JKQTMathTex
     if (bracetype==MTBTParenthesis)  braceWidth=lw*6.0;
     if (bracetype==MTBTDoubleLine)  braceWidth=dblline_distance+3.0*lw;
     if (bracetype==MTBTSingleLine)  braceWidth=3.0*lw;
+    if (bracetype==MTBTSquareBracket || bracetype==MTBTCeilBracket || bracetype==MTBTFloorBracket)  braceWidth=7.0*lw;
 
     const double overSizeFactor=braceHeight/fm.height();
     if (overSizeFactor>1.2) braceWidth=braceWidth*sqrt(overSizeFactor);

@@ -136,13 +136,13 @@ JKQTMathTextNodeSize JKQTMathTextFracNode::getSizeInternal(QPainter& painter, JK
     JKQTMathTextEnvironment ev1=currentEv;
     JKQTMathTextEnvironment ev2=currentEv;
 
-    const double xheight=fm.xHeight(); //tightBoundingRect("x").height();
+    const double xheight=JKQTMathTextGetTightBoundingRect(f, "x", painter.device()).height();
     const double line_ascent=xheight/2.0;
     //const double Mheight=JKQTMathTextGetTightBoundingRect(f, "M", painter.device()).height();//fm.ascent();
     const double xwidth=JKQTMathTextGetTightBoundingRect(f, "x", painter.device()).width();
     const double qheight=JKQTMathTextGetTightBoundingRect(f, "q", painter.device()).height();//fm.ascent();
-    const double braceheight=fm.xHeight()*parentMathText->getUnderbraceBraceSizeXFactor();
-    const double braceseparation=fm.xHeight()*parentMathText->getUnderbraceSeparationXFactor();
+    const double braceheight=xheight*parentMathText->getUnderbraceBraceSizeXFactor();
+    const double braceseparation=xheight*parentMathText->getUnderbraceSeparationXFactor();
 
     if (fracmode==JKQTMathTextFracNode::MTFMunderbrace || fracmode==JKQTMathTextFracNode::MTFMoverbrace||fracmode==JKQTMathTextFracNode::MTFMunderbracket || fracmode==JKQTMathTextFracNode::MTFMoverbracket) {
         ev2.fontSize=ev2.fontSize*parentMathText->getUnderbraceFactor();
@@ -260,13 +260,13 @@ double JKQTMathTextFracNode::draw(QPainter& painter, double x, double y, JKQTMat
     JKQTMathTextEnvironment ev2=currentEv;
 
 
-    const double xheight=fm.xHeight();
+    const double xheight=JKQTMathTextGetTightBoundingRect(f, "x", painter.device()).height();
     const double xwidth=JKQTMathTextGetTightBoundingRect(f, "x", painter.device()).width();
     const double linewideth=fm.lineWidth();
     const double Mheight=JKQTMathTextGetTightBoundingRect(f, "M", painter.device()).height();//fm.ascent();
     const double qheight=JKQTMathTextGetTightBoundingRect(f, "q", painter.device()).height();//fm.ascent();
-    const double braceheight=fm.xHeight()*parentMathText->getUnderbraceBraceSizeXFactor();
-    const double braceseparation=fm.xHeight()*parentMathText->getUnderbraceSeparationXFactor();
+    const double braceheight=xheight*parentMathText->getUnderbraceBraceSizeXFactor();
+    const double braceseparation=xheight*parentMathText->getUnderbraceSeparationXFactor();
 
     if (fracmode==JKQTMathTextFracNode::MTFMunderbrace || fracmode==JKQTMathTextFracNode::MTFMoverbrace||fracmode==JKQTMathTextFracNode::MTFMunderbracket || fracmode==JKQTMathTextFracNode::MTFMoverbracket) {
         ev2.fontSize=ev2.fontSize*parentMathText->getUnderbraceFactor();

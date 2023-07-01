@@ -22,7 +22,6 @@
 #include "jkqtmathtext/nodes/jkqtmathtextmodifyenvironmentnode.h"
 #include "jkqtmathtext/jkqtmathtexttools.h"
 #include "jkqtmathtext/jkqtmathtext.h"
-#include "jkqtcommon/jkqtpcodestructuring.h"
 #include "jkqtcommon/jkqtpstringtools.h"
 #include <cmath>
 #include <QFontMetricsF>

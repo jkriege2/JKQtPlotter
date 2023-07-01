@@ -20,7 +20,7 @@ add_custom_target(JKQTP_GenerateAllDocImages
 if(JKQtPlotter_BUILD_TOOLS)
 
     # custom target that generates the images for the JKQTMathText documentation
-    set(JKQTMathText_GenerateDocImages_DefaultOptions --resolution=96 --fontsize=15 --fontmathroman=XITS --background=white --sizeincrease=5)
+    set(JKQTMathText_GenerateDocImages_DefaultOptions --resolution=96 --fontsize=16 --fontmathroman=XITS --background=white --sizeincrease=5)
     set(JKQTMathText_GenerateDocImages_StdInputFiles
         jkqtmathtext_docimages_accents.jkmt
         jkqtmathtext_docimages_boxes.jkmt

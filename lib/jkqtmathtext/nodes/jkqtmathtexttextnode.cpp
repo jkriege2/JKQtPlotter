@@ -178,7 +178,8 @@ JKQTMathTextTextNode::LayoutInfo JKQTMathTextTextNode::calcLayout(QPainter &pain
                 break;
         }
         l.textpartXPos.append(l.width);
-        l.width+=br.width();
+        if (i==l.textpart.size()-1) l.width+=tbr.width();
+        else l.width+=br.width();
         if (l.textpart[i].size()>0 && l.textpart[i].at(l.textpart[i].size()-1).isSpace()) {
             // this correction is necessary, because it seems that QFontMetricsF::boundingRect() ignores trailing spaces
             l.width+=sp;

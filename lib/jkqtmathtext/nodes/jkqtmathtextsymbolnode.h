@@ -248,7 +248,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSymbolNode: public JKQTMathTextNode {
             SymbolFullProps& setGlobalFlags(GlobalSymbolFlags addglobalFlags);
 
             /** \brief returns the QFont to use for drawing and the QString to draw with it */
-            QPair<QFont, SymbolProps> getDrawingData(JKQTMathTextEnvironment currentEv, JKQTMathText *parent) const;
+            QPair<QFont, SymbolProps> getDrawingData(JKQTMathTextEnvironment currentEv, JKQTMathText *parent, QPainter& painter) const;
         };
 
         /** \brief creates a SymbolFullProps object for a symbol that can be typeset in any font, for SymbolFullProps::html the same text as a\a symbol is used */

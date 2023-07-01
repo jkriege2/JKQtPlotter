@@ -821,7 +821,7 @@ void JKQTBasePlotter::calcPlotScaling(JKQTPEnhancedPainter& painter){
     QFont f=painter.font();
     f.setFamily(JKQTMathTextFontSpecifier::fromFontSpec(plotterStyle.defaultFontName).fontName());
     f.setPointSizeF(plotterStyle.keyStyle.fontSize*fontSizeMultiplier);
-    QFontMetricsF kfm(f);
+    QFontMetricsF kfm(f, painter.device());
     getKeyExtent(painter, &keyWidth, &keyHeight);
     internalPlotKeyBorderTop=0;
     internalPlotKeyBorderBottom=0;
@@ -1153,7 +1153,7 @@ void JKQTBasePlotter::drawKey(JKQTPEnhancedPainter& painter) {
 
     QFont kf(JKQTMathTextFontSpecifier::fromFontSpec(plotterStyle.defaultFontName).fontName(), 10);
     kf.setPointSizeF(plotterStyle.keyStyle.fontSize*fontSizeMultiplier);
-    QFontMetricsF kfm(kf);
+    QFontMetricsF kfm(kf, painter.device());
     const qreal Xwid=kfm.boundingRect('X').width();
 
     // get the size of the key and if keyWidth>0 && keyHeight>0 draw the frame and the contents
@@ -4432,7 +4432,7 @@ void JKQTBasePlotter::drawKeyContents(JKQTPEnhancedPainter& painter, double x, d
 #endif
     QFont kf(JKQTMathTextFontSpecifier::fromFontSpec(plotterStyle.defaultFontName).fontName(), 10);
     kf.setPointSizeF(plotterStyle.keyStyle.fontSize*fontSizeMultiplier);
-    QFontMetricsF kfm(kf);
+    QFontMetricsF kfm(kf, painter.device());
 
     if (plotterStyle.keyStyle.layout==JKQTPKeyLayoutOneColumn) {
 
@@ -4595,7 +4595,7 @@ void JKQTBasePlotter::getKeyExtent(JKQTPEnhancedPainter& painter, double* width,
     QFont f=painter.font();
     f.setFamily(JKQTMathTextFontSpecifier::fromFontSpec(plotterStyle.defaultFontName).fontName());
     f.setPointSizeF(plotterStyle.keyStyle.fontSize*fontSizeMultiplier);
-    QFontMetricsF kfm(f);
+    QFontMetricsF kfm(f, painter.device());
     const qreal Xwid=kfm.boundingRect('X').width();
     if (text_height!=nullptr) *text_height=plotterStyle.keyStyle.itemHeight*Xwid;
     if (plotterStyle.keyStyle.layout==JKQTPKeyLayoutOneColumn) {

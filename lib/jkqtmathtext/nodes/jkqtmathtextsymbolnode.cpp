@@ -107,7 +107,7 @@ QRectF JKQTMathTextSymbolNode::getTightBoundingRect(const QFontMetricsF &fm, con
 
 void JKQTMathTextSymbolNode::drawText(QPainter &p, const QString &text, GlobalSymbolFlags globalFlags, SymbolFlags symflags)
 {
-    const QFontMetricsF fm(p.font());
+    const QFontMetricsF fm(p.font(), p.device());
     if (has(globalFlags, MakeWhitespaceHalf) && text.contains(' ')) {
         const QStringList str=text.simplified().trimmed().split(' ');
         const QRectF brSp=fm.boundingRect("i");
@@ -144,11 +144,11 @@ double JKQTMathTextSymbolNode::draw(QPainter& painter, double x, double y, JKQTM
 
     const auto fullProps=symbols.value(symbolName, SymbolFullProps());
     const GlobalSymbolFlags globalFlags=fullProps.globalFlags;
-    const auto drawProps=fullProps.getDrawingData(currentEv, parentMathText);
+    const auto drawProps=fullProps.getDrawingData(currentEv, parentMathText, painter);
     const QFont f=drawProps.first;
     const QFont fnonItalic=JKQTMathTextGetNonItalic(drawProps.first);
-    const QFontMetricsF fm(f);
-    const QFontMetricsF fmNonItalic(fnonItalic);
+    const QFontMetricsF fm(f, painter.device());
+    const QFontMetricsF fmNonItalic(fnonItalic, painter.device());
     const JKQTMathTextSymbolNode::SymbolProps symprops=drawProps.second;
     const SymbolFlags symflags=symprops.flags;
     const QString sym=symprops.symbol;
@@ -175,8 +175,9 @@ double JKQTMathTextSymbolNode::draw(QPainter& painter, double x, double y, JKQTM
             //qDebug()<<"  -> DrawLeftHBar or DrawRightHBar";
             painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
             painter.setPen(QPen(currentEv.color, fm.lineWidth()));
-            const double ybar=-fm.xHeight()*1.1;
-            const double deltaybar=fm.xHeight()*0.2;
+            const double xh=JKQTMathTextGetTightBoundingRect(f, "x", painter.device()).height();
+            const double ybar=-xh*1.1;
+            const double deltaybar=xh*0.2;
             const double barwidth=tbrNonItalic.width()/2.0;
             const double xbarstart=(has(symflags, DrawLeftHBar))?italic_xcorrection:(tbr.width()-barwidth);
             painter.drawLine(xbarstart, ybar, xbarstart+barwidth, ybar-deltaybar);
@@ -236,9 +237,9 @@ JKQTMathTextSymbolNode::NodeSize JKQTMathTextSymbolNode::getSymbolSize(QPainter 
 
     const auto fullProps=symbols.value(symbolName, SymbolFullProps());
     const GlobalSymbolFlags globalFlags=fullProps.globalFlags;
-    const auto drawProps=fullProps.getDrawingData(currentEv, parentMathText);
+    const auto drawProps=fullProps.getDrawingData(currentEv, parentMathText, painter);
     const QFont f=drawProps.first;
-    const QFontMetricsF fm(f);
+    const QFontMetricsF fm(f, painter.device());
     const JKQTMathTextSymbolNode::SymbolProps symprops=drawProps.second;
     const SymbolFlags symflags=symprops.flags;
     const QString sym=symprops.symbol;
@@ -1139,7 +1140,7 @@ JKQTMathTextSymbolNode::SymbolFullProps &JKQTMathTextSymbolNode::SymbolFullProps
     return *this;
 }
 
-QPair<QFont, JKQTMathTextSymbolNode::SymbolProps> JKQTMathTextSymbolNode::SymbolFullProps::getDrawingData(JKQTMathTextEnvironment currentEv, JKQTMathText* parent) const
+QPair<QFont, JKQTMathTextSymbolNode::SymbolProps> JKQTMathTextSymbolNode::SymbolFullProps::getDrawingData(JKQTMathTextEnvironment currentEv, JKQTMathText* parent, QPainter& painter) const
 {
     //qDebug()<<"    ---------------------";
     SymbolProps outProps;
@@ -1147,11 +1148,11 @@ QPair<QFont, JKQTMathTextSymbolNode::SymbolProps> JKQTMathTextSymbolNode::Symbol
     const JKQTMathTextFontEncoding currentEnc=currentEv.getFontEncoding(parent);
     QFont currentFont=currentEv.getFont(parent);
     currentFont.setStyleStrategy(QFont::NoFontMerging);
-    const QFontMetricsF currentFM(currentFont);
+    const QFontMetricsF currentFM(currentFont, painter.device());
     QFont fallbackSymbolsFont=parent->getFallbackFontSymbols();
     const JKQTMathTextFontEncoding fallbackSymbolsFontEnc=parent->getFontEncodingFallbackFontSymbols();
     fallbackSymbolsFont.setStyleStrategy(QFont::NoFontMerging);
-    const QFontMetricsF fallbackSymbolsFM(fallbackSymbolsFont);
+    const QFontMetricsF fallbackSymbolsFM(fallbackSymbolsFont, painter.device());
     const QChar chFallbackSym=props.value(fallbackSymbolsFontEnc, SymbolProps()).getSymbolSingleChar();
 
     if (fontType==MTECustomFont) {
@@ -1201,7 +1202,7 @@ QPair<QFont, JKQTMathTextSymbolNode::SymbolProps> JKQTMathTextSymbolNode::Symbol
         outProps=getProps(currentEv.getFontEncoding(parent), outProps);
         QFont localFont=currentEv.getFont(parent);
         localFont.setStyleStrategy(QFont::NoFontMerging);
-        const QFontMetricsF localFM(localFont);
+        const QFontMetricsF localFM(localFont, painter.device());
         const QChar chLocal=outProps.getSymbolSingleChar();
 
         if (!chLocal.isNull() && !localFM.inFont(chLocal) && fallbackSymbolsFM.inFont(chFallbackSym)) {

@@ -63,8 +63,8 @@ JKQTMathTextNodeSize JKQTMathTextHorizontalListNode::getSizeInternal(QPainter& p
     //bool wasBrace=false;
     for (int i=0; i<nodes.size(); i++) {
         const QFont f=currentEv.getFont(parentMathText);
-        const QFontMetricsF fm(f);
-        const double subsupershift=fm.xHeight()*parentMathText->getOperatorsubsuperDistanceFactor();
+        const QFontMetricsF fm(f, painter.device());
+        const double subsupershift=JKQTMathTextGetTightBoundingRect(f, "x", painter.device()).height()*parentMathText->getOperatorsubsuperDistanceFactor();
         const double subsuperextrawidth=fm.boundingRect('x').width()*parentMathText->getOperatorsubsuperExtraSpaceFactor();
         const double subsuperSpecialModeAscent=fm.ascent()*parentMathText->getSubsuperModeSelectionBySizeFactor();
         const double subsuperSpecialModeDecent=fm.descent()*parentMathText->getSubsuperModeSelectionBySizeFactor();
@@ -334,8 +334,9 @@ double JKQTMathTextHorizontalListNode::draw(QPainter& painter, double x, double 
     //qDebug()<<"listNode: "<<currentEv.fontSize;
     for (int i=0; i<nodes.size(); i++) {
         bool doDraw=true;
-        const QFontMetricsF fm(currentEv.getFont(parentMathText));
-        const double subsupershift=fm.xHeight()*parentMathText->getOperatorsubsuperDistanceFactor();
+        const QFont f=currentEv.getFont(parentMathText);
+        const QFontMetricsF fm(f, painter.device());
+        const double subsupershift=JKQTMathTextGetTightBoundingRect(f, "x", painter.device()).height()*parentMathText->getOperatorsubsuperDistanceFactor();
         const double subsuperextrawidth=fm.boundingRect('x').width()*parentMathText->getOperatorsubsuperExtraSpaceFactor();
         const double subsuperSpecialModeAscent=fm.ascent()*parentMathText->getSubsuperModeSelectionBySizeFactor();
         const double subsuperSpecialModeDecent=fm.descent()*parentMathText->getSubsuperModeSelectionBySizeFactor();
