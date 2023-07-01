@@ -48,7 +48,7 @@ environment:
            
     - QTABI: msvc2019_64
       COMPILER: MSVC
-      QTVER: 6.3
+      QTVER: 6.5
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
       CMAKE_GENERATOR: "Visual Studio 16 2019"
       CMAKE_BUILDFLAGS: /verbosity:minimal /maxcpucount
@@ -62,14 +62,14 @@ environment:
 
     - QTABI: gcc_64
       COMPILER: GCC
-      QTVER: 6.2
+      QTVER: 6.4
       APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
       CMAKE_GENERATOR: "Unix Makefiles"
       INSTALL_QMAKE5: true
 
     - QTABI: macos
       COMPILER: CLANG
-      QTVER: 6.2
+      QTVER: 6.4
       APPVEYOR_BUILD_WORKER_IMAGE: macos-monterey
       CMAKE_GENERATOR: "Unix Makefiles"
   
