@@ -6,9 +6,9 @@
 
 JKQTPGridStyle::JKQTPGridStyle(bool isMajor):
     enabled(isMajor),
-    lineColor(QColor("gray")),
-    lineWidth(isMajor?0.75:0.5),
-    lineStyle(isMajor?Qt::DashLine:Qt::DotLine)
+    lineColor(QColor(200,200,200)),
+    lineWidth(isMajor?1:0.75),
+    lineStyle(isMajor?Qt::DotLine:Qt::DotLine)
 {
 
 }
@@ -37,10 +37,10 @@ JKQTPCoordinateAxisStyle::JKQTPCoordinateAxisStyle():
     tickLabelType(JKQTPCALTexponent),
     tickMode(JKQTPLTMLinOrPower),
     labelPosition(JKQTPLabelCenter),
-    labelFontSize(10),
-    tickLabelFontSize(10),
-    minorTickLabelFontSize(8),
-    showZeroAxis(true),
+    labelFontSize(QApplication::font().pointSizeF()),
+    tickLabelFontSize(QApplication::font().pointSizeF()),
+    minorTickLabelFontSize(qCeil(QApplication::font().pointSizeF()*0.8)),
+    showZeroAxis(false),
     minorTickLabelFullNumber(true),
     drawMode1(JKQTPCADMcomplete),
     drawMode2(JKQTPCADMLineTicks),
@@ -50,10 +50,10 @@ JKQTPCoordinateAxisStyle::JKQTPCoordinateAxisStyle():
     minorTickWidth(1),
     tickColor(QColor("black")),
     tickLabelColor(QColor("black")),
-    tickWidth(1.5),
-    lineWidth(1.5),
+    tickWidth(1),
+    lineWidth(1),
     arrowSizeFactor(8),
-    lineWidthZeroAxis(1.5),
+    lineWidthZeroAxis(1),
     tickTimeFormat(QLocale().timeFormat(QLocale::NarrowFormat)),
     tickDateFormat(QLocale().dateFormat(QLocale::NarrowFormat)),
     tickDateTimeFormat(QLocale().dateTimeFormat(QLocale::NarrowFormat)),
@@ -65,10 +65,10 @@ JKQTPCoordinateAxisStyle::JKQTPCoordinateAxisStyle():
 #endif
     minTicks(5),
     minorTicks(1),
-    tickOutsideLength(3),
-    minorTickOutsideLength(1.5),
-    tickInsideLength(3),
-    minorTickInsideLength(1.5),
+    tickOutsideLength(0),
+    minorTickOutsideLength(0),
+    tickInsideLength(6),
+    minorTickInsideLength(3),
     axisColor(QColor("black")),
     labelColor(QColor("black")),
     tickLabelDistance(4),

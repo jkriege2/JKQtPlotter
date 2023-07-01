@@ -22,7 +22,8 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: When using a MSVC compiler, the generated PDB files are installed to \c CMAKE_INSTALL_PREFIX/bin/ </li>    
   </ul></li>
   <li>JKQTPlotter:<ul>
-    <li>BREAKING/REWORKED: Implement better/more access functions to the graphs (inlcuding sorting, moving up/down, appending/prepending, graphs-iterators ...), solves issue #97</li>
+    <li>BREAKING/REWORKED: Updated default styling of graphs. They are now more modern!</li>
+    <li>BREAKING/REWORKED: Implement better/more access functions to the graphs (inlcuding sorting, moving up/down, appending/prepending, graphs-iterators ...), solves issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/97">#97</a>, thanks to <a href="https://github.com/sim186">user:sim186</a> for bringing this up</li>
     <li>BREAKING/FIXED: fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/96">#96</a>: JKQTPlotter::saveAsPixelImage() does not add a border around the image any longer (can be reacivated by a new optional function parameter), thanks to <a href="https://github.com/nmielcarek">user:nmielcarek</a> for reporting</li>
     <li>FIXED issue described in <a href="https://github.com/jkriege2/JKQtPlotter/pull/62">#62: Fix custom labels draw, because giving exactly two label-strings did not display all of them</a>, thanks to <a href="https://github.com/FalsinSoft">user:FalsinSoft</a></li>
     <li>FIXED issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/70">#70: Typo in jkqtplotter/CMakeLists.txt</a>, thanks to <a href="https://github.com/tedlinlab">user:tedlinlab</a></li>

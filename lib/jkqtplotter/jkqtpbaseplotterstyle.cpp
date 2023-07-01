@@ -1,7 +1,6 @@
 #include "jkqtpbaseplotterstyle.h"
 #include <QPalette>
 #include <QApplication>
-#include "jkqtplotter/jkqtptools.h"
 
 JKQTBasePlotterStyle::JKQTBasePlotterStyle():
     debugShowRegionBoxes(false),
@@ -18,15 +17,15 @@ JKQTBasePlotterStyle::JKQTBasePlotterStyle():
     exportBackgroundBrush(QColor("white")),
     plotBackgroundBrush(QColor("white")),
     plotFrameColor(QColor("black")),
-    plotFrameWidth(2),
+    plotFrameWidth(1),
     plotFrameRounding(0),
     plotFrameVisible(false),
     plotLabelFontName("GUI"),
-    plotLabelFontSize(12),
+    plotLabelFontSize(qCeil(QApplication::font().pointSizeF()*1.2)),
     useAntiAliasingForSystem(true),
     useAntiAliasingForText(true),
     defaultTextColor(QColor("black")),
-    defaultFontSize(8),
+    defaultFontSize(QApplication::font().pointSizeF()),
     defaultFontName("GUI"),
     keyStyle(*this),
     xAxisStyle(*this),
