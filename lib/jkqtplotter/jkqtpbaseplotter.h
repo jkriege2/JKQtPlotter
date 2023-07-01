@@ -1728,8 +1728,14 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
          * */
         void setShowZeroAxes(bool showXY);
 
-        /** \brief save the current plot as a pixel image image (PNG ...), if filename is empty a file selection dialog is displayed */
-        void saveAsPixelImage(const QString& filename=QString(""), bool displayPreview=true, const QByteArray &outputFormat=QByteArray());
+        /** \brief save the current plot as a pixel image image (PNG ...), if filename is empty a file selection dialog is displayed
+         *
+         *  \param filename name of the stored file, if no \a outputFormat is given, the file format is deduced by the file extension in \a filename
+         *  \param displayPreview if \c true a dialog is shown that allows to modify the generated output (zoo, scaling, ...)
+         *  \param outputFormmat specify the file format for the generated file
+         *  \param  outputSizeIncrease if given, the size of the generated pixel image is increased by this number of pixels in addition to the required space
+         */
+        void saveAsPixelImage(const QString& filename=QString(""), bool displayPreview=true, const QByteArray &outputFormat=QByteArray(), const QSize& outputSizeIncrease=QSize(0,0));
 
         /** \brief save the current plot as a pixel image into a QImage with the given size */
         QImage grabPixelImage(QSize size=QSize(), bool showPreview=false);

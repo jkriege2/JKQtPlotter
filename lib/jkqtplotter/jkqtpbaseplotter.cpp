@@ -3970,7 +3970,7 @@ void JKQTBasePlotter::saveImage(const QString& filename, bool displayPreview) {
 }
 
 
-void JKQTBasePlotter::saveAsPixelImage(const QString& filename, bool displayPreview, const QByteArray& outputFormat) {
+void JKQTBasePlotter::saveAsPixelImage(const QString& filename, bool displayPreview, const QByteArray& outputFormat, const QSize &outputSizeIncrease) {
     loadUserSettings();
     QString fn=filename;
     QStringList filt;
@@ -3998,21 +3998,7 @@ void JKQTBasePlotter::saveAsPixelImage(const QString& filename, bool displayPrev
         if (outputFormat.size()>0) {
             form =outputFormat;
         }
-        /*if (filtID==2 || ext=="tif" || ext=="tiff") { // currentFileFormat
-            form="TIFF";
-        } else if (filtID==0 || ext=="png") {
-            form="PNG";
-        } else if (filtID==1 || ext=="bmp") {
-            form="BMP";
-        } else if (filtID==3 || ext=="jpg" || ext=="jpeg") {
-            form="JPEG";
-        } else if (ext=="ppm") {
-            form="PPM";
-        } else if (filtID==4 || ext=="xbm") {
-            form="XBM";
-        } else if (filtID==5 || ext=="xpm") {
-            form="XPM";
-        }*/
+
 
         emit beforeExporting();; auto __finalpaint=JKQTPFinally([&]() { emit afterExporting();});
         gridPrintingCalc();
@@ -4025,7 +4011,7 @@ void JKQTBasePlotter::saveAsPixelImage(const QString& filename, bool displayPrev
 
         if (!displayPreview || exportpreview(gridPrintingSize, false)) {
 
-            QImage png(QSizeF(double(printSizeX_Millimeter)*1.1, double(printSizeY_Millimeter)*1.1).toSize(), QImage::Format_ARGB32);
+            QImage png(QSizeF(double(printSizeX_Millimeter)+outputSizeIncrease.width(), double(printSizeY_Millimeter)+outputSizeIncrease.height()).toSize(), QImage::Format_ARGB32);
             png.fill(Qt::transparent);
             JKQTPEnhancedPainter painter;
             painter.begin(&png);
