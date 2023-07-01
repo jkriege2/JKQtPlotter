@@ -38,7 +38,7 @@ const int JKQTPImageTools::LUTSIZE = 256;
 
 QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::global_jkqtpimagetools_lutstore = JKQTPImageTools::getDefaultLUTs();
 int JKQTPImageTools::global_next_userpalette = JKQTPMathImageFIRST_REGISTERED_USER_PALETTE;
-std::mutex JKQTPImageTools::lutMutex = std::mutex();
+std::mutex JKQTPImageTools::lutMutex;
 
 
 

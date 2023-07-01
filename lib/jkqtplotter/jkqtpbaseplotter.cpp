@@ -55,7 +55,7 @@
 
 QString JKQTBasePlotter::globalUserSettigsFilename="";
 QString JKQTBasePlotter::globalUserSettigsPrefix="";
-std::mutex JKQTBasePlotter::globalUserSettingsMutex = std::mutex();
+std::mutex JKQTBasePlotter::globalUserSettingsMutex;
 JKQTPSynchronized<QList<JKQTPPaintDeviceAdapter*>> JKQTBasePlotter::jkqtpPaintDeviceAdapters;
 JKQTPSynchronized<QList<JKQTPSaveDataAdapter*>> JKQTBasePlotter::jkqtpSaveDataAdapters;
 
