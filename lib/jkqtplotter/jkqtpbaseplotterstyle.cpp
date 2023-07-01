@@ -1,5 +1,6 @@
 #include "jkqtpbaseplotterstyle.h"
 #include <QPalette>
+#include <QtMath>
 #include <QApplication>
 
 JKQTBasePlotterStyle::JKQTBasePlotterStyle():

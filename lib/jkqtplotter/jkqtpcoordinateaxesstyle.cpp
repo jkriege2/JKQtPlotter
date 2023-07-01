@@ -2,6 +2,7 @@
 #include "jkqtpbaseplotterstyle.h"
 #include "jkqtpbaseplotter.h"
 #include <QApplication>
+#include <QtMath>
 
 
 JKQTPGridStyle::JKQTPGridStyle(bool isMajor):
