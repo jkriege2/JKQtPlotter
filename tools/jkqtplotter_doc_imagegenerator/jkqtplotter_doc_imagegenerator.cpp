@@ -608,10 +608,10 @@ void plotStyleSymbols(JKQTBasePlotter& plotExtra, const JKQTBasePlotter& plot) {
 
 void doListStyles(const QDir& outputDir, const QDir& docoutputDir, int iconsize, QColor backgroundColor) {
     QDir dir(":/JKQTPlotter/styles/", "*.ini");
-    QFile fhtml(docoutputDir.absoluteFilePath("styles.html"));
+    QFile fhtml(docoutputDir.absoluteFilePath("styles.dox"));
     fhtml.open(QFile::WriteOnly|QFile::Text);
     QTextStream shtml(&fhtml);
-    shtml<<"<table class=\"doxtable\">\n  <tr><th>Style-file </th><th>Screenshot </th><th>Symbols </th></tr>\n";
+    shtml<<"<table>\n  <tr>\n    <th>Style-file\n    <th>Screenshot\n    <th>Symbols\n";
     for (auto& f: dir.entryList()) {
         qDebug()<<"plotting example for style "<<f;
 
@@ -626,11 +626,10 @@ void doListStyles(const QDir& outputDir, const QDir& docoutputDir, int iconsize,
         plotStyleSymbols(plotExtra, plot);
         plotExtra.grabPixelImage(QSize(plotExtra.getWidth(),plotExtra.getHeight()), false).copy(0,0,plotExtra.getWidth(),plotExtra.getHeight()).save(outputDir.absoluteFilePath(f+".symbols.png"), "png");
 
-        shtml<<"  <tr>"
-             <<"<td><a href=\"https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/"<<f<<"\"><code>"<<dir.absoluteFilePath(f)<<"</code></a></td>"
-             <<"<td><div class=\"image\"><img src=\""<<f<<".png\" alt=\"\"/></div></td>"
-             <<"<td><div class=\"image\"><img src=\""<<f<<".symbols.png\" alt=\"\"/></div></td>"
-             <<"</tr>";
+        shtml<<"  <tr>\n"
+             <<"    <td><a href=\"https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/"<<f<<"\"><code>"<<dir.absoluteFilePath(f)<<"</code></a>\n"
+             <<"    <td>\\image html "<<f<<".png\n"
+             <<"    <td>\\image html "<<f<<".symbols.png\n";
     }
     shtml<<"</table>";
 }

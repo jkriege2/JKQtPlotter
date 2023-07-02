@@ -40,7 +40,7 @@ These are also linked into the JKQTPlotter library as Qt ressource into the subd
 \endcode
 
 Here is a table with all available ready-made styles:
-\htmlinclude styles.html
+\include{doc} styles.dox
 
 \see Classes are documented in \ref jkqtpplotter_styling_classes .
      <br>See \ref JKQTPlotterStyling for a detailed example.
