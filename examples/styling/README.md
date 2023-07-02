@@ -77,7 +77,6 @@ The major part of the source code of the main application can be found in  [`tes
 The following gallery shows a set of example styles:
 
 
-
 | Style-file    | Screenshot    |
 |:-------------:| ------------- | 
 | <b> The Default Style </b> | ![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/doc/images/styles/default.ini.png) |

@@ -40,35 +40,7 @@ These are also linked into the JKQTPlotter library as Qt ressource into the subd
 \endcode
 
 Here is a table with all available ready-made styles:
-<table>
-    <tr>
-      <th> Style-file
-      <th> Screenshot
-    <tr>
-      <td> <b> The Default Style </b>
-      <td> \image html default.ini.png
-    <tr>
-      <td> <a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/blackandwhite.ini"> \c :/JKQTPlotter/styles/blackandwhite.ini</a>
-      <td> \image html blackandwhite.ini.png
-    <tr>
-      <td> <a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/blueprint.ini"> \c :/JKQTPlotter/styles/blueprint.ini</a>
-      <td> \image html blueprint.ini.png
-    <tr>
-      <td> <a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/dark.ini"> \c :/JKQTPlotter/styles/dark.ini</a>
-      <td> \image html dark.ini.png
-    <tr>
-      <td> <a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/seaborn.ini"> \c :/JKQTPlotter/styles/seaborn.ini</a>
-      <td> \image html seaborn.ini.png
-    <tr>
-      <td> <a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/simple_gridandticks.ini"> \c :/JKQTPlotter/styles/simple_gridandticks.ini</a>
-      <td> \image html simple_gridandticks.ini.png
-    <tr>
-      <td> <a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/simple_axesoffset.ini"> \c :/JKQTPlotter/styles/simple_axesoffset.ini</a>
-      <td> \image html simple_axesoffset.ini.png
-    <tr>
-      <td> <a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/simple_axesoffset_plotbox.ini"> \c :/JKQTPlotter/styles/simple_axesoffset_plotbox.ini</a>
-      <td> \image html simple_axesoffset_plotbox.ini.png
-</table>
+\htmlinclude styles.html
 
 \see Classes are documented in \ref jkqtpplotter_styling_classes .
      <br>See \ref JKQTPlotterStyling for a detailed example.

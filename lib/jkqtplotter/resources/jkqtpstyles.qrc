@@ -8,5 +8,7 @@
         <file>styles/simple_axesoffset.ini</file>
         <file>styles/simple_axesoffset_plotbox.ini</file>
         <file>styles/simple_gridandticks.ini</file>
+        <file>styles/simple_arrowsaxes.ini</file>
+        <file>styles/legacy_default_style.ini</file>
     </qresource>
 </RCC>
