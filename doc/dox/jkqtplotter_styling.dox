@@ -40,7 +40,55 @@ These are also linked into the JKQTPlotter library as Qt ressource into the subd
 \endcode
 
 Here is a table with all available ready-made styles:
-\include{doc} styles.dox
+<!--include:styles.dox-->
+
+<table>
+  <tr>
+    <th>Style-file
+    <th>Screenshot
+    <th>Symbols
+  <tr>
+    <td><a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/blackandwhite.ini"><code>:/JKQTPlotter/styles/blackandwhite.ini</code></a>
+    <td>\image html blackandwhite.ini.png
+    <td>\image html blackandwhite.ini.symbols.png
+  <tr>
+    <td><a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/blueprint.ini"><code>:/JKQTPlotter/styles/blueprint.ini</code></a>
+    <td>\image html blueprint.ini.png
+    <td>\image html blueprint.ini.symbols.png
+  <tr>
+    <td><a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/dark.ini"><code>:/JKQTPlotter/styles/dark.ini</code></a>
+    <td>\image html dark.ini.png
+    <td>\image html dark.ini.symbols.png
+  <tr>
+    <td><a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/default.ini"><code>:/JKQTPlotter/styles/default.ini</code></a>
+    <td>\image html default.ini.png
+    <td>\image html default.ini.symbols.png
+  <tr>
+    <td><a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/legacy_default_style.ini"><code>:/JKQTPlotter/styles/legacy_default_style.ini</code></a>
+    <td>\image html legacy_default_style.ini.png
+    <td>\image html legacy_default_style.ini.symbols.png
+  <tr>
+    <td><a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/seaborn.ini"><code>:/JKQTPlotter/styles/seaborn.ini</code></a>
+    <td>\image html seaborn.ini.png
+    <td>\image html seaborn.ini.symbols.png
+  <tr>
+    <td><a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/simple_arrowsaxes.ini"><code>:/JKQTPlotter/styles/simple_arrowsaxes.ini</code></a>
+    <td>\image html simple_arrowsaxes.ini.png
+    <td>\image html simple_arrowsaxes.ini.symbols.png
+  <tr>
+    <td><a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/simple_axesoffset.ini"><code>:/JKQTPlotter/styles/simple_axesoffset.ini</code></a>
+    <td>\image html simple_axesoffset.ini.png
+    <td>\image html simple_axesoffset.ini.symbols.png
+  <tr>
+    <td><a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/simple_axesoffset_plotbox.ini"><code>:/JKQTPlotter/styles/simple_axesoffset_plotbox.ini</code></a>
+    <td>\image html simple_axesoffset_plotbox.ini.png
+    <td>\image html simple_axesoffset_plotbox.ini.symbols.png
+  <tr>
+    <td><a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/simple_gridandticks.ini"><code>:/JKQTPlotter/styles/simple_gridandticks.ini</code></a>
+    <td>\image html simple_gridandticks.ini.png
+    <td>\image html simple_gridandticks.ini.symbols.png
+</table>
+<!--/include:styles.dox-->
 
 \see Classes are documented in \ref jkqtpplotter_styling_classes .
      <br>See \ref JKQTPlotterStyling for a detailed example.

@@ -606,32 +606,55 @@ void plotStyleSymbols(JKQTBasePlotter& plotExtra, const JKQTBasePlotter& plot) {
 }
 
 
-void doListStyles(const QDir& outputDir, const QDir& docoutputDir, int iconsize, QColor backgroundColor) {
+void doListStyles(const QDir& outputDir, const QStringList& doctomodify, int iconsize, QColor backgroundColor) {
     QDir dir(":/JKQTPlotter/styles/", "*.ini");
-    QFile fhtml(docoutputDir.absoluteFilePath("styles.dox"));
-    fhtml.open(QFile::WriteOnly|QFile::Text);
-    QTextStream shtml(&fhtml);
-    shtml<<"<table>\n  <tr>\n    <th>Style-file\n    <th>Screenshot\n    <th>Symbols\n";
-    for (auto& f: dir.entryList()) {
-        qDebug()<<"plotting example for style "<<f;
+    QString doc;
+    {
+        QTextStream shtml(&doc);
+        shtml<<"<table>\n  <tr>\n    <th>Style-file\n    <th>Screenshot\n    <th>Symbols\n";
+        for (auto& f: dir.entryList()) {
+            qDebug()<<"plotting example for style "<<f;
 
-        JKQTBasePlotter plot(true);
-        plot.setWidgetSize(iconsize,iconsize);
-        plot.loadCurrentPlotterStyle(QSettings(dir.absoluteFilePath(f), QSettings::IniFormat));
-        plotStyle(plot);
-        plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,0,plot.getWidth(),plot.getHeight()).save(outputDir.absoluteFilePath(f+".png"), "png");
+            JKQTBasePlotter plot(true);
+            plot.setWidgetSize(iconsize,iconsize);
+            plot.loadCurrentPlotterStyle(QSettings(dir.absoluteFilePath(f), QSettings::IniFormat));
+            plotStyle(plot);
+            plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,0,plot.getWidth(),plot.getHeight()).save(outputDir.absoluteFilePath(f+".png"), "png");
 
-        JKQTBasePlotter plotExtra(true);
-        plotExtra.setWidgetSize(iconsize*2, iconsize/3);
-        plotStyleSymbols(plotExtra, plot);
-        plotExtra.grabPixelImage(QSize(plotExtra.getWidth(),plotExtra.getHeight()), false).copy(0,0,plotExtra.getWidth(),plotExtra.getHeight()).save(outputDir.absoluteFilePath(f+".symbols.png"), "png");
+            JKQTBasePlotter plotExtra(true);
+            plotExtra.setWidgetSize(iconsize*2, iconsize/3);
+            plotStyleSymbols(plotExtra, plot);
+            plotExtra.grabPixelImage(QSize(plotExtra.getWidth(),plotExtra.getHeight()), false).copy(0,0,plotExtra.getWidth(),plotExtra.getHeight()).save(outputDir.absoluteFilePath(f+".symbols.png"), "png");
 
-        shtml<<"  <tr>\n"
-             <<"    <td><a href=\"https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/"<<f<<"\"><code>"<<dir.absoluteFilePath(f)<<"</code></a>\n"
-             <<"    <td>\\image html "<<f<<".png\n"
-             <<"    <td>\\image html "<<f<<".symbols.png\n";
+            shtml<<"  <tr>\n"
+                 <<"    <td><a href=\"https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/"<<f<<"\"><code>"<<dir.absoluteFilePath(f)<<"</code></a>\n"
+                 <<"    <td>\\image html "<<f<<".png\n"
+                 <<"    <td>\\image html "<<f<<".symbols.png\n";
+        }
+        shtml<<"</table>";
     }
-    shtml<<"</table>";
+    const QString delim1="<!--include:styles.dox-->";
+    const QString delim2="<!--/include:styles.dox-->";
+    for (auto& docf: doctomodify) {
+        QFile f(docf);
+        if (f.open(QFile::ReadOnly|QFile::Text)) {
+            const QString old=f.readAll();
+            QString replold;
+            const int idx1=old.indexOf(delim1)+delim1.size();
+            const int idx2=old.indexOf(delim2);
+            if (idx1>=0 && idx2>=0 && idx2>idx1) {
+                replold=old.mid(0, idx1+1);
+                replold+="\n"+doc+"\n";
+                replold+=old.mid(idx2);
+                f.close();
+                f.remove();
+                QFile fo(docf);
+                if (fo.open(QFile::WriteOnly|QFile::Text)) {
+                    fo.write(replold.toUtf8());
+                }
+            }
+        }
+    }
 }
 
 int main(int argc, char* argv[])
@@ -644,8 +667,8 @@ int main(int argc, char* argv[])
     parser.addVersionOption();
     QCommandLineOption outputDirectoryOption("outputdir", "write results into this directory.", "outputdir", app.applicationDirPath());
     parser.addOption(outputDirectoryOption);
-    QCommandLineOption docoutputDirectoryOption("docoutputdir", "write doc-file results into this directory.", "docoutputdir", app.applicationDirPath());
-    parser.addOption(docoutputDirectoryOption);
+    QCommandLineOption doctomodifyectoryOption("doctomodify", "doc-files into which to write results: tag <include:NAME>...</include:NAME> is replaced by doc.", "doctomodify", app.applicationDirPath());
+    parser.addOption(doctomodifyectoryOption);
     QCommandLineOption listsymbolsOption("listsymbols", "generate example images for all symbols.");
     parser.addOption(listsymbolsOption);
     QCommandLineOption listlinedecoratorsOption("listlinedecorators", "generate example images for all line-decorators.");
@@ -663,7 +686,7 @@ int main(int argc, char* argv[])
     parser.process(app);
 
     const QDir outputDir(parser.value(outputDirectoryOption));
-    const QDir docoutputDir(parser.value(docoutputDirectoryOption));
+    const QStringList doctomodify(parser.value(doctomodifyectoryOption).split(","));
     const bool listsymbols=parser.isSet(listsymbolsOption);
     const bool listlinedecorators=parser.isSet(listlinedecoratorsOption);
     const bool listerrorindicators=parser.isSet(listerrorindicatorsOption);
@@ -678,7 +701,7 @@ int main(int argc, char* argv[])
     if (listlinedecorators) doListLineDecorators(outputDir, iconsize, backgroundColor);
     if (listerrorindicators) doListErrorIndicators(outputDir, iconsize, backgroundColor);
     if (listaxisstyleprops) doListAxisStyling(outputDir, iconsize, backgroundColor);
-    if (liststyles) doListStyles(outputDir, docoutputDir, iconsize, backgroundColor);
+    if (liststyles) doListStyles(outputDir, doctomodify, iconsize, backgroundColor);
 
     return EXIT_SUCCESS;
 }

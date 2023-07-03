@@ -88,7 +88,7 @@ if(JKQtPlotter_BUILD_TOOLS)
 
     set(JKQTPlotter_GenerateDocImages_COMMAND $<TARGET_FILE:jkqtplotter_doc_imagegenerator> ${JKQTPlotter_GenerateDocImages_DefaultOptions})
     set(JKQTPlotter_GenerateDocImages_OutputDir "${CMAKE_CURRENT_LIST_DIR}/images/")
-    set(JKQTPlotter_GenerateDocImages_DocOutputDir "${CMAKE_CURRENT_LIST_DIR}/htmlinclude/")
+    set(JKQTPlotter_GenerateDocImages_dox "${CMAKE_CURRENT_LIST_DIR}/dox/")
 
 
     add_custom_target(JKQTPlotter_GenerateDocImages_listplotsymbols
@@ -125,7 +125,7 @@ if(JKQtPlotter_BUILD_TOOLS)
 
     add_custom_target(JKQTPlotter_GenerateDocImages_liststyles
         COMMENT "Building JKQTPlotter Documentation Images: liststyles"
-        COMMAND ${JKQTPlotter_GenerateDocImages_COMMAND} --liststyles --iconsize=500 --outputdir="${JKQTPlotter_GenerateDocImages_OutputDir}/styles/" --docoutputdir="${JKQTPlotter_GenerateDocImages_DocOutputDir}"
+        COMMAND ${JKQTPlotter_GenerateDocImages_COMMAND} --liststyles --iconsize=500 --outputdir="${JKQTPlotter_GenerateDocImages_OutputDir}/styles/" --doctomodify="${JKQTPlotter_GenerateDocImages_dox}/jkqtplotter_styling.dox"
         WORKING_DIRECTORY ${JKQtPlotter_QT_BINDIR}
         DEPENDS jkqtplotter_doc_imagegenerator
     )
