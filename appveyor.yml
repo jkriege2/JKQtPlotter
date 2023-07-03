@@ -48,7 +48,7 @@ environment:
            
     - QTABI: msvc2019_64
       COMPILER: MSVC
-      QTVER: 6.5
+      QTVER: 6.4
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
       CMAKE_GENERATOR: "Visual Studio 16 2019"
       CMAKE_BUILDFLAGS: /verbosity:minimal /maxcpucount
@@ -93,9 +93,6 @@ for:
     install:
       # Init compiler environment
       - cmd: echo == INIT COMPILER ENVIRONMENT ====================================================================
-      - cmd: dir C:\Qt\
-      - cmd: dir C:\Qt\%QTVER%\
-      - cmd: dir C:\Qt\%QTVER%\%QTABI%\
       - cmd: set QTDIR=C:\Qt\%QTVER%\%QTABI%\bin
       - cmd: set QT_DIR=C:\Qt\%QTVER%\%QTABI%\bin
       - cmd: set PATH=%QTDIR%;%JOMDIR%;%PATH%
