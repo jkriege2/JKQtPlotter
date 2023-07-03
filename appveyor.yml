@@ -93,6 +93,9 @@ for:
     install:
       # Init compiler environment
       - cmd: echo == INIT COMPILER ENVIRONMENT ====================================================================
+      - cmd: dir C:\Qt\
+      - cmd: dir C:\Qt\%QTVER%\
+      - cmd: dir C:\Qt\%QTVER%\%QTABI%\
       - cmd: set QTDIR=C:\Qt\%QTVER%\%QTABI%\bin
       - cmd: set QT_DIR=C:\Qt\%QTVER%\%QTABI%\bin
       - cmd: set PATH=%QTDIR%;%JOMDIR%;%PATH%
