@@ -34,8 +34,12 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>FIXED issue #98: Signal JKQTPlotter::plotMouseWheelOperated() was called with wrong x/y-position-coordinates, thanks to <a href="https://github.com/fpalazzolo">user:fpalazzolo</a> for reporting this bug</li>
     <li>FIXED: first symbol in symbols rotation was never used</li>
     <li>FIXED: color palettes with few entries (i.e. "step"-palettes) were not applied correctly</li>
+    <li>FIXED: fixes strange rendering with distortions (especially in text!), by correcting size calculation of internal image buffer</li>
+    <li>FIXED: exporting gridPrinting plots when using only a JKQTBasePlotter</li>
     <li>REORGANIZED: separated line-graphs from jkqtpscatter.h/.cpp into jkqtplines.h/.cpp</li>
     <li>IMPROVED: QT6-compatibility by removing deprecated warnings</li>
+    <li>IMPROVED: added missing override declarations</li>
+    <li>IMPROVED: JKQTPlotter::jkqtp_RESIZE_DELAY is thread-safe now (atomic)</li>
     <li>IMPROVED/REWORKED: reworked JKQTPErrorPlotstyle and error indicator plotting so error-inidcators can be specified as ORed combination of flags from JKQTPErrorPlotstyleElements, added additional error indicator styles (half-bars, arrows...)</li>
     <li>IMPROVED/REWORKED: reworked JKQTPCADrawMode and coordinate axis drawing so the draw mide can be specified as ORed combination of flags from JKQTPCADrawModeElements, added flags to draw arrows at the end of the axis line</li>
     <li>IMPROVED/REWORKED: coordinate axis code was refactored</li>
