@@ -547,11 +547,15 @@ double JKQTBasePlotter::getAbsoluteYMax() const {
 }
 
 void JKQTBasePlotter::addGridPrintingPlotter(size_t x, size_t y, JKQTBasePlotter *plotter) {
-    JKQTPGridPrintingItem i;
-    i.x=x;
-    i.y=y;
-    i.plotter=plotter;
-    gridPrintingList.push_back(i);
+    if (plotter==this) {
+        setGridPrintingCurrentPos(x,y);
+    } else {
+        JKQTPGridPrintingItem i;
+        i.x=x;
+        i.y=y;
+        i.plotter=plotter;
+        gridPrintingList.push_back(i);
+    }
 }
 
 void JKQTBasePlotter::clearGridPrintingPlotters() {
@@ -1074,7 +1078,7 @@ void JKQTBasePlotter::drawSystemYAxis(JKQTPEnhancedPainter& painter) {
 JKQTBasePlotter::JKQTPPen JKQTBasePlotter::getPlotStyle(int i, JKQTPPlotStyleType type) const{
     int colorI=-1;
     int styleI=0;
-    int symbolI=0;
+    int symbolI=-1;
     int brushI=0;
     for (int k=0; k<=i; k++) {
         colorI++;
@@ -1108,9 +1112,6 @@ JKQTBasePlotter::JKQTPPen JKQTBasePlotter::getPlotStyle(int i, JKQTPPlotStyleTyp
     }
     if (type==JKQTPPlotStyleType::Barchart || type==JKQTPPlotStyleType::Boxplot || type==JKQTPPlotStyleType::Impulses) {
         basePenStyle=Qt::SolidLine;
-    }
-    if (type==JKQTPPlotStyleType::Barchart) {
-        basebrushStyle=Qt::SolidPattern;
     }
     if (type==JKQTPPlotStyleType::Boxplot) {
         basebrushStyle=Qt::SolidPattern;
