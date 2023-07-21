@@ -116,15 +116,61 @@ enum JKQTPMathImageColorPalette {
     JKQTPMathImageCopper, /*!< \image html palettes/palette_copper.png */
     JKQTPMathImageAutumn, /*!< \image html palettes/palette_autumn.png */
     JKQTPMathImageSeismic, /*!< \image html palettes/palette_seismic.png */
+    JKQTPMathImageSeismic_STEP, /*!< \image html palettes/palette_seismic_step.png */
     JKQTPMathImageTerrain, /*!< \image html palettes/palette_terrain.png */
+    JKQTPMathImageTerrain_STEP, /*!< \image html palettes/palette_terrain_step.png */
+
     JKQTPMathImageViridis, /*!< \image html palettes/palette_viridis.png
-                                \see from https://github.com/BIDS/colormap/blob/master/colormaps.py  https://github.com/BIDS/colormap/blob/master/colormaps.py */
+                                \see from https://github.com/BIDS/colormap/blob/master/colormaps.py */
+    JKQTPMathImageINVERTED_Viridis, /*!< \image html palettes/palette_invviridis.png
+                                \see from https://github.com/BIDS/colormap/blob/master/colormaps.py */
+    JKQTPMathImageViridis_STEP, /*!< \image html palettes/palette_viridis_step.png
+                                \see from https://github.com/BIDS/colormap/blob/master/colormaps.py */
+    JKQTPMathImageINVERTED_Viridis_STEP, /*!< \image html palettes/palette_invviridis_step.png
+                                \see from https://github.com/BIDS/colormap/blob/master/colormaps.py */
+
     JKQTPMathImageMagma, /*!< \image html palettes/palette_magma.png
-                              \see from https://github.com/BIDS/colormap/blob/master/colormaps.py  https://github.com/BIDS/colormap/blob/master/colormaps.py */
+                                \see from https://github.com/BIDS/colormap/blob/master/colormaps.py */
+    JKQTPMathImageINVERTED_Magma, /*!< \image html palettes/palette_invmagma.png
+                                \see from https://github.com/BIDS/colormap/blob/master/colormaps.py */
+    JKQTPMathImageMagma_STEP, /*!< \image html palettes/palette_magma_step.png
+                                \see from https://github.com/BIDS/colormap/blob/master/colormaps.py */
+    JKQTPMathImageINVERTED_Magma_STEP, /*!< \image html palettes/palette_invmagma_step.png
+                                \see from https://github.com/BIDS/colormap/blob/master/colormaps.py */
     JKQTPMathImageInferno, /*!< \image html palettes/palette_inferno.png
-                                \see from https://github.com/BIDS/colormap/blob/master/colormaps.py  https://github.com/BIDS/colormap/blob/master/colormaps.py */
+                                \see from https://github.com/BIDS/colormap/blob/master/colormaps.py */
+    JKQTPMathImageINVERTED_Inferno, /*!< \image html palettes/palette_invinferno.png
+                                \see from https://github.com/BIDS/colormap/blob/master/colormaps.py */
+    JKQTPMathImageInferno_STEP, /*!< \image html palettes/palette_inferno_step.png
+                                \see from https://github.com/BIDS/colormap/blob/master/colormaps.py */
+    JKQTPMathImageINVERTED_Inferno_STEP, /*!< \image html palettes/palette_invinferno_step.png
+                                \see from https://github.com/BIDS/colormap/blob/master/colormaps.py */
     JKQTPMathImagePlasma, /*!< \image html palettes/palette_plasma.png
-                               \see from https://github.com/BIDS/colormap/blob/master/colormaps.py  https://github.com/BIDS/colormap/blob/master/colormaps.py */
+                                \see from https://github.com/BIDS/colormap/blob/master/colormaps.py */
+    JKQTPMathImageINVERTED_Plasma, /*!< \image html palettes/palette_invplasma.png
+                                \see from https://github.com/BIDS/colormap/blob/master/colormaps.py */
+    JKQTPMathImagePlasma_STEP, /*!< \image html palettes/palette_plasma_step.png
+                                \see from https://github.com/BIDS/colormap/blob/master/colormaps.py */
+    JKQTPMathImageINVERTED_Plasma_STEP, /*!< \image html palettes/palette_invplasma_step.png
+                                \see from https://github.com/BIDS/colormap/blob/master/colormaps.py */
+    JKQTPMathImageIBMColorBlindSafe, /*!< \image html palettes/palette_IBMColorBlindSafe.png
+                                \note color-blind freindly!
+                                \see from https://lospec.com/palette-list/ibm-color-blind-safe */
+    JKQTPMathImageIBMColorBlindSafe_STEP, /*!< \image html palettes/palette_IBMColorBlindSafe_step.png
+                                \note color-blind freindly!
+                                \see from https://lospec.com/palette-list/ibm-color-blind-safe */
+    JKQTPMathImageOkabeIto_STEP, /*!< \image html palettes/palette_OkabeIto_step.png
+                                \note color-blind freindly!
+                                \see from https://yoshke.org/blog/colorblind-friendly-diagrams and M. Okabe and K. Ito, How to make figures and presentations that are friendly to color blind people, University of Tokyo, 2002. */
+    JKQTPMathImageOkabeItoDarker_STEP, /*!< darker version of JKQTPMathImageOkabeItoDarker_STEP \image html palettes/palette_OkabeItoDarker_step.png
+                                \note color-blind freindly!
+                                \see from https://yoshke.org/blog/colorblind-friendly-diagrams and M. Okabe and K. Ito, How to make figures and presentations that are friendly to color blind people, University of Tokyo, 2002. */
+    JKQTPMathImageOkabeItoLighter_STEP, /*!< lighter version of JKQTPMathImageOkabeItoDarker_STEP \image html palettes/palette_OkabeItoLighter_step.png
+                                \note color-blind freindly!
+                                \see from https://yoshke.org/blog/colorblind-friendly-diagrams and M. Okabe and K. Ito, How to make figures and presentations that are friendly to color blind people, University of Tokyo, 2002. */
+    JKQTPMathImageDefault_STEP, /*!< \image html palettes/palette_jkqtplotterdefault_steps.png
+                                     This is the color cycle used to color graphs in JKQTPlotter#s default style.
+                                 */
 
 
     JKQTPMathImageBLUEMAGENTAYELLOW, /*!< \image html palettes/palette_BlMaYe.png */
@@ -215,6 +261,9 @@ struct JKQTPImageTools {
 
         /*! \brief size of the lookup tables used by JKQTFPimagePlot_array2image() */
         static JKQTCOMMON_LIB_EXPORT const int LUTSIZE;
+
+        /*! \brief number of entries in an auto-generated steps-palette */
+        static JKQTCOMMON_LIB_EXPORT const int NDEFAULTSTEPS;
 
         /*! \brief loads all palettes defined in the given palette files \a filename into global_jkqtpimagetools_userluts
                    and assigns a new LUT-ID >=JKQTPMathImageFIRST_REGISTERED_USER_PALETTE to each palette
@@ -357,7 +406,7 @@ struct JKQTPImageTools {
 
             img = QImage(width, height, QImage::Format_ARGB32);
             if (jkqtp_approximatelyEqual(min, max, JKQTP_DOUBLE_EPSILON)) {
-                    img.fill(0);
+                    img.fill(lut_used[0]);
             } else {
                 const int lutSize=lut_used.size();
                 if (lutSize>0) {
@@ -371,16 +420,16 @@ struct JKQTPImageTools {
                             } else if (std::isinf(val)) {
                                 line[i]=infColor.rgba();
                             } else {
-                                const int v = static_cast<int>((val-min)/delta*static_cast<double>(lutSize-1));
-                                const int vv = (v < 0) ? 0 : ( (v >= lutSize) ? (lutSize-1) : v);
+                                const int v = static_cast<int>((val-min)/delta*static_cast<double>(lutSize));
+                                const int vv = qBound<int>(0, v, lutSize-1);
                                 line[i]=lut_used[vv];
                                 if ((v<0)&&(paletteMinFail==JKQTPMathImageGivenColor)) {
                                     line[i]=minFailColor.rgba();
-                                } else if ((v>lutSize)&&(paletteMaxFail==JKQTPMathImageGivenColor)) {
+                                } else if ((v>=lutSize)&&(paletteMaxFail==JKQTPMathImageGivenColor)) {
                                     line[i]=maxFailColor.rgba();
                                 } else if ((v<0)&&(paletteMinFail==JKQTPMathImageTransparent)) {
                                     line[i]=QColor(Qt::transparent).rgba();
-                                } else if ((v>lutSize)&&(paletteMaxFail==JKQTPMathImageTransparent)) {
+                                } else if ((v>=lutSize)&&(paletteMaxFail==JKQTPMathImageTransparent)) {
                                     line[i]=QColor(Qt::transparent).rgba();
                                 }
                             }
@@ -969,6 +1018,101 @@ struct JKQTPColorPaletteSingleColorLinSegment {
 JKQTPImageTools::LUTType JKQTCOMMON_LIB_EXPORT JKQTPBuildColorPaletteLUTLinSegmentsSorted(const QList<JKQTPColorPaletteSingleColorLinSegment>& itemsR, const QList<JKQTPColorPaletteSingleColorLinSegment>& itemsG, const QList<JKQTPColorPaletteSingleColorLinSegment>& itemsB, int lut_size=JKQTPImageTools::LUTSIZE);
 
 
+/*! \brief version of qRgb() that does not require to add the alpha part
+    \ingroup jkqtplotter_imagelots_tools_LUTS
+*/
+
+inline QRgb jkqtp_qRgbOpaque(QRgb col) {
+    return col | 0xFF000000;
+}
+
+/*! \brief for building palettes from list of colors and position values, using JKQTPBuildColorPaletteLUTLinInterpolateSorted(), ...
+    \ingroup jkqtplotter_imagelots_tools_LUTS
+
+    \see JKQTPBuildColorPaletteLUTLinInterpolateSorted(), JKQTPBuildColorPaletteLUTSorted(), JKQTPBuildColorPaletteLUTColorsOnlySteps(), JKQTPBuildColorPaletteLUT(), JKQTPBuildColorPaletteLUTLinInterpolate()
+
+*/
+class JKQTCOMMON_LIB_EXPORT JKQTPPaletteList: public QList<QPair<double, QRgb> >
+{
+public:
+    typedef QList<QPair<double, QRgb> > ListType;
+    JKQTPPaletteList(): ListType() {};
+    JKQTPPaletteList(qsizetype size): ListType(size) {};
+    JKQTPPaletteList(qsizetype size, QList::parameter_type value): ListType(size, value) {};
+    template <class T>
+    JKQTPPaletteList(std::initializer_list<QPair<double, QRgb>> args): ListType(args) {};
+    template <typename InputIterator, QtPrivate::IfIsInputIterator<InputIterator> = true>
+    JKQTPPaletteList(InputIterator first, InputIterator last): ListType(first, last) {};
+    JKQTPPaletteList(ListType &&other):ListType(std::forward<ListType>(other)) {};
+    JKQTPPaletteList(const ListType &other):ListType(other) {};
+
+    using ListType::push_back;
+    inline void push_back(QRgb rgb) {
+        if (size()==0) push_back(ListType::value_type(0.0, rgb));
+        else if (size()==1) push_back(ListType::value_type(at(0).first+1.0, rgb));
+        else {
+            double mi=0,ma=0, delta=0;
+            getMinMaxPosition(mi,ma,&delta);
+            push_back(ListType::value_type(ma+delta, rgb));
+        }
+    }
+    inline void push_back(double pos, QRgb rgb) {
+        push_back(ListType::value_type(pos, rgb));
+    }
+    using ListType::operator<<;
+    inline JKQTPPaletteList& operator<<(QRgb rgb) {
+        push_back(rgb);
+        return *this;
+    }
+
+    /** \brief returns the minimum value of the double-component */
+    double getMinPosition() const {
+        double mi=0;
+        bool first=true;
+        for (const auto& c: *this) {
+            if (first) {
+                mi=c.first;
+                first=false;
+            } else {
+                mi=qMin<int>(mi, c.first);
+            }
+        }
+        return mi;
+    }
+    /** \brief returns the maximum value of the double-component */
+    double getMaxPosition() const {
+        double ma=0;
+        bool first=true;
+        for (const auto& c: *this) {
+            if (first) {
+                ma=c.first;
+                first=false;
+            } else {
+                ma=qMax<int>(ma, c.first);
+            }
+        }
+        return ma;
+    }
+    /** \brief returns the minimum and maximum value of the double-component, as well as the avg. increment between two such values */
+    void getMinMaxPosition(double& mi, double& ma, double* avgDelta=nullptr) const {
+        mi=ma=0;
+        bool first=true;
+        for (const auto& c: *this) {
+            if (first) {
+                mi=ma=c.first;
+                first=false;
+            } else {
+                ma=qMax<int>(ma, c.first);
+                mi=qMin<int>(mi, c.first);
+            }
+        }
+        if (avgDelta) {
+            if (size()<=1) *avgDelta=1;
+            else *avgDelta=(ma-mi)/static_cast<double>(size()-1);
+        }
+    }
+
+};
 
 /*! \brief build a linearly interpolated palette (as a look-up table) with \a lut_size entries by linearly interpolating between the nodes in \a items .
            \b NOTE: \a items is assumed to be sorted by the first component of the \c QPair<double,QRgb> entries!
@@ -986,7 +1130,7 @@ JKQTPImageTools::LUTType JKQTCOMMON_LIB_EXPORT JKQTPBuildColorPaletteLUTLinSegme
     \see JKQTPBuildColorPaletteLUTLinInterpolate(), \ref JKQTPlotterImagePlotUserPalette
 
 */
-JKQTPImageTools::LUTType JKQTCOMMON_LIB_EXPORT JKQTPBuildColorPaletteLUTLinInterpolateSorted(const QList<QPair<double, QRgb> >& items, int lut_size=JKQTPImageTools::LUTSIZE);
+JKQTPImageTools::LUTType JKQTCOMMON_LIB_EXPORT JKQTPBuildColorPaletteLUTLinInterpolateSorted(const JKQTPPaletteList& items, int lut_size=JKQTPImageTools::LUTSIZE);
 
 
 /*! \brief build a palette (as a look-up table) with \a lut_size entries that step between the nodes provided in \a items.
@@ -1005,14 +1149,14 @@ JKQTPImageTools::LUTType JKQTCOMMON_LIB_EXPORT JKQTPBuildColorPaletteLUTLinInter
     \see JKQTPBuildColorPaletteLUT(), \ref JKQTPlotterImagePlotUserPalette
 
 */
-JKQTPImageTools::LUTType JKQTCOMMON_LIB_EXPORT JKQTPBuildColorPaletteLUTSorted(const QList<QPair<double, QRgb> >& items, int lut_size=JKQTPImageTools::LUTSIZE);
+JKQTPImageTools::LUTType JKQTCOMMON_LIB_EXPORT JKQTPBuildColorPaletteLUTSorted(const JKQTPPaletteList& items, int lut_size=JKQTPImageTools::LUTSIZE);
 
 /*! \brief like JKQTPBuildColorPaletteLUTLinInterpolateSorted(), but sorts \a items before processing it!
     \ingroup jkqtplotter_imagelots_tools_LUTS
 
     \copydetails JKQTPBuildColorPaletteLUTLinInterpolateSorted()
 */
-JKQTPImageTools::LUTType JKQTCOMMON_LIB_EXPORT JKQTPBuildColorPaletteLUTLinInterpolate(QList<QPair<double, QRgb> > items, int lut_size=JKQTPImageTools::LUTSIZE);
+JKQTPImageTools::LUTType JKQTCOMMON_LIB_EXPORT JKQTPBuildColorPaletteLUTLinInterpolate(JKQTPPaletteList items, int lut_size=JKQTPImageTools::LUTSIZE);
 
 
 /*! \brief like JKQTPBuildColorPaletteLUTSorted(), but sorts \a items before processing it!
@@ -1020,7 +1164,14 @@ JKQTPImageTools::LUTType JKQTCOMMON_LIB_EXPORT JKQTPBuildColorPaletteLUTLinInter
 
     \copydetails JKQTPBuildColorPaletteLUTSorted()
 */
-JKQTPImageTools::LUTType JKQTCOMMON_LIB_EXPORT JKQTPBuildColorPaletteLUT(QList<QPair<double, QRgb> > items, int lut_size=JKQTPImageTools::LUTSIZE);
+JKQTPImageTools::LUTType JKQTCOMMON_LIB_EXPORT JKQTPBuildColorPaletteLUT(JKQTPPaletteList items, int lut_size=JKQTPImageTools::LUTSIZE);
+
+/*! \brief takes the QRgb-values in \a items and builds a stepped palette from them, ignoring the double-values. the palette will have items.size() entries.
+    \ingroup jkqtplotter_imagelots_tools_LUTS
+
+    \note \a items wird zunächst nach dem \c double sortiert
+*/
+JKQTPImageTools::LUTType JKQTCOMMON_LIB_EXPORT JKQTPBuildColorPaletteLUTColorsOnlySteps(JKQTPPaletteList items);
 
 /*! \brief like JKQTPBuildColorPaletteLUTLinSegmentsSorted(), but sorts \a itemsR, \a itemB, \a itemsG before processing them!
     \ingroup jkqtplotter_imagelots_tools_LUTS
@@ -1047,6 +1198,23 @@ JKQTPImageTools::LUTType JKQTCOMMON_LIB_EXPORT JKQTPBuildColorPaletteLUTLinInter
 */
 JKQTPImageTools::LUTType JKQTCOMMON_LIB_EXPORT JKQTPBuildColorPaletteLUT(const QMap<double, QRgb>& items, int lut_size=JKQTPImageTools::LUTSIZE);
 
+
+/*! \brief takes an existing JKQTPImageTools::LUTType and subsamples \a lut_size elements from it
+    \ingroup jkqtplotter_imagelots_tools_LUTS
+
+*/
+JKQTPImageTools::LUTType JKQTCOMMON_LIB_EXPORT JKQTPBuildColorPaletteLUTBySubsampling(const JKQTPImageTools::LUTType& items, int lut_size=JKQTPImageTools::NDEFAULTSTEPS);
+
+/*! \brief modify each element of a given lut with a given functor that receives the color and an index
+    \ingroup jkqtplotter_imagelots_tools_LUTS
+
+*/
+JKQTPImageTools::LUTType JKQTCOMMON_LIB_EXPORT JKQTPModifyLUT(JKQTPImageTools::LUTType lut, std::function<QRgb(int, QRgb)> f);
+/*! \brief modify each element of a given lut with a given functor that receives the color
+    \ingroup jkqtplotter_imagelots_tools_LUTS
+
+*/
+JKQTPImageTools::LUTType JKQTCOMMON_LIB_EXPORT JKQTPModifyLUT(JKQTPImageTools::LUTType lut, std::function<QRgb(QRgb)> f);
 
 
 /** \brief describes how to modify a rendered image with a second data array \see ModifierModeToString(), StringToModifierMode(), JKQTPImageModifierModeComboBox
