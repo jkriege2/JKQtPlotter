@@ -25,6 +25,7 @@
 #include <QDebug>
 #include <QSet>
 #include <QGuiApplication>
+#include <QtMath>
 #include <QPalette>
 #include <QLocale>
 #include <cstring>
