@@ -455,16 +455,16 @@ void JKQTPGeoEllipse::drawInternal(JKQTPEnhancedPainter& painter, double angleSt
     auto fTransform=std::bind([](const JKQTPGeometricPlotElement* plot, const QPointF& p) { return plot->transform(p); }, this, std::placeholders::_1);
     QPolygonF rect;
     if(mode==InternalDrawMode::Ellipse) {
-        rect=JKQTPSplitEllipseIntoPoints(fTransform, x,y,width/2.0, height/2.0,0,360);
+        rect=JKQTPSplitEllipseIntoPoints(fTransform, x,y,width/2.0, height/2.0,0,360,angle);
     } else if (mode==InternalDrawMode::Pie) {
         QPointF first, last;
-        rect=JKQTPSplitEllipseIntoPoints(fTransform, x,y,width/2.0, height/2.0, angleStart, angleStop, 0, nullptr, nullptr, &first, &last);
+        rect=JKQTPSplitEllipseIntoPoints(fTransform, x,y,width/2.0, height/2.0, angleStart, angleStop, angle, nullptr, nullptr, &first, &last);
         QPolygonF pie;
         pie<<last<<QPointF(x,y)<<first;
         rect.append(JKQTPSimplyfyLineSegemnts(JKQTPSplitPolylineIntoPoints(pie, fTransform)));
     } else if (mode==InternalDrawMode::Chord) {
         QPointF first, last;
-        rect=JKQTPSplitEllipseIntoPoints(fTransform, x,y,width/2.0, height/2.0, angleStart, angleStop, 0, nullptr, nullptr, &first, &last);
+        rect=JKQTPSplitEllipseIntoPoints(fTransform, x,y,width/2.0, height/2.0, angleStart, angleStop, angle, nullptr, nullptr, &first, &last);
         rect.append(JKQTPSimplyfyLineSegemnts(JKQTPSplitLineIntoPoints(QLineF(last, first), fTransform)));
     }
     painter.drawPolygon(rect);

@@ -65,7 +65,7 @@ QVector<QPointF> JKQTPSplitEllipseIntoPoints(std::function<QPointF (QPointF)> fT
     const double sina=sin(1.0*alpha/180.0*JKQTPSTATISTICS_PI);
     const double cosa=cos(1.0*alpha/180.0*JKQTPSTATISTICS_PI);
     std::function<QPointF(double)> fell=[&](double t)->QPointF {
-        return QPointF(x+a*cos(t)*cosa-b*sin(t)*sina, y+a*cos(t)*sina+b*sin(t)*cosa);
+        return QPointF(x,y)+QPointF(a*cos(t)*cosa-b*sin(t)*sina, a*cos(t)*sina+b*sin(t)*cosa);
     };
     std::function<QPointF(double)> fxy = [&](double t) ->QPointF {
         return fTransform(fell(t));
