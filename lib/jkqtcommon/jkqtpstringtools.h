@@ -209,20 +209,29 @@ JKQTCOMMON_LIB_EXPORT QString jkqtp_QColor2String(QColor color, bool useSpecialT
  * \ingroup jkqtptools_string
  *
  * This returns a QString which contains the name of named colors and the RGBA values in a QT readable form othertwise.
+ *
+ * \param color the color name to convert
+ * \param namesOnly if \c true , the function only compares against the list of CSS colors; otherwise it passes the string also on to QColor()-constructor, which interprets e.g. \c #AABBCC
+ * \param nameFound[out] optional return value that signifies whether a name was found
  */
-JKQTCOMMON_LIB_EXPORT QColor jkqtp_lookupQColorName(const QString& color);
+JKQTCOMMON_LIB_EXPORT QColor jkqtp_lookupQColorName(const QString& color, bool namesOnly=false, bool* nameFound=nullptr);
 
 /** \brief converts a QString into a QColor, compatible with jkqtp_QColor2String(QColor color);
  * \ingroup jkqtptools_string
  *
- * This returns a QString which contains the name of named colors and the RGBA values in a QT readable form othertwise.
- * This function allows to add the alpha-value as \c "<color_name>,<alpha>" as integer betwee 0 and 255
- * or as \c "<color_name>,<transparency_percent>%" in the range of 0..100 % (i.e. (1-transparency_percent/100)*255).
- * Also \c "<color_name>,a<alpha_percent>%" in the range of 0..100 % (i.e. alpha_percent/100*255).
+ * This function converts a color name to a QColor. It extends the names by the following optional synatxes (basically the CSS-syntax with even more options):
+ *   - This function allows to add the alpha-value as \c "<color_name>,<alpha>" as integer betwee 0 and 255
+ *     or as \c "<color_name>,<transparency_percent>%" in the range of 0..100 % (i.e. (1-transparency_percent/100)*255).
+ *   - Also \c "<color_name>,a<alpha_percent>%" in the range of 0..100 % (i.e. alpha_percent/100*255).
+ *   - \c "gray<percent>" in the range of 0..100 generates a gray value with 0%=black and 100%=white. Also works for "blue"|"green"|"red"|...
+ *   - You can use full CSS-color syntax with functions \c "rgb(R,G,B)" , \c "rgba(...)" , \c "hsl(...)" , \c "hsv(...)" , \c "gray(...)" , \c "green(...)" , \c "red(...)" , \c "blue(...)".
+ *     The function also support %-values as parameters and whitespace, comma or slash as value separatos!
+ *   - Finally the default Qt color definitions are supported, i.e. \c #RGB , \c #RRGGBB , \c #AARRGGBB , \c #RRRGGGBBB , \c #RRRRGGGGBBBB
+ * .
  *
- * Finally the default Qt color definitions are supported, i.e. \c #RGB , \c #RRGGBB , \c #AARRGGBB , \c #RRRGGGBBB , \c #RRRRGGGGBBBB
+ *
  */
-JKQTCOMMON_LIB_EXPORT QColor jkqtp_String2QColor(const QString& color);
+JKQTCOMMON_LIB_EXPORT QColor jkqtp_String2QColor(QString color);
 
 /** \brief clean a string to be usable as a variable name, e.g. in an expression parser, or a C++-expression
  * \ingroup jkqtptools_string

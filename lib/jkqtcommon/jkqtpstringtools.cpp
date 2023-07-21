@@ -363,6 +363,7 @@ std::string jkqtp_booltostr(bool data){
 #  undef rgb
 #endif
 #define rgb(r,g,b) (0xff000000 | (r << 16) |  (g << 8) | b)
+#define rgba(r,g,b,a) ((a << 24) | (r << 16) |  (g << 8) | b)
 #define gray(g) rgb(g,g,g)
 #define gray_p(p) gray(static_cast<uint8_t>(g/100.0*255.0))
 
@@ -423,6 +424,15 @@ static const struct RGBData {
     { "ghostwhite", rgb(248, 248, 255) },
     { "gold", rgb(255, 215, 0) },
     { "goldenrod", rgb(218, 165, 32) },
+    { "gray10", gray(255*1/10) },
+    { "gray20", gray(255*2/10) },
+    { "gray30", gray(255*3/10) },
+    { "gray40", gray(255*4/10) },
+    { "gray50", gray(255*5/10) },
+    { "gray60", gray(255*6/10) },
+    { "gray70", gray(255*7/10) },
+    { "gray80", gray(255*8/10) },
+    { "gray90", gray(255*9/10) },
     { "gray", rgb(128, 128, 128) },
     { "green", rgb( 0, 128, 0) },
     { "greenyellow", rgb(173, 255, 47) },
@@ -510,7 +520,7 @@ static const struct RGBData {
     { "teal", rgb( 0, 128, 128) },
     { "thistle", rgb(216, 191, 216) },
     { "tomato", rgb(255, 99, 71) },
-    { "transparent", 0 },
+    { "transparent", rgba(0,0,0,0) },
     { "turquoise", rgb( 64, 224, 208) },
     { "violet", rgb(238, 130, 238) },
     { "wheat", rgb(245, 222, 179) },
@@ -540,6 +550,7 @@ QString jkqtp_rgbtostring(unsigned char r, unsigned char g, unsigned char b, uns
                 return rgbTbl[i].name;
             }
         }
+        if (r==g && r==b) return QString("grey%1").arg(static_cast<int>(static_cast<double>(r)/255.0*100.0));
         return QString("#%1%2%3").arg(static_cast<int>(r), 2,16,QLatin1Char('0')).arg(static_cast<int>(g), 2,16,QLatin1Char('0')).arg(static_cast<int>(b), 2,16,QLatin1Char('0'));
     }
     // if we reach this, we have an unnamed transparent color
@@ -562,7 +573,8 @@ QString jkqtp_QColor2String(QColor color, bool useSpecialTransparencySyntax) {
 }
 
 
-QColor jkqtp_lookupQColorName(const QString &color) {
+QColor jkqtp_lookupQColorName(const QString &color, bool namesOnly, bool *nameFound) {
+    if (nameFound) *nameFound=true;
    const QString col=color.toLower().trimmed();
    if (col=="window") return QGuiApplication::palette().color(QPalette::Window);
    if (col=="windowtext") return QGuiApplication::palette().color(QPalette::WindowText);
@@ -590,40 +602,203 @@ QColor jkqtp_lookupQColorName(const QString &color) {
    for (int i=0; i<rgbTblSize; i++) {
        if (col==rgbTbl[i].name) return QColor(rgbTbl[i].value);
    }
-   return QColor(color);
+   if (!namesOnly) return QColor(color);
+   if (nameFound) *nameFound=false;
+   return Qt::black;
 }
 
-QColor jkqtp_String2QColor(const QString &color)
+QColor jkqtp_String2QColor(QString color)
 {
+    //qDebug()<<"jkqtp_String2QColor: "<<color;
+    // simplify string an convert to lower-case
+    color=color.trimmed().toLower();
+    if (color.startsWith('"')||color.startsWith('\'')) color=color.mid(1);
+    if (color.endsWith('"')||color.endsWith('\'')) color=color.left(color.size()-1);
+    if (color.isEmpty()) return Qt::black;
+    // fish out all #RGB #RRGGBB, ... sequences, withoud added alpha/transparency-value after comma
+    if (color.startsWith("#") && !color.contains(",")) return QColor(color);
+    // check whether we have a names color
+    {
+        bool nameFound=false;
+        const QColor col=jkqtp_lookupQColorName(color, true, &nameFound);
+        if (nameFound) return col;
+    }
+
+    // declare som helper functors
+    static auto valUnitToInt=[](const QString& v, const QString& unit="", int intMax=255) {
+        if (v.isEmpty()) return -1;
+        if (unit=="%") {
+            return qBound<int>(0, QLocale::c().toDouble(v)/100.0*intMax, intMax);
+        } else if (unit=="deg") {
+            int vv=qBound<int>(0, QLocale::c().toDouble(v), intMax);;
+            if (vv<0) vv=vv+static_cast<int>(qCeil(static_cast<double>(-vv)/360.0)*360.0);
+            return vv;
+        }
+        return qBound<int>(0, QLocale::c().toDouble(v), intMax);
+    };
+    static auto valUnitToAlphaInt=[](const QString& v, const QString& unit="", int intMax=255) {
+        if (v.isEmpty()) return -1;
+        if (unit=="%") {
+            return intMax-qBound<int>(0, QLocale::c().toDouble(v)/100.0*intMax, intMax);
+        } else if (unit=="deg") {
+            int vv=qBound<int>(0, QLocale::c().toDouble(v), intMax);;
+            if (vv<0) vv=vv+static_cast<int>(qCeil(static_cast<double>(-vv)/360.0)*360.0);
+            return vv;
+        }
+        return qBound<int>(0, QLocale::c().toDouble(v), intMax);
+    };
+
+    // now we check for diverse special syntaxes
+    //      P: "color,NN%"     NN=TRANSPARENCY in percent
+    //     AP: "color,aNN\%"   NN=ALPHA in percent
+    //     NP: "color,[a]NN\%" NN=ALPHA 0..255
+    //   Frac: "grey25"
+    // ColMod: "rgb(R,G,B)", "hsl(H,S,V)" ... (CSS-Syntax)
 #if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
-    QRegularExpression rxP("(.+)\\s*,\\s*t?\\s*(\\d+\\.?\\d+)\\%");
-    QRegularExpression rxAP("(.+)\\s*,\\s*a\\s*(\\d+\\.?\\d+)\\%");
-    QRegularExpression rxNP("(.+)\\s*,\\s*a?\\s*([\\d]+)");
+    static QRegularExpression rxP("(.+)\\s*,\\s*t?\\s*(\\d+\\.?\\d+)\\%");
+    static QRegularExpression rxFrac("([a-zA-Z]{3,})(\\d{1,3})\\%?");
+    static QRegularExpression rxColMod("\\s*(rgb|hsl|hsv|rgba|gray|grey|red|green|blue)\\(\\s*(\\d+\\.?\\d*)(%|deg)?(?:\\s+|\\s*,\\s*|\\s\\/\\s)?(\\d+\\.?\\d*)?(%)?(?:\\s+|\\s*,\\s*|\\s\\/\\s)?(\\d+\\.?\\d*)?(%)?(?:\\s+|\\s*,\\s*|\\s*\\/\\s*)?(\\d+\\.?\\d*)?(%)?\\s*\\)\\s*");
+    static QRegularExpression rxAP("(.+)\\s*,\\s*a\\s*(\\d+\\.?\\d+)\\%");
+    static QRegularExpression rxNP("(.+)\\s*,\\s*a?\\s*([\\d]+)");
     const auto mP=rxP.match(color);
+
+    const auto mColMod=rxColMod.match(color);
+    if (mColMod.hasMatch()) {
+        QColor col(Qt::black);
+        const QString name=mColMod.captured(1);
+        const int v1=valUnitToInt(mColMod.captured(2), mColMod.captured(3));
+        const int h1=valUnitToInt(mColMod.captured(2), mColMod.captured(3), INT_MAX);
+        const int v2=valUnitToInt(mColMod.captured(4), mColMod.captured(5));
+        const int a2=valUnitToAlphaInt(mColMod.captured(4), mColMod.captured(5));
+        const int v3=valUnitToInt(mColMod.captured(6), mColMod.captured(7));
+        const int a4=valUnitToAlphaInt(mColMod.captured(8), mColMod.captured(9));
+        if (name=="gray"||name=="grey") {
+            if (v2<0) col.setRgb(v1,v1,v1);
+            else col.setRgb(v1,v1,v1,a2);
+            return col;
+        }
+        else if (name=="red") {
+            col.setRed(v1);
+            if (v2>=0) col.setAlpha(a2);
+            return col;
+        }
+        else if (name=="green") {
+            col.setGreen(v1);
+            if (v2>=0) col.setAlpha(a2);
+            return col;
+        }
+        else if (name=="blue") {
+            col.setBlue(v1);
+            if (v2>=0) col.setAlpha(a2);
+            return col;
+        }
+        else if (name=="rgb") {
+            if (a4<0) col.setRgb(v1,v2,v3);
+            else col.setRgb(v1,v2,v3,a2);
+            return col;
+        }
+        else if (name=="rgba") {
+            col.setRgb(v1,v2,v3,a2);
+            return col;
+        }
+        else if (name=="hsl") {
+            if (a4<0) col.setHsl(h1,v2,v3);
+            else col.setHsl(h1,v2,v3,a2);
+            return col;
+        }
+        else if (name=="hsv") {
+            if (a4<0) col.setHsv(h1,v2,v3);
+            else col.setHsv(h1,v2,v3,a2);
+            return col;
+        } else {
+            qDebug()<<"unrecognized CSS-color:'"<<color<<"'";
+        }
+    }
     if (mP.hasMatch()) {
         QColor col=jkqtp_lookupQColorName(mP.captured(1));
-        double a=QLocale::c().toDouble(mP.captured(2));
+        const double a=QLocale::c().toDouble(mP.captured(2));
         col.setAlphaF(1.0-a/100.0);
         return col;
     }
     const auto mAP=rxAP.match(color);
     if (mAP.hasMatch()) {
         QColor col=jkqtp_lookupQColorName(mAP.captured(1));
-        double a=QLocale::c().toDouble(mAP.captured(2));
+        const double a=QLocale::c().toDouble(mAP.captured(2));
         col.setAlphaF(a/100.0);
         return col;
     }
     const auto mNP=rxNP.match(color);
     if (mNP.hasMatch()) {
         QColor col=jkqtp_lookupQColorName(mNP.captured(1));
-        double a=QLocale::c().toInt(mNP.captured(2));
+        const double a=QLocale::c().toInt(mNP.captured(2));
         col.setAlphaF(a/255.0);
+        return col;
+    }
+    const auto mFrac=rxFrac.match(color);
+    if (mFrac.hasMatch()) {
+        QColor col=jkqtp_lookupQColorName(mFrac.captured(1));
+        const double a=static_cast<double>(QLocale::c().toInt(mFrac.captured(2)))/100.0;
+        if (mFrac.captured(1)=="grey"||mFrac.captured(1)=="gray") col.setRgbF(a,a,a);
+        else col.setRgbF(col.redF()*a, col.greenF()*a, col.blueF()*a);
         return col;
     }
 #else
     QRegExp rxP("(.+)\\s*,\\s*t?\\s*(\\d+\\.?\\d+)\\%");
     QRegExp rxAP("(.+)\\s*,\\s*a\\s*(\\d+\\.?\\d+)\\%");
     QRegExp rxNP("(.+)\\s*,\\s*a?\\s*([\\d]+)");
+    QRegExp rxFrac("([a-zA-Z]{3,})(\\d{1,3})\\%?");
+    QRegExp rxColMod("\\s*(rgb|hsl|hsv|rgba|gray|grey|red|green|blue)\\(\\s*(\\d+\\.?\\d*)(%|deg)?(?:\\s+|\\s*,\\s*|\\s\\/\\s)?(\\d+\\.?\\d*)?(%)?(?:\\s+|\\s*,\\s*|\\s\\/\\s)?(\\d+\\.?\\d*)?(%)?(?:\\s+|\\s*,\\s*|\\s*\\/\\s*)?(\\d+\\.?\\d*)?(%)?\\s*\\)\\s*");
+    if (rxColMod.exactMatch(color)) {
+        QColor col(Qt::black);
+        const QString name=rxColMod.cap(1);
+        const int v1=valPercToInt(rxColMod.cap(2), rxColMod.cap(3));
+        const int h1=valUnitToInt(mColMod.captured(2), mColMod.captured(3), INT_MAX);
+        const int v2=valPercToInt(rxColMod.cap(4), rxColMod.cap(5));
+        const int a2=valPercToAInt(rxColMod.cap(4), rxColMod.cap(5));
+        const int v3=valPercToInt(rxColMod.cap(6), rxColMod.cap(7));
+        const int a4=valPercToAInt(rxColMod.cap(8), rxColMod.cap(9));
+        if (name=="gray"||name=="grey") {
+            if (v2<0) col.setRgb(v1,v1,v1);
+            else col.setRgb(v1,v1,v1,a2);
+            return col;
+        }
+        else if (name=="red") {
+            col.setRed(v1);
+            if (v2>=0) col.setAlpha(a2);
+            return col;
+        }
+        else if (name=="green") {
+            col.setGreen(v1);
+            if (v2>=0) col.setAlpha(a2);
+            return col;
+        }
+        else if (name=="blue") {
+            col.setBlue(v1);
+            if (v2>=0) col.setAlpha(a2);
+            return col;
+        }
+        else if (name=="rgb") {
+            if (a4<0) col.setRgb(v1,v2,v3);
+            else col.setRgb(v1,v2,v3,a2);
+            return col;
+        }
+        else if (name=="rgba") {
+            col.setRgb(v1,v2,v3,a2);
+            return col;
+        }
+        else if (name=="hsl") {
+            if (a4<0) col.setHsl(h1,v2,v3);
+            else col.setHsl(h1,v2,v3,a2);
+            return col;
+        }
+        else if (name=="hsv") {
+            if (a4<0) col.setHsv(h1,v2,v3);
+            else col.setHsv(h1,v2,v3,a2);
+            return col;
+        } else {
+            qDebug()<<"unrecognized CSS-color:'"<<color<<"'";
+        }
+    }
     if (rxP.exactMatch(color)) {
         QColor col=jkqtp_lookupQColorName(rxP.cap(1));
         double a=QLocale::c().toDouble(rxP.cap(2));
@@ -640,6 +815,13 @@ QColor jkqtp_String2QColor(const QString &color)
         QColor col=jkqtp_lookupQColorName(rxNP.cap(1));
         double a=QLocale::c().toInt(rxNP.cap(2));
         col.setAlphaF(a/255.0);
+        return col;
+    }
+    if (rxFrac.exactMatch(color)) {
+        QColor col=jkqtp_lookupQColorName(rxFrac.cap(1));
+        const double a=static_cast<double>(QLocale::c().toInt(rxFrac.cap(2)))/100.0;
+        if (rxFrac.cap(1)=="grey"||rxFrac.cap(1)=="gray") col.setRgbF(a,a,a);
+        else col.setRgbF(col.redF()*a, col.greenF()*a, col.blueF()*a);
         return col;
     }
 #endif
