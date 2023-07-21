@@ -19,7 +19,6 @@
 
 
 #include "jkqtplotter/jkqtptools.h"
-#include "jkqtcommon/jkqtpenhancedpainter.h"
 #include <cmath>
 #include <QDebug>
 #include <QSet>
@@ -602,6 +601,10 @@ QString JKQTPColorDerivationMode::toString() const
     case ColorChangeMode::InvertColor:
         name="inverted_color";
         break;
+    default:
+        qDebug()<<"unknown colorModification="<<colorModification<<" in JKQTPColorDerivationMode::toString()";
+        name="same_color";
+        break;
     }
 
     // alpha=0: transparent, alpha=1: ppaque
@@ -617,6 +620,9 @@ QString JKQTPColorDerivationMode::toString() const
     case TransparencyChangeMode::LessTransparent:
         name+=",less_transparent("+QString::number(transparencyModficationStrength,'f',3)+")";
         break;
+    default:
+        qDebug()<<"unknown transparencyModification="<<transparencyModification<<" in JKQTPColorDerivationMode::toString()";
+        break;
     }
     return name;
 }
@@ -624,10 +630,11 @@ QString JKQTPColorDerivationMode::toString() const
 JKQTPColorDerivationMode JKQTPColorDerivationMode::fromString(const QString &mode)
 {
     const QString m=mode.trimmed().toLower();
+    //qDebug()<<"JKQTPColorDerivationMode::fromString("<<m<<")";
 
     // legacy strings
     if (m=="transparent" || m=="no_color" || m=="none") return JKQTPColorDerivationMode(JKQTPFFCMFullyTransparentColor);
-    if (m=="same"||m=="same_color") return JKQTPColorDerivationMode(JKQTPFFCMSameColor);
+    if (m=="same"||m=="same_color"||m.isEmpty()) return JKQTPColorDerivationMode(JKQTPFFCMSameColor);
     if (m=="black") return JKQTPColorDerivationMode(JKQTPFFCMBlack);
     if (m=="white") return JKQTPColorDerivationMode(JKQTPFFCMWhite);
     if (m=="grey25") return JKQTPColorDerivationMode(JKQTPFFCMGrey25);
@@ -660,9 +667,68 @@ JKQTPColorDerivationMode JKQTPColorDerivationMode::fromString(const QString &mod
     if (m=="same_non_transparent" || m=="non_transparent") return JKQTPColorDerivationMode(JKQTPFFCMSameNonTransparentColor);
 
     // cleanly analyze string
+    JKQTPColorDerivationMode res;
+    const QStringList parts=mode.split(',');
+#if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
+            static QRegularExpression rx1arg("(transparency|more_transparent|less_transparent|replace_color_not_transparency|replace_color_and_transparency|darker_color|lighter_color)\\((.*)\\)", QRegularExpression::CaseInsensitiveOption|QRegularExpression::InvertedGreedinessOption);
+#else
+            const QRegExp rx1arg=[](){ QRegExp rx4("(transparency|more_transparent|less_transparent|replace_color_not_transparency|replace_color_and_transparency|darker_color|lighter_color)\\((.*)\\)", Qt::CaseInsensitive);
+                                 rx4.setMinimal(false);
+                                 return rx4;
+            }();
+#endif
+    for (QString p: parts) {
+        p=p.removeIf([](QChar c) { return c.isSpace()||c=='\t';}).trimmed();
+        if (p=="same_color") res.colorModification=ColorChangeMode::SameColor;
+        else if (p=="invert"||p=="inverted"||p=="inverted_color") res.colorModification=ColorChangeMode::InvertColor;
+        else if (p=="invert"||p=="inverted"||p=="inverted_color") res.colorModification=ColorChangeMode::InvertColor;
+        else if (p=="more_transparent") { res.transparencyModification=TransparencyChangeMode::MoreTransparent; res.transparencyModficationStrength=0.3; }
+        else if (p=="non_transparent" || p=="opaque") { res.transparencyModification=TransparencyChangeMode::ReplaceTransparency; res.targetTransparency=0; }
+        else if (p=="transparent") { res.transparencyModification=TransparencyChangeMode::ReplaceTransparency; res.targetTransparency=1; }
+        else if (p=="less_transpatransparentrent") { res.transparencyModification=TransparencyChangeMode::LessTransparent; res.transparencyModficationStrength=0.3; }
+        else if (p=="same_transparency") { res.transparencyModification=TransparencyChangeMode::SameTransparency; }
+        else {
+#if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
+            const auto m1arg=rx1arg.match(p);
+            if (m1arg.hasMatch()) {
+                const QString instr=m1arg.captured(1).trimmed();
+                const QString arg1=m1arg.captured(2).trimmed();
+#else
+            if (rx1arg.indexIn(slt[i])>=0) {
+                const QString instr=rx1arg.cap(1).trimmed();
+                const QString arg1=rx1arg.cap(2).trimmed();
+#endif
+                bool arg1f_ok=false;
+                const float arg1f=arg1.toFloat(&arg1f_ok);
+                if (instr=="transparency" && arg1f_ok) {
+                    res.transparencyModification=TransparencyChangeMode::ReplaceTransparency;
+                    res.targetTransparency=arg1f;
+                } else if (instr=="more_transparent" && arg1f_ok) {
+                    res.transparencyModification=TransparencyChangeMode::MoreTransparent;
+                    res.transparencyModficationStrength=arg1f;
+                } else if (instr=="less_transparent" && arg1f_ok) {
+                    res.transparencyModification=TransparencyChangeMode::LessTransparent;
+                    res.transparencyModficationStrength=arg1f;
+                } else if (instr=="darker_color" && arg1f_ok) {
+                    res.colorModification=ColorChangeMode::DarkerColor;
+                    res.colorModificationStrength=arg1f;
+                } else if (instr=="lighter_color" && arg1f_ok) {
+                    res.colorModification=ColorChangeMode::LighterColor;
+                    res.colorModificationStrength=arg1f;
+                } else if (instr=="replace_color_not_transparency") {
+                    const QColor arg1c=jkqtp_String2QColor(arg1);
+                    res.colorModification=ColorChangeMode::ReplaceColorNotTransparency;
+                    res.targetColor=arg1c;
+                } else if (instr=="replace_color_and_transparency") {
+                    const QColor arg1c=jkqtp_String2QColor(arg1);
+                    res.colorModification=ColorChangeMode::ReplaceColorAndTransparency;
+                    res.targetColor=arg1c;
+                }
+            }
+        }
+    }
 
-
-    return JKQTPColorDerivationMode();
+    return res;
 }
 
 QColor JKQTPColorDerivationMode::apply(const QColor& basecolor) const
