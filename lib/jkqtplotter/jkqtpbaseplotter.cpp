@@ -506,6 +506,11 @@ void JKQTBasePlotter::setWidgetSize(int wid, int heigh) {
     redrawPlot();
 }
 
+void JKQTBasePlotter::setWidgetSize(QSize size)
+{
+    setWidgetSize(size.width(), size.height());
+}
+
 int JKQTBasePlotter::getWidth() {
     return widgetWidth;
 }

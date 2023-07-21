@@ -1535,6 +1535,13 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
          * \see \ref jkqtplotter_base_plotsize
          */
         void setWidgetSize(int width, int height);
+        /** \brief resize the plot
+         *
+         * \image html plot_widget_orientation.png
+         *
+         * \see \ref jkqtplotter_base_plotsize
+         */
+        void setWidgetSize(QSize size);
 
         /** \brief sets the width of the plot widget
          *
