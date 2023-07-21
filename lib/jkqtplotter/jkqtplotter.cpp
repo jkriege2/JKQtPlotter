@@ -31,7 +31,7 @@
 #include "jkqtplotter.h"
 
 
-int JKQTPlotter::jkqtp_RESIZE_DELAY = 100;
+std::atomic<int> JKQTPlotter::jkqtp_RESIZE_DELAY = 100;
 
 void JKQTPlotter::setGlobalResizeDelay(int delayMS)
 {
@@ -91,9 +91,7 @@ JKQTPlotter::JKQTPlotter(bool datastore_internal, QWidget* parent, JKQTPDatastor
     connect(plotter, SIGNAL(beforePlotScalingRecalculate()), this, SLOT(intBeforePlotScalingRecalculate()));
     connect(plotter, SIGNAL(zoomChangedLocally(double, double, double, double, JKQTBasePlotter*)), this, SLOT(pzoomChangedLocally(double, double, double, double, JKQTBasePlotter*)));
 
-    const qreal dpr = devicePixelRatioF();
-    image=QImage(width()*dpr, height()*dpr, QImage::Format_ARGB32);
-    image.setDevicePixelRatio(dpr);
+    image=createImageBuffer();
     oldImage=image;
 
     // enable mouse-tracking, so mouseMoved-Events can be caught
@@ -179,6 +177,35 @@ void JKQTPlotter::fixBasePlotterSettings()
     }
 }
 
+JKQTPlotter::InternalBufferImageType JKQTPlotter::createImageBuffer() const
+{
+    float scale=1.0;
+    auto img=InternalBufferImageType(getImageBufferSize(&scale));
+    img.setDevicePixelRatio(scale);
+    return img;
+}
+
+QSize JKQTPlotter::getImageBufferSize(float* scale_out) const
+{
+    float imagewidth=width();
+    float imageheight=height()-getPlotYOffset();
+    /*
+     * The following code is to avoid low quality blur pixmap created via
+     * QPainter, sample code is found in QAbstractItemViewPrivate::renderToPixmap method
+     */
+    qreal scale = 1.0;
+    const QWidget *window = this->window();
+    if (window) {
+        const QWindow *windowHandle = window->windowHandle();
+        if (windowHandle) {
+            scale = windowHandle->devicePixelRatio();
+        }
+    }
+    qDebug()<<"scale="<<scale<<", dprF="<<devicePixelRatioF()<<", dpr="<<devicePixelRatio()<<" widgetsize="<<QSize(width(),height())<<" img:deviceindependensize="<<QSize(imagewidth,imageheight)<<" img.size.raw="<<QSize(width()*scale, height()*scale);
+    if (scale_out) *scale_out=scale;
+    return QSize(imagewidth*scale, imageheight*scale);
+}
+
 void JKQTPlotter::updateToolbarActions()
 {
     toolbar->clear();
@@ -195,7 +222,7 @@ void JKQTPlotter::setToolbarIconSize(int value) {
     toolbar->setIconSize(s);
 }
 
-int JKQTPlotter::getToolbarIconSize() {
+int JKQTPlotter::getToolbarIconSize() const {
     return plotterStyle.toolbarIconSize;
 }
 
@@ -1121,7 +1148,7 @@ bool JKQTPlotter::event(QEvent* event) {
     return QWidget::event(event);
 }
 
-int JKQTPlotter::getPlotYOffset() {
+int JKQTPlotter::getPlotYOffset() const {
      int plotYOffset=0;
      if (plotterStyle.displayMousePosition) {
         plotYOffset=plotYOffset+QFontMetrics(font()).height()+2;
@@ -1315,14 +1342,12 @@ void JKQTPlotter::paintEvent(QPaintEvent *event){
             p->drawText(QPointF(plotter->getInternalPlotBorderLeft(), getPlotYOffset()-1), plotterStyle.mousePositionTemplate.arg(mousePosX).arg(mousePosY));
         }
 
-        int plotImageWidth=width();
-        int plotImageHeight=height();
+        const QSize plotImageSize=getImageBufferSize();
 
-        plotImageHeight=plotImageHeight-getPlotYOffset();
-        if (image.width()!=plotImageWidth || image.height()!=plotImageHeight)     {
-            p->drawImage(QRectF(0, getPlotYOffset(), plotImageWidth, plotImageHeight), image);
+        if (image.size() != plotImageSize)     {
+            p->drawPixmap(QRect(QPoint(0, getPlotYOffset()), plotImageSize), image);
         } else {
-            p->drawImage(QPoint(0, getPlotYOffset()), image);
+            p->drawPixmap(QPoint(0, getPlotYOffset()), image);
         }
     }
     delete p;
@@ -1355,23 +1380,8 @@ void JKQTPlotter::resizeEvent(QResizeEvent *event) {
 
 void JKQTPlotter::delayedResizeEvent()
 {
-    qreal dpr = devicePixelRatioF();
-    int plotImageWidth=width() * dpr;
-    int plotImageHeight=height() * dpr;
-
-    plotImageHeight=plotImageHeight-getPlotYOffset();
-    //qDebug()<<"resize: "<<plotImageWidth<<" x "<<plotImageHeight<<std::endl;
-    bool sizeChanged=false;
-    if (plotImageWidth != image.width() || plotImageHeight != image.height()) {
-
-        QImage newImage(QSize(plotImageWidth, plotImageHeight), QImage::Format_ARGB32);
-        newImage.setDevicePixelRatio(dpr);
-
-        image=newImage;
-        sizeChanged=true;
-    }
-
-    if (sizeChanged) {
+    if (getImageBufferSize() != image.size()) {
+        image=createImageBuffer();
         emit widgetResized(width(), height(), this);
         redrawPlot();
     }

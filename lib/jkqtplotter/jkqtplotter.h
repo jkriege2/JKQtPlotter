@@ -363,11 +363,11 @@ JKQTPLOTTER_LIB_EXPORT void initJKQTPlotterResources();
 class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
         Q_OBJECT
     public:
-        /** \brief sets the global resize delay in milliseconds \a delayMS. After calling this function all plots will use the new delay
+        /** \brief sets the global resize delay in milliseconds \a delayMS. After calling this function all plots will use the new delay. This function is thread-safe!
           *
           * \see jkqtp_RESIZE_DELAY, setGlobalResizeDelay(), getGlobalResizeDelay(), resizeTimer */
         static void setGlobalResizeDelay(int delayMS);
-        /** \brief returns the currently set global resize delay in milliseconds \a delayMS.
+        /** \brief returns the currently set global resize delay in milliseconds \a delayMS. This function is thread-safe!
           *
           * \see jkqtp_RESIZE_DELAY, setGlobalResizeDelay(), getGlobalResizeDelay(), resizeTimer */
         static int getGlobalResizeDelay();
@@ -397,10 +397,12 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
         void setToolbarIconSize(int value);
 
         /** \brief get the width/height of the icons in the toolbar in pt */
-        int getToolbarIconSize();
+        int getToolbarIconSize() const;
 
         /** \brief returns the class internally used for plotting */
-        JKQTBasePlotter* getPlotter() const { return plotter; }
+        JKQTBasePlotter* getPlotter()  { return plotter; }
+        /** \brief returns the class internally used for plotting */
+        const JKQTBasePlotter* getPlotter() const  { return plotter; }
         /** \brief returns the class internally used for plotting */
         const JKQTBasePlotter* getConstplotter() const { return const_cast<const JKQTBasePlotter*>(plotter); }
 
@@ -479,10 +481,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
         void saveSettings(QSettings& settings, const QString& group=QString("plots/")) const;
 
         /** \brief returns the minimum size of the widget */
-        QSize minimumSizeHint() const;
+        QSize minimumSizeHint() const override;
 
         /** \brief returns the size of the widget */
-        QSize sizeHint() const;
+        QSize sizeHint() const override;
 
         /** \brief returns \c true, if the JKQTPlotter::resizeTimer is currently running and the widget is waiting for the resize-event to finish
           *
@@ -617,7 +619,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
         /** \copydoc JKQTBasePlotter::setEmittingSignalsEnabled() */
         inline void setEmittingSignalsEnabled(bool sig) { plotter->setEmittingSignalsEnabled(sig); }
         /** \copydoc JKQTBasePlotter::isEmittingSignalsEnabled() */
-        inline bool isEmittingSignalsEnabled() { return plotter->isEmittingSignalsEnabled(); }
+        inline bool isEmittingSignalsEnabled() const { return plotter->isEmittingSignalsEnabled(); }
 
         /** \brief returns, whether automatic redrawing the plot is currently activated (e.g. you can deactivate this with setPlotUpdateEnabled() while performing major updates on the plot)
          *
@@ -1518,14 +1520,25 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
         /** \brief internal list of markers to be drawn by paintUserAction() */
         QList<MouseDragMarker> mouseDragMarkers;
 
+        typedef QPixmap InternalBufferImageType;
 
         /** \brief this stores the currently displayed plot */
-        QImage image;
+        InternalBufferImageType image;
 
         /** \brief this can be used when drawing a zoom rectangle to store an unchanged
          *         copy of the currently displayed image.
          */
-        QImage oldImage;
+        InternalBufferImageType oldImage;
+
+        /** \brief constructs a new image for the internal double-buffering
+         *  \internal
+         */
+        InternalBufferImageType createImageBuffer() const;
+
+        /** \brief returns the required size of an image for the internal double-buffering
+         *  \internal
+         */
+        QSize getImageBufferSize(float* scale_out=nullptr) const;
 
 
         /** \brief use this QMenu instance instead of the standard context menu of this widget
@@ -1547,7 +1560,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
          *
          * \see registerMouseDoubleClickAction(), deregisterMouseDoubleClickAction()
          */
-        void mouseDoubleClickEvent ( QMouseEvent * event );
+        void mouseDoubleClickEvent ( QMouseEvent * event ) override;
 
         /*! \brief react on key presses.
 
@@ -1555,7 +1568,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
               - ESC stops current zooming/drawing action
             .
          */
-        void keyReleaseEvent(QKeyEvent* event);
+        void keyReleaseEvent(QKeyEvent* event) override;
 
         /** \brief event handler for a mouse move
          *
@@ -1569,7 +1582,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
          * \see mousePosX, mousePosY
          * \see registerMouseWheelAction(), deregisterMouseWheelAction(), registeredMouseWheelActions
          */
-        void mouseMoveEvent ( QMouseEvent * event );
+        void mouseMoveEvent ( QMouseEvent * event ) override;
 
         /** \brief event handler for a mouse down event
          *
@@ -1578,13 +1591,13 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
          *
          * \see registerMouseDragAction(), deregisterMouseDragAction(), registeredJKQTPMouseDragActions
          */
-        void mousePressEvent ( QMouseEvent * event );
+        void mousePressEvent ( QMouseEvent * event ) override;
 
         /** \brief event handler for a mouse release event
          *
          * this finishes the action, started by mousePressEvent()
          */
-        void mouseReleaseEvent ( QMouseEvent * event );
+        void mouseReleaseEvent ( QMouseEvent * event ) override;
 
         /** \brief event handler for a turn of the mouse wheel
          *
@@ -1592,16 +1605,16 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
          *
          * \see registerMouseWheelAction(), deregisterMouseWheelAction(), registeredMouseWheelActions
          */
-        void wheelEvent(QWheelEvent * event);
+        void wheelEvent(QWheelEvent * event) override;
 
         /** \brief this simply paints the stored image to the widget's surface */
-        void paintEvent(QPaintEvent *event);
+        void paintEvent(QPaintEvent *event) override;
 
         /** \brief resizes the internal representation (image) of the graphs */
-        void resizeEvent(QResizeEvent *event);
+        void resizeEvent(QResizeEvent *event) override;
 
         /** \brief called, when the mouse leaves the widget, hides the toolbar (if visible) */
-        void leaveEvent ( QEvent * event );
+        void leaveEvent ( QEvent * event ) override;
 
 
         /** \brief update settings of the toolbar */
@@ -1614,7 +1627,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
         QPointer<JKQTPlotter> masterPlotterY;
 
         /** \brief calculate the y-axis shift of the plot, so there is space for the potentially displayed mouse position label */
-        int getPlotYOffset();
+        int getPlotYOffset() const;
 
         /** \brief x-position of the mouse during the last mouseMoveEvent() calls (in plot coordinates) */
         double mousePosX;
@@ -1677,7 +1690,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
          *
          * \see jkqtp_RESIZE_DELAY, setGlobalResizeDelay(), getGlobalResizeDelay(), resizeTimer
          */
-        static int jkqtp_RESIZE_DELAY;
+        static std::atomic<int> jkqtp_RESIZE_DELAY;
 
         /** \brief destroys the internal contextMenu and optionally creates a new one
          *
@@ -1718,7 +1731,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
         QAction* actMouseLeftAsPanView;
 
         virtual bool event(QEvent *event) override;
-protected slots:
+    protected slots:
         /** \brief while the window is resized, the plot is only redrawn after a restartable delay, implemented by this function and resizeTimer
         * \internal
         * \see resizeTimer

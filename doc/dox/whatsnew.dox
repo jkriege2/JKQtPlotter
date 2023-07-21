@@ -31,13 +31,17 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>FIXED: styling was not properly applied to coordinate axes of colorbars outside the plot</li>
     <li>FIXED issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/73">#73: Symbol thickness differs in actual plot and legend</a>, thanks to <a href="https://github.com/sim186">user:sim186</a></li>
     <li>FIXED plot-size calculation for filled graphs</li>
-    <li>FIXED issue #98: Signal JKQTPlotter::plotMouseWheelOperated() was called with wrong x/y-position-coordinates, thanks to <a href="https://github.com/fpalazzolo">user:fpalazzolo</a> for reporting this bug<li>
+    <li>FIXED issue #98: Signal JKQTPlotter::plotMouseWheelOperated() was called with wrong x/y-position-coordinates, thanks to <a href="https://github.com/fpalazzolo">user:fpalazzolo</a> for reporting this bug</li>
+    <li>FIXED: first symbol in symbols rotation was never used</li>
+    <li>FIXED: color palettes with few entries (i.e. "step"-palettes) were not applied correctly</li>
     <li>REORGANIZED: separated line-graphs from jkqtpscatter.h/.cpp into jkqtplines.h/.cpp</li>
     <li>IMPROVED: QT6-compatibility by removing deprecated warnings</li>
     <li>IMPROVED/REWORKED: reworked JKQTPErrorPlotstyle and error indicator plotting so error-inidcators can be specified as ORed combination of flags from JKQTPErrorPlotstyleElements, added additional error indicator styles (half-bars, arrows...)</li>
     <li>IMPROVED/REWORKED: reworked JKQTPCADrawMode and coordinate axis drawing so the draw mide can be specified as ORed combination of flags from JKQTPCADrawModeElements, added flags to draw arrows at the end of the axis line</li>
     <li>IMPROVED/REWORKED: coordinate axis code was refactored</li>
     <li>IMPROVED/REWORKED: zomm/pan by mouse-wheel: now there are modes that support zoomin AND panning by trakpad and mouse-wheel simultaneously! This can only be implemented using heuristics, due to the way that Qt handles track-pad events, but the current solution should at least improve the behaviour seen before. Mainly <code>jkqtpmwaZoomByWheelAndTrackpadPan</code> was introduced into <code>JKQTPMouseWheelActions</code> und is set as default mode: Here JKQTPlotter tries to distinguish the QWheelEvent s sent by an actual mouse wheel and a trackpad.</li>
+    <li>IMPROVED/REWORKED: better example graphs in \subpage JKQTPlotterStyling.</li>
+    <li>IMPROVED: documentation of styles: automatized doc image generation.</li>
     <li>NEW: JKQTPFilledCurveXGraph and JKQTPFilledCurveYGraph can now plot wiggle plots with different fill styles above and below the baseline (feature request <a href="https://github.com/jkriege2/JKQtPlotter/issues/68">#68 Wiggle Plots</a> from <a href="https://github.com/xichaoqiang">user:xichaoqiang</a>   </li>
     <li>NEW/BREAKING CHANGE: data tooltip can now also be shown when "just" moving the mouse (so far this was only possible when dragging the mouse with a button pressed). This also removes JKQtPlotter::getActMouseLeftAsToolTip() and adds JKQtPlotter::getActMouseMoveToolTip() instead! Also the default toolbars and context menus changed!</li>
     <li>NEW: new "seaborn" style for plots, see \ref jkqtpplotter_styling </li>
@@ -73,6 +77,8 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: you can provide a custom draw functor to barcharts to completely customize their look</li>
     <li>NEW: barcharts and impulse graphs may now draw their baseline as stylable line (default: off)</li>
     <li>NEW: secondary axes: added functionality to manage additional secondary axes in a JKQTPBasePlotter and to select which x-/y-Axis to use for drawing a JKQTPPlotElement</li>
+    <li>NEW: You can use additional syntax derived from CCS to define colors in style.ini.files (or when using  jkqtp_String2QColor() ): You can use full CSS-color syntax with functions <code>"rgb(R,G,B)"</code>, <code>"rgba(...)"</code>, <code>"hsl(...)"</code>, <code>"hsv(...)"</code>, <code>"gray(...)"</code>, <code>"green(...)"</code>, <code>"red(...)"</code>, <code>"blue(...)"</code>.</li>
+    <li>NEW: several new color palettes (especially stepped/categorial palettes), e.g. JKQTPMathImageColorPalette::JKQTPMathImageOkabeIto_STEP, JKQTPMathImageColorPalette::JKQTPMathImageIBMColorBlindSafe, JKQTPMathImageColorPalette::JKQTPMathImageIBMColorBlindSafe_STEP, ...</li>
   </ul></li>
   
   <li>JKQTMathText:<ul>
