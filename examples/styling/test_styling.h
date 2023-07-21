@@ -27,6 +27,8 @@ class TestStyling : public QMainWindow
         Ui::TestStyling *ui;
         void initPlot();
         QPointer<JKQTPlotter> plotExtra;
+        QVector<JKQTPlotter*> plots;
+        QVector<JKQTBasePlotter*> bplots;
 };
 
 #endif // TEST_STYLING_H

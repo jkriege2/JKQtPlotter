@@ -48,21 +48,25 @@ Here is a table with all available ready-made styles:
     <th>Screenshot
     <th>Symbols
   <tr>
-    <td><a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/blackandwhite.ini"><code>:/JKQTPlotter/styles/blackandwhite.ini</code></a>
-    <td>\image html blackandwhite.ini.png
-    <td>\image html blackandwhite.ini.symbols.png
+    <td><a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/default.ini"><code>:/JKQTPlotter/styles/default.ini</code></a>
+    <td>\image html default.ini.png
+    <td>\image html default.ini.symbols.png
   <tr>
     <td><a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/blueprint.ini"><code>:/JKQTPlotter/styles/blueprint.ini</code></a>
     <td>\image html blueprint.ini.png
     <td>\image html blueprint.ini.symbols.png
   <tr>
+    <td><a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/cyberpunk.ini"><code>:/JKQTPlotter/styles/cyberpunk.ini</code></a>
+    <td>\image html cyberpunk.ini.png
+    <td>\image html cyberpunk.ini.symbols.png
+  <tr>
     <td><a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/dark.ini"><code>:/JKQTPlotter/styles/dark.ini</code></a>
     <td>\image html dark.ini.png
     <td>\image html dark.ini.symbols.png
   <tr>
-    <td><a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/default.ini"><code>:/JKQTPlotter/styles/default.ini</code></a>
-    <td>\image html default.ini.png
-    <td>\image html default.ini.symbols.png
+    <td><a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/blackandwhite.ini"><code>:/JKQTPlotter/styles/blackandwhite.ini</code></a>
+    <td>\image html blackandwhite.ini.png
+    <td>\image html blackandwhite.ini.symbols.png
   <tr>
     <td><a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/legacy_default_style.ini"><code>:/JKQTPlotter/styles/legacy_default_style.ini</code></a>
     <td>\image html legacy_default_style.ini.png

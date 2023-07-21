@@ -10,12 +10,14 @@ message( STATUS "..   Building Tool ${EXAMPLE_NAME}" )
 set(SOURCES
     ${EXAMPLE_NAME}.cpp
 )
-set(HEADERS  )
+set(HEADERS
+    ${CMAKE_CURRENT_LIST_DIR}/../../examples/styling/build_test_graphs.h
+)
 set(RESOURCES  )
 set(UIS  )
 
 add_executable(${EXENAME} WIN32 ${SOURCES} ${HEADERS} ${RESOURCES} ${UIS})
-target_include_directories(${EXENAME} PRIVATE ../../lib)
+target_include_directories(${EXENAME} PRIVATE ../../lib ${CMAKE_CURRENT_LIST_DIR}/../../examples/styling/)
 if(JKQtPlotter_BUILD_STATIC_LIBS)
     target_link_libraries(${EXENAME} JKQTPlotterLib)
 elseif(JKQtPlotter_BUILD_SHARED_LIBS)

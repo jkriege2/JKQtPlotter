@@ -115,6 +115,14 @@ if(JKQtPlotter_BUILD_TOOLS)
     )
     add_dependencies(JKQTPlotter_GenerateDocImages JKQTPlotter_GenerateDocImages_listerrorindicators)
 
+    add_custom_target(JKQTPlotter_GenerateDocImages_listpalettes
+        COMMENT "Building JKQTPlotter Documentation Images: listpalettes"
+        COMMAND ${JKQTPlotter_GenerateDocImages_COMMAND} --listpalettes --iconsize=256 --outputdir="${JKQTPlotter_GenerateDocImages_OutputDir}/palettes/"
+        WORKING_DIRECTORY ${JKQtPlotter_QT_BINDIR}
+        DEPENDS jkqtplotter_doc_imagegenerator
+    )
+    add_dependencies(JKQTPlotter_GenerateDocImages JKQTPlotter_GenerateDocImages_listpalettes)
+
     add_custom_target(JKQTPlotter_GenerateDocImages_listaxisstyleprops
         COMMENT "Building JKQTPlotter Documentation Images: listaxisstyleprops"
         COMMAND ${JKQTPlotter_GenerateDocImages_COMMAND} --listaxisstyleprops --background=lightgrey --iconsize=50 --outputdir="${JKQTPlotter_GenerateDocImages_OutputDir}/axisstyle/"
@@ -125,11 +133,11 @@ if(JKQtPlotter_BUILD_TOOLS)
 
     add_custom_target(JKQTPlotter_GenerateDocImages_liststyles
         COMMENT "Building JKQTPlotter Documentation Images: liststyles"
-        COMMAND ${JKQTPlotter_GenerateDocImages_COMMAND} --liststyles --iconsize=500 --outputdir="${JKQTPlotter_GenerateDocImages_OutputDir}/styles/" --doctomodify="${JKQTPlotter_GenerateDocImages_dox}/jkqtplotter_styling.dox"
+        COMMAND ${JKQTPlotter_GenerateDocImages_COMMAND} --liststyles --iconsize=1200 --outputdir="${JKQTPlotter_GenerateDocImages_OutputDir}/styles/" --doctomodify="${JKQTPlotter_GenerateDocImages_dox}/jkqtplotter_styling.dox"
         WORKING_DIRECTORY ${JKQtPlotter_QT_BINDIR}
         DEPENDS jkqtplotter_doc_imagegenerator
     )
-    add_dependencies(JKQTPlotter_GenerateDocImages JKQTPlotter_GenerateDocImages_listaxisstyleprops)
+    add_dependencies(JKQTPlotter_GenerateDocImages JKQTPlotter_GenerateDocImages_liststyles)
 
 endif(JKQtPlotter_BUILD_TOOLS)
 
