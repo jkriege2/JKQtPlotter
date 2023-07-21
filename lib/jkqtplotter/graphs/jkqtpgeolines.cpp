@@ -245,6 +245,18 @@ JKQTPGeoArrow::JKQTPGeoArrow(JKQTPlotter* parent, double x1, double y1, double x
 {
 }
 
+JKQTPGeoArrow::JKQTPGeoArrow(JKQTBasePlotter *parent, const QPointF &p1, const QPointF &p2, JKQTPLineDecoratorStyle headStyle, JKQTPLineDecoratorStyle tailStyle):
+    JKQTPGeoArrow(parent, p1.x(),p1.y(),p2.x(),p2.y(), headStyle, tailStyle)
+{
+
+}
+
+JKQTPGeoArrow::JKQTPGeoArrow(JKQTPlotter *parent, const QPointF &p1, const QPointF &p2, JKQTPLineDecoratorStyle headStyle, JKQTPLineDecoratorStyle tailStyle):
+    JKQTPGeoArrow(parent->getPlotter(), p1.x(),p1.y(),p2.x(),p2.y(), headStyle, tailStyle)
+{
+
+}
+
 
 
 
