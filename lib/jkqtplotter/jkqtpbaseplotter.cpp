@@ -2242,8 +2242,8 @@ void JKQTBasePlotter::exportpreviewPaintRequested(JKQTPEnhancedPainter &painter,
     QApplication::processEvents();
     int oldWidgetWidth=widgetWidth;
     int oldWidgetHeight=widgetHeight;
-    widgetWidth=size.width();
-    widgetHeight=size.height();
+    //widgetWidth=size.width();
+    //widgetHeight=size.height();
 
     gridPaint(painter, size);
     widgetWidth=oldWidgetWidth;
@@ -4047,7 +4047,7 @@ QImage JKQTBasePlotter::grabPixelImage(QSize size, bool showPreview)
     //std::cout<<gridPrintingSize.width()<<", "<<gridPrintingSize.height()<<std::endl;
     printSizeX_Millimeter=gridPrintingSize.width();
     printSizeY_Millimeter=gridPrintingSize.height();
-    if (!showPreview) {
+    if (!showPreview && !gridPrinting) {
         printSizeX_Millimeter=widgetWidth;
         printSizeY_Millimeter=widgetHeight;
     }
