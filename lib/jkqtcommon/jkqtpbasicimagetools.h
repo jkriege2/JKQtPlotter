@@ -1038,7 +1038,7 @@ public:
     typedef QList<QPair<double, QRgb> > ListType;
     JKQTPPaletteList(): ListType() {};
     JKQTPPaletteList(qsizetype size): ListType(size) {};
-    JKQTPPaletteList(qsizetype size, QList::parameter_type value): ListType(size, value) {};
+    JKQTPPaletteList(qsizetype size, ListType::parameter_type value): ListType(size, value) {};
     template <class T>
     JKQTPPaletteList(std::initializer_list<QPair<double, QRgb>> args): ListType(args) {};
     template <typename InputIterator, QtPrivate::IfIsInputIterator<InputIterator> = true>
