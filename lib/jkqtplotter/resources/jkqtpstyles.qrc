@@ -10,5 +10,6 @@
         <file>styles/simple_gridandticks.ini</file>
         <file>styles/simple_arrowsaxes.ini</file>
         <file>styles/legacy_default_style.ini</file>
+        <file>styles/cyberpunk.ini</file>
     </qresource>
 </RCC>
