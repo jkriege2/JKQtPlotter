@@ -201,7 +201,7 @@ QSize JKQTPlotter::getImageBufferSize(float* scale_out) const
             scale = windowHandle->devicePixelRatio();
         }
     }
-    qDebug()<<"scale="<<scale<<", dprF="<<devicePixelRatioF()<<", dpr="<<devicePixelRatio()<<" widgetsize="<<QSize(width(),height())<<" img:deviceindependensize="<<QSize(imagewidth,imageheight)<<" img.size.raw="<<QSize(width()*scale, height()*scale);
+    //qDebug()<<"scale="<<scale<<", dprF="<<devicePixelRatioF()<<", dpr="<<devicePixelRatio()<<" widgetsize="<<QSize(width(),height())<<" img:deviceindependensize="<<QSize(imagewidth,imageheight)<<" img.size.raw="<<QSize(width()*scale, height()*scale);
     if (scale_out) *scale_out=scale;
     return QSize(imagewidth*scale, imageheight*scale);
 }
