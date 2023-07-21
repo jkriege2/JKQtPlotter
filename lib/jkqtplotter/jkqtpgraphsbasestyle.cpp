@@ -206,10 +206,13 @@ JKQTGraphsBaseStyle::JKQTGraphsBaseStyle(const JKQTBasePlotterStyle& parent):
     annotationStyle(parent),
     defaultPalette(JKQTPMathImageColorPalette::JKQTPMathImageMATLAB)
 {
-    defaultGraphColors<<QColor("red")<<QColor("green")<<QColor("blue")<<QColor("fuchsia")<<QColor("darkorange")
-                       <<QColor("navy")<<QColor("firebrick")<<QColor("darkgreen")<<QColor("darkmagenta")
-                       <<QColor("darkgreen")<<QColor("darkslateblue")<<QColor("maroon")<<QColor("indianred")
-                       <<QColor("darkolivegreen")<<QColor("mediumpurple")<<QColor("darkcyan");
+    // color scale by Okabe & Ito:
+    // M. Okabe and K. Ito, “How to make figures and presentations that are friendly to color blind people,” University of Tokyo, 2002.
+    // see also: https://yoshke.org/blog/colorblind-friendly-diagrams
+    //defaultGraphColors<<QColor(0xD55E00).darker(150)<<QColor(0x0072B2).darker(150)<<QColor(0xF0E442).darker(150)<<QColor(0x009E73).darker(150)
+    //                   <<QColor(0x56B4E9).darker(150)<<QColor(0xE69F00).darker(150)<<QColor(0,0,0)<<QColor(0xCC79A7).darker(150);
+    // a bit brighter than above
+    defaultGraphColors<<QColor(0xD50000)<<QColor(0x0039D6)<<QColor(0xFFDD00)<<QColor(0x00BB40)<<QColor(0xA84CE4)<<QColor(0xFD8600)<<QColor(0x0B069C);
     defaultGraphPenStyles<<Qt::SolidLine<<Qt::DashLine<<Qt::DotLine<<Qt::DashDotLine<<Qt::DashDotDotLine;
     for (int i=2; i<=JKQTPMaxSymbolID; i++) defaultGraphSymbols.push_back(static_cast<JKQTPGraphSymbols>(i));
     defaultGraphFillStyles<<Qt::SolidPattern;
