@@ -11,7 +11,7 @@ public:
     virtual ~JKQTPStylePlainTextEdit();
 protected:
     void contextMenuEvent(QContextMenuEvent *event) override;
-protected slots:
+protected Q_SLOTS:
     void changeCurrentLineValueTo(const QString &targetText);
     void addTransparencyToCurrentLineValue(const QString &targetText);
     void addMathFontSpecifier(const QString &newMath);

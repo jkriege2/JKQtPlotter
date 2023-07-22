@@ -170,7 +170,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarGraphBase: public JKQTPXYBaselineGraph, pub
         /** \copydoc m_baselineStyle */
         const JKQTPGraphLineStyleMixin& baselineStyle() const;
 
-    public slots:
+    public Q_SLOTS:
         /** \copydoc m_fillMode */
         void setFillMode(JKQTPBarGraphBase::FillMode mode);
 

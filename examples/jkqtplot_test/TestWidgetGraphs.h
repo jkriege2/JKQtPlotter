@@ -29,9 +29,9 @@ class TestWidgetGraphs : public QWidget
     public:
         explicit TestWidgetGraphs(QWidget *parent = nullptr);
         
-    signals:
+    Q_SIGNALS:
         
-    protected slots:
+    protected Q_SLOTS:
 
         void setErrorLineStyle(int index);
         void setESSymbol(int index);

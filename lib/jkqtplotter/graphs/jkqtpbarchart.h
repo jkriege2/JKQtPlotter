@@ -115,7 +115,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarVerticalGraph: public JKQTPBarGraphBase {
          */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
-    public slots:
+    public Q_SLOTS:
 
     protected:
 	
@@ -159,7 +159,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarVerticalErrorGraph: public JKQTPBarVertical
         /** \brief returns whether the errors of the bars are symmetric */
         bool getBarErrorSymmetric() const;
 
-    public slots:
+    public Q_SLOTS:
         /** \brief sets whether the errors of the bars are symmetric */
         void setBarErrorSymmetric(bool __value);
         /** \brief sets the error style of the bar */
@@ -256,7 +256,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarHorizontalGraph: public JKQTPBarGraphBase {
         virtual int getKeyColumn() const override;
         /** \brief returns the column used as "value" for the current graph (typically this call getXColumn(), but for horizontal graphs like filled curves or barcharts it may call getYColumn() ) */
         virtual int getValueColumn() const override;
-    public slots:
+    public Q_SLOTS:
         /** \brief sets the column used as "key" for the current graph (typically this call setXColumn(), but for horizontal graphs like filled curves or barcharts it may call setYColumn() ) */
         virtual void setKeyColumn(int __value) override;
         /** \brief sets the column used as "value" for the current graph (typically this call setXColumn(), but for horizontal graphs like filled curves or barcharts it may call setYColumn() ) */
@@ -306,7 +306,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarHorizontalErrorGraph: public JKQTPBarHorizo
         /** \brief returns whether the errors of the bars are symmetric */
         bool getBarErrorSymmetric() const;
 
-    public slots:
+    public Q_SLOTS:
         /** \brief sets whether the errors of the bars are symmetric */
         void setBarErrorSymmetric(bool __value);
         /** \brief sets the error style of the bar */

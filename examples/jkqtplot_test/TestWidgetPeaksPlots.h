@@ -26,9 +26,9 @@ class TestWidgetPeaksPlots : public QWidget
     public:
         explicit TestWidgetPeaksPlots(QWidget *parent = nullptr);
         
-    signals:
+    Q_SIGNALS:
         
-    public slots:
+    public Q_SLOTS:
         void setDrawBaseline(bool checked);
         void setYPeaks(bool checked);
 

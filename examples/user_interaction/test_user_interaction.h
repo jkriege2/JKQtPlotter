@@ -18,9 +18,9 @@ class TestUserInteraction : public QMainWindow
     public:
         explicit TestUserInteraction(QWidget *parent = nullptr);
 
-    signals:
+    Q_SIGNALS:
 
-    public slots:
+    public Q_SLOTS:
         void setMouseMoveAction(int index);
         void setLeftMouseAction(int index);
         void setLeftCtrlMouseAction(int index);

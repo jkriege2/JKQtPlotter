@@ -27,9 +27,9 @@ class TestWidgetEmptyPlot : public QWidget
     public:
         explicit TestWidgetEmptyPlot(QWidget *parent = 0);
         
-    signals:
+    Q_SIGNALS:
         
-    public slots:
+    public Q_SLOTS:
 
 
     protected:

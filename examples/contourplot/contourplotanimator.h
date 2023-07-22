@@ -14,7 +14,7 @@ class ContourPlotAnimator: public QObject {
         ContourPlotAnimator(JKQTPDatastore* ds_, JKQTPlotter* pplot_, int NX_, int NY_,double w_, double h_, double dx_, size_t cPotential_);
 
         void start(int delayMS);
-    protected slots:
+    protected Q_SLOTS:
         void step();
     protected:
         double angle;

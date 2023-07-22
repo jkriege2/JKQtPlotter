@@ -98,7 +98,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPRangeBase: public JKQTPPlotElement, public JKQ
         bool getFillRange() const;
         /** \copydoc plotRangeLines */
         bool getPlotRangeLines() const;
-    public slots:
+    public Q_SLOTS:
         /** \brief set the color of the graph (all lines and filling)  */
         virtual void setColor(QColor c);
 

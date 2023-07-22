@@ -45,9 +45,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPMathImageColorPaletteComboBox: public QComboBo
         JKQTPMathImageColorPalette getColorPalette() const;
         void setColorPalette(JKQTPMathImageColorPalette palette);
         void setCurrentColorPalette(JKQTPMathImageColorPalette palette);
-    signals:
+    Q_SIGNALS:
         void currentPaletteChanged(JKQTPMathImageColorPalette palette);
-    protected slots:
+    protected Q_SLOTS:
         void intIndexChanged(int i);
 
 };
@@ -113,11 +113,11 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPKeyPositionComboBox: public QComboBox {
 
         JKQTPKeyPosition getPosition() const;
         void setPosition(JKQTPKeyPosition position);
-    signals:
+    Q_SIGNALS:
         void currentPositionChanged(JKQTPKeyPosition pos);
     protected:
         void addPosition(JKQTPKeyPosition position, const QString& name, const QIcon& icon=QIcon());
-    protected slots:
+    protected Q_SLOTS:
         void posChanged(int index);
 };
 
@@ -135,11 +135,11 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPKeyLayoutComboBox: public QComboBox {
 
         JKQTPKeyLayout getKeyLayout() const;
         void setKeyLayout(JKQTPKeyLayout layout);
-    signals:
+    Q_SIGNALS:
         void currentLayoutChanged(JKQTPKeyLayout layout);
     protected:
         void addKeyLayout(JKQTPKeyLayout layout, const QString& name);
-    protected slots:
+    protected Q_SLOTS:
         void currentIndexChangedP(int index);
 };
 

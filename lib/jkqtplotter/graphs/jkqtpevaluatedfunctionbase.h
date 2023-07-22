@@ -122,7 +122,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPEvaluatedFunctionGraphBase: public JKQTPGraph 
         double getDataCleanupMaxAllowedAngleDegree() const;
         /** \copydoc displaySamplePoints */
         bool getDisplaySamplePoints() const;
-	public slots:
+	public Q_SLOTS:
         /** \copydoc minSamples */
         void setMinSamples(const unsigned int & __value);
         /** \copydoc maxRefinementDegree */
@@ -254,7 +254,7 @@ public:
 
     /** \copydoc JKQTPGraph::usesColumn() */
     virtual bool usesColumn(int c) const override;
-public slots:
+public Q_SLOTS:
     /** \brief sets the error params as a pointer to an internal COPY of the given vector (not the data of the vector, as then the size would be unknown!!!) */
     void setErrorParams(const QVector<double>& errorParams);
     /** \copydoc errorParameterColumn */

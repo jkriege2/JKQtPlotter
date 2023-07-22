@@ -83,10 +83,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPEnhancedTableView : public QTableView {
         /** \brief return a QAction that prints the table using the methode print() \see print() */
         inline QAction* getActionPrint() { return printAction; }
 #endif
-    signals:
+    Q_SIGNALS:
         /** \brief emitted when a key is pressed in the context of this widget */
         void keyPressed(int key, Qt::KeyboardModifiers modifiers, const QString& text);
-    public slots:
+    public Q_SLOTS:
         /** \brief copy the selected cells' contents to the clipboard, so it can be pasted into Excel */
         void copySelectionToExcel(int copyrole=Qt::EditRole, bool storeHead=true);
         /** \brief copy the selected cells' contents to the clipboard, so it can be pasted into Excel, without header */

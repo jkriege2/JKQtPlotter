@@ -83,6 +83,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: secondary axes: added functionality to manage additional secondary axes in a JKQTPBasePlotter and to select which x-/y-Axis to use for drawing a JKQTPPlotElement</li>
     <li>NEW: You can use additional syntax derived from CCS to define colors in style.ini.files (or when using  jkqtp_String2QColor() ): You can use full CSS-color syntax with functions <code>"rgb(R,G,B)"</code>, <code>"rgba(...)"</code>, <code>"hsl(...)"</code>, <code>"hsv(...)"</code>, <code>"gray(...)"</code>, <code>"green(...)"</code>, <code>"red(...)"</code>, <code>"blue(...)"</code>.</li>
     <li>NEW: several new color palettes (especially stepped/categorial palettes), e.g. JKQTPMathImageColorPalette::JKQTPMathImageOkabeIto_STEP, JKQTPMathImageColorPalette::JKQTPMathImageIBMColorBlindSafe, JKQTPMathImageColorPalette::JKQTPMathImageIBMColorBlindSafe_STEP, ...</li>
+    <li>NEW: Using Q_SIGNALS/Q_SLOTS instead of signals/slots MOC-keywords ... this allows for interoperability with other signals/slots frameworks, thanks to <a href="https://github.com/nickmontini">user:nickmontini</a> for the proposal</li>
   </ul></li>
   
   <li>JKQTMathText:<ul>

@@ -19,7 +19,7 @@ class TestMultiplotUI : public QDialog
         explicit TestMultiplotUI(JKQTPlotter* plotTop_, JKQTPlotter* plotBot_, JKQTPlotter* plotRight_, QGridLayout* plotLayout_, QWidget *parent = nullptr);
         ~TestMultiplotUI();
 
-    protected slots:
+    protected Q_SLOTS:
         void updatePlot();
     private:
         JKQTPlotter* plotTop;

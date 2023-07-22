@@ -624,7 +624,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         /** \brief sort the graphs, using functor \a compareLess to find whether a first graph shall be before (i.e. less) than a second graph. After completing the operation, the graph is updated */
         void sortGraphs(const std::function<bool(const JKQTPPlotElement* , const JKQTPPlotElement* )>& compareLess);
 
-    public slots:
+    public Q_SLOTS:
         /** \brief remove all plots
          *
          *  \param deleteGraphs if set \c true (default) the graph objects will also be deleted
@@ -1471,7 +1471,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
 
 
 
-    signals:
+    Q_SIGNALS:
         /** \brief signal: emitted whenever the user selects a new x-y zoom range (by mouse) */
         void zoomChangedLocally(double newxmin, double newxmax, double newymin, double newymax, JKQTBasePlotter* sender);
 
@@ -1517,7 +1517,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         void afterPrinting();
 
 
-    public slots:
+    public Q_SLOTS:
 
 
         /** \brief sets the width of the plot widget
@@ -2132,7 +2132,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         double getPaintMagnification() const;
 
 
-    protected slots:
+    protected Q_SLOTS:
         /** \brief internal function for print/export preview
          * \internal
          */

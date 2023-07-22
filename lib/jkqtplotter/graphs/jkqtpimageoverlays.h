@@ -118,7 +118,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPOverlayImage: public JKQTPImageBase {
         virtual void setTitle(const QString& title) override;
         /** \copydoc JKQTPImageBase::setParent() */
         virtual void setParent(JKQTBasePlotter* parent) override;
-    public slots:
+    public Q_SLOTS:
         /** \brief save the plotted image as a file with \a filename and format \a outputFormat */
         void saveImagePlotAsImage(const QString &filename=QString(""), const QByteArray &outputFormat=QByteArray());
         /** \brief copy the plotted image as an image into the clipboard */

@@ -95,7 +95,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBoxplotGraphBase: public JKQTPGraph, public JK
 
         /** \copydoc useRelativeBoxWidth */
         bool getUseRelativeBoxWidth() const;
-    public slots:
+    public Q_SLOTS:
         /** \brief set the color of the graph (colors all elements, based on the given color \a c ) */
         virtual void setColor(QColor c);
         /** \copydoc sortData */
@@ -228,7 +228,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBoxplotElementBase: public JKQTPPlotElement, p
 
         /** \copydoc medianConfidenceIntervalWidth */
         double getMedianConfidenceIntervalWidth() const;
-    public slots:
+    public Q_SLOTS:
         /** \brief set the color of the graph (colors all elements, based on the given color \a c ) */
         virtual void setColor(QColor c);
 

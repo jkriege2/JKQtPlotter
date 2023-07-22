@@ -83,7 +83,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPEvaluatedFunctionWithErrorsGraphDrawingBase: p
 
 
 
-    public slots:
+    public Q_SLOTS:
         /** \brief set color, fill color and error color at the same time  */
         void setColor(QColor c);
 

@@ -156,7 +156,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoSymbol: public JKQTPPlotAnnotationElement, 
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
         /** \brief returns the color to be used for the key label */
         virtual QColor getKeyLabelColor() const override;
-    public slots:
+    public Q_SLOTS:
         /** set the symbol color and symbol fill color  */
         virtual void setColor(QColor c);
 
@@ -265,7 +265,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoText: public JKQTPPlotAnnotationElement, pu
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
         /** \brief returns the color to be used for the key label */
         virtual QColor getKeyLabelColor() const override;
-	public slots:
+	public Q_SLOTS:
         /** \brief set line and fill color */
         virtual void setColor(QColor c) ;
 		

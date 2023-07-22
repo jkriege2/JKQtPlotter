@@ -86,7 +86,7 @@ public:
     /** \copydoc tmax */
     double getTMax() const;
 
-public slots:
+public Q_SLOTS:
     /** \copydoc tmin */
     void setTMin(double val);
     /** \copydoc tmax */

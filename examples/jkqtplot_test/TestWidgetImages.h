@@ -27,9 +27,9 @@ class TestWidgetImages : public QWidget
     public:
         explicit TestWidgetImages(QWidget *parent = 0);
         
-    signals:
+    Q_SIGNALS:
         
-    public slots:
+    public Q_SLOTS:
 
 
         void setImgPalette(int index);
