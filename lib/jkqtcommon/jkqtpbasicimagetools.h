@@ -1035,16 +1035,19 @@ inline QRgb jkqtp_qRgbOpaque(QRgb col) {
 class JKQTCOMMON_LIB_EXPORT JKQTPPaletteList: public QList<QPair<double, QRgb> >
 {
 public:
-    typedef QList<QPair<double, QRgb> > ListType;
-    JKQTPPaletteList(): ListType() {};
-    JKQTPPaletteList(qsizetype size): ListType(size) {};
-    JKQTPPaletteList(qsizetype size, ListType::parameter_type value): ListType(size, value) {};
+    typedef QPair<double, QRgb> parameter_type;
+    typedef QList<parameter_type> ListType;
+    inline JKQTPPaletteList(): ListType() {};
+#if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
+    inline JKQTPPaletteList(qsizetype size): ListType(size) {};
+    inline JKQTPPaletteList(qsizetype size, parameter_type value): ListType(size, value) {};
+#endif
     template <class T>
-    JKQTPPaletteList(std::initializer_list<QPair<double, QRgb>> args): ListType(args) {};
+    inline JKQTPPaletteList(std::initializer_list<QPair<double, QRgb>> args): ListType(args) {};
     template <typename InputIterator, QtPrivate::IfIsInputIterator<InputIterator> = true>
-    JKQTPPaletteList(InputIterator first, InputIterator last): ListType(first, last) {};
-    JKQTPPaletteList(ListType &&other):ListType(std::forward<ListType>(other)) {};
-    JKQTPPaletteList(const ListType &other):ListType(other) {};
+    inline JKQTPPaletteList(InputIterator first, InputIterator last): ListType(first, last) {};
+    inline JKQTPPaletteList(ListType &&other):ListType(std::forward<ListType>(other)) {};
+    inline JKQTPPaletteList(const ListType &other):ListType(other) {};
 
     using ListType::push_back;
     inline void push_back(QRgb rgb) {
@@ -1066,7 +1069,7 @@ public:
     }
 
     /** \brief returns the minimum value of the double-component */
-    double getMinPosition() const {
+    inline double getMinPosition() const {
         double mi=0;
         bool first=true;
         for (const auto& c: *this) {
@@ -1080,7 +1083,7 @@ public:
         return mi;
     }
     /** \brief returns the maximum value of the double-component */
-    double getMaxPosition() const {
+    inline double getMaxPosition() const {
         double ma=0;
         bool first=true;
         for (const auto& c: *this) {
@@ -1094,7 +1097,7 @@ public:
         return ma;
     }
     /** \brief returns the minimum and maximum value of the double-component, as well as the avg. increment between two such values */
-    void getMinMaxPosition(double& mi, double& ma, double* avgDelta=nullptr) const {
+    inline void getMinMaxPosition(double& mi, double& ma, double* avgDelta=nullptr) const {
         mi=ma=0;
         bool first=true;
         for (const auto& c: *this) {

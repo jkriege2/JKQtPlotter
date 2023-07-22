@@ -31,7 +31,7 @@
 #include "jkqtplotter.h"
 
 
-std::atomic<int> JKQTPlotter::jkqtp_RESIZE_DELAY = 100;
+std::atomic<int> JKQTPlotter::jkqtp_RESIZE_DELAY(100);
 
 void JKQTPlotter::setGlobalResizeDelay(int delayMS)
 {

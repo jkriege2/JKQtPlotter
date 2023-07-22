@@ -677,8 +677,13 @@ JKQTPColorDerivationMode JKQTPColorDerivationMode::fromString(const QString &mod
                                  return rx4;
             }();
 #endif
-    for (QString p: parts) {
-        p=p.removeIf([](QChar c) { return c.isSpace()||c=='\t';}).trimmed();
+    for (QString pin: parts) {
+        QString p;
+        p.reserve(pin.size());
+        for (auto c: pin) {
+            if (!c.isSpace()&&c!='\t') p.append(c);
+        }
+        p=p.trimmed();
         if (p=="same_color") res.colorModification=ColorChangeMode::SameColor;
         else if (p=="invert"||p=="inverted"||p=="inverted_color") res.colorModification=ColorChangeMode::InvertColor;
         else if (p=="invert"||p=="inverted"||p=="inverted_color") res.colorModification=ColorChangeMode::InvertColor;
@@ -694,7 +699,7 @@ JKQTPColorDerivationMode JKQTPColorDerivationMode::fromString(const QString &mod
                 const QString instr=m1arg.captured(1).trimmed();
                 const QString arg1=m1arg.captured(2).trimmed();
 #else
-            if (rx1arg.indexIn(slt[i])>=0) {
+            if (rx1arg.indexIn(p)>=0) {
                 const QString instr=rx1arg.cap(1).trimmed();
                 const QString arg1=rx1arg.cap(2).trimmed();
 #endif

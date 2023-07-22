@@ -752,12 +752,12 @@ QColor jkqtp_String2QColor(QString color)
     if (rxColMod.exactMatch(color)) {
         QColor col(Qt::black);
         const QString name=rxColMod.cap(1);
-        const int v1=valPercToInt(rxColMod.cap(2), rxColMod.cap(3));
-        const int h1=valUnitToInt(mColMod.captured(2), mColMod.captured(3), INT_MAX);
-        const int v2=valPercToInt(rxColMod.cap(4), rxColMod.cap(5));
-        const int a2=valPercToAInt(rxColMod.cap(4), rxColMod.cap(5));
-        const int v3=valPercToInt(rxColMod.cap(6), rxColMod.cap(7));
-        const int a4=valPercToAInt(rxColMod.cap(8), rxColMod.cap(9));
+        const int v1=valUnitToInt(rxColMod.cap(2), rxColMod.cap(3));
+        const int h1=valUnitToInt(rxColMod.cap(2), rxColMod.cap(3), INT_MAX);
+        const int v2=valUnitToInt(rxColMod.cap(4), rxColMod.cap(5));
+        const int a2=valUnitToAlphaInt(rxColMod.cap(4), rxColMod.cap(5));
+        const int v3=valUnitToInt(rxColMod.cap(6), rxColMod.cap(7));
+        const int a4=valUnitToAlphaInt(rxColMod.cap(8), rxColMod.cap(9));
         if (name=="gray"||name=="grey") {
             if (v2<0) col.setRgb(v1,v1,v1);
             else col.setRgb(v1,v1,v1,a2);

@@ -40,6 +40,7 @@
 #include <vector>
 #include <cmath>
 #include <iostream>
+#include <atomic>
 
 #include "jkqtplotter/jkqtpbaseplotter.h"
 #include "jkqtplotter/jkqtplotterstyle.h"
