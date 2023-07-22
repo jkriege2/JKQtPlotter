@@ -55,7 +55,14 @@ jobs:
           sudo apt-get update
           sudo apt-get update --fix-missing
           sudo apt-get install -f
-          sudo apt -y install build-essential cmake mesa-common-dev libglu1-mesa-dev libfontconfig1 qt6-base-dev
+          sudo apt -y install build-essential cmake mesa-common-dev libglu1-mesa-dev libfontconfig1
+          
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v2.13.2
+      with:
+        version: '6.1.0'
+        host: 'linux'
+        target: 'desktop'
 
     # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
     # If this step fails, then you should remove it and run the build manually (see below)
