@@ -58,9 +58,9 @@ jobs:
           sudo apt -y install build-essential cmake mesa-common-dev libglu1-mesa-dev libfontconfig1
           
     - name: Install Qt
-      uses: jurplel/install-qt-action@v2.13.2
+      uses: jurplel/install-qt-action@v3
       with:
-        version: '6.1.0'
+        version: '6.5.0'
         host: 'linux'
         target: 'desktop'
 
