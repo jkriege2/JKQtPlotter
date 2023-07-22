@@ -59,7 +59,7 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
 
     {
         const auto palette=JKQTPMathImageDefault_STEP;
-        const QString palN="jkqtplotterdefault_steps";
+        const QString palN="jkqtplotterdefault_step";
         const QString palNT=QObject::tr("steps: JKQTPlotter Default");
         lutstore[palette]=JKQTPImageTools::LUTData(palN, palNT);
         JKQTPPaletteList lst;
@@ -2528,7 +2528,7 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
         lutstore[palette].lut=JKQTPBuildColorPaletteLUTLinInterpolate(lst);
         {
             const auto palettei=JKQTPMathImageIBMColorBlindSafe_STEP;
-            lutstore[palettei]=JKQTPImageTools::LUTData("IBMColorBlindSafe_steps", QObject::tr("steps: IBMColorBlindSafe"));
+            lutstore[palettei]=JKQTPImageTools::LUTData("IBMColorBlindSafe_step", QObject::tr("steps: IBMColorBlindSafe"));
             lutstore[palettei].lut=JKQTPBuildColorPaletteLUTColorsOnlySteps(lst);
         }
     }
@@ -2547,11 +2547,20 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
         lst<<jkqtp_qRgbOpaque(0xD55E00);
         lst<<jkqtp_qRgbOpaque(0xCC79A7);
 
-        lutstore[JKQTPMathImageOkabeIto_STEP]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTColorsOnlySteps(lst), "OkabeIto_steps", QObject::tr("steps: Okabe-Ito"));
-        lutstore[JKQTPMathImageOkabeItoDarker_STEP]=JKQTPImageTools::LUTData(JKQTPModifyLUT(lutstore[JKQTPMathImageOkabeIto_STEP].lut, [](QRgb c) { return QColor(c).darker().rgb(); }), "OkabeItoDarker_steps", QObject::tr("steps: Okabe-Ito, darkened"));
-        lutstore[JKQTPMathImageOkabeItoLighter_STEP]=JKQTPImageTools::LUTData(JKQTPModifyLUT(lutstore[JKQTPMathImageOkabeIto_STEP].lut, [](QRgb c) { return QColor(c).lighter().rgb(); }), "OkabeItoLighter_steps", QObject::tr("steps: Okabe-Ito, lighter"));
+        lutstore[JKQTPMathImageOkabeIto_STEP]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTColorsOnlySteps(lst), "OkabeIto_step", QObject::tr("steps: Okabe-Ito"));
+        lutstore[JKQTPMathImageOkabeItoDarker_STEP]=JKQTPImageTools::LUTData(JKQTPModifyLUT(lutstore[JKQTPMathImageOkabeIto_STEP].lut, [](QRgb c) { return QColor(c).darker().rgb(); }), "OkabeItoDarker_step", QObject::tr("steps: Okabe-Ito, darkened"));
+        lutstore[JKQTPMathImageOkabeItoLighter_STEP]=JKQTPImageTools::LUTData(JKQTPModifyLUT(lutstore[JKQTPMathImageOkabeIto_STEP].lut, [](QRgb c) { return QColor(c).lighter().rgb(); }), "OkabeItoLighter_step", QObject::tr("steps: Okabe-Ito, lighter"));
 
     }
+
+    lutstore[JKQTPMathImageCubeHelixClassic]=JKQTPImageTools::LUTData(JKQTPCreateGreensCubeHelixLUT(0.5, -1.5, 1.0, LUTSIZE, 0.0, 1.0, 1.2, 1.2), "CubeHelixClassic", QObject::tr("CubeHelix Classic"));
+    lutstore[JKQTPMathImageCubeHelixClassic_STEP]=JKQTPImageTools::LUTData(JKQTPCreateGreensCubeHelixLUT(0.5, -1.5, 1.0, JKQTPImageTools::NDEFAULTSTEPS, 0.0, 1.0, 1.2, 1.2), "CubeHelixClassic_step", QObject::tr("steps: CubeHelix Classic"));
+    lutstore[JKQTPMathImageCubeHelix1]=JKQTPImageTools::LUTData(JKQTPCreateGreensCubeHelixLUT(1.5, -1.0, 1.0, LUTSIZE, 0.0, 1.0, 1.5, 1.5), "CubeHelix1", QObject::tr("CubeHelix 1"));
+    lutstore[JKQTPMathImageCubeHelix1_STEP]=JKQTPImageTools::LUTData(JKQTPCreateGreensCubeHelixLUT(1.5, -1.0, 1.0, JKQTPImageTools::NDEFAULTSTEPS, 0.0, 1.0, 1.5, 1.5), "CubeHelix1_step", QObject::tr("steps: CubeHelix 1"));
+    lutstore[JKQTPMathImageCubeHelix2]=JKQTPImageTools::LUTData(JKQTPCreateGreensCubeHelixLUT(2.0, -1.0, 1.0, LUTSIZE, 0.0, 1.0, 1.5, 1.5), "CubeHelix2", QObject::tr("CubeHelix 2"));
+    lutstore[JKQTPMathImageCubeHelix2_STEP]=JKQTPImageTools::LUTData(JKQTPCreateGreensCubeHelixLUT(2.0, -1.0, 1.0, JKQTPImageTools::NDEFAULTSTEPS, 0.0, 1.0, 1.5, 1.5), "CubeHelix2_step", QObject::tr("steps: CubeHelix 2"));
+    lutstore[JKQTPMathImageCubeHelix3]=JKQTPImageTools::LUTData(JKQTPCreateGreensCubeHelixLUT(2.0, -1.0, 1.0, LUTSIZE, 0.0, 1.0, 1.5, 1.5), "CubeHelix3", QObject::tr("CubeHelix 3"));
+    lutstore[JKQTPMathImageCubeHelix3_STEP]=JKQTPImageTools::LUTData(JKQTPCreateGreensCubeHelixLUT(2.0, 1.0, 1.0, JKQTPImageTools::NDEFAULTSTEPS, 0.0, 1.0, 3.0, 3.0), "CubeHelix3_step", QObject::tr("steps: CubeHelix 3"));
 
 
 
@@ -3200,4 +3209,23 @@ JKQTPImageTools::LUTType JKQTPModifyLUT(JKQTPImageTools::LUTType lut, std::funct
         c=f(c);
     }
     return lut;
+}
+
+JKQTPImageTools::LUTType JKQTPCreateGreensCubeHelixLUT(float start, float rotation, float gamma, int lutsize, float lambda_min, float lambda_max, float saturation_min, float saturation_max)
+{
+    JKQTPImageTools::LUTType res;
+    for (int i=0; i<lutsize; i++) {
+        const float lambda=lambda_min+static_cast<float>(i)/static_cast<float>(lutsize-1)*(lambda_max-lambda_min);
+        const float sat=saturation_min+static_cast<float>(i)/static_cast<float>(lutsize-1)*(saturation_max-saturation_min);
+        const float lambda_gamma=pow(lambda, gamma);
+        const float phi=2.0*JKQTPSTATISTICS_PI*(start/3.0+rotation*lambda);
+        const float cosphi=cos(phi);
+        const float sinphi=sin(phi);
+        const float amplitude=sat*lambda_gamma*(1-lambda_gamma)/2.0;
+        const float R=lambda_gamma + amplitude*(-0.14861*cosphi+1.78277*sinphi);
+        const float G=lambda_gamma + amplitude*(-0.29227*cosphi-0.90649*sinphi);
+        const float B=lambda_gamma + amplitude*(1.972940*cosphi+0.0*sinphi);
+        res<<QColor::fromRgbF(jkqtp_bounded<float>(0.0,R,1.0), jkqtp_bounded<float>(0.0,G,1.0), jkqtp_bounded<float>(0.0,B,1.0)).rgb();
+    }
+    return res;
 }

@@ -168,8 +168,40 @@ enum JKQTPMathImageColorPalette {
     JKQTPMathImageOkabeItoLighter_STEP, /*!< lighter version of JKQTPMathImageOkabeItoDarker_STEP \image html palettes/palette_OkabeItoLighter_step.png
                                 \note color-blind freindly!
                                 \see from https://yoshke.org/blog/colorblind-friendly-diagrams and M. Okabe and K. Ito, How to make figures and presentations that are friendly to color blind people, University of Tokyo, 2002. */
-    JKQTPMathImageDefault_STEP, /*!< \image html palettes/palette_jkqtplotterdefault_steps.png
-                                     This is the color cycle used to color graphs in JKQTPlotter#s default style.
+    JKQTPMathImageDefault_STEP, /*!< \image html palettes/palette_jkqtplotterdefault_step.png
+                                     This is the color cycle used to color graphs in JKQTPlotter's default style.
+                                 */
+    JKQTPMathImageCubeHelixClassic, /*!< \image html palettes/palette_CubeHelixClassic.png
+                                     This palette was created using Green's CubeHelix method with the parameters shown in the paper: start=0.5, rotation=-1.5, gamma=1.0, saturation=1.2.
+                                     \see JKQTPCreateGreensCubeHelixLUT()
+                                 */
+    JKQTPMathImageCubeHelixClassic_STEP, /*!< \image html palettes/palette_CubeHelixClassic_step.png
+                                     This palette was created using Green's CubeHelix method with the parameters shown in the paper: start=0.5, rotation=-1.5, gamma=1.0, saturation=1.2.
+                                     \see JKQTPCreateGreensCubeHelixLUT()
+                                 */
+    JKQTPMathImageCubeHelix1, /*!< \image html palettes/palette_CubeHelix1.png
+                                     This palette was created using Green's CubeHelix method with the parameters shown in the paper: start=0.5, rotation=-1.5, gamma=1.0, saturation=1.2.
+                                     \see JKQTPCreateGreensCubeHelixLUT()
+                                 */
+    JKQTPMathImageCubeHelix1_STEP, /*!< \image html palettes/palette_CubeHelix1_step.png
+                                     This palette was created using Green's CubeHelix method with the parameters shown in the paper: start=0.5, rotation=-1.5, gamma=1.0, saturation=1.2.
+                                     \see JKQTPCreateGreensCubeHelixLUT()
+                                 */
+    JKQTPMathImageCubeHelix2, /*!< \image html palettes/palette_CubeHelix2.png
+                                     This palette was created using Green's CubeHelix method with the parameters shown in the paper: start=0.5, rotation=-1.5, gamma=1.0, saturation=1.2.
+                                     \see JKQTPCreateGreensCubeHelixLUT()
+                                 */
+    JKQTPMathImageCubeHelix2_STEP, /*!< \image html palettes/palette_CubeHelix2_step.png
+                                     This palette was created using Green's CubeHelix method with the parameters shown in the paper: start=0.5, rotation=-1.5, gamma=1.0, saturation=1.2.
+                                     \see JKQTPCreateGreensCubeHelixLUT()
+                                 */
+    JKQTPMathImageCubeHelix3, /*!< \image html palettes/palette_CubeHelix3.png
+                                     This palette was created using Green's CubeHelix method with the parameters shown in the paper: start=0.5, rotation=-1.5, gamma=1.0, saturation=1.2.
+                                     \see JKQTPCreateGreensCubeHelixLUT()
+                                 */
+    JKQTPMathImageCubeHelix3_STEP, /*!< \image html palettes/palette_CubeHelix3_step.png
+                                     This palette was created using Green's CubeHelix method with the parameters shown in the paper: start=0.5, rotation=-1.5, gamma=1.0, saturation=1.2.
+                                     \see JKQTPCreateGreensCubeHelixLUT()
                                  */
 
 
@@ -1218,6 +1250,25 @@ JKQTPImageTools::LUTType JKQTCOMMON_LIB_EXPORT JKQTPModifyLUT(JKQTPImageTools::L
 
 */
 JKQTPImageTools::LUTType JKQTCOMMON_LIB_EXPORT JKQTPModifyLUT(JKQTPImageTools::LUTType lut, std::function<QRgb(QRgb)> f);
+/*! \brief create color palettes/LUTs by using Green's CubeHelix method
+    \ingroup jkqtplotter_imagelots_tools_LUTS
+
+    \see see Green, D. A. 2011. A colour scheme for the display of astronomical intensity images. Bull. Astr. Soc. India 39, 289-295.
+         and <a href="https://articles.adsabs.harvard.edu/pdf/2011BASI...39..289G">https://articles.adsabs.harvard.edu/pdf/2011BASI...39..289G</a>
+         and <a href="https://jiffyclub.github.io/palettable/cubehelix/">https://jiffyclub.github.io/palettable/cubehelix/</a>
+
+     \param start start-hue for the palette
+     \param rotation rotation paremeter for the palette
+     \param gamma optional gamma parameter
+     \param lutsize number of entries in LUT
+     \param lambda_min start value for the \f$ \lambda \f$ in Green's formula
+     \param lambda_max end value for the \f$ \lambda \f$ in Green's formula
+     \param saturation_min start value for the saturation in Green's formula, usually the saturation is a single value, then \a saturation_min == \a saturation_max!
+     \param saturation_max end value for the saturation in Green's formula, usually the saturation is a single value, then \a saturation_min == \a saturation_max!
+     \return the lut generated from the provided parameters with \a lutsize entries
+
+*/
+JKQTPImageTools::LUTType JKQTCOMMON_LIB_EXPORT JKQTPCreateGreensCubeHelixLUT(float start, float rotation, float gamma=1.0, int lutsize=JKQTPImageTools::LUTSIZE, float lambda_min=0.0, float lambda_max=1.0, float saturation_min=1.2, float saturation_max=1.2);
 
 
 /** \brief describes how to modify a rendered image with a second data array \see ModifierModeToString(), StringToModifierMode(), JKQTPImageModifierModeComboBox

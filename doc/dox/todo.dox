@@ -13,7 +13,6 @@ This page lists several todos and wishes for future version of JKQTPlotter
     <li>graphic elements: make coordinate systems selectable for all: x/y-axis, 0..1/0..1, topleft/topright... </li>
     <li>graphs: add OHLC charts (financial, see https://en.m.wikipedia.org/wiki/Open-high-low-close_chart)</li>
     <li>graphs: add candlestick charts (financial, see https://en.m.wikipedia.org/wiki/Candlestick_chart)</li>
-    <li>graphs: add color palettes from Green's HELIX method, see <a href="https://articles.adsabs.harvard.edu/pdf/2011BASI...39..289G">https://articles.adsabs.harvard.edu/pdf/2011BASI...39..289G</a>, also see <a href="https://jiffyclub.github.io/palettable/cubehelix/">https://jiffyclub.github.io/palettable/cubehelix/</a></li>
     <li>graphs: barchart/ranges chart with (x,y1,y2) or (x1,x2,y)</li>
     <li>graphs: gant-chart as simplified vector field with (x,y1,y2) or (x1,x2,y), or (x,y,dx), (x,y,dy) ... different head/tail style</li>
     <li>graphs: matrix plots with boxes, labels, ...</li>
@@ -31,9 +30,7 @@ This page lists several todos and wishes for future version of JKQTPlotter
     <li>plot: rework layouting of legends: there are some inconsistencies/too large gaps ...</li>
     <li>sryling: better styling/more styling options for data-tooltips</li>
     <li>styling: color gradients as fill-styles in style-INIs</li>
-    <li>styling: style.ini with glowing colors in dark background ("techno" or "cyberpunk")</li>
     <li>user interactions: dialog(s) to edit x/y-range</li>
-    <li>user interactions: support for touch/pad gestures</li>
     <li></li>
   </ul></li>
   <li>JKQTMathText:<ul>
