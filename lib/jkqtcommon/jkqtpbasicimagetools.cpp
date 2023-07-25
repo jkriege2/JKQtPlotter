@@ -64,8 +64,8 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
         lutstore[palette]=JKQTPImageTools::LUTData(palN, palNT);
         JKQTPPaletteList lst;
         lst<<jkqtp_qRgbOpaque(0xd50000);
-        lst<<jkqtp_qRgbOpaque(0xffdd00);
         lst<<jkqtp_qRgbOpaque(0x0039d6);
+        lst<<jkqtp_qRgbOpaque(0xffdd00);
         lst<<jkqtp_qRgbOpaque(0x00bb40);
         lst<<jkqtp_qRgbOpaque(0xa84ce4);
         lst<<jkqtp_qRgbOpaque(0xfd8600);
@@ -2815,6 +2815,18 @@ QString JKQTPImageTools::JKQTPMathImageColorPalette2String(JKQTPMathImageColorPa
     }
 }
 
+QString JKQTPImageTools::JKQTPMathImageColorPalette2StringHumanReadable(JKQTPMathImageColorPalette p)
+{
+    std::lock_guard<std::mutex> lock(JKQTPImageTools::lutMutex);
+    auto it=JKQTPImageTools::global_jkqtpimagetools_lutstore.find(p);
+    if (it==JKQTPImageTools::global_jkqtpimagetools_lutstore.end()) return QString::number(static_cast<int>(p));
+    else {
+        if (it.value().nameT.size()>0) return it.value().nameT;
+        else if (it.value().name.size()>0) return it.value().name;
+        else return QString::number(static_cast<int>(p));
+    }
+}
+
 JKQTPMathImageColorPalette JKQTPImageTools::String2JKQTPMathImageColorPalette(const QString &p)
 {
     std::lock_guard<std::mutex> lock(JKQTPImageTools::lutMutex);
@@ -2848,7 +2860,7 @@ JKQTPMathImageColorPalette JKQTPImageTools::String2JKQTPMathImageColorPalette(co
 
 
 
-const JKQTPImageTools::LUTType& JKQTPImageTools::getLUTforPalette(QMap<int, JKQTPImageTools::LUTData >& lutstore, JKQTPMathImageColorPalette palette) {
+const JKQTPImageTools::LUTType& JKQTPImageTools::getLUTforPalette(const QMap<int, JKQTPImageTools::LUTData >& lutstore, JKQTPMathImageColorPalette palette) {
     static JKQTPImageTools::LUTType empty(JKQTPImageTools::LUTSIZE, 0);
 
     auto it=lutstore.find(static_cast<int>(palette));
@@ -2917,6 +2929,20 @@ QIcon JKQTPImageTools::GetPaletteIcon(int i)  {
 
 QIcon JKQTPImageTools::GetPaletteIcon(JKQTPMathImageColorPalette palette)  {
     return JKQTPImageTools::GetPaletteIcon(static_cast<int>(palette));
+}
+
+const JKQTPImageTools::LUTType &JKQTPImageTools::getLUTforPalette(JKQTPMathImageColorPalette palette)
+{
+    return getLUTforPalette(JKQTPImageTools::global_jkqtpimagetools_lutstore, palette);
+}
+
+QVector<QColor> JKQTPImageTools::getColorsforPalette(JKQTPMathImageColorPalette palette)
+{
+    QVector<QColor> cols;
+    const auto& lut=JKQTPImageTools::getLUTforPalette(palette);
+    cols.reserve(lut.size());
+    std::for_each(lut.begin(), lut.end(), [&](QRgb c) { cols.push_back(c); });
+    return cols;
 }
 
 

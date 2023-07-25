@@ -507,10 +507,14 @@ struct JKQTPImageTools {
         /** \brief return a list of all globally available LUTs, machine-readable form  */
         static QStringList JKQTCOMMON_LIB_EXPORT getPredefinedPalettesMachineReadable();
 
-        /*! \brief convert the palette \a p to a string
+        /*! \brief convert the palette \a p to a machine-readable string
             \see JKQTPImageTools::String2JKQTPMathImageColorPalette()
          */
         static JKQTCOMMON_LIB_EXPORT QString JKQTPMathImageColorPalette2String(JKQTPMathImageColorPalette p);
+        /*! \brief convert the palette \a p to a human-readable (localized) string
+            \see JKQTPImageTools::String2JKQTPMathImageColorPalette()
+         */
+        static JKQTCOMMON_LIB_EXPORT QString JKQTPMathImageColorPalette2StringHumanReadable(JKQTPMathImageColorPalette p);
 
         /*! \brief convert the palette name \a p to JKQTPMathImageColorPalette (compatible with JKQTPImageTools::String2JKQTPMathImageColorPalette() )
             \see JKQTPImageTools::JKQTPMathImageColorPalette2String()
@@ -535,6 +539,10 @@ struct JKQTPImageTools {
 
         /** \brief generates a QIcon for a specific JKQTPMathImageColorPalette  */
         static QIcon JKQTCOMMON_LIB_EXPORT GetPaletteIcon(JKQTPMathImageColorPalette palette) ;
+        /*! \brief create a LUT for a given JKQTPMathImageColorPalette, stored it in \a lutstore and return it */
+        static const LUTType& JKQTCOMMON_LIB_EXPORT getLUTforPalette(JKQTPMathImageColorPalette palette);
+        /*! \brief return the list of QColors making up a JKQTPMathImageColorPalette, stored it in \a lutstore and return it */
+        static QVector<QColor> JKQTCOMMON_LIB_EXPORT getColorsforPalette(JKQTPMathImageColorPalette palette);
 
     private:
 
@@ -577,7 +585,7 @@ struct JKQTPImageTools {
         /*! \brief create a LUT for a given JKQTPMathImageColorPalette, store it in \a lutstore and return it
             \internal
             */
-        static JKQTCOMMON_LIB_EXPORT const LUTType& getLUTforPalette(QMap<int, LUTData > &lutcache, JKQTPMathImageColorPalette palette);
+        static JKQTCOMMON_LIB_EXPORT const LUTType& getLUTforPalette(const QMap<int, LUTData > &lutcache, JKQTPMathImageColorPalette palette);
 
 };
 

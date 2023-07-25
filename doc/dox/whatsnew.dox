@@ -25,6 +25,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>BREAKING/REWORKED: Updated default styling of graphs. They are now more modern!</li>
     <li>BREAKING/REWORKED: Implement better/more access functions to the graphs (inlcuding sorting, moving up/down, appending/prepending, graphs-iterators ...), solves issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/97">#97</a>, thanks to <a href="https://github.com/sim186">user:sim186</a> for bringing this up</li>
     <li>BREAKING/FIXED: fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/96">#96</a>: JKQTPlotter::saveAsPixelImage() does not add a border around the image any longer (can be reacivated by a new optional function parameter), thanks to <a href="https://github.com/nmielcarek">user:nmielcarek</a> for reporting</li>
+    <li>FIXED/BREAKING: graph symbols were not properly applied when reading styles (in fact they were shuffled under some circumstances)</li>
     <li>FIXED issue described in <a href="https://github.com/jkriege2/JKQtPlotter/pull/62">#62: Fix custom labels draw, because giving exactly two label-strings did not display all of them</a>, thanks to <a href="https://github.com/FalsinSoft">user:FalsinSoft</a></li>
     <li>FIXED issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/70">#70: Typo in jkqtplotter/CMakeLists.txt</a>, thanks to <a href="https://github.com/tedlinlab">user:tedlinlab</a></li>
     <li>FIXED issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/80">#80: Bug with multiple inheritance with Q_GDAGET with CLANG</a>, thanks to <a href="https://github.com/igormironchik">user:igormironchik</a>, caused by <a href="https://bugreports.qt.io/browse/QTBUG-104874">QTBUG-104874</a></li>
@@ -85,6 +86,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: several new color palettes (especially stepped/categorial palettes), e.g. JKQTPMathImageColorPalette::JKQTPMathImageOkabeIto_STEP, JKQTPMathImageColorPalette::JKQTPMathImageIBMColorBlindSafe, JKQTPMathImageColorPalette::JKQTPMathImageIBMColorBlindSafe_STEP, ...</li>
     <li>NEW: add color palettes from Green's HELIX method, see <a href="https://arxiv.org/abs/1108.5083">https://arxiv.org/abs/1108.5083</a>, also see <a href="https://jiffyclub.github.io/palettable/cubehelix/">https://jiffyclub.github.io/palettable/cubehelix/</a>, see JKQTPCreateGreensCubeHelixLUT() and e.g. JKQTPMathImageCubeHelixClassic, JKQTPMathImageCubeHelix1, ...</li>
     <li>NEW: Using Q_SIGNALS/Q_SLOTS instead of signals/slots MOC-keywords ... this allows for interoperability with other signals/slots frameworks, thanks to <a href="https://github.com/nickmontini">user:nickmontini</a> for the proposal</li>
+    <li>NEW: you can use any (preferably stepped/categorial) JKQTPMathImageColorPalette as default graph colors list in a style.ini file, by setting <tt>auto_styles/use_color_from_palette=PALETTE_NAME</tt></li>
   </ul></li>
   
   <li>JKQTMathText:<ul>

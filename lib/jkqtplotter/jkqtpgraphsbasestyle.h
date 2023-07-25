@@ -360,6 +360,15 @@ class JKQTPLOTTER_LIB_EXPORT JKQTGraphsBaseStyle {
         /** \brief Qt::BrushStyle used to automatically style different graphs differently */
         QVector<Qt::BrushStyle> defaultGraphFillStyles;
 
+        /** \brief standard color palette for the default style */
+        static QVector<QColor> getDefaultGraphColors();
+        /** \brief a list of Qt::PenStyles used to automatically style different graphs differently in the default style */
+        static QVector<Qt::PenStyle> getDefaultGraphPenStyles();
+        /** \brief list of JKQTPGraphSymbols used to automatically assign to different graphs in the default style */
+        static QVector<JKQTPGraphSymbols> getDefaultGraphSymbols();
+        /** \brief list of Qt::BrushStyle used to automatically style different graphs differently in the default style */
+        static QVector<Qt::BrushStyle> getDefaultGraphFillStyles();
+
 };
 
 #endif // JKQTPGRAPHSBASESTYLE_H
