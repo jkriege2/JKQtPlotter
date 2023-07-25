@@ -270,6 +270,7 @@ inline void buildLineSymbolSampler(JKQTBasePlotter* plotExtra, JKQTBasePlotter* 
     plotExtra->setBackgroundColor(baseplot->getBackgroundColor());
     plotExtra->setExportBackgroundColor(baseplot->getExportBackgroundColor());
     plotExtra->setPlotBackgroundColor(baseplot->getPlotBackgroundColor());
+    plotExtra->setPlotLabelColor(baseplot->getPlotLabelColor());
     plotExtra->getXAxis()->setDrawMode1(JKQTPCADMnone);
     plotExtra->getXAxis()->setDrawMode2(JKQTPCADMnone);
     plotExtra->getYAxis()->setDrawMode1(JKQTPCADMnone);

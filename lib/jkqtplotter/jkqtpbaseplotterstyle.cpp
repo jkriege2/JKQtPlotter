@@ -52,6 +52,7 @@ void JKQTBasePlotterStyle::loadSettings(const QSettings &settings, const QString
     debugTextBoxLineWidth=settings.value(group+"debug_textbox_linewidth", defaultStyle.debugTextBoxLineWidth).toDouble();
     plotLabelFontName=settings.value(group+"plot_label_font_name", defaultStyle.plotLabelFontName).toString();
     plotLabelFontSize=settings.value(group+"plot_label_font_size", defaultStyle.plotLabelFontSize).toDouble();
+    plotLabelColor=jkqtp_String2QColor(settings.value(group+"plot_label_color", jkqtp_QColor2String(defaultStyle.plotLabelColor)).toString());
     widgetBackgroundBrush=QBrush(jkqtp_String2QColor(settings.value(group+"widget_background_color", jkqtp_QColor2String(defaultStyle.widgetBackgroundBrush.color())).toString()));
     exportBackgroundBrush=QBrush(jkqtp_String2QColor(settings.value(group+"widget_background_color_for_export", jkqtp_QColor2String(defaultStyle.exportBackgroundBrush.color())).toString()));
     plotBackgroundBrush=QBrush(jkqtp_String2QColor(settings.value(group+"plot_background_color", jkqtp_QColor2String(defaultStyle.plotBackgroundBrush.color())).toString()));
@@ -99,6 +100,7 @@ void JKQTBasePlotterStyle::saveSettings(QSettings &settings, const QString &grou
     settings.setValue(group+"text_default_font_name", defaultFontName);
     settings.setValue(group+"plot_label_font_name", plotLabelFontName);
     settings.setValue(group+"plot_label_font_size", plotLabelFontSize);
+    settings.setValue(group+"plot_label_color", jkqtp_QColor2String(plotLabelColor));
     settings.setValue(group+"plot_frame_visible", plotFrameVisible);
     settings.setValue(group+"plot_frame_color", jkqtp_QColor2String(plotFrameColor));
     settings.setValue(group+"plot_frame_width", plotFrameWidth);

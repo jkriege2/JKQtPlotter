@@ -139,6 +139,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotterStyle {
         QString plotLabelFontName;
         /** \brief the plot label font size [pt] */
         double plotLabelFontSize;
+        /** \brief the plot label color */
+        QColor plotLabelColor;
         /** \brief specifies whether to use antialiasing for plotting the coordinate system */
         bool useAntiAliasingForSystem;
         /** \brief specifies whether to use antialiasing when drawing any text

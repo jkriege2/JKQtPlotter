@@ -1372,6 +1372,7 @@ void JKQTBasePlotter::drawPlot(JKQTPEnhancedPainter& painter) {
     if (!plotLabel.isEmpty()) {
         mathText.setFontSize(plotterStyle.plotLabelFontSize*fontSizeMultiplier);
         mathText.setFontSpecial(plotterStyle.plotLabelFontName);
+        mathText.setFontColor(plotterStyle.plotLabelColor);
 
         mathText.parse(plotLabel);
         double a=0,d=0,so=0,w=0;
@@ -2996,6 +2997,19 @@ void JKQTBasePlotter::setPlotLabelFontSize(double __value)
 double JKQTBasePlotter::getPlotLabelFontSize() const
 {
     return this->plotterStyle.plotLabelFontSize;
+}
+
+void JKQTBasePlotter::setPlotLabelColor(QColor __value)
+{
+    if (this->plotterStyle.plotLabelColor != __value) {
+        this->plotterStyle.plotLabelColor = __value;
+        redrawPlot();
+    }
+}
+
+QColor JKQTBasePlotter::getPlotLabelColor() const
+{
+    return this->plotterStyle.plotLabelColor;
 }
 
 void JKQTBasePlotter::setplotLabelFontName(const QString &__value)
