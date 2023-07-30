@@ -165,7 +165,6 @@ enum JKQTPMathImageColorPalette {
     JKQTPMathImageTol_STEP, /*!< \image html palettes/palette_Tol_step.png
                                   \note color-blind friendly!
                                   \see https://thenode.biologists.com/data-visualization-with-flying-colors/research/*/
-    JKQTPMathImageTolBright_STEP=JKQTPMathImageTol_STEP,
     JKQTPMathImageTolMuted_STEP, /*!< \image html palettes/palette_TolMuted_step.png
                                         \note color-blind friendly!
                                         \see from https://yoshke.org/blog/colorblind-friendly-diagrams and Tol, B. Points of view: Color blindness. Nat Methods 8, 441 (2011). https://doi.org/10.1038/nmeth.1618 */
@@ -217,7 +216,7 @@ enum JKQTPMathImageColorPalette {
                                      \see JKQTPCreateGreensCubeHelixLUT()
                                  */
     JKQTPMathImageMatlab_STEP, /*!< \image html palettes/palette_Matlab_step.png */
-    JKQTPMathImageMatlabLegacy_STEP, /*!< \image html palettes/palette_Matlab_step.png */
+    JKQTPMathImageMatlabLegacy_STEP, /*!< \image html palettes/palette_MatlabLegacy_step.png */
     JKQTPMathImageMatplotlib_STEP, /*!< \image html palettes/palette_Matplotlib_step.png */
     JKQTPMathImageSeaborn_STEP, /*!< \image html palettes/palette_Seaborn_step.png */
     JKQTPMathImageSeabornPastel_STEP, /*!< \image html palettes/palette_SeabornPastel_step.png */
@@ -1132,10 +1131,21 @@ public:
     inline void push_back(double pos, QColor color) {
         push_back(ListType::value_type(pos, color.rgb()));
     }
-    using ListType::operator<<;
     inline JKQTPPaletteList& operator<<(QColor color) {
         push_back(color);
         return *this;
+    }
+    /** \brief reverse colors */
+    inline void reverse() {
+        const auto ma=getMaxPosition();
+        for (auto& c: *this) {
+            c.first=ma-c.first;
+        }
+        sort();
+    }
+    /** \brief sorty by position */
+    inline void sort() {
+        std::sort(begin(), end(), [](const parameter_type& a, const parameter_type& b) { return a.first<b.first;});
     }
 
     /** \brief returns the minimum value of the double-component */

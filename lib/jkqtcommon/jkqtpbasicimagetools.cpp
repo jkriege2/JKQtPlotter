@@ -979,7 +979,7 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
         }
 
 
-        std::reverse(lst.begin(), lst.end());
+        lst.reverse();
 
 
         {
