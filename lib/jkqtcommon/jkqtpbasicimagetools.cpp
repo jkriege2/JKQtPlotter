@@ -63,13 +63,13 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
         const QString palNT=QObject::tr("steps: JKQTPlotter Default");
         lutstore[palette]=JKQTPImageTools::LUTData(palN, palNT);
         JKQTPPaletteList lst;
-        lst<<jkqtp_qRgbOpaque(0xd50000);
-        lst<<jkqtp_qRgbOpaque(0x0039d6);
-        lst<<jkqtp_qRgbOpaque(0xffdd00);
-        lst<<jkqtp_qRgbOpaque(0x00bb40);
-        lst<<jkqtp_qRgbOpaque(0xa84ce4);
-        lst<<jkqtp_qRgbOpaque(0xfd8600);
-        lst<<jkqtp_qRgbOpaque(0x0b069c);
+        lst<<jkqtp_qRgbOpaque(0xBB0000);
+        lst<<jkqtp_qRgbOpaque(0x00C11D);
+        lst<<jkqtp_qRgbOpaque(0x0039D6);
+        lst<<jkqtp_qRgbOpaque(0xFFDD00);
+        lst<<jkqtp_qRgbOpaque(0xC05FFF);
+        lst<<jkqtp_qRgbOpaque(0xDE7704);
+        lst<<jkqtp_qRgbOpaque(0x03039A);
 
 
         lutstore[palette].lut=JKQTPBuildColorPaletteLUTColorsOnlySteps(lst);
@@ -2552,6 +2552,91 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
         lutstore[JKQTPMathImageOkabeItoLighter_STEP]=JKQTPImageTools::LUTData(JKQTPModifyLUT(lutstore[JKQTPMathImageOkabeIto_STEP].lut, [](QRgb c) { return QColor(c).lighter().rgb(); }), "OkabeItoLighter_step", QObject::tr("steps: Okabe-Ito, lighter"));
 
     }
+    {
+        JKQTPPaletteList lst;
+        lst<<jkqtp_qRgbOpaque(0xEE6677);
+        lst<<jkqtp_qRgbOpaque(0x228833);
+        lst<<jkqtp_qRgbOpaque(0x4477AA);
+        lst<<jkqtp_qRgbOpaque(0x009E73);
+        lst<<jkqtp_qRgbOpaque(0xCCBB44);
+        lst<<jkqtp_qRgbOpaque(0x66CCEE);
+        lst<<jkqtp_qRgbOpaque(0xAA3377);
+        lst<<jkqtp_qRgbOpaque(0xBBBBBB);
+
+        lutstore[JKQTPMathImageTol_STEP]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTColorsOnlySteps(lst), "Tol_step", QObject::tr("steps: Tol"));
+
+    }
+    {
+        JKQTPPaletteList lst;
+        lst<<jkqtp_qRgbOpaque(0xBBCC33);
+        lst<<jkqtp_qRgbOpaque(0xAAAA00);
+        lst<<jkqtp_qRgbOpaque(0x77AADD);
+        lst<<jkqtp_qRgbOpaque(0xEE8866);
+        lst<<jkqtp_qRgbOpaque(0xEEDD88);
+        lst<<jkqtp_qRgbOpaque(0xFFAABB);
+        lst<<jkqtp_qRgbOpaque(0x99DDFF);
+        lst<<jkqtp_qRgbOpaque(0x44BB99);
+        lst<<jkqtp_qRgbOpaque(0xDDDDDD);
+
+        lutstore[JKQTPMathImageTolLight_STEP]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTColorsOnlySteps(lst), "TolLight_step", QObject::tr("steps: Tol, Light"));
+
+    }
+    {
+        JKQTPPaletteList lst;
+        lst<<jkqtp_qRgbOpaque(0x88CCEE);
+        lst<<jkqtp_qRgbOpaque(0x44AA99);
+        lst<<jkqtp_qRgbOpaque(0x117733);
+        lst<<jkqtp_qRgbOpaque(0x332288);
+        lst<<jkqtp_qRgbOpaque(0xDDCC77);
+        lst<<jkqtp_qRgbOpaque(0x999933);
+        lst<<jkqtp_qRgbOpaque(0xCC6677);
+        lst<<jkqtp_qRgbOpaque(0x882255);
+        lst<<jkqtp_qRgbOpaque(0xAA4499);
+        lst<<jkqtp_qRgbOpaque(0xDDDDDD);
+
+        lutstore[JKQTPMathImageTolMuted_STEP]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTColorsOnlySteps(lst), "TolMuted_step", QObject::tr("steps: Tol, Muted"));
+
+    }
+    {
+        JKQTPPaletteList lst;
+        lst<<QColor::fromRgbF(0.0000, 0.4470, 0.7410);
+        lst<<QColor::fromRgbF(0.8500, 0.3250, 0.0980);
+        lst<<QColor::fromRgbF(0.9290, 0.6940, 0.1250);
+        lst<<QColor::fromRgbF(0.4940, 0.1840, 0.5560);
+        lst<<QColor::fromRgbF(0.4660, 0.6740, 0.1880);
+        lst<<QColor::fromRgbF(0.3010, 0.7450, 0.9330);
+        lst<<QColor::fromRgbF(0.6350, 0.0780, 0.1840);
+
+        lutstore[JKQTPMathImageMatlab_STEP]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTColorsOnlySteps(lst), "Matlab_step", QObject::tr("steps: Matlab"));
+
+    }
+    {
+        JKQTPPaletteList lst;
+        lst<<jkqtp_qRgbOpaque(0x1F77B4);
+        lst<<jkqtp_qRgbOpaque(0xFF7F0E);
+        lst<<jkqtp_qRgbOpaque(0x2CA02C);
+        lst<<jkqtp_qRgbOpaque(0xD62728);
+        lst<<jkqtp_qRgbOpaque(0x9467BD);
+        lst<<jkqtp_qRgbOpaque(0x8C564B);
+        lst<<jkqtp_qRgbOpaque(0xE377C2);
+        lst<<jkqtp_qRgbOpaque(0x7F7F7F);
+        lst<<jkqtp_qRgbOpaque(0xBCBD22);
+        lst<<jkqtp_qRgbOpaque(0x17BECF);
+        lutstore[JKQTPMathImageMatplotlib_STEP]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTColorsOnlySteps(lst), "Matplotlib_step", QObject::tr("steps: Matplotlib"));
+    }
+    {
+        JKQTPPaletteList lst;
+        lst<<QColor::fromRgbF(0, 0, 1);
+        lst<<QColor::fromRgbF(0, 0.5, 0);
+        lst<<QColor::fromRgbF(1, 0, 0);
+        lst<<QColor::fromRgbF(0, 0.75, 0.75);
+        lst<<QColor::fromRgbF(0.75, 0, 0.75);
+        lst<<QColor::fromRgbF(0.75, 0.75, 0);
+        lst<<QColor::fromRgbF(0.25, 0.25, 0.25);
+
+        lutstore[JKQTPMathImageMatlabLegacy_STEP]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTColorsOnlySteps(lst), "MatlabLegacy_step", QObject::tr("steps: Matlab, Legacy"));
+
+    }
 
     lutstore[JKQTPMathImageCubeHelixClassic]=JKQTPImageTools::LUTData(JKQTPCreateGreensCubeHelixLUT(0.5, -1.5, 1.0, LUTSIZE, 0.0, 1.0, 1.2, 1.2), "CubeHelixClassic", QObject::tr("CubeHelix Classic"));
     lutstore[JKQTPMathImageCubeHelixClassic_STEP]=JKQTPImageTools::LUTData(JKQTPCreateGreensCubeHelixLUT(0.5, -1.5, 1.0, JKQTPImageTools::NDEFAULTSTEPS, 0.0, 1.0, 1.2, 1.2), "CubeHelixClassic_step", QObject::tr("steps: CubeHelix Classic"));
@@ -2561,7 +2646,8 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
     lutstore[JKQTPMathImageCubeHelix2_STEP]=JKQTPImageTools::LUTData(JKQTPCreateGreensCubeHelixLUT(2.0, -1.0, 1.0, JKQTPImageTools::NDEFAULTSTEPS, 0.0, 1.0, 1.5, 1.5), "CubeHelix2_step", QObject::tr("steps: CubeHelix 2"));
     lutstore[JKQTPMathImageCubeHelix3]=JKQTPImageTools::LUTData(JKQTPCreateGreensCubeHelixLUT(2.0, -1.0, 1.0, LUTSIZE, 0.0, 1.0, 1.5, 1.5), "CubeHelix3", QObject::tr("CubeHelix 3"));
     lutstore[JKQTPMathImageCubeHelix3_STEP]=JKQTPImageTools::LUTData(JKQTPCreateGreensCubeHelixLUT(2.0, 1.0, 1.0, JKQTPImageTools::NDEFAULTSTEPS, 0.0, 1.0, 3.0, 3.0), "CubeHelix3_step", QObject::tr("steps: CubeHelix 3"));
-
+    lutstore[JKQTPMathImageSeaborn_STEP]=JKQTPImageTools::LUTData("#4C72B0, #DD8452, #55A868, #C44E52, #8172B3, #937860, #DA8BC3, #8C8C8C, #CCB974, #64B5CD", "Seaborn_step", QObject::tr("steps: Seaborn"));
+    lutstore[JKQTPMathImageSeabornPastel_STEP]=JKQTPImageTools::LUTData("#A1C9F4, #FFB482, #8DE5A1, #FF9F9B, #D0BBFF, #DEBB9B, #FAB0E4, #CFCFCF, #FFFEA3, #B9F2F0", "SeabornPastel_step", QObject::tr("steps: Seaborn Pastel"));
 
 
     return lutstore;
@@ -3129,6 +3215,15 @@ JKQTPImageTools::LUTData::LUTData(const JKQTPImageTools::LUTType &_lut, const QS
     lut(_lut), name(_name), nameT(_nameT)
 {
 
+}
+
+JKQTPImageTools::LUTData::LUTData(const QString &_lut, const QString &_name, const QString &_nameT):
+    lut(), name(_name), nameT(_nameT)
+{
+    const auto lt=_lut.simplified().split(",");
+    for (const auto& l: lt) {
+        lut<<jkqtp_String2QColor(l).rgb();
+    }
 }
 
 JKQTPImageTools::LUTData::LUTData(const QString &_name, const QString &_nameT):

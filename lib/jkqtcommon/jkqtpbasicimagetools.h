@@ -154,22 +154,35 @@ enum JKQTPMathImageColorPalette {
     JKQTPMathImageINVERTED_Plasma_STEP, /*!< \image html palettes/palette_invplasma_step.png
                                 \see from https://github.com/BIDS/colormap/blob/master/colormaps.py */
     JKQTPMathImageIBMColorBlindSafe, /*!< \image html palettes/palette_IBMColorBlindSafe.png
-                                \note color-blind freindly!
+                                \note color-blind friendly!
                                 \see from https://lospec.com/palette-list/ibm-color-blind-safe */
     JKQTPMathImageIBMColorBlindSafe_STEP, /*!< \image html palettes/palette_IBMColorBlindSafe_step.png
-                                \note color-blind freindly!
+                                \note color-blind friendly!
                                 \see from https://lospec.com/palette-list/ibm-color-blind-safe */
     JKQTPMathImageOkabeIto_STEP, /*!< \image html palettes/palette_OkabeIto_step.png
-                                \note color-blind freindly!
+                                \note color-blind friendly!
                                 \see from https://yoshke.org/blog/colorblind-friendly-diagrams and M. Okabe and K. Ito, How to make figures and presentations that are friendly to color blind people, University of Tokyo, 2002. */
-    JKQTPMathImageOkabeItoDarker_STEP, /*!< darker version of JKQTPMathImageOkabeItoDarker_STEP \image html palettes/palette_OkabeItoDarker_step.png
-                                \note color-blind freindly!
-                                \see from https://yoshke.org/blog/colorblind-friendly-diagrams and M. Okabe and K. Ito, How to make figures and presentations that are friendly to color blind people, University of Tokyo, 2002. */
-    JKQTPMathImageOkabeItoLighter_STEP, /*!< lighter version of JKQTPMathImageOkabeItoDarker_STEP \image html palettes/palette_OkabeItoLighter_step.png
-                                \note color-blind freindly!
-                                \see from https://yoshke.org/blog/colorblind-friendly-diagrams and M. Okabe and K. Ito, How to make figures and presentations that are friendly to color blind people, University of Tokyo, 2002. */
+    JKQTPMathImageTol_STEP, /*!< \image html palettes/palette_Tol_step.png
+                                  \note color-blind friendly!
+                                  \see https://thenode.biologists.com/data-visualization-with-flying-colors/research/*/
+    JKQTPMathImageTolBright_STEP=JKQTPMathImageTol_STEP,
+    JKQTPMathImageTolMuted_STEP, /*!< \image html palettes/palette_TolMuted_step.png
+                                        \note color-blind friendly!
+                                        \see from https://yoshke.org/blog/colorblind-friendly-diagrams and Tol, B. Points of view: Color blindness. Nat Methods 8, 441 (2011). https://doi.org/10.1038/nmeth.1618 */
+    JKQTPMathImageTolLight_STEP, /*!< \image html palettes/palette_TolLight_step.png
+                                         \note color-blind friendly!
+                                         \see https://davidmathlogic.com/colorblind/#%23000000-%23E69F00-%2356B4E9-%23009E73-%23F0E442-%230072B2-%23D55E00-%23CC79A7 and Tol, B. Points of view: Color blindness. Nat Methods 8, 441 (2011). https://doi.org/10.1038/nmeth.1618 */
+    JKQTPMathImageOkabeItoDarker_STEP, /*!< \image html palettes/palette_OkabeItoDarker_step.png
+                                            darker version of JKQTPMathImageOkabeIto_STEP
+                                            \note color-blind friendly!
+                                            \see from https://yoshke.org/blog/colorblind-friendly-diagrams and M. Okabe and K. Ito, How to make figures and presentations that are friendly to color blind people, University of Tokyo, 2002. */
+    JKQTPMathImageOkabeItoLighter_STEP, /*!< \image html palettes/palette_OkabeItoLighter_step.png
+                                             lighter version of JKQTPMathImageOkabeIto_STEP
+                                             \note color-blind friendly!
+                                             \see https://davidmathlogic.com/colorblind/#%23000000-%23E69F00-%2356B4E9-%23009E73-%23F0E442-%230072B2-%23D55E00-%23CC79A7 and M. Okabe and K. Ito, How to make figures and presentations that are friendly to color blind people, University of Tokyo, 2002. */
     JKQTPMathImageDefault_STEP, /*!< \image html palettes/palette_jkqtplotterdefault_step.png
                                      This is the color cycle used to color graphs in JKQTPlotter's default style.
+                                     \see https://davidmathlogic.com/colorblind/#%23BB0000-%2300C11D-%230039D6-%23FFDD00-%23C05FFF-%23DE7704-%2303039A
                                  */
     JKQTPMathImageCubeHelixClassic, /*!< \image html palettes/palette_CubeHelixClassic.png
                                      This palette was created using Green's CubeHelix method with the parameters shown in the paper: start=0.5, rotation=-1.5, gamma=1.0, saturation=1.2.
@@ -203,6 +216,11 @@ enum JKQTPMathImageColorPalette {
                                      This palette was created using Green's CubeHelix method with the parameters shown in the paper: start=0.5, rotation=-1.5, gamma=1.0, saturation=1.2.
                                      \see JKQTPCreateGreensCubeHelixLUT()
                                  */
+    JKQTPMathImageMatlab_STEP, /*!< \image html palettes/palette_Matlab_step.png */
+    JKQTPMathImageMatlabLegacy_STEP, /*!< \image html palettes/palette_Matlab_step.png */
+    JKQTPMathImageMatplotlib_STEP, /*!< \image html palettes/palette_Matplotlib_step.png */
+    JKQTPMathImageSeaborn_STEP, /*!< \image html palettes/palette_Seaborn_step.png */
+    JKQTPMathImageSeabornPastel_STEP, /*!< \image html palettes/palette_SeabornPastel_step.png */
 
 
     JKQTPMathImageBLUEMAGENTAYELLOW, /*!< \image html palettes/palette_BlMaYe.png */
@@ -552,6 +570,7 @@ struct JKQTPImageTools {
         struct LUTData {
             LUTData();
             LUTData(const LUTType& _lut, const QString& _name, const QString& _nameT);
+            LUTData(const QString& _lut, const QString& _name, const QString& _nameT);
             LUTData(const QString& _name, const QString& _nameT);
             /** \brief the LUT itself */
             LUTType lut;
@@ -1105,6 +1124,17 @@ public:
     using ListType::operator<<;
     inline JKQTPPaletteList& operator<<(QRgb rgb) {
         push_back(rgb);
+        return *this;
+    }
+    inline void push_back(QColor color) {
+        push_back(color.rgb());
+    }
+    inline void push_back(double pos, QColor color) {
+        push_back(ListType::value_type(pos, color.rgb()));
+    }
+    using ListType::operator<<;
+    inline JKQTPPaletteList& operator<<(QColor color) {
+        push_back(color);
         return *this;
     }
 

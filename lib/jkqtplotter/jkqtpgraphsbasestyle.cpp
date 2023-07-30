@@ -216,13 +216,12 @@ JKQTGraphsBaseStyle::JKQTGraphsBaseStyle(const JKQTBasePlotterStyle& parent):
 
 QVector<QColor> JKQTGraphsBaseStyle::getDefaultGraphColors()
 {
-    // color scale by Okabe & Ito:
-    // M. Okabe and K. Ito, “How to make figures and presentations that are friendly to color blind people,” University of Tokyo, 2002.
-    // see also: https://yoshke.org/blog/colorblind-friendly-diagrams
-    //defaultGraphColors<<QColor(0xD55E00).darker(150)<<QColor(0x0072B2).darker(150)<<QColor(0xF0E442).darker(150)<<QColor(0x009E73).darker(150)
-    //                   <<QColor(0x56B4E9).darker(150)<<QColor(0xE69F00).darker(150)<<QColor(0,0,0)<<QColor(0xCC79A7).darker(150);
-    // a bit brighter than above
-    return QVector<QColor>()<<QColor(0xD50000)<<QColor(0x0039D6)<<QColor(0xFFDD00)<<QColor(0x00BB40)<<QColor(0xA84CE4)<<QColor(0xFD8600)<<QColor(0x0B069C);
+    QVector<QColor> cols;
+    const auto& lut=JKQTPImageTools::getLUTforPalette(JKQTPMathImageDefault_STEP);
+    for (const auto& c: lut) {
+        cols.push_back(QColor(c));
+    }
+    return cols;
 }
 
 QVector<Qt::PenStyle> JKQTGraphsBaseStyle::getDefaultGraphPenStyles()
@@ -275,7 +274,7 @@ void JKQTGraphsBaseStyle::loadSettings(const QSettings &settings, const QString 
         loadColors=false;
         defaultGraphColors=defaultStyle.defaultGraphColors;
     }
-    const QString ini_colors_fromm_palettes=settings.value("auto_styles/use_color_from_palette", "").toString();
+    const QString ini_colors_fromm_palettes=settings.value(group+"auto_styles/use_color_from_palette", "").toString();
     if (JKQTPImageTools::getPredefinedPalettesMachineReadable().contains(ini_colors_fromm_palettes)) {
         loadColors=false;
         const auto& lut=JKQTPImageTools::getLUTforPalette(JKQTPImageTools::String2JKQTPMathImageColorPalette(ini_colors_fromm_palettes));
