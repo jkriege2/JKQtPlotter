@@ -8,6 +8,7 @@ The source code of the main application is (see [`imageplot_userpal.cpp`](https:
 JKQTPlotter comes with a large set of predefined color palettes, which are enumerated in `JKQTPMathImageColorPalette`.
 In addition you can build your own palettes as simple lookup-tables of type `JKQTPImageTools::LUTType` (which is a `QVector<QRgb>`) and register them in the system (using `JKQTPImageTools::registerPalette()`). There are several options available for building such a palette:
 1. you can simply define a palette from single colors:
+
 ```.cpp
     JKQTPImageTools::LUTType pal{
         QColor("blue").rgb(), 
@@ -18,8 +19,10 @@ In addition you can build your own palettes as simple lookup-tables of type `JKQ
         QColor("red").rgb()
     };
 ```
-    Such a palette will have exactly as many entries, as you specified:  ![palsimple](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/imageplot_userpal_palsimple.png)
+
+Such a palette will have exactly as many entries, as you specified:  ![palsimple](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/imageplot_userpal_palsimple.png)
 2. Alternatively you can build a palette from a set of colors with assocziated positions on the values axis (typically 0..1 as these are in any way later mapped to the actual data range):
+
 ```.cpp
     QList<QPair<double, QRgb> > palsteps2;
     palsteps2<<qMakePair<double, QRgb>(0.00, QColor("blue").rgba());
@@ -31,19 +34,25 @@ In addition you can build your own palettes as simple lookup-tables of type `JKQ
     
     pal=JKQTPBuildColorPaletteLUT(palsteps2, JKQTPImageTools::LUTSIZE);
 ```
-    Such a palette will have `JKQTPImageTools::LUTSIZE (=255)` entries  and the colors are not spaced equally: ![palsteps2](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/imageplot_userpal_palsteps2.png)
+
+Such a palette will have `JKQTPImageTools::LUTSIZE (=255)` entries  and the colors are not spaced equally: ![palsteps2](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/imageplot_userpal_palsteps2.png)
 3. The palettes so far had steps, but you can also give a series of nodes with positions (on the value axis) and RGB-colors there (e.g. `palsteps2` above) but then linearly interpolate between these by calling:
+
 ```.cpp
     pal=JKQTPBuildColorPaletteLUTLinInterpolate(palsteps2, JKQTPImageTools::LUTSIZE);
 ```
+
     The resulting LUT is then:   ![imageplot_userpal_2_linear](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/imageplot_userpal_2_linear.png)
 4. Finally there is a second way of linear interpolation, where linear segments are given for the three color channels separately. To use such a definition, call `JKQTPBuildColorPaletteLUTLinSegments` instead (see documenttaion there).
 
 For each of these options, you finally call `JKQTPImageTools::registerPalette()` to make them known to the system:
+
 ```.cpp
     int userpalette_id=JKQTPImageTools::registerPalette("userpal_computer_readable_name", pal, QObject::tr("User Palette Human-Readable Name"));
 ```
+
 This function returns an integer, which you can cast to a `JKQTPMathImageColorPalette` to use your new palette:
+
 ```.cpp
     JKQTPColumnMathImage* graph=new JKQTPColumnMathImage(plot);
     // ...
@@ -53,12 +62,14 @@ This function returns an integer, which you can cast to a `JKQTPMathImageColorPa
 # Load Palettes from Files
 
 In addition to building palettes/LUTs programmatically, as shown above, you can simply load palettes from files using:
+
 ```.cpp
     JKQTPImageTools::registerPalettesFromFile(":/usercolorpalettes/palettes/All_idl_cmaps.xml");
 ```
 
 This function may load different file formats (discriminated by the extension):
 1. XML-files (extension `.xml`) may contain one or more color palettes and should be formatted as follows:
+
 ```.xml
     <ColorMap name="PALETTENAME" space="RGB">
       <Point x="scalar" r="RED" g="GREEN" b="BLUE"/>
@@ -66,7 +77,9 @@ This function may load different file formats (discriminated by the extension):
       ...
     </ColorMap>
 ```
+
    or with several palettes in one file:
+
 ```.xml
     <ColorMaps>
         <ColorMap name="PALETTENAME" space="RGB">
@@ -84,12 +97,15 @@ This function may load different file formats (discriminated by the extension):
 ```
 
 2. CSV-files (extensions `.csv`, `.rgb`, `.pal`) are simply a list of 3 or 4 comma-separated values:
+
 ```
     red, green, blue
     red, green, blue
     ...
 ```
-    or:
+
+   or:
+
 ```
     scalar, red, green, blue
     scalar, red, green, blue
@@ -97,6 +113,7 @@ This function may load different file formats (discriminated by the extension):
 ```
     
 By default the palettes are simply read from the files as raw data. Alternatively you can linearly interpolate between the nodes in the file by calling
+
 ```.cpp
     JKQTPImageTools::registerPalettesFromFile(":/usercolorpalettes/palettes/All_idl_cmaps.xml", true);
 ```
@@ -106,6 +123,7 @@ Examples for such palette files can be found here: [/examples/imageplot_userpal/
 # Main Program of the Example (GUI)
 
 The rest of the example program [`imageplot_userpal.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/imageplot_userpal/imageplot_userpal.cpp) just generates a 2D function plot as a color-map and displays it ...
+
 ```.cpp
     // 1. create a window containing a plotter and a combobox to select the color palette
     //    ... and get a pointer to the internal datastore (for convenience)
@@ -177,7 +195,9 @@ The rest of the example program [`imageplot_userpal.cpp`](https://github.com/jkr
     win.resize(500,550);
     win.setWindowTitle("JKQTPColumnMathImage, User Palettes");
 ```
+
 ...along with a `JKQTPMathImageColorPaletteComboBox` to select a colormap and redraw the plot:
+
 ```.cpp
     JKQTPMathImageColorPaletteComboBox* cmbPalette=new JKQTPMathImageColorPaletteComboBox(&win);
     // ... 
@@ -186,6 +206,7 @@ The rest of the example program [`imageplot_userpal.cpp`](https://github.com/jkr
 ```
 
 It also adds two `QPushButton`s that allow to save the current or all registered color-palettes to small PNG-Files:
+
 ```.cpp
     QPushButton* btnSavePal=new QPushButton(QObject::tr("save current palette"), &win);
     btnSavePal->connect(btnSavePal, &QPushButton::clicked, [&]() {

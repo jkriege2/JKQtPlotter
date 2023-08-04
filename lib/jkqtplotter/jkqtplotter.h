@@ -776,7 +776,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
         inline void addGraph(JKQTPPlotElement* gr) { plotter->addGraph(gr); }
         /** \copydoc JKQTBasePlotter::addGraphOnTop()   */
         inline void addGraphOnTop(JKQTPPlotElement* gr) { plotter->addGraphOnTop(gr); }
-        /** \copydoc JKQTBasePlotter::addGraphAtBotom()   */
+        /** \copydoc JKQTBasePlotter::addGraphAtBottom()   */
         inline void addGraphAtBottom(JKQTPPlotElement* gr) { plotter->addGraphAtBottom(gr); }
 
         /** \copydoc JKQTBasePlotter::moveGraphTop()   */

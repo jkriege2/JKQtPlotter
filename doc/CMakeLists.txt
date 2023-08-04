@@ -183,7 +183,7 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         #geo_arrows
         #geo_simple
         geometric
-        imageplot
+        imageplot/imageplot,imageplot__scale02,imageplot__smallscalelimitcolor,imageplot__smallscalecolor,imageplot__smallscaletransparent/--iteratefunctorsteps
         imageplot_modifier
         imageplot_nodatastore
         imageplot_userpal/imageplot_userpal_program
@@ -198,6 +198,7 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         mandelbrot
         geo_coordinateaxis0
         second_axis/second_axis,second_axis_hor
+        logaxes/logaxes,logaxes_nolog,logaxes_nominorgrid/--iteratefunctorsteps
         #speed
     )
 

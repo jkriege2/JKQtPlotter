@@ -115,27 +115,34 @@ The result looks like this:
 
 There are several ways to modify the plot:
   1. You can set the color scale manually (here 0..2), by using
+  
     ```
     graph->setAutoImageRange(false);
     graph->setImageMin(0);
     graph->setImageMax(2);
-	```
-	instead of 
+    ```
+
+    instead of 
+    
     ```
     graph->setAutoImageRange(true);
-	```
-	from above. The result will look like this:<br>
-	![imageplot__scale02](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/imageplot__scale02.png)<br>
-	Note how the color scale is not used completely, because data really only scales between 0 and 1.
+    ```
+    
+    from above. The result will look like this:<br>
+    ![imageplot__scale02](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/imageplot__scale02.png)<br>
+    Note how the color scale is not used completely, because data really only scales between 0 and 1.
   2. If you set the color-range to 0.1 .. 0.8 with
     ```
     graph->setAutoImageRange(false);
     graph->setImageMin(0.1);
     graph->setImageMax(0.8);
-	```
-	Then there will be datapoints above or below the range of the colorscale. The default behaviour of the graph is to use the first color of the palette for every pixel with a value below the minimum (here 0.1) and the last color in the palette for every pixel with a value above the maximum.<br>
-	![imageplot__smallscalelimitcolor](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/imageplot__smallscalelimitcolor.png)<br>
-	You can change this behaviour by `setRangeMinFailAction(),setRangeMaxFailAction()` with one of these parameters:
+    ```
+
+    Then there will be datapoints above or below the range of the colorscale. The default behaviour of the graph is to use the first color of the palette for every pixel with a value below the minimum (here 0.1) and the last color in the palette for every pixel with a value above the maximum.<br>
+
+    ![imageplot__smallscalelimitcolor](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/imageplot__smallscalelimitcolor.png)<br>
+
+    You can change this behaviour by `JKQTPColumnMathImage::setRangeMinFailAction()` / `JKQTPColumnMathImage::setRangeMaxFailAction()` with one of these parameters:
 	  - `JKQTPMathImageLastPaletteColor`: the default behaviour explained above
 	  - `JKQTPMathImageGivenColor`: use a color set by `setRangeMinFailColor(),setRangeMaxFailColor()` (here e.g. black for min and grey for max)<br>
 	    ![imageplot__smallscalecolor](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/imageplot__smallscalecolor.png)

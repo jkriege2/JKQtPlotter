@@ -7,7 +7,7 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 
 \tableofcontents
 
-\section jkqtp_extut_jkqtplotter Examples&Tutorials for JKQTPlotter
+\section jkqtp_extut_jkqtplotter Examples & Tutorials for JKQTPlotter
 
 \subsection jkqtp_extut_plotstyles Examples for Different Plot Data Styles
 

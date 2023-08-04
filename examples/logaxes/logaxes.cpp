@@ -75,7 +75,8 @@ int main(int argc, char* argv[])
     //    and loaded in the library). If you don't use the math-mode modifiers, the default
     //    font of the other rendering text is used, which might not be suitable for
     //    high-quality math rendering.
-    plot.addGraph(new JKQTPGeoText(&plot, 1.25, 10, "$\\frac{A}{A_{stat}}=\\frac{1}{\\sqrt{\\left(1-\\eta^2\\right)^2+\\left(2{\\eta}D\\right)^2}}$", 15, QColor("black")));
+    JKQTPGeoText* geoTxt;
+    plot.addGraph(geoTxt=new JKQTPGeoText(&plot, 1.25, 10, "$\\frac{A}{A_{stat}}=\\frac{1}{\\sqrt{\\left(1-\\eta^2\\right)^2+\\left(2{\\eta}D\\right)^2}}$", 15, QColor("black")));
 
     // 5. set y-axis to logarithmic (x-axis would be analogous, but using `plot.getXAxis()`)
     plot.getYAxis()->setLogAxis(true);
@@ -111,6 +112,19 @@ int main(int argc, char* argv[])
     // 7. show plotter and make it a decent size
     plot.show();
     plot.resize(700/plot.devicePixelRatioF(),500/plot.devicePixelRatioF());
+
+
+    app.addExportStepFunctor([&]() {
+        plot.getYAxis()->setLogAxis(false);
+        plot.getYAxis()->setDrawMinorGrid(false);
+        geoTxt->setY(100);
+    });
+
+    app.addExportStepFunctor([&]() {
+        plot.getYAxis()->setLogAxis(true);
+        plot.getYAxis()->setDrawMinorGrid(false);
+        geoTxt->setY(10);
+    });
 
     return app.exec();
 }

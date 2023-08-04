@@ -108,6 +108,32 @@ int main(int argc, char* argv[])
     plot.resize(600/plot.devicePixelRatioF(),600/plot.devicePixelRatioF());
     plot.setWindowTitle("JKQTPColumnMathImage");
 
+    app.addExportStepFunctor([&]() {
+        graph->setAutoImageRange(false);
+        graph->setImageMin(0);
+        graph->setImageMax(2);
+        plot.redrawPlot();
+    });
+    app.addExportStepFunctor([&]() {
+        graph->setAutoImageRange(false);
+        graph->setImageMin(0.1);
+        graph->setImageMax(0.8);
+        graph->setRangeMinFailAction(JKQTPMathImageLastPaletteColor);
+        graph->setRangeMaxFailAction(JKQTPMathImageLastPaletteColor);
+        plot.redrawPlot();
+    });
+    app.addExportStepFunctor([&]() {
+        graph->setRangeMinFailAction(JKQTPMathImageGivenColor);
+        graph->setRangeMaxFailAction(JKQTPMathImageGivenColor);
+        graph->setRangeMinFailColor(Qt::black);
+        graph->setRangeMaxFailColor(QColor("silver"));
+        plot.redrawPlot();
+    });
+    app.addExportStepFunctor([&]() {
+        graph->setRangeMinFailAction(JKQTPMathImageTransparent);
+        graph->setRangeMaxFailAction(JKQTPMathImageTransparent);
+        plot.redrawPlot();
+    });
 
     return app.exec();
 }
