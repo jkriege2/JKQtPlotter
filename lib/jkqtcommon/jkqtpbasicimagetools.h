@@ -540,33 +540,33 @@ struct JKQTPImageTools {
 
 
         /** \brief generates a QImage with width \a width and height 1 for the i-th color palette (\a i is based on the list returned by JKQTPImagePlot_getPredefinedPalettes() )  */
-        static QImage JKQTCOMMON_LIB_EXPORT GetPaletteImage(int i, int width);
+        static JKQTCOMMON_LIB_EXPORT QImage GetPaletteImage(int i, int width);
         /** \brief generates a QImage with width \a width and height \a height for the i-th color palette (\a i is based on the list returned by JKQTPImagePlot_getPredefinedPalettes() )  */
-        static QImage JKQTCOMMON_LIB_EXPORT GetPaletteImage(int i, int width, int height);
+        static JKQTCOMMON_LIB_EXPORT QImage GetPaletteImage(int i, int width, int height);
         /** \brief generates a QImage with width \a width and height 1 for a specific JKQTPMathImageColorPalette  */
-        static QImage JKQTCOMMON_LIB_EXPORT GetPaletteImage(JKQTPMathImageColorPalette palette, int width);
+        static JKQTCOMMON_LIB_EXPORT QImage GetPaletteImage(JKQTPMathImageColorPalette palette, int width);
         /** \brief generates a QImage with width \a width and height \a height for a specific JKQTPMathImageColorPalette  */
-        static QImage JKQTCOMMON_LIB_EXPORT GetPaletteImage(JKQTPMathImageColorPalette palette, int width, int height);
+        static JKQTCOMMON_LIB_EXPORT QImage GetPaletteImage(JKQTPMathImageColorPalette palette, int width, int height);
         /** \brief generates a QImage with width \a width and height 1 for a lookup-table \a lut  */
-        static QImage JKQTCOMMON_LIB_EXPORT GetPaletteImage(const LUTType& lut, int width);
+        static JKQTCOMMON_LIB_EXPORT QImage GetPaletteImage(const LUTType& lut, int width);
 
         /** \brief generates a QIcon for the i-th color palette (\a i is based on the list returned by JKQTPImagePlot_getPredefinedPalettes() )  */
-        static QIcon JKQTCOMMON_LIB_EXPORT GetPaletteIcon(int i) ;
+        static JKQTCOMMON_LIB_EXPORT QIcon GetPaletteIcon(int i) ;
 
 
         /** \brief generates a QIcon for a specific JKQTPMathImageColorPalette  */
-        static QIcon JKQTCOMMON_LIB_EXPORT GetPaletteIcon(JKQTPMathImageColorPalette palette) ;
+        static JKQTCOMMON_LIB_EXPORT QIcon GetPaletteIcon(JKQTPMathImageColorPalette palette) ;
         /*! \brief create a LUT for a given JKQTPMathImageColorPalette, stored it in \a lutstore and return it */
-        static const LUTType& JKQTCOMMON_LIB_EXPORT getLUTforPalette(JKQTPMathImageColorPalette palette);
+        static JKQTCOMMON_LIB_EXPORT const LUTType& getLUTforPalette(JKQTPMathImageColorPalette palette);
         /*! \brief return the list of QColors making up a JKQTPMathImageColorPalette, stored it in \a lutstore and return it */
-        static QVector<QColor> JKQTCOMMON_LIB_EXPORT getColorsforPalette(JKQTPMathImageColorPalette palette);
+        static JKQTCOMMON_LIB_EXPORT QVector<QColor> getColorsforPalette(JKQTPMathImageColorPalette palette);
 
     private:
 
         /*! \brief internal datatype, representing a lookup-table and its metadata inside global_jkqtpimagetools_lutstore
             \internal
             */
-        struct LUTData {
+        struct JKQTCOMMON_LIB_EXPORT LUTData {
             LUTData();
             LUTData(const LUTType& _lut, const QString& _name, const QString& _nameT);
             LUTData(const QString& _lut, const QString& _name, const QString& _nameT);
