@@ -200,6 +200,7 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         second_axis/second_axis,second_axis_hor
         logaxes/logaxes,logaxes_nolog,logaxes_nominorgrid/--iteratefunctorsteps
         #speed
+        datastore/datastore,datastore_sine,datastore_linkedcarray,datastore_map,datastore_calccolumns,datastore_image,datastore_image_sorted,datastore_sineimg/--iteratefunctorsteps
     )
 
 

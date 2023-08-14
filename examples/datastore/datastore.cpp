@@ -10,6 +10,7 @@
 #include "jkqtplotter/graphs/jkqtpscatter.h"
 #include "jkqtplotter/graphs/jkqtpimage.h"
 #include <algorithm>
+#include <set>
 
 int main(int argc, char* argv[])
 {
@@ -118,11 +119,12 @@ int main(int argc, char* argv[])
         datastore->set(imgColumn, i, cos((x-15.0))/(x-15.0)*cos((y-2.0))/(x-2.0));
     }
     // alternatively you can access image pixels with setPixel():
-    //for (int iy=0; iy<10; iy++) {
-    //    for (int ix=0; ix<10; ix++) {
-    //        datastore->setPixel(imgColumn, ix, iy, sin(ix*iy/30.0));
-    //    }
-    //}
+    size_t imgColumn2=datastore->addImageColumn(10, 10, "sine image values");
+    for (int iy=0; iy<10; iy++) {
+        for (int ix=0; ix<10; ix++) {
+            datastore->setPixel(imgColumn2, ix, iy, sin(ix*iy/30.0));
+        }
+    }
     // the loop above can be written more compact using addColumnCalculatedFromColumn():
     //imgColumn=datastore->addColumnCalculatedFromColumn(colLinXY.first, colLinXY.second, [](double x, double y)->double { return cos((x-15.0))/(x-15.0)*cos((y-2.0))/(x-2.0); },  "image value");
     // finally we can use a JKQTPXYParametrizedScatterGraph to display the data from our three columns
@@ -141,6 +143,14 @@ int main(int argc, char* argv[])
     imggraph->setHeight(1.5);
     imggraph->setTitle(QObject::tr("imgColumn"));
 
+    plot.addGraph(imggraph=new JKQTPColumnMathImage(&plot));
+    imggraph->setImageColumn(imgColumn2);
+    imggraph->setX(10);
+    imggraph->setY(3.5);
+    imggraph->setWidth(10);
+    imggraph->setHeight(10);
+    imggraph->setTitle(QObject::tr("imgColumn: simple"));
+
 
 
 
@@ -150,6 +160,26 @@ int main(int argc, char* argv[])
     // show plotter and make it a decent size
     plot.show();
     plot.resize(600,400);
+
+    auto setVisibleV=[&](const std::set<int>& iVis) {
+        int i=0;
+        for (auto g=plot.beginGraphs(); g!=plot.endGraphs(); ++g) {
+            (*g)->setVisible(iVis.find(i)!=iVis.end());
+            qDebug()<<i<<": "<<(*g)->isVisible();
+            i++;
+        }
+    };
+    auto setVisible=[&](int iVis) {
+        setVisibleV({iVis});
+    };
+
+    app.addExportStepFunctor([&]() { setVisible(0); plot.getPlotter()->setShowKey(false); plot.zoomToFit(); plot.redrawPlot(); plot.resize(400,400*4/6); });
+    app.addExportStepFunctor([&]() { setVisible(1); plot.getPlotter()->setShowKey(false); plot.zoomToFit(); plot.redrawPlot(); plot.resize(400,400*4/6); });
+    app.addExportStepFunctor([&]() { setVisible(2); plot.getPlotter()->setShowKey(false); plot.zoomToFit(); plot.redrawPlot(); plot.resize(400,400*4/6); });
+    app.addExportStepFunctor([&]() { setVisible(3); plot.getPlotter()->setShowKey(false); plot.zoomToFit(); plot.redrawPlot(); plot.resize(400,400*4/6); });
+    app.addExportStepFunctor([&]() { setVisibleV({4,5}); plot.getPlotter()->setShowKey(false); plot.zoomToFit(); plot.redrawPlot(); plot.resize(400,400*4/6); });
+    app.addExportStepFunctor([&]() { std::sort(datastore->begin(colLinXY.second), datastore->end(colLinXY.second)); setVisibleV({4,5});plot.getPlotter()->setShowKey(false);  plot.zoomToFit(); plot.redrawPlot(); });
+    app.addExportStepFunctor([&]() { setVisible(6); plot.zoomToFit(); plot.getPlotter()->setShowKey(false); plot.redrawPlot(); plot.resize(400,400); });
 
     return app.exec();
 }
