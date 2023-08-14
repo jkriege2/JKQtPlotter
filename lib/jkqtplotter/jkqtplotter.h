@@ -713,7 +713,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
 
         /** \copydoc JKQTBasePlotter::beginGraphs() */
         inline typename JKQTBasePlotter::GraphsConstIterator cbeginGraphs() const  {
-            return plotter->cendGraphs();
+            return plotter->cbeginGraphs();
         }
         /** \copydoc JKQTBasePlotter::endGraphs() */
         inline typename JKQTBasePlotter::GraphsConstIterator cendGraphs() const {
@@ -722,7 +722,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
 
         /** \copydoc JKQTBasePlotter::beginGraphs() */
         inline typename JKQTBasePlotter::GraphsConstIterator beginGraphs() const  {
-            return plotter->endGraphs();
+            return plotter->beginGraphs();
         }
         /** \copydoc JKQTBasePlotter::endGraphs() */
         inline typename JKQTBasePlotter::GraphsConstIterator endGraphs() const {
@@ -730,7 +730,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
         }
         /** \copydoc JKQTBasePlotter::beginGraphs() */
         inline typename JKQTBasePlotter::GraphsIterator beginGraphs()  {
-            return plotter->endGraphs();
+            return plotter->beginGraphs();
         }
         /** \copydoc JKQTBasePlotter::endGraphs() */
         inline typename JKQTBasePlotter::GraphsIterator endGraphs()  {
