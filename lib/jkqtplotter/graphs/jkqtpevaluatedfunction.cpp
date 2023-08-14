@@ -726,6 +726,16 @@ std::function<QPointF (double)> JKQTPXFunctionLineGraph::buildErrorFunctorSpec()
     return spec;
 }
 
+bool JKQTPXFunctionLineGraph::getXMinMax(double &minx, double &maxx, double &smallestGreaterZero)
+{
+    return false;
+}
+
+bool JKQTPXFunctionLineGraph::getYMinMax(double &miny, double &maxy, double &smallestGreaterZero)
+{
+    return false;
+}
+
 
 
 
@@ -823,6 +833,16 @@ std::function<QPointF (double)> JKQTPYFunctionLineGraph::buildErrorFunctorSpec()
     else if (errorSimplePlotFunction) spec=[&](double y) -> QPointF { return QPointF(errorSimplePlotFunction(y), 0); };
 
     return spec;
+}
+
+bool JKQTPYFunctionLineGraph::getXMinMax(double &miny, double &maxy, double &smallestGreaterZero)
+{
+    return false;
+}
+
+bool JKQTPYFunctionLineGraph::getYMinMax(double &miny, double &maxy, double &smallestGreaterZero)
+{
+    return false;
 }
 
 

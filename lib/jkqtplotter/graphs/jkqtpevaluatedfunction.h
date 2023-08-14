@@ -281,6 +281,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPFunctorLineGraphBase: public JKQTPEvaluatedFun
 
     \image html plot_functionplots.png
 
+    \note Auto-scaling of the plot is deactivated (by overwriting getXMinMax() and getYMinMax() to return \c false ), as it depends on the axes (hen-egg-problem!)
+          Set the plot-ranges by hand!!!
+
     \see \ref JKQTPlotterFunctionPlots, JKQTPAdaptiveFunctionGraphEvaluator, JKQTPYFunctionLineGraph, JKQTPXYFunctionLineGraph, jkqtpstatAddPolyFit(), jkqtpstatAddWeightedRegression(), jkqtpstatAddRobustIRLSRegression(), jkqtpstatAddRegression(), jkqtpstatAddLinearWeightedRegression(), jkqtpstatAddRobustIRLSLinearRegression(), jkqtpstatAddLinearRegression()
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPFunctorLineGraphBase {
@@ -320,6 +323,17 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPFunctorLineGra
         /** \copydoc JKQTPEvaluatedFunctionWithErrorsGraphBase::buildPlotFunctorSpec() */
         virtual std::function<QPointF(double)> buildErrorFunctorSpec() override;
 
+        /** \brief get the maximum and minimum x-value of the graph
+         *
+         * This functions returns 0 for both parameters, so that the plotter uses the predefined
+         * min and max values.
+         */
+        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
+        /** \brief get the maximum and minimum y-value of the graph
+         */
+        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
+
+
 };
 
 /*! \brief This implements line plots where the data is taken from a user supplied function \f$ x=f(y) \f$
@@ -328,6 +342,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPFunctorLineGra
     The following image shows some example graphs:
 
     \image html functionplot_fy.png
+
+    \note Auto-scaling of the plot is deactivated (by overwriting getXMinMax() and getYMinMax() to return \c false ), as it depends on the axes (hen-egg-problem!)
+          Set the plot-ranges by hand!!!
 
     \see \ref JKQTPlotterFunctionPlots , JKQTPXFunctionLineGraph, JKQTPXYFunctionLineGraph
  */
@@ -360,6 +377,15 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPYFunctionLineGraph: public JKQTPFunctorLineGra
 
         /** \copydoc JKQTPEvaluatedFunctionWithErrorsGraphBase::buildPlotFunctorSpec() */
         virtual std::function<QPointF(double)> buildErrorFunctorSpec() override;
+
+
+        /** \brief get the maximum and minimum x-value of the graph
+         */
+        virtual bool getXMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
+        /** \brief get the maximum and minimum y-value of the graph
+         */
+        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
+
 
 };
 
