@@ -31,7 +31,17 @@ JKQTPExampleApplication::~JKQTPExampleApplication()
 
 void JKQTPExampleApplication::addExportStepFunctor(const std::function<void ()> &f)
 {
-    functors<<f;
+    functors<<Data(f);
+}
+
+void JKQTPExampleApplication::addExportStepPlot(JKQTPlotter *plot)
+{
+    functors<<Data(plot);
+}
+
+void JKQTPExampleApplication::addExportStepPlotFunctor(const std::function<JKQTPlotter *()> &fplot)
+{
+    functors<<Data(fplot);
 }
 
 void JKQTPExampleApplication::readCmdLine() {
@@ -96,7 +106,55 @@ QRect JKQTPExampleApplication::getBoundsWithoutColor(QImage qImage, const QColor
         ofTheKing.setCoords(minX, minY, maxX+1, maxY+1);
 
     return ofTheKing;
- }
+}
+
+void JKQTPExampleApplication::saveWidget(QWidget *w, int iVisible) {
+    JKQTPlotter* plot=dynamic_cast<JKQTPlotter*>(w);
+    QString bn=screenshotBasename.value(iVisible, screenshotBasename.value(0));
+    if (iVisible>0 && screenshotBasename.value(iVisible, "")=="") {
+        bn+=QString("_win%1").arg(iVisible, 2, 10, QLatin1Char('0'));
+    }
+    if (w) {
+        QPixmap pix_win=w->grab();
+        /*QPixmap pix;
+                 if (screenshotIncludeWindowTitle) {
+                    pix=w->screen()->grabWindow(0, w->frameGeometry().x(), w->frameGeometry().y(), w->frameGeometry().width(), w->frameGeometry().height());
+                } else {
+                    pix=pix_win;
+                }*/
+        if (saveScreenshot || (saveScreenshotPlot&&!plot)) {
+            if (scaleDownFromHighDPI && pix_win.devicePixelRatio()>1.0) {
+                pix_win.scaled((QSizeF(pix_win.size())/pix_win.devicePixelRatio()).toSize()).save(screenshotDir.absoluteFilePath(bn+".png"));
+            } else {
+                pix_win.save(screenshotDir.absoluteFilePath(bn+".png"));
+            }
+        }
+        if (saveSmallScreenshot || (saveSmallScreenshotPlot&&!plot)) {
+            QPixmap img=pix_win.scaledToWidth(150, Qt::SmoothTransformation);
+            img.save(screenshotDir.absoluteFilePath(bn+"_small.png"));
+        }
+    }
+    if (plot) {
+        QString bnp=bn+"_plot";
+        QImage gr=plot->grabPixelImage();
+
+        if (saveScreenshotPlot) {
+            QString fn=bn+".png";
+            if (saveScreenshot) fn=bnp+".png";
+            if (scaleDownFromHighDPI && gr.devicePixelRatio()>1.0) {
+                gr.scaled((QSizeF(gr.size())/gr.devicePixelRatio()).toSize()).save(screenshotDir.absoluteFilePath(fn));
+            } else {
+                gr.save(screenshotDir.absoluteFilePath(fn));
+            }
+        }
+        if (saveSmallScreenshotPlot) {
+            QString fn=bn+"_small.png";
+            if (saveSmallScreenshot) fn=bnp+"_small.png";
+            QImage img=gr.scaledToWidth(150, Qt::SmoothTransformation);
+            img.save(screenshotDir.absoluteFilePath(fn));
+        }
+    }
+}
 
 int JKQTPExampleApplication::exec()
 {
@@ -122,63 +180,31 @@ int JKQTPExampleApplication::exec()
         return a<b;
     });
 
-    auto saveWidget=[&](QWidget* w, int iVisible) {
-            JKQTPlotter* plot=dynamic_cast<JKQTPlotter*>(w);
-            QString bn=screenshotBasename.value(iVisible, screenshotBasename.value(0));
-            if (iVisible>0 && screenshotBasename.value(iVisible, "")=="") {
-                bn+=QString("_win%1").arg(iVisible, 2, 10, QLatin1Char('0'));
-            }
-            if (w) {
-                QPixmap pix_win=w->grab();
-                /*QPixmap pix;
-                 if (screenshotIncludeWindowTitle) {
-                    pix=w->screen()->grabWindow(0, w->frameGeometry().x(), w->frameGeometry().y(), w->frameGeometry().width(), w->frameGeometry().height());
-                } else {
-                    pix=pix_win;
-                }*/
-                if (saveScreenshot || (saveScreenshotPlot&&!plot)) {
-                    if (scaleDownFromHighDPI && pix_win.devicePixelRatio()>1.0) {
-                        pix_win.scaled((QSizeF(pix_win.size())/pix_win.devicePixelRatio()).toSize()).save(screenshotDir.absoluteFilePath(bn+".png"));
-                    } else {
-                        pix_win.save(screenshotDir.absoluteFilePath(bn+".png"));
-                    }
-                }
-                if (saveSmallScreenshot || (saveSmallScreenshotPlot&&!plot)) {
-                    QPixmap img=pix_win.scaledToWidth(150, Qt::SmoothTransformation);
-                    img.save(screenshotDir.absoluteFilePath(bn+"_small.png"));
-                }
-            }
-            if (plot) {
-                QString bnp=bn+"_plot";
-                QImage gr=plot->grabPixelImage();
 
-                if (saveScreenshotPlot) {
-                    QString fn=bn+".png";
-                    if (saveScreenshot) fn=bnp+".png";
-                    if (scaleDownFromHighDPI && gr.devicePixelRatio()>1.0) {
-                        gr.scaled((QSizeF(gr.size())/gr.devicePixelRatio()).toSize()).save(screenshotDir.absoluteFilePath(fn));
-                    } else {
-                        gr.save(screenshotDir.absoluteFilePath(fn));
-                    }
-                }
-                if (saveSmallScreenshotPlot) {
-                    QString fn=bn+"_small.png";
-                    if (saveSmallScreenshot) fn=bnp+"_small.png";
-                    QImage img=gr.scaledToWidth(150, Qt::SmoothTransformation);
-                    img.save(screenshotDir.absoluteFilePath(fn));
-                }
-            }
-    };
 
 
     if (iterateFunctorSteps) {
-        QVector<std::function<void(void)>> localfunctors=functors;
-        if (!iterateFunctorStepsSupressInitial) localfunctors.prepend([](){});
+        QVector<Data> localfunctors=functors;
+        if (!iterateFunctorStepsSupressInitial) localfunctors.prepend(Data([](){}));
         int iVisible=0;
         //std::cout<<localfunctors.size()<<" functors\n";
         for (auto& f: localfunctors) {
             //std::cout<<"iVisible="<<iVisible<<" f="<<std::boolalpha<<static_cast<bool>(f)<<"\n";
-            if (f) f();
+            QWidgetList widgets_local=widgets;
+            switch(f.type) {
+            case Data::FunctorType:
+                if (f.f) f.f();
+                break;
+            case Data::PlotterType:
+                widgets_local.clear();
+                if (f.p) widgets_local<<f.p;
+                break;
+            case Data::PlotterFunctorType:
+                widgets_local.clear();
+                if (f.plotf) widgets_local<<f.plotf();
+                break;
+            }
+
             //JKQTPlotter::setGlobalResizeDelay(10);
             QElapsedTimer timer;
             timer.start();
@@ -191,8 +217,8 @@ int JKQTPExampleApplication::exec()
                 QApplication::processEvents();
                 QApplication::processEvents();
             }
-            for (int i=0; i<widgets.size(); i++) {
-                QWidget* w=widgets[i];
+            for (int i=0; i<widgets_local.size(); i++) {
+                QWidget* w=widgets_local[i];
                 if (w->isVisible()) {
                     saveWidget(w, iVisible);
                     iVisible++;

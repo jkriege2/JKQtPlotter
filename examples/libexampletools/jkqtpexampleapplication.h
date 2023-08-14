@@ -14,6 +14,8 @@ public:
 
     virtual ~JKQTPExampleApplication();
     void addExportStepFunctor(const std::function<void(void)>& f);
+    void addExportStepPlot(JKQTPlotter* plot);
+    void addExportStepPlotFunctor(const std::function<JKQTPlotter*(void)>& fplot);
     int exec();
 public Q_SLOTS:
     void notifyReadyForScreenshot();
@@ -29,7 +31,30 @@ protected:
     bool iterateFunctorSteps;
     bool iterateFunctorStepsSupressInitial;
     QStringList screenshotBasename;
-    QVector<std::function<void(void)>> functors;
+    struct Data {
+        enum Type {
+            FunctorType,
+            PlotterType,
+            PlotterFunctorType
+        };
+        Type type;
+        std::function<void(void)> f;
+        std::function<JKQTPlotter*(void)> plotf;
+        JKQTPlotter* p;
+        inline Data(const std::function<void(void)>& f_):
+            type(FunctorType), f(f_), p(nullptr), plotf()
+        {}
+        inline Data(JKQTPlotter* p_):
+            type(FunctorType), p(p_), f(), plotf()
+        {}
+        inline Data(std::function<JKQTPlotter*(void)> p_):
+            type(FunctorType), plotf(p_), f(), p(nullptr)
+        {}
+    };
+
+    QVector<Data> functors;
     void readCmdLine();
     QRect getBoundsWithoutColor(QImage qImage, const QColor &exclusionColor = Qt::white);
+
+    void saveWidget(QWidget* w, int iVisible);;
 };
