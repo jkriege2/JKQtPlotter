@@ -45,10 +45,10 @@ protected:
             type(FunctorType), f(f_), p(nullptr), plotf()
         {}
         inline Data(JKQTPlotter* p_):
-            type(FunctorType), p(p_), f(), plotf()
+            type(PlotterType), p(p_), f(), plotf()
         {}
         inline Data(std::function<JKQTPlotter*(void)> p_):
-            type(FunctorType), plotf(p_), f(), p(nullptr)
+            type(PlotterFunctorType), plotf(p_), f(), p(nullptr)
         {}
     };
 

@@ -4,6 +4,7 @@
 #include <QCommandLineOption>
 #include <QWindow>
 #include <QWidget>
+#include <QMessageBox>
 #include "jkqtplotter/jkqtplotter.h"
 
 
@@ -114,6 +115,7 @@ void JKQTPExampleApplication::saveWidget(QWidget *w, int iVisible) {
     if (iVisible>0 && screenshotBasename.value(iVisible, "")=="") {
         bn+=QString("_win%1").arg(iVisible, 2, 10, QLatin1Char('0'));
     }
+    //QMessageBox::information(nullptr, "DEBUG", bn+": w="+QString::number(reinterpret_cast<uint64_t>(w))+", plot="+QString::number(reinterpret_cast<uint64_t>(plot)));
     if (w) {
         QPixmap pix_win=w->grab();
         /*QPixmap pix;
