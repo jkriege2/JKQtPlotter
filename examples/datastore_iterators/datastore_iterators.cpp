@@ -54,7 +54,7 @@ int main(int argc, char* argv[])
     //size_t YCol=datastore->addColumn("cos curve: y-data");
     size_t YCol2=datastore->addColumn("cos curve: y-data");
     //std::transform(datastore->begin(XCol), datastore->end(XCol), datastore->backInserter(YCol), cos);
-    std::transform(datastore->begin(XCol), datastore->end(XCol), datastore->backInserter(YCol2), cos);
+    std::transform(datastore->begin(XCol), datastore->end(XCol), datastore->backInserter(YCol2), [](double a) { return cos(a); });
     // 2.4. Just for fun we can now sort the data:
     //std::sort(datastore->begin(YCol), datastore->end(YCol));
     //      or replace any value <-0.5 with 1:

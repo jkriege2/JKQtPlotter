@@ -1760,7 +1760,7 @@ class JKQTPColumnIterator {
         }
 
         /** \brief dereferences the iterator, throws an exception if the iterator is invalid (see isValid() ) or the value does not exist in the column */
-        inline reference operator*() {
+        inline reference operator*() const {
             JKQTPASSERT(col_!=nullptr && pos_>=0 && pos_<static_cast<int>(col_->getRows()));
             return col_->at(pos_);
         }
@@ -1771,11 +1771,6 @@ class JKQTPColumnIterator {
             }
             JKQTPASSERT(col_!=nullptr && pos_+off>=0 && pos_+off<static_cast<int>(col_->getRows()));
             return col_->at(pos_+off);
-        }
-        /** \brief dereferences the iterator, throws an exception if the iterator is invalid (see isValid() ) or the value does not exist in the column */
-        inline const_reference operator*() const {
-            JKQTPASSERT(col_!=nullptr && pos_>=0 && pos_<static_cast<int>(col_->getRows()));
-            return col_->at(pos_);
         }
         /** \brief comparison operator (less than)
          *
