@@ -821,8 +821,8 @@ void JKQTBasePlotter::calcPlotScaling(JKQTPEnhancedPainter& painter){
 
     if (!plotLabel.isEmpty()) {
         QSizeF s=getTextSizeSize(plotterStyle.plotLabelFontName, plotterStyle.plotLabelFontSize*fontSizeMultiplier, plotLabel, painter);
-        internalPlotBorderTop+=s.height()*1.2;
-        internalTitleHeight=s.height()*1.2;
+        internalTitleHeight=s.height()+2.0*pt2px(painter, plotterStyle.plotLabelOffset);
+        internalPlotBorderTop+=internalTitleHeight;
 
     }
 
@@ -1378,7 +1378,7 @@ void JKQTBasePlotter::drawPlot(JKQTPEnhancedPainter& painter) {
         double a=0,d=0,so=0,w=0;
         getTextSizeDetail(plotterStyle.plotLabelFontName,plotterStyle.plotLabelFontSize*fontSizeMultiplier,plotLabel, painter, w, a, d, so);
         QSizeF s=QSizeF(w, a+d);
-        mathText.draw(painter, internalPlotBorderLeft+(internalPlotWidth-s.width())/2.0,plotterStyle.plotBorderTop+a*1.2, plotterStyle.debugShowTextBoxes);
+        mathText.draw(painter, internalPlotBorderLeft+(internalPlotWidth-s.width())/2.0,plotterStyle.plotBorderTop+a+pt2px(painter, plotterStyle.plotLabelOffset), plotterStyle.debugShowTextBoxes);
         if (plotterStyle.debugShowRegionBoxes) {
             painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
             QPen p("blue");
@@ -2999,6 +2999,18 @@ double JKQTBasePlotter::getPlotLabelFontSize() const
     return this->plotterStyle.plotLabelFontSize;
 }
 
+void JKQTBasePlotter::setPlotLabelOffset(double __value)
+{
+    if (jkqtp_approximatelyUnequal(this->plotterStyle.plotLabelOffset , __value)) {
+        this->plotterStyle.plotLabelOffset = __value;
+        redrawPlot();
+    }
+}
+
+double JKQTBasePlotter::getPlotLabelOffset() const
+{
+    return this->plotterStyle.plotLabelOffset;
+}
 void JKQTBasePlotter::setPlotLabelColor(QColor __value)
 {
     if (this->plotterStyle.plotLabelColor != __value) {
