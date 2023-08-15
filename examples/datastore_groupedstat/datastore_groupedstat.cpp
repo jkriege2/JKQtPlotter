@@ -171,6 +171,7 @@ int main(int argc, char* argv[])
     size_t colScatterRawY=datastore1->addColumn("scatterplot, rawdata, y");
     std::random_device rd; // random number generators:
     std::mt19937 gen{rd()};
+    gen.seed(12345);
     std::normal_distribution<> d1{0,0.5};
     const size_t N=100;
     const double xmax=3.5;
@@ -263,7 +264,13 @@ int main(int argc, char* argv[])
 
     // show plotter and make it a decent size
     mainWidget.show();
-    mainWidget.resize(1200,400);
+    mainWidget.resize(900,300);
+
+    app.addExportStepPlotFunctor([&]() { gBar->setVisible(false); plotbarchart->redrawPlot(); return plotbarchart;});
+    app.addExportStepPlotFunctor([&]() { gBar->setVisible(true); plotbarchart->redrawPlot(); return plotbarchart;});
+    app.addExportStepPlotFunctor([&]() { return plotboxplot; });
+    app.addExportStepPlotFunctor([&]() { gScatterErr->setVisible(false); plotscattererrors->redrawPlot(); return plotscattererrors;});
+    app.addExportStepPlotFunctor([&]() { gScatterErr->setVisible(true); plotscattererrors->redrawPlot(); return plotscattererrors;});
 
     return app.exec();
 }

@@ -54,6 +54,7 @@ int main(int argc, char* argv[])
     //      columns and added gaussian noise
     std::random_device rd; // random number generators:
     std::mt19937 gen{rd()};
+    gen.seed(12345);
     std::normal_distribution<> d1{0,1};
     double a0=-5;
     double b0=2;
@@ -96,8 +97,8 @@ int main(int argc, char* argv[])
     size_t colWLinE=datastore1->addColumn("wlin data, errors");
     for (double x=-5; x<=10; x++) {
         double factor=1;
-        if (ddecide(gen)==4) {
-            factor=4;
+        if (ddecide(gen)>=3) {
+            factor=6;
         }
         const double err=de(gen)*factor;
         datastore1->appendToColumn(colWLinX, x);
@@ -192,12 +193,15 @@ int main(int argc, char* argv[])
     p=1.5;
     g=jkqtpstatAddRobustIRLSLinearRegression(graphD, nullptr, nullptr, false, false, p);
     g->setTitle(g->getTitle()+", $p="+jkqtp_floattolatexqstr(p)+"$");
+    auto gp1=g;
     p=1.7;
     g=jkqtpstatAddRobustIRLSLinearRegression(graphD, nullptr, nullptr, false, false, p);
     g->setTitle(g->getTitle()+", $p="+jkqtp_floattolatexqstr(p)+"$");
+    auto gp2=g;
     p=2;
     g=jkqtpstatAddRobustIRLSLinearRegression(graphD, nullptr, nullptr, false, false, p);
     g->setTitle(g->getTitle()+", $p="+jkqtp_floattolatexqstr(p)+"$");
+    auto gp3=g;
 
 
 
@@ -276,16 +280,20 @@ int main(int argc, char* argv[])
     std::vector<double> pPoly {1,2,-2,0.5};
     size_t colPolyX=datastore1->addColumn("polynomial data, x");
     size_t colPolyY=datastore1->addColumn("polynomial data, y");
+    size_t colPolyYNN=datastore1->addColumn("polynomial data, y, no noise");
     for (double x=-10; x<=10; x++) {
         datastore1->appendToColumn(colPolyX, x);
         datastore1->appendToColumn(colPolyY, jkqtp_polyEval(x, pPoly.begin(), pPoly.end())+d1(gen)*50.0);
+        datastore1->appendToColumn(colPolyYNN, jkqtp_polyEval(x, pPoly.begin(), pPoly.end()));
     }
     //     we visualize this data with a simple scatter graph:
+    QVector<JKQTPGraph*> plotPNoise, plotsPNN;
     JKQTPXYLineGraph* graphP;
     plot6->addGraph(graphP=new JKQTPXYLineGraph(plot6));
     graphP->setXYColumns(colPolyX, colPolyY);
     graphP->setDrawLine(false);
     graphP->setTitle(QString("data $%1+\\mathcal{N}(0,50)$").arg(jkqtp_polynomialModel2Latex(pPoly.begin(), pPoly.end())));
+    plotPNoise<<graphP;
     // 6.2. now we can fit polynomials with different number of coefficients:
     for (size_t p=0; p<=5; p++) {
         std::vector<double> pFit;
@@ -294,6 +302,25 @@ int main(int argc, char* argv[])
         plot6->addGraph(gPoly=new JKQTPXFunctionLineGraph(plot6));
         gPoly->setPlotFunctionFunctor(jkqtp_generatePolynomialModel(pFit.begin(), pFit.end()));
         gPoly->setTitle(QString("regression: $%1$").arg(jkqtp_polynomialModel2Latex(pFit.begin(), pFit.end())));
+        plotPNoise<<gPoly;
+    }
+    JKQTPXYLineGraph* graphPNN;
+    plot6->addGraph(graphPNN=new JKQTPXYLineGraph(plot6));
+    graphPNN->setXYColumns(colPolyX, colPolyYNN);
+    graphPNN->setDrawLine(false);
+    graphPNN->setTitle(QString("data $%1$").arg(jkqtp_polynomialModel2Latex(pPoly.begin(), pPoly.end())));
+    graphPNN->setVisible(false);
+    plotsPNN<<graphPNN;
+    // 6.2. now we can fit polynomials with different number of coefficients:
+    for (size_t p=0; p<=5; p++) {
+        std::vector<double> pFit;
+        JKQTPXFunctionLineGraph* gPoly;
+        jkqtpstatPolyFit(datastore1->begin(colPolyX), datastore1->end(colPolyX), datastore1->begin(colPolyYNN), datastore1->end(colPolyYNN), p, std::back_inserter(pFit));
+        plot6->addGraph(gPoly=new JKQTPXFunctionLineGraph(plot6));
+        gPoly->setPlotFunctionFunctor(jkqtp_generatePolynomialModel(pFit.begin(), pFit.end()));
+        gPoly->setTitle(QString("regression: $%1$").arg(jkqtp_polynomialModel2Latex(pFit.begin(), pFit.end())));
+        gPoly->setVisible(false);
+        plotsPNN<<gPoly;
     }
     // 6.3. of course also the "adaptor" shortcuts are available:
     //for (size_t p=0; p<=5; p++) {
@@ -337,6 +364,15 @@ int main(int argc, char* argv[])
     // show plotter and make it a decent size
     mainWidget.show();
     mainWidget.resize(1600,800);
+
+    app.addExportStepPlotFunctor([&]() { mainWidget.resize(2000, 900); return plot1; });
+    app.addExportStepPlotFunctor([&]() { gp1->setVisible(false); gp2->setVisible(false); gp3->setVisible(false); plot3->redrawPlot(); return plot3; });
+    app.addExportStepPlotFunctor([&]() { gp1->setVisible(true); gp2->setVisible(true); gp3->setVisible(true); plot3->redrawPlot(); return plot3; });
+    app.addExportStepPlot(plot2);
+    app.addExportStepPlot(plot4);
+    app.addExportStepPlot(plot5);
+    app.addExportStepPlotFunctor([&]() { std::for_each(plotPNoise.begin(), plotPNoise.end(), [](JKQTPGraph* g) {g->setVisible(false);}); std::for_each(plotsPNN.begin(), plotsPNN.end(), [](JKQTPGraph* g) {g->setVisible(true);}); plot6->setX(-12.5,12.5); plot6->redrawPlot(); return plot6; });
+    app.addExportStepPlotFunctor([&]() { std::for_each(plotPNoise.begin(), plotPNoise.end(), [](JKQTPGraph* g) {g->setVisible(true);}); std::for_each(plotsPNN.begin(), plotsPNN.end(), [](JKQTPGraph* g) {g->setVisible(false);}); plot6->setX(-12.5,12.5); plot6->redrawPlot(); return plot6; });
 
     return app.exec();
 }

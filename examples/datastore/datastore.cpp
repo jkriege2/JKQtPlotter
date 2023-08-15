@@ -177,9 +177,9 @@ int main(int argc, char* argv[])
     app.addExportStepFunctor([&]() { setVisible(1); plot.getPlotter()->setShowKey(false); plot.zoomToFit(); plot.redrawPlot(); plot.resize(400,400*4/6); });
     app.addExportStepFunctor([&]() { setVisible(2); plot.getPlotter()->setShowKey(false); plot.zoomToFit(); plot.redrawPlot(); plot.resize(400,400*4/6); });
     app.addExportStepFunctor([&]() { setVisible(3); plot.getPlotter()->setShowKey(false); plot.zoomToFit(); plot.redrawPlot(); plot.resize(400,400*4/6); });
-    app.addExportStepFunctor([&]() { setVisibleV({4,5}); plot.getPlotter()->setShowKey(false); plot.zoomToFit(); plot.redrawPlot(); plot.resize(400,400*4/6); });
+    app.addExportStepFunctor([&]() { setVisibleV({4,5}); plot.getPlotter()->setShowKey(false); plot.zoomToFit(); plot.redrawPlot(); plot.resize(600,400*4/6); });
     app.addExportStepFunctor([&]() { std::sort(datastore->begin(colLinXY.second), datastore->end(colLinXY.second)); setVisibleV({4,5});plot.getPlotter()->setShowKey(false);  plot.zoomToFit(); plot.redrawPlot(); });
-    app.addExportStepFunctor([&]() { setVisible(6); plot.zoomToFit(); plot.getPlotter()->setShowKey(false); plot.redrawPlot(); plot.resize(400,400); });
+    app.addExportStepFunctor([&]() { setVisible(6); plot.zoomToFit(); plot.getPlotter()->setShowKey(false); plot.redrawPlot(); plot.resize(300,300); });
 
     return app.exec();
 }

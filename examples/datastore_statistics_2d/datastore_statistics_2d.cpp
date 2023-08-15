@@ -102,6 +102,7 @@ int main(int argc, char* argv[])
     // random number generators:
     std::random_device rd;
     std::mt19937 gen{rd()};
+    gen.seed(12345);
     std::uniform_int_distribution<> ddecide(0,2);
     std::normal_distribution<> d1x{5,3};
     std::normal_distribution<> d1y{5,1};

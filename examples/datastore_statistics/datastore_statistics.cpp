@@ -54,6 +54,7 @@ int main(int argc, char* argv[])
     size_t randomdatacol3=datastore1->addColumn("random data 3");
     std::random_device rd; // random number generators:
     std::mt19937 gen{rd()};
+    gen.seed(12345);
     std::uniform_int_distribution<> ddecide(0,1);
     std::normal_distribution<> d1{0,1};
     std::normal_distribution<> d2{6,1.2};
@@ -146,26 +147,29 @@ int main(int argc, char* argv[])
 
 
     // 4.1. We repeat the JKQTPPeakStreamGraph visualization from above:
-    plot1->addGraph(gData1=new JKQTPPeakStreamGraph(plot1));
-    gData1->setDataColumn(randomdatacol1);
-    gData1->setBaseline(-0.1);
-    gData1->setPeakHeight(-0.05);
-    gData1->setDrawBaseline(false);
-    gData1->setTitle("random data $"+d1_latex+"+"+d2_latex+"$");
+    JKQTPPeakStreamGraph* pgData1;
+    plot1->addGraph(pgData1=new JKQTPPeakStreamGraph(plot1));
+    pgData1->setDataColumn(randomdatacol1);
+    pgData1->setBaseline(-0.1);
+    pgData1->setPeakHeight(-0.05);
+    pgData1->setDrawBaseline(false);
+    pgData1->setTitle("random data $"+d1_latex+"+"+d2_latex+"$");
 
     // 4.2. same as 3.1-3.2, but for the second and thirdcolumn of data:
-    plot1->addGraph(gData2=new JKQTPPeakStreamGraph(plot1));
-    gData2->setDataColumn(randomdatacol2);
-    gData2->setBaseline(-0.1);
-    gData2->setPeakHeight(0.05);
-    gData2->setDrawBaseline(false);
-    gData2->setTitle("random data subset $"+d1_latex+"$");
-    plot1->addGraph(gData3=new JKQTPPeakStreamGraph(plot1));
-    gData3->setDataColumn(randomdatacol3);
-    gData3->setBaseline(-0.15);
-    gData3->setPeakHeight(-0.05);
-    gData3->setDrawBaseline(false);
-    gData3->setTitle("random data subset $"+d2_latex+"$");
+    JKQTPPeakStreamGraph* pgData2;
+    plot1->addGraph(pgData2=new JKQTPPeakStreamGraph(plot1));
+    pgData2->setDataColumn(randomdatacol2);
+    pgData2->setBaseline(-0.1);
+    pgData2->setPeakHeight(0.05);
+    pgData2->setDrawBaseline(false);
+    pgData2->setTitle("random data subset $"+d1_latex+"$");
+    JKQTPPeakStreamGraph* pgData3;
+    plot1->addGraph(pgData3=new JKQTPPeakStreamGraph(plot1));
+    pgData3->setDataColumn(randomdatacol3);
+    pgData3->setBaseline(-0.15);
+    pgData3->setPeakHeight(-0.05);
+    pgData3->setDrawBaseline(false);
+    pgData3->setTitle("random data subset $"+d2_latex+"$");
 
     // 4.3. for comparison we add plots of the initial distributions:
     plot1->addGraph(new JKQTPXFunctionLineGraph(std::bind(&jkqtp_gaussdist, std::placeholders::_1, d1.mean(), d1.stddev()), d1_latex, plot1));
@@ -288,6 +292,13 @@ int main(int argc, char* argv[])
     // show plotter and make it a decent size
     mainWidget.show();
     mainWidget.resize(1200,800);
+
+    app.addExportStepPlotFunctor([&]() { gData1->setVisible(true); gBox1.first->setVisible(false); gBox1.second->setVisible(false); gData2->setVisible(true); gBox2->setVisible(false); gData3->setVisible(true); gBox3->setVisible(false); plot1box->redrawPlot(); return plot1box; });
+    app.addExportStepPlotFunctor([&]() { gData1->setVisible(false); gBox1.first->setVisible(false); gBox1.second->setVisible(false); gData2->setVisible(true); gBox2->setVisible(true); gData3->setVisible(true); gBox3->setVisible(true); plot1box->redrawPlot(); return plot1box; });
+    app.addExportStepPlotFunctor([&]() { gData1->setVisible(true); gBox1.first->setVisible(true); gBox1.second->setVisible(true); gData2->setVisible(false); gBox2->setVisible(false); gData3->setVisible(false); gBox3->setVisible(false); plot1box->redrawPlot(); return plot1box; });
+    app.addExportStepPlotFunctor([&]() { return plot1; });
+    app.addExportStepPlotFunctor([&]() { return plot1kde; });
+    app.addExportStepPlotFunctor([&]() { return plot1cum; });
 
     return app.exec();
 }

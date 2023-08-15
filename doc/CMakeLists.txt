@@ -201,6 +201,11 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         logaxes/logaxes,logaxes_nolog,logaxes_nominorgrid/--iteratefunctorsteps
         #speed
         datastore/datastore,datastore_sine,datastore_linkedcarray,datastore_map,datastore_calccolumns,datastore_image,datastore_image_sorted,datastore_sineimg/--iteratefunctorsteps
+        datastore_iterators/datastore_iterators,datastore_iterators_cosine,datastore_iterators_cosine_ysorted,datastore_iterators_cosine_yreplaced,/--iteratefunctorsteps
+        datastore_groupedstat/datastore_groupedstat,datastore_groupedstat_barchartrawdata,datastore_groupedstat_barchart,datastore_groupedstat_boxplot,datastore_groupedstat_scatterrawdata,datastore_groupedstat_scatter/--iteratefunctorsteps
+        datastore_regression/datastore_regression,datastore_regression_lin,datastore_regression_linrobust,datastore_regression_linrobust_p,datastore_regression_linweight,datastore_regression_nonlinreg_exp,datastore_regression_nonlinreg_pow,datastore_regression_polynom,datastore_regression_polynom_errros/--iteratefunctorsteps
+        datastore_statistics/datastore_statistics,datastore_statistics_dataonly,datastore_statistics_boxplots_simple,datastore_statistics_boxplots_outliers,datastore_statistics_hist,datastore_statistics_kde,datastore_statistics_cumhistkde/--iteratefunctorsteps
+        datastore_statistics_2d/datastore_statistics_2d
     )
 
 

@@ -282,7 +282,8 @@ The regression models can be plotted using a `JKQTPXFunctionLineGraph`. the fucn
 
 The resulting plot looks like this:
 
-![datastore_regression_nonlinreg](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/datastore_regression_nonlinreg.png)
+![datastore_regression_nonlinreg_exp](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/datastore_regression_nonlinreg_exp.png)
+![datastore_regression_nonlinreg_pow](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/datastore_regression_nonlinreg_pow.png)
 
 Of course also "adaptors" exist that allow to perform the steps above in a single function call:
 

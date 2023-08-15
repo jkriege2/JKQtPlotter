@@ -48,7 +48,7 @@ In other tutorials we used e.g. `JKQTPDatastore::set()` to set values in data co
 ```
 Here we added two columns with 50 entries. `XCol` contains linearly spaced values between 0 and 2*pi and `YCol` contains 50 uninitialized values. Then we iterate an index `i` over all these items (`datastore->getRows(XCol)` returns the rows in a column, i.e. 50 in the example above) and used `JKQTPDatastore::set()` to store the calculated values in the two columns. The current x-values is read from `XCol` using `JKQTPDatastore::get()`. The resulting plot looks like this:
 
-![simpletest_datastore_iterators_cosine](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/datastore_iterators_cosine.png)
+![datastore_iterators_cosine](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/datastore_iterators_cosine.png)
 
 The same loop can be written using iterators:
 ```.cpp
@@ -90,14 +90,14 @@ Of course you can now also interface other algorithms, like e.g. [`std::sort()`]
 
 With this line of code, the `YCol` is sorted in ascending order and the plot becomes:
 
-![simpletest_datastore_iterators_cosine_ysorted](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/datastore_iterators_cosine_ysorted.png)
+![datastore_iterators_cosine_ysorted](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/datastore_iterators_cosine_ysorted.png)
 
 Another example would be to replace all value `y<-0.5` with the value `1.0` using  [`std::replace_if()`](https://de.cppreference.com/w/cpp/algorithm/replace):
 ```.cpp
     std::replace_if(datastore->begin(YCol), datastore->end(YCol), [](double v) { return v<-0.5; }, 1.0);
 ```
 
-![simpletest_datastore_iterators_cosine_yreplaced](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/datastore_iterators_cosine_yreplaced.png)
+![datastore_iterators_cosine_yreplaced](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/datastore_iterators_cosine_yreplaced.png)
 
 Finally also the [erase-remove idiom](https://en.wikipedia.org/wiki/Erase%E2%80%93remove_idiom) (e.g. known from `std::vector`) is supported:
 ```.cpp

@@ -52,7 +52,9 @@ int main(int argc, char* argv[])
     // 2.3 combining with addLinearColumn() you can also use C++ STL algorithms:
     //size_t XCol=datastore->addLinearColumn(50, 0, 4.0*JKQTPSTATISTICS_PI, "cos curve: x-data");
     //size_t YCol=datastore->addColumn("cos curve: y-data");
+    size_t YCol2=datastore->addColumn("cos curve: y-data");
     //std::transform(datastore->begin(XCol), datastore->end(XCol), datastore->backInserter(YCol), cos);
+    std::transform(datastore->begin(XCol), datastore->end(XCol), datastore->backInserter(YCol2), cos);
     // 2.4. Just for fun we can now sort the data:
     //std::sort(datastore->begin(YCol), datastore->end(YCol));
     //      or replace any value <-0.5 with 1:
@@ -73,6 +75,11 @@ int main(int argc, char* argv[])
     // show plotter and make it a decent size
     plot.show();
     plot.resize(600,400);
+
+
+    app.addExportStepFunctor([&]() { std::sort(datastore->begin(YCol), datastore->end(YCol)); });
+    app.addExportStepFunctor([&]() {
+        std::replace_if(datastore->begin(YCol2), datastore->end(YCol2), [](double v) { return v<-0.5; }, 1.0); linegraph->setYColumn(YCol2); plot.zoomToFit(); });
 
     return app.exec();
 }
