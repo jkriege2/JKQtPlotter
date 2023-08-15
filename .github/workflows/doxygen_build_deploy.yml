@@ -38,7 +38,7 @@ jobs:
           currDir=`pwd`
           cd $GITHUB_WORKSPACE
           mkdir doxygen
-          wget -O - https://github.com/doxygen/doxygen/releases/download/Release_1_9_7/doxygen-1.9.7.linux.bin.tar.gz | tar --strip-components=1 -xz -C doxygen
+          wget -O - https://github.com/doxygen/doxygen/releases/download/Release_1_9_6/doxygen-1.9.6.linux.bin.tar.gz | tar --strip-components=1 -xz -C doxygen
           export PATH=$GITHUB_WORKSPACE/doxygen/bin:${PATH}
           echo PATH=$PATH
           cd $currDir
