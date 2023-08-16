@@ -90,7 +90,8 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: add color palettes from Green's HELIX method, see <a href="https://arxiv.org/abs/1108.5083">https://arxiv.org/abs/1108.5083</a>, also see <a href="https://jiffyclub.github.io/palettable/cubehelix/">https://jiffyclub.github.io/palettable/cubehelix/</a>, see JKQTPCreateGreensCubeHelixLUT() and e.g. JKQTPMathImageCubeHelixClassic, JKQTPMathImageCubeHelix1, ...</li>
     <li>NEW: Using Q_SIGNALS/Q_SLOTS instead of signals/slots MOC-keywords ... this allows for interoperability with other signals/slots frameworks, thanks to <a href="https://github.com/nickmontini">user:nickmontini</a> for the proposal</li>
     <li>NEW: you can use any (preferably stepped/categorial) JKQTPMathImageColorPalette as default graph colors list in a style.ini file, by setting <tt>auto_styles/use_color_from_palette=PALETTE_NAME</tt></li>
-    <li>NEW added entry for plotLabelColor to JKQTBasePlotterStyle</li>
+    <li>NEW: added entry for JKQTBasePlotterStyle::plotLabelColor to set the plot label color</li>
+    <li>NEW: Due to addition of JKQTMathText::setFontOptions() and the matchign extension of JKQTMathText::setFontSpecial() (see below) you can now add modifiers like <tt>+BOLD+ITALIC</tt> to any font-name provided to JKQTPlotter and in style INI-files</li>
   </ul></li>
   
   <li>JKQTMathText:<ul>
@@ -161,6 +162,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: added environment-modifying commands for text formatting: \c {\\bfseries...}, \c {\\itshape...}, \c {\\bf...}, \c {\\it...}, \c {\\sffamily...}, \c {\\ttfamily...}, ... </li>
     <li>NEW: Added the Fira Math fonts as sans-serif symbol font to the library (as a ressource) and added JKQTMathText::useFiraMath()</li>
     <li>NEW: Added JKQTMathText::useGuiFonts()</li>
+    <li>NEW: Added JKQTMathText::setFontOptions(), which allows to make fonts initially e.g. bold, italic, ... and extended JKQTMathText::setFontSpecial() accordingly</li>
   </ul></li>
 </ul>
 
