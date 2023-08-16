@@ -338,7 +338,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
             BaseFontBold = 0x01, /*!< \brief output is bold (equivalent to placinf text in <code>\textbf{...}</code>) */
             BaseFontItalic = 0x02, /*!< \brief output is italic (equivalent to placinf text in <code>\textit{...}</code>) */
             BaseFontUnderlined = 0x04, /*!< \brief output is underlined (equivalent to placinf text in <code>\underlined{...}</code>) */
-            BaseFontSmallCaps = 0x08, /*!< \brief output is underlined (equivalent to placinf text in <code>\underlined{...}</code>) */
+            BaseFontSmallCaps = 0x08, /*!< \brief output is small-caps (equivalent to placinf text in <code>\textsc{...}</code>) */
             BaseFontDefault=0x00, /*!< \brief base font is used as is, without modifications */
         };
         Q_DECLARE_FLAGS(BaseFontOptions, BaseFontOption)
