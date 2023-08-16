@@ -1139,6 +1139,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         double getPlotLabelFontSize() const;
         /** \copydoc JKQTBasePlotterStyle::plotLabelOffset */
         double getPlotLabelOffset() const;
+        /** \copydoc JKQTBasePlotterStyle::plotLabelTopBorder */
+        double getPlotLabelTopBorder() const;
         /** \copydoc JKQTBasePlotterStyle::plotLabelFontName */
         QString getplotLabelFontName() const;
         /** \copydoc JKQTBasePlotterStyle::plotLabelColor */
@@ -2017,6 +2019,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         void setPlotLabelFontSize(double __value);
         /** \copydoc JKQTBasePlotterStyle::plotLabelOffset */
         void setPlotLabelOffset(double __value);
+        /** \copydoc JKQTBasePlotterStyle::plotLabelTopBorder */
+        void setPlotLabelTopBorder(double __value);
         /** \copydoc JKQTBasePlotterStyle::plotLabelFontName */
         void setplotLabelFontName(const QString & __value);
         /** \copydoc JKQTBasePlotterStyle::plotLabelColor */

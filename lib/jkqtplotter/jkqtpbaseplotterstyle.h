@@ -141,8 +141,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotterStyle {
         double plotLabelFontSize;
         /** \brief the plot label color */
         QColor plotLabelColor;
-        /** \brief offset of the plot label from the next element [pt]. This offset is added below AND above the plot label! */
+        /** \brief offset of the plot label from the next element of the graph, i.e. below the label [pt]. \see plotLabelTopBorder for spacing above */
         double plotLabelOffset;
+        /** \brief offset of the plot label from the top [pt]. \see plotLabelOffset for spacing between label and graph */
+        double plotLabelTopBorder;
         /** \brief specifies whether to use antialiasing for plotting the coordinate system */
         bool useAntiAliasingForSystem;
         /** \brief specifies whether to use antialiasing when drawing any text

@@ -21,9 +21,10 @@ JKQTBasePlotterStyle::JKQTBasePlotterStyle():
     plotFrameWidth(1),
     plotFrameRounding(0),
     plotFrameVisible(false),
-    plotLabelFontName("GUI"),
-    plotLabelFontSize(qCeil(QApplication::font().pointSizeF()*1.2)),
+    plotLabelFontName("GUI+BOLD"),
+    plotLabelFontSize(qCeil(QApplication::font().pointSizeF()*1.5)),
     plotLabelOffset(qCeil(QApplication::font().pointSizeF()*0.4)),
+    plotLabelTopBorder(qCeil(QApplication::font().pointSizeF()*0.25)),
     useAntiAliasingForSystem(true),
     useAntiAliasingForText(true),
     defaultTextColor(QColor("black")),
@@ -54,6 +55,7 @@ void JKQTBasePlotterStyle::loadSettings(const QSettings &settings, const QString
     plotLabelFontName=settings.value(group+"plot_label_font_name", defaultStyle.plotLabelFontName).toString();
     plotLabelFontSize=settings.value(group+"plot_label_font_size", defaultStyle.plotLabelFontSize).toDouble();
     plotLabelOffset=settings.value(group+"plot_label_offset", defaultStyle.plotLabelOffset).toDouble();
+    plotLabelTopBorder=settings.value(group+"plot_label_top_border", defaultStyle.plotLabelTopBorder).toDouble();
     plotLabelColor=jkqtp_String2QColor(settings.value(group+"plot_label_color", jkqtp_QColor2String(defaultStyle.plotLabelColor)).toString());
     widgetBackgroundBrush=QBrush(jkqtp_String2QColor(settings.value(group+"widget_background_color", jkqtp_QColor2String(defaultStyle.widgetBackgroundBrush.color())).toString()));
     exportBackgroundBrush=QBrush(jkqtp_String2QColor(settings.value(group+"widget_background_color_for_export", jkqtp_QColor2String(defaultStyle.exportBackgroundBrush.color())).toString()));
@@ -103,6 +105,7 @@ void JKQTBasePlotterStyle::saveSettings(QSettings &settings, const QString &grou
     settings.setValue(group+"plot_label_font_name", plotLabelFontName);
     settings.setValue(group+"plot_label_font_size", plotLabelFontSize);
     settings.setValue(group+"plot_label_offset", plotLabelOffset);
+    settings.setValue(group+"plot_label_top_border", plotLabelTopBorder);
     settings.setValue(group+"plot_label_color", jkqtp_QColor2String(plotLabelColor));
     settings.setValue(group+"plot_frame_visible", plotFrameVisible);
     settings.setValue(group+"plot_frame_color", jkqtp_QColor2String(plotFrameColor));
