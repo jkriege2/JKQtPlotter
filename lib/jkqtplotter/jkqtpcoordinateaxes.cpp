@@ -2082,15 +2082,15 @@ QSizeF JKQTPHorizontalAxisBase::getSize1(JKQTPEnhancedPainter& painter, double *
         const QSizeF maxLabelSize=getMaxTickLabelSize(painter);
         if (elongateLeft) {
             if (getTickLabelAngle()<-0.0000001)
-                *elongateLeft=maxLabelSize.width();
+                *elongateLeft=maxLabelSize.width()+2;
             else if (getTickLabelAngle()<0.0000001)
-                *elongateLeft=maxLabelSize.width()/2.0;
+                *elongateLeft=maxLabelSize.width()*0.6+2;
         }
         if (elongateRight) {
             if (getTickLabelAngle()>0.0000001)
-                *elongateRight=maxLabelSize.width();
+                *elongateRight=maxLabelSize.width()+2;
             else if (getTickLabelAngle()>-0.0000001)
-                *elongateRight=maxLabelSize.width()/2.0;
+                *elongateRight=maxLabelSize.width()*0.6+2;
         }
         labheight+=maxLabelSize.height();
     }
