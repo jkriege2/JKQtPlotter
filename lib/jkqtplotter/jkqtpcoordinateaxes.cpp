@@ -1332,7 +1332,7 @@ std::pair<QSizeF,QSizeF> JKQTPVerticalAxisBase::getSize0(JKQTPEnhancedPainter& p
 }
 
 
-QSizeF JKQTPVerticalAxisBase::getSize1(JKQTPEnhancedPainter& painter) {
+QSizeF JKQTPVerticalAxisBase::getSize1(JKQTPEnhancedPainter& painter, double* elongateBottom, double *elongateTop) {
     if (axisStyle.drawMode1==JKQTPCADMnone) return QSize(0,0);
     double ptwidth=axisStyle.axisLineOffset;
     const double arrowSize=((axisStyle.drawMode1&(JKQTPCADMMinArrow|JKQTPCADMMinFilledArrow|JKQTPCADMMaxArrow|JKQTPCADMMaxFilledArrow))!=int(0))?(axisStyle.getArrowSize(painter, parent)/2.0):0.0;
@@ -2070,7 +2070,7 @@ std::pair<QSizeF,QSizeF> JKQTPHorizontalAxisBase::getSize0(JKQTPEnhancedPainter&
                 );
 }
 
-QSizeF JKQTPHorizontalAxisBase::getSize1(JKQTPEnhancedPainter& painter) {
+QSizeF JKQTPHorizontalAxisBase::getSize1(JKQTPEnhancedPainter& painter, double *elongateLeft, double *elongateRight) {
     if (axisStyle.drawMode1==JKQTPCADMnone) return QSize(0,0);
     double ptheight=axisStyle.axisLineOffset;
     const double arrowSize=((axisStyle.drawMode1&(JKQTPCADMMinArrow|JKQTPCADMMinFilledArrow|JKQTPCADMMaxArrow|JKQTPCADMMaxFilledArrow))!=int(0))?(axisStyle.getArrowSize(painter, parent)/2.0):0.0;
@@ -2079,7 +2079,20 @@ QSizeF JKQTPHorizontalAxisBase::getSize1(JKQTPEnhancedPainter& painter) {
     if (axisStyle.drawMode1.testFlag(JKQTPCADMTickLabels)) {
         ptheight+=axisStyle.tickLabelDistance;
         // find out the maximum width over all visible plot labels
-        labheight+=getMaxTickLabelSize(painter).height();
+        const QSizeF maxLabelSize=getMaxTickLabelSize(painter);
+        if (elongateLeft) {
+            if (getTickLabelAngle()<-0.0000001)
+                *elongateLeft=maxLabelSize.width();
+            else if (getTickLabelAngle()<0.0000001)
+                *elongateLeft=maxLabelSize.width()/2.0;
+        }
+        if (elongateRight) {
+            if (getTickLabelAngle()>0.0000001)
+                *elongateRight=maxLabelSize.width();
+            else if (getTickLabelAngle()>-0.0000001)
+                *elongateRight=maxLabelSize.width()/2.0;
+        }
+        labheight+=maxLabelSize.height();
     }
     if (axisStyle.drawMode1.testFlag(JKQTPCADMAxisLabel)) {
         ptheight+=axisStyle.labelDistance;

@@ -874,8 +874,12 @@ void JKQTBasePlotter::calcPlotScaling(JKQTPEnhancedPainter& painter){
     }*/
 
     // read additional size required for coordinate axes
-    QSizeF s=xAxis->getSize1(painter);
+    double elongateLeft=0,elongateRight=0;
+    double elongateMin=0,elongateMax=0;
+    QSizeF s=xAxis->getSize1(painter, &elongateMin, &elongateMax);
     internalPlotBorderBottom+=s.height();
+    if (elongateMin>0) elongateLeft=qMax(elongateLeft,elongateMin);
+    if (elongateMax>0) elongateRight=qMax(elongateRight,elongateMax);
     s=xAxis->getSize2(painter);
     internalPlotBorderTop+=s.height();
 
@@ -899,6 +903,9 @@ void JKQTBasePlotter::calcPlotScaling(JKQTPEnhancedPainter& painter){
         internalPlotBorderBottom+=ax->getSize1(painter).height()+plotterStyle.secondaryAxisSeparation;
         internalPlotBorderTop+=ax->getSize2(painter).height()+plotterStyle.secondaryAxisSeparation;
     }
+
+    if (internalPlotBorderRight<elongateRight) internalPlotBorderRight=elongateRight;
+    if (internalPlotBorderLeft<elongateLeft) internalPlotBorderLeft=elongateLeft;
 
     internalPlotBorderTop_notIncludingOutsidePlotSections=internalPlotBorderTop;
     internalPlotBorderLeft_notIncludingOutsidePlotSections=internalPlotBorderLeft;

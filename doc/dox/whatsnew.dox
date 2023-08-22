@@ -39,6 +39,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>FIXED: fixes strange rendering with distortions (especially in text!), by correcting size calculation of internal image buffer</li>
     <li>FIXED: exporting gridPrinting plots when using only a JKQTBasePlotter</li>
     <li>FIXED: fixed impleentations of JKQTPlotter::beginGraphs(), which actually returned the end-iterator (COPY-PASTE-ERROR!!!)</li>
+    <li>partly FIXED issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/99">#99: Clipping of Tick Labels</a>: for horizontal axes, additional space at the left  and/or right of the plot is allowed so labels are no longer clipped (thanks to <a href="https://github.com/allenbarnett5">user:allenbarnett5/a> for reporting)</li>
     <li>FIXED/NEW: placement of plot-title (was not centerd in its box, but glued to the bottom) by adding a plotstyle parameter JKQTBasePlotterStyle::plotLabelOffset</li>
     <li>REORGANIZED: separated line-graphs from jkqtpscatter.h/.cpp into jkqtplines.h/.cpp</li>
     <li>IMPROVED: QT6-compatibility by removing deprecated warnings</li>

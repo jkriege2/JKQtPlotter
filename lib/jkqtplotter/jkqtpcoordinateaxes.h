@@ -246,7 +246,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         void addAxisTickLabels(const double* x, const QString* label, int items);
 
         /** \brief returns the size of the left/bottom axis in pixels */
-        virtual QSizeF getSize1(JKQTPEnhancedPainter& painter)=0;
+        virtual QSizeF getSize1(JKQTPEnhancedPainter& painter, double* elongateMin=nullptr, double* elongateMax=nullptr)=0;
 
         /** \brief returns the size of the right/top axis in pixels */
         virtual QSizeF getSize2(JKQTPEnhancedPainter& painter)=0;
@@ -900,7 +900,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPVerticalAxisBase: public JKQTPCoordinateAxis {
         JKQTPVerticalAxisBase(JKQTBasePlotter* parent);
 
         /** \brief returns the size of the left axis in pixels */
-        virtual QSizeF getSize1(JKQTPEnhancedPainter& painter) override;
+        virtual QSizeF getSize1(JKQTPEnhancedPainter& painter, double *elongateBottom=nullptr, double* elongateTop=nullptr) override;
 
         /** \brief returns the size of the right axis in pixels */
         virtual QSizeF getSize2(JKQTPEnhancedPainter& painter) override;
@@ -1081,7 +1081,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPHorizontalAxisBase: public JKQTPCoordinateAxis
         JKQTPHorizontalAxisBase(JKQTBasePlotter* parent);
 
         /** \brief returns the size of the bottom axis in pixels */
-        virtual QSizeF getSize1(JKQTPEnhancedPainter& painter) override;
+        virtual QSizeF getSize1(JKQTPEnhancedPainter& painter, double* elongateLeft=nullptr, double* elongateRight=nullptr) override;
 
         /** \brief returns the size of the top axis in pixels */
         virtual QSizeF getSize2(JKQTPEnhancedPainter& painter) override;
