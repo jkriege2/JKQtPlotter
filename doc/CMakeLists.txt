@@ -131,6 +131,14 @@ if(JKQtPlotter_BUILD_TOOLS)
     )
     add_dependencies(JKQTPlotter_GenerateDocImages JKQTPlotter_GenerateDocImages_listaxisstyleprops)
 
+    add_custom_target(JKQTPlotter_GenerateDocImages_listaxisticklabelangles
+        COMMENT "Building JKQTPlotter Documentation Images: listaxisticklabelangles"
+        COMMAND ${JKQTPlotter_GenerateDocImages_COMMAND} --listaxisticklabelangles --background=lightgrey --iconsize=50 --outputdir="${JKQTPlotter_GenerateDocImages_OutputDir}/axisstyle/"
+        WORKING_DIRECTORY ${JKQtPlotter_QT_BINDIR}
+        DEPENDS jkqtplotter_doc_imagegenerator
+    )
+    add_dependencies(JKQTPlotter_GenerateDocImages JKQTPlotter_GenerateDocImages_listaxisticklabelangles)
+
     add_custom_target(JKQTPlotter_GenerateDocImages_liststyles
         COMMENT "Building JKQTPlotter Documentation Images: liststyles"
         COMMAND ${JKQTPlotter_GenerateDocImages_COMMAND} --liststyles --iconsize=1200 --outputdir="${JKQTPlotter_GenerateDocImages_OutputDir}/styles/" --doctomodify="${JKQTPlotter_GenerateDocImages_dox}/jkqtplotter_styling.dox"
