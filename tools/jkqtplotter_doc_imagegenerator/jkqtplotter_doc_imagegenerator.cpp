@@ -434,8 +434,38 @@ void doListAxisTickLabelAngles(const QDir& outputDir, int iconsize, QColor backg
     for (int angle: std::vector<int>{-75,-45,-15,0,15,45,75}) {
         plot.getXAxis()->setTickLabelAngle(angle);
         plot.getYAxis()->setTickLabelAngle(angle);
-        plot.setPlotLabel("\\alpha="+QString::number(angle)+"^\\circ");
+        plot.setPlotLabel("$\\alpha="+QString::number(angle)+"^\\degree$");
         plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,0,plot.getWidth(),plot.getHeight()).save(outputDir.absoluteFilePath("JKQTPCoordinateAxisTickLabelAngle"+QString::number(angle)+"Degree.png"), "png");
+    }
+}
+
+void doListLabelPosition(const QDir& outputDir, int iconsize, QColor backgroundColor) {
+    JKQTBasePlotter plot(true);
+
+    plot.setXY(0,100,0,100);
+    plot.setWidgetSize(iconsize*5,5*iconsize);
+    plot.setShowKey(false);
+    plot.setGrid(true);
+    plot.setExportBackgroundColor(QColor("lightgrey"));
+    plot.getXAxis()->setShowZeroAxis(false);
+    plot.getYAxis()->setShowZeroAxis(false);
+    plot.getXAxis()->setDrawMode1(JKQTPCADMLine|JKQTPCADMTicks|JKQTPCADMAxisLabel|JKQTPCADMTicksTickLabels);
+    plot.getXAxis()->setDrawGrid(false);
+    plot.getYAxis()->setDrawMode1(JKQTPCADMLine|JKQTPCADMTicks|JKQTPCADMAxisLabel|JKQTPCADMTicksTickLabels);
+    plot.getYAxis()->setAxisLabel("y-axis-label");
+    plot.getXAxis()->setAxisLabel("x-axis-label");
+
+
+
+    for (int lti=0; lti<=JKQTPLabelPositionMax; lti++) {
+        const JKQTPLabelPosition lt=static_cast<JKQTPLabelPosition>(lti);
+        plot.getXAxis()->setLabelPosition(lt);
+        plot.getYAxis()->setLabelPosition(lt);
+        plot.setPlotLabel("labelPos = "+JKQTPLabelPosition2String(lt));
+        QString ltn=JKQTPLabelPosition2String(lt);
+        if (ltn.size()>0) ltn[0]=ltn[0].toUpper();
+        plot.redrawPlot();
+        plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).save(outputDir.absoluteFilePath("JKQTPLabel"+ltn+".png"), "png");
     }
 }
 
@@ -543,8 +573,10 @@ int main(int argc, char* argv[])
     parser.addOption(listerrorindicatorsOption);
     QCommandLineOption listaxisstylepropsOption("listaxisstyleprops", "generate example images for JKQTPCALabelType and other coordinate axis properties.");
     parser.addOption(listaxisstylepropsOption);
-    QCommandLineOption doListAxisTickLabelAnglesOption("listaxisticklabelangles", "generate example images for coordinate axis tick labels at different angles.");
-    parser.addOption(doListAxisTickLabelAnglesOption);
+    QCommandLineOption listAxisTickLabelAnglesOption("listaxisticklabelangles", "generate example images for coordinate axis tick labels at different angles.");
+    parser.addOption(listAxisTickLabelAnglesOption);
+    QCommandLineOption listlabelpositionsOption("listlabelpositions", "generate example images for JKQTPLabelPosition.");
+    parser.addOption(listlabelpositionsOption);
     QCommandLineOption listpalettesOption("listpalettes", "generate example images for all predefined palettes.");
     parser.addOption(listpalettesOption);
     QCommandLineOption liststylesOption("liststyles", "generate example images for all predefined style INI files.");
@@ -562,7 +594,8 @@ int main(int argc, char* argv[])
     const bool listlinedecorators=parser.isSet(listlinedecoratorsOption);
     const bool listerrorindicators=parser.isSet(listerrorindicatorsOption);
     const bool listaxisstyleprops=parser.isSet(listaxisstylepropsOption);
-    const bool dolistaxisticklabelangles=parser.isSet(doListAxisTickLabelAnglesOption);
+    const bool listaxisticklabelangles=parser.isSet(listAxisTickLabelAnglesOption);
+    const bool listlabelpositions=parser.isSet(listlabelpositionsOption);
     const bool liststyles=parser.isSet(liststylesOption);
     const int iconsize=parser.value(iconsizeOption).toInt();
     const QColor backgroundColor = jkqtp_String2QColor(parser.value(backgroundOption));
@@ -573,7 +606,8 @@ int main(int argc, char* argv[])
     if (listlinedecorators) doListLineDecorators(outputDir, iconsize, backgroundColor);
     if (listerrorindicators) doListErrorIndicators(outputDir, iconsize, backgroundColor);
     if (listaxisstyleprops) doListAxisStyling(outputDir, iconsize, backgroundColor);
-    if (dolistaxisticklabelangles) doListAxisTickLabelAngles(outputDir, iconsize, backgroundColor);
+    if (listlabelpositions) doListLabelPosition(outputDir, iconsize, backgroundColor);
+    if (listaxisticklabelangles) doListAxisTickLabelAngles(outputDir, iconsize, backgroundColor);
     if (liststyles) doListStyles(outputDir, doctomodify, iconsize, backgroundColor);
     if (listpalettes) doListPalettes(outputDir, QSize(iconsize,qMax(5,iconsize/16)));
 
