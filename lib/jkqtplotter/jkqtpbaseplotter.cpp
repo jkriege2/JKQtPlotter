@@ -117,21 +117,20 @@ bool JKQTBasePlotter::deregisterSaveDataAdapter(JKQTPSaveDataAdapter *adapter)
 
 
 
-JKQTBasePlotter::textSizeData JKQTBasePlotter::getTextSizeDetail(const QFont &fm, const QString &text, QPainter& painter)
+JKQTMathTextNodeSize JKQTBasePlotter::getTextSizeDetail(const QFont &fm, const QString &text, QPainter& painter)
 {
     return getTextSizeDetail(fm.family(), fm.pointSizeF(), text, painter);
 }
 
-JKQTBasePlotter::textSizeData JKQTBasePlotter::getTextSizeDetail(const QString &fontName, double fontSize, const QString &text, QPainter& painter)
+JKQTMathTextNodeSize JKQTBasePlotter::getTextSizeDetail(const QString &fontName, double fontSize, const QString &text, QPainter& painter)
 {
-    thread_local QHash<JKQTBasePlotter::textSizeKey, JKQTBasePlotter::textSizeData> s_TextSizeDataCache;
+    thread_local QHash<JKQTBasePlotter::textSizeKey, JKQTMathTextNodeSize> s_TextSizeDataCache;
     JKQTBasePlotter::textSizeKey  dh(fontName, fontSize, text, painter.device());
     if (s_TextSizeDataCache.contains(dh)) return s_TextSizeDataCache[dh];
-    JKQTBasePlotter::textSizeData d;
     mathText.setFontSpecial(fontName);
     mathText.setFontSize(fontSize);
     mathText.parse(text);
-    mathText.getSizeDetail(painter, d.width, d.ascent, d.descent, d.strikeoutPos);
+    const JKQTMathTextNodeSize d=mathText.getSizeDetail(painter);
     s_TextSizeDataCache[dh]=d;
     //qDebug()<<"+++ textsize hash size: "<<tbrh.size();
     return d;
@@ -140,10 +139,10 @@ JKQTBasePlotter::textSizeData JKQTBasePlotter::getTextSizeDetail(const QString &
 void JKQTBasePlotter::getTextSizeDetail(const QString &fontName, double fontSize, const QString &text, QPainter &painter, double &width, double &ascent, double &descent, double &strikeoutPos)
 {
     if (!text.isEmpty()) {
-        JKQTBasePlotter::textSizeData d=getTextSizeDetail(fontName, fontSize, text, painter);
+        const JKQTMathTextNodeSize d=getTextSizeDetail(fontName, fontSize, text, painter);
         width=d.width;
-        ascent=d.ascent;
-        descent=d.descent;
+        ascent=d.baselineHeight;
+        descent=d.getDescent();
         strikeoutPos=d.strikeoutPos;
     } else {
         width=0;
@@ -166,8 +165,8 @@ QSizeF JKQTBasePlotter::getTextSizeSize(const QFont &fm, const QString &text, QP
 QSizeF JKQTBasePlotter::getTextSizeSize(const QString &fontName, double fontSize, const QString &text, QPainter &painter)
 {
     if (text.isEmpty()) return QSizeF(0,0);
-    JKQTBasePlotter::textSizeData d=getTextSizeDetail(fontName, fontSize, text, painter);
-    return QSizeF(d.width, d.ascent+d.descent);
+    const JKQTMathTextNodeSize d=getTextSizeDetail(fontName, fontSize, text, painter);
+    return d.getSize();
 }
 
 
@@ -875,18 +874,24 @@ void JKQTBasePlotter::calcPlotScaling(JKQTPEnhancedPainter& painter){
 
     // read additional size required for coordinate axes
     double elongateLeft=0,elongateRight=0;
-    double elongateMin=0,elongateMax=0;
-    QSizeF s=xAxis->getSize1(painter, &elongateMin, &elongateMax);
-    internalPlotBorderBottom+=s.height();
-    if (elongateMin>0) elongateLeft=qMax(elongateLeft,elongateMin);
-    if (elongateMax>0) elongateRight=qMax(elongateRight,elongateMax);
+    auto s=xAxis->getSize1(painter);
+    internalPlotBorderBottom+=s.requiredSize;
+    if (s.elongateMin>0) elongateLeft=qMax(elongateLeft,s.elongateMin);
+    if (s.elongateMax>0) elongateRight=qMax(elongateRight,s.elongateMax);
     s=xAxis->getSize2(painter);
-    internalPlotBorderTop+=s.height();
+    if (s.elongateMin>0) elongateLeft=qMax(elongateLeft,s.elongateMin);
+    if (s.elongateMax>0) elongateRight=qMax(elongateRight,s.elongateMax);
+    internalPlotBorderTop+=s.requiredSize;
 
+    double elongateBottom=0,elongateTop=0;
     s=yAxis->getSize1(painter);
-    internalPlotBorderLeft+=s.width();
+    if (s.elongateMin>0) elongateBottom=qMax(elongateBottom,s.elongateMin);
+    if (s.elongateMax>0) elongateTop=qMax(elongateTop,s.elongateMax);
+    internalPlotBorderLeft+=s.requiredSize;
     s=yAxis->getSize2(painter);
-    internalPlotBorderRight+=s.width();
+    if (s.elongateMin>0) elongateBottom=qMax(elongateBottom,s.elongateMin);
+    if (s.elongateMax>0) elongateTop=qMax(elongateTop,s.elongateMax);
+    internalPlotBorderRight+=s.requiredSize;
 
     internalPlotBorderTop_notIncludingAxisAndOutsidePlotSections=internalPlotBorderTop;
     internalPlotBorderLeft_notIncludingAxisAndOutsidePlotSections=internalPlotBorderLeft;
@@ -896,16 +901,18 @@ void JKQTBasePlotter::calcPlotScaling(JKQTPEnhancedPainter& painter){
 
     // read size required by secondary axes
     for (const auto& ax: qAsConst(secondaryYAxis)) {
-        internalPlotBorderLeft+=ax->getSize1(painter).width()+plotterStyle.secondaryAxisSeparation;
-        internalPlotBorderRight+=ax->getSize2(painter).width()+plotterStyle.secondaryAxisSeparation;
+        internalPlotBorderLeft+=ax->getSize1(painter).requiredSize+plotterStyle.secondaryAxisSeparation;
+        internalPlotBorderRight+=ax->getSize2(painter).requiredSize+plotterStyle.secondaryAxisSeparation;
     }
     for (const auto& ax: qAsConst(secondaryXAxis)) {
-        internalPlotBorderBottom+=ax->getSize1(painter).height()+plotterStyle.secondaryAxisSeparation;
-        internalPlotBorderTop+=ax->getSize2(painter).height()+plotterStyle.secondaryAxisSeparation;
+        internalPlotBorderBottom+=ax->getSize1(painter).requiredSize+plotterStyle.secondaryAxisSeparation;
+        internalPlotBorderTop+=ax->getSize2(painter).requiredSize+plotterStyle.secondaryAxisSeparation;
     }
 
     if (internalPlotBorderRight<elongateRight) internalPlotBorderRight=elongateRight;
     if (internalPlotBorderLeft<elongateLeft) internalPlotBorderLeft=elongateLeft;
+    if (internalPlotBorderTop<elongateTop) internalPlotBorderTop=elongateTop;
+    if (internalPlotBorderBottom<elongateBottom) internalPlotBorderBottom=elongateBottom;
 
     internalPlotBorderTop_notIncludingOutsidePlotSections=internalPlotBorderTop;
     internalPlotBorderLeft_notIncludingOutsidePlotSections=internalPlotBorderLeft;
@@ -1047,15 +1054,15 @@ void JKQTBasePlotter::drawSystemXAxis(JKQTPEnhancedPainter& painter) {
     //qDebug()<<"  end JKQTBasePlotter::drawSystemXAxis";
 
     if (secondaryXAxis.size()>0) {
-        double ibMove1=xAxis->getSize1(painter).height();
+        double ibMove1=xAxis->getSize1(painter).requiredSize;
         if (ibMove1>0) ibMove1+=plotterStyle.secondaryAxisSeparation;
-        double ibMove2=xAxis->getSize2(painter).height();
+        double ibMove2=xAxis->getSize2(painter).requiredSize;
         if (ibMove2>0) ibMove1+=plotterStyle.secondaryAxisSeparation;
 
         for (auto& ax: secondaryXAxis) {
             ax->drawAxes(painter, ibMove1, ibMove2);
-            const double add1=ax->getSize1(painter).height();
-            const double add2=ax->getSize2(painter).height();
+            const double add1=ax->getSize1(painter).requiredSize;
+            const double add2=ax->getSize2(painter).requiredSize;
             if (add1>0) ibMove1+=add1+plotterStyle.secondaryAxisSeparation;
             if (add2>0) ibMove2+=add2+plotterStyle.secondaryAxisSeparation;
         }
@@ -1071,15 +1078,15 @@ void JKQTBasePlotter::drawSystemYAxis(JKQTPEnhancedPainter& painter) {
     //qDebug()<<"  end JKQTBasePlotter::drawSystemYAxis";
 
     if (secondaryYAxis.size()>0) {
-        double ibMove1=yAxis->getSize1(painter).width();
+        double ibMove1=yAxis->getSize1(painter).requiredSize;
         if (ibMove1>0) ibMove1+=plotterStyle.secondaryAxisSeparation;
-        double ibMove2=yAxis->getSize2(painter).width();
+        double ibMove2=yAxis->getSize2(painter).requiredSize;
         if (ibMove2>0) ibMove1+=plotterStyle.secondaryAxisSeparation;
 
         for (auto& ax: secondaryYAxis) {
             ax->drawAxes(painter, ibMove1, ibMove2);
-            const double add1=ax->getSize1(painter).width();
-            const double add2=ax->getSize2(painter).width();
+            const double add1=ax->getSize1(painter).requiredSize;
+            const double add2=ax->getSize2(painter).requiredSize;
             if (add1>0) ibMove1+=add1+plotterStyle.secondaryAxisSeparation;
             if (add2>0) ibMove2+=add2+plotterStyle.secondaryAxisSeparation;
         }
@@ -5409,12 +5416,6 @@ bool JKQTBasePlotter::textSizeKey::operator==(const JKQTBasePlotter::textSizeKey
     return ldpiX==other.ldpiX &&  ldpiY==other.ldpiY && text==other.text && f==other.f;
 }
 
-
-JKQTBasePlotter::textSizeData::textSizeData():
-    ascent(0), descent(0), width(0), strikeoutPos(0)
-{
-
-}
 
 
 

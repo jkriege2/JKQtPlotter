@@ -504,10 +504,22 @@ JKQTPLOTTER_LIB_EXPORT JKQTPCALabelType String2JKQTPCALabelType(const QString& p
  * \ingroup jkqtpplottersupprt
  */
 enum JKQTPLabelPosition {
-    JKQTPLabelMin=0,            /*!< \brief the axis label is near the min value of the axis (left/bottom) */
-    JKQTPLabelMax,            /*!< \brief the axis label is near the max value of the axis (right/top) */
-    JKQTPLabelCenter,          /*!< \brief the label is at the center of the axis */
-    JKQTPLabelPositionMax=JKQTPLabelCenter
+    JKQTPLabelMin=0,            /*!< \brief the axis label is near the min value of the axis (left/bottom)
+                                     \image html labelstyles/JKQTPLabelMin.png
+                                     \image html labelstyles/JKQTPLabelMin_zeroaxis.png */
+    JKQTPLabelMax,             /*!< \brief the axis label is near the max value of the axis (right/top)
+                                     \image html labelstyles/JKQTPLabelMax.png
+                                     \image html labelstyles/JKQTPLabelMax_zeroaxis.png */
+    JKQTPLabelCenter,          /*!< \brief the label is at the center of the axis
+                                     \image html labelstyles/JKQTPLabelCenter.png
+                                     \image html labelstyles/JKQTPLabelCenter_zeroaxis.png */
+    JKQTPLabelMinBesides,      /*!< \brief the axis label is near the min value of the axis (left/bottom), but besides the axis tip
+                                     \image html labelstyles/JKQTPLabelMinBesides.png
+                                     \image html labelstyles/JKQTPLabelMinBesides_zeroaxis.png */
+    JKQTPLabelMaxBesides,      /*!< \brief the axis label is near the max value of the axis (right/top), but besides the axis tip
+                                     \image html labelstyles/JKQTPLabelMaxBesides.png
+                                     \image html labelstyles/JKQTPLabelMaxBesides_zeroaxis.png */
+    JKQTPLabelPositionMax=JKQTPLabelMaxBesides
 };
 
 

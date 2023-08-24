@@ -140,9 +140,11 @@ JKQTPCALabelType String2JKQTPCALabelType(const QString& pos) {
 
 QString JKQTPLabelPosition2String(JKQTPLabelPosition pos) {
     switch(pos) {
-        case JKQTPLabelMin: return "min";
-        case JKQTPLabelMax: return "max";
-        case JKQTPLabelCenter: return "center";
+    case JKQTPLabelMin: return "min";
+    case JKQTPLabelMax: return "max";
+    case JKQTPLabelMinBesides: return "minBesides";
+    case JKQTPLabelMaxBesides: return "maxBesides";
+    case JKQTPLabelCenter: return "center";
     }
     return "";
 }
@@ -151,6 +153,8 @@ JKQTPLabelPosition String2JKQTPLabelPosition(const QString& pos) {
     QString s=pos.trimmed().toLower();
     if (s=="min") return JKQTPLabelMin;
     if (s=="max") return JKQTPLabelMax;
+    if (s=="minbesides") return JKQTPLabelMinBesides;
+    if (s=="maxbesides") return JKQTPLabelMaxBesides;
     if (s=="center") return JKQTPLabelCenter;
     return JKQTPLabelCenter;
 }

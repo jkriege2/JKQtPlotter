@@ -81,19 +81,19 @@ void JKQTPColorPaletteStyleAndToolsMixin::cbGetOutsideSize(JKQTPEnhancedPainter&
             rightSpace+=cbParent->pt2px(painter, colorBarWidth+colorBarOffset);
             colorBarRightAxis->setRange(internalDataMin, internalDataMax);
             colorBarRightAxis->setAxisWidth(colorBarRelativeHeight*cbParent->getPlotHeight());
-            QSizeF s1=colorBarRightAxis->getSize2(painter);
-            QSizeF s2=colorBarRightAxis->getSize1(painter);
-            QSizeF names=cbParent->getTextSizeSize(imageNameFontName, imageNameFontSize*cbParent->getFontSizeMultiplier(), imageName, painter);
-            rightSpace+=qMax(static_cast<double>(s1.width()+s2.width()), static_cast<double>(names.width()));
+            const auto s1=colorBarRightAxis->getSize2(painter);
+            const auto s2=colorBarRightAxis->getSize1(painter);
+            const QSizeF names=cbParent->getTextSizeSize(imageNameFontName, imageNameFontSize*cbParent->getFontSizeMultiplier(), imageName, painter);
+            rightSpace+=qMax(static_cast<double>(s1.requiredSize+s2.requiredSize), static_cast<double>(names.width()));
         }
         if (colorBarTopVisible) {
             //topSpace+=cbParent->pt2px(painter, colorBarWidth+colorBarOffset);
             colorBarTopAxis->setRange(internalDataMin, internalDataMax);
             colorBarTopAxis->setAxisWidth(colorBarRelativeHeight*cbParent->getPlotWidth());
-            QSizeF s1=colorBarTopAxis->getSize2(painter);
-            QSizeF s2=colorBarTopAxis->getSize1(painter);
-            QSizeF names=cbParent->getTextSizeSize(imageNameFontName, imageNameFontSize*cbParent->getFontSizeMultiplier(), imageName, painter);
-            topSpace+=cbParent->pt2px(painter, colorBarWidth+colorBarOffset)+qMax(static_cast<double>(s1.height()+s2.height()), static_cast<double>(names.height()));
+            const auto s1=colorBarTopAxis->getSize2(painter);
+            const auto s2=colorBarTopAxis->getSize1(painter);
+            const QSizeF names=cbParent->getTextSizeSize(imageNameFontName, imageNameFontSize*cbParent->getFontSizeMultiplier(), imageName, painter);
+            topSpace+=cbParent->pt2px(painter, colorBarWidth+colorBarOffset)+qMax(static_cast<double>(s1.requiredSize+s2.requiredSize), static_cast<double>(names.height()));
         }
     }
 }
@@ -562,10 +562,10 @@ void JKQTPColorPaletteWithModifierStyleAndToolsMixin::cbGetOutsideSize(JKQTPEnha
             colorBarRightAxis->setAxisWidth(colorBarRelativeHeight*cbParent->getPlotHeight());
             modifierColorBarRightAxis->setRange(internalModifierMin, internalModifierMax);
             modifierColorBarRightAxis->setAxisWidth(cbParent->pt2px(painter, colorBarModifiedWidth));
-            QSizeF s1=colorBarRightAxis->getSize2(painter);
-            QSizeF s2=colorBarRightAxis->getSize1(painter);
-            QSizeF names=cbParent->getTextSizeSize(imageNameFontName, imageNameFontSize*cbParent->getFontSizeMultiplier(), imageName, painter);
-            rightSpace+=qMax(static_cast<double>(s1.width()+s2.width()), static_cast<double>(names.width()));
+            const auto s1=colorBarRightAxis->getSize2(painter);
+            const auto s2=colorBarRightAxis->getSize1(painter);
+            const QSizeF names=cbParent->getTextSizeSize(imageNameFontName, imageNameFontSize*cbParent->getFontSizeMultiplier(), imageName, painter);
+            rightSpace+=qMax(static_cast<double>(s1.requiredSize+s2.requiredSize), static_cast<double>(names.width()));
             if (modifierMode!=JKQTPMathImageModifierMode::ModifyNone) {
                 rightSpace=rightSpace+static_cast<int>(2.0*cbParent->pt2px(painter, colorBarModifiedWidth-colorBarWidth));
             }
@@ -576,10 +576,10 @@ void JKQTPColorPaletteWithModifierStyleAndToolsMixin::cbGetOutsideSize(JKQTPEnha
             colorBarTopAxis->setAxisWidth(colorBarRelativeHeight*cbParent->getPlotWidth());
             modifierColorBarTopAxis->setRange(internalModifierMin, internalModifierMax);
             modifierColorBarTopAxis->setAxisWidth(cbParent->pt2px(painter, colorBarModifiedWidth));
-            QSizeF s1=colorBarTopAxis->getSize2(painter);
-            QSizeF s2=colorBarTopAxis->getSize1(painter);
-            QSizeF names=cbParent->getTextSizeSize(imageNameFontName, imageNameFontSize*cbParent->getFontSizeMultiplier(), imageName, painter);
-            topSpace+=cbParent->pt2px(painter, colorBarWidth+colorBarOffset)+qMax(static_cast<double>(s1.height()+s2.height()), static_cast<double>(names.height()));
+            const auto s1=colorBarTopAxis->getSize2(painter);
+            const auto s2=colorBarTopAxis->getSize1(painter);
+            const QSizeF names=cbParent->getTextSizeSize(imageNameFontName, imageNameFontSize*cbParent->getFontSizeMultiplier(), imageName, painter);
+            topSpace+=cbParent->pt2px(painter, colorBarWidth+colorBarOffset)+qMax(static_cast<double>(s1.requiredSize+s2.requiredSize), static_cast<double>(names.height()));
             if (modifierMode!=JKQTPMathImageModifierMode::ModifyNone) {
                 topSpace=topSpace+static_cast<int>(2.0*cbParent->pt2px(painter, colorBarModifiedWidth-colorBarWidth));
             }

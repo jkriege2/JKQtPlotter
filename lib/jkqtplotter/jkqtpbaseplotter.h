@@ -1428,13 +1428,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /** @name Utilities: (math-markup) Text Sizing */
 /**@{*/
-        /** \brief internal tool class for text sizes
-         *   \ingroup jkqtpplottersupprt
-         *  \internal */
-        struct JKQTPLOTTER_LIB_EXPORT textSizeData {
-            explicit textSizeData();
-            double ascent, descent, width, strikeoutPos;
-        };
 
         /** \brief internal tool class for text-sizess in a plot key
          *  \ingroup jkqtpplottersupprt
@@ -1448,14 +1441,14 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
 
             bool operator==(const textSizeKey& other) const;
         };
-        /** \brief calculates a textSizeData for the given string \a text if it would be drawn on \a painter with font \a fm
+        /** \brief calculates a JKQTMathTextNodeSize for the given string \a text if it would be drawn on \a painter with font \a fm
          * \internal
          */
-        textSizeData getTextSizeDetail(const QFont &fm, const QString& text,  QPainter& painter);
-        /** \brief calculates a textSizeData for the given string \a text if it would be drawn on \a painter with font \a fontName
+        JKQTMathTextNodeSize getTextSizeDetail(const QFont &fm, const QString& text,  QPainter& painter);
+        /** \brief calculates a JKQTMathTextNodeSize for the given string \a text if it would be drawn on \a painter with font \a fontName
          * \internal
          */
-        textSizeData getTextSizeDetail(const QString& fontName, double fontSize, const QString& text,  QPainter &painter);
+        JKQTMathTextNodeSize getTextSizeDetail(const QString& fontName, double fontSize, const QString& text,  QPainter &painter);
         /** \brief calculates a text-size details for the given string \a text if it would be drawn on \a painter with font \a fontName and font size \a fontSize
          * \internal
          */

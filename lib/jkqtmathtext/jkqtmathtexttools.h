@@ -393,11 +393,11 @@ struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextNodeSize {
     JKQTMathTextNodeSize();
     /** \brief width of whole block */
     double width;
-    /** \brief baselineHeight of whole block */
+    /** \brief baselineHeight of whole block, i.e. the ascent */
     double baselineHeight;
     /** \brief overallHeight of whole block */
     double overallHeight;
-    /** \brief strikeoutPos of whole block */
+    /** \brief strikeoutPos of whole block, i.e. distance of the strikeout position from the baseline */
     double strikeoutPos;
     /** \brief x-correction (<0 = move to the left) for subscripts, i.e. approximately at the height of the baseline
      *
@@ -408,7 +408,7 @@ struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextNodeSize {
     double baselineXCorrection;
     /** \brief x-correction (>0 = move to the right) for superscripts, i.e. approximately at the top  of the box */
     double topXCorrection;
-    /** \brief calculate the descent */
+    /** \brief calculate the descent (overallHeight-baselineHeight) */
     inline double getDescent() const { return overallHeight-baselineHeight; }
     /** \brief calculate the overall size in floating-point precision */
     inline QSizeF getSize() const { return QSizeF(width, overallHeight); }

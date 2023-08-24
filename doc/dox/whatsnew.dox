@@ -94,6 +94,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: added entry for JKQTBasePlotterStyle::plotLabelColor to set the plot label color</li>
     <li>NEW: added JKQTBasePlotterStyle::plotLabelTopBorder to set the  spacing between top and plot label</li>
     <li>NEW: Due to addition of JKQTMathText::setFontOptions() and the matchign extension of JKQTMathText::setFontSpecial() (see below) you can now add modifiers like <tt>+BOLD+ITALIC</tt> to any font-name provided to JKQTPlotter and in style INI-files</li>
+    <li>NEW: added JKQTPLabelMinBesides and JKQTPLabelMaxBesides to JKQTPLabelPosition, so labels can be set besides the axes</li>
   </ul></li>
   
   <li>JKQTMathText:<ul>

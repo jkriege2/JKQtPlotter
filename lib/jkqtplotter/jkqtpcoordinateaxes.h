@@ -245,11 +245,34 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         /** \brief add a new tick label to the axis */
         void addAxisTickLabels(const double* x, const QString* label, int items);
 
-        /** \brief returns the size of the left/bottom axis in pixels */
-        virtual QSizeF getSize1(JKQTPEnhancedPainter& painter, double* elongateMin=nullptr, double* elongateMax=nullptr)=0;
 
-        /** \brief returns the size of the right/top axis in pixels */
-        virtual QSizeF getSize2(JKQTPEnhancedPainter& painter)=0;
+        /** \brief return value type for getSize1() and getSize2() */
+        struct JKQTPLOTTER_LIB_EXPORT AxisElementsSizeDescription {
+            inline AxisElementsSizeDescription(double _requiredSize=0.0, double _elongateMin=0.0, double _elongateMax=0.0): requiredSize(_requiredSize), elongateMin(_elongateMin), elongateMax(_elongateMax) {}
+
+            /** \brief required space, starting at the axis line, in outward direction [pixels] */
+            double requiredSize;
+            /** \brief extra space on the min (horizontal: left, vertical: bottom) side BESIDE the axis, e.g. when labels elongate to the left/right or top/bottom of the plot rectangle [pixels] */
+            double elongateMin;
+            /** \brief extra space on the max (horizontal: right, vertical: top) side BESIDE the axis, e.g. when labels elongate to the left/right or top/bottom of the plot rectangle [pixels] */
+            double elongateMax;
+        };
+
+        /** \brief returns the sizerequirement of the left/bottom axis in pixels
+         *
+         *  \param painter a JKQTPEnhancedPainter to use for determining sizes (the same that would be used for drawing!)
+         *
+         *  \returns size of the additional space outside the plot rectangle, required for the axis.
+         */
+        virtual AxisElementsSizeDescription getSize1(JKQTPEnhancedPainter& painter)=0;
+
+        /** \brief returns the size of the right/top axis in pixels
+         *
+         *  \param painter a JKQTPEnhancedPainter to use for determining sizes (the same that would be used for drawing!)
+         *
+         *  \returns size of the additional space outside the plot rectangle, required for the axis.
+         */
+        virtual AxisElementsSizeDescription getSize2(JKQTPEnhancedPainter& painter)=0;
 
         /** \brief draw the axes
          *
@@ -672,8 +695,17 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         void setColor(QColor c) ;
 
     protected:
+        struct JKQTPLOTTER_LIB_EXPORT Axis0ElementsSizeDescription: public AxisElementsSizeDescription {
+            inline Axis0ElementsSizeDescription(double _requiredSize=0.0, double _requiredSizeOpposite=0.0, double _elongateMin=0.0, double _elongateMax=0.0): AxisElementsSizeDescription(_requiredSize, _elongateMin, _elongateMax), requiredSizeOpposite(_requiredSizeOpposite) {}
+            /** \brief additional size, required for the axis, in the opposite direction as AxisElementsSizeDescription::requiredSize */
+            double requiredSizeOpposite;
+            inline double maxRequiredSize() const {
+                return qMax(requiredSize,requiredSizeOpposite);
+            }
+        };
+
         /** \brief returns the size of the zero axis in pixels, the first part of the return-value is the lhs size and the second part the rhs size */
-        virtual std::pair<QSizeF, QSizeF> getSize0(JKQTPEnhancedPainter& painter) ;
+        virtual Axis0ElementsSizeDescription getSize0(JKQTPEnhancedPainter& painter) ;
         /** \brief indicates whether one of the parameters has changed sinse the last recalculation of tickSpacing ... */
         bool paramsChanged;
         /** \brief can be used to switch off calcPlotScaling() temporarily, while modifying some properties
@@ -900,10 +932,12 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPVerticalAxisBase: public JKQTPCoordinateAxis {
         JKQTPVerticalAxisBase(JKQTBasePlotter* parent);
 
         /** \brief returns the size of the left axis in pixels */
-        virtual QSizeF getSize1(JKQTPEnhancedPainter& painter, double *elongateBottom=nullptr, double* elongateTop=nullptr) override;
+        virtual AxisElementsSizeDescription getSize1(JKQTPEnhancedPainter& painter) override;
+        QSizeF getQSize1(JKQTPEnhancedPainter& painter);
 
         /** \brief returns the size of the right axis in pixels */
-        virtual QSizeF getSize2(JKQTPEnhancedPainter& painter) override;
+        virtual AxisElementsSizeDescription getSize2(JKQTPEnhancedPainter& painter) override;
+        QSizeF getQSize2(JKQTPEnhancedPainter& painter);
 
         /** copydoc JKQTPCoordinateAxis::drawAxes() */
         virtual void drawAxes(JKQTPEnhancedPainter& painter, int move1=0, int move2=0) override;
@@ -914,7 +948,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPVerticalAxisBase: public JKQTPCoordinateAxis {
 
     protected:
         /** copydoc JKQTPCoordinateAxis::getSize0() */
-        virtual std::pair<QSizeF,QSizeF> getSize0(JKQTPEnhancedPainter& painter) override;
+        virtual Axis0ElementsSizeDescription getSize0(JKQTPEnhancedPainter& painter) override;
         /** \brief draw a tick label on the left axis 1 with text \a label (with optional rotation) at ( \a xx , \a yy ) (in pixel)
          *
          *  \param painter the JKQTPEnhancedPainter used for drawing
@@ -1081,10 +1115,12 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPHorizontalAxisBase: public JKQTPCoordinateAxis
         JKQTPHorizontalAxisBase(JKQTBasePlotter* parent);
 
         /** \brief returns the size of the bottom axis in pixels */
-        virtual QSizeF getSize1(JKQTPEnhancedPainter& painter, double* elongateLeft=nullptr, double* elongateRight=nullptr) override;
+        virtual AxisElementsSizeDescription getSize1(JKQTPEnhancedPainter& painter) override;
+        QSizeF getQSize1(JKQTPEnhancedPainter& painter);
 
         /** \brief returns the size of the top axis in pixels */
-        virtual QSizeF getSize2(JKQTPEnhancedPainter& painter) override;
+        virtual AxisElementsSizeDescription getSize2(JKQTPEnhancedPainter& painter) override;
+        QSizeF getQSize2(JKQTPEnhancedPainter& painter);
 
         /** copydoc JKQTPCoordinateAxis::drawAxes() */
         virtual void drawAxes(JKQTPEnhancedPainter& painter, int move1=0, int move2=0) override;
@@ -1095,7 +1131,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPHorizontalAxisBase: public JKQTPCoordinateAxis
 
     protected:
         /** copydoc JKQTPCoordinateAxis::getSize0() */
-        virtual std::pair<QSizeF, QSizeF> getSize0(JKQTPEnhancedPainter& painter) override;
+        virtual Axis0ElementsSizeDescription getSize0(JKQTPEnhancedPainter& painter) override;
         /** \brief draw a tick label on the lower axis 1 with text \a label (with optional rotation) at ( \a xx , \a yy ) (in pixel)
          *
          *  \param painter the JKQTPEnhancedPainter used for drawing

@@ -443,15 +443,15 @@ void doListLabelPosition(const QDir& outputDir, int iconsize, QColor backgroundC
     JKQTBasePlotter plot(true);
 
     plot.setXY(0,100,0,100);
-    plot.setWidgetSize(iconsize*5,5*iconsize);
+    plot.setWidgetSize(iconsize*7,5*iconsize);
     plot.setShowKey(false);
     plot.setGrid(true);
     plot.setExportBackgroundColor(QColor("lightgrey"));
     plot.getXAxis()->setShowZeroAxis(false);
     plot.getYAxis()->setShowZeroAxis(false);
-    plot.getXAxis()->setDrawMode1(JKQTPCADMLine|JKQTPCADMTicks|JKQTPCADMAxisLabel|JKQTPCADMTicksTickLabels);
+    plot.getXAxis()->setDrawMode1(JKQTPCADMLine|JKQTPCADMTicks|JKQTPCADMAxisLabel);
     plot.getXAxis()->setDrawGrid(false);
-    plot.getYAxis()->setDrawMode1(JKQTPCADMLine|JKQTPCADMTicks|JKQTPCADMAxisLabel|JKQTPCADMTicksTickLabels);
+    plot.getYAxis()->setDrawMode1(JKQTPCADMLine|JKQTPCADMTicks|JKQTPCADMAxisLabel);
     plot.getYAxis()->setAxisLabel("y-axis-label");
     plot.getXAxis()->setAxisLabel("x-axis-label");
 
@@ -461,11 +461,33 @@ void doListLabelPosition(const QDir& outputDir, int iconsize, QColor backgroundC
         const JKQTPLabelPosition lt=static_cast<JKQTPLabelPosition>(lti);
         plot.getXAxis()->setLabelPosition(lt);
         plot.getYAxis()->setLabelPosition(lt);
-        plot.setPlotLabel("labelPos = "+JKQTPLabelPosition2String(lt));
+        plot.setPlotLabel("");//JKQTPLabelPosition2String(lt));
         QString ltn=JKQTPLabelPosition2String(lt);
         if (ltn.size()>0) ltn[0]=ltn[0].toUpper();
         plot.redrawPlot();
         plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).save(outputDir.absoluteFilePath("JKQTPLabel"+ltn+".png"), "png");
+    }
+
+    plot.setXY(-30,100,-40,100);
+    plot.getXAxis()->setShowZeroAxis(true);
+    plot.getYAxis()->setShowZeroAxis(true);
+    plot.getXAxis()->setDrawMode1(JKQTPCADMnone);
+    plot.getXAxis()->setDrawMode2(JKQTPCADMnone);
+    plot.getXAxis()->setDrawMode0(JKQTPCADMLine|JKQTPCADMTicks|JKQTPCADMAxisLabel|JKQTPCADMMaxFilledArrow|JKQTPCADMMinFilledArrow);
+    plot.getXAxis()->setDrawGrid(false);
+    plot.getYAxis()->setDrawMode0(JKQTPCADMLine|JKQTPCADMTicks|JKQTPCADMAxisLabel|JKQTPCADMMaxFilledArrow|JKQTPCADMMinFilledArrow);
+    plot.getYAxis()->setDrawMode1(JKQTPCADMnone);
+    plot.getYAxis()->setDrawMode2(JKQTPCADMnone);
+
+    for (int lti=0; lti<=JKQTPLabelPositionMax; lti++) {
+        const JKQTPLabelPosition lt=static_cast<JKQTPLabelPosition>(lti);
+        plot.getXAxis()->setLabelPosition(lt);
+        plot.getYAxis()->setLabelPosition(lt);
+        plot.setPlotLabel("");//JKQTPLabelPosition2String(lt));
+        QString ltn=JKQTPLabelPosition2String(lt);
+        if (ltn.size()>0) ltn[0]=ltn[0].toUpper();
+        plot.redrawPlot();
+        plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).save(outputDir.absoluteFilePath("JKQTPLabel"+ltn+"_zeroaxis.png"), "png");
     }
 }
 

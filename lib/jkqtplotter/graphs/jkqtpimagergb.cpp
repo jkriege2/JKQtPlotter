@@ -152,18 +152,19 @@ void JKQTPRGBMathImage::getOutsideSize(JKQTPEnhancedPainter& painter, int& leftS
                 colorBarRightAxis->setRange(internalDataMin, internalDataMax);
                 colorBarRightAxis->setAxisWidth(sizeFactor*colorBarRelativeHeight*parent->getPlotHeight());
                 colorBarRightAxisB->setAxisLabel(imageNameR);
-                QSizeF s2=colorBarRightAxis->getSize2(painter);
-                QSizeF s1=colorBarRightAxis->getSize1(painter);
-                if (!colorbarsSideBySide || !firstC) rightSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset)+static_cast<double>(s2.width()+s1.width());
+                const auto s2=colorBarRightAxis->getSize2(painter);
+                const auto s1=colorBarRightAxis->getSize1(painter);
+                if (!colorbarsSideBySide || !firstC) rightSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset)+static_cast<double>(s2.requiredSize
+                                                                                                                                          +s1.requiredSize);
             }
             if (colorBarTopVisible) {
                 //if (!colorbarsSideBySide || !firstC) topSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset);
                 colorBarTopAxis->setRange(internalDataMin, internalDataMax);
                 colorBarTopAxis->setAxisWidth(sizeFactor*colorBarRelativeHeight*parent->getPlotWidth());
                 colorBarTopAxisB->setAxisLabel(imageNameR);
-                QSizeF s2=colorBarTopAxisB->getSize2(painter);
-                QSizeF s1=colorBarTopAxisB->getSize2(painter);
-                if (!colorbarsSideBySide || !firstC) topSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset)+static_cast<double>(s2.height()+s1.height());
+                const auto s2=colorBarTopAxisB->getSize2(painter);
+                const auto s1=colorBarTopAxisB->getSize2(painter);
+                if (!colorbarsSideBySide || !firstC) topSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset)+static_cast<double>(s2.requiredSize+s1.requiredSize);
             }
             firstC=true;
         }
@@ -175,18 +176,18 @@ void JKQTPRGBMathImage::getOutsideSize(JKQTPEnhancedPainter& painter, int& leftS
                 colorBarRightAxisG->setRange(internalDataMinG, internalDataMaxG);
                 colorBarRightAxisG->setAxisWidth(sizeFactor*colorBarRelativeHeight*parent->getPlotHeight());
                 colorBarRightAxisB->setAxisLabel(imageNameG);
-                QSizeF s2=colorBarRightAxis->getSize2(painter);
-                QSizeF s1=colorBarRightAxis->getSize1(painter);
-                if (!colorbarsSideBySide || !firstC) rightSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset)+static_cast<double>(s2.width()+s1.width());
+                const auto s2=colorBarRightAxis->getSize2(painter);
+                const auto s1=colorBarRightAxis->getSize1(painter);
+                if (!colorbarsSideBySide || !firstC) rightSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset)+static_cast<double>(s2.requiredSize+s1.requiredSize);
             }
             if (colorBarTopVisible) {
                 //if (!colorbarsSideBySide || !firstC) topSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset);
                 colorBarTopAxisG->setRange(internalDataMinG, internalDataMaxG);
                 colorBarTopAxisG->setAxisWidth(sizeFactor*colorBarRelativeHeight*parent->getPlotWidth());
                 colorBarTopAxisB->setAxisLabel(imageNameG);
-                QSizeF s2=colorBarTopAxisB->getSize2(painter);
-                QSizeF s1=colorBarTopAxisB->getSize1(painter);
-                if (!colorbarsSideBySide || !firstC) topSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset)+static_cast<double>(s2.height()+s1.height());
+                const auto s2=colorBarTopAxisB->getSize2(painter);
+                const auto s1=colorBarTopAxisB->getSize1(painter);
+                if (!colorbarsSideBySide || !firstC) topSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset)+static_cast<double>(s2.requiredSize+s1.requiredSize);
              }
             firstC=true;
         }
@@ -198,18 +199,18 @@ void JKQTPRGBMathImage::getOutsideSize(JKQTPEnhancedPainter& painter, int& leftS
                 colorBarRightAxisB->setRange(internalDataMinB, internalDataMaxB);
                 colorBarRightAxisB->setAxisWidth(sizeFactor*colorBarRelativeHeight*parent->getPlotHeight());
                 colorBarRightAxisB->setAxisLabel(imageNameB);
-                QSizeF s2=colorBarRightAxis->getSize2(painter);
-                QSizeF s1=colorBarRightAxis->getSize1(painter);
-                if (!colorbarsSideBySide || !firstC) rightSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset)+static_cast<double>(s2.width()+s1.width());
+                const auto s2=colorBarRightAxis->getSize2(painter);
+                const auto s1=colorBarRightAxis->getSize1(painter);
+                if (!colorbarsSideBySide || !firstC) rightSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset)+static_cast<double>(s2.requiredSize+s1.requiredSize);
             }
             if (colorBarTopVisible) {
                 //if (!colorbarsSideBySide || !firstC) topSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset);
                 colorBarTopAxisB->setRange(internalDataMinB, internalDataMaxB);
                 colorBarTopAxisB->setAxisWidth(sizeFactor*colorBarRelativeHeight*parent->getPlotWidth());
                 colorBarTopAxisB->setAxisLabel(imageNameB);
-                QSizeF s2=colorBarTopAxisB->getSize2(painter);
-                QSizeF s1=colorBarTopAxisB->getSize1(painter);
-                if (!colorbarsSideBySide || !firstC) topSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset)+static_cast<double>(s2.height()+s1.height());
+                const auto s2=colorBarTopAxisB->getSize2(painter);
+                const auto s1=colorBarTopAxisB->getSize1(painter);
+                if (!colorbarsSideBySide || !firstC) topSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset)+static_cast<double>(s2.requiredSize+s1.requiredSize);
             }
             firstC=true;
         }
