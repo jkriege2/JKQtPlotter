@@ -4649,7 +4649,7 @@ void JKQTBasePlotter::getKeyExtent(JKQTPEnhancedPainter& painter, double* width,
         double w=0;
         double h=0;
         painter.setFont(f);
-        if (text_height!=nullptr) *text_height=0;
+        //if (text_height!=nullptr) *text_height=0;
 
 
         for (int i=0; i<graphs.size(); i++) {
