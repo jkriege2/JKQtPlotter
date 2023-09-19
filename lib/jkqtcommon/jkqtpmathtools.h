@@ -539,4 +539,14 @@ JKQTCOMMON_LIB_EXPORT uint64_t jkqtp_gcd(uint64_t a, uint64_t b);
 
     */
 JKQTCOMMON_LIB_EXPORT void jkqtp_estimateFraction(double input, int &sign, uint64_t &intpart, uint64_t& num, uint64_t& denom, unsigned int precision=9);
+
+/*! \brief returns the reversed containter \a l
+    \ingroup jkqtptools_math_basic
+
+    */
+template <class T>
+inline T jkqtp_reversed(const T& l) {
+    return T(l.rbegin(), l.rend());
+}
+
 #endif // jkqtpmathtools_H_INCLUDED

@@ -112,13 +112,21 @@ enum JKQTPMathImageColorPalette {
     JKQTPMathImageINVERTED_TRAFFICLIGHT, /*!< \image html palettes/palette_invtrafficlight.png */
 
     JKQTPMathImageBone, /*!< \image html palettes/palette_bone.png */
+    JKQTPMathImageINVERTED_Bone, /*!< \image html palettes/palette_invbone.png */
     JKQTPMathImageCool, /*!< \image html palettes/palette_cool.png */
+    JKQTPMathImageINVERTED_Cool, /*!< \image html palettes/palette_invcool.png */
     JKQTPMathImageCopper, /*!< \image html palettes/palette_copper.png */
+    JKQTPMathImageINVERTED_Copper, /*!< \image html palettes/palette_invcopper.png */
     JKQTPMathImageAutumn, /*!< \image html palettes/palette_autumn.png */
+    JKQTPMathImageINVERTED_Autumn, /*!< \image html palettes/palette_invautumn.png */
     JKQTPMathImageSeismic, /*!< \image html palettes/palette_seismic.png */
-    JKQTPMathImageSeismic_STEP, /*!< \image html palettes/palette_seismic_step.png */
+    JKQTPMathImageSeismic_STEP, /*!< \image html palettes/palette_stepsseismic.png */
+    JKQTPMathImageINVERTED_Seismic, /*!< \image html palettes/palette_invseismic.png */
+    JKQTPMathImageINVERTED_Seismic_STEP, /*!< \image html palettes/palette_stepsinvseismic.png */
     JKQTPMathImageTerrain, /*!< \image html palettes/palette_terrain.png */
-    JKQTPMathImageTerrain_STEP, /*!< \image html palettes/palette_terrain_step.png */
+    JKQTPMathImageTerrain_STEP, /*!< \image html palettes/palette_stepsterrain.png */
+    JKQTPMathImageINVERTED_Terrain, /*!< \image html palettes/palette_invterrain.png */
+    JKQTPMathImageINVERTED_Terrain_STEP, /*!< \image html palettes/palette_stepsterrain.png */
 
     JKQTPMathImageViridis, /*!< \image html palettes/palette_viridis.png
                                 \see from https://github.com/BIDS/colormap/blob/master/colormaps.py */
@@ -233,25 +241,37 @@ enum JKQTPMathImageColorPalette {
     JKQTPMathImageREDWHITEBLUE, /*!< \image html palettes/palette_redwhiteblue.png */
 
     JKQTPMathImageBLACKBLUEREDYELLOW, /*!< \image html palettes/palette_BBlRdYe.png */
+    JKQTPMathImageYELLOWREDBLUEBLACK, /*!< \image html palettes/palette_YeRdBlB.png */
     JKQTPMathImageGREENREDVIOLET, /*!< \image html palettes/palette_GnRdVi.png */
+    JKQTPMathImageVIOLETREDGREEN, /*!< \image html palettes/palette_ViRdGn.png */
     JKQTPMathImageBLACKBLUEWHITEYELLOWWHITE, /*!< \image html palettes/palette_BWprint.png */
     JKQTPMathImageWHITEYELLOWWHITEBLUEBLACK, /*!< \image html palettes/palette_invBWprint.png */
-    JKQTPMathImageBR_GR, /*!< \image html palettes/palette_BrBG.png */
-    JKQTPMathImageBrownGreen=JKQTPMathImageBR_GR, /*!< \image html palettes/palette_BrBG.png */
+    JKQTPMathImageBR_GR, /*!< \image html palettes/palette_BrGr.png */
+    JKQTPMathImageBrownGreen=JKQTPMathImageBR_GR, /*!< \image html palettes/palette_BrGr.png */
+    JKQTPMathImageGR_BR, /*!< \image html palettes/palette_GrBr.png */
+    JKQTPMathImageGreenBrown=JKQTPMathImageGR_BR, /*!< \image html palettes/palette_GrBr.png */
     JKQTPMathImagePU_OR, /*!< \image html palettes/palette_PuOr.png */
-    JKQTPMathImageOrangeWhitePurple=JKQTPMathImagePU_OR, /*!< \image html palettes/palette_PuOr.png */
+    JKQTPMathImagePurpleWhiteOrange=JKQTPMathImagePU_OR, /*!< \image html palettes/palette_PuOr.png */
+    JKQTPMathImageOR_PU, /*!< \image html palettes/palette_OrPu.png */
+    JKQTPMathImageOrangeWhitePurple=JKQTPMathImageOR_PU, /*!< \image html palettes/palette_OrPu.png */
     JKQTPMathImageGN_BU, /*!< \image html palettes/palette_greenblue.png */
     JKQTPMathImageGreenBlue=JKQTPMathImageGN_BU, /*!< \image html palettes/palette_greenblue.png */
     JKQTPMathImageBU_GN, /*!< \image html palettes/palette_bluegreen.png */
     JKQTPMathImageBlueGreen=JKQTPMathImageBU_GN, /*!< \image html palettes/palette_bluegreen.png */
     JKQTPMathImageYL_GN_BU, /*!< \image html palettes/palette_YeGnBu.png */
     JKQTPMathImageYellowGreenBlue=JKQTPMathImageYL_GN_BU, /*!< \image html palettes/palette_YeGnBu.png */
+    JKQTPMathImageBU_GN_YL, /*!< \image html palettes/palette_BuGnYe.png */
+    JKQTPMathImageBU_GN_YE=JKQTPMathImageBU_GN_YL, /*!< \image html palettes/palette_BuGnYe.png */
+    JKQTPMathImageBlueGreenYellow=JKQTPMathImageBU_GN_YE, /*!< \image html palettes/palette_BuGnYe.png */
 
-    JKQTPMathImageBR_GR_STEP, /*!< \image html palettes/palette_stepsBrBG.png */
+    JKQTPMathImageBR_GR_STEP, /*!< \image html palettes/palette_stepsBrGr.png */
+    JKQTPMathImageGR_BR_STEP, /*!< \image html palettes/palette_stepsGrBr.png */
     JKQTPMathImagePU_OR_STEP, /*!< \image html palettes/palette_stepsPuOr.png */
+    JKQTPMathImageOR_PU_STEP, /*!< \image html palettes/palette_stepsOrPu.png */
     JKQTPMathImageGN_BU_STEP, /*!< \image html palettes/palette_stepsGnBl.png */
     JKQTPMathImageBU_GN_STEP, /*!< \image html palettes/palette_stepsBlGn.png */
     JKQTPMathImageYL_GN_BU_STEP, /*!< \image html palettes/palette_stepsYeGnBu.png */
+    JKQTPMathImageBU_GN_YL_STEP, /*!< \image html palettes/palette_stepsBuGnYe.png */
 
 
     JKQTPMathImageCYANWHITE, /*!< \image html palettes/palette_cyanwhite.png */
@@ -577,6 +597,8 @@ struct JKQTPImageTools {
             QString name;
             /** \brief name for the LUT (localized, human-readable) */
             QString nameT;
+            /** \brief legacy (formerly used, but deprecated) name(s) for the LUT (machine-readable) */
+            QList<QString> legacyNames;
         };
 
         /*! \brief internal global storage object for lookup-tables
@@ -1102,6 +1124,27 @@ public:
 #endif
     template <class T>
     inline JKQTPPaletteList(std::initializer_list<QPair<double, QRgb>> args): ListType(args) {};
+    inline JKQTPPaletteList(std::initializer_list<QRgb> args):
+        ListType()
+    {
+        for(const auto& v: args) {
+            push_back(v);
+        }
+    };
+    inline JKQTPPaletteList(std::initializer_list<QColor> args):
+        ListType()
+    {
+        for(const auto& v: args) {
+            push_back(v);
+        }
+    };
+    inline JKQTPPaletteList(std::initializer_list<QPair<double, QColor>> args):
+        ListType()
+    {
+        for(const auto& v: args) {
+            push_back(v.first, v.second);
+        }
+    };
     template <typename InputIterator, QtPrivate::IfIsInputIterator<InputIterator> = true>
     inline JKQTPPaletteList(InputIterator first, InputIterator last): ListType(first, last) {};
     inline JKQTPPaletteList(ListType &&other):ListType(std::forward<ListType>(other)) {};
@@ -1280,6 +1323,25 @@ JKQTPImageTools::LUTType JKQTCOMMON_LIB_EXPORT JKQTPBuildColorPaletteLUTLinInter
      \copydetails JKQTPBuildColorPaletteLUTSorted()
 */
 JKQTPImageTools::LUTType JKQTCOMMON_LIB_EXPORT JKQTPBuildColorPaletteLUT(const QMap<double, QRgb>& items, int lut_size=JKQTPImageTools::LUTSIZE);
+
+/*! \brief Builds a LUT by evaluating \a palFunc(v) for \c v in the range \a vMin ... \a vMax at \a lut_size equally distributed locations
+    \ingroup jkqtplotter_imagelots_tools_LUTS
+*/
+JKQTPImageTools::LUTType JKQTCOMMON_LIB_EXPORT JKQTPBuildColorPaletteLUT(const std::function<QRgb(float)>& palFunc, int lut_size=JKQTPImageTools::LUTSIZE, float vMin=0.0, float vMax=1.0);
+
+/*! \brief Builds a LUT by evaluating the triple RGB = ( \a rFunc(v) , \a gFunc(v) , \a bFunc(v) ) for \c v in the range \a vMin ... \a vMax at \a lut_size equally distributed locations
+    \ingroup jkqtplotter_imagelots_tools_LUTS
+
+    \note  Each function should return a value between 0 and 1. If the values are larger, the are clipped to this range!
+*/
+JKQTPImageTools::LUTType JKQTCOMMON_LIB_EXPORT JKQTPBuildColorPaletteLUT(const std::function<float(float)>& rFunc, const std::function<float(float)>& gFunc, const std::function<float(float)>& bFunc, int lut_size=JKQTPImageTools::LUTSIZE, float vMin=0.0, float vMax=1.0);
+
+/*! \brief Builds a LUT by evaluating the quadruple RGBA = ( \a rFunc(v) , \a gFunc(v) , \a bFunc(v) ) for \c v in the range \a vMin ... \a vMax at \a lut_size equally distributed locations.
+    \ingroup jkqtplotter_imagelots_tools_LUTS
+
+    \note  Each function should return a value between 0 and 1. If the values are larger, the are clipped to this range!
+*/
+JKQTPImageTools::LUTType JKQTCOMMON_LIB_EXPORT JKQTPBuildColorPaletteLUT(const std::function<float(float)>& rFunc, const std::function<float(float)>& gFunc, const std::function<float(float)>& bFunc, const std::function<float(float)>& aFunc, int lut_size=JKQTPImageTools::LUTSIZE, float vMin=0.0, float vMax=1.0);
 
 
 /*! \brief takes an existing JKQTPImageTools::LUTType and subsamples \a lut_size elements from it

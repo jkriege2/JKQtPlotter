@@ -78,1182 +78,291 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
 
 
 
+    lutstore[JKQTPMathImageRED]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTLinInterpolateSorted({QColor(Qt::black),QColor(Qt::red)}), "red", QObject::tr("red"));
+    lutstore[JKQTPMathImageINVERTEDRED]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTLinInterpolateSorted({QColor(Qt::red),QColor(Qt::black)}), "invred", QObject::tr("inv. red"));
+    lutstore[JKQTPMathImageGREEN]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTLinInterpolateSorted({QColor(Qt::black),QColor(Qt::green)}), "green", QObject::tr("green"));
+    lutstore[JKQTPMathImageINVERTEDGREEN]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTLinInterpolateSorted({QColor(Qt::green),QColor(Qt::black)}), "invgreen", QObject::tr("inv. green"));
+    lutstore[JKQTPMathImageBLUE]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTLinInterpolateSorted({QColor(Qt::black),QColor(Qt::blue)}), "blue", QObject::tr("blue"));
+    lutstore[JKQTPMathImageINVERTEDBLUE]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTLinInterpolateSorted({QColor(Qt::blue),QColor(Qt::black)}), "invblue", QObject::tr("inv. blue"));
+    lutstore[JKQTPMathImageGRAY]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTLinInterpolateSorted({QColor(Qt::black),QColor(Qt::white)}), "gray", QObject::tr("gray"));
+    lutstore[JKQTPMathImageINVERTEDGRAY]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTLinInterpolateSorted({QColor(Qt::white),QColor(Qt::black)}), "invgray", QObject::tr("inv. gray"));
+    lutstore[JKQTPMathImageALPHA]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTLinInterpolateSorted({QColor(255,255,255,0),QColor(255,255,255,255)}), "alpha", QObject::tr("alpha"));
+    lutstore[JKQTPMathImageINVERTED_ALPHA]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTLinInterpolateSorted({QColor(255,255,255,255),QColor(255,255,255,0)}), "invalpha", QObject::tr("inv. alpha"));
+
+    lutstore[JKQTPMathImageCYAN]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTLinInterpolateSorted({QColor(Qt::black),QColor(Qt::cyan)}), "cyan", QObject::tr("cyan"));
+    lutstore[JKQTPMathImageINVERTED_CYAN]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTLinInterpolateSorted({QColor(Qt::cyan),QColor(Qt::black)}), "invcyan", QObject::tr("inv. cyan"));
+    lutstore[JKQTPMathImageCYANWHITE]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTLinInterpolateSorted({QColor(Qt::cyan),QColor(Qt::white)}), "cyanwhite", QObject::tr("cyan-white"));
+    lutstore[JKQTPMathImageINVERTED_CYANWHITE]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTLinInterpolateSorted({QColor(Qt::white),QColor(Qt::cyan)}), "whitecyan", QObject::tr("white-cyan"));
+
+    lutstore[JKQTPMathImageMAGENTA]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTLinInterpolateSorted({QColor(Qt::black),QColor(Qt::magenta)}), "magenta", QObject::tr("magenta"));
+    lutstore[JKQTPMathImageINVERTED_MAGENTA]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTLinInterpolateSorted({QColor(Qt::magenta),QColor(Qt::black)}), "invmagenta", QObject::tr("inv. magenta"));
+    lutstore[JKQTPMathImageMAGENTAWHITE]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTLinInterpolateSorted({QColor(Qt::magenta),QColor(Qt::white)}), "magentawhite", QObject::tr("magenta-white"));
+    lutstore[JKQTPMathImageINVERTED_MAGENTAWHITE]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTLinInterpolateSorted({QColor(Qt::white),QColor(Qt::magenta)}), "whitemagenta", QObject::tr("white-magenta"));
+
+    lutstore[JKQTPMathImageYELLOW]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTLinInterpolateSorted({QColor(Qt::black),QColor(Qt::yellow)}), "yellow", QObject::tr("yellow"));
+    lutstore[JKQTPMathImageINVERTED_YELLOW]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTLinInterpolateSorted({QColor(Qt::yellow),QColor(Qt::black)}), "invyellow", QObject::tr("inv. yellow"));
+    lutstore[JKQTPMathImageYELLOWWHITE]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTLinInterpolateSorted({QColor(Qt::yellow),QColor(Qt::white)}), "yellowwhite", QObject::tr("yellow-white"));
+    lutstore[JKQTPMathImageINVERTED_YELLOWWHITE]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTLinInterpolateSorted({QColor(Qt::white),QColor(Qt::yellow)}), "whiteyellow", QObject::tr("white-yellow"));
+
+
+
     {
-        const auto palette=JKQTPMathImageRED;
-        const QString palN="red";
-        const QString palNT=QObject::tr("red");
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), palN, palNT);
-        QRgb* plut=lutstore[palette].lut.data();
-        if (plut!=nullptr) {
-            for (int l=0; l<=JKQTPImageTools::LUTSIZE; l++) {
-                const double v=l/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                plut[l]=qRgb(static_cast<int>(255.0*v), 0, 0);
+        const auto fR= [](float v) -> float { return  (382.5 - 1020.0 * std::abs(v - 0.75))/255.0; };
+        const auto fG= [](float v) -> float { return  (382.5 - 1020.0 * std::abs(v - 0.5))/255.0; };
+        const auto fB= [](float v) -> float { return  (382.5 - 1020.0 * std::abs(v - 0.25))/255.0; };
+        const auto& normLUT=lutstore[JKQTPMathImageMATLAB]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUT(fR, fG, fB), "Matlab", QObject::tr("Matlab"));
+        lutstore[JKQTPMathImageINVERTED_MATLAB]=JKQTPImageTools::LUTData(jkqtp_reversed(normLUT.lut), "invMatlab", QObject::tr("inv. Matlab"));
+
+    }
+
+    {
+        const auto fR= [](float v) -> float { return  (796.875*v - 199.21875)/255.0; };
+        const auto fG= [](float v) -> float { return  std::sin(JKQTPSTATISTICS_PI*v); };
+        const auto fB= [](float v) -> float { return  (255.0 - 765.0 * v)/255.0; };
+        const auto& normLUT=lutstore[JKQTPMathImageRYGB]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUT(fR, fG, fB), "RYGB", QObject::tr("RYGB"));
+        lutstore[JKQTPMathImageINVERTED_RYGB]=JKQTPImageTools::LUTData(jkqtp_reversed(normLUT.lut), "invRYGB", QObject::tr("inv. RYGB"));
+
+    }
+
+    {
+        const auto& normLUT=lutstore[JKQTPMathImageHSV]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUT([](float v)->QRgb {
+            const int h = static_cast<int>(floor(6.0*v));
+            const double f = 6*v-double(h);
+
+            switch (h)
+            {
+                case 0: return qRgb(255, static_cast<int>(255.0*f), 0);
+                case 1: return qRgb(static_cast<int>(255.0*(1-f)), 255, 0);
+                case 2: return qRgb(0, 255, static_cast<int>(255.0*f));
+                case 3: return qRgb(0, static_cast<int>(255.0*(1-f)), 255);
+                case 4: return qRgb(static_cast<int>(255.0*f), 0, 255);
+                case 5: return qRgb(255, 0, static_cast<int>(255.0*(1-f)));
+                case 6: return qRgb(255, static_cast<int>(255.0*f), 0);
+                default: return qRgb(0,0,0);
             }
-        }
+        }), "HSV", QObject::tr("HSV"));
+        lutstore[JKQTPMathImageINVERTED_HSV]=JKQTPImageTools::LUTData(jkqtp_reversed(normLUT.lut), "invHSV", QObject::tr("inv. HSV"));
+
+    }
+
+    {
+        const auto fR= [](float v) -> float { return  std::abs(2.0*v-0.5); };
+        const auto fG= [](float v) -> float { return  sin(JKQTPSTATISTICS_PI*v); };
+        const auto fB= [](float v) -> float { return  cos(0.5*JKQTPSTATISTICS_PI*v); };
+        const auto& normLUT=lutstore[JKQTPMathImageRAINBOW]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUT(fR, fG, fB), "rainbow", QObject::tr("rainbow"));
+        lutstore[JKQTPMathImageINVERTED_RAINBOW]=JKQTPImageTools::LUTData(jkqtp_reversed(normLUT.lut), "invrainbow", QObject::tr("inv. rainbow"));
+
+    }
+
+    {
+        const auto fR= [](float v) -> float { return  765.0*v/255.0; };
+        const auto fG= [](float v) -> float { return  (765.0*v-255.0)/255.0; };
+        const auto fB= [](float v) -> float { return  (765.0*v-510.0)/255.0; };
+        const auto& normLUT=lutstore[JKQTPMathImageHOT]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUT(fR, fG, fB), "AFMhot", QObject::tr("AFM hot"));
+        lutstore[JKQTPMathImageINVERTED_HOT]=JKQTPImageTools::LUTData(jkqtp_reversed(normLUT.lut), "invAFMhot", QObject::tr("inv. AFM hot"));
+
+    }
+
+    {
+        const auto fR= [](float v) -> float { return  (765.0*v-510.0)/255.0; };
+        const auto fG= [](float v) -> float { return  (std::abs(382.5*v-127.5))/255.0; };
+        const auto fB= [](float v) -> float { return  v; };
+        const auto& normLUT=lutstore[JKQTPMathImageOCEAN]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUT(fR, fG, fB), "ocean", QObject::tr("ocean"));
+        lutstore[JKQTPMathImageINVERTED_OCEAN]=JKQTPImageTools::LUTData(jkqtp_reversed(normLUT.lut), "invocean", QObject::tr("inv. ocean"));
+
+    }
+
+    {
+        const auto fR= [](float v) -> float { return  v/0.32-0.78125; };
+        const auto fG= [](float v) -> float { return  2.0*v-0.84; };
+        const auto fB= [](float v) -> float {
+            double b = 4.0*v;
+            if (b>1 || b<0) b = -2.0*v+1.84;
+            if (b>1 || b<0) b = v/0.08-11.5;
+            if (b>1 || b<0) b=1;
+            return  b;
+        };
+        const auto& normLUT=lutstore[JKQTPMathImageBLUEMAGENTAYELLOW]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUT(fR, fG, fB), "BlMaYe", QObject::tr("blue-magenta-yellow"));
+        lutstore[JKQTPMathImageINVERTED_BLUEMAGENTAYELLOW]=JKQTPImageTools::LUTData(jkqtp_reversed(normLUT.lut), "YeMaBl", QObject::tr("yellow-magenta-blue"));
+
+    }
+
+    {
+        const auto fR= [](float v) -> float { return  sqrt(sqrt(v)); };
+        const auto fG= [](float v) -> float { return  sin(JKQTPSTATISTICS_PI/2.0*v); };
+        const auto fB= [](float v) -> float { return cos(JKQTPSTATISTICS_PI/2.0*v); };
+        const auto& normLUT=lutstore[JKQTPMathImageBLUEYELLOW]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUT(fR, fG, fB), "BlYe", QObject::tr("blue-yellow"));
+        lutstore[JKQTPMathImageINVERTED_BLUEYELLOW]=JKQTPImageTools::LUTData(jkqtp_reversed(normLUT.lut), "YeBl", QObject::tr("yellow-blue"));
+
+    }
+
+    {
+        const auto fR= [](float v) -> float { return  ((v < 0.5) ? 128.0*sin(JKQTPSTATISTICS_PI*(2.0*v-0.5))+128.0 : 255.0)/255.0; };
+        const auto fG= [](float v) -> float { return  ((v < 0.5) ? 512.0*v+128.0 : 512.0-512.0*v)/255.0; };
+        const auto fB= [](float v) -> float { return  0.0; };
+        const auto& normLUT=lutstore[JKQTPMathImageTRAFFICLIGHT]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUT(fR, fG, fB), "Trafficlight", QObject::tr("Trafficlight"));
+        lutstore[JKQTPMathImageINVERTED_TRAFFICLIGHT]=JKQTPImageTools::LUTData(jkqtp_reversed(normLUT.lut), "invtrafficlight", QObject::tr("inv. Trafficlight"));
+
+    }
+
+    {
+        const auto fR= [](float v) -> float { return sqrt(v); };
+        const auto fG= [](float v) -> float { return v*v*v; };
+        const auto fB= [](float v) -> float { return sin(2.0*JKQTPSTATISTICS_PI*v); };
+        const auto& normLUT=lutstore[JKQTPMathImageBLACKBLUEREDYELLOW]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUT(fR, fG, fB), "BBlRdYe", QObject::tr("black-blue-red-yellow"));
+        lutstore[JKQTPMathImageYELLOWREDBLUEBLACK]=JKQTPImageTools::LUTData(jkqtp_reversed(normLUT.lut), "YeRdBlB", QObject::tr("yellow-red-blue-black"));
+    }
+
+    {
+        const auto fR= [](float v) -> float { return v; };
+        const auto fG= [](float v) -> float { return fabs(v-0.5); };
+        const auto fB= [](float v) -> float { return v*v*v*v; };
+        const auto& normLUT=lutstore[JKQTPMathImageGREENREDVIOLET]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUT(fR, fG, fB), "GnRdVi", QObject::tr("green-red-violet"));
+        lutstore[JKQTPMathImageVIOLETREDGREEN]=JKQTPImageTools::LUTData(jkqtp_reversed(normLUT.lut), "ViRdGn", QObject::tr("violet-red-green"));
+    }
+
+    {
+        const auto fR= [](float v) -> float { return v/0.32-0.78125; };
+        const auto fG= [](float v) -> float { return v/0.32-0.78125; };
+        const auto fB= [](float v) -> float { return (v<0.25)?4*v:(v<0.42)?1.0:(v<0.92)?-2.0*v+1.84:v/0.08-11.5; };
+        const auto& normLUT=lutstore[JKQTPMathImageBLACKBLUEWHITEYELLOWWHITE]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUT(fR, fG, fB), "BWprint", QObject::tr("black-blue-white-yellow-white"));
+        lutstore[JKQTPMathImageWHITEYELLOWWHITEBLUEBLACK]=JKQTPImageTools::LUTData(jkqtp_reversed(normLUT.lut), "invBWprint", QObject::tr("white-yellow-white-blue-black"));
+    }
+
+    {
+        const auto& normLUT=lutstore[JKQTPMathImageREDWHITEBLUE]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTLinInterpolate(JKQTPPaletteList(
+                                                                                                           {jkqtp_qRgbOpaque(0xB2182B),
+                                                                                                            jkqtp_qRgbOpaque(0xD6604D),
+                                                                                                            jkqtp_qRgbOpaque(0xF4A582),
+                                                                                                            jkqtp_qRgbOpaque(0xFDDBC7),
+                                                                                                            jkqtp_qRgbOpaque(0xD1E5F0),
+                                                                                                            jkqtp_qRgbOpaque(0x92C5DE),
+                                                                                                            jkqtp_qRgbOpaque(0x4393C3),
+                                                                                                            jkqtp_qRgbOpaque(0x2166AC)})),
+                                                                                          "redwhiteblue", QObject::tr("red-white-blue"));
+        lutstore[JKQTPMathImageBLUEWHITERED]=JKQTPImageTools::LUTData(jkqtp_reversed(normLUT.lut), "bluewhitered", QObject::tr("blue-white-red"));
+    }
+
+    {
+        const JKQTPPaletteList lst=  {
+            jkqtp_qRgbOpaque(0x8C510A),
+            jkqtp_qRgbOpaque(0xBF812D),
+            jkqtp_qRgbOpaque(0xDFC27D),
+            jkqtp_qRgbOpaque(0xF6E8C3),
+            jkqtp_qRgbOpaque(0xC7EAE5),
+            jkqtp_qRgbOpaque(0x80CDC1),
+            jkqtp_qRgbOpaque(0x35978F),
+            jkqtp_qRgbOpaque(0x01665E)
+        };
+        const auto& normLUT=lutstore[JKQTPMathImageBR_GR]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTLinInterpolate(lst),  "BrGr", QObject::tr("brown-white-green (diverging)"));
+        lutstore[JKQTPMathImageBR_GR].legacyNames<<"BrBG";
+        const auto& normStepLUT=lutstore[JKQTPMathImageBR_GR_STEP]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTColorsOnlySteps(lst), "stepsBrGr", QObject::tr("steps: brown-white-green (diverging)"));
+        lutstore[JKQTPMathImageBR_GR_STEP].legacyNames<<"stepsBrBG";
+        lutstore[JKQTPMathImageGR_BR]=JKQTPImageTools::LUTData(jkqtp_reversed(normLUT.lut), "GrBr", QObject::tr("green-white-brown (diverging)"));
+        lutstore[JKQTPMathImageGR_BR_STEP]=JKQTPImageTools::LUTData(jkqtp_reversed(normStepLUT.lut), "stepsGrBr", QObject::tr("steps: green-white-brown (diverging)"));
+    }
+
+    {
+        const JKQTPPaletteList lst=  {
+            jkqtp_qRgbOpaque(0xB35806),
+            jkqtp_qRgbOpaque(0xE08214),
+            jkqtp_qRgbOpaque(0xFDB863),
+            jkqtp_qRgbOpaque(0xFEE0B6),
+            jkqtp_qRgbOpaque(0xF7F7F7),
+            jkqtp_qRgbOpaque(0xD8DAEB),
+            jkqtp_qRgbOpaque(0xB2ABD2),
+            jkqtp_qRgbOpaque(0x8073AC),
+            jkqtp_qRgbOpaque(0x542788)
+        };
+        const auto& normLUT=lutstore[JKQTPMathImagePU_OR]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTLinInterpolate(lst),  "PuOr", QObject::tr("purple-white-orange (diverging)"));
+        const auto& normStepLUT=lutstore[JKQTPMathImagePU_OR_STEP]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTColorsOnlySteps(lst), "stepsPuOr", QObject::tr("steps: purple-white-orange (diverging)"));
+        lutstore[JKQTPMathImageOR_PU]=JKQTPImageTools::LUTData(jkqtp_reversed(normLUT.lut), "OrPu", QObject::tr("orange-white-purple (diverging)"));
+        lutstore[JKQTPMathImageOR_PU_STEP]=JKQTPImageTools::LUTData(jkqtp_reversed(normStepLUT.lut), "stepsOrPu", QObject::tr("steps: orange-white-purple (diverging)"));
+    }
+
+    {
+        const JKQTPPaletteList lst=  {
+            jkqtp_qRgbOpaque(0xFFFFD9),
+            jkqtp_qRgbOpaque(0xEDF8B1),
+            jkqtp_qRgbOpaque(0xC7E9B4),
+            jkqtp_qRgbOpaque(0x7FCDBB),
+            jkqtp_qRgbOpaque(0x41B6C4),
+            jkqtp_qRgbOpaque(0x1D91C0),
+            jkqtp_qRgbOpaque(0x225EA8),
+            jkqtp_qRgbOpaque(0x253494),
+            jkqtp_qRgbOpaque(0x081D58)
+        };
+        const auto& normLUT=lutstore[JKQTPMathImageYL_GN_BU]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTLinInterpolate(lst),  "YeGnBu", QObject::tr("yellow-green-blue"));
+        const auto& normStepLUT=lutstore[JKQTPMathImageYL_GN_BU_STEP]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTColorsOnlySteps(lst), "stepsYeGnBu", QObject::tr("steps: yellow-green-blue"));
+        lutstore[JKQTPMathImageBU_GN_YL]=JKQTPImageTools::LUTData(jkqtp_reversed(normLUT.lut), "BlGnYe", QObject::tr("blue-green-yellow"));
+        lutstore[JKQTPMathImageBU_GN_YL_STEP]=JKQTPImageTools::LUTData(jkqtp_reversed(normStepLUT.lut), "stepsBlGnYe", QObject::tr("steps: blue-green-yellow"));
     }
 
 
     {
-        const auto palette=JKQTPMathImageGREEN;
-        const QString palN="green";
-        const QString palNT=QObject::tr("green");
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), palN, palNT);
-        QRgb* plut=lutstore[palette].lut.data();
-        if (plut!=nullptr) {
-            for (int l=0; l<=JKQTPImageTools::LUTSIZE; l++) {
-                const double v=l/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                plut[l]=qRgb(0, static_cast<int>(255.0*v), 0);
-            }
-        }
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageBLUE;
-        const QString palN="blue";
-        const QString palNT=QObject::tr("blue");
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), palN, palNT);
-        QRgb* plut=lutstore[palette].lut.data();
-        if (plut!=nullptr) {
-            for (int l=0; l<=JKQTPImageTools::LUTSIZE; l++) {
-                const double v=l/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                plut[l]=qRgb(0, 0, static_cast<int>(255.0*v));
-            }
-        }
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageGRAY;
-        const QString palN="gray";
-        const QString palNT=QObject::tr("gray");
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), palN, palNT);
-        QRgb* plut=lutstore[palette].lut.data();
-        if (plut!=nullptr) {
-            for (int l=0; l<=JKQTPImageTools::LUTSIZE; l++) {
-                const double v=l/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                plut[l]=qRgb(static_cast<int>(255.0*v),
-                             static_cast<int>(255.0*v),
-                             static_cast<int>(255.0*v));
-            }
-        }
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageALPHA;
-        const QString palN="alpha";
-        const QString palNT=QObject::tr("alpha");
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), palN, palNT);
-        QRgb* plut=lutstore[palette].lut.data();
-        if (plut!=nullptr) {
-            for (int l=0; l<=JKQTPImageTools::LUTSIZE; l++) {
-                const double v=l/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                plut[l]=qRgba(255,255,255,
-                              static_cast<int>(255.0*v));
-            }
-        }
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageINVERTED_ALPHA;
-        const QString palN="invAlpha";
-        const QString palNT=QObject::tr("inv. alpha");
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), palN, palNT);
-        QRgb* plut=lutstore[palette].lut.data();
-        if (plut!=nullptr) {
-            for (int l=0; l<=JKQTPImageTools::LUTSIZE; l++) {
-                const double v=l/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                plut[l]=qRgba(255,255,255,
-                              static_cast<int>(255.0*v));
-            }
-        }
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageINVERTEDRED;
-        const QString palN="invred";
-        const QString palNT=QObject::tr("inv. red");
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), palN, palNT);
-        QRgb* plut=lutstore[palette].lut.data();
-        if (plut!=nullptr) {
-            for (int l=0; l<=JKQTPImageTools::LUTSIZE; l++) {
-                const double v=l/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                plut[l]=qRgb(static_cast<int>(255.0*(1.0-v)), 0, 0);
-            }
-        }
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageINVERTEDGREEN;
-        const QString palN="invgreen";
-        const QString palNT=QObject::tr("inv. green");
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), palN, palNT);
-        QRgb* plut=lutstore[palette].lut.data();
-        if (plut!=nullptr) {
-            for (int l=0; l<=JKQTPImageTools::LUTSIZE; l++) {
-                const double v=l/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                plut[l]=qRgb(0, static_cast<int>(255.0*(1.0-v)), 0);
-            }
-        }
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageINVERTEDBLUE;
-        const QString palN="invblue";
-        const QString palNT=QObject::tr("inv. blue");
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), palN, palNT);
-        QRgb* plut=lutstore[palette].lut.data();
-        if (plut!=nullptr) {
-            for (int l=0; l<=JKQTPImageTools::LUTSIZE; l++) {
-                const double v=l/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                plut[l]=qRgb(0, 0, static_cast<int>(255.0*(1.0-v)));
-            }
-        }
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageINVERTEDGRAY;
-        const QString palN="invgray";
-        const QString palNT=QObject::tr("inv. gray");
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), palN, palNT);
-        QRgb* plut=lutstore[palette].lut.data();
-        if (plut!=nullptr) {
-            for (int l=0; l<=JKQTPImageTools::LUTSIZE; l++) {
-                const double v=1.0-(l/static_cast<double>(JKQTPImageTools::LUTSIZE));
-                plut[l]=qRgb(static_cast<int>(255.0*v),
-                             static_cast<int>(255.0*v),
-                             static_cast<int>(255.0*v));
-            }
-        }
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageMATLAB;
-        const QString palN="Matlab";
-        const QString palNT=QObject::tr("Matlab");
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), palN, palNT);
-        QRgb* plut=lutstore[palette].lut.data();
-        if (plut!=nullptr) {
-            for (int l=0; l<=JKQTPImageTools::LUTSIZE; l++) {
-                const double v=l/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                double r = 382.5 - 1020.0 * std::abs(v - 0.75);
-                if (r > 255.0)
-                    r = 255.0;
-                else if (r < 0.0)
-                    r = 0.0;
-
-                double g = 382.5 - 1020.0 * std::abs(v - 0.5);
-                if (g > 255.0)
-                    g = 255.0;
-                else if (g < 0.0)
-                    g = 0.0;
-
-                double b = 382.5 - 1020.0 * std::abs(v - 0.25);
-                if (b > 255.0)
-                    b = 255.0;
-                else if (b < 0.0)
-                    b = 0.0;
-
-                plut[l]=qRgb(static_cast<int>(r), static_cast<int>(g), static_cast<int>(b));
-            }
-        }
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageINVERTED_MATLAB;
-        const QString palN="invMatlab";
-        const QString palNT=QObject::tr("inv. Matlab");
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), palN, palNT);
-        QRgb* plut=lutstore[palette].lut.data();
-        if (plut!=nullptr) {
-            for (int l=JKQTPImageTools::LUTSIZE; l>=0; l--) {
-                const double v=(JKQTPImageTools::LUTSIZE-l)/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                double r = 382.5 - 1020.0 * std::abs(v - 0.75);
-                if (r > 255.0)
-                    r = 255.0;
-                else if (r < 0.0)
-                    r = 0.0;
-
-                double g = 382.5 - 1020.0 * std::abs(v - 0.5);
-                if (g > 255.0)
-                    g = 255.0;
-                else if (g < 0.0)
-                    g = 0.0;
-
-                double b = 382.5 - 1020.0 * std::abs(v - 0.25);
-                if (b > 255.0)
-                    b = 255.0;
-                else if (b < 0.0)
-                    b = 0.0;
-
-                plut[l]=qRgb(static_cast<int>(r), static_cast<int>(g), static_cast<int>(b));
-            }
-        }
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageRYGB;
-        const QString palN="RYGB";
-        const QString palNT=QObject::tr("RYGB");
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), palN, palNT);
-        QRgb* plut=lutstore[palette].lut.data();          if (plut!=nullptr) {
-            for (int l=0; l<=JKQTPImageTools::LUTSIZE; l++) {
-                const double v=l/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                double r = 796.875*v - 199.21875;
-                if (r > 255.0)
-                    r = 255.0;
-                else if (r < 0.0)
-                    r = 0.0;
-
-                const double g = 255.0 * std::sin(JKQTPSTATISTICS_PI*v);
-
-                double b = 255.0 - 765.0 * v;
-                if (b < 0.0)
-                    b = 0.0;
-                plut[l]=qRgb(static_cast<int>(r), static_cast<int>(g), static_cast<int>(b));
-            }
-        }
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageINVERTED_RYGB;
-        const QString palN="invRYGB";
-        const QString palNT=QObject::tr("inv. RYGB");
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), palN, palNT);
-        QRgb* plut=lutstore[palette].lut.data();          if (plut!=nullptr) {
-            for (int l=JKQTPImageTools::LUTSIZE; l>=0; l--) {
-                const double v=(JKQTPImageTools::LUTSIZE-l)/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                double r = 796.875*v - 199.21875;
-                if (r > 255.0)
-                    r = 255.0;
-                else if (r < 0.0)
-                    r = 0.0;
-
-                const double g = 255.0 * std::sin(JKQTPSTATISTICS_PI*v);
-
-                double b = 255.0 - 765.0 * v;
-                if (b < 0.0)
-                    b = 0.0;
-                plut[l]=qRgb(static_cast<int>(r), static_cast<int>(g), static_cast<int>(b));
-            }
-        }
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageHSV;
-        const QString palN="HSV";
-        const QString palNT=QObject::tr("HSV");
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), palN, palNT);
-        QRgb* plut=lutstore[palette].lut.data();
-        if (plut!=nullptr) {
-            for (int l=0; l<=JKQTPImageTools::LUTSIZE; l++) {
-                const double v=l/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                const int h = static_cast<int>(floor(6*v));
-                const double f = 6*v-double(h);
-
-                switch (h)
-                {
-                    case 0: plut[l]=qRgb(255, static_cast<int>(255.0*f), 0); break;
-                    case 1: plut[l]=qRgb(static_cast<int>(255.0*(1-f)), 255, 0); break;
-                    case 2: plut[l]=qRgb(0, 255, static_cast<int>(255.0*f)); break;
-                    case 3: plut[l]=qRgb(0, static_cast<int>(255.0*(1-f)), 255); break;
-                    case 4: plut[l]=qRgb(static_cast<int>(255.0*f), 0, 255); break;
-                    case 5: plut[l]=qRgb(255, 0, static_cast<int>(255.0*(1-f))); break;
-                    case 6: plut[l]=qRgb(255, static_cast<int>(255.0*f), 0); break;
-                }
-            }
-        }
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageINVERTED_HSV;
-        const QString palN="invHSV";
-        const QString palNT=QObject::tr("inv. HSV");
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), palN, palNT);
-        QRgb* plut=lutstore[palette].lut.data();
-        if (plut!=nullptr) {
-            for (int l=0; l<=JKQTPImageTools::LUTSIZE; l++) {
-                const double v=l/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                const int h = static_cast<int>(floor(6.0-6.0*v));
-                const double f = 6.0-6.0*v-double(h);
-
-                switch (h)
-                {
-                    case 0: plut[l]=qRgb(255, static_cast<int>(255.0*f), 0); break;
-                    case 1: plut[l]=qRgb(static_cast<int>(255.0*(1-f)), 255, 0); break;
-                    case 2: plut[l]=qRgb(0, 255, static_cast<int>(255.0*f)); break;
-                    case 3: plut[l]=qRgb(0, static_cast<int>(255.0*(1-f)), 255); break;
-                    case 4: plut[l]=qRgb(static_cast<int>(255.0*f), 0, 255); break;
-                    case 5: plut[l]=qRgb(255, 0, static_cast<int>(255.0*(1-f))); break;
-                    case 6: plut[l]=qRgb(255, static_cast<int>(255.0*f), 0); break;
-                }
-            }
-        }
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageRAINBOW;
-        const QString palN="rainbow";
-        const QString palNT=QObject::tr("rainbow");
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), palN, palNT);
-        QRgb* plut=lutstore[palette].lut.data();         //std::cout<<"!!! creating rainbow lut\n";
-        if (plut!=nullptr) {
-            for (int l=0; l<=JKQTPImageTools::LUTSIZE; l++) {
-                const double v=l/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                double r = 255.0*std::abs(2.0*v-0.5);
-                if (r > 255.0)
-                    r = 255.0;
-
-                const double g = 255.0*sin(JKQTPSTATISTICS_PI*v);
-
-                const double b = 255.0*cos(0.5*JKQTPSTATISTICS_PI*v);
-
-                plut[l]=qRgb(static_cast<int>(r), static_cast<int>(g), static_cast<int>(b));
-            }
-        }
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageINVERTED_RAINBOW;
-        const QString palN="invrainbow";
-        const QString palNT=QObject::tr("inv. rainbow");
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), palN, palNT);
-        QRgb* plut=lutstore[palette].lut.data();         //std::cout<<"!!! creating rainbow lut\n";
-        if (plut!=nullptr) {
-            for (int l=JKQTPImageTools::LUTSIZE; l>=0; l--) {
-                const double v=(JKQTPImageTools::LUTSIZE-l)/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                double r = 255.0*std::abs(2.0*v-0.5);
-                if (r > 255.0)
-                    r = 255.0;
-
-                const double g = 255.0*sin(JKQTPSTATISTICS_PI*v);
-
-                const double b = 255.0*cos(0.5*JKQTPSTATISTICS_PI*v);
-
-                plut[l]=qRgb(static_cast<int>(r), static_cast<int>(g), static_cast<int>(b));
-            }
-        }
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageHOT;
-        const QString palN="AFMhot";
-        const QString palNT=QObject::tr("AFM hot");
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), palN, palNT);
-        QRgb* plut=lutstore[palette].lut.data();
-        if (plut!=nullptr) {
-            for (int l=0; l<=JKQTPImageTools::LUTSIZE; l++) {
-                const double v=l/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                double r = 765.0*v;
-                if (r > 255.0)
-                    r = 255.0;
-
-                double g = 765.0*v-255.0;
-                if (g > 255.0)
-                    g = 255.0;
-                else if (g < 0.0)
-                    g = 0.0;
-
-                double b = 765.0*v-510.0;
-                if (b < 0.0)
-                    b = 0.0;
-                plut[l]=qRgb(static_cast<int>(r), static_cast<int>(g), static_cast<int>(b));
-            }
-        }
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageINVERTED_HOT;
-        const QString palN="invAFMhot";
-        const QString palNT=QObject::tr("inv. AFM hot");
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), palN, palNT);
-        QRgb* plut=lutstore[palette].lut.data();
-        if (plut!=nullptr) {
-            for (int l=JKQTPImageTools::LUTSIZE; l>=0; l--) {
-                const double v=(JKQTPImageTools::LUTSIZE-l)/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                double r = 765.0*v;
-                if (r > 255.0)
-                    r = 255.0;
-
-                double g = 765.0*v-255.0;
-                if (g > 255.0)
-                    g = 255.0;
-                else if (g < 0.0)
-                    g = 0.0;
-
-                double b = 765.0*v-510.0;
-                if (b < 0.0)
-                    b = 0.0;
-                plut[l]=qRgb(static_cast<int>(r), static_cast<int>(g), static_cast<int>(b));
-            }
-        }
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageOCEAN;
-        const QString palN="ocean";
-        const QString palNT=QObject::tr("ocean");
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), palN, palNT);
-        QRgb* plut=lutstore[palette].lut.data();
-        if (plut!=nullptr) {
-            for (int l=0; l<=JKQTPImageTools::LUTSIZE; l++) {
-                const double v=l/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                double r = 765.0*v-510.0;
-                if (r < 0.0)
-                    r = 0.0;
-
-                const double g = std::abs(382.5*v-127.5);
-
-                const double b = 255.0*v;
-                plut[l]=qRgb(static_cast<int>(r), static_cast<int>(g), static_cast<int>(b));
-            }
-        }
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageINVERTED_OCEAN;
-        const QString palN="invocean";
-        const QString palNT=QObject::tr("inv. ocean");
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), palN, palNT);
-        QRgb* plut=lutstore[palette].lut.data();
-        if (plut!=nullptr) {
-            for (int l=JKQTPImageTools::LUTSIZE; l>=0; l--) {
-                const double v=(JKQTPImageTools::LUTSIZE-l)/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                double r = 765.0*v-510.0;
-                if (r < 0.0)
-                    r = 0.0;
-
-                const double g = std::abs(382.5*v-127.5);
-
-                const double b = 255.0*v;
-                plut[l]=qRgb(static_cast<int>(r), static_cast<int>(g), static_cast<int>(b));
-            }
-        }
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageBLUEMAGENTAYELLOW;
-        const QString palN="BlMaYe";
-        const QString palNT=QObject::tr("blue-magenta-yellow");
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), palN, palNT);
-        QRgb* plut=lutstore[palette].lut.data();
-        if (plut!=nullptr) {
-            for (int l=0; l<=JKQTPImageTools::LUTSIZE; l++) {
-                const double v=l/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                double r = (v/0.32-0.78125);
-                if (r < 0.0) r = 0.0;
-                if (r > 1.0) r = 1.0;
-
-                double g = 2.0*v-0.84;
-                if (g < 0.0) g = 0.0;
-                if (g > 1.0) g = 1.0;
-
-                double b = 4.0*v;
-                if (b>1 || b<0) b = -2.0*v+1.84;
-                if (b>1 || b<0) b = v/0.08-11.5;
-                if (b>1 || b<0) b=1;
-
-                if (b < 0.0) b = 0.0;
-                if (b > 1.0) b = 1.0;
-                plut[l]=qRgb(static_cast<int>(255.0*r), static_cast<int>(255.0*g), static_cast<int>(255.0*b));
-            }
-        }
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageINVERTED_BLUEMAGENTAYELLOW;
-        const QString palN="YeMaBl";
-        const QString palNT=QObject::tr("yellow-magenta-blue");
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), palN, palNT);
-        QRgb* plut=lutstore[palette].lut.data();            if (plut!=nullptr) {
-            for (int l=0; l<=JKQTPImageTools::LUTSIZE; l++) {
-                const double v=(JKQTPImageTools::LUTSIZE-l)/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                double r = (v/0.32-0.78125);
-                if (r < 0.0) r = 0.0;
-                if (r > 1.0) r = 1.0;
-
-                double g = 2.0*v-0.84;
-                if (g < 0.0) g = 0.0;
-                if (g > 1.0) g = 1.0;
-
-                double b = 4.0*v;
-                if (b>1 || b<0) b = -2.0*v+1.84;
-                if (b>1 || b<0) b = v/0.08-11.5;
-                if (b>1 || b<0) b=1;
-
-                if (b < 0.0) b = 0.0;
-                if (b > 1.0) b = 1.0;
-                plut[l]=qRgb(static_cast<int>(255.0*r), static_cast<int>(255.0*g), static_cast<int>(255.0*b));
-            }
-        }
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageBLUEYELLOW;
-        const QString palN="BlYe";
-        const QString palNT=QObject::tr("blue-yellow");
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), palN, palNT);
-        QRgb* plut=lutstore[palette].lut.data();
-        if (plut!=nullptr) {
-            for (int l=0; l<=JKQTPImageTools::LUTSIZE; l++) {
-                const double v=l/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                double r = sqrt(sqrt(v));
-                if (r < 0.0) r = 0.0;
-                if (r > 1.0) r = 1.0;
-
-                double g = sin(JKQTPSTATISTICS_PI/2.0*v);
-                if (g < 0.0) g = 0.0;
-                if (g > 1.0) g = 1.0;
-
-                double b = cos(JKQTPSTATISTICS_PI/2.0*v);
-                if (b < 0.0) b = 0.0;
-                if (b > 1.0) b = 1.0;
-
-                plut[l]=qRgb(static_cast<int>(255.0*r), static_cast<int>(255.0*g), static_cast<int>(255.0*b));
-            }
-        }
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageINVERTED_BLUEYELLOW;
-        const QString palN="YeBl";
-        const QString palNT=QObject::tr("yellow-blue");
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), palN, palNT);
-        QRgb* plut=lutstore[palette].lut.data();
-        if (plut!=nullptr) {
-            for (int l=0; l<=JKQTPImageTools::LUTSIZE; l++) {
-                const double v=(JKQTPImageTools::LUTSIZE-l)/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                double r = sqrt(sqrt(v));
-                if (r < 0.0) r = 0.0;
-                if (r > 1.0) r = 1.0;
-
-                double g = sin(JKQTPSTATISTICS_PI/2.0*v);
-                if (g < 0.0) g = 0.0;
-                if (g > 1.0) g = 1.0;
-
-                double b = cos(JKQTPSTATISTICS_PI/2.0*v);
-                if (b < 0.0) b = 0.0;
-                if (b > 1.0) b = 1.0;
-
-                plut[l]=qRgb(static_cast<int>(255.0*r), static_cast<int>(255.0*g), static_cast<int>(255.0*b));
-            }
-        }
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageCYAN;
-        const QString palN="cyan";
-        const QString palNT=QObject::tr("cyan");
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), palN, palNT);
-        QRgb* plut=lutstore[palette].lut.data();
-        if (plut!=nullptr) {
-            for (int l=0; l<=JKQTPImageTools::LUTSIZE; l++) {
-                const double v=l/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                double r = v*0.5;
-                if (r < 0.0) r = 0.0;
-                if (r > 1.0) r = 1.0;
-
-                double g = v;
-                if (g < 0.0) g = 0.0;
-                if (g > 1.0) g = 1.0;
-
-                double b = v;
-                if (b < 0.0) b = 0.0;
-                if (b > 1.0) b = 1.0;
-                plut[l]=qRgb(static_cast<int>(255.0*r), static_cast<int>(255.0*g), static_cast<int>(255.0*b));
-            }
-        }
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageINVERTED_CYAN;
-        const QString palN="invcyan";
-        const QString palNT=QObject::tr("inv. cyan");
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), palN, palNT);
-        QRgb* plut=lutstore[palette].lut.data();
-        if (plut!=nullptr) {
-            for (int l=0; l<=JKQTPImageTools::LUTSIZE; l++) {
-                const double v=(JKQTPImageTools::LUTSIZE-l)/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                double r = v*0.5;
-                if (r < 0.0) r = 0.0;
-                if (r > 1.0) r = 1.0;
-
-                double g = v;
-                if (g < 0.0) g = 0.0;
-                if (g > 1.0) g = 1.0;
-
-                double b = v;
-                if (b < 0.0) b = 0.0;
-                if (b > 1.0) b = 1.0;
-                plut[l]=qRgb(static_cast<int>(255.0*r), static_cast<int>(255.0*g), static_cast<int>(255.0*b));
-            }
-        }
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageTRAFFICLIGHT;
-        const QString palN="trafficlight";
-        const QString palNT=QObject::tr("trafficlight");
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), palN, palNT);
-        QRgb* plut=lutstore[palette].lut.data();
-        if (plut!=nullptr) {
-            for (int l=0; l<=JKQTPImageTools::LUTSIZE; l++) {
-                const double v=l/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                double r = (v < 0.5) ? 128.0*sin(JKQTPSTATISTICS_PI*(2.0*v-0.5))+128.0 : 255.0;
-                if (r > 255.0)
-                    r = 255.0;
-
-                double g = (v < 0.5) ? 512.0*v+128.0 : 512.0-512.0*v;
-                if (g > 255.0)
-                    g = 255.0;
-                plut[l]=qRgb(static_cast<int>(r), static_cast<int>(g), 0);
-            }
-        }
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageINVERTED_TRAFFICLIGHT;
-        const QString palN="invtrafficlight";
-        const QString palNT=QObject::tr("inv. trafficlight");
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), palN, palNT);
-        QRgb* plut=lutstore[palette].lut.data();
-        if (plut!=nullptr) {
-            for (int l=0; l<=JKQTPImageTools::LUTSIZE; l++) {
-                const double v=(JKQTPImageTools::LUTSIZE-l)/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                double r = (v < 0.5) ? 128.0*sin(JKQTPSTATISTICS_PI*(2.0*v-0.5))+128.0 : 255.0;
-                if (r > 255.0)
-                    r = 255.0;
-
-                double g = (v < 0.5) ? 512.0*v+128.0 : 512.0-512.0*v;
-                if (g > 255.0)
-                    g = 255.0;
-                plut[l]=qRgb(static_cast<int>(r), static_cast<int>(g), 0);
-            }
-        }
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageBLUEWHITERED;
-        const QString palN="bluewhitered";
-        const QString palNT=QObject::tr("blue-white-red");
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), palN, palNT);
-        JKQTPPaletteList lst;
-        lst<<qMakePair<double, QRgb>(8.0, 0xFFB2182B);
-        lst<<qMakePair<double, QRgb>(7.0, 0xFFD6604D);
-        lst<<qMakePair<double, QRgb>(6.0, 0xFFF4A582);
-        lst<<qMakePair<double, QRgb>(5.0, 0xFFFDDBC7);
-        lst<<qMakePair<double, QRgb>(4.0, 0xFFD1E5F0);
-        lst<<qMakePair<double, QRgb>(3.0, 0xFF92C5DE);
-        lst<<qMakePair<double, QRgb>(2.0, 0xFF4393C3);
-        lst<<qMakePair<double, QRgb>(1.0, 0xFF2166AC);
-
-        lutstore[palette].lut=JKQTPBuildColorPaletteLUTLinInterpolate(lst, JKQTPImageTools::LUTSIZE+1);
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageREDWHITEBLUE;
-        const QString palN="redwhiteblue";
-        const QString palNT=QObject::tr("red-white-blue");
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), palN, palNT);
-
-        JKQTPPaletteList lst;
-        lst<<jkqtp_qRgbOpaque(0xB2182B);
-        lst<<jkqtp_qRgbOpaque(0xD6604D);
-        lst<<jkqtp_qRgbOpaque(0xF4A582);
-        lst<<jkqtp_qRgbOpaque(0xFDDBC7);
-        lst<<jkqtp_qRgbOpaque(0xD1E5F0);
-        lst<<jkqtp_qRgbOpaque(0x92C5DE);
-        lst<<jkqtp_qRgbOpaque(0x4393C3);
-        lst<<jkqtp_qRgbOpaque(0x2166AC);
-
-        lutstore[palette].lut=JKQTPBuildColorPaletteLUTLinInterpolate(lst, JKQTPImageTools::LUTSIZE+1);
-
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageBLACKBLUEREDYELLOW;
-        const QString palN="BBlRdYe";
-        const QString palNT=QObject::tr("black-blue-red-yellow");
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), palN, palNT);
-        QRgb* plut=lutstore[palette].lut.data();          //std::cout<<"!!! creating rainbow lut\n";
-        if (plut!=nullptr) {
-            for (int l=0; l<=JKQTPImageTools::LUTSIZE; l++) {
-                const double v=(l)/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                const double r = 255.0*qBound(0.0,sqrt(v),1.0);
-                const double g = 255.0*qBound(0.0,v*v*v,1.0);
-                const double b = 255.0*qBound(0.0,sin(2.0*JKQTPSTATISTICS_PI*v),1.0);
-
-                plut[l]=qRgb(static_cast<int>(r), static_cast<int>(g), static_cast<int>(b));
-            }
-        }
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageGREENREDVIOLET;
-        const QString palN="GnRdVi";
-        const QString palNT=QObject::tr("green-red-violet");
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), palN, palNT);
-        QRgb* plut=lutstore[palette].lut.data();          //std::cout<<"!!! creating rainbow lut\n";
-        if (plut!=nullptr) {
-            for (int l=0; l<=JKQTPImageTools::LUTSIZE; l++) {
-                const double v=(l)/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                const double r = 255.0*qBound(0.0,v,1.0);
-                const double g = 255.0*qBound(0.0,fabs(v-0.5),1.0);
-                const double b = 255.0*qBound(0.0,v*v*v*v,1.0);
-
-                plut[l]=qRgb(static_cast<int>(r), static_cast<int>(g), static_cast<int>(b));
-            }
-        }
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageBLACKBLUEWHITEYELLOWWHITE;
-        const QString palN="BWprint";
-        const QString palNT=QObject::tr("black-blue-white-yellow-white");
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), palN, palNT);
-        QRgb* plut=lutstore[palette].lut.data();          //std::cout<<"!!! creating rainbow lut\n";
-        if (plut!=nullptr) {
-            for (int l=0; l<=JKQTPImageTools::LUTSIZE; l++) {
-                const double v=(l)/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                const double r = 255.0*qBound(0.0,v/0.32-0.78125,1.0);
-                const double g = 255.0*qBound(0.0,v/0.32-0.78125,1.0);
-                const double b = 255.0*qBound(0.0,(v<0.25)?4*v:(v<0.42)?1.0:(v<0.92)?-2.0*v+1.84:v/0.08-11.5,1.0);
-
-                plut[l]=qRgb(static_cast<int>(r), static_cast<int>(g), static_cast<int>(b));
-            }
-        }
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageWHITEYELLOWWHITEBLUEBLACK;
-        const QString palN="invBWprint";
-        const QString palNT=QObject::tr("white-yellow-white-blue-black");
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), palN, palNT);
-        QRgb* plut=lutstore[palette].lut.data();
-        if (plut!=nullptr) {
-            for (int l=0; l<=JKQTPImageTools::LUTSIZE; l++) {
-                const double v=(JKQTPImageTools::LUTSIZE-l)/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                const double r = 255.0*qBound(0.0,v/0.32-0.78125,1.0);
-                const double g = 255.0*qBound(0.0,v/0.32-0.78125,1.0);
-                const double b = 255.0*qBound(0.0,(v<0.25)?4*v:(v<0.42)?1.0:(v<0.92)?-2.0*v+1.84:v/0.08-11.5,1.0);
-
-                plut[l]=qRgb(static_cast<int>(r), static_cast<int>(g), static_cast<int>(b));
-            }
-        }
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageBR_GR;
-        const QString palN="BrBG";
-        const QString palNT=QObject::tr("BrBG");
-        lutstore[palette]=JKQTPImageTools::LUTData(palN, palNT);
-        JKQTPPaletteList lst;
-        lst<<qMakePair<double, QRgb>(0.0, qRgb(0x8C, 0x51, 0x0A));
-        lst<<qMakePair<double, QRgb>(1.0, qRgb(0xBF, 0x81, 0x2D));
-        lst<<qMakePair<double, QRgb>(2.0, qRgb(0xDF, 0xC2, 0x7D));
-        lst<<jkqtp_qRgbOpaque(0xF6E8C3);
-        lst<<jkqtp_qRgbOpaque(0xC7EAE5);
-        lst<<jkqtp_qRgbOpaque(0x80CDC1);
-        lst<<jkqtp_qRgbOpaque(0x35978F);
-        lst<<jkqtp_qRgbOpaque(0x01665E);
-
-        lutstore[palette].lut=JKQTPBuildColorPaletteLUTLinInterpolate(lst);
-
-        {
-            const auto palettei=JKQTPMathImageBR_GR_STEP;
-            lutstore[palettei]=JKQTPImageTools::LUTData("stepsBrBG", QObject::tr("steps: BrBG"));
-            lutstore[palettei].lut=JKQTPBuildColorPaletteLUTColorsOnlySteps(lst);
-        }
-    }
-
-
-
-
-    {
-        const auto palette=JKQTPMathImagePU_OR;
-        const QString palN="PuOr";
-        const QString palNT=QObject::tr("PuOr");
-        lutstore[palette]=JKQTPImageTools::LUTData(palN, palNT);
-        JKQTPPaletteList lst;
-        lst<<jkqtp_qRgbOpaque(0xB35806);
-        lst<<jkqtp_qRgbOpaque(0xE08214);
-        lst<<jkqtp_qRgbOpaque(0xFDB863);
-        lst<<jkqtp_qRgbOpaque(0xFEE0B6);
-        lst<<jkqtp_qRgbOpaque(0xF7F7F7);
-        lst<<jkqtp_qRgbOpaque(0xD8DAEB);
-        lst<<jkqtp_qRgbOpaque(0xB2ABD2);
-        lst<<jkqtp_qRgbOpaque(0x8073AC);
-        lst<<jkqtp_qRgbOpaque(0x542788);
-
-        lutstore[palette].lut=JKQTPBuildColorPaletteLUTLinInterpolate(lst);
-        {
-            const auto palettei=JKQTPMathImagePU_OR_STEP;
-            lutstore[palettei]=JKQTPImageTools::LUTData("stepsPuOr", QObject::tr("steps: PuOr"));
-            lutstore[palettei].lut=JKQTPBuildColorPaletteLUTColorsOnlySteps(lst);
-        }
-    }
-
-
-
-    {
-        const auto palette=JKQTPMathImageYL_GN_BU;
-        const QString palN="YeGnBu";
-        const QString palNT=QObject::tr("YeGnBu");
-        lutstore[palette]=JKQTPImageTools::LUTData(palN, palNT);
-        JKQTPPaletteList lst;
-        lst<<jkqtp_qRgbOpaque(0xFFFFD9);
-        lst<<jkqtp_qRgbOpaque(0xEDF8B1);
-        lst<<jkqtp_qRgbOpaque(0xC7E9B4);
-        lst<<jkqtp_qRgbOpaque(0x7FCDBB);
-        lst<<jkqtp_qRgbOpaque(0x41B6C4);
-        lst<<jkqtp_qRgbOpaque(0x1D91C0);
-        lst<<jkqtp_qRgbOpaque(0x225EA8);
-        lst<<jkqtp_qRgbOpaque(0x253494);
-        lst<<jkqtp_qRgbOpaque(0x081D58);
-
-        lutstore[palette].lut=JKQTPBuildColorPaletteLUTLinInterpolate(lst);
-        {
-            const auto palettei=JKQTPMathImageYL_GN_BU_STEP;
-            lutstore[palettei]=JKQTPImageTools::LUTData("stepsYeGnBu", QObject::tr("steps: YeGnBu"));
-            lutstore[palettei].lut=JKQTPBuildColorPaletteLUTColorsOnlySteps(lst);
-        }
-    }
-
-
-
-    {
-        JKQTPPaletteList lst;
-        lst<<jkqtp_qRgbOpaque(0xF7FCF0);
-        lst<<jkqtp_qRgbOpaque(0xE0F3DB);
-        lst<<jkqtp_qRgbOpaque(0xCCEBC5);
-        lst<<jkqtp_qRgbOpaque(0xA8DDB5);
-        lst<<jkqtp_qRgbOpaque(0x7BCCC4);
-        lst<<jkqtp_qRgbOpaque(0x4EB3D3);
-        lst<<jkqtp_qRgbOpaque(0x2B8CBE);
-        lst<<jkqtp_qRgbOpaque(0x0868AC);
-        lst<<jkqtp_qRgbOpaque(0x084081);
-
-        {
-            const auto palette=JKQTPMathImageBU_GN;
-            lutstore[palette]=JKQTPImageTools::LUTData("bluegreen", QObject::tr("blue-green"));
-            lutstore[palette].lut=JKQTPBuildColorPaletteLUTLinInterpolate(lst);
-        }
-
-        {
-            const auto palette=JKQTPMathImageBU_GN_STEP;
-            lutstore[palette]=JKQTPImageTools::LUTData("stepsBlGn", QObject::tr("steps: blue-green"));
-            lutstore[palette].lut=JKQTPBuildColorPaletteLUTColorsOnlySteps(lst);
-        }
-
-
-        lst.reverse();
-
-
-        {
-            const auto palette=JKQTPMathImageGN_BU;
-            lutstore[palette]=JKQTPImageTools::LUTData("greenblue", QObject::tr("green-blue"));
-            lutstore[palette].lut=JKQTPBuildColorPaletteLUTLinInterpolate(lst);
-        }
-
-        {
-            const auto palette=JKQTPMathImageGN_BU_STEP;
-            lutstore[palette]=JKQTPImageTools::LUTData("stepsGnBl", QObject::tr("steps: green-blue"));
-            lutstore[palette].lut=JKQTPBuildColorPaletteLUTColorsOnlySteps(lst);
-        }
-    }
-
-
-
-
-
-
-    {
-        const auto palette=JKQTPMathImageMAGENTA;
-        const auto palettei=JKQTPMathImageINVERTED_MAGENTA;
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), "magenta", QObject::tr("magenta"));
-        lutstore[palettei]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), "invmagenta", QObject::tr("inv. magenta"));
-        QRgb* plut=lutstore[palette].lut.data();
-        QRgb* pluti=lutstore[palettei].lut.data();
-        if (plut!=nullptr) {
-            for (int l=0; l<=JKQTPImageTools::LUTSIZE; l++) {
-                const double v=(JKQTPImageTools::LUTSIZE-l)/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                plut[l]=QColor::fromCmykF(0,1,0,v).rgba();
-                pluti[l]=QColor::fromCmykF(0,1,0,1.0-v).rgba();
-            }
-
-        }
-    }
-
-        {
-            const auto palette=JKQTPMathImageYELLOW;
-            const auto palettei=JKQTPMathImageINVERTED_YELLOW;
-            lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), "yellow", QObject::tr("yellow"));
-            lutstore[palettei]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), "invyellow", QObject::tr("inv. yellow"));
-            QRgb* plut=lutstore[palette].lut.data();
-            QRgb* pluti=lutstore[palettei].lut.data();
-            if (plut!=nullptr) {
-                for (int l=0; l<=JKQTPImageTools::LUTSIZE; l++) {
-                    const double v=(JKQTPImageTools::LUTSIZE-l)/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                    plut[l]=QColor::fromCmykF(0,0,1,v).rgba();
-                    pluti[l]=QColor::fromCmykF(0,0,1,1.0-v).rgba();
-                }
-
-            }
-        }
-
-
-        {
-            const auto palette=JKQTPMathImageCYAN;
-            const auto palettei=JKQTPMathImageINVERTED_CYAN;
-            lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), "cyan", QObject::tr("cyan"));
-            lutstore[palettei]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), "invcyan", QObject::tr("inv. cyan"));
-            QRgb* plut=lutstore[palette].lut.data();
-            QRgb* pluti=lutstore[palettei].lut.data();
-            if (plut!=nullptr) {
-                for (int l=0; l<=JKQTPImageTools::LUTSIZE; l++) {
-                    const double v=(JKQTPImageTools::LUTSIZE-l)/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                    plut[l]=QColor::fromCmykF(1,0,0,v).rgba();
-                    pluti[l]=QColor::fromCmykF(1,0,0,1.0-v).rgba();
-                }
-
-            }
-        }
-
-
-
-    {
-        const auto palette=JKQTPMathImageINVERTED_MAGENTAWHITE;
-        const QString palN="whitemagenta";
-        const QString palNT=QObject::tr("white-magenta");
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), palN, palNT);
-        QRgb* plut=lutstore[palette].lut.data();          //std::cout<<"!!! creating rainbow lut\n";
-        if (plut!=nullptr) {
-            for (int l=0; l<=JKQTPImageTools::LUTSIZE; l++) {
-                const double v=(l)/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                plut[l]=QColor::fromCmykF(0,v,0,0).rgba();
-            }
-
-        }
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageMAGENTAWHITE;
-        const QString palN="magentawhite";
-        const QString palNT=QObject::tr("magenta-white");
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), palN, palNT);
-        QRgb* plut=lutstore[palette].lut.data();          //std::cout<<"!!! creating rainbow lut\n";
-        if (plut!=nullptr) {
-            for (int l=0; l<=JKQTPImageTools::LUTSIZE; l++) {
-                const double v=(JKQTPImageTools::LUTSIZE-l)/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                plut[l]=QColor::fromCmykF(0,v,0,0).rgba();
-            }
-
-        }
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageINVERTED_YELLOWWHITE;
-        const QString palN="whiteyellow";
-        const QString palNT=QObject::tr("white-yellow");
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), palN, palNT);
-        QRgb* plut=lutstore[palette].lut.data();          //std::cout<<"!!! creating rainbow lut\n";
-        if (plut!=nullptr) {
-            for (int l=0; l<=JKQTPImageTools::LUTSIZE; l++) {
-                const double v=(l)/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                plut[l]=QColor::fromCmykF(0,0,v,0).rgba();
-            }
-
-        }
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageYELLOWWHITE;
-        const QString palN="yellowwhite";
-        const QString palNT=QObject::tr("yellow-white");
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), palN, palNT);
-        QRgb* plut=lutstore[palette].lut.data();          //std::cout<<"!!! creating rainbow lut\n";
-        if (plut!=nullptr) {
-            for (int l=0; l<=JKQTPImageTools::LUTSIZE; l++) {
-                const double v=(JKQTPImageTools::LUTSIZE-l)/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                plut[l]=QColor::fromCmykF(0,0,v,0).rgba();
-            }
-
-        }
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageINVERTED_CYANWHITE;
-        const QString palN="whitecyan";
-        const QString palNT=QObject::tr("white-cyan");
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), palN, palNT);
-        QRgb* plut=lutstore[palette].lut.data();          //std::cout<<"!!! creating rainbow lut\n";
-        if (plut!=nullptr) {
-            for (int l=0; l<=JKQTPImageTools::LUTSIZE; l++) {
-                const double v=(l)/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                plut[l]=QColor::fromCmykF(v,0,0,0).rgba();
-            }
-
-        }
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageCYANWHITE;
-        const QString palN="cyanwhite";
-        const QString palNT=QObject::tr("cyan-white");
-        lutstore[palette]=JKQTPImageTools::LUTData(QVector<QRgb>(JKQTPImageTools::LUTSIZE+1, 0), palN, palNT);
-        QRgb* plut=lutstore[palette].lut.data();          //std::cout<<"!!! creating rainbow lut\n";
-        if (plut!=nullptr) {
-            for (int l=0; l<=JKQTPImageTools::LUTSIZE; l++) {
-                const double v=(JKQTPImageTools::LUTSIZE-l)/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                plut[l]=QColor::fromCmykF(v,0,0,0).rgba();
-            }
-
-        }
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageBlueGreenRed;
-        const QString palN="bluegreenred";
-        const QString palNT=QObject::tr("blue-green-red");
-        lutstore[palette]=JKQTPImageTools::LUTData( palN, palNT);
-        JKQTPPaletteList lst;
-        lst<<qMakePair<double, QRgb>(1.0, QColor("blue").rgb());
-        lst<<qMakePair<double, QRgb>(2.0, QColor("green").rgb());
-        lst<<qMakePair<double, QRgb>(3.0, QColor("red").rgb());
-
-        lutstore[palette].lut=JKQTPBuildColorPaletteLUTLinInterpolate(lst);
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageRedGreenBlue;
-        const QString palN="redgreenblue";
-        const QString palNT=QObject::tr("red-green-blue");
-        lutstore[palette]=JKQTPImageTools::LUTData( palN, palNT);
-        JKQTPPaletteList lst;
-        lst<<qMakePair<double, QRgb>(1.0, QColor("red").rgb());
-        lst<<qMakePair<double, QRgb>(2.0, QColor("green").rgb());
-        lst<<qMakePair<double, QRgb>(3.0, QColor("blue").rgb());
-
-        lutstore[palette].lut=JKQTPBuildColorPaletteLUTLinInterpolate(lst);
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageMagentaYellow;
-        const QString palN="magentayellow";
-        const QString palNT=QObject::tr("magenta-yellow");
-        lutstore[palette]=JKQTPImageTools::LUTData( palN, palNT);
-        JKQTPPaletteList lst;
-        lst<<qMakePair<double, QRgb>(1.0, QColor("magenta").rgb());
-        lst<<qMakePair<double, QRgb>(2.0, QColor("yellow").rgb());
-
-        lutstore[palette].lut=JKQTPBuildColorPaletteLUTLinInterpolate(lst);
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageYellowMagenta;
-        const QString palN="yellowmagenta";
-        const QString palNT=QObject::tr("yellow-magenta");
-        lutstore[palette]=JKQTPImageTools::LUTData( palN, palNT);
-        JKQTPPaletteList lst;
-        lst<<qMakePair<double, QRgb>(1.0, QColor("yellow").rgb());
-        lst<<qMakePair<double, QRgb>(2.0, QColor("magenta").rgb());
-
-        lutstore[palette].lut=JKQTPBuildColorPaletteLUTLinInterpolate(lst);
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageRedBlue;
-        const QString palN="redblue";
-        const QString palNT=QObject::tr("red-blue");
-        lutstore[palette]=JKQTPImageTools::LUTData(palN, palNT);
-        JKQTPPaletteList lst;
-        lst<<qMakePair<double, QRgb>(1.0, QColor("red").rgb());
-        lst<<qMakePair<double, QRgb>(2.0, QColor("blue").rgb());
-
-        lutstore[palette].lut=JKQTPBuildColorPaletteLUTLinInterpolate(lst);
-    }
-
-
-    {
-        const auto palette=JKQTPMathImageBlueRed;
-        const QString palN="bluered";
-        const QString palNT=QObject::tr("blue-red");
-        lutstore[palette]=JKQTPImageTools::LUTData( palN, palNT);
-        JKQTPPaletteList lst;
-        lst<<qMakePair<double, QRgb>(1.0, QColor("blue").rgb());
-        lst<<qMakePair<double, QRgb>(2.0, QColor("red").rgb());
-
-        lutstore[palette].lut=JKQTPBuildColorPaletteLUTLinInterpolate(lst);
+        const JKQTPPaletteList lst=  {
+            jkqtp_qRgbOpaque(0xF7FCF0),
+            jkqtp_qRgbOpaque(0xE0F3DB),
+            jkqtp_qRgbOpaque(0xCCEBC5),
+            jkqtp_qRgbOpaque(0xA8DDB5),
+            jkqtp_qRgbOpaque(0x7BCCC4),
+            jkqtp_qRgbOpaque(0x4EB3D3),
+            jkqtp_qRgbOpaque(0x2B8CBE),
+            jkqtp_qRgbOpaque(0x0868AC),
+            jkqtp_qRgbOpaque(0x084081)
+        };
+        const auto& normLUT=lutstore[JKQTPMathImageBU_GN]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTLinInterpolate(lst),  "bluegreen", QObject::tr("blue-green-white"));
+        const auto& normStepLUT=lutstore[JKQTPMathImageBU_GN_STEP]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTColorsOnlySteps(lst), "stepsBlGn", QObject::tr("steps: blue-green-white"));
+        lutstore[JKQTPMathImageGN_BU]=JKQTPImageTools::LUTData(jkqtp_reversed(normLUT.lut), "BlGnYe", QObject::tr("white-green-blue"));
+        lutstore[JKQTPMathImageGN_BU_STEP]=JKQTPImageTools::LUTData(jkqtp_reversed(normStepLUT.lut), "stepsBlGnYe", QObject::tr("steps: white-green-blue"));
     }
 
     {
-        const auto palette=JKQTPMathImageSeismic;
-        const QString palN="seismic";
-        const QString palNT=QObject::tr("seismic");
-        lutstore[palette]=JKQTPImageTools::LUTData( palN, palNT);
-        JKQTPPaletteList lst;
-        lst<<qMakePair<double, QRgb>(0, QColor::fromRgbF(0.0f, 0.0f, 0.3f).rgb());
-        lst<<qMakePair<double, QRgb>(1, QColor::fromRgbF(0.0f, 0.0f, 1.0f).rgb());
-        lst<<qMakePair<double, QRgb>(2, QColor::fromRgbF(1.0f, 1.0f, 1.0f).rgb());
-        lst<<qMakePair<double, QRgb>(3, QColor::fromRgbF(1.0f, 0.0f, 0.0f).rgb());
-        lst<<qMakePair<double, QRgb>(4, QColor::fromRgbF(0.5f, 0.0f, 0.0f).rgb());
-
-        lutstore[palette].lut=JKQTPBuildColorPaletteLUTLinInterpolate(lst);
-        {
-            const auto palettei=JKQTPMathImageSeismic_STEP;
-            lutstore[palettei]=JKQTPImageTools::LUTData("seismic_step", QObject::tr("steps: seismic"));
-            lutstore[palettei].lut=JKQTPBuildColorPaletteLUTColorsOnlySteps(lst);
-        }
+        const JKQTPPaletteList lst=  {
+            QColor("blue"),
+            QColor("green"),
+            QColor("red")
+        };
+        const auto& normLUT=lutstore[JKQTPMathImageBlueGreenRed]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTLinInterpolate(lst),  "BlGnRd", QObject::tr("blue-green-red"));
+        lutstore[JKQTPMathImageBlueGreenRed].legacyNames<<"bluegreenred";
+        lutstore[JKQTPMathImageRedGreenBlue]=JKQTPImageTools::LUTData(jkqtp_reversed(normLUT.lut), "RdGnBu", QObject::tr("red-green-blue"));
+        lutstore[JKQTPMathImageRedGreenBlue].legacyNames<<"redgreenblue";
     }
 
     {
-        const auto palette=JKQTPMathImageTerrain;
-        const QString palN="terrain";
-        const QString palNT=QObject::tr("terrain");
-        lutstore[palette]=JKQTPImageTools::LUTData( palN, palNT);
+        const JKQTPPaletteList lst=  {
+            QColor("magenta"),
+            QColor("yellow")
+        };
+        const auto& normLUT=lutstore[JKQTPMathImageMagentaYellow]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTLinInterpolate(lst),  "magentayellow", QObject::tr("magenta-yellow"));
+        lutstore[JKQTPMathImageYellowMagenta]=JKQTPImageTools::LUTData(jkqtp_reversed(normLUT.lut), "yellowmagenta", QObject::tr("yellow-magenta"));
+    }
+
+    {
+        const JKQTPPaletteList lst=  {
+            QColor("red"),
+            QColor("blue")
+        };
+        const auto& normLUT=lutstore[JKQTPMathImageRedBlue]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTLinInterpolate(lst),  "redblue", QObject::tr("red-blue"));
+        lutstore[JKQTPMathImageBlueRed]=JKQTPImageTools::LUTData(jkqtp_reversed(normLUT.lut), "bluered", QObject::tr("blue-red"));
+    }
+
+    {
+        const JKQTPPaletteList lst=  {
+            QColor::fromRgbF(0.0f, 0.0f, 0.3f),
+            QColor::fromRgbF(0.0f, 0.0f, 1.0f),
+            QColor::fromRgbF(1.0f, 1.0f, 1.0f),
+            QColor::fromRgbF(1.0f, 0.0f, 0.0f),
+            QColor::fromRgbF(0.5f, 0.0f, 0.0f)
+        };
+        const auto& normLUT=lutstore[JKQTPMathImageSeismic]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTLinInterpolate(lst),  "seismic", QObject::tr("seismic"));
+        const auto& normStepLUT=lutstore[JKQTPMathImageSeismic_STEP]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTColorsOnlySteps(lst), "stepsseismic", QObject::tr("steps: seismic"));
+        lutstore[JKQTPMathImageSeismic_STEP].legacyNames<<"seismic_step";
+        lutstore[JKQTPMathImageINVERTED_Seismic]=JKQTPImageTools::LUTData(jkqtp_reversed(normLUT.lut), "invseismic", QObject::tr("inv. seismic"));
+        lutstore[JKQTPMathImageINVERTED_Seismic_STEP]=JKQTPImageTools::LUTData(jkqtp_reversed(normStepLUT.lut), "stepsinvseismic", QObject::tr("steps: inv. seismic"));
+    }
+
+    {
         JKQTPPaletteList lst;
         lst<<qMakePair<double, QRgb>(0.00, QColor::fromRgbF(0.2f, 0.2f, 0.6f).rgb());
         lst<<qMakePair<double, QRgb>(0.15, QColor::fromRgbF(0.0f, 0.6f, 1.0f).rgb());
@@ -1261,22 +370,15 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
         lst<<qMakePair<double, QRgb>(0.50, QColor::fromRgbF(1.0f, 1.0f, 0.6f).rgb());
         lst<<qMakePair<double, QRgb>(0.75, QColor::fromRgbF(0.5f, 0.36f, 0.33f).rgb());
         lst<<qMakePair<double, QRgb>(1.00, QColor::fromRgbF(1.0f, 1.0f, 1.0f).rgb());
-
-        lutstore[palette].lut=JKQTPBuildColorPaletteLUTLinInterpolate(lst);
-
-
-        {
-            const auto palettei=JKQTPMathImageTerrain_STEP;
-            lutstore[palettei]=JKQTPImageTools::LUTData("terrain_step", QObject::tr("steps: terrain"));
-            lutstore[palettei].lut=JKQTPBuildColorPaletteLUTColorsOnlySteps(lst);
-        }
+        const auto& normLUT=lutstore[JKQTPMathImageTerrain]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTLinInterpolate(lst),  "terrain", QObject::tr("terrain"));
+        const auto& normStepLUT=lutstore[JKQTPMathImageTerrain_STEP]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTColorsOnlySteps(lst), "stepsterrain", QObject::tr("steps: terrain"));
+        lutstore[JKQTPMathImageTerrain_STEP].legacyNames<<"terrain_step";
+        lutstore[JKQTPMathImageINVERTED_Terrain]=JKQTPImageTools::LUTData(jkqtp_reversed(normLUT.lut), "invterrain", QObject::tr("inv. terrain"));
+        lutstore[JKQTPMathImageINVERTED_Terrain_STEP]=JKQTPImageTools::LUTData(jkqtp_reversed(normStepLUT.lut), "stepsinvterrain", QObject::tr("steps: inv. terrain"));
     }
 
+
     {
-        const auto palette=JKQTPMathImageBone;
-        const QString palN="bone";
-        const QString palNT=QObject::tr("bone");
-        lutstore[palette]=JKQTPImageTools::LUTData( palN, palNT);
         QList<JKQTPColorPaletteSingleColorLinSegment> lstR,lstG,lstB;
         lstR<<JKQTPColorPaletteSingleColorLinSegment::makeDbl_0_1(0,        0.0,      0.0);
         lstR<<JKQTPColorPaletteSingleColorLinSegment::makeDbl_0_1(0.746032, 0.652778, 0.652778);
@@ -1290,15 +392,12 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
         lstB<<JKQTPColorPaletteSingleColorLinSegment::makeDbl_0_1(0,        0.0,      0.0);
         lstB<<JKQTPColorPaletteSingleColorLinSegment::makeDbl_0_1(0.365079, 0.444444, 0.444444);
         lstB<<JKQTPColorPaletteSingleColorLinSegment::makeDbl_0_1(1.0,      1.0,      1.0);
-
-        lutstore[palette].lut=JKQTPBuildColorPaletteLUTLinSegmentsSorted(lstR, lstG, lstB);
+        const auto& normLUT=lutstore[JKQTPMathImageBone]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTLinSegmentsSorted(lstR, lstG, lstB),  "bone", QObject::tr("bone"));
+        lutstore[JKQTPMathImageINVERTED_Bone]=JKQTPImageTools::LUTData(jkqtp_reversed(normLUT.lut), "invbone", QObject::tr("inv. bone"));
     }
 
+
     {
-        const auto palette=JKQTPMathImageCool;
-        const QString palN="cool";
-        const QString palNT=QObject::tr("cool");
-        lutstore[palette]=JKQTPImageTools::LUTData( palN, palNT);
         QList<JKQTPColorPaletteSingleColorLinSegment> lstR,lstG,lstB;
         lstR<<JKQTPColorPaletteSingleColorLinSegment::makeDbl_0_1(0,        0.0,      0.0);
         lstR<<JKQTPColorPaletteSingleColorLinSegment::makeDbl_0_1(1.0,      1.0,      1.0);
@@ -1309,14 +408,11 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
         lstB<<JKQTPColorPaletteSingleColorLinSegment::makeDbl_0_1(0.0,      1.0,      1.0);
         lstB<<JKQTPColorPaletteSingleColorLinSegment::makeDbl_0_1(1.0,      1.0,      1.0);
 
-        lutstore[palette].lut=JKQTPBuildColorPaletteLUTLinSegmentsSorted(lstR, lstG, lstB);
+        const auto& lutNorm=lutstore[JKQTPMathImageCool]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTLinSegmentsSorted(lstR, lstG, lstB), "cool", QObject::tr("cool"));
+        lutstore[JKQTPMathImageINVERTED_Cool]=JKQTPImageTools::LUTData(jkqtp_reversed(lutNorm.lut), "invcool", QObject::tr("inv. cool"));
     }
 
     {
-        const auto palette=JKQTPMathImageCopper;
-        const QString palN="copper";
-        const QString palNT=QObject::tr("copper");
-        lutstore[palette]=JKQTPImageTools::LUTData( palN, palNT);
         QList<JKQTPColorPaletteSingleColorLinSegment> lstR,lstG,lstB;
         lstR<<JKQTPColorPaletteSingleColorLinSegment::makeDbl_0_1(0,        0.0,      0.0);
         lstR<<JKQTPColorPaletteSingleColorLinSegment::makeDbl_0_1(0.809524, 1.000000, 1.000000);
@@ -1328,14 +424,11 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
         lstB<<JKQTPColorPaletteSingleColorLinSegment::makeDbl_0_1(0.0,      0.0,      0.0);
         lstB<<JKQTPColorPaletteSingleColorLinSegment::makeDbl_0_1(1.0,      0.4975,   0.4975);
 
-        lutstore[palette].lut=JKQTPBuildColorPaletteLUTLinSegmentsSorted(lstR, lstG, lstB);
+        const auto& lutNorm=lutstore[JKQTPMathImageCopper]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTLinSegmentsSorted(lstR, lstG, lstB), "copper", QObject::tr("copper"));
+        lutstore[JKQTPMathImageINVERTED_Copper]=JKQTPImageTools::LUTData(jkqtp_reversed(lutNorm.lut), "invcopper", QObject::tr("inv. copper"));
     }
 
     {
-        const auto palette=JKQTPMathImageAutumn;
-        const QString palN="autumn";
-        const QString palNT=QObject::tr("autumn");
-        lutstore[palette]=JKQTPImageTools::LUTData( palN, palNT);
         QList<JKQTPColorPaletteSingleColorLinSegment> lstR,lstG,lstB;
         lstR<<JKQTPColorPaletteSingleColorLinSegment::makeDbl_0_1(0,        1.0,      1.0);
         lstR<<JKQTPColorPaletteSingleColorLinSegment::makeDbl_0_1(1.0,      1.0,      1.0);
@@ -1346,7 +439,8 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
         lstB<<JKQTPColorPaletteSingleColorLinSegment::makeDbl_0_1(0.0,      0.0,      0.0);
         lstB<<JKQTPColorPaletteSingleColorLinSegment::makeDbl_0_1(1.0,      0.0,      0.0);
 
-        lutstore[palette].lut=JKQTPBuildColorPaletteLUTLinSegmentsSorted(lstR, lstG, lstB);
+        const auto& lutNorm=lutstore[JKQTPMathImageAutumn]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTLinSegmentsSorted(lstR, lstG, lstB), "autumn", QObject::tr("autumn"));
+        lutstore[JKQTPMathImageINVERTED_Autumn]=JKQTPImageTools::LUTData(jkqtp_reversed(lutNorm.lut), "invautumn", QObject::tr("inv. autumn"));
     }
 
 
@@ -2920,6 +2014,11 @@ JKQTPMathImageColorPalette JKQTPImageTools::String2JKQTPMathImageColorPalette(co
         if (QString::compare(p, it.value().name, Qt::CaseInsensitive)==0) {
             return static_cast<JKQTPMathImageColorPalette>(it.key());
         }
+        for (const auto& ln: it.value().legacyNames) {
+            if (QString::compare(p, ln, Qt::CaseInsensitive)==0) {
+                return static_cast<JKQTPMathImageColorPalette>(it.key());
+            }
+        }
     }
 
     for (auto it=JKQTPImageTools::global_jkqtpimagetools_lutstore.begin(); it!=JKQTPImageTools::global_jkqtpimagetools_lutstore.end(); ++it) {
@@ -3349,4 +2448,25 @@ JKQTPImageTools::LUTType JKQTPCreateGreensCubeHelixLUT(float start, float rotati
         res<<QColor::fromRgbF(jkqtp_bounded<float>(0.0,R,1.0), jkqtp_bounded<float>(0.0,G,1.0), jkqtp_bounded<float>(0.0,B,1.0)).rgb();
     }
     return res;
+}
+
+JKQTPImageTools::LUTType JKQTPBuildColorPaletteLUT(const std::function<QRgb (float)> &palFunc, int lut_size, float vMin, float vMax)
+{
+    JKQTPImageTools::LUTType res;
+    const float delta=(vMax-vMin)/static_cast<float>(lut_size-1);
+    for (int i=0; i<lut_size; i++) {
+        const float v=vMin+static_cast<float>(i)*delta;
+        res<<palFunc(v);
+    }
+    return res;
+}
+
+JKQTPImageTools::LUTType JKQTPBuildColorPaletteLUT(const std::function<float (float)> &rFunc, const std::function<float (float)> &gFunc, const std::function<float (float)> &bFunc, int lut_size, float vMin, float vMax)
+{
+    return JKQTPBuildColorPaletteLUT([&rFunc, &gFunc, &bFunc](float v) { return QColor::fromRgbF(jkqtp_bounded<float>(0.0, rFunc(v), 1.0), jkqtp_bounded<float>(0.0, gFunc(v), 1.0), jkqtp_bounded<float>(0.0, bFunc(v), 1.0)).rgba(); }, lut_size, vMin, vMax);
+}
+
+JKQTPImageTools::LUTType JKQTPBuildColorPaletteLUT(const std::function<float (float)> &rFunc, const std::function<float (float)> &gFunc, const std::function<float (float)> &aFunc, const std::function<float (float)> &bFunc, int lut_size, float vMin, float vMax)
+{
+    return JKQTPBuildColorPaletteLUT([&rFunc, &gFunc, &bFunc, &aFunc](float v) { return QColor::fromRgbF(jkqtp_bounded<float>(0.0, rFunc(v), 1.0), jkqtp_bounded<float>(0.0, gFunc(v), 1.0), jkqtp_bounded<float>(0.0, bFunc(v), 1.0), jkqtp_bounded<float>(0.0, aFunc(v), 1.0)).rgba(); }, lut_size, vMin, vMax);
 }
