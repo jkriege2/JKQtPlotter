@@ -260,9 +260,9 @@ enum JKQTPMathImageColorPalette {
     JKQTPMathImageBlueGreen=JKQTPMathImageBU_GN, /*!< \image html palettes/palette_bluegreen.png */
     JKQTPMathImageYL_GN_BU, /*!< \image html palettes/palette_YeGnBu.png */
     JKQTPMathImageYellowGreenBlue=JKQTPMathImageYL_GN_BU, /*!< \image html palettes/palette_YeGnBu.png */
-    JKQTPMathImageBU_GN_YL, /*!< \image html palettes/palette_BuGnYe.png */
-    JKQTPMathImageBU_GN_YE=JKQTPMathImageBU_GN_YL, /*!< \image html palettes/palette_BuGnYe.png */
-    JKQTPMathImageBlueGreenYellow=JKQTPMathImageBU_GN_YE, /*!< \image html palettes/palette_BuGnYe.png */
+    JKQTPMathImageBU_GN_YL, /*!< \image html palettes/palette_BlGnYe.png */
+    JKQTPMathImageBU_GN_YE=JKQTPMathImageBU_GN_YL, /*!< \image html palettes/palette_BlGnYe.png */
+    JKQTPMathImageBlueGreenYellow=JKQTPMathImageBU_GN_YE, /*!< \image html palettes/palette_BlGnYe.png */
 
     JKQTPMathImageBR_GR_STEP, /*!< \image html palettes/palette_stepsBrGr.png */
     JKQTPMathImageGR_BR_STEP, /*!< \image html palettes/palette_stepsGrBr.png */
@@ -271,7 +271,7 @@ enum JKQTPMathImageColorPalette {
     JKQTPMathImageGN_BU_STEP, /*!< \image html palettes/palette_stepsGnBl.png */
     JKQTPMathImageBU_GN_STEP, /*!< \image html palettes/palette_stepsBlGn.png */
     JKQTPMathImageYL_GN_BU_STEP, /*!< \image html palettes/palette_stepsYeGnBu.png */
-    JKQTPMathImageBU_GN_YL_STEP, /*!< \image html palettes/palette_stepsBuGnYe.png */
+    JKQTPMathImageBU_GN_YL_STEP, /*!< \image html palettes/palette_stepsBlGnYe.png */
 
 
     JKQTPMathImageCYANWHITE, /*!< \image html palettes/palette_cyanwhite.png */
