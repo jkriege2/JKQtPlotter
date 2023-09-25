@@ -168,7 +168,7 @@ enum JKQTPMathImageColorPalette {
                                 \see from https://yoshke.org/blog/colorblind-friendly-diagrams and M. Okabe and K. Ito, How to make figures and presentations that are friendly to color blind people, University of Tokyo, 2002. */
     JKQTPMathImageTol_STEP, /*!< \image html palettes/palette_Tol_step.png
                                   \note color-blind friendly!
-                                  \see https://thenode.biologists.com/data-visualization-with-flying-colors/research/*/
+                                  \see https://thenode.biologists.com/data-visualization-with-flying-colors/research/ */
     JKQTPMathImageTolMuted_STEP, /*!< \image html palettes/palette_TolMuted_step.png
                                         \note color-blind friendly!
                                         \see from https://yoshke.org/blog/colorblind-friendly-diagrams and Tol, B. Points of view: Color blindness. Nat Methods 8, 441 (2011). https://doi.org/10.1038/nmeth.1618 */
