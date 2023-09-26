@@ -246,9 +246,9 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
     }
 
     {
-        JKQTPPaletteList lst {  QColor(49,54,149),
+        JKQTPPaletteList lst {  QColor(165,0,38),
                                 QColor(253,254,194),
-                                QColor(165,0,38)
+                                QColor(49,54,149)
                              };
         const auto& normLUT=lutstore[JKQTPMathImageREDYELLOWBLUE]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTLinInterpolate(lst), "redyellowblue", QObject::tr("red-yellow-blue (diverging)"));
         const auto& normStepLUT=lutstore[JKQTPMathImageREDYELLOWBLUE_STEP]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTLinInterpolate(lst,9), "stepsredyellowblue", QObject::tr("steps: red-yellow-blue (diverging)"));
@@ -298,10 +298,10 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
             jkqtp_qRgbOpaque(0x8073AC),
             jkqtp_qRgbOpaque(0x542788)
         };
-        const auto& normLUT=lutstore[JKQTPMathImagePU_OR]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTLinInterpolate(lst),  "PuOr", QObject::tr("purple-white-orange (diverging)"));
-        const auto& normStepLUT=lutstore[JKQTPMathImagePU_OR_STEP]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTColorsOnlySteps(lst), "stepsPuOr", QObject::tr("steps: purple-white-orange (diverging)"));
-        lutstore[JKQTPMathImageOR_PU]=JKQTPImageTools::LUTData(jkqtp_reversed(normLUT.lut), "OrPu", QObject::tr("orange-white-purple (diverging)"));
-        lutstore[JKQTPMathImageOR_PU_STEP]=JKQTPImageTools::LUTData(jkqtp_reversed(normStepLUT.lut), "stepsOrPu", QObject::tr("steps: orange-white-purple (diverging)"));
+        const auto& normLUT=lutstore[JKQTPMathImageOR_PU]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTLinInterpolate(lst), "OrPu", QObject::tr("orange-white-purple (diverging)"));
+        const auto& normStepLUT=lutstore[JKQTPMathImageOR_PU_STEP]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUTColorsOnlySteps(lst), "stepsOrPu", QObject::tr("steps: orange-white-purple (diverging)"));
+        lutstore[JKQTPMathImagePU_OR]=JKQTPImageTools::LUTData(jkqtp_reversed(normLUT.lut),  "PuOr", QObject::tr("purple-white-orange (diverging)"));
+        lutstore[JKQTPMathImagePU_OR_STEP]=JKQTPImageTools::LUTData(jkqtp_reversed(normStepLUT.lut), "stepsPuOr", QObject::tr("steps: purple-white-orange (diverging)"));
     }
 
     {
