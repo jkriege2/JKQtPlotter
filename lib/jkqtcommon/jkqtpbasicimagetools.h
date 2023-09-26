@@ -80,267 +80,267 @@ inline void JKQTPSetColorChannel(QRgb& rgb, int ch, int val)
     \ingroup jkqtplotter_imagelots_tools
  */
 enum JKQTPMathImageColorPalette {
-    JKQTPMathImageGRAY=0, /*!< \image html palettes/palette_gray.png */
-    JKQTPMathImageINVERTEDGRAY, /*!< \image html palettes/palette_invgray.png */
-    JKQTPMathImageRED, /*!< \image html palettes/palette_red.png */
-    JKQTPMathImageINVERTEDRED, /*!< \image html palettes/palette_invred.png */
-    JKQTPMathImageGREEN, /*!< \image html palettes/palette_green.png */
-    JKQTPMathImageINVERTEDGREEN, /*!< \image html palettes/palette_invgreen.png */
-    JKQTPMathImageBLUE, /*!< \image html palettes/palette_blue.png */
-    JKQTPMathImageINVERTEDBLUE, /*!< \image html palettes/palette_invblue.png */
-    JKQTPMathImageCYAN, /*!< \image html palettes/palette_cyan.png */
-    JKQTPMathImageINVERTED_CYAN, /*!< \image html palettes/palette_invcyan.png */
-    JKQTPMathImageYELLOW, /*!< \image html palettes/palette_yellow.png */
-    JKQTPMathImageINVERTED_YELLOW, /*!< \image html palettes/palette_invyellow.png */
-    JKQTPMathImageMAGENTA, /*!< \image html palettes/palette_magenta.png */
-    JKQTPMathImageINVERTED_MAGENTA, /*!< \image html palettes/palette_invmagenta.png */
+    JKQTPMathImageGRAY=0, /*!< \image html,inline palettes/palette_gray.png */
+    JKQTPMathImageINVERTEDGRAY, /*!< \image html,inline palettes/palette_invgray.png */
+    JKQTPMathImageRED, /*!< \image html,inline palettes/palette_red.png */
+    JKQTPMathImageINVERTEDRED, /*!< \image html,inline palettes/palette_invred.png */
+    JKQTPMathImageGREEN, /*!< \image html,inline palettes/palette_green.png */
+    JKQTPMathImageINVERTEDGREEN, /*!< \image html,inline palettes/palette_invgreen.png */
+    JKQTPMathImageBLUE, /*!< \image html,inline palettes/palette_blue.png */
+    JKQTPMathImageINVERTEDBLUE, /*!< \image html,inline palettes/palette_invblue.png */
+    JKQTPMathImageCYAN, /*!< \image html,inline palettes/palette_cyan.png */
+    JKQTPMathImageINVERTED_CYAN, /*!< \image html,inline palettes/palette_invcyan.png */
+    JKQTPMathImageYELLOW, /*!< \image html,inline palettes/palette_yellow.png */
+    JKQTPMathImageINVERTED_YELLOW, /*!< \image html,inline palettes/palette_invyellow.png */
+    JKQTPMathImageMAGENTA, /*!< \image html,inline palettes/palette_magenta.png */
+    JKQTPMathImageINVERTED_MAGENTA, /*!< \image html,inline palettes/palette_invmagenta.png */
 
 
-    JKQTPMathImageMATLAB, /*!< \image html palettes/palette_Matlab.png */
-    JKQTPMathImageINVERTED_MATLAB, /*!< \image html palettes/palette_invMatlab.png */
-    JKQTPMathImageRYGB, /*!< \image html palettes/palette_RYGB.png */
-    JKQTPMathImageINVERTED_RYGB, /*!< \image html palettes/palette_invRYGB.png */
-    JKQTPMathImageHSV, /*!< \image html palettes/palette_HSV.png */
-    JKQTPMathImageINVERTED_HSV, /*!< \image html palettes/palette_invHSV.png */
-    JKQTPMathImageRAINBOW, /*!< \image html palettes/palette_rainbow.png */
-    JKQTPMathImageINVERTED_RAINBOW, /*!< \image html palettes/palette_invrainbow.png */
-    JKQTPMathImageHOT, /*!< \image html palettes/palette_AFMhot.png */
-    JKQTPMathImageINVERTED_HOT, /*!< \image html palettes/palette_invAFMhot.png */
-    JKQTPMathImageOCEAN, /*!< \image html palettes/palette_ocean.png */
-    JKQTPMathImageINVERTED_OCEAN, /*!< \image html palettes/palette_invocean.png */
-    JKQTPMathImageTRAFFICLIGHT, /*!< \image html palettes/palette_trafficlight.png */
-    JKQTPMathImageINVERTED_TRAFFICLIGHT, /*!< \image html palettes/palette_invtrafficlight.png */
+    JKQTPMathImageMATLAB, /*!< \image html,inline palettes/palette_Matlab.png */
+    JKQTPMathImageINVERTED_MATLAB, /*!< \image html,inline palettes/palette_invMatlab.png */
+    JKQTPMathImageRYGB, /*!< \image html,inline palettes/palette_RYGB.png */
+    JKQTPMathImageINVERTED_RYGB, /*!< \image html,inline palettes/palette_invRYGB.png */
+    JKQTPMathImageHSV, /*!< \image html,inline palettes/palette_HSV.png */
+    JKQTPMathImageINVERTED_HSV, /*!< \image html,inline palettes/palette_invHSV.png */
+    JKQTPMathImageRAINBOW, /*!< \image html,inline palettes/palette_rainbow.png */
+    JKQTPMathImageINVERTED_RAINBOW, /*!< \image html,inline palettes/palette_invrainbow.png */
+    JKQTPMathImageHOT, /*!< \image html,inline palettes/palette_AFMhot.png */
+    JKQTPMathImageINVERTED_HOT, /*!< \image html,inline palettes/palette_invAFMhot.png */
+    JKQTPMathImageOCEAN, /*!< \image html,inline palettes/palette_ocean.png */
+    JKQTPMathImageINVERTED_OCEAN, /*!< \image html,inline palettes/palette_invocean.png */
+    JKQTPMathImageTRAFFICLIGHT, /*!< \image html,inline palettes/palette_trafficlight.png */
+    JKQTPMathImageINVERTED_TRAFFICLIGHT, /*!< \image html,inline palettes/palette_invtrafficlight.png */
 
-    JKQTPMathImageBone, /*!< \image html palettes/palette_bone.png */
-    JKQTPMathImageINVERTED_Bone, /*!< \image html palettes/palette_invbone.png */
-    JKQTPMathImageCool, /*!< \image html palettes/palette_cool.png */
-    JKQTPMathImageINVERTED_Cool, /*!< \image html palettes/palette_invcool.png */
-    JKQTPMathImageCopper, /*!< \image html palettes/palette_copper.png */
-    JKQTPMathImageINVERTED_Copper, /*!< \image html palettes/palette_invcopper.png */
-    JKQTPMathImageAutumn, /*!< \image html palettes/palette_autumn.png */
-    JKQTPMathImageINVERTED_Autumn, /*!< \image html palettes/palette_invautumn.png */
-    JKQTPMathImageTerrain, /*!< \image html palettes/palette_terrain.png */
-    JKQTPMathImageTerrain_STEP, /*!< \image html palettes/palette_stepsterrain.png */
-    JKQTPMathImageINVERTED_Terrain, /*!< \image html palettes/palette_invterrain.png */
-    JKQTPMathImageINVERTED_Terrain_STEP, /*!< \image html palettes/palette_stepsterrain.png */
+    JKQTPMathImageBone, /*!< \image html,inline palettes/palette_bone.png */
+    JKQTPMathImageINVERTED_Bone, /*!< \image html,inline palettes/palette_invbone.png */
+    JKQTPMathImageCool, /*!< \image html,inline palettes/palette_cool.png */
+    JKQTPMathImageINVERTED_Cool, /*!< \image html,inline palettes/palette_invcool.png */
+    JKQTPMathImageCopper, /*!< \image html,inline palettes/palette_copper.png */
+    JKQTPMathImageINVERTED_Copper, /*!< \image html,inline palettes/palette_invcopper.png */
+    JKQTPMathImageAutumn, /*!< \image html,inline palettes/palette_autumn.png */
+    JKQTPMathImageINVERTED_Autumn, /*!< \image html,inline palettes/palette_invautumn.png */
+    JKQTPMathImageTerrain, /*!< \image html,inline palettes/palette_terrain.png */
+    JKQTPMathImageTerrain_STEP, /*!< \image html,inline palettes/palette_stepsterrain.png */
+    JKQTPMathImageINVERTED_Terrain, /*!< \image html,inline palettes/palette_invterrain.png */
+    JKQTPMathImageINVERTED_Terrain_STEP, /*!< \image html,inline palettes/palette_stepsterrain.png */
 
-    JKQTPMathImageViridis, /*!< \image html palettes/palette_viridis.png
-                                \see from https://github.com/BIDS/colormap/blob/master/colormaps.py */
-    JKQTPMathImageINVERTED_Viridis, /*!< \image html palettes/palette_invviridis.png
-                                \see from https://github.com/BIDS/colormap/blob/master/colormaps.py */
-    JKQTPMathImageViridis_STEP, /*!< \image html palettes/palette_viridis_step.png
-                                \see from https://github.com/BIDS/colormap/blob/master/colormaps.py */
-    JKQTPMathImageINVERTED_Viridis_STEP, /*!< \image html palettes/palette_invviridis_step.png
-                                \see from https://github.com/BIDS/colormap/blob/master/colormaps.py */
+    JKQTPMathImageViridis, /*!< \image html,inline palettes/palette_viridis.png
+                                Palette was adapted from https://github.com/BIDS/colormap/blob/master/colormaps.py */
+    JKQTPMathImageINVERTED_Viridis, /*!< \image html,inline palettes/palette_invviridis.png
+                                Palette was adapted from https://github.com/BIDS/colormap/blob/master/colormaps.py */
+    JKQTPMathImageViridis_STEP, /*!< \image html,inline palettes/palette_viridis_step.png
+                                Palette was adapted from https://github.com/BIDS/colormap/blob/master/colormaps.py */
+    JKQTPMathImageINVERTED_Viridis_STEP, /*!< \image html,inline palettes/palette_invviridis_step.png
+                                Palette was adapted from https://github.com/BIDS/colormap/blob/master/colormaps.py */
 
-    JKQTPMathImageMagma, /*!< \image html palettes/palette_magma.png
-                                \see from https://github.com/BIDS/colormap/blob/master/colormaps.py */
-    JKQTPMathImageINVERTED_Magma, /*!< \image html palettes/palette_invmagma.png
-                                \see from https://github.com/BIDS/colormap/blob/master/colormaps.py */
-    JKQTPMathImageMagma_STEP, /*!< \image html palettes/palette_magma_step.png
-                                \see from https://github.com/BIDS/colormap/blob/master/colormaps.py */
-    JKQTPMathImageINVERTED_Magma_STEP, /*!< \image html palettes/palette_invmagma_step.png
-                                \see from https://github.com/BIDS/colormap/blob/master/colormaps.py */
-    JKQTPMathImageInferno, /*!< \image html palettes/palette_inferno.png
-                                \see from https://github.com/BIDS/colormap/blob/master/colormaps.py */
-    JKQTPMathImageINVERTED_Inferno, /*!< \image html palettes/palette_invinferno.png
-                                \see from https://github.com/BIDS/colormap/blob/master/colormaps.py */
-    JKQTPMathImageInferno_STEP, /*!< \image html palettes/palette_inferno_step.png
-                                \see from https://github.com/BIDS/colormap/blob/master/colormaps.py */
-    JKQTPMathImageINVERTED_Inferno_STEP, /*!< \image html palettes/palette_invinferno_step.png
-                                \see from https://github.com/BIDS/colormap/blob/master/colormaps.py */
-    JKQTPMathImagePlasma, /*!< \image html palettes/palette_plasma.png
-                                \see from https://github.com/BIDS/colormap/blob/master/colormaps.py */
-    JKQTPMathImageINVERTED_Plasma, /*!< \image html palettes/palette_invplasma.png
-                                \see from https://github.com/BIDS/colormap/blob/master/colormaps.py */
-    JKQTPMathImagePlasma_STEP, /*!< \image html palettes/palette_plasma_step.png
-                                \see from https://github.com/BIDS/colormap/blob/master/colormaps.py */
-    JKQTPMathImageINVERTED_Plasma_STEP, /*!< \image html palettes/palette_invplasma_step.png
-                                \see from https://github.com/BIDS/colormap/blob/master/colormaps.py */
-    JKQTPMathImageIBMColorBlindSafe, /*!< \image html palettes/palette_IBMColorBlindSafe.png
-                                \note color-blind friendly!
-                                \see from https://lospec.com/palette-list/ibm-color-blind-safe */
-    JKQTPMathImageIBMColorBlindSafe_STEP, /*!< \image html palettes/palette_IBMColorBlindSafe_step.png
-                                \note color-blind friendly!
-                                \see from https://lospec.com/palette-list/ibm-color-blind-safe */
-    JKQTPMathImageOkabeIto_STEP, /*!< \image html palettes/palette_OkabeIto_step.png
-                                \note color-blind friendly!
-                                \see from https://yoshke.org/blog/colorblind-friendly-diagrams and M. Okabe and K. Ito, How to make figures and presentations that are friendly to color blind people, University of Tokyo, 2002. */
-    JKQTPMathImageTol_STEP, /*!< \image html palettes/palette_Tol_step.png
-                                  \note color-blind friendly!
-                                  \see https://thenode.biologists.com/data-visualization-with-flying-colors/research/ */
-    JKQTPMathImageTolMuted_STEP, /*!< \image html palettes/palette_TolMuted_step.png
-                                        \note color-blind friendly!
-                                        \see from https://yoshke.org/blog/colorblind-friendly-diagrams and Tol, B. Points of view: Color blindness. Nat Methods 8, 441 (2011). https://doi.org/10.1038/nmeth.1618 */
-    JKQTPMathImageTolLight_STEP, /*!< \image html palettes/palette_TolLight_step.png
-                                         \note color-blind friendly!
-                                         \see https://davidmathlogic.com/colorblind/#%23000000-%23E69F00-%2356B4E9-%23009E73-%23F0E442-%230072B2-%23D55E00-%23CC79A7 and Tol, B. Points of view: Color blindness. Nat Methods 8, 441 (2011). https://doi.org/10.1038/nmeth.1618 */
-    JKQTPMathImageOkabeItoDarker_STEP, /*!< \image html palettes/palette_OkabeItoDarker_step.png
+    JKQTPMathImageMagma, /*!< \image html,inline palettes/palette_magma.png
+                                Palette was adapted from https://github.com/BIDS/colormap/blob/master/colormaps.py */
+    JKQTPMathImageINVERTED_Magma, /*!< \image html,inline palettes/palette_invmagma.png
+                                Palette was adapted from https://github.com/BIDS/colormap/blob/master/colormaps.py */
+    JKQTPMathImageMagma_STEP, /*!< \image html,inline palettes/palette_magma_step.png
+                                Palette was adapted from https://github.com/BIDS/colormap/blob/master/colormaps.py */
+    JKQTPMathImageINVERTED_Magma_STEP, /*!< \image html,inline palettes/palette_invmagma_step.png
+                                Palette was adapted from https://github.com/BIDS/colormap/blob/master/colormaps.py */
+    JKQTPMathImageInferno, /*!< \image html,inline palettes/palette_inferno.png
+                                Palette was adapted from https://github.com/BIDS/colormap/blob/master/colormaps.py */
+    JKQTPMathImageINVERTED_Inferno, /*!< \image html,inline palettes/palette_invinferno.png
+                                Palette was adapted from https://github.com/BIDS/colormap/blob/master/colormaps.py */
+    JKQTPMathImageInferno_STEP, /*!< \image html,inline palettes/palette_inferno_step.png
+                                Palette was adapted from https://github.com/BIDS/colormap/blob/master/colormaps.py */
+    JKQTPMathImageINVERTED_Inferno_STEP, /*!< \image html,inline palettes/palette_invinferno_step.png
+                                Palette was adapted from https://github.com/BIDS/colormap/blob/master/colormaps.py */
+    JKQTPMathImagePlasma, /*!< \image html,inline palettes/palette_plasma.png
+                                Palette was adapted from https://github.com/BIDS/colormap/blob/master/colormaps.py */
+    JKQTPMathImageINVERTED_Plasma, /*!< \image html,inline palettes/palette_invplasma.png
+                                Palette was adapted from https://github.com/BIDS/colormap/blob/master/colormaps.py */
+    JKQTPMathImagePlasma_STEP, /*!< \image html,inline palettes/palette_plasma_step.png
+                                Palette was adapted from https://github.com/BIDS/colormap/blob/master/colormaps.py */
+    JKQTPMathImageINVERTED_Plasma_STEP, /*!< \image html,inline palettes/palette_invplasma_step.png
+                                Palette was adapted from https://github.com/BIDS/colormap/blob/master/colormaps.py */
+    JKQTPMathImageIBMColorBlindSafe, /*!< \image html,inline palettes/palette_IBMColorBlindSafe.png
+                                This is a color-blind friendly palete!
+                                Palette was adapted from https://lospec.com/palette-list/ibm-color-blind-safe */
+    JKQTPMathImageIBMColorBlindSafe_STEP, /*!< \image html,inline palettes/palette_IBMColorBlindSafe_step.png
+                                This is a color-blind friendly palete!
+                                Palette was adapted from https://lospec.com/palette-list/ibm-color-blind-safe */
+    JKQTPMathImageOkabeIto_STEP, /*!< \image html,inline palettes/palette_OkabeIto_step.png
+                                This is a color-blind friendly palete!
+                                Palette was adapted from https://yoshke.org/blog/colorblind-friendly-diagrams and M. Okabe and K. Ito, How to make figures and presentations that are friendly to color blind people, University of Tokyo, 2002. */
+    JKQTPMathImageTol_STEP, /*!< \image html,inline palettes/palette_Tol_step.png
+                                  This is a color-blind friendly palete!
+                                  Palette was adapted from https://thenode.biologists.com/data-visualization-with-flying-colors/research/ */
+    JKQTPMathImageTolMuted_STEP, /*!< \image html,inline palettes/palette_TolMuted_step.png
+                                        This is a color-blind friendly palete!
+                                        Palette was adapted from https://yoshke.org/blog/colorblind-friendly-diagrams and Tol, B. Points of view: Color blindness. Nat Methods 8, 441 (2011). https://doi.org/10.1038/nmeth.1618 */
+    JKQTPMathImageTolLight_STEP, /*!< \image html,inline palettes/palette_TolLight_step.png
+                                         This is a color-blind friendly palete!
+                                         Palette was adapted from https://davidmathlogic.com/colorblind/#%23000000-%23E69F00-%2356B4E9-%23009E73-%23F0E442-%230072B2-%23D55E00-%23CC79A7 and Tol, B. Points of view: Color blindness. Nat Methods 8, 441 (2011). https://doi.org/10.1038/nmeth.1618 */
+    JKQTPMathImageOkabeItoDarker_STEP, /*!< \image html,inline palettes/palette_OkabeItoDarker_step.png
                                             darker version of JKQTPMathImageOkabeIto_STEP
-                                            \note color-blind friendly!
-                                            \see from https://yoshke.org/blog/colorblind-friendly-diagrams and M. Okabe and K. Ito, How to make figures and presentations that are friendly to color blind people, University of Tokyo, 2002. */
-    JKQTPMathImageOkabeItoLighter_STEP, /*!< \image html palettes/palette_OkabeItoLighter_step.png
+                                            This is a color-blind friendly palete!
+                                            Palette was adapted from https://yoshke.org/blog/colorblind-friendly-diagrams and M. Okabe and K. Ito, How to make figures and presentations that are friendly to color blind people, University of Tokyo, 2002. */
+    JKQTPMathImageOkabeItoLighter_STEP, /*!< \image html,inline palettes/palette_OkabeItoLighter_step.png
                                              lighter version of JKQTPMathImageOkabeIto_STEP
-                                             \note color-blind friendly!
-                                             \see https://davidmathlogic.com/colorblind/#%23000000-%23E69F00-%2356B4E9-%23009E73-%23F0E442-%230072B2-%23D55E00-%23CC79A7 and M. Okabe and K. Ito, How to make figures and presentations that are friendly to color blind people, University of Tokyo, 2002. */
-    JKQTPMathImageDefault_STEP, /*!< \image html palettes/palette_jkqtplotterdefault_step.png
+                                             This is a color-blind friendly palete!
+                                             Palette was adapted from https://davidmathlogic.com/colorblind/#%23000000-%23E69F00-%2356B4E9-%23009E73-%23F0E442-%230072B2-%23D55E00-%23CC79A7 and M. Okabe and K. Ito, How to make figures and presentations that are friendly to color blind people, University of Tokyo, 2002. */
+    JKQTPMathImageDefault_STEP, /*!< \image html,inline palettes/palette_jkqtplotterdefault_step.png
                                      This is the color cycle used to color graphs in JKQTPlotter's default style.
-                                     \see https://davidmathlogic.com/colorblind/#%23BB0000-%2300C11D-%230039D6-%23FFDD00-%23C05FFF-%23DE7704-%2303039A
+                                     Palette was adapted from https://davidmathlogic.com/colorblind/#%23BB0000-%2300C11D-%230039D6-%23FFDD00-%23C05FFF-%23DE7704-%2303039A
                                  */
-    JKQTPMathImageCubeHelixClassic, /*!< \image html palettes/palette_CubeHelixClassic.png
+    JKQTPMathImageCubeHelixClassic, /*!< \image html,inline palettes/palette_CubeHelixClassic.png
                                      This palette was created using Green's CubeHelix method with the parameters shown in the paper: start=0.5, rotation=-1.5, gamma=1.0, saturation=1.2.
-                                     \see JKQTPCreateGreensCubeHelixLUT()
+                                     (see  JKQTPCreateGreensCubeHelixLUT() )
                                  */
-    JKQTPMathImageCubeHelixClassic_STEP, /*!< \image html palettes/palette_CubeHelixClassic_step.png
+    JKQTPMathImageCubeHelixClassic_STEP, /*!< \image html,inline palettes/palette_CubeHelixClassic_step.png
                                      This palette was created using Green's CubeHelix method with the parameters shown in the paper: start=0.5, rotation=-1.5, gamma=1.0, saturation=1.2.
-                                     \see JKQTPCreateGreensCubeHelixLUT()
+                                     (see  JKQTPCreateGreensCubeHelixLUT() )
                                  */
-    JKQTPMathImageCubeHelix1, /*!< \image html palettes/palette_CubeHelix1.png
+    JKQTPMathImageCubeHelix1, /*!< \image html,inline palettes/palette_CubeHelix1.png
                                      This palette was created using Green's CubeHelix method with the parameters shown in the paper: start=0.5, rotation=-1.5, gamma=1.0, saturation=1.2.
-                                     \see JKQTPCreateGreensCubeHelixLUT()
+                                     (see  JKQTPCreateGreensCubeHelixLUT() )
                                  */
-    JKQTPMathImageCubeHelix1_STEP, /*!< \image html palettes/palette_CubeHelix1_step.png
+    JKQTPMathImageCubeHelix1_STEP, /*!< \image html,inline palettes/palette_CubeHelix1_step.png
                                      This palette was created using Green's CubeHelix method with the parameters shown in the paper: start=0.5, rotation=-1.5, gamma=1.0, saturation=1.2.
-                                     \see JKQTPCreateGreensCubeHelixLUT()
+                                     (see  JKQTPCreateGreensCubeHelixLUT() )
                                  */
-    JKQTPMathImageCubeHelix2, /*!< \image html palettes/palette_CubeHelix2.png
+    JKQTPMathImageCubeHelix2, /*!< \image html,inline palettes/palette_CubeHelix2.png
                                      This palette was created using Green's CubeHelix method with the parameters shown in the paper: start=0.5, rotation=-1.5, gamma=1.0, saturation=1.2.
-                                     \see JKQTPCreateGreensCubeHelixLUT()
+                                     (see  JKQTPCreateGreensCubeHelixLUT() )
                                  */
-    JKQTPMathImageCubeHelix2_STEP, /*!< \image html palettes/palette_CubeHelix2_step.png
+    JKQTPMathImageCubeHelix2_STEP, /*!< \image html,inline palettes/palette_CubeHelix2_step.png
                                      This palette was created using Green's CubeHelix method with the parameters shown in the paper: start=0.5, rotation=-1.5, gamma=1.0, saturation=1.2.
-                                     \see JKQTPCreateGreensCubeHelixLUT()
+                                     (see  JKQTPCreateGreensCubeHelixLUT() )
                                  */
-    JKQTPMathImageCubeHelix3, /*!< \image html palettes/palette_CubeHelix3.png
+    JKQTPMathImageCubeHelix3, /*!< \image html,inline palettes/palette_CubeHelix3.png
                                      This palette was created using Green's CubeHelix method with the parameters shown in the paper: start=0.5, rotation=-1.5, gamma=1.0, saturation=1.2.
-                                     \see JKQTPCreateGreensCubeHelixLUT()
+                                     (see  JKQTPCreateGreensCubeHelixLUT() )
                                  */
-    JKQTPMathImageCubeHelix3_STEP, /*!< \image html palettes/palette_CubeHelix3_step.png
+    JKQTPMathImageCubeHelix3_STEP, /*!< \image html,inline palettes/palette_CubeHelix3_step.png
                                      This palette was created using Green's CubeHelix method with the parameters shown in the paper: start=0.5, rotation=-1.5, gamma=1.0, saturation=1.2.
-                                     \see JKQTPCreateGreensCubeHelixLUT()
+                                     (see  JKQTPCreateGreensCubeHelixLUT() )
                                  */
-    JKQTPMathImageMatlab_STEP, /*!< \image html palettes/palette_Matlab_step.png */
-    JKQTPMathImageMatlabLegacy_STEP, /*!< \image html palettes/palette_MatlabLegacy_step.png */
-    JKQTPMathImageMatplotlib_STEP, /*!< \image html palettes/palette_Matplotlib_step.png */
-    JKQTPMathImageSeaborn_STEP, /*!< \image html palettes/palette_Seaborn_step.png */
-    JKQTPMathImageSeabornPastel_STEP, /*!< \image html palettes/palette_SeabornPastel_step.png */
+    JKQTPMathImageMatlab_STEP, /*!< \image html,inline palettes/palette_Matlab_step.png */
+    JKQTPMathImageMatlabLegacy_STEP, /*!< \image html,inline palettes/palette_MatlabLegacy_step.png */
+    JKQTPMathImageMatplotlib_STEP, /*!< \image html,inline palettes/palette_Matplotlib_step.png */
+    JKQTPMathImageSeaborn_STEP, /*!< \image html,inline palettes/palette_Seaborn_step.png */
+    JKQTPMathImageSeabornPastel_STEP, /*!< \image html,inline palettes/palette_SeabornPastel_step.png */
 
 
-    JKQTPMathImageBLUEMAGENTAYELLOW, /*!< \image html palettes/palette_BlMaYe.png */
-    JKQTPMathImageINVERTED_BLUEMAGENTAYELLOW, /*!< \image html palettes/palette_YeMaBl.png */
-    JKQTPMathImageYELLOWMAGENTABLUE=JKQTPMathImageINVERTED_BLUEMAGENTAYELLOW, /*!< \image html palettes/palette_YeMaBl.png */
-    JKQTPMathImageBLUEYELLOW, /*!< \image html palettes/palette_BlYe.png */
-    JKQTPMathImageINVERTED_BLUEYELLOW, /*!< \image html palettes/palette_YeBl.png */
-    JKQTPMathImageYELLOWBLUE=JKQTPMathImageINVERTED_BLUEYELLOW, /*!< \image html palettes/palette_YeBl.png */
+    JKQTPMathImageBLUEMAGENTAYELLOW, /*!< \image html,inline palettes/palette_BlMaYe.png */
+    JKQTPMathImageINVERTED_BLUEMAGENTAYELLOW, /*!< \image html,inline palettes/palette_YeMaBl.png */
+    JKQTPMathImageYELLOWMAGENTABLUE=JKQTPMathImageINVERTED_BLUEMAGENTAYELLOW, /*!< \image html,inline palettes/palette_YeMaBl.png */
+    JKQTPMathImageBLUEYELLOW, /*!< \image html,inline palettes/palette_BlYe.png */
+    JKQTPMathImageINVERTED_BLUEYELLOW, /*!< \image html,inline palettes/palette_YeBl.png */
+    JKQTPMathImageYELLOWBLUE=JKQTPMathImageINVERTED_BLUEYELLOW, /*!< \image html,inline palettes/palette_YeBl.png */
 
-    JKQTPMathImageBLACKBLUEREDYELLOW, /*!< \image html palettes/palette_BBlRdYe.png */
-    JKQTPMathImageYELLOWREDBLUEBLACK, /*!< \image html palettes/palette_YeRdBlB.png */
-    JKQTPMathImageGREENREDVIOLET, /*!< \image html palettes/palette_GnRdVi.png */
-    JKQTPMathImageVIOLETREDGREEN, /*!< \image html palettes/palette_ViRdGn.png */
-    JKQTPMathImageBLACKBLUEWHITEYELLOWWHITE, /*!< \image html palettes/palette_BWprint.png */
-    JKQTPMathImageWHITEYELLOWWHITEBLUEBLACK, /*!< \image html palettes/palette_invBWprint.png */
-    JKQTPMathImageBR_GR, /*!< \image html palettes/palette_BrGr.png */
-    JKQTPMathImageBrownGreen=JKQTPMathImageBR_GR, /*!< \image html palettes/palette_BrGr.png */
-    JKQTPMathImageBR_GR_STEP, /*!< \image html palettes/palette_stepsBrGr.png */
-    JKQTPMathImageGR_BR, /*!< \image html palettes/palette_GrBr.png */
-    JKQTPMathImageGreenBrown=JKQTPMathImageGR_BR, /*!< \image html palettes/palette_GrBr.png */
-    JKQTPMathImageGR_BR_STEP, /*!< \image html palettes/palette_stepsGrBr.png */
-    JKQTPMathImagePU_OR, /*!< \image html palettes/palette_PuOr.png */
-    JKQTPMathImagePurpleWhiteOrange=JKQTPMathImagePU_OR, /*!< \image html palettes/palette_PuOr.png */
-    JKQTPMathImagePU_OR_STEP, /*!< \image html palettes/palette_stepsPuOr.png */
-    JKQTPMathImageOR_PU, /*!< \image html palettes/palette_OrPu.png */
-    JKQTPMathImageOR_PU_STEP, /*!< \image html palettes/palette_stepsOrPu.png */
-    JKQTPMathImageOrangeWhitePurple=JKQTPMathImageOR_PU, /*!< \image html palettes/palette_OrPu.png */
-    JKQTPMathImageGN_BU, /*!< \image html palettes/palette_greenblue.png */
-    JKQTPMathImageGreenBlue=JKQTPMathImageGN_BU, /*!< \image html palettes/palette_greenblue.png */
-    JKQTPMathImageGN_BU_STEP, /*!< \image html palettes/palette_stepsGnBl.png */
-    JKQTPMathImageBU_GN, /*!< \image html palettes/palette_bluegreen.png */
-    JKQTPMathImageBlueGreen=JKQTPMathImageBU_GN, /*!< \image html palettes/palette_bluegreen.png */
-    JKQTPMathImageBU_GN_STEP, /*!< \image html palettes/palette_stepsBlGn.png */
-    JKQTPMathImageYL_GN_BU, /*!< \image html palettes/palette_YeGnBu.png */
-    JKQTPMathImageYellowGreenBlue=JKQTPMathImageYL_GN_BU, /*!< \image html palettes/palette_YeGnBu.png */
-    JKQTPMathImageYL_GN_BU_STEP, /*!< \image html palettes/palette_stepsYeGnBu.png */
-    JKQTPMathImageBU_GN_YL, /*!< \image html palettes/palette_BlGnYe.png */
-    JKQTPMathImageBU_GN_YE=JKQTPMathImageBU_GN_YL, /*!< \image html palettes/palette_BlGnYe.png */
-    JKQTPMathImageBU_GN_YL_STEP, /*!< \image html palettes/palette_stepsBlGnYe.png */
-    JKQTPMathImageBlueGreenYellow=JKQTPMathImageBU_GN_YE, /*!< \image html palettes/palette_BlGnYe.png */
+    JKQTPMathImageBLACKBLUEREDYELLOW, /*!< \image html,inline palettes/palette_BBlRdYe.png */
+    JKQTPMathImageYELLOWREDBLUEBLACK, /*!< \image html,inline palettes/palette_YeRdBlB.png */
+    JKQTPMathImageGREENREDVIOLET, /*!< \image html,inline palettes/palette_GnRdVi.png */
+    JKQTPMathImageVIOLETREDGREEN, /*!< \image html,inline palettes/palette_ViRdGn.png */
+    JKQTPMathImageBLACKBLUEWHITEYELLOWWHITE, /*!< \image html,inline palettes/palette_BWprint.png */
+    JKQTPMathImageWHITEYELLOWWHITEBLUEBLACK, /*!< \image html,inline palettes/palette_invBWprint.png */
+    JKQTPMathImageBR_GR, /*!< \image html,inline palettes/palette_BrGr.png */
+    JKQTPMathImageBrownGreen=JKQTPMathImageBR_GR, /*!< \image html,inline palettes/palette_BrGr.png */
+    JKQTPMathImageBR_GR_STEP, /*!< \image html,inline palettes/palette_stepsBrGr.png */
+    JKQTPMathImageGR_BR, /*!< \image html,inline palettes/palette_GrBr.png */
+    JKQTPMathImageGreenBrown=JKQTPMathImageGR_BR, /*!< \image html,inline palettes/palette_GrBr.png */
+    JKQTPMathImageGR_BR_STEP, /*!< \image html,inline palettes/palette_stepsGrBr.png */
+    JKQTPMathImagePU_OR, /*!< \image html,inline palettes/palette_PuOr.png */
+    JKQTPMathImagePurpleWhiteOrange=JKQTPMathImagePU_OR, /*!< \image html,inline palettes/palette_PuOr.png */
+    JKQTPMathImagePU_OR_STEP, /*!< \image html,inline palettes/palette_stepsPuOr.png */
+    JKQTPMathImageOR_PU, /*!< \image html,inline palettes/palette_OrPu.png */
+    JKQTPMathImageOR_PU_STEP, /*!< \image html,inline palettes/palette_stepsOrPu.png */
+    JKQTPMathImageOrangeWhitePurple=JKQTPMathImageOR_PU, /*!< \image html,inline palettes/palette_OrPu.png */
+    JKQTPMathImageGN_BU, /*!< \image html,inline palettes/palette_greenblue.png */
+    JKQTPMathImageGreenBlue=JKQTPMathImageGN_BU, /*!< \image html,inline palettes/palette_greenblue.png */
+    JKQTPMathImageGN_BU_STEP, /*!< \image html,inline palettes/palette_stepsGnBl.png */
+    JKQTPMathImageBU_GN, /*!< \image html,inline palettes/palette_bluegreen.png */
+    JKQTPMathImageBlueGreen=JKQTPMathImageBU_GN, /*!< \image html,inline palettes/palette_bluegreen.png */
+    JKQTPMathImageBU_GN_STEP, /*!< \image html,inline palettes/palette_stepsBlGn.png */
+    JKQTPMathImageYL_GN_BU, /*!< \image html,inline palettes/palette_YeGnBu.png */
+    JKQTPMathImageYellowGreenBlue=JKQTPMathImageYL_GN_BU, /*!< \image html,inline palettes/palette_YeGnBu.png */
+    JKQTPMathImageYL_GN_BU_STEP, /*!< \image html,inline palettes/palette_stepsYeGnBu.png */
+    JKQTPMathImageBU_GN_YL, /*!< \image html,inline palettes/palette_BlGnYe.png */
+    JKQTPMathImageBU_GN_YE=JKQTPMathImageBU_GN_YL, /*!< \image html,inline palettes/palette_BlGnYe.png */
+    JKQTPMathImageBU_GN_YL_STEP, /*!< \image html,inline palettes/palette_stepsBlGnYe.png */
+    JKQTPMathImageBlueGreenYellow=JKQTPMathImageBU_GN_YE, /*!< \image html,inline palettes/palette_BlGnYe.png */
 
-    JKQTPMathImagePI_W_GR, /*!< \image html palettes/palette_PiWGr.png */
-    JKQTPMathImagePinkWhiteGreen=JKQTPMathImagePI_W_GR, /*!< \image html palettes/palette_PiWGr.png */
-    JKQTPMathImagePI_W_GR_STEP, /*!< \image html palettes/palette_stepsBrGr.png */
-    JKQTPMathImageGR_W_PI, /*!< \image html palettes/palette_GrWPi.png */
-    JKQTPMathImageGreenWhitePink=JKQTPMathImageGR_W_PI, /*!< \image html palettes/palette_GrWPi.png */
-    JKQTPMathImageGR_W_PI_STEP, /*!< \image html palettes/palette_stepsGrWPi.png */
+    JKQTPMathImagePI_W_GR, /*!< \image html,inline palettes/palette_PiWGr.png */
+    JKQTPMathImagePinkWhiteGreen=JKQTPMathImagePI_W_GR, /*!< \image html,inline palettes/palette_PiWGr.png */
+    JKQTPMathImagePI_W_GR_STEP, /*!< \image html,inline palettes/palette_stepsBrGr.png */
+    JKQTPMathImageGR_W_PI, /*!< \image html,inline palettes/palette_GrWPi.png */
+    JKQTPMathImageGreenWhitePink=JKQTPMathImageGR_W_PI, /*!< \image html,inline palettes/palette_GrWPi.png */
+    JKQTPMathImageGR_W_PI_STEP, /*!< \image html,inline palettes/palette_stepsGrWPi.png */
 
-    JKQTPMathImageBLUEWHITERED, /*!< \image html palettes/palette_bluewhitered.png */
-    JKQTPMathImageBL_W_RD=JKQTPMathImageBLUEWHITERED, /*!< \image html palettes/palette_bluewhitered.png */
-    JKQTPMathImageBLUEWHITERED_STEP, /*!< \image html palettes/palette_stepsbluewhitered.png */
-    JKQTPMathImageBL_W_RD_STEP=JKQTPMathImageBLUEWHITERED_STEP, /*!< \image html palettes/palette_stepsbluewhitered.png */
-    JKQTPMathImageREDWHITEBLUE, /*!< \image html palettes/palette_redwhiteblue.png */
-    JKQTPMathImageRD_W_BL=JKQTPMathImageREDWHITEBLUE, /*!< \image html palettes/palette_redwhiteblue.png */
-    JKQTPMathImageREDWHITEBLUE_STEP, /*!< \image html palettes/palette_stepsredwhiteblue.png */
-    JKQTPMathImageRD_W_BL_STEP=JKQTPMathImageREDWHITEBLUE_STEP, /*!< \image html palettes/palette_stepsredwhiteblue.png */
-    JKQTPMathImageBLUEYELLOWRED, /*!< \image html palettes/palette_blueyellowred.png */
-    JKQTPMathImageBL_Yl_RD=JKQTPMathImageBLUEYELLOWRED, /*!< \image html palettes/palette_blueyellowred.png */
-    JKQTPMathImageBLUEYELLOWRED_STEP, /*!< \image html palettes/palette_stepsblueyellowred.png */
-    JKQTPMathImageBL_Yl_RD_STEP=JKQTPMathImageBLUEYELLOWRED_STEP, /*!< \image html palettes/palette_stepsblueyellowred.png */
-    JKQTPMathImageREDYELLOWBLUE, /*!< \image html palettes/palette_redyellowblue.png */
-    JKQTPMathImageRd_Yl_Bl=JKQTPMathImageREDYELLOWBLUE, /*!< \image html palettes/palette_redyellowblue.png */
-    JKQTPMathImageREDYELLOWBLUE_STEP, /*!< \image html palettes/palette_stepsredyellowblue.png */
-    JKQTPMathImageRd_Yl_Bl_STEP=JKQTPMathImageREDYELLOWBLUE_STEP, /*!< \image html palettes/palette_stepsredyellowblue.png */
+    JKQTPMathImageBLUEWHITERED, /*!< \image html,inline palettes/palette_bluewhitered.png */
+    JKQTPMathImageBL_W_RD=JKQTPMathImageBLUEWHITERED, /*!< \image html,inline palettes/palette_bluewhitered.png */
+    JKQTPMathImageBLUEWHITERED_STEP, /*!< \image html,inline palettes/palette_stepsbluewhitered.png */
+    JKQTPMathImageBL_W_RD_STEP=JKQTPMathImageBLUEWHITERED_STEP, /*!< \image html,inline palettes/palette_stepsbluewhitered.png */
+    JKQTPMathImageREDWHITEBLUE, /*!< \image html,inline palettes/palette_redwhiteblue.png */
+    JKQTPMathImageRD_W_BL=JKQTPMathImageREDWHITEBLUE, /*!< \image html,inline palettes/palette_redwhiteblue.png */
+    JKQTPMathImageREDWHITEBLUE_STEP, /*!< \image html,inline palettes/palette_stepsredwhiteblue.png */
+    JKQTPMathImageRD_W_BL_STEP=JKQTPMathImageREDWHITEBLUE_STEP, /*!< \image html,inline palettes/palette_stepsredwhiteblue.png */
+    JKQTPMathImageBLUEYELLOWRED, /*!< \image html,inline palettes/palette_blueyellowred.png */
+    JKQTPMathImageBL_Yl_RD=JKQTPMathImageBLUEYELLOWRED, /*!< \image html,inline palettes/palette_blueyellowred.png */
+    JKQTPMathImageBLUEYELLOWRED_STEP, /*!< \image html,inline palettes/palette_stepsblueyellowred.png */
+    JKQTPMathImageBL_Yl_RD_STEP=JKQTPMathImageBLUEYELLOWRED_STEP, /*!< \image html,inline palettes/palette_stepsblueyellowred.png */
+    JKQTPMathImageREDYELLOWBLUE, /*!< \image html,inline palettes/palette_redyellowblue.png */
+    JKQTPMathImageRd_Yl_Bl=JKQTPMathImageREDYELLOWBLUE, /*!< \image html,inline palettes/palette_redyellowblue.png */
+    JKQTPMathImageREDYELLOWBLUE_STEP, /*!< \image html,inline palettes/palette_stepsredyellowblue.png */
+    JKQTPMathImageRd_Yl_Bl_STEP=JKQTPMathImageREDYELLOWBLUE_STEP, /*!< \image html,inline palettes/palette_stepsredyellowblue.png */
 
-    JKQTPMathImageRD_W_GY, /*!< \image html palettes/palette_RdWGy.png */
-    JKQTPMathImageRedWhiteGray=JKQTPMathImageRD_W_GY, /*!< \image html palettes/palette_RdWGy.png */
-    JKQTPMathImageRD_W_GY_STEP, /*!< \image html palettes/palette_stepsRdWGy.png */
-    JKQTPMathImageGY_W_RD, /*!< \image html palettes/palette_GyWRd.png */
-    JKQTPMathImageGrayWhiteRed=JKQTPMathImageGY_W_RD, /*!< \image html palettes/palette_GyWRd.png */
-    JKQTPMathImageGY_W_RD_STEP, /*!< \image html palettes/palette_stepsGyWRd.png */
+    JKQTPMathImageRD_W_GY, /*!< \image html,inline palettes/palette_RdWGy.png */
+    JKQTPMathImageRedWhiteGray=JKQTPMathImageRD_W_GY, /*!< \image html,inline palettes/palette_RdWGy.png */
+    JKQTPMathImageRD_W_GY_STEP, /*!< \image html,inline palettes/palette_stepsRdWGy.png */
+    JKQTPMathImageGY_W_RD, /*!< \image html,inline palettes/palette_GyWRd.png */
+    JKQTPMathImageGrayWhiteRed=JKQTPMathImageGY_W_RD, /*!< \image html,inline palettes/palette_GyWRd.png */
+    JKQTPMathImageGY_W_RD_STEP, /*!< \image html,inline palettes/palette_stepsGyWRd.png */
 
-    JKQTPMathImageRD_Yn_GN, /*!< \image html palettes/palette_RdYnGn.png */
-    JKQTPMathImageRedYelloynGreen=JKQTPMathImageRD_Yn_GN, /*!< \image html palettes/palette_RdYnGn.png */
-    JKQTPMathImageRD_Yn_GN_STEP, /*!< \image html palettes/palette_stepsRdYnGn.png */
-    JKQTPMathImageGN_Yn_RD, /*!< \image html palettes/palette_GnYnRd.png */
-    JKQTPMathImageGreenYelloynRed=JKQTPMathImageGN_Yn_RD, /*!< \image html palettes/palette_GnYnRd.png */
-    JKQTPMathImageGN_Yn_RD_STEP, /*!< \image html palettes/palette_stepsGnYnRd.png */
+    JKQTPMathImageRD_Yn_GN, /*!< \image html,inline palettes/palette_RdYnGn.png */
+    JKQTPMathImageRedYelloynGreen=JKQTPMathImageRD_Yn_GN, /*!< \image html,inline palettes/palette_RdYnGn.png */
+    JKQTPMathImageRD_Yn_GN_STEP, /*!< \image html,inline palettes/palette_stepsRdYnGn.png */
+    JKQTPMathImageGN_Yn_RD, /*!< \image html,inline palettes/palette_GnYnRd.png */
+    JKQTPMathImageGreenYelloynRed=JKQTPMathImageGN_Yn_RD, /*!< \image html,inline palettes/palette_GnYnRd.png */
+    JKQTPMathImageGN_Yn_RD_STEP, /*!< \image html,inline palettes/palette_stepsGnYnRd.png */
 
-    JKQTPMathImageSeismic, /*!< \image html palettes/palette_seismic.png */
-    JKQTPMathImageSeismic_STEP, /*!< \image html palettes/palette_stepsseismic.png */
-    JKQTPMathImageINVERTED_Seismic, /*!< \image html palettes/palette_invseismic.png */
-    JKQTPMathImageINVERTED_Seismic_STEP, /*!< \image html palettes/palette_stepsinvseismic.png */
+    JKQTPMathImageSeismic, /*!< \image html,inline palettes/palette_seismic.png */
+    JKQTPMathImageSeismic_STEP, /*!< \image html,inline palettes/palette_stepsseismic.png */
+    JKQTPMathImageINVERTED_Seismic, /*!< \image html,inline palettes/palette_invseismic.png */
+    JKQTPMathImageINVERTED_Seismic_STEP, /*!< \image html,inline palettes/palette_stepsinvseismic.png */
 
-    JKQTPMathImageCoolwarm, /*!< \image html palettes/palette_coolwarm.png */
-    JKQTPMathImageCoolwarm_STEP, /*!< \image html palettes/palette_stepscoolwarm.png */
-    JKQTPMathImageINVERTED_Coolwarm, /*!< \image html palettes/palette_invcoolwarm.png */
-    JKQTPMathImageINVERTED_Coolwarm_STEP, /*!< \image html palettes/palette_stepsinvcoolwarm.png */
+    JKQTPMathImageCoolwarm, /*!< \image html,inline palettes/palette_coolwarm.png */
+    JKQTPMathImageCoolwarm_STEP, /*!< \image html,inline palettes/palette_stepscoolwarm.png */
+    JKQTPMathImageINVERTED_Coolwarm, /*!< \image html,inline palettes/palette_invcoolwarm.png */
+    JKQTPMathImageINVERTED_Coolwarm_STEP, /*!< \image html,inline palettes/palette_stepsinvcoolwarm.png */
 
-    JKQTPMathImageCYANWHITE, /*!< \image html palettes/palette_cyanwhite.png */
-    JKQTPMathImageINVERTED_CYANWHITE, /*!< \image html palettes/palette_whitecyan.png */
-    JKQTPMathImageWHITECYAN=JKQTPMathImageINVERTED_CYANWHITE, /*!< \image html palettes/palette_whitecyan.png */
-    JKQTPMathImageYELLOWWHITE, /*!< \image html palettes/palette_yellowwhite.png */
-    JKQTPMathImageINVERTED_YELLOWWHITE, /*!< \image html palettes/palette_whiteyellow.png */
-    JKQTPMathImageWHITEYELLOW=JKQTPMathImageINVERTED_YELLOWWHITE, /*!< \image html palettes/palette_whiteyellow.png */
-    JKQTPMathImageMAGENTAWHITE, /*!< \image html palettes/palette_magentawhite.png */
-    JKQTPMathImageINVERTED_MAGENTAWHITE, /*!< \image html palettes/palette_whitemagenta.png */
-    JKQTPMathImageWHITEMAGENTA=JKQTPMathImageINVERTED_MAGENTAWHITE, /*!< \image html palettes/palette_whitemagenta.png */
-    JKQTPMathImageBlueGreenRed, /*!< \image html palettes/palette_bluegreenred.png */
-    JKQTPMathImageRedGreenBlue, /*!< \image html palettes/palette_redgreenblue.png */
-    JKQTPMathImageMagentaYellow, /*!< \image html palettes/palette_magentayellow.png */
-    JKQTPMathImageYellowMagenta, /*!< \image html palettes/palette_yellowmagenta.png */
-    JKQTPMathImageRedBlue, /*!< \image html palettes/palette_redblue.png */
-    JKQTPMathImageBlueRed, /*!< \image html palettes/palette_bluered.png */
-    JKQTPMathImagePrism16, /*!< \image html palettes/palette_prism16.png */
-    JKQTPMathImagePrism8, /*!< \image html palettes/palette_prism8.png */
-    JKQTPMathImageFlag16, /*!< \image html palettes/palette_flag16.png */
-    JKQTPMathImageFlag8, /*!< \image html palettes/palette_flag8.png */
-    JKQTPMathImagePaired12_STEP, /*!< \image html palettes/palette_paired12_step.png */
-    JKQTPMathImagePaired10_STEP, /*!< \image html palettes/palette_paired10_step.png */
-    JKQTPMathImageSet3_STEP, /*!< \image html palettes/palette_set3_step.png */
-    JKQTPMathImageAccent_STEP, /*!< \image html palettes/palette_accent_step.png */
-    JKQTPMathImageDark2_STEP, /*!< \image html palettes/palette_dark2_step.png */
-    JKQTPMathImagePastel1_STEP, /*!< \image html palettes/palette_pastel1_step.png */
-    JKQTPMathImagePastel2_STEP, /*!< \image html palettes/palette_pastel2_step.png */
-    JKQTPMathImageSet1_STEP, /*!< \image html palettes/palette_set1_step.png */
-    JKQTPMathImageSet2_STEP, /*!< \image html palettes/palette_set2_step.png */
+    JKQTPMathImageCYANWHITE, /*!< \image html,inline palettes/palette_cyanwhite.png */
+    JKQTPMathImageINVERTED_CYANWHITE, /*!< \image html,inline palettes/palette_whitecyan.png */
+    JKQTPMathImageWHITECYAN=JKQTPMathImageINVERTED_CYANWHITE, /*!< \image html,inline palettes/palette_whitecyan.png */
+    JKQTPMathImageYELLOWWHITE, /*!< \image html,inline palettes/palette_yellowwhite.png */
+    JKQTPMathImageINVERTED_YELLOWWHITE, /*!< \image html,inline palettes/palette_whiteyellow.png */
+    JKQTPMathImageWHITEYELLOW=JKQTPMathImageINVERTED_YELLOWWHITE, /*!< \image html,inline palettes/palette_whiteyellow.png */
+    JKQTPMathImageMAGENTAWHITE, /*!< \image html,inline palettes/palette_magentawhite.png */
+    JKQTPMathImageINVERTED_MAGENTAWHITE, /*!< \image html,inline palettes/palette_whitemagenta.png */
+    JKQTPMathImageWHITEMAGENTA=JKQTPMathImageINVERTED_MAGENTAWHITE, /*!< \image html,inline palettes/palette_whitemagenta.png */
+    JKQTPMathImageBlueGreenRed, /*!< \image html,inline palettes/palette_bluegreenred.png */
+    JKQTPMathImageRedGreenBlue, /*!< \image html,inline palettes/palette_redgreenblue.png */
+    JKQTPMathImageMagentaYellow, /*!< \image html,inline palettes/palette_magentayellow.png */
+    JKQTPMathImageYellowMagenta, /*!< \image html,inline palettes/palette_yellowmagenta.png */
+    JKQTPMathImageRedBlue, /*!< \image html,inline palettes/palette_redblue.png */
+    JKQTPMathImageBlueRed, /*!< \image html,inline palettes/palette_bluered.png */
+    JKQTPMathImagePrism16, /*!< \image html,inline palettes/palette_prism16.png */
+    JKQTPMathImagePrism8, /*!< \image html,inline palettes/palette_prism8.png */
+    JKQTPMathImageFlag16, /*!< \image html,inline palettes/palette_flag16.png */
+    JKQTPMathImageFlag8, /*!< \image html,inline palettes/palette_flag8.png */
+    JKQTPMathImagePaired12_STEP, /*!< \image html,inline palettes/palette_paired12_step.png */
+    JKQTPMathImagePaired10_STEP, /*!< \image html,inline palettes/palette_paired10_step.png */
+    JKQTPMathImageSet3_STEP, /*!< \image html,inline palettes/palette_set3_step.png */
+    JKQTPMathImageAccent_STEP, /*!< \image html,inline palettes/palette_accent_step.png */
+    JKQTPMathImageDark2_STEP, /*!< \image html,inline palettes/palette_dark2_step.png */
+    JKQTPMathImagePastel1_STEP, /*!< \image html,inline palettes/palette_pastel1_step.png */
+    JKQTPMathImagePastel2_STEP, /*!< \image html,inline palettes/palette_pastel2_step.png */
+    JKQTPMathImageSet1_STEP, /*!< \image html,inline palettes/palette_set1_step.png */
+    JKQTPMathImageSet2_STEP, /*!< \image html,inline palettes/palette_set2_step.png */
 
     JKQTPMathImagePREDEFINED_PALETTES_COUNT, /*!< \brief the number of predefined palettes */
 
