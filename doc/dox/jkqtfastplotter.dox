@@ -2,6 +2,8 @@
 
 \defgroup jkqtfastplotter JKQTFastPlotter: Speed-Optimized Plotter class
 
+  \deprecated The class JKQTFastPlotter and all its support classes are deprecated and will be removed in future versions. 
+
 	This is an indepent (and fully self-contained) plotter class, which is optimized for drawing speed, rather than
 	output quality. It lacks several of the advanced features of JKQTPlotter, but can be used in cases, where fast
 	update of plots or real-time plotting is required.
@@ -14,8 +16,11 @@
 
   \defgroup jkqtfastplotter_PlotItems Plot Elements available in JKQTFastPlotter 
   \ingroup jkqtfastplotter
+  \deprecated The class JKQTFastPlotter and all its support classes are deprecated and will be removed in future versions. 
+  
   
   \defgroup jkqtfastplotter_tools Tool Functions, Enums, Classes for JKQTFastPlotter
   \ingroup jkqtfastplotter
+  \deprecated The class JKQTFastPlotter and all its support classes are deprecated and will be removed in future versions. 
 
 */

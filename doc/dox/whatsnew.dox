@@ -16,6 +16,8 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
 <ul>
   <li>General:<ul>
     <li>BREAKING: renamed library JKQTCommonStatisticsAndMath to JKQTMath. <i>Note: A CMake-ALIAS-Library JKQTCommonStatisticsAndMath was also added to ease transition for users</i></li>
+    <li>BREAKING: JKQTFastPlotter class and library are now deprecated and will be removed in future versions!</li>
+    <li>BREAKING: The QMake build system is deprecated and will not get the same love and atttention as the recommended CMake system. The QMake scripts might be removed in future versions!</li>
     <li>CLEANUP (BREAKING) of library structure</li>
     <li>NEW: Using precompiled headers in CMake-build to speed up build times</li>
     <li>NEW/BREAKING: split jkqtcommon into basic tools and jkqtmath for advanced math tools not used by all libs</li>
@@ -167,6 +169,9 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: Added the Fira Math fonts as sans-serif symbol font to the library (as a ressource) and added JKQTMathText::useFiraMath()</li>
     <li>NEW: Added JKQTMathText::useGuiFonts()</li>
     <li>NEW: Added JKQTMathText::setFontOptions(), which allows to make fonts initially e.g. bold, italic, ... and extended JKQTMathText::setFontSpecial() accordingly</li>
+  </ul></li>
+  <li>JKQTFastPloter:<ul>
+    <li>BREAKING: This class/library is now deprecated and will be removed in future versions!</li>
   </ul></li>
 </ul>
 

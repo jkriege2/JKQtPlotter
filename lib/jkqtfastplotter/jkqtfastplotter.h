@@ -54,10 +54,10 @@
 class JKQTFPPlot;
 
 
-
-
 /*! \brief a speed optimized plotter class
     \ingroup jkqtfastplotter
+
+    \deprecated The class JKQTFastPlotter and all its support classes are deprecated and will be removed in future versions.
 
     This plotter class is (in contrast to JKQTPlotter) optimized for speed. It allows to plot function graphs/data in
     a simple manner. The focus of design was not on a nice output (athough this is not unimportant), but on the speed
@@ -1001,6 +1001,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter :
 
 /*! \brief base class for all plots that may be plotted by JKQTFastPlotter
     \ingroup jkqtfastplotter_PlotItems
+    \deprecated The class JKQTFastPlotter and all its support classes are deprecated and will be removed in future versions.
 */
 class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPPlot: public QObject {
         Q_OBJECT
@@ -1040,6 +1041,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPPlot: public QObject {
 
 /*! \brief a simple line plot for JKQTFastPlotter
     \ingroup jkqtfastplotter_PlotItems
+    \deprecated The class JKQTFastPlotter and all its support classes are deprecated and will be removed in future versions.
 
     This class plots data as (x,y) points connected by straight lines. If errors for the y values are
     provided, also y+/-yerr errorlines are drawn.
@@ -1269,6 +1271,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPLinePlot: public JKQTFPPlot {
 
 /*! \brief a simple plot that draws a cross for every datapoint
     \ingroup jkqtfastplotter_PlotItems
+    \deprecated The class JKQTFastPlotter and all its support classes are deprecated and will be removed in future versions.
 
     This class does not support y errors!
 */
@@ -1324,6 +1327,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPVCrossPlot: public JKQTFPLinePlot {
 
 /*! \brief a simple vertical bar plot for JKQTFastPlotter
     \ingroup jkqtfastplotter_PlotItems
+    \deprecated The class JKQTFastPlotter and all its support classes are deprecated and will be removed in future versions.
 
     This class does not support y errors!
 */
@@ -1360,6 +1364,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPVBarPlot: public JKQTFPLinePlot {
 
 /*! \brief plot a range of x values
     \ingroup jkqtfastplotter_PlotItems
+    \deprecated The class JKQTFastPlotter and all its support classes are deprecated and will be removed in future versions.
 
 */
 class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPXRangePlot: public JKQTFPPlot {
@@ -1524,6 +1529,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPXRangePlot: public JKQTFPPlot {
 
 /*! \brief plot a range of x values
     \ingroup jkqtfastplotter_PlotItems
+    \deprecated The class JKQTFastPlotter and all its support classes are deprecated and will be removed in future versions.
 
 */
 class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPYRangePlot: public JKQTFPPlot {
@@ -1688,6 +1694,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPYRangePlot: public JKQTFPPlot {
 
 /*! \brief a plot of a QImage
     \ingroup jkqtfastplotter_PlotItems
+    \deprecated The class JKQTFastPlotter and all its support classes are deprecated and will be removed in future versions.
 */
 class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPQImagePlot: public JKQTFPPlot {
         Q_OBJECT
@@ -1785,6 +1792,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPQImagePlot: public JKQTFPPlot {
 /*!
    \brief An enum for selecting the palette for coloring
     \ingroup jkqtfastplotter_tools
+    \deprecated The class JKQTFastPlotter and all its support classes are deprecated and will be removed in future versions.
 
    Here, the color palettes are illustrated (left is the color for the minimum and right for the maximum).
  */
@@ -1812,6 +1820,7 @@ enum JKQTFPColorPalette {
 
 /*! \brief datatype for an image plotpalette for coloring
     \ingroup jkqtfastplotter_tools
+    \deprecated The class JKQTFastPlotter and all its support classes are deprecated and will be removed in future versions.
 
    Here, the color palettes are illustrated (left is the color for the minimum and right for the maximum).
  */
@@ -1828,6 +1837,7 @@ enum JKQTFPImageFormat {
 
 /*! \brief convert a 2D image (as 1D array) into a QImage with given palette (see JKQTFPColorPalette)
     \ingroup jkqtfastplotter_tools
+    \deprecated The class JKQTFastPlotter and all its support classes are deprecated and will be removed in future versions.
 
     This method uses lookup tables which are saved as static variables to convert the 2D array into
     an image. The luts are only created once, and stored then, so mor CPU time is saved. The precompiler define
@@ -2349,15 +2359,18 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 /*! \brief get list with all available palettes
     \ingroup jkqtfastplotter_tools
     \see JKQTFPimagePlot_array2image()
+    \deprecated The class JKQTFastPlotter and all its support classes are deprecated and will be removed in future versions.
  */
 JKQTFASTPLOTTER_LIB_EXPORT QStringList JKQTFPimagePlot_getPalettes();
 /*! \brief get QIcon representing the given palette
     \ingroup jkqtfastplotter_tools
     \see JKQTFPimagePlot_array2image()
+    \deprecated The class JKQTFastPlotter and all its support classes are deprecated and will be removed in future versions.
 */
 JKQTFASTPLOTTER_LIB_EXPORT QIcon JKQTFPimagePlot_getPaletteIcon(int i);
 /*! \brief get QIcon representing the given palette
     \ingroup jkqtfastplotter_tools
+    \deprecated The class JKQTFastPlotter and all its support classes are deprecated and will be removed in future versions.
     \see JKQTFPimagePlot_array2image()
 */
 JKQTFASTPLOTTER_LIB_EXPORT QIcon JKQTFPimagePlot_getPaletteIcon(JKQTFPColorPalette palette);
@@ -2365,6 +2378,7 @@ JKQTFASTPLOTTER_LIB_EXPORT QIcon JKQTFPimagePlot_getPaletteIcon(JKQTFPColorPalet
 
 /*! \brief plots a given grayscale image with a given color palette
     \ingroup jkqtfastplotter_PlotItems
+    \deprecated The class JKQTFastPlotter and all its support classes are deprecated and will be removed in future versions.
 
       - This plot may plot any 2D array of data (8-, 16-, 32-bit integer images, float and double).
       - This class also draws a color bar in the right border of the plot
@@ -2634,6 +2648,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPimagePlot: public JKQTFPPlot {
 
 /*! \brief convert a 2D image (as 1D array) into a QImage and puts the image values into one color channel (set by \a channel).
     \ingroup jkqtfastplotter_tools
+    \deprecated The class JKQTFastPlotter and all its support classes are deprecated and will be removed in future versions.
 
 */
 template <class T>
@@ -2736,6 +2751,7 @@ inline void JKQTFPRGBImageOverlayPlot_array2image(T* dbl, int width, int height,
 
 /*! \brief plots 1,2 or 3 given grayscale images as an overlay plot, where each channel is drawn as one color channel (e.g. red, green or blue).
     \ingroup jkqtfastplotter_PlotItems
+    \deprecated The class JKQTFastPlotter and all its support classes are deprecated and will be removed in future versions.
 
       - This plot may plot any 2D array of data (8-, 16-, 32-bit integer images, float and double).
       - The images all have to have the same size
@@ -3102,6 +3118,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPRGBImageOverlayPlot: public JKQTFPPlot {
 /*! \brief plots an image overlay, i.e. a boolean image where each \c true pixel is drawn with a given color
            and the \c false pixels are transparent
     \ingroup jkqtfastplotter_PlotItems
+    \deprecated The class JKQTFastPlotter and all its support classes are deprecated and will be removed in future versions.
 
 */
 class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPimageOverlayPlot: public JKQTFPPlot {
@@ -3257,6 +3274,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPimageOverlayPlot: public JKQTFPPlot {
 
 /*! \brief plot a horizontal scale bar
     \ingroup jkqtfastplotter_PlotItems
+    \deprecated The class JKQTFastPlotter and all its support classes are deprecated and will be removed in future versions.
 
 */
 class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPQScaleBarXPlot: public JKQTFPPlot {
@@ -3381,6 +3399,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPQScaleBarXPlot: public JKQTFPPlot {
 
 /*! \brief plot a horizontal scale bar
     \ingroup jkqtfastplotter_PlotItems
+    \deprecated The class JKQTFastPlotter and all its support classes are deprecated and will be removed in future versions.
 
 */
 class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPQOverlayLinearGridPlot: public JKQTFPPlot {
