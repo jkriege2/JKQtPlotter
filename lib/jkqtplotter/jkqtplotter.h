@@ -364,7 +364,7 @@ JKQTPLOTTER_LIB_EXPORT void initJKQTPlotterResources();
 class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
         Q_OBJECT
     public:
-        /** \brief sets the global resize delay in milliseconds \a delayMS. After calling this function all plots will use the new delay. This function is thread-safe!
+        /** \brief sets the global resize delay in milliseconds \a delayMS. After calling this function all plots will use the new delay. Setting the the delay to 0 disables the delayed resize feature. This function is thread-safe!
           *
           * \see jkqtp_RESIZE_DELAY, setGlobalResizeDelay(), getGlobalResizeDelay(), resizeTimer */
         static void setGlobalResizeDelay(int delayMS);
@@ -1687,7 +1687,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
          */
         QTimer resizeTimer;
 
-        /** \brief delay for  resizing in milliseconds
+        /** \brief delay for resizing in milliseconds.  If set to 0, resize delay is disabled and resizeTimer is unused.
          *
          * \see jkqtp_RESIZE_DELAY, setGlobalResizeDelay(), getGlobalResizeDelay(), resizeTimer
          */

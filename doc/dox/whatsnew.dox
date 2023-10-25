@@ -18,6 +18,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>BREAKING: renamed library JKQTCommonStatisticsAndMath to JKQTMath. <i>Note: A CMake-ALIAS-Library JKQTCommonStatisticsAndMath was also added to ease transition for users</i></li>
     <li>BREAKING: JKQTFastPlotter class and library are now deprecated and will be removed in future versions!</li>
     <li>BREAKING: The QMake build system is deprecated and will not get the same love and atttention as the recommended CMake system. The QMake scripts might be removed in future versions!</li>
+    <li>FIXED issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/102">#102: Fix CMake Compile Error: JKQTCommonLib no properly linked in JKQTMath static build</a> (thanks to <a href="https://github.com/Neumann-A">user:Neumann-A</a> for reporting)</li>
     <li>CLEANUP (BREAKING) of library structure</li>
     <li>NEW: Using precompiled headers in CMake-build to speed up build times</li>
     <li>NEW/BREAKING: split jkqtcommon into basic tools and jkqtmath for advanced math tools not used by all libs</li>
@@ -43,6 +44,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>FIXED: fixed impleentations of JKQTPlotter::beginGraphs(), which actually returned the end-iterator (COPY-PASTE-ERROR!!!)</li>
     <li>FIXED issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/99">#99: Clipping of Tick Labels</a>: for horizontal axes, additional space at the left  and/or right of the plot is allowed so labels are no longer clipped (thanks to <a href="https://github.com/allenbarnett5">user:allenbarnett5/a> for reporting)</li>
     <li>FIXED issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/99">#99: Height of one-column key/legend was too large</a> (thanks to <a href="https://github.com/allenbarnett5">user:allenbarnett5/a> for reporting)</li>
+    <li>FIXED/IMPROVED issue <a href="https://github.com/jkriege2/JKQtPlotter/issues/100">#100: Add option to disable resize delay feature by setting the delay to zero</a> (thanks to <a href="https://github.com/fpalazzolo">user:fpalazzolo</a> for reporting)</li>
     <li>FIXED/NEW: placement of plot-title (was not centerd in its box, but glued to the bottom) by adding a plotstyle parameter JKQTBasePlotterStyle::plotLabelOffset</li>
     <li>REORGANIZED: separated line-graphs from jkqtpscatter.h/.cpp into jkqtplines.h/.cpp</li>
     <li>IMPROVED: QT6-compatibility by removing deprecated warnings</li>

@@ -1370,8 +1370,13 @@ void JKQTPlotter::resizeEvent(QResizeEvent *event) {
          sizeChanged=true;
      }
      if (sizeChanged) {
-         resizeTimer.setSingleShot(true);
-         resizeTimer.start(jkqtp_RESIZE_DELAY);
+         if (jkqtp_RESIZE_DELAY == 0) {
+             // Do this now
+             delayedResizeEvent();
+         } else {
+             resizeTimer.setSingleShot(true);
+             resizeTimer.start(jkqtp_RESIZE_DELAY);
+         }
      }
 
      //updateGeometry();
