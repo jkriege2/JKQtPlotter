@@ -173,10 +173,10 @@ for:
             if [ "$USE_CMAKE" = true ]; then
               echo == INSTALL CIMG =================================================================================
               mkdir $HOME/cimg
-              git clone --depth=1 https://github.com/dtschump/CImg.git $HOME/\cimg
-              set CIMG_DIR=$HOME/\cimg
+              git clone --depth=1 https://github.com/dtschump/CImg.git $HOME/cimg
+              set CIMG_DIR=$HOME/cimg
               echo CIMG_DIR=$CIMG_DIR
-              set CIMG_INCLUDE_DIR=$HOME/\cimg
+              set CIMG_INCLUDE_DIR=$HOME/cimg
               echo CIMG_INCLUDE_DIR=$CIMG_INCLUDE_DIR
             fi
 
