@@ -1902,12 +1902,12 @@ void JKQTPVerticalAxisBase::drawAxes(JKQTPEnhancedPainter& painter, int move1, i
                                 // calculate minor tick lines, axis 2
                                 if (axisStyle.minorTicks>0&&axisStyle.drawMode2.testFlag(JKQTPCADMTicks)) {
                                     const QLineF l(right+parent->pt2px(painter, axisStyle.minorTickOutsideLength), my_pix, right-parent->pt2px(painter, axisStyle.minorTickInsideLength), my_pix);
-                                    if (l.length()>0) lines_pmtick.append(l);
+                                    if (l.length()>0) lines_pmtick2.append(l);
                                 }
                                 // calculate minor tick lines, axis 0
                                 if (axisStyle.minorTicks>0&&axisStyle.drawMode0.testFlag(JKQTPCADMTicks)) {
                                     const QLineF l(zeroaxispos-parent->pt2px(painter, axisStyle.minorTickOutsideLength), my_pix, zeroaxispos+parent->pt2px(painter, axisStyle.minorTickInsideLength), my_pix);
-                                    if (l.length()>0) lines_pmtick.append(l);
+                                    if (l.length()>0) lines_pmtick0.append(l);
                                 }
 
                                 // draw minor tick label, axis 1
@@ -2692,12 +2692,12 @@ void JKQTPHorizontalAxisBase::drawAxes(JKQTPEnhancedPainter& painter, int move1,
                             // calculate minor tick lines, axis 0
                             if (axisStyle.minorTicks>0&&axisStyle.drawMode0.testFlag(JKQTPCADMTicks)) {
                                 const QLineF l( mx_pix, zeroaxispos-parent->pt2px(painter, axisStyle.minorTickInsideLength), mx_pix, zeroaxispos+parent->pt2px(painter, axisStyle.minorTickOutsideLength));
-                                if (l.length()>0) lines_pmtick.append(l);
+                                if (l.length()>0) lines_pmtick0.append(l);
                             }
                             // calculate minor tick lines, axis 2
                             if (axisStyle.minorTicks>0&&axisStyle.drawMode2.testFlag(JKQTPCADMTicks)) {
                                 const QLineF l( mx_pix, top+parent->pt2px(painter, axisStyle.minorTickInsideLength), mx_pix, top-parent->pt2px(painter, axisStyle.minorTickOutsideLength));
-                                if (l.length()>0) lines_pmtick.append(l);
+                                if (l.length()>0) lines_pmtick2.append(l);
                             }
 
                             // draw minor tick label, axis 1
