@@ -92,8 +92,8 @@ int main(int argc, char* argv[])
 
 
     // 4. autoscale the plot so the graph is contained
-    plot.getPlotter()->setKeyPosition(JKQTPKeyPosition::JKQTPKeyOutsideBottomLeft);
-    plot.getPlotter()->setKeyLayout(JKQTPKeyLayout::JKQTPKeyLayoutMultiColumn);
+    plot.getPlotter()->setKeyPosition(JKQTPKeyOutsideBottomLeft);
+    plot.getMainKey()->setLayout(JKQTPKeyLayout::JKQTPKeyLayoutMultiColumn);
     plot.getXAxis()->setShowZeroAxis(false);
     plot.getYAxis()->setShowZeroAxis(false);
     plot.setGrid(false);

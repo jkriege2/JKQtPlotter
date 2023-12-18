@@ -137,7 +137,7 @@ inline void buildPlots(QVector<JKQTBasePlotter*>& plots) {
     graphI->setY(-2.0);
     graphI->setWidth(5);
     graphI->setHeight(1);
-    graphI->setTitle(QObject::tr("2{\\times}Gauss"));
+    graphI->setTitle(QObject::tr("$2\\times$ Gauss"));
     plots.last()->addGraph(graphI);
 
     JKQTPXYLineErrorGraph* graph1=new JKQTPXYLineErrorGraph(plots[0]);

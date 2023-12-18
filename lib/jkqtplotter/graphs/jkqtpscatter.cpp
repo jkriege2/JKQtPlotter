@@ -115,7 +115,7 @@ void JKQTPXYScatterGraph::draw(JKQTPEnhancedPainter& painter) {
     //qDebug()<<"JKQTPXYScatterGraph::draw() ... done";
 }
 
-void JKQTPXYScatterGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
+void JKQTPXYScatterGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, const QRectF& rect) {
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     JKQTPPlotSymbol(painter, rect.left()+rect.width()/2.0, rect.top()+rect.height()/2.0, getSymbolType(), getKeySymbolSizePx(painter, rect, parent), getKeySymbolLineWidthPx(painter, rect, parent), getKeyLabelColor(), getSymbolFillColor(),getSymbolFont());
 }
@@ -421,7 +421,7 @@ void JKQTPXYParametrizedScatterGraph::draw(JKQTPEnhancedPainter &painter)
     drawErrorsAfter(painter);
 }
 
-void JKQTPXYParametrizedScatterGraph::drawKeyMarker(JKQTPEnhancedPainter &painter, QRectF &rect)
+void JKQTPXYParametrizedScatterGraph::drawKeyMarker(JKQTPEnhancedPainter &painter, const QRectF &rect)
 {
     double symbolSize1=getKeySymbolSizePx(painter, rect, parent, 0.75);
     double symbolSize2=symbolSize1*0.8;

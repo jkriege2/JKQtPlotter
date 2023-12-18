@@ -82,7 +82,6 @@ TestWidgetGeometry::TestWidgetGeometry(QWidget *parent) :
 
     plotGeo->setPlotUpdateEnabled(true);
     plotGeo->getPlotter()->zoomToFit();
-    plotGeo->getPlotter()->setKeyAutosize(true);
 
 
     QCheckBox* chkAspect=new QCheckBox("keep aspect ratio", this);

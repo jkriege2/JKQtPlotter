@@ -47,7 +47,6 @@ TestWidgetLogGraphs::TestWidgetLogGraphs(QWidget *parent) :
 
     plotLOG->setPlotUpdateEnabled(true);
     plotLOG->getPlotter()->zoomToFit(true, true);//, true);
-    plotLOG->getPlotter()->setKeyAutosize(true);
 
     QCheckBox* chklogX=new QCheckBox("logarithmic X-axis", this);
     QCheckBox* chklogY=new QCheckBox("logarithmic Y-axis", this);

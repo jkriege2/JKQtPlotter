@@ -535,24 +535,84 @@ JKQTPLOTTER_LIB_EXPORT JKQTPLabelPosition String2JKQTPLabelPosition(const QStrin
 
 /** \brief position of the key
  * \ingroup jkqtpplottersupprt
+ *
+ * \see JKQTPKeyPosition, JKQTPKeyStyle, JKQTPKeyBase, JKQTPGetTypicalKeyPositions()
  */
-enum JKQTPKeyPosition {
-    JKQTPKeyOutsideTopRight=0,            /*!< \brief the key is positioned on the right side of the graph */
-    JKQTPKeyOutsideTopLeft,             /*!< \brief the key is positioned on the left side of the graph */
-    JKQTPKeyOutsideLeftTop,              /*!< \brief the key is positioned above the graph */
-    JKQTPKeyOutsideLeftBottom,           /*!< \brief the key is positioned below the graph */
-    JKQTPKeyOutsideRightBottom,            /*!< \brief the key is positioned on the right side of the graph */
-    JKQTPKeyOutsideRightTop,             /*!< \brief the key is positioned on the left side of the graph */
-    JKQTPKeyOutsideBottomLeft,              /*!< \brief the key is positioned above the graph */
-    JKQTPKeyOutsideBottomRight,           /*!< \brief the key is positioned below the graph */
-    JKQTPKeyInsideTopRight,             /*!< \brief the key is positioned inside on the right side of the graph, but inside the graph*/
-    JKQTPKeyInsideTopLeft,              /*!< \brief the key is positioned inside on the left side of the graph */
-    JKQTPKeyInsideBottomLeft,               /*!< \brief the key is positioned inside on the upper bound of the graph */
-    JKQTPKeyInsideBottomRight,             /*!< \brief the key is positioned inside on the lower bound of the graph */
+enum JKQTPKeyPositions {
+    JKQTPKeyInside       =0x0001,      /*!< \brief key is drawn inside the plot rectangle */
+    JKQTPKeyOutsideTop   =0x0010,      /*!< \brief key is drawn outside and above of the plot rectangle */
+    JKQTPKeyOutsideBottom=0x0020,      /*!< \brief key is drawn outside and below of the plot rectangle */
+    JKQTPKeyOutsideLeft  =0x0040,      /*!< \brief key is drawn outside and on the left of the plot rectangle */
+    JKQTPKeyOutsideRight =0x0080,      /*!< \brief key is drawn outside and on the rightof  the plot rectangle */
+    JKQTPKeyLeft         =0x0100,      /*!< \brief key is drawn to the left */
+    JKQTPKeyHCenter      =0x0200,      /*!< \brief key is drawn to the horizontal center */
+    JKQTPKeyRight        =0x0400,      /*!< \brief key is drawn to the right */
+    JKQTPKeyTop          =0x1000,      /*!< \brief key is drawn to the top */
+    JKQTPKeyVCenter      =0x2000,      /*!< \brief key is drawn to the vertical center */
+    JKQTPKeyBottom       =0x4000,      /*!< \brief key is drawn to the bottom */
 
-    JKQTPKeyPositionMax=JKQTPKeyInsideBottomRight
+
+    JKQTPKeyOutsideTopRight=JKQTPKeyOutsideTop|JKQTPKeyBottom|JKQTPKeyRight,            /*!< \brief the key is positioned above the graph, on the right
+                                                                                             \image html keypositions/JKQTPKeyOutsideTopRight.png */
+    JKQTPKeyOutsideTopLeft=JKQTPKeyOutsideTop|JKQTPKeyBottom|JKQTPKeyLeft,             /*!< \brief the key is positioned above the graph, on the left
+                                                                                             \image html keypositions/JKQTPKeyOutsideTopLeft.png */
+    JKQTPKeyOutsideTopCenter=JKQTPKeyOutsideTop|JKQTPKeyBottom|JKQTPKeyHCenter,             /*!< \brief the key is positioned above the graph, in the center
+                                                                                             \image html keypositions/JKQTPKeyOutsideTopCenter.png */
+    JKQTPKeyOutsideBottomLeft=JKQTPKeyOutsideBottom|JKQTPKeyTop|JKQTPKeyLeft,            /*!< \brief the key is positioned below the graph, on the left
+                                                                                             \image html keypositions/JKQTPKeyOutsideBottomLeft.png */
+    JKQTPKeyOutsideBottomRight=JKQTPKeyOutsideBottom|JKQTPKeyTop|JKQTPKeyRight,            /*!< \brief the key is positioned below the graph, on the right
+                                                                                             \image html keypositions/JKQTPKeyOutsideBottomRight.png */
+    JKQTPKeyOutsideBottomCenter=JKQTPKeyOutsideBottom|JKQTPKeyTop|JKQTPKeyHCenter,            /*!< \brief the key is positioned below the graph, in the center
+                                                                                             \image html keypositions/JKQTPKeyOutsideBottomCenter.png */
+    JKQTPKeyOutsideLeftTop=JKQTPKeyOutsideLeft|JKQTPKeyTop|JKQTPKeyRight,              /*!< \brief the key is positioned on the left side of the graph, towards the top
+                                                                                             \image html keypositions/JKQTPKeyOutsideLeftTop.png */
+    JKQTPKeyOutsideLeftCenter=JKQTPKeyOutsideLeft|JKQTPKeyVCenter|JKQTPKeyRight,           /*!< \brief the key is positioned on the left side of the graph, in the center
+                                                                                             \image html keypositions/JKQTPKeyOutsideLeftCenter.png */
+    JKQTPKeyOutsideLeftBottom=JKQTPKeyOutsideLeft|JKQTPKeyBottom|JKQTPKeyRight,           /*!< \brief the key is positioned on the left side of the graph, towards the Bottom
+                                                                                             \image html keypositions/JKQTPKeyOutsideLeftBottom.png */
+    JKQTPKeyOutsideRightBottom=JKQTPKeyOutsideRight|JKQTPKeyBottom|JKQTPKeyLeft,            /*!< \brief the key is positioned on the right side of the graph, towards the bottom
+                                                                                             \image html keypositions/JKQTPKeyOutsideRightBottom.png */
+    JKQTPKeyOutsideRightCenter=JKQTPKeyOutsideRight|JKQTPKeyVCenter|JKQTPKeyLeft,            /*!< \brief the key is positioned on the right side of the graph, in the center
+                                                                                             \image html keypositions/JKQTPKeyOutsideRightCenter.png */
+    JKQTPKeyOutsideRightTop=JKQTPKeyOutsideRight|JKQTPKeyTop|JKQTPKeyLeft,             /*!< \brief the key is positioned on the left side of the graph, towards the top
+                                                                                             \image html keypositions/JKQTPKeyOutsideRightTop.png */
+    JKQTPKeyInsideTopRight=JKQTPKeyInside|JKQTPKeyTop|JKQTPKeyRight,             /*!< \brief the key is positioned inside on the top-right
+                                                                                             \image html keypositions/JKQTPKeyInsideTopRight.png */
+    JKQTPKeyInsideTopLeft=JKQTPKeyInside|JKQTPKeyTop|JKQTPKeyLeft,             /*!< \brief the key is positioned inside on the top-left
+                                                                                             \image html keypositions/JKQTPKeyInsideTopLeft.png */
+    JKQTPKeyInsideBottomLeft=JKQTPKeyInside|JKQTPKeyBottom|JKQTPKeyLeft,             /*!< \brief the key is positioned inside on the bottom-left
+                                                                                             \image html keypositions/JKQTPKeyInsideBottomLeft.png */
+    JKQTPKeyInsideBottomRight=JKQTPKeyInside|JKQTPKeyBottom|JKQTPKeyRight,             /*!< \brief the key is positioned inside on the bottom-right
+                                                                                             \image html keypositions/JKQTPKeyInsideBottomRight.png */
+    JKQTPKeyInsideTop=JKQTPKeyInside|JKQTPKeyTop|JKQTPKeyHCenter,             /*!< \brief the key is positioned inside on the top-center
+                                                                                             \image html keypositions/JKQTPKeyInsideTop.png */
+    JKQTPKeyInsideBottom=JKQTPKeyInside|JKQTPKeyBottom|JKQTPKeyHCenter,             /*!< \brief the key is positioned inside on the bottom-center
+                                                                                             \image html keypositions/JKQTPKeyInsideBottom.png */
+    JKQTPKeyInsideLeft=JKQTPKeyInside|JKQTPKeyVCenter|JKQTPKeyLeft,             /*!< \brief the key is positioned inside on the center-left
+                                                                                             \image html keypositions/JKQTPKeyInsideLeft.png */
+    JKQTPKeyInsideRight=JKQTPKeyInside|JKQTPKeyVCenter|JKQTPKeyRight,             /*!< \brief the key is positioned inside on the center-right
+                                                                                             \image html keypositions/JKQTPKeyInsideRight.png */
+    JKQTPKeyDefaultPosition=JKQTPKeyInsideTopRight
+
 };
+/** \brief position of the key
+ * \ingroup jkqtpplottersupprt
+ *
+ * \qFlagsNote{JKQTPKeyPosition,JKQTPKeyPositions}
+ *
+ * \see JKQTPKeyPositions, JKQTPKeyStyle, JKQTPKeyBase, JKQTPGetTypicalKeyPositions()
+ */
+Q_DECLARE_FLAGS(JKQTPKeyPosition, JKQTPKeyPositions)
+Q_DECLARE_OPERATORS_FOR_FLAGS(JKQTPKeyPosition)
 
+/** \brief returns a list of typical positions of the main key
+ * \ingroup jkqtpplottersupprt
+ *
+ * \qFlagsNote{JKQTPKeyPosition,JKQTPKeyPositions}
+ *
+ * \see JKQTPKeyPositions, JKQTPKeyStyle, JKQTPKeyBase
+ */
+JKQTPLOTTER_LIB_EXPORT QList<JKQTPKeyPosition> JKQTPGetTypicalKeyPositions();
 
 /** \brief converts a JKQTPLabelPosition variable into a human-readable string
  * \ingroup jkqtpplottersupprt
@@ -568,11 +628,16 @@ JKQTPLOTTER_LIB_EXPORT JKQTPKeyPosition String2JKQTPKeyPosition(const QString& p
  * \ingroup jkqtpplottersupprt
  */
 enum JKQTPKeyLayout {
-    JKQTPKeyLayoutOneColumn=0,            /*!< \brief the key consists of one column */
-    JKQTPKeyLayoutOneRow,            /*!< \brief the key consists of one row */
-    JKQTPKeyLayoutMultiColumn,           /*!< \brief the key consists of multiple columns */
+    JKQTPKeyLayoutOneColumn=0,            /*!< \brief the key consists of one column
+                                               \image html keylayouts/JKQTPKeyLayout_one_column.png */
+    JKQTPKeyLayoutOneRow,                 /*!< \brief the key consists of one row
+                                               \image html keylayouts/JKQTPKeyLayout_one_row.png */
+    JKQTPKeyLayoutMultiColumn,            /*!< \brief the key consists of multiple columns, (top->bottom, top->bottom, ...)
+                                               \image html keylayouts/JKQTPKeyLayout_multi_column.png */
+    JKQTPKeyLayoutMultiRow,               /*!< \brief the key consists of multiple rows (left->right,left->right,...)
+                                               \image html keylayouts/JKQTPKeyLayout_multi_row.png */
 
-    JKQTPKeyLayoutMax=JKQTPKeyLayoutMultiColumn
+    JKQTPKeyLayoutMax=JKQTPKeyLayoutMultiRow
 };
 
 

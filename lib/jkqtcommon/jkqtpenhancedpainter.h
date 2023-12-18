@@ -71,6 +71,8 @@ class JKQTCOMMON_LIB_EXPORT JKQTPEnhancedPainter : public QPainter {
 
         /** \brief draw a rounded rect, where each corner has a separate radius */
         void drawComplexRoundedRect(const QRectF& r, double rTopLeft, double rTopRight, double rBottomLeft, double rBottomRight, Qt::SizeMode mode = Qt::AbsoluteSize);
+        /** \brief draw a rounded rect (\a radius >0 ), or a simple rect (\a radius <=0 ) */
+        void drawRoundedRectOrRect(const QRectF& r, double radius, Qt::SizeMode mode = Qt::AbsoluteSize);
     protected:
         void initQEnhacedPainter();
     private:

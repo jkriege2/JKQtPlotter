@@ -336,29 +336,29 @@ int main(int argc, char* argv[])
     plot1->zoomToFit();
     plot1->getXAxis()->setShowZeroAxis(false);
     plot1->getYAxis()->setShowZeroAxis(false);
-    plot1->getPlotter()->setKeyPosition(JKQTPKeyPosition::JKQTPKeyInsideTopLeft);
+    plot1->getPlotter()->setKeyPosition(JKQTPKeyInsideTopLeft);
     plot2->zoomToFit();
     plot2->getXAxis()->setShowZeroAxis(false);
     plot2->getYAxis()->setShowZeroAxis(false);
-    plot2->getPlotter()->setKeyPosition(JKQTPKeyPosition::JKQTPKeyInsideTopLeft);
+    plot2->getPlotter()->setKeyPosition(JKQTPKeyInsideTopLeft);
     plot3->zoomToFit();
     plot3->getXAxis()->setShowZeroAxis(false);
     plot3->getYAxis()->setShowZeroAxis(false);
-    plot3->getPlotter()->setKeyPosition(JKQTPKeyPosition::JKQTPKeyInsideTopLeft);
+    plot3->getPlotter()->setKeyPosition(JKQTPKeyInsideTopLeft);
     plot4->zoomToFit();
     plot4->getXAxis()->setShowZeroAxis(false);
     plot4->getYAxis()->setShowZeroAxis(false);
-    plot4->getPlotter()->setKeyPosition(JKQTPKeyPosition::JKQTPKeyInsideTopLeft);
+    plot4->getPlotter()->setKeyPosition(JKQTPKeyInsideTopLeft);
     plot4->setAbsoluteX(0.05, plot4->getXMax());
     plot4->zoomToFit();
     plot5->getXAxis()->setShowZeroAxis(false);
     plot5->getYAxis()->setShowZeroAxis(false);
-    plot5->getPlotter()->setKeyPosition(JKQTPKeyPosition::JKQTPKeyInsideTopLeft);
+    plot5->getPlotter()->setKeyPosition(JKQTPKeyInsideTopLeft);
     plot5->setAbsoluteX(0.05, plot5->getXMax());
     plot5->zoomToFit();
     plot6->getXAxis()->setShowZeroAxis(false);
     plot6->getYAxis()->setShowZeroAxis(false);
-    plot6->getPlotter()->setKeyPosition(JKQTPKeyPosition::JKQTPKeyInsideBottomRight);
+    plot6->getPlotter()->setKeyPosition(JKQTPKeyInsideBottomRight);
     plot6->zoomToFit();
 
     // show plotter and make it a decent size

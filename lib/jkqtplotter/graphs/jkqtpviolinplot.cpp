@@ -338,7 +338,7 @@ bool JKQTPViolinplotVerticalElement::getYMinMax(double& miny, double& maxy, doub
         return true;
 }
 
-void JKQTPViolinplotVerticalElement::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
+void JKQTPViolinplotVerticalElement::drawKeyMarker(JKQTPEnhancedPainter& painter, const QRectF& rect) {
     plotVerticalKeyMarker(parent, painter, rect);
 }
 
@@ -356,7 +356,7 @@ JKQTPViolinplotHorizontalElement::JKQTPViolinplotHorizontalElement(JKQTPlotter *
 {
 }
 
-void JKQTPViolinplotHorizontalElement::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
+void JKQTPViolinplotHorizontalElement::drawKeyMarker(JKQTPEnhancedPainter& painter, const QRectF& rect) {
     plotHorizontalKeyMarker(parent, painter, rect);
 }
 

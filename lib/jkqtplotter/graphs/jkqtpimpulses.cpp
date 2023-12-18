@@ -253,7 +253,7 @@ void JKQTPImpulsesHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
     drawErrorsAfter(painter);
 }
 
-void JKQTPImpulsesHorizontalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
+void JKQTPImpulsesHorizontalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, const QRectF& rect) {
 
 
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
@@ -317,7 +317,7 @@ JKQTPImpulsesVerticalGraph::JKQTPImpulsesVerticalGraph(JKQTPlotter *parent):
 
 }
 
-void JKQTPImpulsesVerticalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
+void JKQTPImpulsesVerticalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, const QRectF& rect) {
 
 
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});

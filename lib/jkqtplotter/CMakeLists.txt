@@ -31,6 +31,7 @@ set(SOURCES_BASE
     ${CMAKE_CURRENT_LIST_DIR}/jkqtplotter.cpp
     ${CMAKE_CURRENT_LIST_DIR}/jkqtplotterstyle.cpp
     ${CMAKE_CURRENT_LIST_DIR}/jkqtpkeystyle.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/jkqtpkey.cpp
     ${CMAKE_CURRENT_LIST_DIR}/jkqtpbaseplotterstyle.cpp
     ${CMAKE_CURRENT_LIST_DIR}/jkqtpcoordinateaxes.cpp
     ${CMAKE_CURRENT_LIST_DIR}/jkqtpcoordinateaxesstyle.cpp
@@ -98,6 +99,8 @@ set(HEADERS_BASE
     $<INSTALL_INTERFACE:jkqtplotterstyle.h>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpkeystyle.h>
     $<INSTALL_INTERFACE:jkqtpkeystyle.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpkey.h>
+    $<INSTALL_INTERFACE:jkqtpkey.h>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpbaseplotterstyle.h>
     $<INSTALL_INTERFACE:jkqtpbaseplotterstyle.h>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpcoordinateaxes.h>

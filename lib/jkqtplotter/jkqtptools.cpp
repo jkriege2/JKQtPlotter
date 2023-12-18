@@ -162,29 +162,62 @@ JKQTPLabelPosition String2JKQTPLabelPosition(const QString& pos) {
 QString JKQTPKeyPosition2String(JKQTPKeyPosition pos) {
     switch(pos) {
         case JKQTPKeyOutsideLeftBottom: return "outside_leftbottom";
+        case JKQTPKeyOutsideLeftTop: return "outside_lefttop";
+        case JKQTPKeyOutsideLeftCenter: return "outside_leftcenter";
+
         case JKQTPKeyOutsideTopLeft: return "outside_topleft";
         case JKQTPKeyOutsideTopRight: return "outside_topright";
-        case JKQTPKeyOutsideLeftTop: return "outside_lefttop";
+        case JKQTPKeyOutsideTopCenter: return "outside_topcenter";
 
         case JKQTPKeyOutsideRightBottom: return "outside_rightbottom";
+        case JKQTPKeyOutsideRightTop: return "outside_righttop";
+        case JKQTPKeyOutsideRightCenter: return "outside_rightcenter";
+
         case JKQTPKeyOutsideBottomLeft: return "outside_bottomleft";
         case JKQTPKeyOutsideBottomRight: return "outside_bottomright";
-        case JKQTPKeyOutsideRightTop: return "outside_righttop";
+        case JKQTPKeyOutsideBottomCenter: return "outside_bottomcenter";
 
         case JKQTPKeyInsideBottomRight: return "inside_bottomright";
         case JKQTPKeyInsideTopLeft: return "inside_topleft";
         case JKQTPKeyInsideTopRight: return "inside_topright";
         case JKQTPKeyInsideBottomLeft: return "inside_bottomleft";
+        case JKQTPKeyInsideTop: return "inside_top";
+        case JKQTPKeyInsideBottom: return "inside_bottom";
+        case JKQTPKeyInsideLeft: return "inside_left";
+        case JKQTPKeyInsideRight: return "inside_right";
     }
-    return "";
+
+    QString res;
+    if (pos.testFlag(JKQTPKeyInside)) res+=std::string(res.size()>0?"|":"")+"inside";
+    else if (pos.testFlag(JKQTPKeyOutsideTop)) res+=std::string(res.size()>0?"|":"")+"outside_top";
+    else if (pos.testFlag(JKQTPKeyOutsideBottom)) res+=std::string(res.size()>0?"|":"")+"outside_bottom";
+    else if (pos.testFlag(JKQTPKeyOutsideLeft)) res+=std::string(res.size()>0?"|":"")+"outside_left";
+    else if (pos.testFlag(JKQTPKeyOutsideRight)) res+=std::string(res.size()>0?"|":"")+"outside_right";
+
+    if (pos.testFlag(JKQTPKeyLeft)) res+=std::string(res.size()>0?"|":"")+"left";
+    else if (pos.testFlag(JKQTPKeyHCenter)) res+=std::string(res.size()>0?"|":"")+"hcenter";
+    else if (pos.testFlag(JKQTPKeyRight)) res+=std::string(res.size()>0?"|":"")+"right";
+
+    if (pos.testFlag(JKQTPKeyTop)) res+=std::string(res.size()>0?"|":"")+"top";
+    else if (pos.testFlag(JKQTPKeyVCenter)) res+=std::string(res.size()>0?"|":"")+"vcenter";
+    else if (pos.testFlag(JKQTPKeyBottom)) res+=std::string(res.size()>0?"|":"")+"bottom";
+
+    return res;
 }
 
+
+
 JKQTPKeyPosition String2JKQTPKeyPosition(const QString& pos) {
-    QString s=pos.trimmed().toLower();
+    const QString s=pos.trimmed().toLower();
     if (s=="outside_bottom" || s=="outsidebottom" || s=="outside_leftbottom" || s=="outsideleftbottom" || s=="olb") return JKQTPKeyOutsideLeftBottom;
     if (s=="outside_left" || s=="outsideleft" || s=="outside_topleft" || s=="outsidetopleft" || s=="otl") return JKQTPKeyOutsideTopLeft;
     if (s=="outside_right" || s=="outsideright" || s=="outside_topright" || s=="outsidetopright" || s=="otr") return JKQTPKeyOutsideTopRight;
     if (s=="outside_top" || s=="outsidetop" || s=="outside_lefttop" || s=="outsidelefttop" || s=="olt") return JKQTPKeyOutsideLeftTop;
+
+    if (s=="outside_leftcenter" || s=="outsideleftcenter" || s=="olc") return JKQTPKeyOutsideLeftCenter;
+    if (s=="outside_rightcenter" || s=="outsiderightcenter" || s=="orc") return JKQTPKeyOutsideRightCenter;
+    if (s=="outside_topcenter" || s=="outsidetopcenter" || s=="otc") return JKQTPKeyOutsideTopCenter;
+    if (s=="outside_bottomcenter" || s=="outsidebottomcenter" || s=="obc") return JKQTPKeyOutsideBottomCenter;
 
     if (s=="outside_rightbottom" || s=="outsiderightbottom" || s=="orb" ) return JKQTPKeyOutsideRightBottom;
     if (s=="outside_bottomleft" || s=="outsidebottomleft" || s=="obl" ) return JKQTPKeyOutsideBottomLeft;
@@ -195,6 +228,28 @@ JKQTPKeyPosition String2JKQTPKeyPosition(const QString& pos) {
     if (s=="inside_top" || s=="insidetop" || s=="inside_left" || s=="insideleft" || s=="inside_topleft" || s=="insidetopleft" || s=="itl") return JKQTPKeyInsideTopLeft;
     if (s=="inside_right" || s=="insideright" || s=="inside_topright" || s=="insidetopright" || s=="itr") return JKQTPKeyInsideTopRight;
     if (s=="inside_bottomleft" || s=="insidebottomleft"  || s=="ibl") return JKQTPKeyInsideBottomLeft;
+
+    if (s.contains("|")) {
+        JKQTPKeyPosition pos;
+        const QStringList ss=s.split("|");
+        for (const auto& i: ss) {
+            if (i=="inside") pos|=JKQTPKeyInside;
+            if (i=="outside_top") pos|=JKQTPKeyOutsideTop;
+            if (i=="outside_bottom") pos|=JKQTPKeyOutsideBottom;
+            if (i=="outside_left") pos|=JKQTPKeyOutsideLeft;
+            if (i=="outside_right") pos|=JKQTPKeyOutsideRight;
+
+            if (i=="left") pos|=JKQTPKeyLeft;
+            if (i=="hcenter") pos|=JKQTPKeyHCenter;
+            if (i=="right") pos|=JKQTPKeyRight;
+
+            if (i=="top") pos|=JKQTPKeyTop;
+            if (i=="vcenter") pos|=JKQTPKeyVCenter;
+            if (i=="bottom") pos|=JKQTPKeyBottom;
+        }
+        return pos;
+    }
+
     return JKQTPKeyInsideTopRight;
 }
 
@@ -204,6 +259,7 @@ QString JKQTPKeyLayout2String(JKQTPKeyLayout pos) {
         case JKQTPKeyLayoutOneColumn: return "one_column";
         case JKQTPKeyLayoutOneRow: return "one_row";
         case JKQTPKeyLayoutMultiColumn: return "multi_column";
+        case JKQTPKeyLayoutMultiRow: return "multi_row";
     }
     return "";
 }
@@ -212,7 +268,8 @@ JKQTPKeyLayout String2JKQTPKeyLayout(const QString& pos) {
     QString s=pos.trimmed().toLower();
     if (s=="one_column" || s=="onecolumn" || s=="one") return JKQTPKeyLayoutOneColumn;
     if (s=="one_row" || s=="onerow") return JKQTPKeyLayoutOneRow;
-    if (s=="multi_column" || s=="multicolumn" || s=="multi") return JKQTPKeyLayoutMultiColumn;
+    if (s=="multi_column" || s=="multicolumn" || s=="multi_columns" || s=="multicolumns" || s=="multi" || s=="columns") return JKQTPKeyLayoutMultiColumn;
+    if (s=="multi_row" || s=="multirow" || s=="multi_rows" || s=="multirows" || s=="rows") return JKQTPKeyLayoutMultiRow;
     return JKQTPKeyLayoutOneColumn;
 }
 
@@ -854,4 +911,31 @@ JKQTPMouseMoveActions String2JKQTPMouseMoveActions(const QString &s)
 {
     if (s=="jkqtpmmatooltipforclosestdatapoint"||s=="closestdatapointtooltip"||s=="tooltipforclosestdatapoint"||s=="tooltip") return jkqtpmmaToolTipForClosestDataPoint;
     return jkqtpmmaToolTipForClosestDataPoint;
+}
+
+QList<JKQTPKeyPosition> JKQTPGetTypicalKeyPositions()
+{
+    static QList<JKQTPKeyPosition> pos = {
+        JKQTPKeyInsideTopRight,
+        JKQTPKeyInsideTopLeft,
+        JKQTPKeyInsideBottomLeft,
+        JKQTPKeyInsideBottomRight,
+        JKQTPKeyInsideTop,
+        JKQTPKeyInsideBottom,
+        JKQTPKeyInsideLeft,
+        JKQTPKeyInsideRight,
+        JKQTPKeyOutsideTopLeft,
+        JKQTPKeyOutsideTopCenter,
+        JKQTPKeyOutsideTopRight,
+        JKQTPKeyOutsideLeftTop,
+        JKQTPKeyOutsideLeftCenter,
+        JKQTPKeyOutsideLeftBottom,
+        JKQTPKeyOutsideRightTop,
+        JKQTPKeyOutsideRightCenter,
+        JKQTPKeyOutsideRightBottom,
+        JKQTPKeyOutsideBottomLeft,
+        JKQTPKeyOutsideBottomCenter,
+        JKQTPKeyOutsideBottomRight
+     };
+    return pos;
 }

@@ -67,7 +67,7 @@ JKQTPXYFunctionLineGraphBase::~JKQTPXYFunctionLineGraphBase()
 
 
 
-void JKQTPXYFunctionLineGraphBase::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
+void JKQTPXYFunctionLineGraphBase::drawKeyMarker(JKQTPEnhancedPainter& painter, const QRectF& rect) {
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     QPen p=getLinePen(painter, parent);
     p.setJoinStyle(Qt::RoundJoin);

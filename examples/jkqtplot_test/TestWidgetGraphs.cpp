@@ -249,7 +249,6 @@ TestWidgetGraphs::TestWidgetGraphs(QWidget *parent) :
 
     plot->setPlotUpdateEnabled(true);
     plot->getPlotter()->zoomToFit(true, false);//, true);
-    plot->getPlotter()->setKeyAutosize(true);
 
     QCheckBox* chklogX=new QCheckBox("logarithmic X-axis", this);
     QCheckBox* chklogY=new QCheckBox("logarithmic Y-axis", this);
@@ -348,9 +347,9 @@ void TestWidgetGraphs::setSortOrder2(int index)
 
 void TestWidgetGraphs::setKeyLayout2(JKQTPKeyLayout layout)
 {
-    plot->getPlotter()->setKeyLayout(layout);
-    plotBot->getPlotter()->setKeyLayout(layout);
-    plotBot2->getPlotter()->setKeyLayout(layout);
+    plot->getMainKey()->setLayout(layout);
+    plotBot->getMainKey()->setLayout(layout);
+    plotBot2->getMainKey()->setLayout(layout);
     plot->redrawPlot();
     plotBot->redrawPlot();
     plotBot2->redrawPlot();

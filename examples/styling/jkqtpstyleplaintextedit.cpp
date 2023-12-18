@@ -522,9 +522,7 @@ void JKQTPStylePlainTextEdit::contextMenuEvent(QContextMenuEvent *event)
         } else  if (currentLinePartsLower[0].endsWith("key\\position")) {
            submenu->setEnabled(true);
            QAction* act;
-           JKQTPKeyPosition st;
-           for (int i=0; i<=static_cast<int>(JKQTPKeyPositionMax); i++) {
-               st=static_cast<JKQTPKeyPosition>(i);
+           for (const auto st: JKQTPGetTypicalKeyPositions()) {
                act=new QAction(JKQTPKeyPosition2String(st));
                connect(act, &QAction::triggered, std::bind(std::mem_fn(&JKQTPStylePlainTextEdit::changeCurrentLineValueTo), this, act->text()));
                submenu->addAction(act);

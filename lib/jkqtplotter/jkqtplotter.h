@@ -400,12 +400,31 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
         /** \brief get the width/height of the icons in the toolbar in pt */
         int getToolbarIconSize() const;
 
-        /** \brief returns the class internally used for plotting */
+        /** \brief returns the JKQTBasePlotter object internally used for plotting */
         JKQTBasePlotter* getPlotter()  { return plotter; }
-        /** \brief returns the class internally used for plotting */
+        /** \brief returns the JKQTBasePlotter object internally used for plotting */
         const JKQTBasePlotter* getPlotter() const  { return plotter; }
-        /** \brief returns the class internally used for plotting */
+        /** \brief returns the JKQTBasePlotter object internally used for plotting */
         const JKQTBasePlotter* getConstplotter() const { return const_cast<const JKQTBasePlotter*>(plotter); }
+
+
+        /** \brief returns the JKQTPBaseKey object representing the main plot key/legend
+         *
+         *  \see JKQTBasePlotter::getMainKey()
+         */
+        inline JKQTPBaseKey* getMainKey()
+        {
+            return plotter->getMainKey();
+        }
+
+        /** \brief returns the JKQTPBaseKey object representing the main plot key/legend
+         *
+         *  \see JKQTBasePlotter::getMainKey()
+         */
+        inline const JKQTPBaseKey* getMainKey() const
+        {
+            return plotter->getMainKey();
+        }
 
         /** \brief returns whether the toolbar is enabled
          *
@@ -839,10 +858,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
         }
 
 
-        /** \copydoc JKQTBasePlotter::getKeyFontSize()   */
-        inline double getKeyFontSize() const {
-            return getConstplotter()->getKeyFontSize();
-        }
 
         /** \brief returns the currently set mode for the context menu \see JKQTPContextMenuModes, \ref JKQTPLOTTER_CONTEXTMENU , \ref JKQTPLOTTER_SPECIALCONTEXTMENU , \ref JKQTPLOTTER_USERMOUSEINTERACTION */
         JKQTPContextMenuModes getContextMenuMode() const;

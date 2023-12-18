@@ -57,7 +57,7 @@ public:
     /** \brief returns the color to be used for the key label */
     virtual QColor getKeyLabelColor() const override;
     /** \brief plots a key marker inside the specified rectangle \a rect */
-    virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
+    virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, const QRectF& rect) override;
     /** \copydoc m_fillStyleBelow */
     JKQTPGraphFillStyleMixin& fillStyleBelow();
     /** \copydoc m_fillStyleBelow */
@@ -328,7 +328,7 @@ public:
     /** \brief plots the graph to the plotter object specified as parent */
     virtual void draw(JKQTPEnhancedPainter& painter) override;
     /** \brief plots a key marker inside the specified rectangle \a rect */
-    virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
+    virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, const QRectF& rect) override;
     /** \brief returns the color to be used for the key label */
     virtual QColor getKeyLabelColor() const override;
 
@@ -368,7 +368,7 @@ public:
     /** \brief plots the graph to the plotter object specified as parent */
     virtual void draw(JKQTPEnhancedPainter& painter) override;
     /** \brief plots a key marker inside the specified rectangle \a rect */
-    virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
+    virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, const QRectF& rect) override;
     /** \brief returns the color to be used for the key label */
     virtual QColor getKeyLabelColor() const override;
 

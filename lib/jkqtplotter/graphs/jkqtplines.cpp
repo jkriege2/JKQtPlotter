@@ -157,7 +157,7 @@ void JKQTPXYLineGraph::draw(JKQTPEnhancedPainter& painter) {
     //qDebug()<<"JKQTPXYLineGraph::draw() ... done";
 }
 
-void JKQTPXYLineGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
+void JKQTPXYLineGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, const QRectF& rect) {
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     QPen p=getLinePen(painter, parent);
     p.setWidthF(getKeyLineWidthPx(painter,rect,parent));

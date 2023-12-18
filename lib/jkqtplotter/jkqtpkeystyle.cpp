@@ -25,24 +25,25 @@
 JKQTPKeyStyle::JKQTPKeyStyle():
     frameVisible(true),
     frameColor(QColor("black")),
+    frameLineStyle(Qt::SolidLine),
     frameWidth(1),
     frameRounding(0),
     backgroundBrush(QColor("white")),
     visible(true),
     fontSize(QApplication::font().pointSizeF()),
+    fontName("GUI"),
     textColor(QColor("black")),
-    itemWidth(20),
-    itemHeight(2.2),
     sampleLineLength(3),
+    sampleHeight(1),
     xMargin(0.5),
     yMargin(0.5),
     xOffset(1),
     yOffset(1),
-    xSeparation(0.75),
-    ySeparation(0.75),
+    xSeparation(0.85),
+    columnSeparation(0.75),
+    ySeparation(0.35),
     position(JKQTPKeyInsideTopRight),
-    layout(JKQTPKeyLayoutOneColumn),
-    autosize(true)
+    layout(JKQTPKeyLayoutOneColumn)
 {
 
 
@@ -54,6 +55,7 @@ JKQTPKeyStyle::JKQTPKeyStyle(const JKQTBasePlotterStyle &baseStyle):
 {
     fontSize=baseStyle.defaultFontSize;
     textColor=baseStyle.defaultTextColor;
+    fontName=baseStyle.defaultFontName;
 }
 
 void JKQTPKeyStyle::loadSettings(const QSettings &settings, const QString &group, const JKQTPKeyStyle &defaultStyle)
@@ -64,7 +66,9 @@ void JKQTPKeyStyle::loadSettings(const QSettings &settings, const QString &group
     yMargin = settings.value(group+"ymargin", defaultStyle.yMargin).toDouble();
     xSeparation = settings.value(group+"xseparation", defaultStyle.xSeparation).toDouble();
     ySeparation = settings.value(group+"yseparation", defaultStyle.ySeparation).toDouble();
+    columnSeparation = settings.value(group+"column_separation", defaultStyle.columnSeparation).toDouble();
     frameColor = jkqtp_String2QColor(settings.value(group+"frame_color", jkqtp_QColor2String(defaultStyle.frameColor)).toString());
+    frameLineStyle=jkqtp_String2QPenStyle(settings.value(group+"frame_linestyle", jkqtp_QPenStyle2String(frameLineStyle)).toString());
     textColor = jkqtp_String2QColor(settings.value(group+"text_color", jkqtp_QColor2String(defaultStyle.textColor)).toString());
     frameWidth = settings.value(group+"frame_width", defaultStyle.frameWidth).toDouble();
     frameRounding = settings.value(group+"frame_rounding", defaultStyle.frameRounding).toDouble();
@@ -74,10 +78,9 @@ void JKQTPKeyStyle::loadSettings(const QSettings &settings, const QString &group
     position = String2JKQTPKeyPosition(settings.value(group+"position", JKQTPKeyPosition2String(defaultStyle.position)).toString());
     layout =  String2JKQTPKeyLayout(settings.value(group+"layout", JKQTPKeyLayout2String(defaultStyle.layout)).toString());
     fontSize = settings.value(group+"fontsize", defaultStyle.fontSize).toDouble();
-    itemWidth = settings.value(group+"item_width", defaultStyle.itemWidth).toDouble();
-    itemHeight = settings.value(group+"item_height", defaultStyle.itemHeight).toDouble();
-    sampleLineLength = settings.value(group+"line_width", defaultStyle.sampleLineLength).toDouble();
-    autosize = settings.value(group+"autosize", defaultStyle.autosize).toBool();
+    fontName = settings.value(group+"fontname", defaultStyle.fontName).toString();
+    sampleLineLength = settings.value(group+"sample_width", settings.value(group+"line_width", defaultStyle.sampleLineLength).toDouble()).toDouble();
+    sampleHeight = settings.value(group+"sample_height", defaultStyle.sampleHeight).toDouble();
 }
 
 void JKQTPKeyStyle::saveSettings(QSettings &settings, const QString &group) const
@@ -88,8 +91,10 @@ void JKQTPKeyStyle::saveSettings(QSettings &settings, const QString &group) cons
     settings.setValue(group+"ymargin", yMargin);
     settings.setValue(group+"xseparation", xSeparation);
     settings.setValue(group+"yseparation", ySeparation);
+    settings.setValue(group+"column_separation", columnSeparation);
     settings.setValue(group+"frame_visible", frameVisible);
     settings.setValue(group+"frame_color", jkqtp_QColor2String(frameColor));
+    settings.setValue(group+"frame_linestyle", jkqtp_QPenStyle2String(frameLineStyle));
     settings.setValue(group+"frame_width", frameWidth);
     settings.setValue(group+"frame_rounding", frameRounding);
     settings.setValue(group+"background_color", jkqtp_QColor2String(backgroundBrush.color()));
@@ -97,9 +102,8 @@ void JKQTPKeyStyle::saveSettings(QSettings &settings, const QString &group) cons
     settings.setValue(group+"position", JKQTPKeyPosition2String(position));
     settings.setValue(group+"layout", JKQTPKeyLayout2String(layout));
     settings.setValue(group+"fontsize", fontSize);
+    settings.setValue(group+"fontname", fontName);
     settings.setValue(group+"text_color", jkqtp_QColor2String(textColor));
-    settings.setValue(group+"item_width", itemWidth);
-    settings.setValue(group+"item_height", itemHeight);
-    settings.setValue(group+"line_width", sampleLineLength);
-    settings.setValue(group+"autosize", autosize);
+    settings.setValue(group+"sample_width", sampleLineLength);
+    settings.setValue(group+"sample_height", sampleHeight);
 }

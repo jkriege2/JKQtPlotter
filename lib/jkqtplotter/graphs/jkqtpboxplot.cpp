@@ -296,7 +296,7 @@ bool JKQTPBoxplotVerticalGraph::getYMinMax(double& miny, double& maxy, double& s
     return !start;
 }
 
-void JKQTPBoxplotVerticalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
+void JKQTPBoxplotVerticalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, const QRectF& rect) {
     plotVerticalKeyMarker(parent, painter, rect);
 }
 
@@ -312,7 +312,7 @@ JKQTPBoxplotHorizontalGraph::JKQTPBoxplotHorizontalGraph(JKQTPlotter *parent):
     JKQTPBoxplotHorizontalGraph(parent->getPlotter())
 {
 }
-void JKQTPBoxplotHorizontalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
+void JKQTPBoxplotHorizontalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, const QRectF& rect) {
     plotHorizontalKeyMarker(parent, painter, rect);
     
 }
@@ -763,7 +763,7 @@ bool JKQTPBoxplotVerticalElement::getYMinMax(double& miny, double& maxy, double&
         return true;
 }
 
-void JKQTPBoxplotVerticalElement::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
+void JKQTPBoxplotVerticalElement::drawKeyMarker(JKQTPEnhancedPainter& painter, const QRectF& rect) {
     plotVerticalKeyMarker(parent, painter, rect);
 }
 
@@ -781,7 +781,7 @@ JKQTPBoxplotHorizontalElement::JKQTPBoxplotHorizontalElement(JKQTPlotter *parent
 {
 }
 
-void JKQTPBoxplotHorizontalElement::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
+void JKQTPBoxplotHorizontalElement::drawKeyMarker(JKQTPEnhancedPainter& painter, const QRectF& rect) {
     plotHorizontalKeyMarker(parent, painter, rect);
 }
 

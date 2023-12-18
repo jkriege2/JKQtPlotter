@@ -42,7 +42,7 @@ class JKQTPGraphErrorStyleMixin;
  * Each possible graph is represented by a child of this class. So additional plots may be created by
  * deriving new JKQTPGraph classes. To do so implement/overwrite these functions:
  *   - void draw(JKQTPEnhancedPainter& painter);
- *   - void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect);
+ *   - void drawKeyMarker(JKQTPEnhancedPainter& painter, const QRectF& rect);
  *   - bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero);
  *   - bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero);
  *   - QColor getKeyLabelColor() const=0;
@@ -73,7 +73,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPPlotElement: public QObject {
         virtual void draw(JKQTPEnhancedPainter& painter)=0;
 
         /** \brief plots a key marker inside the specified rectangle \a rect */
-        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect)=0;
+        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, const QRectF& rect)=0;
 
         /** \brief returns an image with a key marker inside  */
         QImage generateKeyMarker(QSize size=QSize(16,16));

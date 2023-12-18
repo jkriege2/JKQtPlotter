@@ -46,13 +46,18 @@ QColor JKQTPFilledCurveGraphBase::getKeyLabelColor() const
     return getLineColor();
 }
 
-void JKQTPFilledCurveGraphBase::drawKeyMarker(JKQTPEnhancedPainter &painter, QRectF &rect)
+void JKQTPFilledCurveGraphBase::drawKeyMarker(JKQTPEnhancedPainter &painter, const QRectF &r)
 {
+    QRectF rect=r;
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     QPen p=getLinePen(painter, parent);
     p.setWidthF(getKeyLineWidthPx(painter, rect, parent));
     QPen np(Qt::NoPen);
     QBrush b=getFillBrush(painter, parent);
+    rect.setWidth(rect.width()-p.widthF());
+    rect.setHeight(rect.height()-p.widthF());
+    rect.setX(rect.x()+p.widthF()/2.0);
+    rect.setY(rect.y()+p.widthF()/2.0);
     const double y=rect.top()+rect.height()/2.0;
     painter.setPen(np);
     if (getDrawLine()) painter.setPen(p);
@@ -528,7 +533,7 @@ void JKQTPFilledVerticalRangeGraph::draw(JKQTPEnhancedPainter &painter)
     drawErrorsAfter(painter);
 }
 
-void JKQTPFilledVerticalRangeGraph::drawKeyMarker(JKQTPEnhancedPainter &painter, QRectF &rect)
+void JKQTPFilledVerticalRangeGraph::drawKeyMarker(JKQTPEnhancedPainter &painter, const QRectF &rect)
 {
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     QRectF r=rect;
@@ -643,7 +648,7 @@ void JKQTPFilledHorizontalRangeGraph::draw(JKQTPEnhancedPainter &painter)
     drawErrorsAfter(painter);
 }
 
-void JKQTPFilledHorizontalRangeGraph::drawKeyMarker(JKQTPEnhancedPainter &painter, QRectF &rect)
+void JKQTPFilledHorizontalRangeGraph::drawKeyMarker(JKQTPEnhancedPainter &painter, const QRectF &rect)
 {
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     QRectF r=rect;

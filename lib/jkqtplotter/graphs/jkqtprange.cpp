@@ -309,12 +309,17 @@ void JKQTPHorizontalRange::draw(JKQTPEnhancedPainter& painter) {
 
 }
 
-void JKQTPHorizontalRange::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
+void JKQTPHorizontalRange::drawKeyMarker(JKQTPEnhancedPainter& painter, const QRectF& r) {
+    QRectF rect=r;
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     QPen p=getKeyLinePen(painter, rect, parent);
     QPen np(Qt::NoPen);
     QBrush nb(Qt::NoBrush);
     QBrush b=getFillBrush(painter, parent);
+    rect.setWidth(rect.width()-p.widthF());
+    rect.setHeight(rect.height()-p.widthF());
+    rect.setX(rect.x()+p.widthF()/2.0);
+    rect.setY(rect.y()+p.widthF()/2.0);
     //int y=rect.top()+rect.height()/2.0;
     if (plotRange) {
         painter.setPen(np);
@@ -428,12 +433,17 @@ void JKQTPVerticalRange::draw(JKQTPEnhancedPainter& painter) {
 
 }
 
-void JKQTPVerticalRange::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
+void JKQTPVerticalRange::drawKeyMarker(JKQTPEnhancedPainter& painter, const QRectF& r) {
+    QRectF rect=r;
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     QPen p=getKeyLinePen(painter, rect, parent);
     QPen np(Qt::NoPen);
     QBrush nb(Qt::NoBrush);
     QBrush b=getFillBrush(painter, parent);
+    rect.setWidth(rect.width()-p.widthF());
+    rect.setHeight(rect.height()-p.widthF());
+    rect.setX(rect.x()+p.widthF()/2.0);
+    rect.setY(rect.y()+p.widthF()/2.0);
     //int y=rect.top()+rect.height()/2.0;
     if (plotRange) {
         painter.setPen(np);

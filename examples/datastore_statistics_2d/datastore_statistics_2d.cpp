@@ -257,7 +257,7 @@ int main(int argc, char* argv[])
     plothist->setGrid(false);
     plothist->getXAxis()->setShowZeroAxis(false);
     plothist->getYAxis()->setShowZeroAxis(false);
-    plothist->getPlotter()->setKeyBackgroundColor(QColorWithAlphaF("white", 0.25), Qt::SolidPattern);
+    plothist->getMainKey()->setBackgroundColor(QColorWithAlphaF("white", 0.25), Qt::SolidPattern);
     plothist->getPlotter()->moveGraphTop(gDataHist);
     plothist->getPlotter()->moveGraphTop(gEll1Hist);
     plothist->getPlotter()->moveGraphTop(gEll2Hist);
@@ -267,7 +267,7 @@ int main(int argc, char* argv[])
     plotkde->setGrid(false);
     plotkde->getXAxis()->setShowZeroAxis(false);
     plotkde->getYAxis()->setShowZeroAxis(false);
-    plotkde->getPlotter()->setKeyBackgroundColor(QColorWithAlphaF("white", 0.25), Qt::SolidPattern);
+    plotkde->getMainKey()->setBackgroundColor(QColorWithAlphaF("white", 0.25), Qt::SolidPattern);
     plotkde->getPlotter()->moveGraphTop(gDataKDE);
     plotkde->getPlotter()->moveGraphTop(gEll1KDE);
     plotkde->getPlotter()->moveGraphTop(gEll2KDE);

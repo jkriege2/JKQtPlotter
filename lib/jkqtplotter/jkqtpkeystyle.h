@@ -17,8 +17,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef JKQTPSTYLE_H
-#define JKQTPSTYLE_H
+#ifndef JKQTPKEYSTYLE_H
+#define JKQTPKEYSTYLE_H
 
 #include "jkqtplotter/jkqtptools.h"
 #include "jkqtplotter/jkqtplotter_imexport.h"
@@ -34,7 +34,9 @@ class JKQTBasePlotterStyle; // forward
 /** \brief Support Class for JKQTBasePlotter, which summarizes all properties that define the visual styling of the key in a JKQTBasePlotter
  *  \ingroup jkqtpplotter_styling_classes
  *
- *  \see JKQTBasePlotter, JKQTBasePlotterStyle, \ref jkqtpplotter_styling
+ *  \image html plot_key.png
+ *
+ *  \see JKQTPKey, JKQTBasePlotter, JKQTBasePlotterStyle, \ref jkqtpplotter_styling
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPKeyStyle  {
         Q_GADGET
@@ -64,6 +66,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPKeyStyle  {
         bool frameVisible;
         /** \brief color of the key frame line */
         QColor frameColor;
+        /** \brief linestyle for the frame */
+        Qt::PenStyle frameLineStyle;
         /** \brief width of the key frame line [pt] */
         double frameWidth;
         /** \brief rounding radius of the key frame rectangle (<=0 -> no rounded rectangle) [pt] */
@@ -74,32 +78,33 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPKeyStyle  {
         bool visible;
         /** \brief font size for key labels [in points] */
         double fontSize;
+        /** \brief font name */
+        QString fontName;
         /** \brief color of the key entries' text */
         QColor textColor;
-        /** \brief width of a key item in pt [in units of width of 'X' set in font, fontSize] */
-        double itemWidth;
-        /** \brief height of a key item in pt [in units of height of font, fontSize] */
-        double itemHeight;
-        /** \brief length of the line samples in the key in pt [in units of width of 'X' set in font, fontSize] */
+        /** \brief length of the line samples in the key [in units of width of 'X' set in fontName, fontSize] */
         double sampleLineLength;
-        /** \brief x-distance between key frame and key content [in units of width of 'X' set in font, fontSize] */
+        /** \brief height of a line sample [in units of height of fontName, fontSize] */
+        double sampleHeight;
+        /** \brief x-distance between key frame and key content [in units of width of 'X' set in fontName, fontSize] */
         double xMargin;
-        /** \brief y-distance between key frame and key content [in units of width of 'x' set in font, fontSize] */
+        /** \brief y-distance between key frame and key content [in units of width of 'X' set in fontName, fontSize] */
         double yMargin;
-        /** \brief x-offset of the key from the border of the plot [in units of width of 'X' set in font, fontSize] */
+        /** \brief x-offset of the key from the border of the plot [in units of width of 'X' set in fontName, fontSize] */
         double xOffset;
-        /** \brief y-offset of the key from the border of the plot [in units of width of 'x' set in font, fontSize] */
+        /** \brief y-offset of the key from the border of the plot [in units of width of 'X' set in fontName, fontSize] */
         double yOffset;
-        /** \brief distance between key line example and key text [in units of width of 'X' set in font, fontSize] */
+        /** \brief distance between key line example and key text [in units of width of 'X' set in fontName, fontSize] */
         double xSeparation;
-        /** \brief distance between two key entries [in units of height of font, fontSize] */
+        /** \brief distance between two key entries [in units of height of fontName, fontSize] */
         double ySeparation;
+        /** \brief distance between two columns of key entries [in units of width of 'X' set in fontName, fontSize] */
+        double columnSeparation;
+
         /** \brief key position */
         JKQTPKeyPosition position;
         /** \brief the key layout */
         JKQTPKeyLayout layout;
-        /** \brief determine width of the key automatically */
-        bool autosize;
 };
 
-#endif // JKQTPSTYLE_H
+#endif // JKQTPKEYSTYLE_H

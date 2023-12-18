@@ -155,6 +155,22 @@ if(JKQtPlotter_BUILD_TOOLS)
     )
     add_dependencies(JKQTPlotter_GenerateDocImages JKQTPlotter_GenerateDocImages_liststyles)
 
+    add_custom_target(JKQTPlotter_GenerateDocImages_listkeypos
+        COMMENT "Building JKQTPlotter Documentation Images: listkeypos"
+        COMMAND ${JKQTPlotter_GenerateDocImages_COMMAND} --listkeypos --iconsize=225 --outputdir="${JKQTPlotter_GenerateDocImages_OutputDir}/keypositions/"
+        WORKING_DIRECTORY ${JKQtPlotter_QT_BINDIR}
+        DEPENDS jkqtplotter_doc_imagegenerator
+    )
+    add_dependencies(JKQTPlotter_GenerateDocImages JKQTPlotter_GenerateDocImages_listkeypos)
+
+    add_custom_target(JKQTPlotter_GenerateDocImages_listkeylayout
+        COMMENT "Building JKQTPlotter Documentation Images: listkeylayout"
+        COMMAND ${JKQTPlotter_GenerateDocImages_COMMAND} --listkeylayout --iconsize=225 --outputdir="${JKQTPlotter_GenerateDocImages_OutputDir}/keylayouts/"
+        WORKING_DIRECTORY ${JKQtPlotter_QT_BINDIR}
+        DEPENDS jkqtplotter_doc_imagegenerator
+    )
+    add_dependencies(JKQTPlotter_GenerateDocImages JKQTPlotter_GenerateDocImages_listkeylayout)
+
 endif(JKQtPlotter_BUILD_TOOLS)
 
 

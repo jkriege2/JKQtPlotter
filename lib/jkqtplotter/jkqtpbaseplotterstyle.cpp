@@ -122,6 +122,7 @@ void JKQTBasePlotterStyle::saveSettings(QSettings &settings, const QString &grou
 
 }
 
+
 JKQTBasePlotterStyle &JKQTPGetSystemDefaultBaseStyle()
 {
     static JKQTBasePlotterStyle instance=JKQTBasePlotterStyle();

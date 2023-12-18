@@ -116,7 +116,7 @@ QImage JKQTPOverlayImage::drawImage() {
     return img;
 }
 
-void JKQTPOverlayImage::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
+void JKQTPOverlayImage::drawKeyMarker(JKQTPEnhancedPainter& painter, const QRectF& rect) {
     double w=rect.width()/2;
     QRectF r1=QRectF(rect.topLeft(), QSizeF(w, rect.height()));
     QRectF r2=QRectF(QPointF(rect.left()+w, rect.top()), QSizeF(w, rect.height()));
@@ -244,7 +244,7 @@ JKQTPOverlayImageEnhanced::JKQTPOverlayImageEnhanced(JKQTPlotter *parent):
 
 }
 
-void JKQTPOverlayImageEnhanced::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
+void JKQTPOverlayImageEnhanced::drawKeyMarker(JKQTPEnhancedPainter& painter, const QRectF& rect) {
     if (drawMode!=OverlayImageEnhancedDrawMode::DrawAsSymbols) JKQTPOverlayImage::drawKeyMarker(painter, rect);
     else JKQTPPlotSymbol(painter, rect.center().x(), rect.center().y(), symbol, qMin(rect.width(), rect.height()), parent->pt2px(painter, symbolLineWidth*parent->getLineWidthMultiplier()), trueColor, trueColor.lighter(), m_symbolFontName);
 }

@@ -170,7 +170,7 @@ int main(int argc, char* argv[])
 
     // 4. autoscale the plot so the graph is contained and format the coordinate system and key
     plot.getPlotter()->setKeyPosition(JKQTPKeyOutsideBottomLeft);
-    plot.getPlotter()->setKeyLayout(JKQTPKeyLayoutOneRow);
+    plot.getMainKey()->setLayout(JKQTPKeyLayoutOneRow);
     plot.getXAxis()->setAxisLabel("x-axis");
     plot.getYAxis()->setAxisLabel("y-axis");
     plot.getXAxis()->setDrawGrid(false);

@@ -142,7 +142,7 @@ void JKQTPPeakStreamGraph::draw(JKQTPEnhancedPainter &painter)
     drawErrorsAfter(painter);
 }
 
-void JKQTPPeakStreamGraph::drawKeyMarker(JKQTPEnhancedPainter &painter, QRectF &rect)
+void JKQTPPeakStreamGraph::drawKeyMarker(JKQTPEnhancedPainter &painter, const QRectF &rect)
 {
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     QPen p=getKeyLinePen(painter, rect, parent);

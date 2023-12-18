@@ -91,7 +91,7 @@ std::vector<TCHART*> doExample(JKQTPlotter& plot, const QString& title)
     //          So many properties of the plot are only available in this internal
     //          object, which you can access by plot.getPlotter().
     plot.getPlotter()->setKeyPosition(JKQTPKeyOutsideTopRight);
-    plot.getPlotter()->setKeyLayout(JKQTPKeyLayoutOneRow);
+    plot.getMainKey()->setLayout(JKQTPKeyLayoutOneRow);
 
     // 9 autoscale the plot so the graph is contained
     plot.zoomToFit();

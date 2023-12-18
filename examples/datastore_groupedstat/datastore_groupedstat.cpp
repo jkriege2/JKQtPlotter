@@ -248,18 +248,18 @@ int main(int argc, char* argv[])
     plotboxplot->zoomToFit();
     plotboxplot->setGrid(false);
     plotboxplot->setShowZeroAxes(false);
-    plotboxplot->getPlotter()->setKeyBackgroundColor(QColorWithAlphaF("white", 0.25), Qt::SolidPattern);
+    plotboxplot->getMainKey()->setBackgroundBrush(QBrush(QColorWithAlphaF("white", 0.25), Qt::SolidPattern));
     plotbarchart->setAbsoluteY(0,5);
     plotboxplot->setAbsoluteY(0,5);
     plotbarchart->zoomToFit();
     plotbarchart->setGrid(false);
     plotbarchart->setShowZeroAxes(false);
-    plotbarchart->getPlotter()->setKeyBackgroundColor(QColorWithAlphaF("white", 0.25), Qt::SolidPattern);
+    plotbarchart->getMainKey()->setBackgroundBrush(QBrush(QColorWithAlphaF("white", 0.25), Qt::SolidPattern));
     plotbarchart->moveGraphTop(gScatterForBar);
     plotscattererrors->zoomToFit();
     plotscattererrors->setGrid(false);
     plotscattererrors->setShowZeroAxes(false);
-    plotscattererrors->getPlotter()->setKeyBackgroundColor(QColorWithAlphaF("white", 0.25), Qt::SolidPattern);
+    plotscattererrors->getMainKey()->setBackgroundBrush(QBrush(QColorWithAlphaF("white", 0.25), Qt::SolidPattern));
 
 
     // show plotter and make it a decent size

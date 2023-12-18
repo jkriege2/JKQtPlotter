@@ -64,7 +64,7 @@ void JKQTPGeoBaseLine::setColor(QColor c)
 }
 
 
-void JKQTPGeoBaseLine::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
+void JKQTPGeoBaseLine::drawKeyMarker(JKQTPEnhancedPainter& painter, const QRectF& rect) {
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     painter.setPen(getKeyLinePen(painter, rect, parent));
     const double y=rect.top()+rect.height()/2.0;
@@ -173,7 +173,7 @@ void JKQTPGeoBaseFilled::setStyleTransparentFill(QColor color)
 }
 
 
-void JKQTPGeoBaseFilled::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
+void JKQTPGeoBaseFilled::drawKeyMarker(JKQTPEnhancedPainter& painter, const QRectF& rect) {
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     painter.setPen(getKeyLinePen(painter, rect, parent));
     painter.setBrush(getFillBrush(painter, parent));
@@ -226,7 +226,7 @@ void JKQTPGeoBaseDecoratedHeadLine::setColor(QColor c)
     setLineColor(c);
 }
 
-void JKQTPGeoBaseDecoratedHeadLine::drawKeyMarker(JKQTPEnhancedPainter &painter, QRectF &rect)
+void JKQTPGeoBaseDecoratedHeadLine::drawKeyMarker(JKQTPEnhancedPainter &painter, const QRectF &rect)
 {
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     painter.setPen(getLinePen(painter, parent));
@@ -287,7 +287,7 @@ void JKQTPGeoBaseDecoratedLine::setColor(QColor c)
     setLineColor(c);
 }
 
-void JKQTPGeoBaseDecoratedLine::drawKeyMarker(JKQTPEnhancedPainter &painter, QRectF &rect)
+void JKQTPGeoBaseDecoratedLine::drawKeyMarker(JKQTPEnhancedPainter &painter, const QRectF &rect)
 {
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     QPen p=getLinePen(painter, parent);

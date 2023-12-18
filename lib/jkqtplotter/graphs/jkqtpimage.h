@@ -71,7 +71,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPImageBase: public JKQTPGraph {
          */
         JKQTPImageBase(double x, double y, double width, double height, JKQTPlotter* parent);
         /** \brief plots a key marker inside the specified rectangle \a rect */
-        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
+        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, const QRectF& rect) override;
 
         /** \brief get the maximum and minimum x-value of the graph
          *
@@ -203,7 +203,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPMathImageBase: public JKQTPImageBase {
         JKQTPMathImageBase(double x, double y, double width, double height, JKQTPMathImageDataType datatype, const void* data, int Nx, int Ny, JKQTPlotter* parent);
 
         /** \brief plots a key marker inside the specified rectangle \a rect */
-        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
+        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, const QRectF& rect) override;
 
 		/** \copydoc Nx */
 		void setNx(int __value);
@@ -364,7 +364,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPImage: public JKQTPImageBase {
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 
         /** \brief plots a key marker inside the specified rectangle \a rect */
-        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
+        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, const QRectF& rect) override;
 
         /** \brief copy an external image into an internally owned copy */
         virtual void setImage(const QImage& image);
@@ -531,7 +531,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase, public J
         inline double getModifierPixelValue(int xIdx, int yIdx) const;
 
         /** \brief plots a key marker inside the specified rectangle \a rect */
-        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
+        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, const QRectF& rect) override;
         /** \brief determine min/max data value of the image */
         virtual void cbGetDataMinMax(double& imin, double& imax) override;
         /** \brief determine min/max data value of the modifier image */

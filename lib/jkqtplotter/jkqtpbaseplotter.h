@@ -25,6 +25,7 @@
 #include "jkqtplotter/jkqtptools.h"
 #include "jkqtplotter/jkqtpdatastorage.h"
 #include "jkqtplotter/jkqtpbaseplotterstyle.h"
+#include "jkqtplotter/jkqtpkey.h"
 #include "jkqtmathtext/jkqtmathtext.h"
 #include "jkqtplotter/jkqtpbaseelements.h"
 #include "jkqtcommon/jkqtpenhancedpainter.h"
@@ -60,6 +61,7 @@
 class JKQTPGraphsModel; // forward
 class JKQTPGraph; // forward
 class JKQTPPlotElement; // forward
+class JKQTPBaseKey; // forward
 
 /** \brief initialized Qt-ressources necessary for JKQTBasePlotter
  * \ingroup jkqtpplottersupprt */
@@ -830,7 +832,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/** @name Utilities: Unit Trannsforms */
+/** @name Utilities: Unit Transforms */
 /**@{*/
 
 
@@ -1049,49 +1051,12 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         QBrush getExportBackgroundBrush() const;
         /** \copydoc JKQTBasePlotterStyle::plotBackgroundBrush  */
         QBrush getPlotBackgroundBrush() const;
-        /** \copydoc JKQTPKeyStyle::fontSize */
-        double getKeyFontSize() const;
-        /** \copydoc JKQTPKeyStyle::itemWidth */
-        double getKeyItemWidth() const;
-        /** \copydoc JKQTPKeyStyle::itemHeight */
-        double getKeyItemHeight() const;
-        /** \copydoc JKQTPKeyStyle::ySeparation */
-        double getKeyYSeparation() const;
-        /** \copydoc JKQTPKeyStyle::sampleLineLength */
-        double getKeyLineLength() const;
-        /** \copydoc JKQTPKeyStyle::xMargin */
-        double getKeyXMargin() const;
-        /** \copydoc JKQTPKeyStyle::yMargin */
-        double getKeyYMargin() const;
-        /** \copydoc JKQTPKeyStyle::xSeparation */
-        double getKeyXSeparation() const;
-        /** \copydoc JKQTPKeyStyle::xOffset */
-        double getKeyXOffset() const;
-        /** \copydoc JKQTPKeyStyle::yOffset */
-        double getKeyYOffset() const;
+
+
         /** \copydoc JKQTPKeyStyle::visible */
         bool getShowKey() const;
-        /** \copydoc JKQTPKeyStyle::frameVisible */
-        bool getShowKeyFrame() const;
-        /** \copydoc JKQTPKeyStyle::frameColor */
-        QColor getKeyFrameColor() const;
-        /** \copydoc JKQTPKeyStyle::backgroundBrush */
-        QColor getKeyBackgroundColor() const;
-        /** \copydoc JKQTPKeyStyle::backgroundBrush */
-        QBrush getKeyBackgroundBrush() const;
-
-        /** \copydoc JKQTPKeyStyle::textColor */
-        QColor getKeyTextColor() const;
-        /** \copydoc JKQTPKeyStyle::frameWidth */
-        double getKeyFrameWidth() const;
-        /** \copydoc JKQTPKeyStyle::frameRounding */
-        double getKeyFrameRounding() const;
-        /** \copydoc JKQTPKeyStyle::autosize */
-        bool getKeyAutosize() const;
         /** \copydoc JKQTPKeyStyle::position */
         JKQTPKeyPosition getKeyPosition() const;
-        /** \copydoc JKQTPKeyStyle::layout */
-        JKQTPKeyLayout getKeyLayout() const;
         /** \copydoc JKQTBasePlotterStyle::defaultTextColor */
         QColor getDefaultTextColor() const;
         /** \copydoc JKQTBasePlotterStyle::defaultFontSize */
@@ -1110,6 +1075,15 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         double getFontSizeMultiplier() const;
         /** \copydoc lineWidthMultiplier */
         double getLineWidthMultiplier() const;
+        /** \brief retuns the JKQTPKeyStyle to be used for the main key (extracted from JKQTBasePlotterStyle::keyStyle) */
+        const JKQTPKeyStyle& getMainKeyStyle() const;
+
+    protected:
+        /** \brief retuns the JKQTPKeyStyle to be used for the main key (extracted from JKQTBasePlotterStyle::keyStyle) */
+        JKQTPKeyStyle& getMainKeyStyle();
+        friend class JKQTPBaseKey;
+        friend class JKQTPMainKey;
+    public:
 
         /** \brief if set \c true (default: \c false ) the JKQTBasePlotter draws colored rectangles to indicate the different regions in the plot (border, axes, ...)
          *
@@ -1190,10 +1164,14 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         inline int getPlotWidth() const { return this->internalPlotWidth; }
         /** \copydoc internalPlotHeight */
         inline int getPlotHeight() const { return this->internalPlotHeight; }
-        /** \brief returns the internal JKQTMathText, used to render text with LaTeX markup */
-        JKQTMathText* getMathText();
-        /** \brief returns the internal JKQTMathText, used to render text with LaTeX markup */
-        const JKQTMathText *getMathText() const;
+
+    /**@}*/
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /** @name Coordinate Axis Management */
+    /**@{*/
+
         /** \brief returns the x-axis objet of the plot
          *
          *  \see \ref jkqtplotter_base_grids_baseplotter
@@ -1303,6 +1281,15 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
 
 /**@}*/
 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/** @name Key Management Management */
+/**@{*/
+    /** \brief retuns the main key object */
+    JKQTPBaseKey* getMainKey();
+    /** \brief retuns the main key object */
+    const JKQTPBaseKey* getMainKey() const;
+/**@}*/
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1465,6 +1452,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
          * \internal
          */
         QSizeF getTextSizeSize(const QString& fontName, double fontSize, const QString& text,  QPainter &painter);
+        /** \brief returns the internal JKQTMathText, used to render text with LaTeX markup */
+        JKQTMathText* getMathText();
+        /** \brief returns the internal JKQTMathText, used to render text with LaTeX markup */
+        const JKQTMathText *getMathText() const;
 /**@}*/
 
 
@@ -1948,8 +1939,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         void setExportBackgroundTexture(const QImage & __value);
         /** \copydoc JKQTBasePlotterStyle::plotBackgroundBrush */
         void setPlotBackgroundTexture(const QImage & __value);
-        /** \copydoc JKQTPKeyStyle::textColor */
-        void setKeyTextColor(const QColor & __value);
 
 
         /** \copydoc JKQTBasePlotterStyle::plotFrameWidth */
@@ -1962,52 +1951,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         void setPlotFrameVisible(bool enabled);
 
 
-        /** \copydoc JKQTPKeyStyle::fontSize */
-        void setKeyFontSize(double __value);
-        /** \copydoc JKQTPKeyStyle::itemWidth */
-        void setKeyItemWidth(double __value);
-        /** \copydoc JKQTPKeyStyle::itemHeight */
-        void setKeyItemHeight(double __value);
-        /** \copydoc JKQTPKeyStyle::ySeparation */
-        void setKeyYSeparation(double __value);
-        /** \copydoc JKQTPKeyStyle::sampleLineLength */
-        void setKeyLineLength(double __value);
-        /** \copydoc JKQTPKeyStyle::xMargin */
-        void setKeyXMargin(double __value);
-        /** \copydoc JKQTPKeyStyle::yMargin */
-        void setKeyYMargin(double __value);
-        /** \copydoc JKQTPKeyStyle::xSeparation */
-        void setKeyXSeparation(double __value);
-        /** \copydoc JKQTPKeyStyle::yOffset */
-        void setKeyXOffset(double __value);
-        /** \copydoc JKQTPKeyStyle::xOffset */
-        void setKeyYOffset(double __value);
         /** \copydoc JKQTPKeyStyle::visible */
         void setShowKey(bool __value);
-        /** \copydoc JKQTPKeyStyle::frameVisible */
-        void setShowKeyFrame(bool __value);
-        /** \copydoc JKQTPKeyStyle::frameColor */
-        void setKeyFrameColor(const QColor & __value);
-        /** \copydoc JKQTPKeyStyle::backgroundBrush */
-        void setKeyBackgroundColor(const QColor & __value, Qt::BrushStyle __style);
-        /** \copydoc JKQTPKeyStyle::backgroundBrush */
-        void setKeyBackgroundBrush(const QBrush & __value);
-        /** \copydoc JKQTPKeyStyle::backgroundBrush */
-        void setKeyBackgroundGradient(const QGradient & __value);
-        /** \copydoc JKQTPKeyStyle::backgroundBrush */
-        void setKeyBackgroundTexture(const QImage & __value);
-        /** \copydoc JKQTPKeyStyle::backgroundBrush */
-        void setKeyBackgroundTexture(const QPixmap & __value);
-        /** \copydoc JKQTPKeyStyle::frameWidth */
-        void setKeyFrameWidth(double __value);
-        /** \copydoc JKQTPKeyStyle::frameRounding */
-        void setKeyFrameRounding(double __value);
-        /** \copydoc JKQTPKeyStyle::autosize */
-        void setKeyAutosize(bool __value);
         /** \copydoc JKQTPKeyStyle::position */
         void setKeyPosition(const JKQTPKeyPosition & __value);
-        /** \copydoc JKQTPKeyStyle::layout */
-        void setKeyLayout(const JKQTPKeyLayout & __value);
         /** \copydoc JKQTBasePlotterStyle::plotLabelFontSize */
         void setPlotLabelFontSize(double __value);
         /** \copydoc JKQTBasePlotterStyle::plotLabelOffset */
@@ -2091,31 +2038,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         void drawGraphs(JKQTPEnhancedPainter& painter);
         /** \brief plot a key */
         void drawKey(JKQTPEnhancedPainter& painter);
-
-        /** \brief plot the key contents
-         *
-         * This function does not do anything and has to be overwritten in child classes if they want to plot a key.
-         * The implementation should draw the contents of the key, not its frame as this is done in plotKey().
-         *
-         * \param painter draw the key on this painter
-         * \param x left-most coordinate of the key [pixels]
-         * \param y top-most coordinate of the key [pixels]
-         * \param width width of the key [pixels]
-         * \param height height of the key [pixels]
-         *
-         * So any implementation should only draw inside the rectangle <code>[x..x+width, y..y+hieght]</code>
-         */
-        void drawKeyContents(JKQTPEnhancedPainter& painter, double x, double y, double width, double height);
-
-        /** \brief returns the size of the key (as call-by-reference parameters
-         *
-         * Any implementation of key plotting has to overwrite this function and use it to return the size of the key that would be
-         * plotted by plotKeyContents(). This class will use the return values to plot the frame of the key and also supply them to
-         * plotKeyContents(). If height or width are returned 0, no key is plotted
-         *
-         * The implementation in here returns zero size!
-         */
-        void getKeyExtent(JKQTPEnhancedPainter& painter, double *width, double *height, double *text_width=nullptr, double *text_height=nullptr, int *columns_count=nullptr, int* lines_count=nullptr);
+        /** \brief plot the plot label */
+        void drawPlotLabel(JKQTPEnhancedPainter& painter);
 
         /** \brief show the print preview window for a given print \a p */
         bool printpreviewNew(QPaintDevice* paintDevice, bool setAbsolutePaperSize=false, double printsizeX_inMM=-1.0, double printsizeY_inMM=-1.0, bool displayPreview=true);
@@ -2271,6 +2195,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         /** \brief objects used a secondary y-axes */
         QMap<JKQTPCoordinateAxisRef, JKQTPVerticalAxisBase*> secondaryYAxis;
 
+        /** \brief key objects used for the main plot key */
+        JKQTPBaseKey* mainKey;
+
         /** \brief filename for the ini file in which to save the user settings
          *  \see jkqtplotter_base_userprops
          */
@@ -2332,21 +2259,116 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         int widgetHeight;
 
 
+        /** \brief used for calculated value:describing what freespace outside the graph area is used for
+         * \internal
+         */
+        enum PlotMarginUse {
+            muOutermost=0,
+            muUserBorder=0,
+            muPlotTitle,
+            muKey,
+            muGraphsOutside,
+            muAxesOutsideExtend,
+            muAxesOutside,
+
+            // this is always the last one
+            muUsesCount,
+            muInnermost=muUsesCount-1
+        };
+        /** \brief enum to indicate relative position from a central position */
+        enum PlotMarginSide {
+            sideLeft,
+            sideRight,
+            sideTop,
+            sideBottom
+        };
+
+        /** \brief used for calculated value: describing a section in the freespace outside the graph area
+         * \internal
+         */
+        struct PlotMargin {
+            double left;
+            double right;
+            double top;
+            double bottom;
+
+            inline PlotMargin(double l=0, double r=0, double t=0, double b=0) : left(l), right(r), top(t), bottom(b) {};
+
+            /** \brief select left,right, top, bottom, depending on \a side */
+            inline double getMargin(PlotMarginSide side) const
+            {
+                switch (side) {
+                case sideLeft:
+                    return left;
+                case sideRight:
+                    return right;
+                case sideTop:
+                    return top;
+                case sideBottom:
+                    return bottom;
+                }
+                return 0;
+            }
+        };
+
+        /** \brief used for calculated value: describing all sections of freespace outside the graph area
+         * \internal
+         */
+        class PlotMargins: public QMap<PlotMarginUse, PlotMargin> {
+        public:
+            inline PlotMargins(): QMap<PlotMarginUse, PlotMargin>() {};
+            /** \brief claculate size of plot margins on the left (sums all) */
+            double calcLeft() const;
+            double calcLeft(PlotMarginUse start, PlotMarginUse stop) const;
+            /** \brief claculate size of plot margins on the right (sums all) */
+            double calcRight() const;
+            double calcRight(PlotMarginUse start, PlotMarginUse stop) const;
+            /** \brief claculate size of plot margins at the top (sums all) */
+            double calcTop() const;
+            double calcTop(PlotMarginUse start, PlotMarginUse stop) const;
+            /** \brief claculate size of plot margins at the bottom (sums all) */
+            double calcBottom() const;
+            double calcBottom(PlotMarginUse start, PlotMarginUse stop) const;
+        };
+
+        /** \brief <b>calculated value:</b> description of free space between actual plot and widget borders
+         * \internal
+         *
+         * \image html plot_widget_orientation.png
+         *
+         * \note This property is an intermediate storage for calculated values. Do not change directly!
+         *
+         * \see calcPlotMarginRect()
+         */
+        PlotMargins internalPlotMargins;
+
+        /** \brief calculate the rectangle to be used for a given PlotMarginUse on the indicated side of the plot
+         *
+         *  This function evaluates the data in internalPlotMargins also using the other properties known in this class.
+         *  Basically it therefore defines the ordering and interpretation of PlotMarginUse.
+         *
+         * \image html plot_widget_orientation.png
+         *
+         * \see internalPlotMargins
+         */
+        QRectF calcPlotMarginRect(PlotMarginUse use, PlotMarginSide side) const;
+        /** \brief calculate the rectangle of the plot (excluding all margins) */
+        QRectF calcPlotRect() const;
+
+
 
         /** \brief <b>calculated value:</b> free space between widget top border and plot top border, as used to plot the graph
          * \internal
          *
-         * \note This property is an intermediate storage for calculated values. Do not change directly!
-         */
-        double internalPlotBorderTop;
-        /** \brief <b>calculated value:</b> free space between widget top border and top border of the key/legend
-         * \internal
+         * \image html plot_widget_orientation.png
          *
          * \note This property is an intermediate storage for calculated values. Do not change directly!
          */
-        double internalPlotKeyBorderTop;
+        double internalPlotBorderTop;
         /** \brief <b>calculated value:</b> height of the plot title (or 0 if no title)
          * \internal
+         *
+         * \image html plot_widget_orientation.png
          *
          * \note This property is an intermediate storage for calculated values. Do not change directly!
          */
@@ -2355,110 +2377,42 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         /** \brief <b>calculated value:</b> free space between widget top border and plot top border, as used to plot the graph
          * \internal
          *
+         * \image html plot_widget_orientation.png
+         *
          * \note This property is an intermediate storage for calculated values. Do not change directly!
           */
         double internalPlotBorderLeft;
-        /** \brief <b>calculated value:</b> free space between widget left border and left border of the key/legend
-         * \internal
-         *
-         * \note This property is an intermediate storage for calculated values. Do not change directly!
-         */
-        double internalPlotKeyBorderLeft;
 
         /** \brief <b>calculated value:</b> free space between widget top border and plot top border, as used to plot the graph
          * \internal
+         *
+         * \image html plot_widget_orientation.png
          *
          * \note This property is an intermediate storage for calculated values. Do not change directly!
           */
         double internalPlotBorderBottom;
-        /** \brief <b>calculated value:</b> free space between widget bottom border and bottom border of the key/legend
-         * \internal
-         *
-         * \note This property is an intermediate storage for calculated values. Do not change directly!
-         */
-        double internalPlotKeyBorderBottom;
 
         /** \brief <b>calculated value:</b> free space between widget top border and plot top border, as used to plot the graph
          * \internal
          *
+         * \image html plot_widget_orientation.png
+         *
          * \note This property is an intermediate storage for calculated values. Do not change directly!
           */
         double internalPlotBorderRight;
-        /** \brief <b>calculated value:</b> free space between widget right border and right border of the key/legend
-         * \internal
-         *
-         * \note This property is an intermediate storage for calculated values. Do not change directly!
-         */
-        double internalPlotKeyBorderRight;
 
-
-
-        /** \brief <b>calculated value:</b> free space between widget top border and (plot+drawOutside) top border (including coordinate axes)
+        /** \brief <b>calculated value:</b> size and location of the plot key
          * \internal
          *
          * \image html plot_widget_orientation.png
          *
          * \note This property is an intermediate storage for calculated values. Do not change directly!
          */
-        double internalPlotBorderTop_notIncludingOutsidePlotSections;
-        /** \brief <b>calculated value:</b> free space between widget left border and (plot+drawOutside) left border (including coordinate axes)
-         * \internal
-         *
-         * \image html plot_widget_orientation.png
-         *
-         * \note This property is an intermediate storage for calculated values. Do not change directly!
-          */
-        double internalPlotBorderLeft_notIncludingOutsidePlotSections;
-        /** \brief <b>calculated value:</b> free space between widget right border and (plot+drawOutside) right border (including coordinate axes)
-         * \internal
-         *
-         * \image html plot_widget_orientation.png
-         *
-         * \note This property is an intermediate storage for calculated values. Do not change directly!
-          */
-        double internalPlotBorderBottom_notIncludingOutsidePlotSections;
-        /** \brief <b>calculated value:</b> free space between widget bottom border and (plot+drawOutside) bottom border (including coordinate axes)
-         * \internal
-         *
-         * \image html plot_widget_orientation.png
-         *
-         * \note This property is an intermediate storage for calculated values. Do not change directly!
-          */
-        double internalPlotBorderRight_notIncludingOutsidePlotSections;
+        JKQTPBaseKey::KeySizeDescription internalPlotKeyDescription;
 
 
-        /** \brief <b>calculated value:</b> free space between widget top border and (plot+drawOutside) top border (including coordinate axes)
-         * \internal
-         *
-         * \image html plot_widget_orientation.png
-         *
-         * \note This property is an intermediate storage for calculated values. Do not change directly!
-         */
-        double internalPlotBorderTop_notIncludingAxisAndOutsidePlotSections;
-        /** \brief <b>calculated value:</b> free space between widget left border and (plot+drawOutside) left border (including coordinate axes)
-         * \internal
-         *
-         * \image html plot_widget_orientation.png
-         *
-         * \note This property is an intermediate storage for calculated values. Do not change directly!
-          */
-        double internalPlotBorderLeft_notIncludingAxisAndOutsidePlotSections;
-        /** \brief <b>calculated value:</b> free space between widget right border and (plot+drawOutside) right border (including coordinate axes)
-         * \internal
-         *
-         * \image html plot_widget_orientation.png
-         *
-         * \note This property is an intermediate storage for calculated values. Do not change directly!
-          */
-        double internalPlotBorderBottom_notIncludingAxisAndOutsidePlotSections;
-        /** \brief <b>calculated value:</b> free space between widget bottom border and (plot+drawOutside) bottom border (including coordinate axes)
-         * \internal
-         *
-         * \image html plot_widget_orientation.png
-         *
-         * \note This property is an intermediate storage for calculated values. Do not change directly!
-          */
-        double internalPlotBorderRight_notIncludingAxisAndOutsidePlotSections;
+
+
 
         /** \brief <b>calculated value:</b> plot width in pixel inside the widget (calculated by calcPlotScaling() from plotBorderLeft, plotBorderRight and widgetWidth)
          *

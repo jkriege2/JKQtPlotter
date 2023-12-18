@@ -80,18 +80,20 @@ void JKQTPCoordinateAxis::setParent(JKQTBasePlotter* parent) {
 }
 
 void JKQTPCoordinateAxis::redrawPlot() {
-    //if (paramsChanged)  {
-        calcPlotScaling();
+    calcPlotScaling();
+    if (parent) {
         parent->updateSecondaryAxes();
         parent->redrawPlot();
-    //}
+    }
 }
 
 JKQTMathText* JKQTPCoordinateAxis::getParentMathText() {
+    if (!parent) return nullptr;
     return parent->getMathText();
 }
 
 const JKQTMathText* JKQTPCoordinateAxis::getParentMathText() const {
+    if (!parent) return nullptr;
     return parent->getMathText();
 }
 

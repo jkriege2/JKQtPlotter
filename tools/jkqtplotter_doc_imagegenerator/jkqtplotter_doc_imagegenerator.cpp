@@ -575,6 +575,146 @@ void doListStyles(const QDir& outputDir, const QStringList& doctomodify, int ico
     }
 }
 
+inline QString JKQTPKeyPosition2CPPString(JKQTPKeyPosition pos) {
+    switch(pos) {
+        case JKQTPKeyOutsideLeftBottom: return "JKQTPKeyOutsideLeftBottom";
+        case JKQTPKeyOutsideLeftCenter: return "JKQTPKeyOutsideLeftCenter";
+        case JKQTPKeyOutsideLeftTop: return "JKQTPKeyOutsideLeftTop";
+        case JKQTPKeyOutsideTopLeft: return "JKQTPKeyOutsideTopLeft";
+        case JKQTPKeyOutsideTopRight: return "JKQTPKeyOutsideTopRight";
+        case JKQTPKeyOutsideTopCenter: return "JKQTPKeyOutsideTopCenter";
+
+        case JKQTPKeyOutsideRightBottom: return "JKQTPKeyOutsideRightBottom";
+        case JKQTPKeyOutsideRightTop: return "JKQTPKeyOutsideRightTop";
+        case JKQTPKeyOutsideRightCenter: return "JKQTPKeyOutsideRightCenter";
+        case JKQTPKeyOutsideBottomLeft: return "JKQTPKeyOutsideBottomLeft";
+        case JKQTPKeyOutsideBottomRight: return "JKQTPKeyOutsideBottomRight";
+        case JKQTPKeyOutsideBottomCenter: return "JKQTPKeyOutsideBottomCenter";
+
+        case JKQTPKeyInsideBottomRight: return "JKQTPKeyInsideBottomRight";
+        case JKQTPKeyInsideTopLeft: return "JKQTPKeyInsideTopLeft";
+        case JKQTPKeyInsideTopRight: return "JKQTPKeyInsideTopRight";
+        case JKQTPKeyInsideBottomLeft: return "JKQTPKeyInsideBottomLeft";
+
+        case JKQTPKeyInsideTop: return "JKQTPKeyInsideTop";
+        case JKQTPKeyInsideBottom: return "JKQTPKeyInsideBottom";
+        case JKQTPKeyInsideLeft: return "JKQTPKeyInsideLeft";
+        case JKQTPKeyInsideRight: return "JKQTPKeyInsideRight";
+    }
+
+    QString res;
+    if (pos.testFlag(JKQTPKeyInside)) res+=std::string(res.size()>0?"|":"")+"JKQTPKeyInside";
+    else if (pos.testFlag(JKQTPKeyOutsideTop)) res+=std::string(res.size()>0?"|":"")+"JKQTPKeyOutsideTop";
+    else if (pos.testFlag(JKQTPKeyOutsideBottom)) res+=std::string(res.size()>0?"|":"")+"JKQTPKeyOutsideBottom";
+    else if (pos.testFlag(JKQTPKeyOutsideLeft)) res+=std::string(res.size()>0?"|":"")+"JKQTPKeyOutsideLeft";
+    else if (pos.testFlag(JKQTPKeyOutsideRight)) res+=std::string(res.size()>0?"|":"")+"JKQTPKeyOutsideRight";
+
+    if (pos.testFlag(JKQTPKeyLeft)) res+=std::string(res.size()>0?"|":"")+"JKQTPKeyLeft";
+    else if (pos.testFlag(JKQTPKeyHCenter)) res+=std::string(res.size()>0?"|":"")+"JKQTPKeyHCenter";
+    else if (pos.testFlag(JKQTPKeyRight)) res+=std::string(res.size()>0?"|":"")+"JKQTPKeyRight";
+
+    if (pos.testFlag(JKQTPKeyTop)) res+=std::string(res.size()>0?"|":"")+"JKQTPKeyTop";
+    else if (pos.testFlag(JKQTPKeyVCenter)) res+=std::string(res.size()>0?"|":"")+"JKQTPKeyVCenter";
+    else if (pos.testFlag(JKQTPKeyBottom)) res+=std::string(res.size()>0?"|":"")+"JKQTPKeyBottom";
+
+    return res;
+    return "";
+}
+
+
+void doListKeyPositions(const QDir& outputDir, int iconsize, QColor backgroundColor) {
+    JKQTBasePlotter plot(true);
+
+    plot.setWidgetSize(iconsize,iconsize);
+    plot.setShowKey(true);
+    plot.getMainKey()->setBackgroundColor(QColor("yellow").lighter());
+    plot.setGrid(false);
+    plot.setExportBackgroundColor(QColor("lightgrey"));
+    plot.getXAxis()->setShowZeroAxis(false);
+    plot.getYAxis()->setShowZeroAxis(false);
+    plot.getYAxis()->setAxisLabel("y-axis-label");
+    plot.getXAxis()->setAxisLabel("x-axis-label");
+
+
+    const size_t colX=plot.getDatastore()->addLinearColumn(30,0,1);
+    const size_t colY1=plot.getDatastore()->addColumnCalculatedFromColumn(colX, [](double x) { return x; });
+    const size_t colY2=plot.getDatastore()->addColumnCalculatedFromColumn(colX, [](double x) { return x*x; });
+    const size_t colY3=plot.getDatastore()->addColumnCalculatedFromColumn(colX, [](double x) { return sqrt(x); });
+    JKQTPXYLineGraph* g;
+    plot.addGraph(g=new JKQTPXYLineGraph(&plot));
+    g->setTitle("linear");
+    g->setDrawLine(true);
+    g->setSymbolType(JKQTPNoSymbol);
+    g->setXYColumns(colX, colY1);
+    plot.addGraph(g=new JKQTPXYLineGraph(&plot));
+    g->setTitle("square");
+    g->setDrawLine(true);
+    g->setSymbolType(JKQTPNoSymbol);
+    g->setXYColumns(colX, colY2);
+    plot.addGraph(g=new JKQTPXYLineGraph(&plot));
+    g->setTitle("square root");
+    g->setDrawLine(true);
+    g->setSymbolType(JKQTPNoSymbol);
+    g->setXYColumns(colX, colY3);
+
+
+    plot.setXY(0,1,0,1);
+    for (const auto keypos: JKQTPGetTypicalKeyPositions()) {
+        if (keypos.testFlag(JKQTPKeyInside)) plot.setWidgetSize(iconsize,iconsize);
+        else plot.setWidgetSize(1.5*iconsize,iconsize);
+
+
+        plot.setKeyPosition(keypos);
+        plot.setPlotLabel(JKQTPKeyPosition2CPPString(keypos));
+        plot.redrawPlot();
+        plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).save(outputDir.absoluteFilePath(JKQTPKeyPosition2CPPString(keypos)+".png"), "png");
+    }
+}
+
+void doListKeyLayouts(const QDir& outputDir, int iconsize, QColor backgroundColor) {
+    JKQTBasePlotter plot(true);
+
+    plot.setWidgetSize(iconsize*2.0,iconsize);
+    plot.setShowKey(true);
+    plot.getMainKey()->setBackgroundColor(QColor("yellow").lighter());
+    plot.setGrid(false);
+    plot.setExportBackgroundColor(QColor("lightgrey"));
+    plot.getXAxis()->setShowZeroAxis(false);
+    plot.getYAxis()->setShowZeroAxis(false);
+    plot.getYAxis()->setAxisLabel("y-axis-label");
+    plot.getXAxis()->setAxisLabel("x-axis-label");
+
+
+    JKQTPXYLineGraph* g;
+    const size_t colX=plot.getDatastore()->addLinearColumn(70,0,1);
+    for (int i=0; i<8; i++) {
+        const size_t colY1=plot.getDatastore()->addColumnCalculatedFromColumn(colX, [i](double x) { return pow(x, pow(2,(i-4)/4.0)); });
+        plot.addGraph(g=new JKQTPXYLineGraph(&plot));
+        g->setTitle(QString::number(i+1)+": $f(x)=x^{"+QString::number(pow(2,(i-4)/4.0), 'f', 2)+"}$");
+        g->setDrawLine(true);
+        g->setSymbolType(JKQTPNoSymbol);
+        g->setXYColumns(colX, colY1);
+    }
+
+
+    plot.zoomToFit();
+    for (int i=0; i<=JKQTPKeyLayoutMax; i++) {
+        const auto l=static_cast<JKQTPKeyLayout>(i);
+
+        plot.getMainKey()->setLayout(l);
+        plot.setPlotLabel("\\verb|"+JKQTPKeyLayout2String(l)+"|");
+        plot.redrawPlot();
+
+        plot.getMainKey()->setPosition(JKQTPKeyInsideTopRight);
+        plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).save(outputDir.absoluteFilePath("JKQTPKeyLayout_"+JKQTPKeyLayout2String(l)+".png"), "png");
+        plot.getMainKey()->setPosition(JKQTPKeyOutsideRightCenter);
+        plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).save(outputDir.absoluteFilePath("JKQTPKeyLayout_outsideright_"+JKQTPKeyLayout2String(l)+".png"), "png");
+        plot.getMainKey()->setPosition(JKQTPKeyOutsideBottomCenter);
+        plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).save(outputDir.absoluteFilePath("JKQTPKeyLayout_outsidebottom_"+JKQTPKeyLayout2String(l)+".png"), "png");
+    }
+
+}
+
 int main(int argc, char* argv[])
 {
     // 1. create Qt Appcilation object and a QCommandLineParser to go with it
@@ -603,6 +743,10 @@ int main(int argc, char* argv[])
     parser.addOption(listpalettesOption);
     QCommandLineOption liststylesOption("liststyles", "generate example images for all predefined style INI files.");
     parser.addOption(liststylesOption);
+    QCommandLineOption listkeyposOption("listkeypos", "generate example images for all standard key positions.");
+    parser.addOption(listkeyposOption);
+    QCommandLineOption listkeylayoutOption("listkeylayout", "generate example images for all key layouts.");
+    parser.addOption(listkeylayoutOption);
     QCommandLineOption iconsizeOption("iconsize", "typical size of the generatued images.", "iconsize", "24");
     parser.addOption(iconsizeOption);
     QCommandLineOption backgroundOption("background", "background color.", "background", "white");
@@ -619,6 +763,8 @@ int main(int argc, char* argv[])
     const bool listaxisticklabelangles=parser.isSet(listAxisTickLabelAnglesOption);
     const bool listlabelpositions=parser.isSet(listlabelpositionsOption);
     const bool liststyles=parser.isSet(liststylesOption);
+    const bool listkeypos=parser.isSet(listkeyposOption);
+    const bool listkeylayout=parser.isSet(listkeylayoutOption);
     const int iconsize=parser.value(iconsizeOption).toInt();
     const QColor backgroundColor = jkqtp_String2QColor(parser.value(backgroundOption));
 
@@ -632,6 +778,8 @@ int main(int argc, char* argv[])
     if (listaxisticklabelangles) doListAxisTickLabelAngles(outputDir, iconsize, backgroundColor);
     if (liststyles) doListStyles(outputDir, doctomodify, iconsize, backgroundColor);
     if (listpalettes) doListPalettes(outputDir, QSize(iconsize,qMax(5,iconsize/16)));
+    if (listkeypos) doListKeyPositions(outputDir, iconsize, backgroundColor);
+    if (listkeylayout) doListKeyLayouts(outputDir, iconsize, backgroundColor);
 
     return EXIT_SUCCESS;
 }

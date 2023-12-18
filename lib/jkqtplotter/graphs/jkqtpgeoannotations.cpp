@@ -134,7 +134,7 @@ void JKQTPGeoText::draw(JKQTPEnhancedPainter& painter) {
 
 }
 
-void JKQTPGeoText::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
+void JKQTPGeoText::drawKeyMarker(JKQTPEnhancedPainter& painter, const QRectF& rect) {
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     painter.setPen(QPen(getTextColor()));
     double y=rect.top()+rect.height()/2.0;
@@ -281,7 +281,7 @@ void JKQTPGeoSymbol::draw(JKQTPEnhancedPainter &painter)
     addHitTestData(x,y);
 }
 
-void JKQTPGeoSymbol::drawKeyMarker(JKQTPEnhancedPainter &painter, QRectF &rect)
+void JKQTPGeoSymbol::drawKeyMarker(JKQTPEnhancedPainter &painter, const QRectF &rect)
 {
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     JKQTPPlotSymbol(painter, rect.left()+rect.width()/2.0, rect.top()+rect.height()/2.0, getSymbolType(), getKeySymbolSizePx(painter, rect, parent), getKeySymbolLineWidthPx(painter, rect, parent), getKeyLabelColor(), getSymbolFillColor(),getSymbolFont());

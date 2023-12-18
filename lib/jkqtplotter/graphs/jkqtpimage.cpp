@@ -62,7 +62,7 @@ JKQTPImageBase::JKQTPImageBase(JKQTPlotter *parent):
 {
 }
 
-void JKQTPImageBase::drawKeyMarker(JKQTPEnhancedPainter& /*painter*/, QRectF& /*rect*/) {
+void JKQTPImageBase::drawKeyMarker(JKQTPEnhancedPainter& /*painter*/, const QRectF& /*rect*/) {
 
 }
 
@@ -264,7 +264,7 @@ void JKQTPImage::draw(JKQTPEnhancedPainter& painter)  {
     if (image) plotImage(painter, *image, x, y, width, height);
 }
 
-void JKQTPImage::drawKeyMarker(JKQTPEnhancedPainter &painter, QRectF &rect)
+void JKQTPImage::drawKeyMarker(JKQTPEnhancedPainter &painter, const QRectF &rect)
 {
     painter.drawImage(rect, QPixmap(":/JKQTPlotter/jkqtp_plot_image.png").toImage());
 }
@@ -404,7 +404,7 @@ JKQTPMathImageBase::JKQTPMathImageBase(double x, double y, double width, double 
     dataModifier=nullptr;
     datatypeModifier=JKQTPMathImageDataType::DoubleArray;
 }
-void JKQTPMathImageBase::drawKeyMarker(JKQTPEnhancedPainter &/*painter*/, QRectF &/*rect*/)
+void JKQTPMathImageBase::drawKeyMarker(JKQTPEnhancedPainter &/*painter*/, const QRectF &/*rect*/)
 {
 
 }
@@ -964,7 +964,7 @@ void JKQTPMathImage::getModifierMinMax(double &imin, double &imax)
 
 
 
-void JKQTPMathImage::drawKeyMarker(JKQTPEnhancedPainter &painter, QRectF &rect)
+void JKQTPMathImage::drawKeyMarker(JKQTPEnhancedPainter &painter, const QRectF &rect)
 {
     painter.drawImage(rect, getPaletteKeyImage(palette, 32,32));
 }

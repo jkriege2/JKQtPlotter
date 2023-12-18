@@ -272,21 +272,21 @@ int main(int argc, char* argv[])
     plot1->zoomToFit();
     plot1->setGrid(false);
     plot1->getXAxis()->setShowZeroAxis(false);
-    plot1->getPlotter()->setKeyBackgroundColor(QColorWithAlphaF("white", 0.25), Qt::SolidPattern);
+    plot1->getMainKey()->setBackgroundColor(QColorWithAlphaF("white", 0.25), Qt::SolidPattern);
     plot1->setY(-0.25, 0.45);
     plot1cum->zoomToFit();
     plot1cum->setGrid(false);
     plot1cum->getXAxis()->setShowZeroAxis(false);
-    plot1cum->getPlotter()->setKeyBackgroundColor(QColorWithAlphaF("white", 0.25), Qt::SolidPattern);
+    plot1cum->getMainKey()->setBackgroundColor(QColorWithAlphaF("white", 0.25), Qt::SolidPattern);
     plot1kde->zoomToFit();
     plot1kde->setGrid(false);
     plot1kde->getXAxis()->setShowZeroAxis(false);
-    plot1kde->getPlotter()->setKeyBackgroundColor(QColorWithAlphaF("white", 0.25), Qt::SolidPattern);
+    plot1kde->getMainKey()->setBackgroundColor(QColorWithAlphaF("white", 0.25), Qt::SolidPattern);
     plot1kde->setY(-0.155, 0.45);
     plot1box->zoomToFit();
     plot1box->setGrid(false);
     plot1box->getXAxis()->setShowZeroAxis(false);
-    plot1box->getPlotter()->setKeyBackgroundColor(QColorWithAlphaF("white", 0.25), Qt::SolidPattern);
+    plot1box->getMainKey()->setBackgroundColor(QColorWithAlphaF("white", 0.25), Qt::SolidPattern);
     plot1box->setY(-0.4, 0.0);
 
     // show plotter and make it a decent size

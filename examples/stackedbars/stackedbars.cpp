@@ -90,7 +90,7 @@ void addGraph(JKQTPlotter& plot, bool swapXY) {
     //          So many properties of the plot are only available in this internal
     //          object, which you can access by plot.getPlotter().
     plot.getPlotter()->setKeyPosition(JKQTPKeyOutsideTopRight);
-    plot.getPlotter()->setKeyLayout(JKQTPKeyLayoutOneRow);
+    plot.getMainKey()->setLayout(JKQTPKeyLayoutOneRow);
 
     // 8 autoscale the plot so the graph is contained
     plot.zoomToFit();

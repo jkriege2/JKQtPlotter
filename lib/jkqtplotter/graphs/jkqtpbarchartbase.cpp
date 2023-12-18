@@ -59,10 +59,16 @@ JKQTPBarGraphBase::JKQTPBarGraphBase(JKQTPlotter* parent):
 {
 }
 
-void JKQTPBarGraphBase::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
+void JKQTPBarGraphBase::drawKeyMarker(JKQTPEnhancedPainter& painter, const QRectF& r) {
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     QPen p=getLinePenForRects(painter, parent);
     QBrush b=getFillBrush(painter, parent);
+    QRectF rect=r;
+    rect.setWidth(rect.width()-p.widthF());
+    rect.setHeight(rect.height()-p.widthF());
+    rect.setX(rect.x()+p.widthF()/2.0);
+    rect.setY(rect.y()+p.widthF()/2.0);
+
     //int y=rect.top()+rect.height()/2.0;
     painter.setPen(p);
     painter.setBrush(b);

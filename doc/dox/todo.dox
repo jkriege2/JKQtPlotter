@@ -5,6 +5,11 @@
 This page lists several todos and wishes for future version of JKQTPlotter
 
 <ul>
+  <li>General:<ul>
+    <li>build system: provide general targets JKQTPlotter::JKQTPlotter, JKQTPlotter::JKQTMathText, instead of targets which differ by linking option</li>
+    <li>build system: refactor CMake-Code, so static/dynamic switch is done on compile and only one variant is built</li>
+    <li>build system: maybe prepare for CMake's <a href="https://cmake.org/cmake/help/latest/module/FetchContent.html">FetchContent</a>-API (+ possibly providing a reduced source-package for each release)</li>
+  </ul></li>
   <li>JKQTPlotter:<ul>
     <li>data management: allow for other datatypes than double, would be good to have, double, float, ints, bool, string ... as for images</li>
     <li>data management: binding  for the <a href="https://eigen.tuxfamily.org/index.php?title=Main_Page">Eigen library</a></li>
@@ -25,9 +30,7 @@ This page lists several todos and wishes for future version of JKQTPlotter
     <li>plot: axes with symlog (see http://dx.doi.org/10.1088/0957-0233/24/2/027001) and logit (https://de.m.wikipedia.org/wiki/Logit) scaling? </li>
     <li>plot: axis labels above/below/centered around tick</li>
     <li>plot: elongated grid to left of tick labels</li>
-    <li>plot: legend positioning as combination of 3 values: inside|outside + left|center|right + top|vcenter|bottom</li>
     <li>plot: refactor print preview/export preview code </li>
-    <li>plot: rework layouting of legends: there are some inconsistencies/too large gaps ...</li>
     <li>sryling: better styling/more styling options for data-tooltips</li>
     <li>styling: color gradients as fill-styles in style-INIs</li>
     <li>user interactions: dialog(s) to edit x/y-range</li>
