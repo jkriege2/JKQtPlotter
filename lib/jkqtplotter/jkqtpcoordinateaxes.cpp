@@ -463,7 +463,7 @@ QString JKQTPCoordinateAxis::floattolabel(double data, int past_comma) const {
                 if (sign<0) res+="-";
                 if (intpart!=0) res+=QString::number(intpart);
                 if (num!=0) {
-                    if (denom==1) res+=QString::number(num);
+                    if (denom==1) res+=addTickUnit(QString::number(num));
                     else {
                         if (axisStyle.tickLabelType==JKQTPCALTfrac || (axisStyle.tickLabelType==JKQTPCALTintfrac && intpart==0)) res+=QString("\\frac{%1}{%2}").arg(addTickUnit(QString::number(num))).arg(denom);
                         else if (axisStyle.tickLabelType==JKQTPCALTintfrac) res=addTickUnit(res+QString("\\frac{%1}{%2}").arg(num).arg(denom));
