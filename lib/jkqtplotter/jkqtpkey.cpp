@@ -443,7 +443,7 @@ void JKQTPBaseKey::KeyLayoutDescription::redistributeIntoOneColumn()
             columns[0].rows.append(columns[i].rows);
         }
         for (int i=columns.size()-1; i>=1; i--) {
-            columns.remove(i);
+            columns.removeAt(i);
         }
     }
 }
