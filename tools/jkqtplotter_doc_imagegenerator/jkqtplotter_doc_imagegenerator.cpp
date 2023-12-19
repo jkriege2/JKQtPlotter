@@ -603,19 +603,19 @@ inline QString JKQTPKeyPosition2CPPString(JKQTPKeyPosition pos) {
     }
 
     QString res;
-    if (pos.testFlag(JKQTPKeyInside)) res+=std::string(res.size()>0?"|":"")+"JKQTPKeyInside";
-    else if (pos.testFlag(JKQTPKeyOutsideTop)) res+=std::string(res.size()>0?"|":"")+"JKQTPKeyOutsideTop";
-    else if (pos.testFlag(JKQTPKeyOutsideBottom)) res+=std::string(res.size()>0?"|":"")+"JKQTPKeyOutsideBottom";
-    else if (pos.testFlag(JKQTPKeyOutsideLeft)) res+=std::string(res.size()>0?"|":"")+"JKQTPKeyOutsideLeft";
-    else if (pos.testFlag(JKQTPKeyOutsideRight)) res+=std::string(res.size()>0?"|":"")+"JKQTPKeyOutsideRight";
+    if (pos.testFlag(JKQTPKeyInside)) res+=QString(res.size()>0?"|":"")+"JKQTPKeyInside";
+    else if (pos.testFlag(JKQTPKeyOutsideTop)) res+=QString(res.size()>0?"|":"")+"JKQTPKeyOutsideTop";
+    else if (pos.testFlag(JKQTPKeyOutsideBottom)) res+=QString(res.size()>0?"|":"")+"JKQTPKeyOutsideBottom";
+    else if (pos.testFlag(JKQTPKeyOutsideLeft)) res+=QString(res.size()>0?"|":"")+"JKQTPKeyOutsideLeft";
+    else if (pos.testFlag(JKQTPKeyOutsideRight)) res+=QString(res.size()>0?"|":"")+"JKQTPKeyOutsideRight";
 
-    if (pos.testFlag(JKQTPKeyLeft)) res+=std::string(res.size()>0?"|":"")+"JKQTPKeyLeft";
-    else if (pos.testFlag(JKQTPKeyHCenter)) res+=std::string(res.size()>0?"|":"")+"JKQTPKeyHCenter";
-    else if (pos.testFlag(JKQTPKeyRight)) res+=std::string(res.size()>0?"|":"")+"JKQTPKeyRight";
+    if (pos.testFlag(JKQTPKeyLeft)) res+=QString(res.size()>0?"|":"")+"JKQTPKeyLeft";
+    else if (pos.testFlag(JKQTPKeyHCenter)) res+=QString(res.size()>0?"|":"")+"JKQTPKeyHCenter";
+    else if (pos.testFlag(JKQTPKeyRight)) res+=QString(res.size()>0?"|":"")+"JKQTPKeyRight";
 
-    if (pos.testFlag(JKQTPKeyTop)) res+=std::string(res.size()>0?"|":"")+"JKQTPKeyTop";
-    else if (pos.testFlag(JKQTPKeyVCenter)) res+=std::string(res.size()>0?"|":"")+"JKQTPKeyVCenter";
-    else if (pos.testFlag(JKQTPKeyBottom)) res+=std::string(res.size()>0?"|":"")+"JKQTPKeyBottom";
+    if (pos.testFlag(JKQTPKeyTop)) res+=QString(res.size()>0?"|":"")+"JKQTPKeyTop";
+    else if (pos.testFlag(JKQTPKeyVCenter)) res+=QString(res.size()>0?"|":"")+"JKQTPKeyVCenter";
+    else if (pos.testFlag(JKQTPKeyBottom)) res+=QString(res.size()>0?"|":"")+"JKQTPKeyBottom";
 
     return res;
     return "";
