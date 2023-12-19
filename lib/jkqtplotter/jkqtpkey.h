@@ -39,26 +39,43 @@ class JKQTMathText;
 /*! \brief base class for drawing a key (or legend)
     \ingroup jkqtpbaseplotter_elements
 
-    This class immplements the basic layouting and drawing of a key/legend:
+    The class JKQTPBaseKey implements the basic layouting and drawing of a key/legend. The basic style properties are defined in JKQTPKeyStyle.
+
+    The following image shows, which properties of the key may be altered with the style:
 
     \image html plot_key.png
 
+    \section JKQTPBaseKey_Usage Usage
+
+    The functions in JKQTPBaseKey are mainly used for drawing the main key in a JKQTBasePlotter.
+    The instance representing that main key is accessible via JKQTPBaseKey::getMainKey().
+    It is not a direct instance of JKQTPBaseKey, which is impossible, as it is pure virtual,
+    but an instance of JKQTPMainKey, which extends JKQTPBaseKey with access to the titles assigned to
+    each JKQTPPlotElement (see JKQTPPlotElement::getTitle(), JKQTPPlotElement::setTitle()) and its key-marker (JKQTPPlotElement::drawKeyMarker()).
+
+    Note however that it is also possible to draw additional keys into the graph (e.g. to show the size/color classes in a parametrized scatter graph),
+    if the corresponding JKQTPPlotElement implements this.
+
+
+
+    \section JKQTPBaseKey_ImplementationDetails Implementation Details
+
     It relies on these protected virtual functions to determine the contents of the legend items:
-        - getEntryCount()
-        - getEntryTextExtent()
-        - getEntryText()
-        - drawEntrySample()
+        - JKQTPBaseKey::getEntryCount()
+        - JKQTPBaseKey::getEntryTextExtent()
+        - JKQTPBaseKey::getEntryText()
+        - JKQTPBaseKey::drawEntrySample()
     .
     So you can derive from JKQTPBaseKey and implement these to provide a new source of data.
 
     There are additional customization points in this class. You can also override the
     default implementations of these functions to change the way keys/legends are drawn:
-        - drawKey()
-        - getLayout()
-        - modifySize()
+        - JKQTPBaseKey::drawKey()
+        - JKQTPBaseKey::getLayout()
+        - JKQTPBaseKey::modifySize()
     .
 
-    \see JKQTPKeyStyle
+    \see JKQTPKeyStyle, JKQTPMainKey
 
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPBaseKey: public QObject {

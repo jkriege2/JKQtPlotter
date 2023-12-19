@@ -52,7 +52,7 @@ typedef JKQTPCoordinateAxes JKQTPCoordinateAxisRef;
 /*! \brief this virtual class is the base for any type of coordinate axis, to be drawn by JKQTBasePlotter.
     \ingroup jkqtpbaseplotter_elements
 
-    Class derived from JKQTPCoordinateAxis implements all the functionality needed for a coordinate axis:
+    Classes derived from JKQTPCoordinateAxis implements all the functionality needed for a coordinate axis:
       - transform world to screen coordinates and vice versa
       - draw the axis (implemented by child classes!) with these elements: axis lines, ticks, tick labels, axis label, x/y=0 axis
       - measure the axes in screen coordinates
@@ -168,13 +168,13 @@ typedef JKQTPCoordinateAxes JKQTPCoordinateAxisRef;
     unit than \f$ pi \f$ ,i.e.:
 
       \image html axisstyle/axis_unit_scaling_none.png "no axis scaling (default case)"
-      \image html axisstyle/axis_unit_scaling_pi.png "pi-axis scaling (default case)"
+      \image html axisstyle/axis_unit_scaling_pi.png "pi-axis scaling"
 
     You can use these methods to set such a factor:
-      - setTickUnitFactor() for the actual factor and setTickUnitName() for a name, added to the tick label
-      - setTickUnit() sets factor and name in one call
-      - setTickUnitPi() shortcut to set pi-scaling
-      - resetTickUnit() resets to no-scaling (default case)
+      - JKQTPCoordinateAxis::setTickUnitFactor() for the actual factor and setTickUnitName() for a name, added to the tick label
+      - JKQTPCoordinateAxis::setTickUnit() sets factor and name in one call
+      - JKQTPCoordinateAxis::setTickUnitPi() shortcut to set pi-scaling
+      - JKQTPCoordinateAxis::resetTickUnit() resets to no-scaling (default case)
     .
 
  */
