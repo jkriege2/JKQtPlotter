@@ -34,9 +34,17 @@ class JKQTBasePlotterStyle; // forward
 /** \brief Support Class for JKQTBasePlotter, which summarizes all properties that define the visual styling of the key in a JKQTBasePlotter
  *  \ingroup jkqtpplotter_styling_classes
  *
+ *  With JKQTPKeyStyle you can style the appearance of a key/legend:
+ *
  *  \image html plot_key.png
  *
- *  \see JKQTPKey, JKQTBasePlotter, JKQTBasePlotterStyle, \ref jkqtpplotter_styling
+ *  In addition it is possible to set:
+ *    - its visiblility with JKQTPKeyStyle::visible
+ *    - its location within or besides the plot area, using JKQTPKeyStyle::position
+ *    - its overall layout (i.e. how the entries are distributed over the available space), using JKQTPKeyStyle::layout
+ *  .
+ *
+ *  \see JKQTPBaseKey, JKQTBasePlotter, JKQTBasePlotterStyle, \ref jkqtpplotter_styling
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPKeyStyle  {
         Q_GADGET
@@ -101,9 +109,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPKeyStyle  {
         /** \brief distance between two columns of key entries [in units of width of 'X' set in fontName, fontSize] */
         double columnSeparation;
 
-        /** \brief key position */
+        /** \brief key position inside or besides the plot area, see JKQTPKeyPositions for details and examples */
         JKQTPKeyPosition position;
-        /** \brief the key layout */
+        /** \brief the key layout, i.e. how the entries are distributed over the available space, see JKQTPKeyLayout for details and examples */
         JKQTPKeyLayout layout;
 };
 

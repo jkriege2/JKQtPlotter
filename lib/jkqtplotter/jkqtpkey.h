@@ -39,11 +39,13 @@ class JKQTMathText;
 /*! \brief base class for drawing a key (or legend)
     \ingroup jkqtpbaseplotter_elements
 
-    The class JKQTPBaseKey implements the basic layouting and drawing of a key/legend. The basic style properties are defined in JKQTPKeyStyle.
+    The class JKQTPBaseKey implements the basic layouting and drawing of a key/legend.
 
-    The following image shows, which properties of the key may be altered with the style:
+    \section JKQTPBaseKey_Styling Key/Legend Styling
 
-    \image html plot_key.png
+    \copydetails JKQTPKeyStyle
+
+    \note The class JKQTPBaseKey offers setters (slots) and getters for all the properties in the used instance of JKQTPKeyStyle .
 
     \section JKQTPBaseKey_Usage Usage
 
@@ -350,7 +352,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBaseKey: public QObject {
 
 
 /*! \brief concrete class for drawing the main plot key (or legend).
- *         This class reads the key entries fromm the graphs list of its parent JKQTBasePlotter.
+ *         This class reads the key entries from the graphs list of its parent JKQTBasePlotter und references the JKQTPKeyStyle object from JKQTBasePlotterStyle::keyStyle in the parent JKQTBasePlotter.
     \ingroup jkqtpbaseplotter_elements
 
 

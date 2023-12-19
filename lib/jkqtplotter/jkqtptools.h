@@ -628,14 +628,22 @@ JKQTPLOTTER_LIB_EXPORT JKQTPKeyPosition String2JKQTPKeyPosition(const QString& p
  * \ingroup jkqtpplottersupprt
  */
 enum JKQTPKeyLayout {
-    JKQTPKeyLayoutOneColumn=0,            /*!< \brief the key consists of one column
-                                               \image html keylayouts/JKQTPKeyLayout_one_column.png */
-    JKQTPKeyLayoutOneRow,                 /*!< \brief the key consists of one row
-                                               \image html keylayouts/JKQTPKeyLayout_one_row.png */
-    JKQTPKeyLayoutMultiColumn,            /*!< \brief the key consists of multiple columns, (top->bottom, top->bottom, ...)
-                                               \image html keylayouts/JKQTPKeyLayout_multi_column.png */
-    JKQTPKeyLayoutMultiRow,               /*!< \brief the key consists of multiple rows (left->right,left->right,...)
-                                               \image html keylayouts/JKQTPKeyLayout_multi_row.png */
+    JKQTPKeyLayoutOneColumn=0,            /*!< \brief the key consists of one column. This may overflow the available space, use JKQTPKeyLayoutMultiColumn or JKQTPKeyLayoutMultiRow if you have many entries!
+                                               \image html keylayouts/JKQTPKeyLayout_one_column.png
+                                               \image html keylayouts/JKQTPKeyLayout_outsidebottom_one_column.png
+                                               \image html keylayouts/JKQTPKeyLayout_outsideright_one_column.png */
+    JKQTPKeyLayoutOneRow,                 /*!< \brief the key consists of one row. This may overflow the available space, use JKQTPKeyLayoutMultiColumn or JKQTPKeyLayoutMultiRow if you have many entries!
+                                               \image html keylayouts/JKQTPKeyLayout_one_row.png
+                                               \image html keylayouts/JKQTPKeyLayout_outsidebottom_one_row.png
+                                               \image html keylayouts/JKQTPKeyLayout_outsideright_one_row.png */
+    JKQTPKeyLayoutMultiColumn,            /*!< \brief the key items are distributed over multiple columns that fill the available space, (top->bottom, top->bottom, ...)
+                                               \image html keylayouts/JKQTPKeyLayout_multi_column.png
+                                               \image html keylayouts/JKQTPKeyLayout_outsidebottom_multi_column.png
+                                               \image html keylayouts/JKQTPKeyLayout_outsideright_multi_column.png */
+    JKQTPKeyLayoutMultiRow,               /*!< \brief the key items are distributed over multiple rows that fill the available space (left->right,left->right,...)
+                                               \image html keylayouts/JKQTPKeyLayout_multi_row.png
+                                               \image html keylayouts/JKQTPKeyLayout_outsidebottom_multi_row.png
+                                               \image html keylayouts/JKQTPKeyLayout_outsideright_multi_row.png */
 
     JKQTPKeyLayoutMax=JKQTPKeyLayoutMultiRow
 };
