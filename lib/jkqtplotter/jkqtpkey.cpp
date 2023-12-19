@@ -292,7 +292,7 @@ JKQTPBaseKey::KeyLayoutDescription JKQTPBaseKey::getKeyLayout(JKQTPEnhancedPaint
         layout.columns.append(allItems);
     } else if (keyStyle().layout==JKQTPKeyLayoutOneRow || keyStyle().layout==JKQTPKeyLayoutMultiRow) {
         for (const auto& r: allItems.rows) {
-            layout.columns.emplaceBack(r);
+            layout.columns.push_back(KeyColumnDescription(r));
         }
     }
 
@@ -460,7 +460,7 @@ void JKQTPBaseKey::KeyLayoutDescription::redistributeOverRows(int rowCnt)
 
             int i=0;
             for (int c=0; c<colCnt; c++) {
-                columns.emplace_back();
+                columns.push_back(KeyColumnDescription());
             }
             for (int r=0; r<rowCnt; r++) {
                 for (int c=0; c<colCnt; c++) {
@@ -483,7 +483,7 @@ void JKQTPBaseKey::KeyLayoutDescription::redistributeOverColumns(int colCnt)
             columns.clear();
             int i=0;
             for (int c=0; c<colCnt; c++) {
-                columns.emplace_back();
+                columns.push_back(KeyColumnDescription());
                 for (int r=0; r<rowCnt; r++) {
                     if (i<itemCnt) columns[c].rows.append(items[i]);
                     i++;
