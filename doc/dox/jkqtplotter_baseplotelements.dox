@@ -14,7 +14,7 @@
   \defgroup jkqtplotter_general_basicplotelements_key Plot Key/Legend
   \ingroup jkqtplotter_general_basicplotelements
 
-  \copydetails JKQTBaseKey
+  \copydetails JKQTPBaseKey
    
   
 */
