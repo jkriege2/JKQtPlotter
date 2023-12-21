@@ -72,7 +72,9 @@ JKQTPLOTTER_LIB_EXPORT void initJKQTBasePlotterResources();
 class JKQTPLOTTER_LIB_EXPORT JKQTPSaveDataAdapter {
     public:
         virtual ~JKQTPSaveDataAdapter() ;
+        /** \brief Filter-String for a Qt File-Dialog, e.g. <code>"CSV Files (*.csv)"</code> */
         virtual QString getFilter() const=0;
+        /** \brief actually save the table \a data into file \a filename . The parameter \a columnNames provides a name for each column */
         virtual void saveJKQTPData(const QString& filename, const QList<QVector<double> >& data, const QStringList& columnNames) const=0;
 };
 
@@ -82,9 +84,13 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPSaveDataAdapter {
 class JKQTPLOTTER_LIB_EXPORT JKQTPPaintDeviceAdapter {
     public:
         virtual ~JKQTPPaintDeviceAdapter()  {}
+        /** \brief Filter-String for a Qt File-Dialog, e.g. <code>"JPEG Files (*.jpg)"</code> */
         virtual QString getFilter() const=0;
+        /** \brief Human readable name for the format */
         virtual QString getFormatName() const=0;
+        /** \brief a plugin-ID, i.e. a unique name for this format plugin, e.g. \c MyPluginExport_JPEG */
         virtual QString getFormatID() const=0;
+        /** \brief returns a list (in lower-case) of the file extensions supported by this plugin, e.g. \c {"jpg","jpeg"} */
         virtual QStringList getFileExtension() const=0;
         virtual bool getSetAbsolutePaperSize() const=0;
         virtual double getPrintSizeXInMM() const =0;
@@ -1731,8 +1737,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
          *  \param displayPreview if \c true a dialog is shown that allows to modify the generated output (zoo, scaling, ...)
          *  \param outputFormmat specify the file format for the generated file
          *  \param  outputSizeIncrease if given, the size of the generated pixel image is increased by this number of pixels in addition to the required space
+         *  \return returns \c true on success
          */
-        void saveAsPixelImage(const QString& filename=QString(""), bool displayPreview=true, const QByteArray &outputFormat=QByteArray(), const QSize& outputSizeIncrease=QSize(0,0));
+        bool saveAsPixelImage(const QString& filename=QString(""), bool displayPreview=true, const QByteArray &outputFormat=QByteArray(), const QSize& outputSizeIncrease=QSize(0,0));
 
         /** \brief save the current plot as a pixel image into a QImage with the given size */
         QImage grabPixelImage(QSize size=QSize(), bool showPreview=false);
@@ -1742,20 +1749,33 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
 #ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
         /** \brief save the current plot as a SVG file, with the current widget aspect ratio, if filename is empty a file selection dialog is displayed
          *
+         *   \param filename the filename to save to, if empty a file save dialog is displayed
+         *   \param displayPreview if \C true, a save/print-preview dialog is displayed that allows to make some modifications to the generated image, otherwise the image is saved with default settings.
+         *   \return Returns \c true if the file was save successfully
+         *
          *  \note Exporting to SVG requires QPrinter-support, if it is not available on your platform, this function will not be available either!
          */
-        void saveAsSVG(const QString& filename=QString(""), bool displayPreview=true);
+        bool saveAsSVG(const QString& filename=QString(""), bool displayPreview=true);
 
         /** \brief save the current plot as a PDF file, with the current widget aspect ratio, if filename is empty a file selection dialog is displayed
          *
+         *   \param filename the filename to save to, if empty a file save dialog is displayed
+         *   \param displayPreview if \C true, a save/print-preview dialog is displayed that allows to make some modifications to the generated image, otherwise the image is saved with default settings.
+         *   \return Returns \c true if the file was save successfully
+         *
          *  \note Exporting to PDF requires QPrinter-support, if it is not available on your platform, this function will not be available either!
          */
-        void saveAsPDF(const QString& filename=QString(""), bool displayPreview=true);
+        bool saveAsPDF(const QString& filename=QString(""), bool displayPreview=true);
 #endif
 
         /** \brief save the current plot as an image file, with the current widget aspect ratio, if filename is empty a file selection dialog is displayed.
-        *          The image format is extracted from the file extension (jpeg, tiff, png, pdf, ...) */
-        void saveImage(const QString& filename=QString(""), bool displayPreview=true);
+        *          The image format is extracted from the file extension (jpeg, tiff, png, pdf, ...)
+        *
+        *   \param filename the filename to save to, if empty a file save dialog is displayed
+        *   \param displayPreview if \C true, a save/print-preview dialog is displayed that allows to make some modifications to the generated image, otherwise the image is saved with default settings.
+        *   \return Returns \c true if the file was save successfully
+        */
+        bool saveImage(const QString& filename=QString(""), bool displayPreview=true);
 
         /** \brief save the data used for the current plot. The file format is extracted from the file extension (csv, ...)
          *

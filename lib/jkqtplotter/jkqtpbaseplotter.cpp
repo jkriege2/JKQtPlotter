@@ -3501,7 +3501,7 @@ void JKQTBasePlotter::saveAsGerExcelCSV(const QString& filename) {
 }
 
 #ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
-void JKQTBasePlotter::saveAsPDF(const QString& filename, bool displayPreview) {
+bool JKQTBasePlotter::saveAsPDF(const QString& filename, bool displayPreview) {
     loadUserSettings();
     QString fn=filename;
     if (fn.isEmpty()) {
@@ -3513,7 +3513,7 @@ void JKQTBasePlotter::saveAsPDF(const QString& filename, bool displayPreview) {
 
     if (!fn.isEmpty()) {
         emit beforeExporting();; auto __finalpaint=JKQTPFinally([&]() { emit afterExporting();});
-        QPrinter* printer=new QPrinter;
+        std::shared_ptr<QPrinter> printer=std::make_shared<QPrinter>();
         bool doLandscape=widgetWidth>widgetHeight;
         if (gridPrinting) {
             gridPrintingCalc();
@@ -3529,91 +3529,133 @@ void JKQTBasePlotter::saveAsPDF(const QString& filename, bool displayPreview) {
         printer->setOutputFileName(fn);
         printer->setPageMargins(QMarginsF(0,0,0,0),QPageLayout::Millimeter);
         printer->setColorMode(QPrinter::Color);
-        printpreviewNew(printer, true, -1.0, -1.0, displayPreview);
-        delete printer;
+        return printpreviewNew(printer.get(), true, -1.0, -1.0, displayPreview);
     }
     saveUserSettings();
+    return false;
 }
 #endif
 
-void JKQTBasePlotter::saveImage(const QString& filename, bool displayPreview) {
+bool JKQTBasePlotter::saveImage(const QString& filename, bool displayPreview) {
     loadUserSettings();
     QString fn=filename;
-    QStringList filt;
+    QStringList filterstrings;
+    QList<QStringList> filterextensions;
+
+    const auto findExporterByExtension=[&filterextensions](const QString& ext) {
+        const QString extl=ext.toLower();
+        for (int i=0; i<filterextensions.size(); i++) {
+            if (filterextensions[i].contains(extl)) return i;
+        }
+        return -1;
+    };
+
+    // add default exporters
 #ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
-    filt<<tr("Portable Document Format PDF [Qt] (*.pdf)");
-    filt<<tr("Scalable Vector Graphics [Qt] (*.svg)");
+    filterstrings<<tr("Portable Document Format PDF [Qt] (*.pdf)");    filterextensions<<(QStringList()<<"pdf");
+    const int idxDefaultPDF=filterstrings.size()-1;
+    filterstrings<<tr("Scalable Vector Graphics [Qt] (*.svg)");    filterextensions<<(QStringList()<<"svg");
+    const int idxDefaultSVG=filterstrings.size()-1;
 #endif
-    filt<<tr("PNG Image [Qt] (*.png)");
-    filt<<tr("BMP Image [Qt] (*.bmp)");
-    filt<<tr("TIFF Image [Qt] (*.tif *.tiff)");
-    filt<<tr("JPEG Image [Qt] (*.jpg *.jpeg)");
-    const int filtStartSize=filt.size();
+    filterstrings<<tr("PNG Image [Qt] (*.png)");    filterextensions<<(QStringList()<<"png");
+    filterstrings<<tr("BMP Image [Qt] (*.bmp)");    filterextensions<<(QStringList()<<"bmp");
+    filterstrings<<tr("TIFF Image [Qt] (*.tif *.tiff)");    filterextensions<<(QStringList()<<"tif"<<"tiff");
+    filterstrings<<tr("JPEG Image [Qt] (*.jpg *.jpeg)");    filterextensions<<(QStringList()<<"jpg"<<"jpeg");
+    //  add JKQTPPaintDeviceAdapter exporters
+    const int filtersIndexFirstExporterPLugin=filterstrings.size();
     {
         JKQTPSynchronized<QList<JKQTPPaintDeviceAdapter*>>::Locker lock(jkqtpPaintDeviceAdapters);
         for (int i=0; i<jkqtpPaintDeviceAdapters.get().size(); i++) {
-            filt<<jkqtpPaintDeviceAdapters.get()[i]->getFilter();
+            filterstrings<<jkqtpPaintDeviceAdapters.get()[i]->getFilter();
+            filterextensions<<QStringList();
+            for (const auto& ext: jkqtpPaintDeviceAdapters.get()[i]->getFileExtension()) filterextensions.last()<<ext.toLower();
         }
     }
-    int qtwritersidx=filt.size();
-    QList<QByteArray> writerformats=QImageWriter::supportedImageFormats();
+    const bool isWithSpecialDeviceAdapter=(filterstrings.size()>filtersIndexFirstExporterPLugin);
+    // add remaining QImageWriter exporters
+    const int filtersIndexFirstQtWriter=filterstrings.size();
+    const QList<QByteArray> writerformats=QImageWriter::supportedImageFormats();
     for (int i=0; i<writerformats.size(); i++) {
-        filt<<QString("%1 Image (*.%2)").arg(QString(writerformats[i]).toUpper()).arg(QString(writerformats[i].toLower()));
+        const QString ext=writerformats[i].toLower();
+        const int extIdx=findExporterByExtension(ext);
+        const QString name=writerformats[i].toUpper();
+        // only add QtWriters that are not yt contained in the default filters options
+        if (extIdx<0 || extIdx>=filtersIndexFirstExporterPLugin) {
+            filterstrings<<QString("%1 Image (*.%2)").arg(name).arg(ext);
+            filterextensions<<(QStringList()<<ext);
+        }
     }
-    QString selFormat="";
+
+    QString selFormat;
     if (fn.isEmpty()) {
         selFormat=currentFileFormat;
         fn = QFileDialog::getSaveFileName(nullptr, tr("Save Plot"),
                                     currentSaveDirectory,
-                                          filt.join(";;"), &selFormat);
+                                          filterstrings.join(";;"), &selFormat);
         if (!fn.isEmpty()) {
             currentSaveDirectory=QFileInfo(fn).absolutePath();
             currentFileFormat=selFormat;
         }
+    } else {
+        const QString fnExt=QFileInfo(filename).suffix().toLower();
+        const int filtidx=findExporterByExtension(fnExt);
+        if (filtidx>=0) selFormat=filterstrings[filtidx];
+
     }
 
     //qDebug()<<"fn="<<fn<<"  selFormat="<<selFormat;
 
     saveUserSettings();
     if (!fn.isEmpty()) {
-        int filtID=filt.indexOf(selFormat);
-        JKQTPSynchronized<QList<JKQTPPaintDeviceAdapter*>>::Locker lock(jkqtpPaintDeviceAdapters);
+        const QString fnExt=QFileInfo(filename).suffix().toLower();
 
-        bool isWithSpecialDeviceAdapter=filtID>=filtStartSize && filtID<filtStartSize+jkqtpPaintDeviceAdapters.get().size();
-        int adapterID=filtID-filtStartSize;
-        QString e=QFileInfo(filename).suffix().toLower();
-        if (!isWithSpecialDeviceAdapter) {
-            for (int i=0; i<jkqtpPaintDeviceAdapters.get().size(); i++) {
-                if (jkqtpPaintDeviceAdapters.get()[i]->getFileExtension().contains(e)) {
-                    adapterID=i;
-                    isWithSpecialDeviceAdapter=true;
-                    break;
-                }
-            }
+        const int filtID=[&](){
+            // 1. look for the selected format
+            int idx=filterstrings.indexOf(selFormat);
+            // 2. if not found try to match up the file extension
+            if (idx<0) idx=findExporterByExtension(fnExt);
+            return idx;
+        }();
+        JKQTPSynchronized<QList<JKQTPPaintDeviceAdapter*>>::Locker lock(jkqtpPaintDeviceAdapters);
+        // now we determine whether we selected a jkqtpPaintDeviceAdapters, if not adapterID will be <0
+        const int adapterID=[&](){
+            int idx=filtID-filtersIndexFirstExporterPLugin;
+            if (idx<0) idx=-1;
+            if (idx>=jkqtpPaintDeviceAdapters.get().size()) idx=-1;
+            return idx;
+        }();
+
+
+        if (filtID<0) {
+            qWarning()<<"You tried to save an image to to '"<<fn<<"', but JKQTPlottter did not recognize the file format!";
+            return false;
         }
-        //qDebug()<<"filtID="<<filtID<<"   isWithSpecialDeviceAdapter="<<isWithSpecialDeviceAdapter<<"   adapterID="<<adapterID;
+
+
 #ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
-        if (filtID==0) {
-            saveAsPDF(fn, displayPreview);
-            return;
+        // SVG and PDF need to be treated separately!
+        if (filtID==idxDefaultPDF) {
+            return saveAsPDF(fn, displayPreview);
         }
-        if (filtID==1) {
-            saveAsSVG(fn, displayPreview);
-            return;
+        if (filtID==idxDefaultSVG) {
+            return saveAsSVG(fn, displayPreview);
         }
 #endif
-        if (isWithSpecialDeviceAdapter && adapterID>=0 && adapterID<jkqtpPaintDeviceAdapters.get().size()) {
+
+        // we need to use a jkqtpPaintDeviceAdapters
+        if (adapterID>=0) {
             QString tempFM="";
             if (QFile::exists(fn)) {
+                // if the file fn already exists, we make a temporary copy, so it is not destroyed by the export process!
 #ifdef QFWIDLIB_LIBRARY
-                QFTemporaryFile* tf=new QFTemporaryFile();
+                QSharedPointer<QFTemporaryFile> tf=QSharedPointer<QTemporaryFile>(new QFTemporaryFile());
 #else
-                QTemporaryFile* tf=new QTemporaryFile();
+                QSharedPointer<QTemporaryFile> tf=QSharedPointer<QTemporaryFile>(new QTemporaryFile());
 #endif
                 tf->open();
                 tempFM=tf->fileName();
                 tf->close();
-                delete tf;
+                tf.reset();
                 QFile::copy(fn, tempFM);
             }
 
@@ -3621,35 +3663,33 @@ void JKQTBasePlotter::saveImage(const QString& filename, bool displayPreview) {
             emit beforeExporting();; auto __finalpaint=JKQTPFinally([&]() { emit afterExporting();});
 
             gridPrintingCalc();
-            QPaintDevice* paintDevice=jkqtpPaintDeviceAdapters.get()[adapterID]->createPaintdevice(fn, jkqtp_roundTo<int>(gridPrintingSize.width()), jkqtp_roundTo<int>(gridPrintingSize.height()));
+            QSharedPointer<QPaintDevice> paintDevice=QSharedPointer<QPaintDevice>(jkqtpPaintDeviceAdapters.get()[adapterID]->createPaintdevice(fn, jkqtp_roundTo<int>(gridPrintingSize.width()), jkqtp_roundTo<int>(gridPrintingSize.height())));
 
 #ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
-            if (!printpreviewNew(paintDevice, jkqtpPaintDeviceAdapters.get()[adapterID]->getSetAbsolutePaperSize(), jkqtpPaintDeviceAdapters.get()[adapterID]->getPrintSizeXInMM(), jkqtpPaintDeviceAdapters.get()[adapterID]->getPrintSizeYInMM(), displayPreview)) {
-                delete paintDevice;
-
-
+            if (!printpreviewNew(paintDevice.get(), jkqtpPaintDeviceAdapters.get()[adapterID]->getSetAbsolutePaperSize(), jkqtpPaintDeviceAdapters.get()[adapterID]->getPrintSizeXInMM(), jkqtpPaintDeviceAdapters.get()[adapterID]->getPrintSizeYInMM(), displayPreview)) {
                 if (QFile::exists(tempFM)) {
                     QFile::copy(tempFM, fn);
                     QFile::remove(tempFM);
                 }
-            } else {
-#else
-            {
+                return false;
+            } else
 #endif
-                delete paintDevice;
-                paintDevice=jkqtpPaintDeviceAdapters.get()[adapterID]->createPaintdeviceMM(fn,printSizeX_Millimeter,printSizeY_Millimeter);
-                printpreviewPaintRequestedNewPaintDevice(paintDevice);
-                delete paintDevice;
+            {
+                paintDevice.reset(jkqtpPaintDeviceAdapters.get()[adapterID]->createPaintdeviceMM(fn,printSizeX_Millimeter,printSizeY_Millimeter));
+                printpreviewPaintRequestedNewPaintDevice(paintDevice.get());
+                return true;
             }
 
         } else {
-            saveAsPixelImage(fn, displayPreview, writerformats.value(filtID-qtwritersidx, QByteArray()));
+            // here we can let Qt figure out the correct exporter
+            return saveAsPixelImage(fn, displayPreview, writerformats.value(filtID-filtersIndexFirstQtWriter, QByteArray()));
         }
     }
+    return false;
 }
 
 
-void JKQTBasePlotter::saveAsPixelImage(const QString& filename, bool displayPreview, const QByteArray& outputFormat, const QSize &outputSizeIncrease) {
+bool JKQTBasePlotter::saveAsPixelImage(const QString& filename, bool displayPreview, const QByteArray& outputFormat, const QSize &outputSizeIncrease) {
     loadUserSettings();
     QString fn=filename;
     QStringList filt;
@@ -3668,15 +3708,17 @@ void JKQTBasePlotter::saveAsPixelImage(const QString& filename, bool displayPrev
 
     saveUserSettings();
     if (!fn.isEmpty()) {
-        int filtID=filt.indexOf(selFormat);
+        const int filtID=filt.indexOf(selFormat);
         //QString ext=tolower(extract_file_ext(fn.toStdString()));
-        QString form="NONE";
-        if (filtID>=0 && filtID<writerformats.size()) {
-            form=writerformats[filtID];
-        }
-        if (outputFormat.size()>0) {
-            form =outputFormat;
-        }
+        const QString form=[&]()->QString{
+            if (filtID>=0 && filtID<writerformats.size()) {
+                return writerformats[filtID];
+            }
+            if (outputFormat.size()>0) {
+                return outputFormat;
+            }
+            return "NONE";
+        }();
 
 
         emit beforeExporting();; auto __finalpaint=JKQTPFinally([&]() { emit afterExporting();});
@@ -3692,26 +3734,29 @@ void JKQTBasePlotter::saveAsPixelImage(const QString& filename, bool displayPrev
 
             QImage png(QSizeF(double(printSizeX_Millimeter)+outputSizeIncrease.width(), double(printSizeY_Millimeter)+outputSizeIncrease.height()).toSize(), QImage::Format_ARGB32);
             png.fill(Qt::transparent);
-            JKQTPEnhancedPainter painter;
-            painter.begin(&png);
-            painter.setRenderHint(JKQTPEnhancedPainter::Antialiasing);
-            painter.setRenderHint(JKQTPEnhancedPainter::TextAntialiasing);
-            painter.setRenderHint(JKQTPEnhancedPainter::SmoothPixmapTransform);
-#if (QT_VERSION<QT_VERSION_CHECK(6, 0, 0))
-            painter.setRenderHint(JKQTPEnhancedPainter::NonCosmeticDefaultPen, true);
-            painter.setRenderHint(JKQTPEnhancedPainter::HighQualityAntialiasing);
-#endif
+            {
+                JKQTPEnhancedPainter painter;
+                painter.begin(&png);
+                painter.setRenderHint(JKQTPEnhancedPainter::Antialiasing);
+                painter.setRenderHint(JKQTPEnhancedPainter::TextAntialiasing);
+                painter.setRenderHint(JKQTPEnhancedPainter::SmoothPixmapTransform);
+    #if (QT_VERSION<QT_VERSION_CHECK(6, 0, 0))
+                painter.setRenderHint(JKQTPEnhancedPainter::NonCosmeticDefaultPen, true);
+                painter.setRenderHint(JKQTPEnhancedPainter::HighQualityAntialiasing);
+    #endif
 
-            /*calcPlotScaling(painter);
-            gridPaint(painter, png.rect().size());*/\
-            //qDebug()<<QSize(printSizeX_Millimeter, printSizeY_Millimeter);
-            exportpreviewPaintRequested(painter, QSize(jkqtp_roundTo<int>(printSizeX_Millimeter), jkqtp_roundTo<int>(printSizeY_Millimeter)));
-            painter.end();
-            if (form=="NONE") png.save(fn);
-            else png.save(fn, form.toLatin1().data());
+                /*calcPlotScaling(painter);
+                gridPaint(painter, png.rect().size());*/\
+                //qDebug()<<QSize(printSizeX_Millimeter, printSizeY_Millimeter);
+                exportpreviewPaintRequested(painter, QSize(jkqtp_roundTo<int>(printSizeX_Millimeter), jkqtp_roundTo<int>(printSizeY_Millimeter)));
+                painter.end();
+            }
+            if (form=="NONE") return png.save(fn);
+            else return png.save(fn, form.toLatin1().data());
         }
 
     }
+    return false;
 }
 
 QImage JKQTBasePlotter::grabPixelImage(QSize size, bool showPreview)
@@ -3843,7 +3888,8 @@ void JKQTBasePlotter::copyPixelImage(bool showPreview) {
 }
 
 #ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
-void JKQTBasePlotter::saveAsSVG(const QString& filename, bool displayPreview) {
+bool JKQTBasePlotter::saveAsSVG(const QString& filename, bool displayPreview) {
+    bool printed=false;
     loadUserSettings();
     QString fn=filename;
     if (fn.isEmpty()) {
@@ -3870,23 +3916,23 @@ void JKQTBasePlotter::saveAsSVG(const QString& filename, bool displayPreview) {
 
         emit beforeExporting();; auto __finalpaint=JKQTPFinally([&]() { emit afterExporting();});
         gridPrintingCalc();
-        QSvgGenerator* svg=new QSvgGenerator;
+        std::shared_ptr<QSvgGenerator> svg=std::make_shared<QSvgGenerator>();
         svg->setResolution(96);
         QSize size=QSizeF(gridPrintingSize.width()*25.4/svg->resolution(), gridPrintingSize.height()*25.4/svg->resolution()).toSize();
         svg->setSize(size);
         svg->setFileName(fn);
-
-        if (!printpreviewNew(svg, true, -1.0, -1.0, displayPreview)) {
+        printed=printpreviewNew(svg.get(), true, -1.0, -1.0, displayPreview);
+        if (!printed) {
             if (QFile::exists(tempFM)) {
                 QFile::copy(tempFM, fn);
                 QFile::remove(tempFM);
             }
         }
 
-        delete svg;
 
     }
     saveUserSettings();
+    return printed;
 }
 #endif
 

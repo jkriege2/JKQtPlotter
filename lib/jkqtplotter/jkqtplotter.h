@@ -408,19 +408,13 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
         const JKQTBasePlotter* getConstplotter() const { return const_cast<const JKQTBasePlotter*>(plotter); }
 
 
-        /** \brief returns the JKQTPBaseKey object representing the main plot key/legend
-         *
-         *  \see JKQTBasePlotter::getMainKey()
-         */
+        /** \copydoc JKQTBasePlotter::getMainKey()  */
         inline JKQTPBaseKey* getMainKey()
         {
             return plotter->getMainKey();
         }
 
-        /** \brief returns the JKQTPBaseKey object representing the main plot key/legend
-         *
-         *  \see JKQTBasePlotter::getMainKey()
-         */
+        /** \copydoc JKQTBasePlotter::getMainKey()  */
         inline const JKQTPBaseKey* getMainKey() const
         {
             return plotter->getMainKey();
@@ -613,18 +607,13 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
 
 
 
-        /** \brief returns a pointer to the datastore used by this object */
+        /** \copydoc JKQTBasePlotter::getDatastore()  */
         inline JKQTPDatastore* getDatastore() { return plotter->getDatastore(); }
 
-        /** \brief returns a pointer to the datastore used by this object */
+        /** \copydoc JKQTBasePlotter::getDatastore()  */
         inline const JKQTPDatastore* getDatastore() const { return plotter->getDatastore(); }
 
-        /** \brief tells the plotter object to use the given external datastore.
-         *
-         * If the current datastore is internally managed, this method will free that object and use the supplied datastore
-         * with external management. If the current datastore is already external, this method will simply replace it by the
-         * new one.
-         */
+        /** \copydoc JKQTBasePlotter::useExternalDatastore()  */
         inline void useExternalDatastore(JKQTPDatastore* newStore) { plotter->useExternalDatastore(newStore); }
 
         /** \copydoc JKQTBasePlotter::useAsInternalDatastore() */
@@ -930,7 +919,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
     public Q_SLOTS:
         /** \brief set the current plot magnification */
         void setMagnification(double m);
-        /** \brief sets x/ymin and x/ymax to the supplied values and replots the graph (zoom operation!) */
+        /** \copydoc JKQTBasePlotter::zoom() */
         inline void zoom(double nxmin, double nxmax, double nymin, double nymax) {
             plotter->zoom(nxmin, nxmax, nymin, nymax);
         }
@@ -991,61 +980,70 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
             plotter->setShowZeroAxes(showXY);
         }
 
-        /** \brief save the current plot as an image file, with the current widget aspect ratio, if filename is empty a file selection dialog is displayed.
-        *          The image format is extracted from the file extension (jpeg, tiff, png, pdf, ...) */
-        inline void saveImage(const QString& filename=QString(""), bool displayPreview=true) {
-            plotter->saveImage(filename, displayPreview);
+        /** \copydoc JKQTBasePlotter::saveImage() */
+        inline bool saveImage(const QString& filename=QString(""), bool displayPreview=true) {
+            return plotter->saveImage(filename, displayPreview);
         }
 
-        /** \brief save the data used for the current plot. The file format is extracted from the file extension (csv, ...)
-         *
-         * The parameter \a format specifies the export format. if it is empty the format will be choosen according to the file extension, or
-         * if \a filename is also empty the format will be choosen according to what is selected in the file selection dialog.
-         *
-         * If \a format is \c "slk" the output will be in SYLK format, if \a format is \c "csv" or \a "dat" the output will be comma separated values
-         * and if \a format is \c "txt" the output will be tab separated values.
-         */
+        /** \copydoc JKQTBasePlotter::saveAsPixelImage() */
+        inline bool saveAsPixelImage(const QString& filename=QString(""), bool displayPreview=true, const QByteArray &outputFormat=QByteArray(), const QSize& outputSizeIncrease=QSize(0,0)) {
+            return plotter->saveAsPixelImage(filename, displayPreview, outputFormat, outputSizeIncrease);
+        }
+
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
+        /** \copydoc JKQTBasePlotter::saveAsSVG() */
+        inline bool saveAsSVG(const QString& filename=QString(""), bool displayPreview=true) { return plotter->saveAsSVG(filename, displayPreview); }
+        /** \copydoc JKQTBasePlotter::saveAsPDF() */
+        inline bool saveAsPDF(const QString& filename=QString(""), bool displayPreview=true) { return plotter->saveAsPDF(filename, displayPreview); }
+#endif
+
+        /** \copydoc JKQTBasePlotter::saveAsCSV() */
+        inline void saveAsCSV(const QString& filename=QString("")) { plotter->saveAsCSV(filename); }
+        /** \copydoc JKQTBasePlotter::saveAsSemicolonSV() */
+        inline void saveAsSemicolonSV(const QString& filename=QString("")) { plotter->saveAsSemicolonSV(filename); }
+        /** \copydoc JKQTBasePlotter::saveAsTabSV() */
+        inline void saveAsTabSV(const QString& filename=QString("")) { plotter->saveAsTabSV(filename); }
+        /** \copydoc JKQTBasePlotter::saveAsDIF() */
+        inline void saveAsDIF(const QString& filename=QString("")) { plotter->saveAsDIF(filename); }
+        /** \copydoc JKQTBasePlotter::saveAsSYLK() */
+        inline void saveAsSYLK(const QString& filename=QString("")) { plotter->saveAsSYLK(filename); }
+        /** \copydoc JKQTBasePlotter::saveAsMatlab() */
+        inline void saveAsMatlab(const QString& filename=QString("")) { plotter->saveAsMatlab(filename); }
+        /** \copydoc JKQTBasePlotter::saveAsGerExcelCSV() */
+        inline void saveAsGerExcelCSV(const QString& filename=QString("")) { plotter->saveAsGerExcelCSV(filename); }
+
+
+        /** \copydoc JKQTBasePlotter::saveData() */
         inline void saveData(const QString& filename=QString(""), const QString& format=QString("")) {
             plotter->saveData(filename, format);
         }
 
 #ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
-        /** \brief print the current plot, if printer is \c nullptr a printer selection dialog is displayed */
+        /** \copydoc JKQTBasePlotter::print() */
         inline void print(QPrinter* printer=nullptr) {
             plotter->print(printer);
         }
 #endif
 
-        /** \brief copy displayed data to cpliboard */
+        /** \copydoc JKQTBasePlotter::copyData() */
         inline void copyData() {
             plotter->copyData();
         }
 
-        /** \brief copy displayed data to cpliboard in Matlab syntax */
+        /** \copydoc JKQTBasePlotter::copyDataMatlab() */
         inline void copyDataMatlab() {
             plotter->copyDataMatlab();
         }
 
 
-        /** \brief this method zooms the graph so that all plotted datapoints are visible.
-         *
-         * \param zoomX if set \c true (default) zooms the x axis
-         * \param zoomY if set \c true (default) zooms the y axis
-         * \param includeX0 if this is \c true zoomToFit() will ensure that \f$ x=0 \f$ is visible in the plot (only for non-logx plots, default: false)
-         * \param includeY0 if this is \c true zoomToFit() will ensure that \f$ y=0 \f$ is visible in the plot (only for non-logy plots, default: false)
-         * \param scaleX the plot will have a width of \f$ \mbox{Xscale}\cdot\Delta x \f$ where \f$ \Delta x \f$ is the actual x-axis data range
-         *               For logx plots we actually use this on the logarithmized data! (default: 1.05)
-         * \param scaleY the plot will have a height of \f$ \mbox{Yscale}\cdot\Delta < \f$ where \f$ \Delta < \f$ is the actual <-axis data range
-         *               For log< plots we actually use this on the logarithmized data! (default: 1.05)
-         *
-         */
+        /** \copydoc JKQTBasePlotter::zoomToFit() */
         inline void zoomToFit(bool zoomX=true, bool zoomY=true, bool includeX0=false, bool includeY0=false, double scaleX=1.05, double scaleY=1.05) {
             plotter->zoomToFit(zoomX, zoomY, includeX0, includeY0, scaleX, scaleY);
         }
 
-        /** \brief zooms into the graph (the same as turning the mouse wheel) by the given factor */
+        /** \copydoc JKQTBasePlotter::zoomIn() */
         inline void zoomIn(double factor=2.0) { plotter->zoomIn(factor); }
-        /** \brief zooms out of the graph (the same as turning the mouse wheel) by the given factor */
+        /** \copydoc JKQTBasePlotter::zoomOut() */
         inline void zoomOut(double factor=2.0) { plotter->zoomOut(factor); }
 
         /** \brief update the plot and the overlays */
@@ -1151,95 +1149,22 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
         /** \brief open the standard context menu with the special context menu integrated at the mouse position \a x and \a y \see \ref JKQTPLOTTER_CONTEXTMENU , \ref JKQTPLOTTER_SPECIALCONTEXTMENU, \ref JKQTPLOTTER_USERMOUSEINTERACTION */
         void openStandardAndSpecialContextMenu(int x, int y);
 
-        /** \brief sets absolutely limiting x-range of the plot
-         *
-         *  \param xminn absolute minimum of x-axis
-         *  \param xmaxx absolute maximum of x-axis
-         *
-         * \note if the aspect ratio of this does not fit into the widget, it is possible that you don't see the complete contents!
-         *
-         * \see setAbsoluteXY(), setAbsoluteY(), JKQTBasePlotter::setAbsoluteX()
-         */
+        /** \copydoc JKQTBasePlotter::setAbsoluteX()  */
         inline void setAbsoluteX(double xminn, double xmaxx) { plotter->setAbsoluteX(xminn, xmaxx); }
 
-        /** \brief sets absolute minimum and maximum y-value to plot
-         *
-         *  \param yminn absolute minimum of y-axis
-         *  \param ymaxx absolute maximum of y-axis
-         *
-         * \note if the aspect ratio of this does not fit into the widget, it is possible that you don't see the complete contents!
-         *
-         * \see setAbsoluteXY(), setAbsoluteX(), JKQTBasePlotter::setAbsoluteY()
-         */
+        /** \copydoc JKQTBasePlotter::setAbsoluteY()  */
         inline void setAbsoluteY(double yminn, double ymaxx) { plotter->setAbsoluteY(yminn, ymaxx); }
 
-        /** \brief sets absolutely limiting x- and y-range of the plot
-         *
-         * The user (or programmer) cannot zoom to a viewport that is larger than the range given to this function.
-         *
-         *  \param xminn absolute minimum of x-axis
-         *  \param xmaxx absolute maximum of x-axis
-         *  \param yminn absolute minimum of y-axis
-         *  \param ymaxx absolute maximum of y-axis
-         *
-         * \note if the aspect ratio of this does not fit into the widget, it is possible that you don't see the complete contents!
-         *
-         * \see setAbsoluteX(), setAbsoluteY(), zoomToFit(), JKQTBasePlotter::setAbsoluteXY()
-         */
+        /** \copydoc JKQTBasePlotter::setAbsoluteXY()  */
         inline void setAbsoluteXY(double xminn, double xmaxx, double yminn, double ymaxx) { plotter->setAbsoluteXY(xminn, xmaxx, yminn, ymaxx); }
 
-        /** \brief sets the x-range of the plot (minimum and maximum x-value on the x-axis)
-         *
-         *  \param xminn absolute minimum of x-axis
-         *  \param xmaxx absolute maximum of x-axis
-         *
-         * \note You cannot expand the x-range outside the absolute x-range set e.g. by setAbsoluteX()!
-         *       Also the range will be limited to possible values (e.g. to positive values if you use
-         *       logarithmic axes).
-         *
-         * Uppon setting, this function emits the signal zoomChangedLocally(), if emitting signals
-         * is activated at the moment (e.g. using JKQTBasePlotter::setEmittingSignalsEnabled() ).
-         *
-         * \see setY(), setXY(), zoomToFit(), setAbsoluteXY(), JKQTBasePlotter::setY()
-         */
+        /** \copydoc JKQTBasePlotter::setX()  */
         inline void setX(double xminn, double xmaxx) { plotter->setX(xminn, xmaxx); }
 
-        /** \brief sets the y-range of the plot (minimum and maximum y-value on the y-axis)
-         *
-         *  \param yminn absolute minimum of y-axis
-         *  \param ymaxx absolute maximum of y-axis
-         *
-         * \note You cannot expand the y-range outside the absolute y-range set e.g. by setAbsoluteY()!
-         *       Also the range will be limited to possible values (e.g. to positive values if you use
-         *       logarithmic axes).
-         *
-         * Uppon setting, this function emits the signal zoomChangedLocally(), if emitting signals
-         * is activated at the moment (e.g. using JKQTBasePlotter::setEmittingSignalsEnabled() ).
-         *
-         * \see setX(), setXY(), zoomToFit(), setAbsoluteXY(), JKQTBasePlotter::setX()
-         */
+        /** \copydoc JKQTBasePlotter::setY()  */
         inline void setY(double yminn, double ymaxx) { plotter->setY(yminn, ymaxx); }
 
-        /** \brief sets the x- and y-range of the plot (minimum and maximum values on the x-/y-axis)
-         *
-         *  \param xminn absolute minimum of x-axis
-         *  \param xmaxx absolute maximum of x-axis
-         *  \param yminn absolute minimum of y-axis
-         *  \param ymaxx absolute maximum of y-axis
-         *  \param affectsSecondaryAxes if \c true, the secondary axes are affectedtoo, by using a relative zooming scheme,
-         *                              i.e. if a major axis range shrinks by 50%, also the secondary ranges shrink by 50%
-         *                              [default: \c false]
-         *
-         *
-         * \note You cannot expand the ranges outside the absolute ranges set e.g. by setAbsoluteXY()!
-         *       Also the range will be limited to possible values (e.g. to positive values if you use
-         *       logarithmic axes).
-         *
-         * Uppon setting, this function emits the signal zoomChangedLocally(), if emitting signals
-         * is activated at the moment (e.g. using JKQTBasePlotter::setEmittingSignalsEnabled() ).
-         *
-         * \see setX(), setX(), zoomToFit(), setAbsoluteXY(), JKQTBasePlotter::setXY()
-         */
+        /** \copydoc JKQTBasePlotter::setXY()  */
          inline void setXY(double xminn, double xmaxx, double yminn, double ymaxx, bool affectsSecondaryAxes=false) { plotter->setXY(xminn, xmaxx, yminn, ymaxx, affectsSecondaryAxes); }
     Q_SIGNALS:
         /** \brief emitted whenever the mouse moves
