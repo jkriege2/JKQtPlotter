@@ -747,6 +747,33 @@ void JKQTPlotter::paintUserAction() {
     }
 }
 
+void JKQTPlotter::correctZoomRectForPanning(QRectF &zoomRect) const
+{
+    zoomRect=zoomRect.normalized();
+
+    // this code corrects for cases, where you pan over getAbsoluteXY().
+    // without this correction, the zoom rectangle size will be changed, instead of jus stopping at the absolute size
+    auto correctForAbsoluteLeft=[](double pos, double absPos) {
+        if (!JKQTPIsOKFloat(absPos)) return pos;
+        if (pos<absPos) return absPos;
+        return pos;
+    };
+    auto correctForAbsoluteRight=[](double pos, double absPos) {
+        if (!JKQTPIsOKFloat(absPos)) return pos;
+        if (pos>absPos) return absPos;
+        return pos;
+    };
+    const double absXMin=plotter->x2p(plotter->getAbsoluteXMin());
+    const double absYMin=plotter->y2p(plotter->getAbsoluteYMin());
+    const double absXMax=plotter->x2p(plotter->getAbsoluteXMax());
+    const double absYMax=plotter->y2p(plotter->getAbsoluteYMax());
+    if (JKQTPIsOKFloat(absXMin)&&JKQTPIsOKFloat(absXMax)) zoomRect.moveLeft(correctForAbsoluteLeft(zoomRect.left(), std::min<double>(absXMin, absXMax)));
+    if (JKQTPIsOKFloat(absYMin)&&JKQTPIsOKFloat(absYMax)) zoomRect.moveTop(correctForAbsoluteLeft(zoomRect.top(), std::min<double>(absYMin, absYMax)));
+    if (JKQTPIsOKFloat(absXMin)&&JKQTPIsOKFloat(absXMax)) zoomRect.moveRight(correctForAbsoluteRight(zoomRect.right(), std::max<double>(absXMin, absXMax)));
+    if (JKQTPIsOKFloat(absYMin)&&JKQTPIsOKFloat(absYMax)) zoomRect.moveBottom(correctForAbsoluteRight(zoomRect.bottom(), std::max<double>(absYMin, absYMax)));
+
+}
+
 
 void JKQTPlotter::mouseMoveEvent ( QMouseEvent * event ) {
     if (plotterStyle.displayMousePosition) {
@@ -825,6 +852,7 @@ void JKQTPlotter::mouseMoveEvent ( QMouseEvent * event ) {
                 } else {
                     zoomRect.translate(mouseDragRectXStartPixel-mouseDragRectXEndPixel, mouseDragRectYStartPixel-mouseDragRectYEndPixel);
                 }
+                correctZoomRectForPanning(zoomRect);
                 setXY(plotter->p2x(zoomRect.left()), plotter->p2x(zoomRect.right()), plotter->p2y(zoomRect.bottom()), plotter->p2y(zoomRect.top()), true);
             }
 
@@ -939,6 +967,7 @@ void JKQTPlotter::mouseReleaseEvent ( QMouseEvent * event ){
                 } else {
                     zoomRect.translate(mouseDragRectXStartPixel-mouseDragRectXEndPixel, mouseDragRectYStartPixel-mouseDragRectYEndPixel);
                 }
+                correctZoomRectForPanning(zoomRect);
                 setXY(plotter->p2x(zoomRect.left()), plotter->p2x(zoomRect.right()), plotter->p2y(zoomRect.bottom()), plotter->p2y(zoomRect.top()), true);
             } else if (currentMouseDragAction.mode==jkqtpmdaDrawRectangleForEvent) {
                 emit userRectangleFinished(x1, y1, x2-x1, y2-y1, event->modifiers());
@@ -1094,7 +1123,7 @@ void JKQTPlotter::wheelEvent ( QWheelEvent * event ) {
             acTodo=WheelActionType::Pan;
             d=QPointF(angleDelta.x()/120.0*zoomRect.width()/10.0,
                               angleDelta.y()/120.0*zoomRect.height()/10.0);
-            // maximum shoft is 100 Pixels in either direction
+            // maximum shift is 100 Pixels in either direction
             d.setX(jkqtp_bounded<double>(-100, d.x(), 100));
             d.setY(jkqtp_bounded<double>(-100, d.y(), 100));
             // minimmum shift is 10 pixels, unles |shift|<1
@@ -1130,6 +1159,8 @@ void JKQTPlotter::wheelEvent ( QWheelEvent * event ) {
         } else {
             zoomRect.translate(d.x(), d.y());
         }
+        correctZoomRectForPanning(zoomRect);
+        // now apply the new range
         setXY(plotter->p2x(zoomRect.left()), plotter->p2x(zoomRect.right()), plotter->p2y(zoomRect.bottom()), plotter->p2y(zoomRect.top()), true);
     }
 

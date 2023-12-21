@@ -1496,6 +1496,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
         /** \brief paint the user action (rectangle, ellipse, ... */
         void paintUserAction();
 
+        /** \brief tool function, which corrects the given rectangle (in pixels!) during a panning action. The correction is necesary towards getAbsoluteXY() to prevent an unwanted zooming in. */
+        void correctZoomRectForPanning(QRectF& rect) const;
+
 
         /** \brief event handler for a double click
          *
