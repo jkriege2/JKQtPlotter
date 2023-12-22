@@ -763,14 +763,14 @@ void JKQTPlotter::correctZoomRectForPanning(QRectF &zoomRect) const
         if (pos>absPos) return absPos;
         return pos;
     };
-    const double absXMin=plotter->x2p(plotter->getAbsoluteXMin());
-    const double absYMin=plotter->y2p(plotter->getAbsoluteYMin());
-    const double absXMax=plotter->x2p(plotter->getAbsoluteXMax());
-    const double absYMax=plotter->y2p(plotter->getAbsoluteYMax());
-    if (JKQTPIsOKFloat(absXMin)&&JKQTPIsOKFloat(absXMax)) zoomRect.moveLeft(correctForAbsoluteLeft(zoomRect.left(), std::min<double>(absXMin, absXMax)));
-    if (JKQTPIsOKFloat(absYMin)&&JKQTPIsOKFloat(absYMax)) zoomRect.moveTop(correctForAbsoluteLeft(zoomRect.top(), std::min<double>(absYMin, absYMax)));
-    if (JKQTPIsOKFloat(absXMin)&&JKQTPIsOKFloat(absXMax)) zoomRect.moveRight(correctForAbsoluteRight(zoomRect.right(), std::max<double>(absXMin, absXMax)));
-    if (JKQTPIsOKFloat(absYMin)&&JKQTPIsOKFloat(absYMax)) zoomRect.moveBottom(correctForAbsoluteRight(zoomRect.bottom(), std::max<double>(absYMin, absYMax)));
+    const double absLeft=plotter->x2p((plotter->getXAxis()->getInverted())? plotter->getAbsoluteXMax() : plotter->getAbsoluteXMin());
+    const double absTop=plotter->y2p((plotter->getYAxis()->getInverted())? plotter->getAbsoluteYMin() : plotter->getAbsoluteYMax());
+    const double absRight=plotter->x2p((plotter->getXAxis()->getInverted())? plotter->getAbsoluteXMin() : plotter->getAbsoluteXMax());
+    const double absBottom=plotter->y2p((plotter->getYAxis()->getInverted())? plotter->getAbsoluteYMax() : plotter->getAbsoluteYMin());
+    if (JKQTPIsOKFloat(absLeft)) zoomRect.moveLeft(correctForAbsoluteLeft(zoomRect.left(), absLeft));
+    if (JKQTPIsOKFloat(absTop)) zoomRect.moveTop(correctForAbsoluteLeft(zoomRect.top(), absTop));
+    if (JKQTPIsOKFloat(absRight)) zoomRect.moveRight(correctForAbsoluteRight(zoomRect.right(), absRight));
+    if (JKQTPIsOKFloat(absBottom)) zoomRect.moveBottom(correctForAbsoluteRight(zoomRect.bottom(), absBottom));
 
 }
 
