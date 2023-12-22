@@ -1642,35 +1642,50 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
          * Uppon setting, this function emits the signal zoomChangedLocally(), if emitting signals
          * is activated at the moment (e.g. using setEmittingSignalsEnabled() ).
          *
-         * \see setX(), setX(), zoomToFit(), setAbsoluteXY(), JKQTPlotter::setXY()
+         * \see setX(), setX(), zoomToFit(), setAbsoluteXY()
          */
         void setXY(double xminn, double xmaxx, double yminn, double ymaxx, bool affectsSecondaryAxes=false);
 
+
+        /** \copydoc setXY()
+         *  \deprecated The function JKQTBasePlotter::zoom() is deprecated and will be removed in future version, use JKQTBasePlotter::setXY() instead!
+         */
+        inline void zoom(double xminn, double xmaxx, double yminn, double ymaxx, bool affectsSecondaryAxes=false) {
+            setXY(xminn, xmaxx, yminn, ymaxx, affectsSecondaryAxes);
+        }
+
         /** \brief sets absolutely limiting x-range of the plot
+         *
+         * The user (or programmer) cannot zoom to a viewport that is larger than the range given to this function.
+         * This is implemented by calling JKQTPCoordinateAxis::setAbsoluteRange() for the major x-axes!
          *
          *  \param xminn absolute minimum of x-axis
          *  \param xmaxx absolute maximum of x-axis
          *
          * \note if the aspect ratio of this does not fit into the widget, it is possible that you don't see the complete contents!
          *
-         * \see setAbsoluteXY(), setAbsoluteY(), JKQTPlotter::setAbsoluteX()
+         * \see setAbsoluteXY(), setAbsoluteY(), JKQTPCoordinateAxis::setAbsoluteRange()
          */
         void setAbsoluteX(double xminn, double xmaxx);
 
         /** \brief sets absolute minimum and maximum y-value to plot
+         *
+         * The user (or programmer) cannot zoom to a viewport that is larger than the range given to this function.
+         * This is implemented by calling JKQTPCoordinateAxis::setAbsoluteRange() for the major y-axes!
          *
          *  \param yminn absolute minimum of y-axis
          *  \param ymaxx absolute maximum of y-axis
          *
          * \note if the aspect ratio of this does not fit into the widget, it is possible that you don't see the complete contents!
          *
-         * \see setAbsoluteXY(), setAbsoluteX(), JKQTPlotter::setAbsoluteY()
+         * \see setAbsoluteXY(), setAbsoluteX(), JKQTPCoordinateAxis::setAbsoluteRange()
          */
         void setAbsoluteY(double yminn, double ymaxx);
 
         /** \brief sets absolutely limiting x- and y-range of the plot
          *
          * The user (or programmer) cannot zoom to a viewport that is larger than the range given to this function.
+         * This is implemented by calling JKQTPCoordinateAxis::setAbsoluteRange() for the major axes!
          *
          *  \param xminn absolute minimum of x-axis
          *  \param xmaxx absolute maximum of x-axis
@@ -1679,55 +1694,71 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
          *
          * \note if the aspect ratio of this does not fit into the widget, it is possible that you don't see the complete contents!
          *
-         * \see setAbsoluteX(), setAbsoluteY(), zoomToFit(), JKQTPlotter::setAbsoluteXY()
+         * \see setAbsoluteX(), setAbsoluteY(), JKQTPCoordinateAxis::setAbsoluteRange()
          */
         void setAbsoluteXY(double xminn, double xmaxx, double yminn, double ymaxx);
 
 
-        /** \brief sets x/ymin and x/ymax to the supplied values and replots the graph (zoom operation!) */
-        void zoom(double nxmin, double nxmax, double nymin, double nymax);
 
-        /** \brief sets whether to plot grid lines or not
+        /** \brief sets whether the major grid lines of the major axes are shown
         *
         * \image html jkqtplotter_gridvisible.png "Grid visible"
         * \image html jkqtplotter_gridinvisible.png "Grid invisible"
+        *
+        * \see JKQTPCoordinateAxis::setDrawGrid() and JKQTPGridStyle::enabled in JKQTPCoordinateAxisStyle::majorGridStyle
         */
         void setGrid(bool val);
 
-        /** \brief sets the color of all Major grid lines
+        /** \brief sets the color of all major grid lines (of the major x- and y-axis)
+         *
+         *  \see JKQTPCoordinateAxis::setGridColor() and JKQTPGridStyle::lineColor in JKQTPCoordinateAxisStyle::majorGridStyle
          * */
         void setGridColor(QColor color);
 
-        /** \brief sets the color of all minor grid lines
+        /** \brief sets the color of all minor grid lines (of the major x- and y-axis)
+         *
+         *  \see JKQTPCoordinateAxis::setMinorGridColor() and JKQTPGridStyle::lineColor in JKQTPCoordinateAxisStyle::minorGridStyle
          * */
         void setMinorGridColor(QColor color);
 
         /** \brief sets the width of all Major grid lines
+         *
+         *  \see JKQTPCoordinateAxis::setGridWidth() and JKQTPGridStyle::lineWidth in JKQTPCoordinateAxisStyle::majorGridStyle
          * */
         void setGridWidth(double __value);
 
         /** \brief sets the width of all minor grid lines
-         * */
+         *
+         *  \see JKQTPCoordinateAxis::setMinorGridWidth() and JKQTPGridStyle::lineWidth in JKQTPCoordinateAxisStyle::minorGridStyle
+         */
         void setMinorGridWidth(double __value);
 
         /** \brief sets the style of all Major grid lines
+         *
+         *  \see JKQTPCoordinateAxis::setGridStyle() and JKQTPGridStyle::lineStyle in JKQTPCoordinateAxisStyle::majorGridStyle
          * */
         void setGridStyle(Qt::PenStyle __value);
 
         /** \brief sets the style of all minor grid lines
+         *
+         *  \see JKQTPCoordinateAxis::setMinorGridStyle() and JKQTPGridStyle::lineStyle in JKQTPCoordinateAxisStyle::minorGridStyle
          * */
         void setMinorGridStyle(Qt::PenStyle __value);
 
 
-        /** \brief switches the visibility of the zero-axes associated with the x- and y-axis
+        /** \brief switches the visibility of the zero-axes associated with the major x- and y-axis
          *
          * \param showX indicates whether to show the zero-axis associated with the x-axis (i.e. x==0 or the vertical zero-axis)
          * \param showY indicates whether to show the zero-axis associated with the y-axis (i.e. y==0 or the horizontal zero-axis)
+         *
+         *  \see JKQTPCoordinateAxis::showZeroAxis() and JKQTPCoordinateAxisStyle::showZeroAxis
          * */
         void setShowZeroAxes(bool showX, bool showY);
-        /** \brief switches the visibility of the zero-axes associated with the x- and y-axis
+        /** \brief switches the visibility of the zero-axes associated with the major x- and y-axis
          *
-         * \param showXY indicates whether to show the zero-axis associated with the x- and y-axis
+         * \param showXY indicates whether to show the zero-axis associated with the x- <ul>and</ul> y-axis
+         *
+         *  \see JKQTPCoordinateAxis::showZeroAxis() and JKQTPCoordinateAxisStyle::showZeroAxis
          * */
         void setShowZeroAxes(bool showXY);
 
@@ -1738,10 +1769,18 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
          *  \param outputFormmat specify the file format for the generated file
          *  \param  outputSizeIncrease if given, the size of the generated pixel image is increased by this number of pixels in addition to the required space
          *  \return returns \c true on success
+         *
+         *  This function may generate any pixel-graphics format, supported by Qt and listed in <a href="https://doc.qt.io/qt-6/qimagewriter.html"><code>QImageWriter::supportedImageFormats()</code></a>.
+         *  The parameters are comparable to the standard Qt functions like <a href="https://doc.qt.io/qt-6/qimage.html#save"><code>QImage::save()</code></a>, which is also used internally.
+         *
+         *  \see grabPixelImage(), copyPixelImage()
          */
         bool saveAsPixelImage(const QString& filename=QString(""), bool displayPreview=true, const QByteArray &outputFormat=QByteArray(), const QSize& outputSizeIncrease=QSize(0,0));
 
-        /** \brief save the current plot as a pixel image into a QImage with the given size */
+        /** \brief returns a rendering of the current plot as a QImage (pixel image) with the given size
+         *
+         *  \see saveAsPixelImage(), copyPixelImage()
+         */
         QImage grabPixelImage(QSize size=QSize(), bool showPreview=false);
         /** \brief copy the current plot as a pixel+svg image to the clipboard */
         void copyPixelImage(bool showPreview=true);
@@ -1774,6 +1813,11 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         *   \param filename the filename to save to, if empty a file save dialog is displayed
         *   \param displayPreview if \C true, a save/print-preview dialog is displayed that allows to make some modifications to the generated image, otherwise the image is saved with default settings.
         *   \return Returns \c true if the file was save successfully
+        *
+        *   This function is comparable to saveAsPixelImage(), but it allows to save into any graphics format, including SVG and PF (if printer-support is compiled into the library).
+        *   Also it may use the custom exporters implemented as JKQTPPaintDeviceAdapter and registered via JKQTBasePlotter::registerPaintDeviceAdapter().
+        *
+        *  \see grabPixelImage(), copyPixelImage(), saveAsPixelImage(), JKQTBasePlotter::registerPaintDeviceAdapter(), JKQTPPaintDeviceAdapter
         */
         bool saveImage(const QString& filename=QString(""), bool displayPreview=true);
 

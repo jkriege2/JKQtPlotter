@@ -488,18 +488,6 @@ void JKQTBasePlotter::setMaintainAxisAspectRatio(bool value) {
     redrawPlot();
 }
 
-void JKQTBasePlotter::zoom(double nxmin, double nxmax, double nymin, double nymax){
-    // only react on double clicks inside event
-    double xmin=nxmin;
-    double xmax=nxmax;
-    double ymin=nymin;
-    double ymax=nymax;
-
-    xAxis->setRange(xmin, xmax);
-    yAxis->setRange(ymin, ymax);
-    redrawPlot();
-    if (emitSignals) emit zoomChangedLocally(xAxis->getMin(), xAxis->getMax(), yAxis->getMin(), yAxis->getMax(), this);
-}
 
 void JKQTBasePlotter::setWidgetSize(int wid, int heigh) {
     widgetWidth=wid;

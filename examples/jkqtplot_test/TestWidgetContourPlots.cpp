@@ -88,7 +88,7 @@ TestWidgetContourPlots::TestWidgetContourPlots(QWidget *parent) :
     densityplot->setTitle("density plot");
     plotContour->addGraph(densityplot);
     plotContour->setGrid(false);
-    plotDensity->zoom(-0.1,1.1,-0.1,1.1);
+    plotDensity->setXY(-0.1,1.1,-0.1,1.1);
 
     QVector<double> levels;
 //    levels<<5<<10<<25; //    levels<<5.1<<10.1;
@@ -105,7 +105,7 @@ TestWidgetContourPlots::TestWidgetContourPlots(QWidget *parent) :
     cp->setContourLevels(levels);
     cp->setTitle("contour plot");
     plotContour->addGraph(cp);
-    plotContour->zoom(-0.1,1.1,-0.1,1.1);
+    plotContour->setXY(-0.1,1.1,-0.1,1.1);
 
     plotContour->setPlotUpdateEnabled(true);
     plotContour->redrawPlot();

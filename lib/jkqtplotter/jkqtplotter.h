@@ -919,9 +919,11 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
     public Q_SLOTS:
         /** \brief set the current plot magnification */
         void setMagnification(double m);
-        /** \copydoc JKQTBasePlotter::zoom() */
-        inline void zoom(double nxmin, double nxmax, double nymin, double nymax) {
-            plotter->zoom(nxmin, nxmax, nymin, nymax);
+        /** \copydoc JKQTBasePlotter::zoom()
+         *  \deprecated The function JKQTPlotter::zoom() is deprecated and will be removed in future version, use JKQTPlotter::setXY() instead!
+         */
+        inline void zoom(double nxmin, double nxmax, double nymin, double nymax, bool affectsSecondaryAxes=false) {
+            plotter->zoom(nxmin, nxmax, nymin, nymax, affectsSecondaryAxes);
         }
 
         /** \copydoc JKQTBasePlotter::setGrid()   */
@@ -972,10 +974,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
         inline void setShowZeroAxes(bool showX, bool showY) {
             plotter->setShowZeroAxes(showX, showY);
         }
-        /** \brief switches the visibility of the zero-axes associated with the x- and y-axis
-         *
-         * \param showXY indicates whether to show the zero-axis associated with the x- and y-axis
-         * */
+        /** \copydoc JKQTBasePlotter::setShowZeroAxes() */
         inline void setShowZeroAxes(bool showXY) {
             plotter->setShowZeroAxes(showXY);
         }

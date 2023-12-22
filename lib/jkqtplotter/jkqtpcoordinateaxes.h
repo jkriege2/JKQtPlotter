@@ -494,7 +494,17 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
     public Q_SLOTS:
         /** \brief set range of plot axis */
         void setRange(double amin, double amax);
-        /** \brief set absolute range of plot axis */
+        /** \brief sets absolutely limiting range of the plot
+         *
+         * The user (or programmer) cannot zoom to a viewport that is larger than the range given to this function.
+         *
+         *  \param aamin absolute minimum of the axis
+         *  \param aamax absolute maximum of the axis
+         *
+         * \note if the aspect ratio (set in the JKQTBasePlotter or JKQTPlotter) of this does not fit into the widget, it is possible that you don't see the complete contents!
+         *
+         * \see setAbsoluteX(), setAbsoluteY(), zoomToFit(), JKQTPCoordinateAxis::setAbsoluteRange()
+         */
         void setAbsoluteRange(double aamin, double aamax);
         /** \brief do not use an absolute range of plot axis */
         void setNoAbsoluteRange();
