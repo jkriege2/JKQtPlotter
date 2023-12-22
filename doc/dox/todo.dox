@@ -9,6 +9,7 @@ This page lists several todos and wishes for future version of JKQTPlotter
     <li>build system: provide general targets JKQTPlotter::JKQTPlotter, JKQTPlotter::JKQTMathText, instead of targets which differ by linking option</li>
     <li>build system: refactor CMake-Code, so static/dynamic switch is done on compile and only one variant is built</li>
     <li>build system: maybe prepare for CMake's <a href="https://cmake.org/cmake/help/latest/module/FetchContent.html">FetchContent</a>-API (+ possibly providing a reduced source-package for each release)</li>
+    <li>Lib Utilities: General and portable way to mark functions and classes as deprecated for different compilers</li>
   </ul></li>
   <li>JKQTPlotter:<ul>
     <li>data management: allow for other datatypes than double, would be good to have, double, float, ints, bool, string ... as for images</li>
