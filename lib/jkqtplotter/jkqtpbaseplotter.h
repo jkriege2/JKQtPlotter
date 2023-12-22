@@ -74,6 +74,11 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPSaveDataAdapter {
         virtual ~JKQTPSaveDataAdapter() ;
         /** \brief Filter-String for a Qt File-Dialog, e.g. <code>"CSV Files (*.csv)"</code> */
         virtual QString getFilter() const=0;
+        /** \brief a plugin-ID, i.e. a unique name for this format plugin, e.g. \c MyPluginExport_MATLABMAT */
+        virtual QString getFormatID() const=0;
+        /** \brief returns a list (in lower-case) of the file extensions supported by this plugin, e.g. \c {"mat"} */
+        virtual QStringList getFileExtension() const=0;
+
         /** \brief actually save the table \a data into file \a filename . The parameter \a columnNames provides a name for each column */
         virtual void saveJKQTPData(const QString& filename, const QList<QVector<double> >& data, const QStringList& columnNames) const=0;
 };
@@ -1823,19 +1828,32 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
 
         /** \brief save the data used for the current plot. The file format is extracted from the file extension (csv, ...)
          *
-         * The parameter \a format specifies the export format. if it is empty the format will be choosen according to the file extension, or
-         * if \a filename is also empty the format will be choosen according to what is selected in the file selection dialog.
+         *   \param filename the filename to save to, if empty a file save dialog is displayed
+         *   \param format The parameter \a format specifies the export format. if it is empty the format will be choosen according to the file extension, or
+         *                 if \a filename is also empty the format will be choosen according to what is selected in the file selection dialog.
+         *                 See below for a listing of supported values.
+         *   \returns returns \c true if the data was exported successfully.
          *
-         * If \a format is \c "slk" the output will be in SYLK format, if \a format is \c "csv" or \a "dat" the output will be comma separated values
-         * and if \a format is \c "txt" the output will be tab separated values.
+         * These values are supported for \a format (if \a format is not provided, the function tries to guess it from the file extensions liste below):
+         *   - \c "csv", Comma Separated Values, dot as decimal separator (see also <a href="https://en.wikipedia.org/wiki/Comma-separated_values">https://en.wikipedia.org/wiki/Comma-separated_values</a>, extensions: \c *.csv , \c *.dat , see JKQTBasePlotter::saveAsCSV()
+         *   - \c "tab" Tab Separated Values, dot as decimal separator, extensions: \c *.txt , see JKQTBasePlotter::saveAsTabSV()
+         *   - \c "sem" or \c "ssv", Semicolon Separated Values, dot as decimal separator, extensions: \c *.sem , \c *.ssv , see JKQTBasePlotter::saveAsSemicolonSV()
+         *   - \c "gex", Semicolon Separated Values for German Excel, i.e. comma as decimal separator, extensions: \c *.gex , see JKQTBasePlotter::saveAsGerExcelCSV()
+         *   - \c "slk" or \c "sylk" , SYmbolik LinK (SYLK) spreadsheet (see <a href="https://en.wikipedia.org/wiki/Symbolic_Link_(SYLK)">https://en.wikipedia.org/wiki/Symbolic_Link_(SYLK)</a> ), extensions: \c *.slk , \c *.sylk , see JKQTBasePlotter::saveAsSYLK()
+         *   - \c "dif", Data Interchange Format (see <a href="https://en.wikipedia.org/wiki/Data_Interchange_Format">https://en.wikipedia.org/wiki/Data_Interchange_Format</a>), extensions: \c *.dif , see JKQTBasePlotter::saveAsDIF()
+         *   - \c "m", Matlab Script, extensions: \c *.m , see JKQTBasePlotter::saveAsMatlab()
+         * .
+         *
+         * In addition you can use the custom exporters implemented as JKQTPSaveDataAdapter and registered using JKQTBasePlotter::registerSaveDataAdapter().
+         * For these you need to use \a format <code>= "customN"</code>, where N is the index of the exporter in the list of registered exporters.
          */
-        void saveData(const QString& filename=QString(""), const QString& jkqtp_format=QString(""));
+        bool saveData(const QString& filename=QString(""), const QString& format=QString(""));
         /** \brief copy the data used for the current plot to the clipboard
          *
          *  copies data as tab separated data with the system-decimal point.
          */
         void copyData();
-        /** \brief copy the data used for the current plot to the clipboard in Matlab format
+        /** \brief copy the data used for the current plot to the clipboard as a Matlab script
          */
         void copyDataMatlab();
         /** \brief save the current plot data as a Comma Separated Values (CSV) file
@@ -1859,30 +1877,40 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
          * \param filename the file to save to, if \a filename is empty, a file open dialog will be shown
          *
          * \note this function uses  CSVdecimalSeparator as decimal separator and CSVcommentInitializer to initialize content lines
+         *
+         * \see saveData()
          */
         void saveAsTabSV(const QString& filename=QString(""));
 
         /** \brief save the current plot data as a DIF file
          *
          * \param filename the file to save to, if \a filename is empty, a file open dialog will be shown
+         *
+         * \see saveData()
          */
         void saveAsDIF(const QString& filename=QString(""));
 
         /** \brief save the current plot data as a SYLK spreadsheet file
          *
          * \param filename the file to save to, if \a filename is empty, a file open dialog will be shown
+         *
+         * \see saveData()
          */
         void saveAsSYLK(const QString& filename=QString(""));
 
         /** \brief save the current plot data as a Matlab Script
          *
          * \param filename the file to save to, if \a filename is empty, a file open dialog will be shown
+         *
+         * \see copyDataMatlab(), saveData()
          */
         void saveAsMatlab(const QString& filename=QString(""));
 
         /** \brief save the current plot data as a Semicolon Separated Values (CSV) file for german Excel, i.e. with comma as decimal separator
          *
          * \param filename the file to save to, if \a filename is empty, a file open dialog will be shown
+         *
+         * \see saveData()
          */
         void saveAsGerExcelCSV(const QString& filename=QString(""));
 

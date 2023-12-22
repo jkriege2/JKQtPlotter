@@ -3264,7 +3264,7 @@ void JKQTBasePlotter::copyDataMatlab() {
     saveUserSettings();
 }
 
-void JKQTBasePlotter::saveData(const QString& filename, const QString &format) {
+bool JKQTBasePlotter::saveData(const QString& filename, const QString &format) {
     loadUserSettings();
     QStringList fileformats;
     QStringList fileformatIDs;
@@ -3283,20 +3283,27 @@ void JKQTBasePlotter::saveData(const QString& filename, const QString &format) {
     fileformats<<tr("Matlab Script (*.m)");
     fileformatIDs<<"m";
 
+    QMap<QString, QStringList> saveAdapterFileExtensions;
     {
         JKQTPSynchronized<QList<JKQTPSaveDataAdapter*>>::Locker lock(jkqtpSaveDataAdapters);
         for (int i=0; i<jkqtpSaveDataAdapters.get().size(); i++) {
+            const QString fid=jkqtpSaveDataAdapters.get()[i]->getFormatID();
             fileformats<<jkqtpSaveDataAdapters.get()[i]->getFilter();
-            fileformatIDs<<QString("custom%1").arg(i);
+            fileformatIDs<<fid;
+            saveAdapterFileExtensions[fid]=jkqtpSaveDataAdapters.get()[i]->getFileExtension();
         }
     }
 
 
 
     QString fn=filename;
-    QString fmt=format.toLower();
+    QString fmt=format.toLower().trimmed();
+    if (fmt=="sylk") fmt="slk";
+    else if (fmt=="ssv") fmt="sem";
+
     if (fmt.isEmpty()) {
-        QString e=QFileInfo(filename).suffix().toLower();//  jkqtp_tolower(extract_file_ext(fn.toStdString()));
+        const QString e=QFileInfo(filename).suffix().toLower();
+        fmt=e;
         if (e=="csv" || e=="dat") {
             fmt="csv";
         } else if (e=="txt") {
@@ -3307,6 +3314,16 @@ void JKQTBasePlotter::saveData(const QString& filename, const QString &format) {
             fmt="dif";
         } else if (e=="m") {
             fmt="m";
+        } else if (e=="ssv") {
+            fmt="sem";
+        }
+        if (!fileformatIDs.contains(fmt)) {
+            for (auto it= saveAdapterFileExtensions.begin(); it!=saveAdapterFileExtensions.end(); ++it) {
+                if (it.value().contains(e)) {
+                    fmt=it.key();
+                    break;
+                }
+            }
         }
     }
     if (fn.isEmpty()) {
@@ -3322,13 +3339,8 @@ void JKQTBasePlotter::saveData(const QString& filename, const QString &format) {
         }
         //qDebug()<<"after: currentSaveDirectory="<<currentSaveDirectory;
         fmt="csv";
-        for (int i=0; i<fileformats.size(); i++) {
-            if (selectedFilter.contains(fileformats[i])) {
-                fmt=fileformatIDs[i] ;
-            }
-        }
-
-
+        const int filtIdx=fileformats.indexOf(selectedFilter);
+        if (filtIdx>=0) fmt=fileformatIDs[filtIdx] ;
     }
 
     saveUserSettings();
@@ -3336,30 +3348,49 @@ void JKQTBasePlotter::saveData(const QString& filename, const QString &format) {
 
         if (fmt=="csv") {
             saveAsCSV(fn);
+            return true;
         } else if (fmt=="tab") {
             saveAsTabSV(fn);
+            return true;
         } else if (fmt=="gex") {
             saveAsGerExcelCSV(fn);
+            return true;
         } else if (fmt=="sem") {
             saveAsSemicolonSV(fn);
+            return true;
         } else if (fmt=="slk") {
             saveAsSYLK(fn);
+            return true;
         } else if (fmt=="dif") {
             saveAsDIF(fn);
+            return true;
         } else if (fmt=="m") {
             saveAsMatlab(fn);
-        } else if (fmt.startsWith("custom")) {
+            return true;
+        } else if (fmt.startsWith("custom")) { // for backward compatibility!
             QString fidx=fmt;
             fidx=fidx.remove(0,6);
             int idx=fidx.toInt();
             JKQTPSynchronized<QList<JKQTPSaveDataAdapter*>>::Locker lock(jkqtpSaveDataAdapters);
             if (idx>=0 && idx<jkqtpSaveDataAdapters.get().size() && jkqtpSaveDataAdapters.get()[idx]) {
-                QStringList cn;
-                QList<QVector<double> > dataset=datastore->getData(&cn);
-                jkqtpSaveDataAdapters.get()[idx]->saveJKQTPData(fn, dataset, cn);
+                QStringList columnNames;
+                const QList<QVector<double> > dataset=datastore->getData(&columnNames);
+                jkqtpSaveDataAdapters.get()[idx]->saveJKQTPData(fn, dataset, columnNames);
+                return true;
+            }
+        } else {
+            JKQTPSynchronized<QList<JKQTPSaveDataAdapter*>>::Locker lock(jkqtpSaveDataAdapters);
+            for (int i=0; i<jkqtpSaveDataAdapters.get().size(); i++) {
+                if (fmt == jkqtpSaveDataAdapters.get()[i]->getFormatID()) {
+                    QStringList columnNames;
+                    const QList<QVector<double> > dataset=datastore->getData(&columnNames);
+                    jkqtpSaveDataAdapters.get()[i]->saveJKQTPData(fn, dataset, columnNames);
+                    return true;
+                }
             }
         }
     }
+    return false;
 }
 
 void JKQTBasePlotter::saveAsCSV(const QString& filename) {
