@@ -21,6 +21,7 @@
 
 #include "jkqtplotter/gui/jkqtpgraphsmodel.h"
 #include "jkqtplotter/jkqtpbaseplotter.h"
+#include <QGuiApplication>
 #include "jkqtplotter/jkqtptools.h"
 #include "jkqtplotter/graphs/jkqtpscatter.h"
 #include <QImage>
@@ -51,6 +52,10 @@ QVariant JKQTPGraphsModel::data(const QModelIndex &index, int role) const
        if (index.row()<static_cast<int>(m_plotter->getGraphCount())) return m_plotter->getGraph(static_cast<size_t>(index.row()))->isVisible()?Qt::Checked:Qt::Unchecked;
     } else if (role == Qt::DecorationRole) {
         if (index.row()<static_cast<int>(m_plotter->getGraphCount())) {
+            const qreal dpr = qGuiApp->devicePixelRatio();
+            QPixmap pix=QPixmap::fromImage(m_plotter->getGraph(static_cast<size_t>(index.row()))->generateKeyMarker(QSize(16,16)*dpr));
+            pix.setDevicePixelRatio(dpr);
+
             return m_plotter->getGraph(static_cast<size_t>(index.row()))->generateKeyMarker(QSize(16,16));
         }
     }
