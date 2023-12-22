@@ -477,28 +477,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         void forceInternalDatastore();
 
 
-        /** \brief save the current plot data as a Comma Separated Values (CSV) file
-         *
-         * \param filename the file to save to, if \a filename is empty, a file open dialog will be shown
-         * \param decimalSeparator decimal separator for outpu
-         * \param commentInitializer line-start for comment lines
-         */
-        void saveAsCSV(const QString& filename, const QString& decimalSeparator, const QString& commentInitializer);
-
-        /** \brief save the current plot data as a Semicolon Separated Values (SSV) file
-         *
-         * \param filename the file to save to, if \a filename is empty, a file open dialog will be shown
-         * \param decimalSeparator decimal separator for outpu
-         * \param commentInitializer line-start for comment lines
-         */
-        void saveAsSemicolonSV(const QString& filename, const QString& decimalSeparator, const QString& commentInitializer);        /** \brief save the current plot data as a Tabulator Separated Values (CSV) file
-         *
-         * \param filename the file to save to, if \a filename is empty, a file open dialog will be shown
-         * \param decimalSeparator decimal separator for outpu
-         * \param commentInitializer line-start for comment lines
-         */
-        void saveAsTabSV(const QString& filename, const QString& decimalSeparator, const QString& commentInitializer);
-
 /**@}*/
 
 
@@ -1472,19 +1450,273 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
 
 
 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/** @name Plot Data Export */
+/**@{*/
+public Q_SLOTS:
+
+        /** \brief save the data used for the current plot. The file format is extracted from the file extension (csv, ...)
+         *
+         *   \param filename the filename to save to, if empty a file save dialog is displayed
+         *   \param format The parameter \a format specifies the export format. if it is empty the format will be choosen according to the file extension, or
+         *                 if \a filename is also empty the format will be choosen according to what is selected in the file selection dialog.
+         *                 See below for a listing of supported values.
+         *   \returns returns \c true if the data was exported successfully.
+         *
+         * These values are supported for \a format (if \a format is not provided, the function tries to guess it from the file extensions liste below):
+         *   - \c "csv", Comma Separated Values, dot as decimal separator (see also <a href="https://en.wikipedia.org/wiki/Comma-separated_values">https://en.wikipedia.org/wiki/Comma-separated_values</a>, extensions: \c *.csv , \c *.dat , see JKQTBasePlotter::saveAsCSV()
+         *   - \c "tab" Tab Separated Values, dot as decimal separator, extensions: \c *.txt , see JKQTBasePlotter::saveAsTabSV()
+         *   - \c "sem" or \c "ssv", Semicolon Separated Values, dot as decimal separator, extensions: \c *.sem , \c *.ssv , see JKQTBasePlotter::saveAsSemicolonSV()
+         *   - \c "gex", Semicolon Separated Values for German Excel, i.e. comma as decimal separator, extensions: \c *.gex , see JKQTBasePlotter::saveAsGerExcelCSV()
+         *   - \c "slk" or \c "sylk" , SYmbolik LinK (SYLK) spreadsheet (see <a href="https://en.wikipedia.org/wiki/Symbolic_Link_(SYLK)">https://en.wikipedia.org/wiki/Symbolic_Link_(SYLK)</a> ), extensions: \c *.slk , \c *.sylk , see JKQTBasePlotter::saveAsSYLK()
+         *   - \c "dif", Data Interchange Format (see <a href="https://en.wikipedia.org/wiki/Data_Interchange_Format">https://en.wikipedia.org/wiki/Data_Interchange_Format</a>), extensions: \c *.dif , see JKQTBasePlotter::saveAsDIF()
+         *   - \c "m", Matlab Script, extensions: \c *.m , see JKQTBasePlotter::saveAsMatlab()
+         * .
+         *
+         * In addition you can use the custom exporters implemented as JKQTPSaveDataAdapter and registered using JKQTBasePlotter::registerSaveDataAdapter().
+         * For these you need to use \a format <code>= "customN"</code>, where N is the index of the exporter in the list of registered exporters.
+         */
+        bool saveData(const QString& filename=QString(""), const QString& format=QString(""));
+        /** \brief copy the data used for the current plot to the clipboard
+         *
+         *  copies data as tab separated data with the system-decimal point.
+         */
+        void copyData();
+        /** \brief copy the data used for the current plot to the clipboard as a Matlab script
+         *
+         * example output:
+         * \code
+         * % data from columne 1 ('x')
+         * x = [ 0 0.251327 0.502655 ... ];
+         *
+         * % data from columne 2 ('y')
+         * y = [ 0 0.24869 0.481754 ... ];
+         * \endcode
+         *
+         * \see saveAsMatlab()
+         */
+        void copyDataMatlab();
+        /** \brief save the current plot data as a Comma Separated Values (CSV) file
+         *
+         * \param filename the file to save to, if \a filename is empty, a file open dialog will be shown
+         *
+         *
+         * This method uses JKQTBasePlotterStyle::CSVdecimalSeparator as decimal separator and
+         * JKQTBasePlotterStyle::CSVcommentInitializer as comment initializer!
+         */
+        void saveAsCSV(const QString& filename=QString(""));
+
+        /** \brief save the current plot data as a Semicolon Separated Values (SSV) file
+         *
+         * \param filename the file to save to, if \a filename is empty, a file open dialog will be shown
+         *
+         * example output:
+         * \code
+         * #  x, y
+         * 0; 0
+         * 0.251327; 0.24869
+         * 0.502655; 0.481754
+         * ...
+         * \endcode
+         *
+         * This method uses JKQTBasePlotterStyle::CSVdecimalSeparator as decimal separator and
+         * JKQTBasePlotterStyle::CSVcommentInitializer as comment initializer!
+         */
+        void saveAsSemicolonSV(const QString& filename=QString(""));
+
+        /** \brief save the current plot data as a Tabulator Separated Values (CSV) file
+         *
+         * \param filename the file to save to, if \a filename is empty, a file open dialog will be shown
+         *
+         *
+         * example output:
+         * \code
+         * #  x	y
+         * 0	0
+         * 0.251327	0.24869
+         * 0.502655	0.481754
+         * ...
+         * \endcode
+         *
+         * This method uses JKQTBasePlotterStyle::CSVdecimalSeparator as decimal separator and
+         * JKQTBasePlotterStyle::CSVcommentInitializer as comment initializer!
+         *
+         * \see saveData()
+         */
+        void saveAsTabSV(const QString& filename=QString(""));
+
+        /** \brief save the current plot data as a Data Interchange Format file (see <a href="https://en.wikipedia.org/wiki/Data_Interchange_Format">https://en.wikipedia.org/wiki/Data_Interchange_Format</a>).
+         *
+         * \param filename the file to save to, if \a filename is empty, a file open dialog will be shown
+         *
+         * \see saveData()
+         */
+        void saveAsDIF(const QString& filename=QString(""));
+
+        /** \brief save the current plot data as a SYmbolik LinK (SYLK) spreadsheet file (see <a href="https://en.wikipedia.org/wiki/Symbolic_Link_(SYLK)">https://en.wikipedia.org/wiki/Symbolic_Link_(SYLK)</a> )
+         *
+         * \param filename the file to save to, if \a filename is empty, a file open dialog will be shown
+         *
+         * \see saveData()
+         */
+        void saveAsSYLK(const QString& filename=QString(""));
+
+        /** \brief save the current plot data as a Matlab Script
+         *
+         * \param filename the file to save to, if \a filename is empty, a file open dialog will be shown
+         *
+         * example output:
+         * \code
+         * % data from columne 1 ('x')
+         * x = [ 0 0.251327 0.502655 ... ];
+         *
+         * % data from columne 2 ('y')
+         * y = [ 0 0.24869 0.481754 ... ];
+         * \endcode
+         *
+         * \see copyDataMatlab(), saveData()
+         */
+        void saveAsMatlab(const QString& filename=QString(""));
+
+        /** \brief save the current plot data as a Semicolon Separated Values (CSV) file for german Excel, i.e. with comma as decimal separator
+         *
+         * \param filename the file to save to, if \a filename is empty, a file open dialog will be shown
+         *
+         * example output:
+         * \code
+         * #  x, y
+         * 0, 0
+         * 0,251327; 0,24869
+         * 0,502655; 0,481754
+         * ...
+         * \endcode
+         *
+         * \see saveData(), saveAsSemicolonSV()
+         */
+        void saveAsGerExcelCSV(const QString& filename=QString(""));
+
+    public:
+        /** \brief save the current plot data as a Comma Separated Values (CSV) file
+         *
+         * \param filename the file to save to, if \a filename is empty, a file open dialog will be shown
+         * \param decimalSeparator decimal separator for outpu
+         * \param commentInitializer line-start for comment lines
+         *
+         * example output:
+         * \code
+         * #  x, y
+         * 0, 0
+         * 0.251327, 0.24869
+         * 0.502655, 0.481754
+         * ...
+         * \endcode
+         *
+         * This method uses JKQTBasePlotterStyle::CSVdecimalSeparator as decimal separator and
+         * JKQTBasePlotterStyle::CSVcommentInitializer as comment initializer!
+         */
+        void saveAsCSV(const QString& filename, const QString& decimalSeparator, const QString& commentInitializer);
+
+        /** \brief save the current plot data as a Semicolon Separated Values (SSV) file
+         *
+         * \param filename the file to save to, if \a filename is empty, a file open dialog will be shown
+         * \param decimalSeparator decimal separator for outpu
+         * \param commentInitializer line-start for comment lines
+         *
+         * example output for <code>saveAsSemicolonSV(filename, ",","#")</code>:
+         * \code
+         * #  x, y
+         * 0, 0
+         * 0,251327; 0,24869
+         * 0,502655; 0,481754
+         * ...
+         * \endcode
+         */
+        void saveAsSemicolonSV(const QString& filename, const QString& decimalSeparator, const QString& commentInitializer);
+        /** \brief save the current plot data as a Tabulator Separated Values (CSV) file
+         *
+         * \param filename the file to save to, if \a filename is empty, a file open dialog will be shown
+         * \param decimalSeparator decimal separator for outpu
+         * \param commentInitializer line-start for comment lines
+         *
+         * example output for <code>saveAsTabSV(filename, ",","#")</code>:
+         * \code
+         * #  x	y
+         * 0	0
+         * 0,251327	0,24869
+         * 0,502655	0,481754
+         * ...
+         * \endcode
+         */
+        void saveAsTabSV(const QString& filename, const QString& decimalSeparator, const QString& commentInitializer);
+
+/**@}*/
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/** @name Saving/Exporting Plots as Image/Vector Files */
+/**@{*/
+public Q_SLOTS:
+
+        /** \brief save the current plot as a pixel image image (PNG ...), if filename is empty a file selection dialog is displayed
+         *
+         *  \param filename name of the stored file, if no \a outputFormat is given, the file format is deduced by the file extension in \a filename
+         *  \param displayPreview if \c true a dialog is shown that allows to modify the generated output (zoo, scaling, ...)
+         *  \param outputFormmat specify the file format for the generated file
+         *  \param  outputSizeIncrease if given, the size of the generated pixel image is increased by this number of pixels in addition to the required space
+         *  \return returns \c true on success
+         *
+         *  This function may generate any pixel-graphics format, supported by Qt and listed in <a href="https://doc.qt.io/qt-6/qimagewriter.html"><code>QImageWriter::supportedImageFormats()</code></a>.
+         *  The parameters are comparable to the standard Qt functions like <a href="https://doc.qt.io/qt-6/qimage.html#save"><code>QImage::save()</code></a>, which is also used internally.
+         *
+         *  \see grabPixelImage(), copyPixelImage()
+         */
+        bool saveAsPixelImage(const QString& filename=QString(""), bool displayPreview=true, const QByteArray &outputFormat=QByteArray(), const QSize& outputSizeIncrease=QSize(0,0));
+
+        /** \brief returns a rendering of the current plot as a QImage (pixel image) with the given size
+         *
+         *  \see saveAsPixelImage(), copyPixelImage()
+         */
+        QImage grabPixelImage(QSize size=QSize(), bool showPreview=false);
+        /** \brief copy the current plot as a pixel+svg image to the clipboard */
+        void copyPixelImage(bool showPreview=true);
+
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
+        /** \brief save the current plot as a SVG file, with the current widget aspect ratio, if filename is empty a file selection dialog is displayed
+         *
+         *   \param filename the filename to save to, if empty a file save dialog is displayed
+         *   \param displayPreview if \C true, a save/print-preview dialog is displayed that allows to make some modifications to the generated image, otherwise the image is saved with default settings.
+         *   \return Returns \c true if the file was save successfully
+         *
+         *  \note Exporting to SVG requires QPrinter-support, if it is not available on your platform, this function will not be available either!
+         */
+        bool saveAsSVG(const QString& filename=QString(""), bool displayPreview=true);
+
+        /** \brief save the current plot as a PDF file, with the current widget aspect ratio, if filename is empty a file selection dialog is displayed
+         *
+         *   \param filename the filename to save to, if empty a file save dialog is displayed
+         *   \param displayPreview if \C true, a save/print-preview dialog is displayed that allows to make some modifications to the generated image, otherwise the image is saved with default settings.
+         *   \return Returns \c true if the file was save successfully
+         *
+         *  \note Exporting to PDF requires QPrinter-support, if it is not available on your platform, this function will not be available either!
+         */
+        bool saveAsPDF(const QString& filename=QString(""), bool displayPreview=true);
+#endif
+
+        /** \brief save the current plot as an image file, with the current widget aspect ratio, if filename is empty a file selection dialog is displayed.
+        *          The image format is extracted from the file extension (jpeg, tiff, png, pdf, ...)
+        *
+        *   \param filename the filename to save to, if empty a file save dialog is displayed
+        *   \param displayPreview if \C true, a save/print-preview dialog is displayed that allows to make some modifications to the generated image, otherwise the image is saved with default settings.
+        *   \return Returns \c true if the file was save successfully
+        *
+        *   This function is comparable to saveAsPixelImage(), but it allows to save into any graphics format, including SVG and PF (if printer-support is compiled into the library).
+        *   Also it may use the custom exporters implemented as JKQTPPaintDeviceAdapter and registered via JKQTBasePlotter::registerPaintDeviceAdapter().
+        *
+        *  \see grabPixelImage(), copyPixelImage(), saveAsPixelImage(), JKQTBasePlotter::registerPaintDeviceAdapter(), JKQTPPaintDeviceAdapter
+        */
+        bool saveImage(const QString& filename=QString(""), bool displayPreview=true);
+
     Q_SIGNALS:
-        /** \brief signal: emitted whenever the user selects a new x-y zoom range (by mouse) */
-        void zoomChangedLocally(double newxmin, double newxmax, double newymin, double newymax, JKQTBasePlotter* sender);
-
-        /** \brief emitted when the plot has to be updated */
-        void plotUpdated();
-
-        /** \brief emitted when the plot scaling had to be recalculated */
-        void plotScalingRecalculated();
-
-        /** \brief emitted before the plot scaling has been recalculated */
-        void beforePlotScalingRecalculate();
-
         /** \brief emitted just before exporting the current plot as image, or just before the export preview dialog is shown
          *
          *  This signal can be used to e.g. modify the plotter settings before an export.
@@ -1501,6 +1733,23 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
          */
         void afterExporting();
 
+
+/**@}*/
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/** @name Print Support */
+/**@{*/
+public Q_SLOTS:
+
+#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
+        /** \brief print the current plot, if printer is \c nullptr a printer selection dialog is displayed
+         *
+         *  \note This function is only available on platforms with QPrinter support!
+         */
+        void print(QPrinter* printer=nullptr, bool displayPreview=true);
+#endif
+    Q_SIGNALS:
         /** \brief emitted just before Printing the current plot as image, or just before the print preview dialog is shown
          *
          *  This signal can be used to e.g. modify the plotter settings before a print.
@@ -1516,6 +1765,22 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
          *  \see beforePrinting(), beforeExporting(), afterExporting()
          */
         void afterPrinting();
+
+/**@}*/
+
+    Q_SIGNALS:
+        /** \brief signal: emitted whenever the user selects a new x-y zoom range (by mouse) */
+        void zoomChangedLocally(double newxmin, double newxmax, double newymin, double newymax, JKQTBasePlotter* sender);
+
+        /** \brief emitted when the plot has to be updated */
+        void plotUpdated();
+
+        /** \brief emitted when the plot scaling had to be recalculated */
+        void plotScalingRecalculated();
+
+        /** \brief emitted before the plot scaling has been recalculated */
+        void beforePlotScalingRecalculate();
+
 
 
     public Q_SLOTS:
@@ -1767,160 +2032,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
          * */
         void setShowZeroAxes(bool showXY);
 
-        /** \brief save the current plot as a pixel image image (PNG ...), if filename is empty a file selection dialog is displayed
-         *
-         *  \param filename name of the stored file, if no \a outputFormat is given, the file format is deduced by the file extension in \a filename
-         *  \param displayPreview if \c true a dialog is shown that allows to modify the generated output (zoo, scaling, ...)
-         *  \param outputFormmat specify the file format for the generated file
-         *  \param  outputSizeIncrease if given, the size of the generated pixel image is increased by this number of pixels in addition to the required space
-         *  \return returns \c true on success
-         *
-         *  This function may generate any pixel-graphics format, supported by Qt and listed in <a href="https://doc.qt.io/qt-6/qimagewriter.html"><code>QImageWriter::supportedImageFormats()</code></a>.
-         *  The parameters are comparable to the standard Qt functions like <a href="https://doc.qt.io/qt-6/qimage.html#save"><code>QImage::save()</code></a>, which is also used internally.
-         *
-         *  \see grabPixelImage(), copyPixelImage()
-         */
-        bool saveAsPixelImage(const QString& filename=QString(""), bool displayPreview=true, const QByteArray &outputFormat=QByteArray(), const QSize& outputSizeIncrease=QSize(0,0));
-
-        /** \brief returns a rendering of the current plot as a QImage (pixel image) with the given size
-         *
-         *  \see saveAsPixelImage(), copyPixelImage()
-         */
-        QImage grabPixelImage(QSize size=QSize(), bool showPreview=false);
-        /** \brief copy the current plot as a pixel+svg image to the clipboard */
-        void copyPixelImage(bool showPreview=true);
-
-#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
-        /** \brief save the current plot as a SVG file, with the current widget aspect ratio, if filename is empty a file selection dialog is displayed
-         *
-         *   \param filename the filename to save to, if empty a file save dialog is displayed
-         *   \param displayPreview if \C true, a save/print-preview dialog is displayed that allows to make some modifications to the generated image, otherwise the image is saved with default settings.
-         *   \return Returns \c true if the file was save successfully
-         *
-         *  \note Exporting to SVG requires QPrinter-support, if it is not available on your platform, this function will not be available either!
-         */
-        bool saveAsSVG(const QString& filename=QString(""), bool displayPreview=true);
-
-        /** \brief save the current plot as a PDF file, with the current widget aspect ratio, if filename is empty a file selection dialog is displayed
-         *
-         *   \param filename the filename to save to, if empty a file save dialog is displayed
-         *   \param displayPreview if \C true, a save/print-preview dialog is displayed that allows to make some modifications to the generated image, otherwise the image is saved with default settings.
-         *   \return Returns \c true if the file was save successfully
-         *
-         *  \note Exporting to PDF requires QPrinter-support, if it is not available on your platform, this function will not be available either!
-         */
-        bool saveAsPDF(const QString& filename=QString(""), bool displayPreview=true);
-#endif
-
-        /** \brief save the current plot as an image file, with the current widget aspect ratio, if filename is empty a file selection dialog is displayed.
-        *          The image format is extracted from the file extension (jpeg, tiff, png, pdf, ...)
-        *
-        *   \param filename the filename to save to, if empty a file save dialog is displayed
-        *   \param displayPreview if \C true, a save/print-preview dialog is displayed that allows to make some modifications to the generated image, otherwise the image is saved with default settings.
-        *   \return Returns \c true if the file was save successfully
-        *
-        *   This function is comparable to saveAsPixelImage(), but it allows to save into any graphics format, including SVG and PF (if printer-support is compiled into the library).
-        *   Also it may use the custom exporters implemented as JKQTPPaintDeviceAdapter and registered via JKQTBasePlotter::registerPaintDeviceAdapter().
-        *
-        *  \see grabPixelImage(), copyPixelImage(), saveAsPixelImage(), JKQTBasePlotter::registerPaintDeviceAdapter(), JKQTPPaintDeviceAdapter
-        */
-        bool saveImage(const QString& filename=QString(""), bool displayPreview=true);
-
-        /** \brief save the data used for the current plot. The file format is extracted from the file extension (csv, ...)
-         *
-         *   \param filename the filename to save to, if empty a file save dialog is displayed
-         *   \param format The parameter \a format specifies the export format. if it is empty the format will be choosen according to the file extension, or
-         *                 if \a filename is also empty the format will be choosen according to what is selected in the file selection dialog.
-         *                 See below for a listing of supported values.
-         *   \returns returns \c true if the data was exported successfully.
-         *
-         * These values are supported for \a format (if \a format is not provided, the function tries to guess it from the file extensions liste below):
-         *   - \c "csv", Comma Separated Values, dot as decimal separator (see also <a href="https://en.wikipedia.org/wiki/Comma-separated_values">https://en.wikipedia.org/wiki/Comma-separated_values</a>, extensions: \c *.csv , \c *.dat , see JKQTBasePlotter::saveAsCSV()
-         *   - \c "tab" Tab Separated Values, dot as decimal separator, extensions: \c *.txt , see JKQTBasePlotter::saveAsTabSV()
-         *   - \c "sem" or \c "ssv", Semicolon Separated Values, dot as decimal separator, extensions: \c *.sem , \c *.ssv , see JKQTBasePlotter::saveAsSemicolonSV()
-         *   - \c "gex", Semicolon Separated Values for German Excel, i.e. comma as decimal separator, extensions: \c *.gex , see JKQTBasePlotter::saveAsGerExcelCSV()
-         *   - \c "slk" or \c "sylk" , SYmbolik LinK (SYLK) spreadsheet (see <a href="https://en.wikipedia.org/wiki/Symbolic_Link_(SYLK)">https://en.wikipedia.org/wiki/Symbolic_Link_(SYLK)</a> ), extensions: \c *.slk , \c *.sylk , see JKQTBasePlotter::saveAsSYLK()
-         *   - \c "dif", Data Interchange Format (see <a href="https://en.wikipedia.org/wiki/Data_Interchange_Format">https://en.wikipedia.org/wiki/Data_Interchange_Format</a>), extensions: \c *.dif , see JKQTBasePlotter::saveAsDIF()
-         *   - \c "m", Matlab Script, extensions: \c *.m , see JKQTBasePlotter::saveAsMatlab()
-         * .
-         *
-         * In addition you can use the custom exporters implemented as JKQTPSaveDataAdapter and registered using JKQTBasePlotter::registerSaveDataAdapter().
-         * For these you need to use \a format <code>= "customN"</code>, where N is the index of the exporter in the list of registered exporters.
-         */
-        bool saveData(const QString& filename=QString(""), const QString& format=QString(""));
-        /** \brief copy the data used for the current plot to the clipboard
-         *
-         *  copies data as tab separated data with the system-decimal point.
-         */
-        void copyData();
-        /** \brief copy the data used for the current plot to the clipboard as a Matlab script
-         */
-        void copyDataMatlab();
-        /** \brief save the current plot data as a Comma Separated Values (CSV) file
-         *
-         * \param filename the file to save to, if \a filename is empty, a file open dialog will be shown
-         *
-         * \note this function uses  CSVdecimalSeparator as decimal separator and CSVcommentInitializer to initialize content lines
-         */
-        void saveAsCSV(const QString& filename=QString(""));
-
-        /** \brief save the current plot data as a Semicolon Separated Values (SSV) file
-         *
-         * \param filename the file to save to, if \a filename is empty, a file open dialog will be shown
-         *
-         * \note this function uses  CSVdecimalSeparator as decimal separator and CSVcommentInitializer to initialize content lines
-         */
-        void saveAsSemicolonSV(const QString& filename=QString(""));
-
-        /** \brief save the current plot data as a Tabulator Separated Values (CSV) file
-         *
-         * \param filename the file to save to, if \a filename is empty, a file open dialog will be shown
-         *
-         * \note this function uses  CSVdecimalSeparator as decimal separator and CSVcommentInitializer to initialize content lines
-         *
-         * \see saveData()
-         */
-        void saveAsTabSV(const QString& filename=QString(""));
-
-        /** \brief save the current plot data as a DIF file
-         *
-         * \param filename the file to save to, if \a filename is empty, a file open dialog will be shown
-         *
-         * \see saveData()
-         */
-        void saveAsDIF(const QString& filename=QString(""));
-
-        /** \brief save the current plot data as a SYLK spreadsheet file
-         *
-         * \param filename the file to save to, if \a filename is empty, a file open dialog will be shown
-         *
-         * \see saveData()
-         */
-        void saveAsSYLK(const QString& filename=QString(""));
-
-        /** \brief save the current plot data as a Matlab Script
-         *
-         * \param filename the file to save to, if \a filename is empty, a file open dialog will be shown
-         *
-         * \see copyDataMatlab(), saveData()
-         */
-        void saveAsMatlab(const QString& filename=QString(""));
-
-        /** \brief save the current plot data as a Semicolon Separated Values (CSV) file for german Excel, i.e. with comma as decimal separator
-         *
-         * \param filename the file to save to, if \a filename is empty, a file open dialog will be shown
-         *
-         * \see saveData()
-         */
-        void saveAsGerExcelCSV(const QString& filename=QString(""));
-
-#ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
-        /** \brief print the current plot, if printer is \c nullptr a printer selection dialog is displayed
-         *
-         *  \note This function is only available on platforms with QPrinter support!
-         */
-        void print(QPrinter* printer=nullptr, bool displayPreview=true);
-#endif
 
         /** \brief this method zooms the graph so that all plotted datapoints are visible.
          *
