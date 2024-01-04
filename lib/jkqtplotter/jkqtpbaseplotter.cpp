@@ -3922,14 +3922,14 @@ bool JKQTBasePlotter::saveAsSVG(const QString& filename, bool displayPreview) {
         QString tempFM="";
         if (QFile::exists(fn)) {
 #ifdef QFWIDLIB_LIBRARY
-                QFTemporaryFile* tf=new QFTemporaryFile();
+                QSharedPointer<QFTemporaryFile> tf=QSharedPointer<QFTemporaryFile>(new QFTemporaryFile());
 #else
-                QTemporaryFile* tf=new QTemporaryFile();
+                QSharedPointer<QTemporaryFile> tf=QSharedPointer<QTemporaryFile>(new QTemporaryFile());
 #endif
             tf->open();
             tempFM=tf->fileName();
             tf->close();
-            delete tf;
+            tf.reset();
             QFile::copy(fn, tempFM);
         }
 
