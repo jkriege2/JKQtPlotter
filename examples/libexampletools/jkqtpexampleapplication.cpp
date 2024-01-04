@@ -71,7 +71,8 @@ void JKQTPExampleApplication::readCmdLine() {
     QCommandLineOption iterateFunctorStepsSupressInitialOption(QStringList()<<"iteratefunctorsteps_suppressinitial", "iterate over steps defined by addExportStepFunctor() in code.");
     parser.addOption(iterateFunctorStepsSupressInitialOption);
 
-    parser.process(*this);
+    //parser.process(*this);
+    parser.parse(arguments());
 
     screenshotDir=QDir(parser.value(outputDirectoryOption));
     screenshotBasename=parser.value(basenameOption).split(',');
