@@ -127,7 +127,7 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
     <td> `JKQTPXYLineGraph` and `JKQTPFilledVerticalRangeGraph` <br> C++ vector of data <br> date/time axes <br> plot min/max range graph <br> internal LaTeX parser <br> data from CSV files 
 <tr><td> \image html second_axis_small.png
     <td> \subpage JKQTPlotterSecondaryAxes
-    <td> plottig with secondary axes, `JKQTPBasePlotter::addSecondaryXAxis()`/`JKQTPBasePlotter::addSecondaryYAxis()`
+    <td> plottig with secondary axes, `JKQTBasePlotter::addSecondaryXAxis()`/`JKQTBasePlotter::addSecondaryYAxis()`
 <tr><td> \image html advancedlineandfillstyling_small.png
     <td> \subpage JKQTPlotterAdvancedLineAndFillStyling
     <td> `JKQTPXYLineGraph`, `JKQTPSpecialLineHorizontalGraph` and `JKQTPBarVerticalGraph` <br> C++ vector of data <br> advanced line styling and filling
@@ -250,6 +250,15 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 <tr><td> \image html mandelbrot_small.png
     <td> \subpage JKQTPlotterMandelbrot
     <td> Allows to zoom into the Mandelbrot Set, using the different Zooming methods of JKQTPlotter
+</table>
+
+\subsection jkqtp_extut_specialusecasesexamples Examples for special Use-Cases
+
+<table>
+<tr><th> Screenshot    <th> Description   <th> Notes  
+<tr><td> \image html multithreaded_small.png
+    <td> \subpage JKQTPlotterMultiThreaded
+    <td> multi-threaded plotting using JKQTBasePlotter
 </table>
 
 	

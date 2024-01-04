@@ -238,6 +238,7 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         datastore_regression/datastore_regression,datastore_regression_lin,datastore_regression_linrobust,datastore_regression_linrobust_p,datastore_regression_linweight,datastore_regression_nonlinreg_exp,datastore_regression_nonlinreg_pow,datastore_regression_polynom,datastore_regression_polynom_errros/--iteratefunctorsteps
         datastore_statistics/datastore_statistics,datastore_statistics_dataonly,datastore_statistics_boxplots_simple,datastore_statistics_boxplots_outliers,datastore_statistics_hist,datastore_statistics_kde,datastore_statistics_cumhistkde/--iteratefunctorsteps
         datastore_statistics_2d/datastore_statistics_2d
+        multithreaded/multithreaded/--mdfile=${CMAKE_CURRENT_LIST_DIR}/../examples/multithreaded/README.md
     )
 
 
@@ -279,7 +280,7 @@ if(JKQtPlotter_BUILD_EXAMPLES)
     foreach(ex ${JKQTPlotter_GenerateDocScreenshots_From})
         set(example ${ex})
         set(basename ${ex})
-        string(REGEX MATCH "(.+)/(.+)" dummy ${ex})
+        string(REGEX MATCH "([^/]+)/([^/]+)" dummy ${ex})
         set(extra_command "")
         if(CMAKE_MATCH_1 STREQUAL "" OR CMAKE_MATCH_2 STREQUAL "")
             set(example ${ex})
@@ -288,7 +289,7 @@ if(JKQtPlotter_BUILD_EXAMPLES)
             set(example ${CMAKE_MATCH_1})
             set(basename ${CMAKE_MATCH_2})
             set(CMAKE_MATCH_3 "")
-            string(REGEX MATCH "(.+)/(.*)/(.+)" dummy ${ex})
+            string(REGEX MATCH "([^/]+)/([^/]*)/(.+)" dummy ${ex})
             if(NOT (CMAKE_MATCH_3 STREQUAL ""))
                 set(example ${CMAKE_MATCH_1})
                 set(basename ${CMAKE_MATCH_2})

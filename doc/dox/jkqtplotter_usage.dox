@@ -47,7 +47,11 @@
   With simlar code you can also integrate JKQTBasePlotter into your own widgets.
  
  
- 
+  This class is immpleented in a such a way that ^different instances can be used in different parallel threads, i.e. the class is re-entrant. 
+  There are however access to different cached data is synchronized between all threads (i.e. static internal caches are used), which limmits
+  the acheavable parallelization speedup!
+  
+  \see See \ref JKQTPlotterMultiThreaded for an example of multi-threaded plotting!
  
  
  

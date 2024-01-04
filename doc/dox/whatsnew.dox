@@ -47,6 +47,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>FIXED issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/99">#99: Clipping of Tick Labels</a>: for horizontal axes, additional space at the left  and/or right of the plot is allowed so labels are no longer clipped (thanks to <a href="https://github.com/allenbarnett5">user:allenbarnett5/a> for reporting)</li>
     <li>FIXED issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/99">#99: Height of one-column key/legend was too large</a> (thanks to <a href="https://github.com/allenbarnett5">user:allenbarnett5/a> for reporting)</li>
     <li>FIXED issue mentioned in <a href="https://github.com/jkriege2/JKQtPlotter/pull/110">#110: Lock the panning action to certain values: View zooms in, when panning close to AbosluteXY</a> (thanks to <a href="https://github.com/sim186">user:sim186</a> for reporting)</li>
+    <li>FIXED: jkqtpstatSum() and jkqtpstatSumSqr() did not work, as a non-existing function is called internally</li>
     <li>FIXED/IMPROVED issue <a href="https://github.com/jkriege2/JKQtPlotter/issues/100">#100: Add option to disable resize delay feature by setting the delay to zero</a> (thanks to <a href="https://github.com/fpalazzolo">user:fpalazzolo</a> for reporting)</li>
     <li>FIXED/NEW: placement of plot-title (was not centerd in its box, but glued to the bottom) by adding a plotstyle parameter JKQTBasePlotterStyle::plotLabelOffset</li>
     <li>FIXED/REWORKED issue <a href="https://github.com/jkriege2/JKQtPlotter/issues/111">#111: Can't write to PDF files with JKQTPlotter::saveImage() when passing a filename ending in ".pdf"</a> (thanks to <a href="https://github.com/fpalazzolo">user:fpalazzolo/a> for reporting):<br/>While fixing this issue, the functions JKQTBasePlotter::saveImage() etc. gained a bool return value to indicate whether sacing was successful.</li>
@@ -108,6 +109,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: added JKQTBasePlotterStyle::plotLabelTopBorder to set the  spacing between top and plot label</li>
     <li>NEW: Due to addition of JKQTMathText::setFontOptions() and the matchign extension of JKQTMathText::setFontSpecial() (see below) you can now add modifiers like <tt>+BOLD+ITALIC</tt> to any font-name provided to JKQTPlotter and in style INI-files</li>
     <li>NEW: added JKQTPLabelMinBesides and JKQTPLabelMaxBesides to JKQTPLabelPosition, so labels can be set besides the axes</li>
+    <li>NEW/REWORKED JKQTBasePlottercan be used is re-entrant, i.e. different instances can be used from different threads in parallel (although there is significant overhead due to shared caches between the threads!). This is demonstrated and discussed in \ref JKQTPlotterMultiThreaded . </li>
   </ul></li>
   
   <li>JKQTMathText:<ul>
