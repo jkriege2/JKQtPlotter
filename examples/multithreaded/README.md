@@ -89,18 +89,21 @@ The main application in [`multithreaded.cpp`](https://github.com/jkriege2/JKQtPl
 
 This test results in the following numbers (on my AMD Ryzen5 8/16-core laptop):
 
+
+------
 [comment]:RESULTS
 
-<u><b>SERIAL RESULTS:</b></u><br/>runtime, overall = 1719.3ms<br/>single runtimes = (214.8 +/- 277.4) ms<br/>speedup = 1.00x<br/>threads / available = 1 / 16<br/><br/>  
+<u><b>SERIAL RESULTS:</b></u><br/>runtime, overall = 9022.3ms<br/>single runtimes = (1127.6 +/- 773.0) ms<br/>speedup = 1.00x<br/>threads / available = 1 / 16<br/><br/>  
 
 <u><b>PARALLEL RESULTS:</b></u><br/>
-runtime, overall = 649.1ms<br/>single runtimes = (605.2 +/- 81.8) ms<br/>speedup = 7.46x<br/>threads / available = 8 / 16<br/><br/><b>speedup vs. serial = 2.6x</b>
+runtime, overall = 2507.3ms<br/>single runtimes = (2431.4 +/- 91.7) ms<br/>speedup = 7.76x<br/>threads / available = 8 / 16<br/><br/><b>speedup vs. serial = 3.6x</b>
 
 [comment]:RESULTS_END
+------
 
 From this data you can observe:
   - The plotting parallelizes nicely, i.e. the speedup ist >7x on a 8-core-machine. This is the speedup calculated as sum of runtimes of each thread, divided by the runtime of all threads in parallel.
-  - BUT: the speedup of serialized plotting vs. parallel plotting is way smaller: It is only 2-3x. This can be explained by the (significant) overhead due to shared caches (and therefore synchronization) between the plotters. This may be reworked in future!
+  - BUT: the speedup of serialized plotting vs. parallel plotting is way smaller: It is only 2-3x. Also the runtime in each thread is about 3x longer than in the serialized example. This can be explained by the (significant) overhead due to shared caches (and therefore synchronization) between the plotters. This may be reworked in future!
   - The variance in runtimes in the (initial) serial test-run is larger than in the parallel run. This is due to filling of the internal caches during the first plotting!
 .
 
