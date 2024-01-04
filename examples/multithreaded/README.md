@@ -94,10 +94,10 @@ This test results in the following numbers (on my AMD Ryzen5 8/16-core laptop):
 
 [comment]:RESULTS
 
-<u><b>SERIAL RESULTS:</b></u><br/>runtime, overall = 9022.3ms<br/>single runtimes = (1127.6 +/- 773.0) ms<br/>speedup = 1.00x<br/>threads / available = 1 / 16<br/><br/>  
+<u><b>SERIAL RESULTS:</b></u><br/>runtime, overall = 1822.3ms<br/>single runtimes = (227.7 +/- 306.8) ms<br/>speedup = 1.00x<br/>threads / available = 1 / 16<br/><br/>  
 
 <u><b>PARALLEL RESULTS:</b></u><br/>
-runtime, overall = 2507.3ms<br/>single runtimes = (2431.4 +/- 91.7) ms<br/>speedup = 7.76x<br/>threads / available = 8 / 16<br/><br/><b>speedup vs. serial = 3.6x</b>
+runtime, overall = 811.1ms<br/>single runtimes = (760.8 +/- 63.8) ms<br/>speedup = 7.50x<br/>threads / available = 8 / 16<br/><br/><b>speedup vs. serial = 2.2x</b>
 
 [comment]:RESULTS_END
 
