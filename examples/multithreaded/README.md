@@ -90,7 +90,8 @@ The main application in [`multithreaded.cpp`](https://github.com/jkriege2/JKQtPl
 This test results in the following numbers (on my AMD Ryzen5 8/16-core laptop):
 
 
-------
+---
+
 [comment]:RESULTS
 
 <u><b>SERIAL RESULTS:</b></u><br/>runtime, overall = 9022.3ms<br/>single runtimes = (1127.6 +/- 773.0) ms<br/>speedup = 1.00x<br/>threads / available = 1 / 16<br/><br/>  
@@ -99,7 +100,8 @@ This test results in the following numbers (on my AMD Ryzen5 8/16-core laptop):
 runtime, overall = 2507.3ms<br/>single runtimes = (2431.4 +/- 91.7) ms<br/>speedup = 7.76x<br/>threads / available = 8 / 16<br/><br/><b>speedup vs. serial = 3.6x</b>
 
 [comment]:RESULTS_END
-------
+
+---
 
 From this data you can observe:
   - The plotting parallelizes nicely, i.e. the speedup ist >7x on a 8-core-machine. This is the speedup calculated as sum of runtimes of each thread, divided by the runtime of all threads in parallel.
