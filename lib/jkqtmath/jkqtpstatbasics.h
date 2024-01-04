@@ -38,6 +38,7 @@
 #include "jkqtmath/jkqtplinalgtools.h"
 #include "jkqtmath/jkqtparraytools.h"
 #include "jkqtcommon/jkqtpdebuggingtools.h"
+#include "jkqtcommon/jkqtpmathtools.h"
 
 
 /*! \brief calculates the average of a given data range \a first ... \a last
@@ -352,7 +353,7 @@ inline double jkqtpstatModifiedSum(InputIt first, InputIt last, FF modifierFunct
 */
 template <class InputIt>
 inline double jkqtpstatSum(InputIt first, InputIt last, size_t* Noutput=nullptr) {
-    return jkqtpstatSum(first, last, &jkqtp_identity<double>, Noutput);
+    return jkqtpstatModifiedSum(first, last, &jkqtp_identity<double>, Noutput);
 }
 
 /*! \brief calculates the sum of squares of a given data range \a first ... \a last
@@ -374,7 +375,7 @@ inline double jkqtpstatSum(InputIt first, InputIt last, size_t* Noutput=nullptr)
 */
 template <class InputIt>
 inline double jkqtpstatSumSqr(InputIt first, InputIt last, size_t* Noutput=nullptr) {
-    return jkqtpstatSum(first, last, &jkqtp_sqr<double>, Noutput);
+    return jkqtpstatModifiedSum(first, last, &jkqtp_sqr<double>, Noutput);
 }
 
 
