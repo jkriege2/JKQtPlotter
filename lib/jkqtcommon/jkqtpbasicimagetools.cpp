@@ -40,7 +40,9 @@ const int JKQTPImageTools::NDEFAULTSTEPS = 5;
 
 QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::global_jkqtpimagetools_lutstore = JKQTPImageTools::getDefaultLUTs();
 int JKQTPImageTools::global_next_userpalette = JKQTPMathImageFIRST_REGISTERED_USER_PALETTE;
-std::mutex JKQTPImageTools::lutMutex;
+QReadWriteLock JKQTPImageTools::lutMutex;
+QStringList JKQTPImageTools::getPredefinedPalettesGlobalList = QStringList();
+QStringList JKQTPImageTools::getPredefinedPalettesMachineReadableGlobalList = QStringList();
 
 
 
@@ -2040,38 +2042,44 @@ bool JKQTPImagePlot_QPairCompareFirst(const QPair<T1, T2> &s1, const QPair<T1, T
 }
 
 QStringList JKQTPImageTools::getPredefinedPalettes()  {
-    std::lock_guard<std::mutex> lock(JKQTPImageTools::lutMutex);
-    static QStringList sl;
+    QReadLocker lock(&JKQTPImageTools::lutMutex);
 
-    if (sl.size()!=JKQTPImageTools::global_jkqtpimagetools_lutstore.size()) {
-        sl.clear();
-        for (auto it=JKQTPImageTools::global_jkqtpimagetools_lutstore.begin(); it!=JKQTPImageTools::global_jkqtpimagetools_lutstore.end(); ++it) {
-            if (it.key()>=0 && it.key()<=JKQTPMathImageLAST_POSSIBLE_REGISTERED_USER_PALETTE) {
-                if (it.value().nameT.size()!=0) sl<<it.value().nameT;
-                else if (it.value().name.size()!=0) sl<<it.value().name;
-                else sl<<QString(QObject::tr("Palette")+" #"+QString::number(it.key()));
+    if (getPredefinedPalettesGlobalList.size()!=JKQTPImageTools::global_jkqtpimagetools_lutstore.size()) {
+        lock.unlock();
+        QWriteLocker lock(&JKQTPImageTools::lutMutex);
+        if (getPredefinedPalettesGlobalList.size()!=JKQTPImageTools::global_jkqtpimagetools_lutstore.size()) {
+            getPredefinedPalettesGlobalList.clear();
+            for (auto it=JKQTPImageTools::global_jkqtpimagetools_lutstore.begin(); it!=JKQTPImageTools::global_jkqtpimagetools_lutstore.end(); ++it) {
+                if (it.key()>=0 && it.key()<=JKQTPMathImageLAST_POSSIBLE_REGISTERED_USER_PALETTE) {
+                    if (it.value().nameT.size()!=0) getPredefinedPalettesGlobalList<<it.value().nameT;
+                    else if (it.value().name.size()!=0) getPredefinedPalettesGlobalList<<it.value().name;
+                    else getPredefinedPalettesGlobalList<<QString(QObject::tr("Palette")+" #"+QString::number(it.key()));
+                }
             }
         }
     }
-    return sl;
+    return getPredefinedPalettesGlobalList;
 }
 
 
 QStringList JKQTPImageTools::getPredefinedPalettesMachineReadable()  {
-    std::lock_guard<std::mutex> lock(JKQTPImageTools::lutMutex);
-    static QStringList sl;
+    QReadLocker lock(&JKQTPImageTools::lutMutex);
 
-    if (sl.size()!=JKQTPImageTools::global_jkqtpimagetools_lutstore.size()) {
-        sl.clear();
-        for (auto it=JKQTPImageTools::global_jkqtpimagetools_lutstore.begin(); it!=JKQTPImageTools::global_jkqtpimagetools_lutstore.end(); ++it) {
-            if (it.key()>=0) {
-                if (it.value().name.size()!=0) sl<<it.value().name;
-                else if (it.value().nameT.size()!=0) sl<<it.value().nameT;
-                else sl<<QString("palette #"+QString::number(it.key()));
+    if (getPredefinedPalettesMachineReadableGlobalList.size()!=JKQTPImageTools::global_jkqtpimagetools_lutstore.size()) {
+        lock.unlock();
+        QWriteLocker lock(&JKQTPImageTools::lutMutex);
+        if (getPredefinedPalettesMachineReadableGlobalList.size()!=JKQTPImageTools::global_jkqtpimagetools_lutstore.size()) {
+            getPredefinedPalettesMachineReadableGlobalList.clear();
+            for (auto it=JKQTPImageTools::global_jkqtpimagetools_lutstore.begin(); it!=JKQTPImageTools::global_jkqtpimagetools_lutstore.end(); ++it) {
+                if (it.key()>=0) {
+                    if (it.value().name.size()!=0) getPredefinedPalettesMachineReadableGlobalList<<it.value().name;
+                    else if (it.value().nameT.size()!=0) getPredefinedPalettesMachineReadableGlobalList<<it.value().nameT;
+                    else getPredefinedPalettesMachineReadableGlobalList<<QString("palette #"+QString::number(it.key()));
+                }
             }
         }
     }
-    return sl;
+    return getPredefinedPalettesMachineReadableGlobalList;
 }
 
 
@@ -2080,7 +2088,7 @@ QStringList JKQTPImageTools::getPredefinedPalettesMachineReadable()  {
 
 QString JKQTPImageTools::JKQTPMathImageColorPalette2String(JKQTPMathImageColorPalette p)
 {
-    std::lock_guard<std::mutex> lock(JKQTPImageTools::lutMutex);
+    QReadLocker lock(&JKQTPImageTools::lutMutex);
     auto it=JKQTPImageTools::global_jkqtpimagetools_lutstore.find(p);
     if (it==JKQTPImageTools::global_jkqtpimagetools_lutstore.end()) return QString::number(static_cast<int>(p));
     else {
@@ -2091,7 +2099,7 @@ QString JKQTPImageTools::JKQTPMathImageColorPalette2String(JKQTPMathImageColorPa
 
 QString JKQTPImageTools::JKQTPMathImageColorPalette2StringHumanReadable(JKQTPMathImageColorPalette p)
 {
-    std::lock_guard<std::mutex> lock(JKQTPImageTools::lutMutex);
+    QReadLocker lock(&JKQTPImageTools::lutMutex);
     auto it=JKQTPImageTools::global_jkqtpimagetools_lutstore.find(p);
     if (it==JKQTPImageTools::global_jkqtpimagetools_lutstore.end()) return QString::number(static_cast<int>(p));
     else {
@@ -2103,7 +2111,7 @@ QString JKQTPImageTools::JKQTPMathImageColorPalette2StringHumanReadable(JKQTPMat
 
 JKQTPMathImageColorPalette JKQTPImageTools::String2JKQTPMathImageColorPalette(const QString &p)
 {
-    std::lock_guard<std::mutex> lock(JKQTPImageTools::lutMutex);
+    QReadLocker lock(&JKQTPImageTools::lutMutex);
     for (auto it=JKQTPImageTools::global_jkqtpimagetools_lutstore.begin(); it!=JKQTPImageTools::global_jkqtpimagetools_lutstore.end(); ++it) {
         if (QString::compare(p, it.value().name, Qt::CaseInsensitive)==0) {
             return static_cast<JKQTPMathImageColorPalette>(it.key());
@@ -2234,7 +2242,7 @@ QVector<QColor> JKQTPImageTools::getColorsforPalette(JKQTPMathImageColorPalette 
 
 int JKQTPImageTools::registerPalette(const QString &name, const JKQTPImageTools::LUTType &paletteLut, const QString &nameT)
 {
-    std::lock_guard<std::mutex> lock(JKQTPImageTools::lutMutex);
+    QWriteLocker lock(&JKQTPImageTools::lutMutex);
     int id=JKQTPImageTools::global_next_userpalette++;
     JKQTPImageTools::global_jkqtpimagetools_lutstore[id].name=name;
     JKQTPImageTools::global_jkqtpimagetools_lutstore[id].nameT=((nameT.size()>0)?nameT:name);

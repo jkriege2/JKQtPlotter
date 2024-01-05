@@ -87,7 +87,8 @@ struct JKQTPlotterDrawingTools {
      * \internal
      */
     static JKQTCOMMON_LIB_EXPORT JKQTPSynchronized<QVector<JKQTPCustomGraphSymbolFunctor> > JKQTPCustomGraphSymbolStore;
-    typedef JKQTPSynchronized<QVector<JKQTPCustomGraphSymbolFunctor> >::Locker SymbolsLocker;
+    typedef JKQTPSynchronized<QVector<JKQTPCustomGraphSymbolFunctor> >::ReadLocker SymbolsReadLocker;
+    typedef JKQTPSynchronized<QVector<JKQTPCustomGraphSymbolFunctor> >::WriteLocker SymbolsWriteLocker;
 };
 
 
@@ -982,7 +983,7 @@ inline void JKQTPPlotSymbol(TPainter& painter, double x, double y, JKQTPGraphSym
         painter.drawPath(path);
     }
     if (symbol>=JKQTPFirstCustomSymbol) {
-        JKQTPlotterDrawingTools::SymbolsLocker lock(JKQTPlotterDrawingTools::JKQTPCustomGraphSymbolStore);
+        JKQTPlotterDrawingTools::SymbolsReadLocker lock(JKQTPlotterDrawingTools::JKQTPCustomGraphSymbolStore);
         const int idx(static_cast<int>(symbol-JKQTPFirstCustomSymbol));
         if (idx>=0 && idx<JKQTPlotterDrawingTools::JKQTPCustomGraphSymbolStore->size()) {
             painter.setPen(p);

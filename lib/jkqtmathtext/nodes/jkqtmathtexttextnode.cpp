@@ -73,37 +73,39 @@ bool JKQTMathTextTextBaseNode::toHtml(QString &html, JKQTMathTextEnvironment cur
 
 
 
-QHash<QChar, uint32_t> JKQTMathTextTextNode::blackboardUnicodeTable=QHash<QChar, uint32_t>();
+const QHash<QChar, uint32_t>& JKQTMathTextTextNode::blackboardUnicodeTable(){
+    static QHash<QChar, uint32_t> table=[]() {
+        QHash<QChar, uint32_t> blackboardUnicodeTable;
 
-void JKQTMathTextTextNode::fillStaticTables() {
-    static std::mutex sMutex;
-    std::lock_guard<std::mutex> lock(sMutex);
-    if (blackboardUnicodeTable.size()>0) return;
+        const QString ALPHA="ABDEFGIJKLMOSTUVWXYZ";
+        for (const QChar ch: ALPHA) {
+            blackboardUnicodeTable[ch]=0x1D538+(ch.unicode()-QChar('A').unicode());
+        }
+        const QString alpha="abcdefghijklmnopqrstuvwxyz";
+        for (const QChar ch: alpha) {
+            blackboardUnicodeTable[ch]=0x1D552+(ch.unicode()-QChar('a').unicode());
+        }
+        const QString nums="0123456789";
+        for (const QChar ch: nums) {
+            blackboardUnicodeTable[ch]=0x1D7D8+(ch.unicode()-QChar('0').unicode());
+        }
 
+        blackboardUnicodeTable['C']=0x2102;
+        blackboardUnicodeTable['H']=0x210D;
+        blackboardUnicodeTable['N']=0x2115;
+        blackboardUnicodeTable['P']=0x2119;
+        blackboardUnicodeTable['Q']=0x211A;
+        blackboardUnicodeTable['R']=0x211D;
+        blackboardUnicodeTable['Z']=0x2124;
 
-    for (const QChar ch: QString("ABDEFGIJKLMOSTUVWXYZ")) {
-        blackboardUnicodeTable[ch]=0x1D538+(ch.unicode()-QChar('A').unicode());
-    }
-    for (const QChar ch: QString("abcdefghijklmnopqrstuvwxyz")) {
-        blackboardUnicodeTable[ch]=0x1D552+(ch.unicode()-QChar('a').unicode());
-    }
-    for (const QChar ch: QString("0123456789")) {
-        blackboardUnicodeTable[ch]=0x1D7D8+(ch.unicode()-QChar('0').unicode());
-    }
-
-    blackboardUnicodeTable['C']=0x2102;
-    blackboardUnicodeTable['H']=0x210D;
-    blackboardUnicodeTable['N']=0x2115;
-    blackboardUnicodeTable['P']=0x2119;
-    blackboardUnicodeTable['Q']=0x211A;
-    blackboardUnicodeTable['R']=0x211D;
-    blackboardUnicodeTable['Z']=0x2124;
+        return blackboardUnicodeTable;
+    }();
+    return table;
 }
 
 JKQTMathTextTextNode::JKQTMathTextTextNode(JKQTMathText* _parent, const QString& textIn, bool addWhitespace, bool stripInnerWhitepace):
     JKQTMathTextTextBaseNode(_parent, "")
 {
-    fillStaticTables();
     QString textTransformed=textIn;
 
     if (stripInnerWhitepace) {
@@ -240,11 +242,11 @@ void JKQTMathTextTextNode::splitTextForLayout(QPainter &painter, JKQTMathTextEnv
             } else if (bbMode==MTBBDMsimulate) {
                 CFontMode=FMasDefinedOutline;
             } else if (bbMode==MTBBDMunicodeCharactersOrSimulate || bbMode==MTBBDMunicodeCharactersOrFontDirectly) {
-                if (blackboardUnicodeTable.contains(c) && fmRoman.inFontUcs4(blackboardUnicodeTable[c])) {
-                    cs=jkqtp_UnicodeToUTF8Q(blackboardUnicodeTable[c]);
+                if (blackboardUnicodeTable().contains(c) && fmRoman.inFontUcs4(blackboardUnicodeTable().operator[](c))) {
+                    cs=jkqtp_UnicodeToUTF8Q(blackboardUnicodeTable().operator[](c));
                     CFontMode=FMroman;
-                } else if (blackboardUnicodeTable.contains(c) && fmFallbackSym.inFontUcs4(blackboardUnicodeTable[c])) {
-                    cs=jkqtp_UnicodeToUTF8Q(blackboardUnicodeTable[c]);
+                } else if (blackboardUnicodeTable().contains(c) && fmFallbackSym.inFontUcs4(blackboardUnicodeTable().operator[](c))) {
+                    cs=jkqtp_UnicodeToUTF8Q(blackboardUnicodeTable().operator[](c));
                     CFontMode=FMfallbackSymbol;
                 } else {
                     if (bbMode==MTBBDMunicodeCharactersOrSimulate) {
@@ -291,10 +293,10 @@ double JKQTMathTextTextNode::draw(QPainter& painter, double x, double y, JKQTMat
     const QFont fUpright=JKQTMathTextGetNonItalic(f);
     const QFont fFallbackSym=currentEv.exchangedFontFor(MTEFallbackSymbols).getFont(parentMathText);
     const QFont fRoman=currentEv.exchangedFontForRoman().getFont(parentMathText);
-    const QFontMetricsF fm(f, painter.device());
-    const QFontMetricsF fmUpright(fUpright, painter.device());
-    const QFontMetricsF fmFallbackSym(fFallbackSym, painter.device());
-    const QFontMetricsF fmRoman(fRoman, painter.device());
+    //const QFontMetricsF fm(f, painter.device());
+    //const QFontMetricsF fmUpright(fUpright, painter.device());
+    //const QFontMetricsF fmFallbackSym(fFallbackSym, painter.device());
+    //const QFontMetricsF fmRoman(fRoman, painter.device());
 
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     painter.setFont(f);

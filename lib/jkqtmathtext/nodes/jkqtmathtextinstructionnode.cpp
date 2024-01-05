@@ -64,7 +64,6 @@ JKQTMathTextSimpleInstructionNode::JKQTMathTextSimpleInstructionNode(JKQTMathTex
     instructionName(_name),
     parameters(_parameters)
 {
-    fillInstructions();
 
 }
 
@@ -81,7 +80,6 @@ QString JKQTMathTextSimpleInstructionNode::getTypeName() const
 double JKQTMathTextSimpleInstructionNode::draw(QPainter &painter, double x, double y, JKQTMathTextEnvironment currentEv) const
 {
     doDrawBoxes(painter, x, y, currentEv);
-    fillInstructions();
     QFont f=currentEv.getFont(parentMathText);
     f.setStyleStrategy(QFont::PreferDefault);
     const QFontMetricsF fm(f, painter.device());
@@ -95,7 +93,6 @@ double JKQTMathTextSimpleInstructionNode::draw(QPainter &painter, double x, doub
 
 bool JKQTMathTextSimpleInstructionNode::toHtml(QString &html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) const
 {
-    fillInstructions();
     const QString txt=executeInstruction();
     html+=txt;
     return true;
@@ -113,20 +110,17 @@ const QStringList &JKQTMathTextSimpleInstructionNode::getParameters() const
 
 bool JKQTMathTextSimpleInstructionNode::supportsInstructionName(const QString &instructionName)
 {
-    fillInstructions();
-    return instructions.contains(instructionName);
+    return instructions().contains(instructionName);
 }
 
 size_t JKQTMathTextSimpleInstructionNode::countParametersOfInstruction(const QString &instructionName)
 {
-    fillInstructions();
-    if (instructions.contains(instructionName)) return instructions[instructionName].NParams;
+    if (instructions().contains(instructionName)) return instructions()[instructionName].NParams;
     return 0;
 }
 
 JKQTMathTextNodeSize JKQTMathTextSimpleInstructionNode::getSizeInternal(QPainter &painter, JKQTMathTextEnvironment currentEv) const
 {
-    fillInstructions();
     QFont f=currentEv.getFont(parentMathText);
     f.setStyleStrategy(QFont::PreferDefault);
     const QFontMetricsF fm(f, painter.device());
@@ -140,47 +134,46 @@ JKQTMathTextNodeSize JKQTMathTextSimpleInstructionNode::getSizeInternal(QPainter
     return s;
 }
 
-QHash<QString, JKQTMathTextSimpleInstructionNode::InstructionProperties> JKQTMathTextSimpleInstructionNode::instructions;
-
-void JKQTMathTextSimpleInstructionNode::fillInstructions()
-{
-    static std::mutex sMutex;
-    std::lock_guard<std::mutex> lock(sMutex);
-    if (instructions.size()>0) return;
-    {
-        InstructionProperties i([](const QStringList& parameters) -> QString {
-            bool ok=false;
-            qlonglong code=parameters.value(0, "0").toLongLong(&ok, 16);
-            ok=ok&&(code>=0);
-            if (ok&&(code>=0)&&(code<=0xFFFFFFFF)) return QString::fromStdString(jkqtp_UnicodeToUTF8(static_cast<uint32_t>(code)));
-            else return QString();
-        }, 1);
-        instructions["unicode"]= i;
-        instructions["usym"]= i;
-    }
-    {
-        InstructionProperties i([](const QStringList& parameters) -> QString {
-            bool ok=false;
-            qlonglong code=parameters.value(0, "0").toLongLong(&ok, 16);
-            ok=ok&&(code>=0);
-            if (ok) {
-                QByteArray bytes;
-                while (code!=0) {
-                    bytes.prepend(static_cast<char>(code&0xFF));
-                    code=code>>8;
-                }
-                return QString::fromUtf8(bytes);
+const QHash<QString, JKQTMathTextSimpleInstructionNode::InstructionProperties>& JKQTMathTextSimpleInstructionNode::instructions() {
+    static QHash<QString, JKQTMathTextSimpleInstructionNode::InstructionProperties> table=[]()
+        {
+            QHash<QString, JKQTMathTextSimpleInstructionNode::InstructionProperties> instructions;
+            {
+                InstructionProperties i([](const QStringList& parameters) -> QString {
+                    bool ok=false;
+                    qlonglong code=parameters.value(0, "0").toLongLong(&ok, 16);
+                    ok=ok&&(code>=0);
+                    if (ok&&(code>=0)&&(code<=0xFFFFFFFF)) return QString::fromStdString(jkqtp_UnicodeToUTF8(static_cast<uint32_t>(code)));
+                    else return QString();
+                }, 1);
+                instructions["unicode"]= i;
+                instructions["usym"]= i;
             }
-            return QChar(0);
-        }, 1);
-        instructions["utfeight"]= i;
-    }
+            {
+                InstructionProperties i([](const QStringList& parameters) -> QString {
+                    bool ok=false;
+                    qlonglong code=parameters.value(0, "0").toLongLong(&ok, 16);
+                    ok=ok&&(code>=0);
+                    if (ok) {
+                        QByteArray bytes;
+                        while (code!=0) {
+                            bytes.prepend(static_cast<char>(code&0xFF));
+                            code=code>>8;
+                        }
+                        return QString::fromUtf8(bytes);
+                    }
+                    return QChar(0);
+                }, 1);
+                instructions["utfeight"]= i;
+            }
+            return instructions;
+        }();
+    return table;
 }
 
 QString JKQTMathTextSimpleInstructionNode::executeInstruction() const
 {
-    fillInstructions();
-    return instructions.value(getInstructionName(), InstructionProperties()).evaluator(getParameters());
+    return instructions().value(getInstructionName(), InstructionProperties()).evaluator(getParameters());
 }
 
 JKQTMathTextSimpleInstructionNode::InstructionProperties::InstructionProperties():

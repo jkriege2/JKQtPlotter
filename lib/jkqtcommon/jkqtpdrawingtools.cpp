@@ -556,14 +556,14 @@ JKQTPSynchronized<QVector<JKQTPCustomGraphSymbolFunctor> > JKQTPlotterDrawingToo
 
 JKQTPGraphSymbols JKQTPRegisterCustomGraphSymbol(JKQTPCustomGraphSymbolFunctor&& f)
 {
-    JKQTPlotterDrawingTools::SymbolsLocker lock(JKQTPlotterDrawingTools::JKQTPCustomGraphSymbolStore);
+    JKQTPlotterDrawingTools::SymbolsWriteLocker lock(JKQTPlotterDrawingTools::JKQTPCustomGraphSymbolStore);
     JKQTPlotterDrawingTools::JKQTPCustomGraphSymbolStore->push_back(std::move(f));
     return static_cast<JKQTPGraphSymbols>(static_cast<uint64_t>(JKQTPFirstCustomSymbol)+static_cast<uint64_t>(JKQTPlotterDrawingTools::JKQTPCustomGraphSymbolStore->size()-1));
 }
 
 JKQTPGraphSymbols JKQTPRegisterCustomGraphSymbol(const JKQTPCustomGraphSymbolFunctor& f)
 {
-    JKQTPlotterDrawingTools::SymbolsLocker lock(JKQTPlotterDrawingTools::JKQTPCustomGraphSymbolStore);
+    JKQTPlotterDrawingTools::SymbolsWriteLocker lock(JKQTPlotterDrawingTools::JKQTPCustomGraphSymbolStore);
     JKQTPlotterDrawingTools::JKQTPCustomGraphSymbolStore->push_back(f);
     return static_cast<JKQTPGraphSymbols>(static_cast<uint64_t>(JKQTPFirstCustomSymbol)+static_cast<uint64_t>(JKQTPlotterDrawingTools::JKQTPCustomGraphSymbolStore->size()-1));
 }

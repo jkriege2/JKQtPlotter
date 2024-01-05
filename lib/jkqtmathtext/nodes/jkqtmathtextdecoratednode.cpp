@@ -108,14 +108,12 @@ QString JKQTMathTextDecoratedNode::DecorationType2String(JKQTMathTextDecoratedNo
 
 JKQTMathTextDecoratedNode::DecorationType JKQTMathTextDecoratedNode::InstructionName2DecorationType(const QString &mode)
 {
-    fillInstructions();
-    return instructions[mode];
+    return instructions()[mode];
 }
 
 bool JKQTMathTextDecoratedNode::supportsInstructionName(const QString &instructionName)
 {
-    fillInstructions();
-    return instructions.contains(instructionName);
+    return instructions().contains(instructionName);
 }
 
 
@@ -168,64 +166,64 @@ JKQTMathTextNodeSize JKQTMathTextDecoratedNode::getSizeInternal(QPainter& painte
     return s;
 }
 
-QHash<QString, JKQTMathTextDecoratedNode::DecorationType> JKQTMathTextDecoratedNode::instructions;
+const QHash<QString, JKQTMathTextDecoratedNode::DecorationType>& JKQTMathTextDecoratedNode::instructions() {
+    static QHash<QString, JKQTMathTextDecoratedNode::DecorationType> table =[](){
+        QHash<QString, JKQTMathTextDecoratedNode::DecorationType> instructions;
 
-void JKQTMathTextDecoratedNode::fillInstructions()
-{
-    static std::mutex sMutex;
-    std::lock_guard<std::mutex> lock(sMutex);
-    if (instructions.size()>0) return;
+        instructions["vec"]=MTDvec;
+        instructions["overline"]=MTDoverline;
+        instructions["oline"]=MTDoverline;
+        instructions["ol"]=MTDoverline;
+        instructions["underline"]=MTDunderline;
+        instructions["uline"]=MTDunderline;
+        instructions["ul"]=MTDunderline;
+        instructions["dashuline"]=MTDunderlineDashed;
+        instructions["dotuline"]=MTDunderlineDotted;
+        instructions["uuline"]=MTDdoubleunderline;
+        instructions["uul"]=MTDdoubleunderline;
+        instructions["ooline"]=MTDdoubleoverline;
+        instructions["ool"]=MTDdoubleoverline;
+        instructions["arrow"]=MTDarrow;
+        instructions["overrightarrow"]=MTDarrow;
+        instructions["overarrow"]=MTDarrow;
+        instructions["hat"]=MTDhat;
+        instructions["^"]=MTDhat;
+        instructions["widehat"]=MTDwidehat;
+        instructions["check"]=MTDcheck;
+        instructions["v"]=MTDcheck;
+        instructions["widecheck"]=MTDwidecheck;
+        instructions["bar"]=MTDbar;
+        instructions["="]=MTDbar;
+        instructions["dot"]=MTDdot;
+        instructions["."]=MTDdot;
+        instructions["ocirc"]=MTDocirc;
+        instructions["tilde"]=MTDtilde;
+        instructions["~"]=MTDtilde;
+        instructions["acute"]=MTDacute;
+        instructions["'"]=MTDacute;
+        instructions["grave"]=MTDgrave;
+        instructions["`"]=MTDgrave;
+        instructions["breve"]=MTDbreve;
+        instructions["u"]=MTDbreve;
+        instructions["widetilde"]=MTDwidetilde;
+        instructions["ddot"]=MTDddot;
+        instructions["cancel"]=MTDcancel;
+        instructions["xcancel"]=MTDxcancel;
+        instructions["bcancel"]=MTDbcancel;
+        instructions["strike"]=MTDstrike;
+        instructions["st"]=MTDstrike;
+        instructions["sout"]=MTDstrike;
+        instructions["overleftarrow"]=MTDoverleftarrow;
+        instructions["overrightarrow"]=MTDoverrightarrow;
+        instructions["overleftrightarrow"]=MTDoverleftrightarrow;
+        instructions["underleftarrow"]=MTDunderleftarrow;
+        instructions["underrightarrow"]=MTDunderrightarrow;
+        instructions["underleftrightarrow"]=MTDunderleftrightarrow;
 
-    instructions["vec"]=MTDvec;
-    instructions["overline"]=MTDoverline;
-    instructions["oline"]=MTDoverline;
-    instructions["ol"]=MTDoverline;
-    instructions["underline"]=MTDunderline;
-    instructions["uline"]=MTDunderline;
-    instructions["ul"]=MTDunderline;
-    instructions["dashuline"]=MTDunderlineDashed;
-    instructions["dotuline"]=MTDunderlineDotted;
-    instructions["uuline"]=MTDdoubleunderline;
-    instructions["uul"]=MTDdoubleunderline;
-    instructions["ooline"]=MTDdoubleoverline;
-    instructions["ool"]=MTDdoubleoverline;
-    instructions["arrow"]=MTDarrow;
-    instructions["overrightarrow"]=MTDarrow;
-    instructions["overarrow"]=MTDarrow;
-    instructions["hat"]=MTDhat;
-    instructions["^"]=MTDhat;
-    instructions["widehat"]=MTDwidehat;
-    instructions["check"]=MTDcheck;
-    instructions["v"]=MTDcheck;
-    instructions["widecheck"]=MTDwidecheck;
-    instructions["bar"]=MTDbar;
-    instructions["="]=MTDbar;
-    instructions["dot"]=MTDdot;
-    instructions["."]=MTDdot;
-    instructions["ocirc"]=MTDocirc;
-    instructions["tilde"]=MTDtilde;
-    instructions["~"]=MTDtilde;
-    instructions["acute"]=MTDacute;
-    instructions["'"]=MTDacute;
-    instructions["grave"]=MTDgrave;
-    instructions["`"]=MTDgrave;
-    instructions["breve"]=MTDbreve;
-    instructions["u"]=MTDbreve;
-    instructions["widetilde"]=MTDwidetilde;
-    instructions["ddot"]=MTDddot;
-    instructions["cancel"]=MTDcancel;
-    instructions["xcancel"]=MTDxcancel;
-    instructions["bcancel"]=MTDbcancel;
-    instructions["strike"]=MTDstrike;
-    instructions["st"]=MTDstrike;
-    instructions["sout"]=MTDstrike;
-    instructions["overleftarrow"]=MTDoverleftarrow;
-    instructions["overrightarrow"]=MTDoverrightarrow;
-    instructions["overleftrightarrow"]=MTDoverleftrightarrow;
-    instructions["underleftarrow"]=MTDunderleftarrow;
-    instructions["underrightarrow"]=MTDunderrightarrow;
-    instructions["underleftrightarrow"]=MTDunderleftrightarrow;
+        return instructions;
 
+    }();
+    return table;
 }
 
 double JKQTMathTextDecoratedNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) const {

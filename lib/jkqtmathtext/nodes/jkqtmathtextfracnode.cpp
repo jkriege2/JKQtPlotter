@@ -34,34 +34,32 @@
 #include <QFont>
 
 
-QHash<QString, JKQTMathTextFracNode::FracType> JKQTMathTextFracNode::instructions;
-
-
-void JKQTMathTextFracNode::fillInstructions()
-{
-    static std::mutex sMutex;
-    std::lock_guard<std::mutex> lock(sMutex);
-    if (instructions.size()>0) return;
-    instructions["frac"]=MTFMfrac;
-    instructions["dfrac"] = MTFMdfrac;
-    instructions["cfrac"]=MTFMdfrac;
-    instructions["sfrac"] = MTFMsfrac;
-    instructions["slantfrac"] = MTFMsfrac;
-    instructions["xfrac"]=MTFMsfrac;
-    instructions["stfrac"] = MTFMstfrac;
-    instructions["nicefrac"] = MTFMstfrac;
-    instructions["slanttextfrac"] = MTFMstfrac;
-    instructions["xtfrac"]=MTFMstfrac;
-    instructions["tfrac"]=MTFMtfrac;
-    instructions["stackrel"]=MTFMstackrel;
-    instructions["underbrace"]=MTFMunderbrace;
-    instructions["underbracket"]=MTFMunderbracket;
-    instructions["underset"]=MTFMunderset;
-    instructions["overbrace"]=MTFMoverbrace;
-    instructions["overbracket"]=MTFMoverbracket;
-    instructions["overset"]=MTFMoverset;
+const QHash<QString, JKQTMathTextFracNode::FracType>& JKQTMathTextFracNode::instructions() {
+    static QHash<QString, JKQTMathTextFracNode::FracType> table=[]()
+        {
+            QHash<QString, JKQTMathTextFracNode::FracType> instructions;
+            instructions["frac"]=MTFMfrac;
+            instructions["dfrac"] = MTFMdfrac;
+            instructions["cfrac"]=MTFMdfrac;
+            instructions["sfrac"] = MTFMsfrac;
+            instructions["slantfrac"] = MTFMsfrac;
+            instructions["xfrac"]=MTFMsfrac;
+            instructions["stfrac"] = MTFMstfrac;
+            instructions["nicefrac"] = MTFMstfrac;
+            instructions["slanttextfrac"] = MTFMstfrac;
+            instructions["xtfrac"]=MTFMstfrac;
+            instructions["tfrac"]=MTFMtfrac;
+            instructions["stackrel"]=MTFMstackrel;
+            instructions["underbrace"]=MTFMunderbrace;
+            instructions["underbracket"]=MTFMunderbracket;
+            instructions["underset"]=MTFMunderset;
+            instructions["overbrace"]=MTFMoverbrace;
+            instructions["overbracket"]=MTFMoverbracket;
+            instructions["overset"]=MTFMoverset;
+            return instructions;
+        }();
+    return table;
 }
-
 
 
 
@@ -99,14 +97,12 @@ QString JKQTMathTextFracNode::FracType2String(JKQTMathTextFracNode::FracType mod
 
 JKQTMathTextFracNode::FracType JKQTMathTextFracNode::InstructionName2FracType(const QString &mode)
 {
-    fillInstructions();
-    return instructions.value(mode, MTFMfrac);
+    return instructions().value(mode, MTFMfrac);
 }
 
 bool JKQTMathTextFracNode::supportsInstructionName(const QString &instructionName)
 {
-    fillInstructions();
-    return instructions.contains(instructionName);
+    return instructions().contains(instructionName);
 }
 
 

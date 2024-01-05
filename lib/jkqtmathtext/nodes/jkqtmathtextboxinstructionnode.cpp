@@ -41,7 +41,7 @@
 JKQTMathTextBoxInstructionNode::JKQTMathTextBoxInstructionNode(JKQTMathText* _parent, const QString& name, JKQTMathTextNode* child, const QStringList& parameters):
     JKQTMathTextInstruction1Node(_parent, name, child, parameters)
 {
-    fillInstructions();
+
 }
 
 JKQTMathTextBoxInstructionNode::~JKQTMathTextBoxInstructionNode() {
@@ -56,7 +56,7 @@ QString JKQTMathTextBoxInstructionNode::getTypeName() const
 JKQTMathTextNodeSize JKQTMathTextBoxInstructionNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv) const {
     JKQTMathTextEnvironment ev=currentEv;
 
-    const auto& inst=instructions.value(getInstructionName());
+    const auto& inst=instructions().value(getInstructionName());
     inst.modifier(ev, getParameters());
     const QPen p=inst.pen(ev, getParameters(), parentMathText);
     const QBrush b=inst.brush(ev, getParameters(), parentMathText);
@@ -77,7 +77,7 @@ double JKQTMathTextBoxInstructionNode::draw(QPainter& painter, double x, double 
     doDrawBoxes(painter, x, y, currentEv);
     JKQTMathTextEnvironment ev=currentEv;
 
-    const auto& inst=instructions.value(getInstructionName());
+    const auto& inst=instructions().value(getInstructionName());
     inst.modifier(ev, getParameters());
     const QPen p=inst.pen(ev, getParameters(), parentMathText);
     const QBrush b=inst.brush(ev, getParameters(), parentMathText);
@@ -111,8 +111,8 @@ double JKQTMathTextBoxInstructionNode::draw(QPainter& painter, double x, double 
 
 bool JKQTMathTextBoxInstructionNode::toHtml(QString &html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) const {
     JKQTMathTextEnvironment ev=currentEv;
-    fillInstructions();
-    const auto& inst=instructions.value(getInstructionName());
+
+    const auto& inst=instructions().value(getInstructionName());
     inst.modifier(ev, getParameters());
     const QPen p=inst.pen(ev, getParameters(), parentMathText);
     const QBrush b=inst.brush(ev, getParameters(), parentMathText);
@@ -140,173 +140,171 @@ bool JKQTMathTextBoxInstructionNode::toHtml(QString &html, JKQTMathTextEnvironme
 
 bool JKQTMathTextBoxInstructionNode::supportsInstructionName(const QString &instructionName)
 {
-    fillInstructions();
-    return instructions.contains(instructionName);
+    return instructions().contains(instructionName);
 }
 
 size_t JKQTMathTextBoxInstructionNode::countParametersOfInstruction(const QString &instructionName)
 {
-    fillInstructions();
-    if (instructions.contains(instructionName)) return instructions[instructionName].NParams;
+    if (instructions().contains(instructionName)) return instructions()[instructionName].NParams;
     return 0;
 }
 
 void JKQTMathTextBoxInstructionNode::modifyInMathEnvironment(const QString &instructionName, bool &insideMath, bool& insideMathTextStyle, const QStringList& params)
 {
-    fillInstructions();
-    if (instructions.contains(instructionName)) {
+
+    if (instructions().contains(instructionName)) {
         JKQTMathTextEnvironment ev;
         ev.insideMath=insideMath;
         ev.insideMathUseTextStyle=insideMathTextStyle;
-        instructions[instructionName].modifier(ev, params);
+        instructions()[instructionName].modifier(ev, params);
         insideMath=ev.insideMath;
         insideMathTextStyle=ev.insideMathUseTextStyle;
     }
 }
 
 
-QHash<QString, JKQTMathTextBoxInstructionNode::InstructionProperties> JKQTMathTextBoxInstructionNode::instructions;
+const QHash<QString, JKQTMathTextBoxInstructionNode::InstructionProperties>& JKQTMathTextBoxInstructionNode::instructions() {
+    static QHash<QString, JKQTMathTextBoxInstructionNode::InstructionProperties> table=[](){
+        QHash<QString, JKQTMathTextBoxInstructionNode::InstructionProperties> instructions;
 
-void JKQTMathTextBoxInstructionNode::fillInstructions()
-{
-    static std::mutex sMutex;
-    std::lock_guard<std::mutex> lock(sMutex);
-    if (instructions.size()>0) return;
-
-    {
-        InstructionProperties i(InstructionProperties::NoModification,
-                                InstructionProperties::DefaultPen,
-                                InstructionProperties::NoBrush,
-                                InstructionProperties::DefaultPadding,
-                                /*Nparams=*/0);
-        instructions["fbox"] = i;
-        instructions["framebox"] = i;
-        instructions["boxed"] = i;
-        instructions["framed"] = i;
-    }
-    {
-        InstructionProperties i(InstructionProperties::NoModification,
-                                InstructionProperties::DefaultPen,
-                                InstructionProperties::NoBrush,
-                                InstructionProperties::DefaultPadding,
-                                /*Nparams=*/0);
-        i.doubleLine=true;
-        instructions["doublebox"] = i;
-    }
-    {
-        InstructionProperties i(InstructionProperties::NoModification,
-                                InstructionProperties::DefaultPen,
-                                InstructionProperties::NoBrush,
-                                InstructionProperties::DefaultPadding,
-                                /*Nparams=*/0);
-        i.roundingFactor=0.7;
-        instructions["ovalbox"] = i;
-    }
-    {
-        InstructionProperties i(InstructionProperties::NoModification,
-                                [](JKQTMathTextEnvironment& ev, const QStringList& parameters, JKQTMathText* parent){
-                                    QPen p=InstructionProperties::DefaultPen(ev, parameters, parent);
-                                    p.setWidthF(p.widthF()*1.5);
-                                    return p;
-                                },
-                                InstructionProperties::NoBrush,
-                                InstructionProperties::DefaultPadding,
-                                /*Nparams=*/0);
-        i.roundingFactor=0.8;
-        instructions["Ovalbox"] = i;
-    }
-    {
-        InstructionProperties i(InstructionProperties::NoModification,
-                                InstructionProperties::DefaultPen,
-                                InstructionProperties::NoBrush,
-                                InstructionProperties::DefaultPadding,
-                                /*Nparams=*/0);
-        i.roundingFactor=0.7;
-        i.doubleLine=true;
-        instructions["ovaldoublebox"] = i;
-    }
-    {
-        InstructionProperties i(InstructionProperties::NoModification,
-                                [](JKQTMathTextEnvironment& ev, const QStringList& parameters, JKQTMathText* parent){
-                                    QPen p=InstructionProperties::DefaultPen(ev, parameters, parent);
-                                    p.setColor(jkqtp_String2QColor(parameters.value(0, p.color().name())));
-                                    return p;
-                                },
-                                InstructionProperties::NoBrush,
-                                InstructionProperties::DefaultPadding,
-                                /*Nparams=*/1);
-        instructions["colorbox"] = i;
-    }
-    {
-        InstructionProperties i(InstructionProperties::NoModification,
-                                [](JKQTMathTextEnvironment& ev, const QStringList& parameters, JKQTMathText* parent){
-                                    QPen p=InstructionProperties::DefaultPen(ev, parameters, parent);
-                                    p.setStyle(Qt::DashLine);
-                                    return p;
-                                },
-                                InstructionProperties::NoBrush,
-                                InstructionProperties::DefaultPadding,
-                                /*Nparams=*/0);
-        instructions["dashbox"] = i;
-        instructions["dashedbox"] = i;
-        instructions["dbox"] = i;
-    }
-    {
-        InstructionProperties i(InstructionProperties::NoModification,
-                                [](JKQTMathTextEnvironment& ev, const QStringList& parameters, JKQTMathText* parent){
-                                    QPen p=InstructionProperties::DefaultPen(ev, parameters, parent);
-                                    p.setStyle(Qt::DotLine);
-                                    return p;
-                                },
-                                InstructionProperties::NoBrush,
-                                InstructionProperties::DefaultPadding,
-                                /*Nparams=*/0);
-        instructions["dottedbox"] = i;
-        instructions["dotbox"] = i;
-    }
-    {
-        InstructionProperties i(InstructionProperties::NoModification,
-                                InstructionProperties::NoPen,
-                                [](JKQTMathTextEnvironment& /*ev*/, const QStringList& parameters, JKQTMathText* /*parent*/){
-                                    return QBrush(jkqtp_String2QColor(parameters.value(0, QColor(Qt::transparent).name())), Qt::SolidPattern);
-                                },
-                                InstructionProperties::DefaultPadding,
-                                /*Nparams=*/1);
-        instructions["shaded"] = i;
-    }
-    {
-        InstructionProperties i(InstructionProperties::NoModification,
-                                InstructionProperties::NoPen,
-                                [](JKQTMathTextEnvironment& /*ev*/, const QStringList& parameters, JKQTMathText* /*parent*/){
-                                    return QBrush(jkqtp_String2QColor(parameters.value(0, QColor(Qt::transparent).name())), Qt::SolidPattern);
-                                },
-                                0,
-                                /*Nparams=*/1);
-        instructions["snugshade"] = i;
-    }
-    {
-        InstructionProperties i(InstructionProperties::NoModification,
-                                InstructionProperties::DefaultPen,
-                                InstructionProperties::NoBrush,
-                                0,
-                                /*Nparams=*/0);
-        instructions["snugbox"] = i;
-    }
-    {
-        InstructionProperties i(InstructionProperties::NoModification,
-                                [](JKQTMathTextEnvironment& ev, const QStringList& parameters, JKQTMathText* parent){
-                                    QPen p=InstructionProperties::DefaultPen(ev, parameters, parent);
-                                    p.setColor(jkqtp_String2QColor(parameters.value(0, p.color().name())));
-                                    return p;
-                                },
-                                [](JKQTMathTextEnvironment& /*ev*/, const QStringList& parameters, JKQTMathText* /*parent*/){
-                                    return QBrush(jkqtp_String2QColor(parameters.value(1, QColor(Qt::transparent).name())), Qt::SolidPattern);
-                                },
-                                InstructionProperties::DefaultPadding,
-                                /*Nparams=*/2);
-        instructions["fcolorbox"] = i;
-    }
+        {
+            InstructionProperties i(InstructionProperties::NoModification,
+                                    InstructionProperties::DefaultPen,
+                                    InstructionProperties::NoBrush,
+                                    InstructionProperties::DefaultPadding,
+                                    /*Nparams=*/0);
+            instructions["fbox"] = i;
+            instructions["framebox"] = i;
+            instructions["boxed"] = i;
+            instructions["framed"] = i;
+        }
+        {
+            InstructionProperties i(InstructionProperties::NoModification,
+                                    InstructionProperties::DefaultPen,
+                                    InstructionProperties::NoBrush,
+                                    InstructionProperties::DefaultPadding,
+                                    /*Nparams=*/0);
+            i.doubleLine=true;
+            instructions["doublebox"] = i;
+        }
+        {
+            InstructionProperties i(InstructionProperties::NoModification,
+                                    InstructionProperties::DefaultPen,
+                                    InstructionProperties::NoBrush,
+                                    InstructionProperties::DefaultPadding,
+                                    /*Nparams=*/0);
+            i.roundingFactor=0.7;
+            instructions["ovalbox"] = i;
+        }
+        {
+            InstructionProperties i(InstructionProperties::NoModification,
+                                    [](JKQTMathTextEnvironment& ev, const QStringList& parameters, JKQTMathText* parent){
+                                        QPen p=InstructionProperties::DefaultPen(ev, parameters, parent);
+                                        p.setWidthF(p.widthF()*1.5);
+                                        return p;
+                                    },
+                                    InstructionProperties::NoBrush,
+                                    InstructionProperties::DefaultPadding,
+                                    /*Nparams=*/0);
+            i.roundingFactor=0.8;
+            instructions["Ovalbox"] = i;
+        }
+        {
+            InstructionProperties i(InstructionProperties::NoModification,
+                                    InstructionProperties::DefaultPen,
+                                    InstructionProperties::NoBrush,
+                                    InstructionProperties::DefaultPadding,
+                                    /*Nparams=*/0);
+            i.roundingFactor=0.7;
+            i.doubleLine=true;
+            instructions["ovaldoublebox"] = i;
+        }
+        {
+            InstructionProperties i(InstructionProperties::NoModification,
+                                    [](JKQTMathTextEnvironment& ev, const QStringList& parameters, JKQTMathText* parent){
+                                        QPen p=InstructionProperties::DefaultPen(ev, parameters, parent);
+                                        p.setColor(jkqtp_String2QColor(parameters.value(0, p.color().name())));
+                                        return p;
+                                    },
+                                    InstructionProperties::NoBrush,
+                                    InstructionProperties::DefaultPadding,
+                                    /*Nparams=*/1);
+            instructions["colorbox"] = i;
+        }
+        {
+            InstructionProperties i(InstructionProperties::NoModification,
+                                    [](JKQTMathTextEnvironment& ev, const QStringList& parameters, JKQTMathText* parent){
+                                        QPen p=InstructionProperties::DefaultPen(ev, parameters, parent);
+                                        p.setStyle(Qt::DashLine);
+                                        return p;
+                                    },
+                                    InstructionProperties::NoBrush,
+                                    InstructionProperties::DefaultPadding,
+                                    /*Nparams=*/0);
+            instructions["dashbox"] = i;
+            instructions["dashedbox"] = i;
+            instructions["dbox"] = i;
+        }
+        {
+            InstructionProperties i(InstructionProperties::NoModification,
+                                    [](JKQTMathTextEnvironment& ev, const QStringList& parameters, JKQTMathText* parent){
+                                        QPen p=InstructionProperties::DefaultPen(ev, parameters, parent);
+                                        p.setStyle(Qt::DotLine);
+                                        return p;
+                                    },
+                                    InstructionProperties::NoBrush,
+                                    InstructionProperties::DefaultPadding,
+                                    /*Nparams=*/0);
+            instructions["dottedbox"] = i;
+            instructions["dotbox"] = i;
+        }
+        {
+            InstructionProperties i(InstructionProperties::NoModification,
+                                    InstructionProperties::NoPen,
+                                    [](JKQTMathTextEnvironment& /*ev*/, const QStringList& parameters, JKQTMathText* /*parent*/){
+                                        return QBrush(jkqtp_String2QColor(parameters.value(0, QColor(Qt::transparent).name())), Qt::SolidPattern);
+                                    },
+                                    InstructionProperties::DefaultPadding,
+                                    /*Nparams=*/1);
+            instructions["shaded"] = i;
+        }
+        {
+            InstructionProperties i(InstructionProperties::NoModification,
+                                    InstructionProperties::NoPen,
+                                    [](JKQTMathTextEnvironment& /*ev*/, const QStringList& parameters, JKQTMathText* /*parent*/){
+                                        return QBrush(jkqtp_String2QColor(parameters.value(0, QColor(Qt::transparent).name())), Qt::SolidPattern);
+                                    },
+                                    0,
+                                    /*Nparams=*/1);
+            instructions["snugshade"] = i;
+        }
+        {
+            InstructionProperties i(InstructionProperties::NoModification,
+                                    InstructionProperties::DefaultPen,
+                                    InstructionProperties::NoBrush,
+                                    0,
+                                    /*Nparams=*/0);
+            instructions["snugbox"] = i;
+        }
+        {
+            InstructionProperties i(InstructionProperties::NoModification,
+                                    [](JKQTMathTextEnvironment& ev, const QStringList& parameters, JKQTMathText* parent){
+                                        QPen p=InstructionProperties::DefaultPen(ev, parameters, parent);
+                                        p.setColor(jkqtp_String2QColor(parameters.value(0, p.color().name())));
+                                        return p;
+                                    },
+                                    [](JKQTMathTextEnvironment& /*ev*/, const QStringList& parameters, JKQTMathText* /*parent*/){
+                                        return QBrush(jkqtp_String2QColor(parameters.value(1, QColor(Qt::transparent).name())), Qt::SolidPattern);
+                                    },
+                                    InstructionProperties::DefaultPadding,
+                                    /*Nparams=*/2);
+            instructions["fcolorbox"] = i;
+        }
+        return instructions;
+    }();
+    return table;
 }
+
 
 JKQTMathTextBoxInstructionNode::InstructionProperties::ModifyEnvironmentFunctor JKQTMathTextBoxInstructionNode::InstructionProperties::NoModification=
         [](JKQTMathTextEnvironment& /*ev*/, const QStringList& /*parameters*/){};

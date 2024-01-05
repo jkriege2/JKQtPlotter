@@ -90,9 +90,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextFracNode: public JKQTMathTextDualChild
         JKQTMathTextFracNode::FracType getMode() const;
     protected:
         /** \brief lists all supported instructions */
-        static QHash<QString, FracType> instructions;
-        /** \brief fills instructions */
-        static void fillInstructions();
+        static const QHash<QString, FracType>& instructions();
         /** \copydoc JKQTMathTextNode::getSizeInternal() */
         virtual JKQTMathTextNodeSize getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv) const override;
         /** \brief actual display type of fraction object */

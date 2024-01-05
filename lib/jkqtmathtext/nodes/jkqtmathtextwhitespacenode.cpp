@@ -51,15 +51,13 @@ JKQTMathTextWhitespaceNode::JKQTMathTextWhitespaceNode(JKQTMathText *_parent):
 JKQTMathTextWhitespaceNode::JKQTMathTextWhitespaceNode(const QString &_type, JKQTMathText *parent):
     JKQTMathTextWhitespaceNode(parent)
 {
-    fillSupportedInstructions();
-    whitespace=supportedInstructions[_type];
+    whitespace=supportedInstructions()[_type];
 }
 
 JKQTMathTextWhitespaceNode::JKQTMathTextWhitespaceNode(const QString &_type, size_t count, JKQTMathText *parent):
     JKQTMathTextWhitespaceNode(parent)
 {
-    fillSupportedInstructions();
-    whitespace=supportedInstructions[_type];
+    whitespace=supportedInstructions()[_type];
     whitespace.count=whitespace.count*count;
 }
 
@@ -67,7 +65,6 @@ JKQTMathTextWhitespaceNode::JKQTMathTextWhitespaceNode(Types type, size_t count,
     JKQTMathTextNode(parent),
     whitespace(type, count)
 {
-    fillSupportedInstructions();
 }
 
 JKQTMathTextWhitespaceNode::~JKQTMathTextWhitespaceNode() {
@@ -134,31 +131,30 @@ JKQTMathTextNodeSize JKQTMathTextWhitespaceNode::getSizeInternal(QPainter &paint
     return s;
 }
 
-QHash<QString, JKQTMathTextWhitespaceNode::WhitespaceProps> JKQTMathTextWhitespaceNode::supportedInstructions;
-
-void JKQTMathTextWhitespaceNode::fillSupportedInstructions()
-{
-    static std::mutex sMutex;
-    std::lock_guard<std::mutex> lock(sMutex);
-    if (supportedInstructions.size()==0) {
-        supportedInstructions[" "]=WhitespaceProps(WSTthicker, 1);
-        supportedInstructions["nbsp"]=WhitespaceProps(WSTNonbreaking, 1);
-        supportedInstructions["enspace"]=WhitespaceProps(WST1en, 1);
-        supportedInstructions["enskip"]=WhitespaceProps(WST1en, 1);
-        supportedInstructions["quad"]=WhitespaceProps(WSTQuad, 1);
-        supportedInstructions["emspace"]=WhitespaceProps(WSTQuad, 1);
-        supportedInstructions["qquad"]=WhitespaceProps(WSTQuad, 2);
-        supportedInstructions[","]=WhitespaceProps(WSTthin, 1);
-        supportedInstructions["thinspace"]=WhitespaceProps(WSTthin, 1);
-        supportedInstructions[":"]=WhitespaceProps(WSTmedium, 1);
-        supportedInstructions["medspace"]=WhitespaceProps(WSTmedium, 1);
-        supportedInstructions[";"]=WhitespaceProps(WSTthick, 1);
-        supportedInstructions["thickspace"]=WhitespaceProps(WSTthick, 1);
-        supportedInstructions["!"]=WhitespaceProps(WSTnegthin, 1);
-        supportedInstructions["negthinspace"]=WhitespaceProps(WSTnegthin, 1);
-        supportedInstructions["negmedspace"]=WhitespaceProps(WSTnegmedium, 1);
-        supportedInstructions["negthickspace"]=WhitespaceProps(WSTnegthick, 1);
-    }
+const QHash<QString, JKQTMathTextWhitespaceNode::WhitespaceProps>& JKQTMathTextWhitespaceNode::supportedInstructions() {
+    static QHash<QString, JKQTMathTextWhitespaceNode::WhitespaceProps> table=[]()
+        {
+            QHash<QString, JKQTMathTextWhitespaceNode::WhitespaceProps> supportedInstructions;
+            supportedInstructions[" "]=WhitespaceProps(WSTthicker, 1);
+            supportedInstructions["nbsp"]=WhitespaceProps(WSTNonbreaking, 1);
+            supportedInstructions["enspace"]=WhitespaceProps(WST1en, 1);
+            supportedInstructions["enskip"]=WhitespaceProps(WST1en, 1);
+            supportedInstructions["quad"]=WhitespaceProps(WSTQuad, 1);
+            supportedInstructions["emspace"]=WhitespaceProps(WSTQuad, 1);
+            supportedInstructions["qquad"]=WhitespaceProps(WSTQuad, 2);
+            supportedInstructions[","]=WhitespaceProps(WSTthin, 1);
+            supportedInstructions["thinspace"]=WhitespaceProps(WSTthin, 1);
+            supportedInstructions[":"]=WhitespaceProps(WSTmedium, 1);
+            supportedInstructions["medspace"]=WhitespaceProps(WSTmedium, 1);
+            supportedInstructions[";"]=WhitespaceProps(WSTthick, 1);
+            supportedInstructions["thickspace"]=WhitespaceProps(WSTthick, 1);
+            supportedInstructions["!"]=WhitespaceProps(WSTnegthin, 1);
+            supportedInstructions["negthinspace"]=WhitespaceProps(WSTnegthin, 1);
+            supportedInstructions["negmedspace"]=WhitespaceProps(WSTnegmedium, 1);
+            supportedInstructions["negthickspace"]=WhitespaceProps(WSTnegthick, 1);
+            return supportedInstructions;
+        }();
+    return table;
 
 }
 
@@ -212,8 +208,7 @@ double JKQTMathTextWhitespaceNode::Type2PixelWidth(Types type, JKQTMathTextEnvir
 
 bool JKQTMathTextWhitespaceNode::supportsInstructionName(const QString &instruction)
 {
-    fillSupportedInstructions();
-    return supportedInstructions.contains(instruction);
+    return supportedInstructions().contains(instruction);
 }
 
 
@@ -370,13 +365,11 @@ QString JKQTMathTextPhantomNode::Mode2Instruction(Mode mode)
 JKQTMathTextPhantomNode::JKQTMathTextPhantomNode(JKQTMathText *parent, const QString &mode, JKQTMathTextNode *child):
     JKQTMathTextInstruction1Node(parent, mode, child)
 {
-    fillInstructions();
 }
 
 JKQTMathTextPhantomNode::JKQTMathTextPhantomNode(JKQTMathText* _parent, Mode mode, JKQTMathTextNode* child):
     JKQTMathTextInstruction1Node(_parent, Mode2Instruction(mode), child)
 {
-    fillInstructions();
 }
 
 JKQTMathTextPhantomNode::~JKQTMathTextPhantomNode() {
@@ -389,10 +382,9 @@ QString JKQTMathTextPhantomNode::getTypeName() const
 }
 
 JKQTMathTextNodeSize JKQTMathTextPhantomNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv) const {
-    fillInstructions();
     JKQTMathTextNodeSize s=getChild()->getSize(painter, currentEv);
 
-    switch(instructions[getInstructionName()]) {
+    switch(instructions()[getInstructionName()]) {
         case FMwidth:
             s.overallHeight=0;
             s.baselineHeight=0;
@@ -415,25 +407,23 @@ double JKQTMathTextPhantomNode::draw(QPainter& painter, double x, double y, JKQT
 
 bool JKQTMathTextPhantomNode::toHtml(QString &html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) const {
     JKQTMathTextEnvironment ev=currentEv;
-    fillInstructions();
     return "&nbsp;";
 }
 
 bool JKQTMathTextPhantomNode::supportsInstructionName(const QString &instructionName)
 {
-    fillInstructions();
-    return instructions.contains(instructionName);
+    return instructions().contains(instructionName);
 }
 
-QHash<QString, JKQTMathTextPhantomNode::Mode> JKQTMathTextPhantomNode::instructions;
-
-void JKQTMathTextPhantomNode::fillInstructions()
-{
-    static std::mutex sMutex;
-    std::lock_guard<std::mutex> lock(sMutex);
-    if (instructions.size()>0) return;
-    instructions["phantom"] = FMwidthAndHeight;
-    instructions["hphantom"] = FMwidth;
-    instructions["vphantom"] = FMheight;
+const QHash<QString, JKQTMathTextPhantomNode::Mode>& JKQTMathTextPhantomNode::instructions() {
+    static QHash<QString, JKQTMathTextPhantomNode::Mode> table=[]()
+        {
+            QHash<QString, JKQTMathTextPhantomNode::Mode> instructions;
+            instructions["phantom"] = FMwidthAndHeight;
+            instructions["hphantom"] = FMwidth;
+            instructions["vphantom"] = FMheight;
+            return instructions;
+        }();
+    return table;
 }
 

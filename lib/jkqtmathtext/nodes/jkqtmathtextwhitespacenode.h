@@ -100,10 +100,11 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextWhitespaceNode: public JKQTMathTextNod
         WhitespaceProps whitespace;
         /** \brief converts Types \a type into its HTML representation */
         static QString Type2HTML(Types type);
-        /** \brief translation table between latex instruction and WhitespaceProps */
-        static QHash<QString, WhitespaceProps> supportedInstructions;
-        /** \brief initializes supportedInstructions */
-        static void fillSupportedInstructions();
+        /** \brief translation table between latex instruction and WhitespaceProps
+         *
+         *  \note This is a customization point for additional whitespace instructions!
+         */
+        static const QHash<QString, WhitespaceProps>& supportedInstructions();
 };
 
 
@@ -187,13 +188,11 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextPhantomNode: public JKQTMathTextInstru
     protected:
         /** \copydoc JKQTMathTextNode::getSizeInternal() */
         virtual JKQTMathTextNodeSize getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv) const override;
-        /** \brief fills instructions
+        /** \brief defines all implemented instructions in this node
          *
          *  \note this is the customization point for new instructions!
-         */
-        static void fillInstructions();
-        /** \brief defines all implemented instructions in this node */
-        static QHash<QString, Mode> instructions;
+          */
+        static const QHash<QString, Mode>& instructions();
 };
 #endif // JKQTMATHTEXTWHITESPACENODE_H
 

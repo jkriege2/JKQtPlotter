@@ -274,7 +274,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSymbolNode: public JKQTMathTextNode {
         /** \brief constructs a SymbolProps for a greek letter with the format from outside with the symbol in unicode-encoding \a letterUnicode and in WinSymbol-encoding letterWinWsymbol */
         static SymbolFullProps AsOutsiudeGreekLetter_WinSymbol_Unicode_Html(const QString& letterWinSymbol, const QString& letterUnicode, const QString& html);
         /** \brief insert GreekLetter_WinSymbol_Unicode_Html() as \a baseInstructionName and UprightGreekLetter_WinSymbol_Unicode_Html and "up"+\a letterWinSymbol into symbols */
-        static void addGreekLetterVariants_WinSymbol_Unicode_Html(const QString& baseInstructionName, const QString& letterWinSymbol, const QString& letterUnicode, const QString& html);
+        static void addGreekLetterVariants_WinSymbol_Unicode_Html(QHash<QString, JKQTMathTextSymbolNode::SymbolFullProps>& symbols,const QString& baseInstructionName, const QString& letterWinSymbol, const QString& letterUnicode, const QString& html);
         /** \brief constructs a SymbolProps for a symbol with encoding in Standard-fonts a */
         static SymbolFullProps StdSymbol(const QString& symbol, const QString& html);
         /** \brief constructs a SymbolProps for a symbol with encoding in UnicodeFull-fonts a */
@@ -306,10 +306,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSymbolNode: public JKQTMathTextNode {
 
 
         /** \brief symbols that can be generated in any standard-font */
-        static QHash<QString, SymbolFullProps> symbols;
-
-        /** \brief fill the symbol tables standardTextSymbols, winSymbolSymbol, ... with contents */
-        static void fillSymbolTables();
+        static const QHash<QString, SymbolFullProps>& symbols();
 
         /** \brief retrieve the properties to render the given symbol \a symName in the current environment \a currentEv */
         SymbolFullProps getSymbolProp(const QString& symName, const JKQTMathTextEnvironment& currentEv) const;

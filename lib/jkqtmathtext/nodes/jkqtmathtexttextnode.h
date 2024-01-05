@@ -110,9 +110,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextTextNode: public JKQTMathTextTextBaseN
          */
         void splitTextForLayout(QPainter &painter, JKQTMathTextEnvironment currentEv, const QString& txt, QStringList& textpart, QList<FontMode>& fontMode) const;
         /** \brief translation table for blackboard-font characters from "normal" Latin-1 encoding to unicode-encoding of blackboards */
-        static QHash<QChar, uint32_t> blackboardUnicodeTable;
-        /** \brief fill static data */
-        static void fillStaticTables();
+        static const QHash<QChar, uint32_t>& blackboardUnicodeTable();
         /** \copydoc JKQTMathTextTextBaseNode::textTransform() */
         virtual QString textTransform(const QString& text, const JKQTMathTextEnvironment& currentEv) const override;
 };

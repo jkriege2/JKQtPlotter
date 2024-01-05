@@ -53,15 +53,15 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextModifiedTextPropsInstructionNode: publ
         virtual bool toHtml(QString& html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) const override;
 
         /** \brief returns true, if the given \a instructionName can be represented by this node
-         *  \see instructions
+         *  \see instructions()
          */
         static bool supportsInstructionName(const QString& instructionName);
         /** \brief returns the number of additional string parameters, required for the given \a instructionName
-         *  \see instructions
+         *  \see instructions()
          */
         static size_t countParametersOfInstruction(const QString& instructionName);
         /** \brief sets \a insideMath to \c true if inside the node is to be parsed in math mode and \c false else
-         *  \see instructions
+         *  \see instructions()
          */
         static void modifyInMathEnvironment(const QString& instructionName, bool& insideMath, bool &insideMathTextStyle, const QStringList &params=QStringList());
 
@@ -82,13 +82,11 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextModifiedTextPropsInstructionNode: publ
             ModifyEnvironmentFunctor modifier;
         };
 
-        /** \brief fills instructions
+        /** \brief defines all implemented instructions in this node
          *
          *  \note this is the customization point for new instructions!
          */
-        static void fillInstructions();
-        /** \brief defines all implemented instructions in this node */
-        static QHash<QString, InstructionProperties> instructions;
+        static const QHash<QString, InstructionProperties>& instructions();
         /** \brief executes the instruction on \a ev */
         void executeInstruction(JKQTMathTextEnvironment& ev) const;
 };
@@ -116,15 +114,15 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextModifiedEnvironmentInstructionNode: pu
         virtual void modifyEnvironment(JKQTMathTextEnvironment& currentEv) const override;
 
         /** \brief returns true, if the given \a instructionName can be represented by this node
-         *  \see instructions
+         *  \see instructions()
          */
         static bool supportsInstructionName(const QString& instructionName);
         /** \brief returns the number of additional string parameters, required for the given \a instructionName
-         *  \see instructions
+         *  \see instructions()
          */
         static size_t countParametersOfInstruction(const QString& instructionName);
         /** \brief sets \a insideMathTextStyle to \c true if textstyle is set inside math
-         *  \see instructions
+         *  \see instructions()
          */
         static void modifyInMathTextStyleEnvironment(const QString& instructionName, bool &insideMathTextStyle, JKQTMathText *parentMathText, const QStringList &params=QStringList());
     protected:
@@ -146,13 +144,11 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextModifiedEnvironmentInstructionNode: pu
             ModifyEnvironmentFunctor modifier;
         };
 
-        /** \brief fills instructions
+        /** \brief defines all implemented instructions in this node
          *
          *  \note this is the customization point for new instructions!
          */
-        static void fillInstructions();
-        /** \brief defines all implemented instructions in this node */
-        static QHash<QString, InstructionProperties> instructions;
+        static const QHash<QString, InstructionProperties>& instructions();
 };
 
 

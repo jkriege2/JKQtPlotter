@@ -28,7 +28,7 @@
 #include <cfloat>
 #include <stdint.h>
 #include <QColor>
-#include <mutex>
+#include <QReadWriteLock>
 #include <vector>
 #include "jkqtcommon/jkqtcommon_imexport.h"
 #include "jkqtcommon/jkqtpmathtools.h"
@@ -341,16 +341,16 @@ enum JKQTPMathImageColorPalette {
     JKQTPMathImagePastel2_STEP, /*!< \image{inline} html palettes/palette_pastel2_step.png */
     JKQTPMathImageSet1_STEP, /*!< \image{inline} html palettes/palette_set1_step.png */
     JKQTPMathImageSet2_STEP, /*!< \image{inline} html palettes/palette_set2_step.png */
+    JKQTPMathImageALPHA, /*!< \brief special palette with increasing alpha values */
+    JKQTPMathImageINVERTED_ALPHA, /*!< \brief special palette with decreasing alpha values */
 
     JKQTPMathImagePREDEFINED_PALETTES_COUNT, /*!< \brief the number of predefined palettes */
 
     JKQTPMathImageUSER_PALETTE=65000, /*!< \brief special value for JKQTPImageTools::array2image(), which signals the usage of a provided user-defined palette */
 
-    JKQTPMathImageALPHA=JKQTPMathImageUSER_PALETTE-2, /*!< \brief special palette with increasing alpha values */
-    JKQTPMathImageINVERTED_ALPHA=JKQTPMathImageUSER_PALETTE-1, /*!< \brief special palette with decreasing alpha values */
 
     JKQTPMathImageFIRST_REGISTERED_USER_PALETTE=JKQTPMathImagePREDEFINED_PALETTES_COUNT,  /*!< \brief the ID of the first user-defined paletted, registered with JKQTPImageTools::registerPalette() or JKQTPImageTools::registerPalettesFromFile() */
-    JKQTPMathImageLAST_POSSIBLE_REGISTERED_USER_PALETTE=JKQTPMathImageUSER_PALETTE-10,  /*!< \brief the ID of the first user-defined paletted, registered with JKQTPImageTools::registerPalette() or JKQTPImageTools::registerPalettesFromFile() */
+    JKQTPMathImageLAST_POSSIBLE_REGISTERED_USER_PALETTE=JKQTPMathImageUSER_PALETTE-10,  /*!< \brief the ID of the last user-defined paletted, registered with JKQTPImageTools::registerPalette() or JKQTPImageTools::registerPalettesFromFile() */
 };
 
 
@@ -664,8 +664,12 @@ struct JKQTPImageTools {
             \see registerPalette() registerPalettesFromFile()
             */
         static JKQTCOMMON_LIB_EXPORT int global_next_userpalette;
-        /** \brief Mutex to protect global_jkqtpimagetools_lutstore and global_next_userpalette */
-        static JKQTCOMMON_LIB_EXPORT std::mutex lutMutex;
+        /** \brief storage for the palette names in getPredefinedPalettes() \internal  */
+        static JKQTCOMMON_LIB_EXPORT QStringList getPredefinedPalettesGlobalList;
+        /** \brief storage for the palette names in etPredefinedPalettesMachineReadable() \internal  */
+        static JKQTCOMMON_LIB_EXPORT QStringList getPredefinedPalettesMachineReadableGlobalList;
+        /** \brief Mutex to protect global_jkqtpimagetools_lutstore, getPredefinedPalettesGlobalList, getPredefinedPalettesMachineReadableGlobalList and global_next_userpalette */
+        static JKQTCOMMON_LIB_EXPORT QReadWriteLock lutMutex;
 
 
         /*! \brief returns data of the default LUTs, used to initialize global_jkqtpimagetools_lutstore

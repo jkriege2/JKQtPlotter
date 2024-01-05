@@ -53,6 +53,7 @@
 #include "jkqtmathtext/jkqtmathtext.h"
 #include "jkqtplotter/jkqtpkey.h"
 #include <algorithm>
+#include <mutex>
 
 QString JKQTBasePlotter::globalUserSettigsFilename="";
 QString JKQTBasePlotter::globalUserSettigsPrefix="";
@@ -64,10 +65,11 @@ JKQTPSynchronized<QList<JKQTPSaveDataAdapter*>> JKQTBasePlotter::jkqtpSaveDataAd
 
 void initJKQTBasePlotterResources()
 {
-    static std::mutex sMutex;
-    std::lock_guard<std::mutex> lock(sMutex);
-    Q_INIT_RESOURCE(jkqtpbaseplotter);
-    initJKQTMathTextResources();
+    static std::once_flag flag;
+    std::call_once(flag, []() {
+        Q_INIT_RESOURCE(jkqtpbaseplotter);
+        initJKQTMathTextResources();
+    });
 }
 
 
@@ -80,20 +82,20 @@ void JKQTBasePlotter::setDefaultJKQTBasePrinterUserSettings(QString userSettigsF
 
 void JKQTBasePlotter::registerPaintDeviceAdapter(JKQTPPaintDeviceAdapter *adapter)
 {
-    JKQTPSynchronized<QList<JKQTPPaintDeviceAdapter*>>::Locker lock(jkqtpPaintDeviceAdapters);
+    JKQTPSynchronized<QList<JKQTPPaintDeviceAdapter*>>::WriteLocker lock(jkqtpPaintDeviceAdapters);
     jkqtpPaintDeviceAdapters.get().append(adapter);
 }
 
 void JKQTBasePlotter::deregisterPaintDeviceAdapter(JKQTPPaintDeviceAdapter *adapter)
 {
-    JKQTPSynchronized<QList<JKQTPPaintDeviceAdapter*>>::Locker lock(jkqtpPaintDeviceAdapters);
+    JKQTPSynchronized<QList<JKQTPPaintDeviceAdapter*>>::WriteLocker lock(jkqtpPaintDeviceAdapters);
     if (jkqtpPaintDeviceAdapters.get().contains(adapter)) jkqtpPaintDeviceAdapters.get().removeAll(adapter);
 }
 
 bool JKQTBasePlotter::registerSaveDataAdapter(JKQTPSaveDataAdapter *adapter)
 {
     if (adapter){
-        JKQTPSynchronized<QList<JKQTPSaveDataAdapter*>>::Locker lock(jkqtpSaveDataAdapters);
+        JKQTPSynchronized<QList<JKQTPSaveDataAdapter*>>::WriteLocker lock(jkqtpSaveDataAdapters);
         QString format=adapter->getFilter();
         for (int i=0; i<jkqtpSaveDataAdapters.get().size(); i++) {
             if (jkqtpSaveDataAdapters.get()[i] && jkqtpSaveDataAdapters.get()[i]->getFilter()==format) {
@@ -108,7 +110,7 @@ bool JKQTBasePlotter::registerSaveDataAdapter(JKQTPSaveDataAdapter *adapter)
 
 bool JKQTBasePlotter::deregisterSaveDataAdapter(JKQTPSaveDataAdapter *adapter)
 {
-    JKQTPSynchronized<QList<JKQTPSaveDataAdapter*>>::Locker lock(jkqtpSaveDataAdapters);
+    JKQTPSynchronized<QList<JKQTPSaveDataAdapter*>>::WriteLocker lock(jkqtpSaveDataAdapters);
     if (jkqtpSaveDataAdapters.get().contains(adapter)) jkqtpSaveDataAdapters.get().removeAll(adapter);
     return true;
 }
@@ -3285,7 +3287,7 @@ bool JKQTBasePlotter::saveData(const QString& filename, const QString &format) {
 
     QMap<QString, QStringList> saveAdapterFileExtensions;
     {
-        JKQTPSynchronized<QList<JKQTPSaveDataAdapter*>>::Locker lock(jkqtpSaveDataAdapters);
+        JKQTPSynchronized<QList<JKQTPSaveDataAdapter*>>::ReadLocker lock(jkqtpSaveDataAdapters);
         for (int i=0; i<jkqtpSaveDataAdapters.get().size(); i++) {
             const QString fid=jkqtpSaveDataAdapters.get()[i]->getFormatID();
             fileformats<<jkqtpSaveDataAdapters.get()[i]->getFilter();
@@ -3371,7 +3373,7 @@ bool JKQTBasePlotter::saveData(const QString& filename, const QString &format) {
             QString fidx=fmt;
             fidx=fidx.remove(0,6);
             int idx=fidx.toInt();
-            JKQTPSynchronized<QList<JKQTPSaveDataAdapter*>>::Locker lock(jkqtpSaveDataAdapters);
+            JKQTPSynchronized<QList<JKQTPSaveDataAdapter*>>::ReadLocker lock(jkqtpSaveDataAdapters);
             if (idx>=0 && idx<jkqtpSaveDataAdapters.get().size() && jkqtpSaveDataAdapters.get()[idx]) {
                 QStringList columnNames;
                 const QList<QVector<double> > dataset=datastore->getData(&columnNames);
@@ -3379,7 +3381,7 @@ bool JKQTBasePlotter::saveData(const QString& filename, const QString &format) {
                 return true;
             }
         } else {
-            JKQTPSynchronized<QList<JKQTPSaveDataAdapter*>>::Locker lock(jkqtpSaveDataAdapters);
+            JKQTPSynchronized<QList<JKQTPSaveDataAdapter*>>::ReadLocker lock(jkqtpSaveDataAdapters);
             for (int i=0; i<jkqtpSaveDataAdapters.get().size(); i++) {
                 if (fmt == jkqtpSaveDataAdapters.get()[i]->getFormatID()) {
                     QStringList columnNames;
@@ -3583,7 +3585,7 @@ bool JKQTBasePlotter::saveImage(const QString& filename, bool displayPreview) {
     //  add JKQTPPaintDeviceAdapter exporters
     const int filtersIndexFirstExporterPLugin=filterstrings.size();
     {
-        JKQTPSynchronized<QList<JKQTPPaintDeviceAdapter*>>::Locker lock(jkqtpPaintDeviceAdapters);
+        JKQTPSynchronized<QList<JKQTPPaintDeviceAdapter*>>::ReadLocker lock(jkqtpPaintDeviceAdapters);
         for (int i=0; i<jkqtpPaintDeviceAdapters.get().size(); i++) {
             filterstrings<<jkqtpPaintDeviceAdapters.get()[i]->getFilter();
             filterextensions<<QStringList();
@@ -3635,7 +3637,7 @@ bool JKQTBasePlotter::saveImage(const QString& filename, bool displayPreview) {
             if (idx<0) idx=findExporterByExtension(fnExt);
             return idx;
         }();
-        JKQTPSynchronized<QList<JKQTPPaintDeviceAdapter*>>::Locker lock(jkqtpPaintDeviceAdapters);
+        JKQTPSynchronized<QList<JKQTPPaintDeviceAdapter*>>::ReadLocker lock(jkqtpPaintDeviceAdapters);
         // now we determine whether we selected a jkqtpPaintDeviceAdapters, if not adapterID will be <0
         const int adapterID=[&](){
             int idx=filtID-filtersIndexFirstExporterPLugin;

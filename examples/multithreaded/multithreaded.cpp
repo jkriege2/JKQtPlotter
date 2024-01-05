@@ -15,6 +15,7 @@
 #include "multithreaded_thread.h"
 #include "jkqtmath/jkqtpstatbasics.h"
 #include "jkqtpexampleapplication.h"
+#include "jkqtplotter_version.h"
 
 #define NUM_SHOWN_PLOTS 3
 #define NUM_PLOTS 8
@@ -129,7 +130,9 @@ int main(int argc, char* argv[])
                 const auto iend=md.indexOf("[comment]:RESULTS_END");
                 qDebug()<<"  istart="<<istart<<",  iend="<<iend;
                 if (istart>=0 && iend>istart) {
-                    const QByteArray newResults="[comment]:RESULTS\n\n<u><b>SERIAL RESULTS:</b></u><br/>"+ser_result.toUtf8()
+                    const QByteArray newResults="[comment]:RESULTS\n\n<b>VERSION:</b> "+QByteArray(JKQTPLOTTER_VERSION::PROJECT_VERSION)
+                                               +"\n<b>BUILD MODE:</b> "+QByteArray(JKQTPLOTTER_VERSION::PROJECT_BUILDTYPE)
+                                               +"\n\n<u><b>SERIAL RESULTS:</b></u><br/>"+ser_result.toUtf8()
                                                +"\n\n<u><b>PARALLEL RESULTS:</b></u><br/>\n"+par_result.toUtf8()+"\n\n";
                     md.replace(istart,iend-istart,newResults);
                     if (f.open(QFile::WriteOnly)) {

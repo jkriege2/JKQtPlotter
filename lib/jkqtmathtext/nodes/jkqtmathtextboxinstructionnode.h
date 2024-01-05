@@ -106,13 +106,11 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextBoxInstructionNode: public JKQTMathTex
             double roundingFactor;
         };
 
-        /** \brief fills instructions
+        /** \brief defines all implemented instructions in this node
          *
          *  \note this is the customization point for new instructions!
          */
-        static void fillInstructions();
-        /** \brief defines all implemented instructions in this node */
-        static QHash<QString, InstructionProperties> instructions;
+        static const QHash<QString, InstructionProperties>& instructions();
 };
 
 

@@ -103,14 +103,11 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSimpleInstructionNode: public JKQTMath
             /** \brief output of the instruction */
             EvaluateInstructionFunctor evaluator;
         };
-
-        /** \brief fills instructions
+        /** \brief defines all implemented instructions in this node
          *
          *  \note this is the customization point for new instructions!
          */
-        static void fillInstructions();
-        /** \brief defines all implemented instructions in this node */
-        static QHash<QString, InstructionProperties> instructions;
+        static const QHash<QString, InstructionProperties>& instructions();
         /** \brief executes the instruction on \a ev */
         QString executeInstruction() const;
         /** \brief instruction name */

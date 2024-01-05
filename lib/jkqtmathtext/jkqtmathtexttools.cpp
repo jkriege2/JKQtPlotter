@@ -29,22 +29,21 @@
 #include <QFontInfo>
 #include <QApplication>
 #include <QFont>
+#include <mutex>
 
 
 void initJKQTMathTextResources()
 {
-    static bool initialized=false;
-    static std::mutex mutex_initialized;
-    std::lock_guard<std::mutex> lock(mutex_initialized);
-    if (!initialized) {
-#ifdef JKQTMATHTEXT_COMPILED_WITH_XITS
-        Q_INIT_RESOURCE(xits);
-#endif
-#ifdef JKQTMATHTEXT_COMPILED_WITH_FIRAMATH
-        Q_INIT_RESOURCE(firamath);
-#endif
-        initialized=true;
-    }
+    static std::once_flag flag;
+    std::call_once(flag, []() {
+            #ifdef JKQTMATHTEXT_COMPILED_WITH_XITS
+                    Q_INIT_RESOURCE(xits);
+            #endif
+            #ifdef JKQTMATHTEXT_COMPILED_WITH_FIRAMATH
+                    Q_INIT_RESOURCE(firamath);
+            #endif
+        }
+    );
 }
 
 JKQTMathTextFontSpecifier::JKQTMathTextFontSpecifier():
@@ -234,6 +233,8 @@ bool JKQTMathTextFontSpecifier::hasFallbackSymbolFontName() const
 JKQTMathTextFontSpecifier JKQTMathTextFontSpecifier::getXITSFamilies()
 {
     initJKQTMathTextResources();
+
+
 #if (QT_VERSION<QT_VERSION_CHECK(6, 0, 0))
     QFontDatabase fdb;
     const auto fontFamilies=fdb.families();
@@ -249,9 +250,7 @@ JKQTMathTextFontSpecifier JKQTMathTextFontSpecifier::getXITSFamilies()
         if (QFile::exists(":/JKQTMathText/fonts/xits-regular.otf")) { QFontDatabase::addApplicationFont(":/JKQTMathText/fonts/xits-regular.otf"); }
     }
 
-    static JKQTMathTextFontSpecifier fontSpec;
-    static std::mutex fontSpecMutex;
-    std::lock_guard<std::mutex> lock(fontSpecMutex);
+     static JKQTMathTextFontSpecifier fontSpec;
     if (fontSpec.m_fontName.isEmpty() && fontSpec.m_mathFontName.isEmpty()) {
         fontSpec.m_transformOnOutput=false;
         for (int i=0; i<fontFamilies.size(); i++) {
@@ -277,22 +276,20 @@ JKQTMathTextFontSpecifier JKQTMathTextFontSpecifier::getXITSFamilies()
 
 JKQTMathTextFontSpecifier JKQTMathTextFontSpecifier::getASANAFamilies()
 {
-    initJKQTMathTextResources();
-#if (QT_VERSION<QT_VERSION_CHECK(6, 0, 0))
-    QFontDatabase fdb;
-    const auto fontFamilies=fdb.families();
-#else
-    const auto fontFamilies=QFontDatabase::families();
-#endif
-    if (!fontFamilies.contains("Asana") && !fontFamilies.contains("Asana Math")) {
-        if (QFile::exists(":/JKQTMathText/fonts/asana-math.otf")) { /*i=*/QFontDatabase::addApplicationFont(":/JKQTMathText/fonts/asana-math.otf"); }
-    }
+    static JKQTMathTextFontSpecifier fontSpec=[]() -> JKQTMathTextFontSpecifier {
+        initJKQTMathTextResources();
+    #if (QT_VERSION<QT_VERSION_CHECK(6, 0, 0))
+        QFontDatabase fdb;
+        const auto fontFamilies=fdb.families();
+    #else
+        const auto fontFamilies=QFontDatabase::families();
+    #endif
+        if (!fontFamilies.contains("Asana") && !fontFamilies.contains("Asana Math")) {
+            if (QFile::exists(":/JKQTMathText/fonts/asana-math.otf")) { /*i=*/QFontDatabase::addApplicationFont(":/JKQTMathText/fonts/asana-math.otf"); }
+        }
 
 
-    static JKQTMathTextFontSpecifier fontSpec;
-    static std::mutex fontSpecMutex;
-    std::lock_guard<std::mutex> lock(fontSpecMutex);
-    if (fontSpec.m_fontName.isEmpty() && fontSpec.m_mathFontName.isEmpty()) {
+        JKQTMathTextFontSpecifier fontSpec;
         fontSpec.m_transformOnOutput=false;
         for (int i=0; i<fontFamilies.size(); i++) {
             if (fontFamilies.at(i).contains("Asana Math")) {
@@ -310,22 +307,19 @@ JKQTMathTextFontSpecifier JKQTMathTextFontSpecifier::getASANAFamilies()
             fontSpec.m_fontName=fontSpec.m_mathFontName;
         }
         fontSpec.m_fallbackSymbolFont=fontSpec.m_mathFontName;
-    }
-
-
+        return fontSpec;
+    }();
     return fontSpec;
 }
 
 JKQTMathTextFontSpecifier JKQTMathTextFontSpecifier::getSTIXFamilies()
 {
-    initJKQTMathTextResources();
-    static QStringList mathNames{"STIX Two Math", "STIX Math", "STIX Two Math Standard", "STIX Math Standard"};
-    static QStringList textNames{"STIX", "STIXGeneral", "STIX General"};
+    static JKQTMathTextFontSpecifier fontSpec=[]() -> JKQTMathTextFontSpecifier {
+        initJKQTMathTextResources();
+        static QStringList mathNames{"STIX Two Math", "STIX Math", "STIX Two Math Standard", "STIX Math Standard"};
+        static QStringList textNames{"STIX", "STIXGeneral", "STIX General"};
 
-    static JKQTMathTextFontSpecifier fontSpec;
-    static std::mutex fontSpecMutex;
-    std::lock_guard<std::mutex> lock(fontSpecMutex);
-    if (fontSpec.m_fontName.isEmpty() && fontSpec.m_mathFontName.isEmpty()) {
+        JKQTMathTextFontSpecifier fontSpec;
         fontSpec.m_transformOnOutput=false;
 #if (QT_VERSION<QT_VERSION_CHECK(6, 0, 0))
         QFontDatabase fdb;
@@ -365,27 +359,26 @@ JKQTMathTextFontSpecifier JKQTMathTextFontSpecifier::getSTIXFamilies()
             fontSpec.m_fontName=fontSpec.m_mathFontName;
         }
         fontSpec.m_fallbackSymbolFont=fontSpec.m_mathFontName;
-    }
+        return fontSpec;
+    }();
     return fontSpec;
 }
 
 JKQTMathTextFontSpecifier JKQTMathTextFontSpecifier::getFIRAFamilies()
 {
-    initJKQTMathTextResources();
-#if (QT_VERSION<QT_VERSION_CHECK(6, 0, 0))
-    QFontDatabase fdb;
-    const auto fontFamilies=fdb.families();
-#else
-    const auto fontFamilies=QFontDatabase::families();
-#endif
-    if (!fontFamilies.contains("Fira Math")) {
-        if (QFile::exists(":/JKQTMathText/fonts/FiraMath-Regular.otf")) { QFontDatabase::addApplicationFont(":/JKQTMathText/fonts/FiraMath-Regular.otf"); }
-    }
+    static JKQTMathTextFontSpecifier fontSpec=[]() -> JKQTMathTextFontSpecifier {
+        initJKQTMathTextResources();
+    #if (QT_VERSION<QT_VERSION_CHECK(6, 0, 0))
+        QFontDatabase fdb;
+        const auto fontFamilies=fdb.families();
+    #else
+        const auto fontFamilies=QFontDatabase::families();
+    #endif
+        if (!fontFamilies.contains("Fira Math")) {
+            if (QFile::exists(":/JKQTMathText/fonts/FiraMath-Regular.otf")) { QFontDatabase::addApplicationFont(":/JKQTMathText/fonts/FiraMath-Regular.otf"); }
+        }
 
-    static JKQTMathTextFontSpecifier fontSpec;
-    static std::mutex fontSpecMutex;
-    std::lock_guard<std::mutex> lock(fontSpecMutex);
-    if (fontSpec.m_fontName.isEmpty() && fontSpec.m_mathFontName.isEmpty()) {
+        JKQTMathTextFontSpecifier fontSpec;
         fontSpec.m_transformOnOutput=false;
         for (int i=0; i<fontFamilies.size(); i++) {
             if (fontFamilies.at(i).contains("Fira Math")) {
@@ -405,17 +398,16 @@ JKQTMathTextFontSpecifier JKQTMathTextFontSpecifier::getFIRAFamilies()
             fontSpec.m_fontName=fontSpec.m_mathFontName;
         }
         fontSpec.m_fallbackSymbolFont=fontSpec.m_mathFontName;
-    }
+        return fontSpec;
+    }();
 
     return fontSpec;
 }
 
 JKQTMathTextFontSpecifier JKQTMathTextFontSpecifier::getAppFontFamilies()
 {
-    static JKQTMathTextFontSpecifier fontSpec;
-    static std::mutex fontSpecMutex;
-    std::lock_guard<std::mutex> lock(fontSpecMutex);
-    if (fontSpec.m_fontName.isEmpty() && fontSpec.m_mathFontName.isEmpty()) {
+    static JKQTMathTextFontSpecifier fontSpec=[]() -> JKQTMathTextFontSpecifier {
+        JKQTMathTextFontSpecifier fontSpec;
 #if (QT_VERSION<QT_VERSION_CHECK(6, 0, 0))
         QFontDatabase fdb;
         const auto fontFamilies=fdb.families();
@@ -448,16 +440,14 @@ JKQTMathTextFontSpecifier JKQTMathTextFontSpecifier::getAppFontFamilies()
                 if (xits.hasMathFontName()) fontSpec.m_mathFontName=xits.mathFontName();
             }
         }
-    }
+        return fontSpec;
+    }();
     return fontSpec;
 }
 
 JKQTMathTextFontSpecifier JKQTMathTextFontSpecifier::getAppFontSFFamilies()
 {
-    static JKQTMathTextFontSpecifier fontSpec;
-    static std::mutex fontSpecMutex;
-    std::lock_guard<std::mutex> lock(fontSpecMutex);
-    if (fontSpec.m_fontName.isEmpty() && fontSpec.m_mathFontName.isEmpty()) {
+    static JKQTMathTextFontSpecifier fontSpec=[]() -> JKQTMathTextFontSpecifier {
         const QFont f=QGuiApplication::font().family();
         QFont testFnt;
         if (f.styleHint()==QFont::SansSerif) {
@@ -467,7 +457,8 @@ JKQTMathTextFontSpecifier JKQTMathTextFontSpecifier::getAppFontSFFamilies()
             testFnt.setStyleHint(QFont::StyleHint::SansSerif);
             fontSpec.m_fontName=fontSpec.m_mathFontName=testFnt.defaultFamily();
         }
-    }
+        return fontSpec;
+    }();
     return fontSpec;
 }
 
