@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2022 Jan W. Krieger (<jan@jkrieger.de>)
+    Copyright (c) 2008-2024 Jan W. Krieger (<jan@jkrieger.de>)
 
     
 
@@ -24,6 +24,8 @@ namespace JKQTPLOTTER_VERSION {
   const char* PROJECT_LONGNAME = "@PROJECT_LONGNAME@";
   const char* PROJECT_VERSION = "@PROJECT_VERSION@";
   const char* PROJECT_BITNESS = "@PROJECT_BITNESS@";
+  const char* PROJECT_BUILDTYPE = "@CMAKE_BUILD_TYPE@";
+  const char* PROJECT_COMPILED_AGAINST_QT_VERSION = "@QT_VERSION@";
 }
 
-#JKQTPLOTTER_VERSION_DEFINES_H
+#endif // JKQTPLOTTER_VERSION_DEFINES_H

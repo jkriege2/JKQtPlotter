@@ -221,6 +221,10 @@ function(JKQtPlottter_setDefaultLibOptions TARGETNAME)
         $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/../>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
     )
+    target_include_directories(${TARGETNAME} PUBLIC
+        $<BUILD_INTERFACE:${JKQTPLOTTER_VERSION_FILE_DIR}>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+    )
 
     # precomiled headers to speed up compilation
     if (JKQtPlotter_BUILD_WITH_PRECOMPILED_HEADERS)
@@ -285,6 +289,7 @@ install(FILES ${HEADERS_GUI}
 		DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${libIncludeSubdir}/gui
 		COMPONENT Headers)
 
+install(FILES ${JKQTPLOTTER_VERSION_FILE} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${libIncludeSubdir} COMPONENT Headers )
 configure_file(${PROJECT_SOURCE_DIR}/readme.txt.in ${CMAKE_CURRENT_BINARY_DIR}/${libBasename}_Readme.txt @ONLY)
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${libBasename}_Readme.txt" DESTINATION doc/JKQtPlotter )
 install(FILES "${PROJECT_SOURCE_DIR}/LICENSE" DESTINATION doc/JKQtPlotter RENAME "${libBasename}_LICENSE.txt" )

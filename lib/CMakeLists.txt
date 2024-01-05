@@ -44,9 +44,10 @@ message( STATUS ".. BUILDING LIBRARIES" )
 message( STATUS "............................................................................." )
 
 
+set(JKQTPLOTTER_VERSION_FILE_DIR ${CMAKE_CURRENT_BINARY_DIR})
+set(JKQTPLOTTER_VERSION_FILE ${JKQTPLOTTER_VERSION_FILE_DIR}/jkqtplotter_version.h)
 configure_file(${CMAKE_CURRENT_LIST_DIR}/jkqtplotter_version.h.in
-               ${CMAKE_CURRENT_BINARY_DIR}/jkqtplotter_version.h)
-
+               ${JKQTPLOTTER_VERSION_FILE})
 
 include_directories(.)
 
