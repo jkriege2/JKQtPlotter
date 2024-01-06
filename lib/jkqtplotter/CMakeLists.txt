@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.16)
 
 set(libBasename JKQTPlotter)
 set(libIncludeSubdir jkqtplotter)
@@ -208,6 +208,7 @@ function(JKQtPlottter_setDefaultLibOptions TARGETNAME)
     set_property(TARGET ${TARGETNAME} PROPERTY CXX_STANDARD ${JKQtPlotter_QT_CXX_STANDARD})
     set_property(TARGET ${TARGETNAME} PROPERTY CXX_STANDARD_REQUIRED ${JKQtPlotter_QT_CXX_STANDARD_REQUIRED})
     target_compile_features(${TARGETNAME} PUBLIC ${JKQtPlotter_QT_CXX_COMPILE_FEATURE})
+    #target_compile_definitions(${TARGETNAME} PRIVATE JKQTBP_AUTOTIMER)
 
     if(MINGW)
       # COMPILER-SETTINGS FOR MINGW
