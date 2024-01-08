@@ -150,35 +150,42 @@ JKQTMathTextTextNode::LayoutInfo JKQTMathTextTextNode::calcLayout(QPainter &pain
         l.baselineXCorrection=0;
         l.topXCorrection=0;
         QRectF br, tbr;
+        double hadv=0;
         switch(l.fontMode[i]) {
             case FMasDefined:
             case FMasDefinedOutline:
                 br=JKQTMathTextGetBoundingRect(f, l.textpart[i], painter.device());
                 tbr=JKQTMathTextGetTightBoundingRect(f, l.textpart[i], painter.device());
+                hadv=JKQTMathTextGetHorAdvance(f, l.textpart[i], painter.device());
                 if (f.italic() && l.textpart[i].size()>0) l.baselineXCorrection=JKQTMathTextGetRightBearing(f,l.textpart[i].operator[](l.textpart[i].size()-1),painter.device());
                 break;
             case FMasDefinedForceUpright:
                 br=JKQTMathTextGetBoundingRect(fUpright, l.textpart[i], painter.device());
                 tbr=JKQTMathTextGetTightBoundingRect(fUpright, l.textpart[i], painter.device());
+                hadv=JKQTMathTextGetHorAdvance(fUpright, l.textpart[i], painter.device());
                 break;
             case FMroman:
                 br=JKQTMathTextGetBoundingRect(fRoman, l.textpart[i], painter.device());
                 tbr=JKQTMathTextGetTightBoundingRect(fRoman, l.textpart[i], painter.device());
                 if (fRoman.italic() && l.textpart[i].size()>0) l.baselineXCorrection=JKQTMathTextGetRightBearing(fRoman,l.textpart[i].operator[](l.textpart[i].size()-1),painter.device());
+                hadv=JKQTMathTextGetHorAdvance(fRoman, l.textpart[i], painter.device());
                 break;
             case FMfallbackSymbol:
                 br=JKQTMathTextGetBoundingRect(fFallbackSym, l.textpart[i], painter.device());
                 tbr=JKQTMathTextGetTightBoundingRect(fFallbackSym, l.textpart[i], painter.device());
                 if (fFallbackSym.italic() && l.textpart[i].size()>0) l.baselineXCorrection=JKQTMathTextGetRightBearing(fFallbackSym,l.textpart[i].operator[](l.textpart[i].size()-1),painter.device());
+                hadv=JKQTMathTextGetHorAdvance(fFallbackSym, l.textpart[i], painter.device());
                 break;
         }
         l.textpartXPos.append(l.width);
+        l.width+=hadv;
+        /*
         if (i==l.textpart.size()-1) l.width+=tbr.width();
         else l.width+=br.width();
         if (l.textpart[i].size()>0 && l.textpart[i].at(l.textpart[i].size()-1).isSpace()) {
             // this correction is necessary, because it seems that QFontMetricsF::boundingRect() ignores trailing spaces
             l.width+=sp;
-        }
+        }*/
         const double thisAscent=-tbr.top();
         const double thisDescent=tbr.bottom();
         ascent=qMax(ascent, thisAscent);
@@ -324,6 +331,15 @@ double JKQTMathTextTextNode::draw(QPainter& painter, double x, double y, JKQTMat
                 painter.drawText(QPointF(x+l.textpartXPos[i], y), l.textpart[i]);
                 break;
         }
+        if (drawBoxes) {
+            painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+            QPen p=QPen(Qt::SolidLine);
+            p.setColor("red");
+            p.setWidthF(0.5);
+            painter.setPen(p);
+            const QLineF vline(x+l.textpartXPos[i], y-l.baselineHeight, x+l.textpartXPos[i], y-l.baselineHeight+l.overallHeight );
+            painter.drawLine(vline);
+        }
     }
 
     return x+l.width;
@@ -351,6 +367,7 @@ QString JKQTMathTextTextNode::textTransform(const QString &text, const JKQTMathT
     QString txt=text;
     auto fnt=parentMathText->getFontData(currentEv.font, currentEv.insideMath);
     const QFontMetricsF fm(currentEv.getFont(parentMathText));
+    const bool ch2212InFont=fm.inFont(QChar(0x2212));
     if (fnt.second==MTFELatin1 || fnt.second==MTFEUnicode) {
         if (currentEv.insideMath) {
             txt="";
@@ -358,7 +375,7 @@ QString JKQTMathTextTextNode::textTransform(const QString &text, const JKQTMathT
                 QChar c=text[i];
                 switch(c.unicode()) {
                     case '-':
-                    if (fm.inFont(QChar(0x2212))) {
+                    if (ch2212InFont) {
                         txt+=QString(QString(" ")+QChar(0x2212));
                     } else {
                         txt+=QString(QString(" -"));
