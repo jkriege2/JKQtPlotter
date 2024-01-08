@@ -34,7 +34,7 @@ int main(int argc, char* argv[])
     mainWin->setCentralWidget(main=new QWidget(mainWin));
 
     QString markdownFile="";
-    QString labelTemplate="Plot %1: $f(x)=\\cos\\left(x+\\sfrac{%1\\pi}{8}\\right)$";
+    QString labelTemplate="Plot %1: $f(x)=\\cos(x+%1\\pi/8)$";
     QByteArray mdMATCH="RESULTS";
     for (int i=1; i<argc; i++) {
         if (QString(argv[i]).startsWith("--mdfile=")) {
