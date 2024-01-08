@@ -185,6 +185,10 @@ if(JKQtPlotter_BUILD_EXAMPLES)
     # unless you specify the basenames by adding it/them after a slash '/'
     # e.g. "barchart/barchart,barchart_hor"
     # the basenames are applied to the windows in the order of their windowTitle()s!
+    # after a second slash '/' you can add extra command-line commands to send to the application
+    # if you want to call any example twice (e.g. with differnt parameters), you need to give it a new name, but also the name of the actual executible in [..]:
+    #      multithreaded/multithreaded/--mdfile=${CMAKE_CURRENT_LIST_DIR}/../examples/multithreaded/README.md
+    #      "multithreaded_complex[multithreaded]/multithreaded_complex/--mdfile=${CMAKE_CURRENT_LIST_DIR}/../examples/multithreaded/README.md --complexlabel"
     set(JKQTPlotter_GenerateDocScreenshots_From
         scatter/scatter,scatter_error
         scatter_customsymbol
@@ -239,6 +243,7 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         datastore_statistics/datastore_statistics,datastore_statistics_dataonly,datastore_statistics_boxplots_simple,datastore_statistics_boxplots_outliers,datastore_statistics_hist,datastore_statistics_kde,datastore_statistics_cumhistkde/--iteratefunctorsteps
         datastore_statistics_2d/datastore_statistics_2d
         multithreaded/multithreaded/--mdfile=${CMAKE_CURRENT_LIST_DIR}/../examples/multithreaded/README.md
+        #"multithreaded_complex[multithreaded]/multithreaded_complex/--mdfile=${CMAKE_CURRENT_LIST_DIR}/../examples/multithreaded/README.md --complexlabel"
     )
 
 
@@ -302,15 +307,25 @@ if(JKQtPlotter_BUILD_EXAMPLES)
             string(REPLACE "--" ";--" extra_command "${extra_command}")
         endif()
 
-
-        set(loc_target_name JKQTPlotter_GenerateDocScreenshots_${example})
+        set(example_target ${example})
+        string(REGEX MATCH "(.+)\\[(.+)\\]" dummy ${example})
+        if(NOT (CMAKE_MATCH_2 STREQUAL ""))
+            set(example ${CMAKE_MATCH_2})
+            set(example_target ${CMAKE_MATCH_1})
+            message(STATUS "example=${example}, example_target=${example_target}")
+        endif()
+        set(loc_target_name JKQTPlotter_GenerateDocScreenshots_${example_target})
         set(dep_name jkqtptest_${example})
-        string(TOUPPER ${example} example_upper)
+        set(tgt_dependecies ${dep_name})
+        if(NOT (CMAKE_MATCH_2 STREQUAL ""))
+            set(tgt_dependecies jkqtptest_${example} JKQTPlotter_GenerateDocScreenshots_${example})
+        endif()
+        string(TOUPPER ${example_target} example_upper)
         add_custom_target(${loc_target_name}
             COMMENT "Building JKQTPlotter Documentation Screenshot: ${example_upper}"
-            COMMAND $<TARGET_FILE:${dep_name}> ${JKQTPlotter_GenerateDocScreenshots_DefaultOptions} --screenshotbasename=${basename} ${extra_command}
+            COMMAND $<TARGET_FILE:${dep_name}> ${JKQTPlotter_GenerateDocScreenshots_DefaultOptions} --screenshotbasename=${basename} ${extra_command} > c:/temp/${loc_target_name}.txt
             WORKING_DIRECTORY ${JKQtPlotter_QT_BINDIR}
-            DEPENDS ${dep_name}
+            DEPENDS ${tgt_dependecies}
         )
 
         add_dependencies(JKQTPlotter_GenerateDocScreenshots ${loc_target_name})
@@ -319,7 +334,9 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         unset(dep_name)
         unset(example)
         unset(example_upper)
+        unset(example_target)
         unset(basename)
+        unset(tgt_dependecies)
     endforeach()
 
 
