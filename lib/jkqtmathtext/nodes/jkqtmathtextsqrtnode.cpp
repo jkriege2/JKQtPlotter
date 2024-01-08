@@ -24,6 +24,7 @@
 #include "jkqtmathtext/jkqtmathtext.h"
 #include "jkqtcommon/jkqtpcodestructuring.h"
 #include "jkqtcommon/jkqtpstringtools.h"
+#include "jkqtcommon/jkqtpdebuggingtools.h"
 #include <cmath>
 #include <QFontMetricsF>
 #include <QDebug>
@@ -52,16 +53,16 @@ JKQTMathTextSqrtNode::~JKQTMathTextSqrtNode() {
 
 JKQTMathTextNodeSize JKQTMathTextSqrtNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv) const {
     JKQTMathTextNodeSize s;
-    const QFontMetricsF fm(currentEv.getFont(parentMathText), painter.device());
+    const QFont f=currentEv.getFont(parentMathText);
     JKQTMathTextEnvironment evSmall=currentEv;
     evSmall.fontSize=currentEv.fontSize*parentMathText->getSqrtSmallFontFactor();
     evSmall.italic=false;
 
     const JKQTMathTextNodeSize cs=getChild()->getSize(painter, currentEv);
     const double descent=cs.getDescent();
-    const double sqrtwidth=fm.boundingRect("X").width()*parentMathText->getSqrtWidthXFactor();
-    const double newAscent=qMax(cs.baselineHeight*parentMathText->getSqrtHeightFactor(), fm.ascent());
-    const double newDescent=qMax(descent*parentMathText->getSqrtHeightFactor(), fm.descent());
+    const double sqrtwidth=JKQTMathTextGetBoundingRect(f, "X", painter.device()).width()*parentMathText->getSqrtWidthXFactor();
+    const double newAscent=qMax(cs.baselineHeight*parentMathText->getSqrtHeightFactor(), JKQTMathTextGetFontAscent(f, painter.device()));
+    const double newDescent=qMax(descent*parentMathText->getSqrtHeightFactor(), JKQTMathTextGetFontDescent(f, painter.device()));
 
     s.overallHeight=newAscent+newDescent;
     s.baselineHeight=newAscent;
@@ -76,20 +77,22 @@ JKQTMathTextNodeSize JKQTMathTextSqrtNode::getSizeInternal(QPainter& painter, JK
 }
 
 double JKQTMathTextSqrtNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) const {
+#ifdef JKQTBP_AUTOTIMER
+    JKQTPAutoOutputTimer jkaat(QString("JKQTMathTextSqrtNode[]::draw()"));
+#endif
     doDrawBoxes(painter, x, y, currentEv);
 
     const QFont f=currentEv.getFont(parentMathText);
-    const QFontMetricsF fm(f, painter.device());
     JKQTMathTextEnvironment evSmall=currentEv;
     evSmall.fontSize=currentEv.fontSize*parentMathText->getSqrtSmallFontFactor();
     evSmall.italic=false;
 
     const JKQTMathTextNodeSize cs=getChild()->getSize(painter, currentEv);
     const double descent=cs.overallHeight-cs.baselineHeight;
-    const double sqrtwidth=fm.boundingRect("X").width()*parentMathText->getSqrtWidthXFactor();
-    const double newAscent=qMax(cs.baselineHeight*parentMathText->getSqrtHeightFactor(), fm.ascent());
-    const double newDescent=qMax(descent*parentMathText->getSqrtHeightFactor(), fm.descent());
-    const double linewidth=fm.lineWidth();
+    const double sqrtwidth=JKQTMathTextGetBoundingRect(f, "X", painter.device()).width()*parentMathText->getSqrtWidthXFactor();
+    const double newAscent=qMax(cs.baselineHeight*parentMathText->getSqrtHeightFactor(), JKQTMathTextGetFontAscent(f, painter.device()));
+    const double newDescent=qMax(descent*parentMathText->getSqrtHeightFactor(), JKQTMathTextGetFontDescent(f, painter.device()));
+    const double linewidth=JKQTMathTextGetFontLineWidth(f, painter.device());
     const double tinyhookSize=sqrtwidth*0.1;
     const double smalltextIndent=0.6*sqrtwidth;
 

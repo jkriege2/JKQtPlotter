@@ -25,6 +25,7 @@
 #include "jkqtmathtext/jkqtmathtext.h"
 #include "jkqtcommon/jkqtpcodestructuring.h"
 #include "jkqtcommon/jkqtpstringtools.h"
+#include "jkqtcommon/jkqtpdebuggingtools.h"
 #include <cmath>
 #include <QFontMetricsF>
 #include <QDebug>
@@ -128,15 +129,14 @@ JKQTMathTextNodeSize JKQTMathTextFracNode::getSizeInternal(QPainter& painter, JK
         if (fracmode==MTFMsfrac) fracmode=MTFMstfrac;
     }
     const QFont f=currentEv.getFont(parentMathText);
-    const QFontMetricsF fm(f, painter.device());
     JKQTMathTextEnvironment ev1=currentEv;
     JKQTMathTextEnvironment ev2=currentEv;
 
     const double xheight=JKQTMathTextGetTightBoundingRect(f, "x", painter.device()).height();
     const double line_ascent=xheight/2.0;
-    //const double Mheight=JKQTMathTextGetTightBoundingRect(f, "M", painter.device()).height();//fm.ascent();
+    //const double Mheight=JKQTMathTextGetTightBoundingRect(f, "M", painter.device()).height();
     const double xwidth=JKQTMathTextGetTightBoundingRect(f, "x", painter.device()).width();
-    const double qheight=JKQTMathTextGetTightBoundingRect(f, "q", painter.device()).height();//fm.ascent();
+    const double qheight=JKQTMathTextGetTightBoundingRect(f, "q", painter.device()).height();
     const double braceheight=xheight*parentMathText->getUnderbraceBraceSizeXFactor();
     const double braceseparation=xheight*parentMathText->getUnderbraceSeparationXFactor();
 
@@ -152,11 +152,11 @@ JKQTMathTextNodeSize JKQTMathTextFracNode::getSizeInternal(QPainter& painter, JK
         ev2.fontSize=ev2.fontSize*getFracScalingFactor()*0.7;
     }
 
-    const QFontMetricsF fmev1(ev1.getFont(parentMathText), painter.device());
-    const QRectF AeTBR1=fmev1.tightBoundingRect("A");
+    const QFont fev1=ev1.getFont(parentMathText);
+    const QRectF AeTBR1=JKQTMathTextGetBoundingRect(fev1, "A", painter.device());
     const double asc1=AeTBR1.height();
-    const QFontMetricsF fmev2(ev2.getFont(parentMathText), painter.device());
-    const QRectF AeTBR2=fmev2.tightBoundingRect("A");
+    const QFont fev2=ev2.getFont(parentMathText);
+    const QRectF AeTBR2=JKQTMathTextGetBoundingRect(fev2, "A", painter.device());
     const double asc2=AeTBR2.height();
 
     JKQTMathTextNodeSize size1=child1->getSize(painter, ev1);
@@ -243,6 +243,9 @@ double JKQTMathTextFracNode::getFracScalingFactor() const
 }
 
 double JKQTMathTextFracNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) const {
+#ifdef JKQTBP_AUTOTIMER
+    JKQTPAutoOutputTimer jkaat(QString("JKQTMathTextFracNode[]::draw()"));
+#endif
     FracType fracmode=this->mode;
     if (currentEv.isMathTextStyle()) {
         if (fracmode==MTFMfrac) fracmode=MTFMtfrac;
@@ -251,14 +254,13 @@ double JKQTMathTextFracNode::draw(QPainter& painter, double x, double y, JKQTMat
 
     doDrawBoxes(painter, x, y, currentEv);
     const QFont f=currentEv.getFont(parentMathText);
-    const QFontMetricsF fm(f, painter.device());
     JKQTMathTextEnvironment ev1=currentEv;
     JKQTMathTextEnvironment ev2=currentEv;
 
-
-    const double xheight=JKQTMathTextGetTightBoundingRect(f, "x", painter.device()).height();
-    const double xwidth=JKQTMathTextGetTightBoundingRect(f, "x", painter.device()).width();
-    const double linewideth=fm.lineWidth();
+    const QRectF tbr_x=JKQTMathTextGetTightBoundingRect(f, "x", painter.device());
+    const double xheight=tbr_x.height();
+    const double xwidth=tbr_x.width();
+    const double linewideth=JKQTMathTextGetFontLineWidth(f, painter.device());
     const double Mheight=JKQTMathTextGetTightBoundingRect(f, "M", painter.device()).height();//fm.ascent();
     const double qheight=JKQTMathTextGetTightBoundingRect(f, "q", painter.device()).height();//fm.ascent();
     const double braceheight=xheight*parentMathText->getUnderbraceBraceSizeXFactor();
@@ -277,12 +279,13 @@ double JKQTMathTextFracNode::draw(QPainter& painter, double x, double y, JKQTMat
     }
 
 
-    const QFontMetricsF fmev1(ev1.getFont(parentMathText), painter.device());
-    const QRectF AeTBR1=fmev1.tightBoundingRect("A");
+    const QFont fev1=ev1.getFont(parentMathText);
+    const QRectF AeTBR1=JKQTMathTextGetBoundingRect(fev1, "A", painter.device());
     const double asc1=AeTBR1.height();
-    const QFontMetricsF fmev2(ev2.getFont(parentMathText), painter.device());
-    const QRectF AeTBR2=fmev2.tightBoundingRect("A");
+    const QFont fev2=ev2.getFont(parentMathText);
+    const QRectF AeTBR2=JKQTMathTextGetBoundingRect(fev2, "A", painter.device());
     const double asc2=AeTBR2.height();
+
 
     JKQTMathTextNodeSize size1=child1->getSize(painter, ev1);
     JKQTMathTextNodeSize size2=child2->getSize(painter, ev2);

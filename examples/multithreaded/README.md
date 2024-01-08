@@ -97,10 +97,10 @@ This test results in the following numbers (on my AMD Ryzen5 8/16-core laptop):
 <b>VERSION:</b> 5.0.0
 <b>BUILD MODE:</b> Release
 
-<u><b>SERIAL RESULTS:</b></u><br/>runtime, overall = 1896.0ms<br/>single runtimes = (236.9 +/- 379.1) ms<br/>speedup = 1.00x<br/>threads / available = 1 / 16<br/><br/>  
+<u><b>SERIAL RESULTS:</b></u><br/>runtime, overall = 3399.6ms<br/>single runtimes = (141.6 +/- 366.9) ms<br/>speedup = 1.00x<br/>threads / available = 1 / 16<br/><br/><br/>  
 
 <u><b>PARALLEL RESULTS:</b></u><br/>
-runtime, overall = 624.7ms<br/>single runtimes = (564.3 +/- 107.7) ms<br/>speedup = 7.23x<br/>threads / available = 8 / 16<br/><br/><b>speedup vs. serial = 3.0x</b>
+runtime, overall = 526.7ms<br/>single runtimes = (166.4 +/- 9.9) ms<br/>speedup = 7.58x<br/>threads / available = 8 / 16<br/>batch runs = 3<br/><br/><b>speedup vs. serial = 6.5x</b>
 
 [comment]:RESULTS_END
 
@@ -108,8 +108,9 @@ runtime, overall = 624.7ms<br/>single runtimes = (564.3 +/- 107.7) ms<br/>speedu
 
 From this data you can observe:
   - The plotting parallelizes nicely, i.e. the speedup ist >7x on a 8-core-machine. This is the speedup calculated as sum of runtimes of each thread, divided by the runtime of all threads in parallel.
-  - BUT: the speedup of serialized plotting vs. parallel plotting is way smaller: It is only 2-3x. Also the runtime in each thread is about 3x longer than in the serialized example. This can be explained by the (significant) overhead due to shared caches (and therefore synchronization) between the plotters. This may be reworked in future!
+  - BUT: the speedup of serialized plotting vs. parallel plotting is a biz smaller: It is only 6-7x. Also the runtime in each thread is a bit longer than in the serialized example. This can be explained by the overhead due to shared caches (and therefore synchronization) between the plotters (e.g. using JKQTMathTextGetBoundingRect() within JKQTMathText). 
   - The variance in runtimes in the (initial) serial test-run is larger than in the parallel run. This is due to filling of the internal caches during the first plotting!
+  - NOTE: The parallel vs. serial speedup significantly depends on the complexity of the text rendering (i.e. usage of JKQTMathText). Therefore rendinering more complex textxs with more and more complex LaTeX markup, will result in smalle speedups!
 .
 
 Finally the application displays the plots:

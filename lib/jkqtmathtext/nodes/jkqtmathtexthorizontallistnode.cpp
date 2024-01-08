@@ -27,6 +27,7 @@
 #include "jkqtmathtext/jkqtmathtext.h"
 #include "jkqtcommon/jkqtpcodestructuring.h"
 #include "jkqtcommon/jkqtpstringtools.h"
+#include "jkqtcommon/jkqtpdebuggingtools.h"
 #include <cmath>
 #include <QFontMetricsF>
 #include <QDebug>
@@ -63,12 +64,12 @@ JKQTMathTextNodeSize JKQTMathTextHorizontalListNode::getSizeInternal(QPainter& p
     //bool wasBrace=false;
     for (int i=0; i<nodes.size(); i++) {
         const QFont f=currentEv.getFont(parentMathText);
-        const QFontMetricsF fm(f, painter.device());
-        const double subsupershift=JKQTMathTextGetTightBoundingRect(f, "x", painter.device()).height()*parentMathText->getOperatorsubsuperDistanceFactor();
-        const double subsuperextrawidth=fm.boundingRect('x').width()*parentMathText->getOperatorsubsuperExtraSpaceFactor();
-        const double subsuperSpecialModeAscent=fm.ascent()*parentMathText->getSubsuperModeSelectionBySizeFactor();
-        const double subsuperSpecialModeDecent=fm.descent()*parentMathText->getSubsuperModeSelectionBySizeFactor();
-        const double spaceWidth=fm.boundingRect(' ').width();
+        const auto tbr_x=JKQTMathTextGetTightBoundingRect(f, "x", painter.device());
+        const double subsupershift=tbr_x.height()*parentMathText->getOperatorsubsuperDistanceFactor();
+        const double subsuperextrawidth=tbr_x.width()*parentMathText->getOperatorsubsuperExtraSpaceFactor();
+        const double subsuperSpecialModeAscent=JKQTMathTextGetFontAscent(f, painter.device())*parentMathText->getSubsuperModeSelectionBySizeFactor();
+        const double subsuperSpecialModeDecent=JKQTMathTextGetFontDescent(f, painter.device())*parentMathText->getSubsuperModeSelectionBySizeFactor();
+        const double spaceWidth=JKQTMathTextGetBoundingRect(f, " ", painter.device()).width();
 
         JKQTMathTextSymbolNode::NodeSize prevNodeSize;
         JKQTMathTextNodeSize* prevNodeSizePtrForSubscript=nullptr;
@@ -85,7 +86,7 @@ JKQTMathTextNodeSize JKQTMathTextHorizontalListNode::getSizeInternal(QPainter& p
             if (shouldUseSpecialSubscriptMode)  prevNodeSizePtrForSubscript=&prevNodeSize;
             if (shouldUseSpecialSuperscriptMode)  prevNodeSizePtrForSuperscript=&prevNodeSize;
         }
-        const double subscript_xcorrection=prevNodeSize.baselineXCorrection+fm.lineWidth()*0.5;
+        const double subscript_xcorrection=prevNodeSize.baselineXCorrection+JKQTMathTextGetFontLineWidth(f, painter.device())*0.5;
 
         JKQTMathTextSuperscriptNode* nodeI_SuperScript=dynamic_cast<JKQTMathTextSuperscriptNode*>(nodes[i]);
         JKQTMathTextSubscriptNode* nodeI_SubScript=dynamic_cast<JKQTMathTextSubscriptNode*>(nodes[i]);
@@ -327,6 +328,9 @@ JKQTMathTextNodeSize JKQTMathTextHorizontalListNode::getSizeInternal(QPainter& p
 }
 
 double JKQTMathTextHorizontalListNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment ev) const {
+#ifdef JKQTBP_AUTOTIMER
+    JKQTPAutoOutputTimer jkaat(QString("JKQTMathTextHorizontalListNode[]::draw()"));
+#endif
     JKQTMathTextEnvironment currentEv=ev;
     doDrawBoxes(painter, x, y, currentEv);
     double ynew=y;
@@ -335,11 +339,11 @@ double JKQTMathTextHorizontalListNode::draw(QPainter& painter, double x, double 
     for (int i=0; i<nodes.size(); i++) {
         bool doDraw=true;
         const QFont f=currentEv.getFont(parentMathText);
-        const QFontMetricsF fm(f, painter.device());
-        const double subsupershift=JKQTMathTextGetTightBoundingRect(f, "x", painter.device()).height()*parentMathText->getOperatorsubsuperDistanceFactor();
-        const double subsuperextrawidth=fm.boundingRect('x').width()*parentMathText->getOperatorsubsuperExtraSpaceFactor();
-        const double subsuperSpecialModeAscent=fm.ascent()*parentMathText->getSubsuperModeSelectionBySizeFactor();
-        const double subsuperSpecialModeDecent=fm.descent()*parentMathText->getSubsuperModeSelectionBySizeFactor();
+        const auto tbr_x=JKQTMathTextGetTightBoundingRect(f, "x", painter.device());
+        const double subsupershift=tbr_x.height()*parentMathText->getOperatorsubsuperDistanceFactor();
+        const double subsuperextrawidth=tbr_x.width()*parentMathText->getOperatorsubsuperExtraSpaceFactor();
+        const double subsuperSpecialModeAscent=JKQTMathTextGetFontAscent(f, painter.device())*parentMathText->getSubsuperModeSelectionBySizeFactor();
+        const double subsuperSpecialModeDecent=JKQTMathTextGetFontDescent(f, painter.device())*parentMathText->getSubsuperModeSelectionBySizeFactor();
 
         JKQTMathTextSymbolNode::NodeSize prevNodeSize;
         JKQTMathTextNodeSize* prevNodeSizePtrForSubscript=nullptr;
@@ -359,7 +363,7 @@ double JKQTMathTextHorizontalListNode::draw(QPainter& painter, double x, double 
             if (shouldUseSpecialSubscriptMode)  prevNodeSizePtrForSubscript=&prevNodeSize;
             if (shouldUseSpecialSuperscriptMode)  prevNodeSizePtrForSuperscript=&prevNodeSize;
         }
-        const double subscript_xcorrection=prevNodeSize.baselineXCorrection+fm.lineWidth()*0.5;
+        const double subscript_xcorrection=prevNodeSize.baselineXCorrection+JKQTMathTextGetFontLineWidth(f, painter.device())*0.5;
 
         JKQTMathTextSuperscriptNode* nodeI_SuperScript=dynamic_cast<JKQTMathTextSuperscriptNode*>(nodes[i]);
         JKQTMathTextSubscriptNode* nodeI_SubScript=dynamic_cast<JKQTMathTextSubscriptNode*>(nodes[i]);

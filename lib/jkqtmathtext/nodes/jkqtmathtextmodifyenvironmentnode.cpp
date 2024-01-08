@@ -23,6 +23,7 @@
 #include "jkqtmathtext/jkqtmathtexttools.h"
 #include "jkqtmathtext/jkqtmathtext.h"
 #include "jkqtcommon/jkqtpstringtools.h"
+#include "jkqtcommon/jkqtpdebuggingtools.h"
 #include <cmath>
 #include <QFontMetricsF>
 #include <QDebug>
@@ -58,6 +59,9 @@ JKQTMathTextNodeSize JKQTMathTextModifiedTextPropsInstructionNode::getSizeIntern
 }
 
 double JKQTMathTextModifiedTextPropsInstructionNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) const {
+#ifdef JKQTBP_AUTOTIMER
+    JKQTPAutoOutputTimer jkaat(QString("JKQTMathTextModifiedTextPropsInstructionNode[]::draw()"));
+#endif
     doDrawBoxes(painter, x, y, currentEv);
     JKQTMathTextEnvironment ev=currentEv;
 

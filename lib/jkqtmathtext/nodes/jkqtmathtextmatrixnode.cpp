@@ -25,6 +25,7 @@
 #include "jkqtmathtext/jkqtmathtext.h"
 #include "jkqtcommon/jkqtpcodestructuring.h"
 #include "jkqtcommon/jkqtpstringtools.h"
+#include "jkqtcommon/jkqtpdebuggingtools.h"
 #include <cmath>
 #include <QFontMetricsF>
 #include <QDebug>
@@ -318,10 +319,10 @@ JKQTMathTextMatrixNode::LayoutInfo JKQTMathTextMatrixNode::calcLayout(QPainter &
 
     JKQTMathTextEnvironment ev1=currentEv;
 
-    const QFontMetricsF fm(ev1.getFont(parentMathText), painter.device());
-    const double strikepos=fm.strikeOutPos();
-    const double xwidth=fm.boundingRect("x").width();
-    const double lw=fm.lineWidth()*1.5;
+    const QFont font=ev1.getFont(parentMathText);
+    const double strikepos=JKQTMathTextGetFontStrikoutPos(font, painter.device());
+    const double xwidth=JKQTMathTextGetBoundingRect(font,"f",painter.device()).width();
+    const double lw=JKQTMathTextGetFontLineWidth(font, painter.device())*1.5;
     const double XPadding=parentMathText->getMatrixXPaddingFactor()*xwidth;
     const double YPadding=parentMathText->getMatrixYPaddingFactor()*xwidth;
     const double XSeparation=parentMathText->getMatrixXSeparationFactor()*xwidth;
@@ -372,21 +373,25 @@ JKQTMathTextNodeSize JKQTMathTextMatrixNode::getSizeInternal(QPainter& painter, 
 }
 
 double JKQTMathTextMatrixNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) const {
+#ifdef JKQTBP_AUTOTIMER
+    JKQTPAutoOutputTimer jkaat(QString("JKQTMathTextMatrixNode[]::draw()"));
+#endif
 
-    const QFontMetricsF fm(currentEv.getFont(parentMathText), painter.device());
+    const QFont font=currentEv.getFont(parentMathText);
     JKQTMathTextEnvironment ev1=currentEv;
 
     const  LayoutInfo l=calcLayout(painter, currentEv);
     doDrawBoxes(painter, x, y, l);
 
-    const double xwidth=fm.boundingRect("x").width();
+    const double xwidth=JKQTMathTextGetBoundingRect(font,"f",painter.device()).width();
+    const double fontlw=JKQTMathTextGetFontLineWidth(font, painter.device());
     const double XSeparation=parentMathText->getMatrixXSeparationFactor()*xwidth;
     const double YSeparation=parentMathText->getMatrixYSeparationFactor()*xwidth;
     const double yTop=y-l.baselineHeight+l.topPadding;
     const double xLeft=x+l.leftPadding;
-    const double linewidth=parentMathText->getMatrixLinewidthThinFactor()*fm.lineWidth();
-    const double linewidthThick=parentMathText->getMatrixLinewidthHeavyFactor()*fm.lineWidth();
-    const double lineSeparation=parentMathText->getMatrixLineSeparationFactor()*fm.lineWidth();
+    const double linewidth=parentMathText->getMatrixLinewidthThinFactor()*fontlw;
+    const double linewidthThick=parentMathText->getMatrixLinewidthHeavyFactor()*fontlw;
+    const double lineSeparation=parentMathText->getMatrixLineSeparationFactor()*fontlw;
     double leftlineX=xLeft-l.leftPadding/2.0;
     double rightlineX=x+l.width-l.rightPadding/2.0;
     double toplineY=yTop-l.topPadding/2.0;

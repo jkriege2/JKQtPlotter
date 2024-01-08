@@ -22,6 +22,7 @@
 #include "jkqtmathtext/nodes/jkqtmathtextnoopnode.h"
 #include "jkqtmathtext/nodes/jkqtmathtextnode.h"
 #include "jkqtmathtext/jkqtmathtext.h"
+#include "jkqtcommon/jkqtpdebuggingtools.h"
 
 
 
@@ -67,6 +68,9 @@ QString JKQTMathTextBlockNode::getTypeName() const
 
 double JKQTMathTextBlockNode::draw(QPainter &painter, double x, double y, JKQTMathTextEnvironment currentEv) const
 {
+#ifdef JKQTBP_AUTOTIMER
+    JKQTPAutoOutputTimer jkaat(QString("JKQTMathTextBlockNode[]::draw()"));
+#endif
     return child->draw(painter, x, y, currentEv);
 }
 

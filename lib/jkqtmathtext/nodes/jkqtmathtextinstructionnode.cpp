@@ -82,9 +82,8 @@ double JKQTMathTextSimpleInstructionNode::draw(QPainter &painter, double x, doub
     doDrawBoxes(painter, x, y, currentEv);
     QFont f=currentEv.getFont(parentMathText);
     f.setStyleStrategy(QFont::PreferDefault);
-    const QFontMetricsF fm(f, painter.device());
     const QString txt=executeInstruction();
-    const QRectF bb=fm.boundingRect(txt);
+    const QRectF bb=JKQTMathTextGetBoundingRect(f, txt, painter.device());
     painter.setPen(currentEv.color);
     painter.setFont(f);
     painter.drawText(x,y,txt);
@@ -123,14 +122,13 @@ JKQTMathTextNodeSize JKQTMathTextSimpleInstructionNode::getSizeInternal(QPainter
 {
     QFont f=currentEv.getFont(parentMathText);
     f.setStyleStrategy(QFont::PreferDefault);
-    const QFontMetricsF fm(f, painter.device());
     const QString txt=executeInstruction();
-    const QRectF bb=fm.boundingRect(txt);
+    const QRectF bb=JKQTMathTextGetBoundingRect(f, txt, painter.device());
     JKQTMathTextNodeSize s;
     s.width=bb.width();
     s.baselineHeight=-bb.y();
     s.overallHeight=bb.height();
-    s.strikeoutPos=fm.strikeOutPos();
+    s.strikeoutPos=JKQTMathTextGetFontStrikoutPos(f, painter.device());
     return s;
 }
 

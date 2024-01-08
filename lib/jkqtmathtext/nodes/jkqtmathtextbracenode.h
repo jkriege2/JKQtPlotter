@@ -101,7 +101,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextBraceNode: public JKQTMathTextSingleCh
          *
          *  \return width and hieght of the brace
          */
-        QSizeF calcBraceSize(const QFontMetricsF& fm, JKQTMathTextBraceType bracetype, const JKQTMathTextNodeSize &childSize) const;
+        QSizeF calcBraceSize(const QFont& fm, QPaintDevice* pd, JKQTMathTextBraceType bracetype, const JKQTMathTextNodeSize &childSize) const;
 };
 
 #endif // JKQTMATHTEXTBRACENODE_H

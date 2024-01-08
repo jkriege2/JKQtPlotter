@@ -24,6 +24,7 @@
 #include "jkqtmathtext/jkqtmathtext.h"
 #include "jkqtcommon/jkqtpcodestructuring.h"
 #include "jkqtcommon/jkqtpstringtools.h"
+#include "jkqtcommon/jkqtpdebuggingtools.h"
 #include <cmath>
 #include <QFontMetricsF>
 #include <QDebug>
@@ -133,15 +134,15 @@ JKQTMathTextNodeSize JKQTMathTextDecoratedNode::getSizeInternal(QPainter& painte
     JKQTMathTextNodeSize cs=getChild()->getSize(painter, ev);
     const double cDescent=cs.getDescent();
     const QFont font=ev.getFont(parentMathText);
-    const QFontMetricsF fm(font, painter.device());
-    const double decoSeparation=parentMathText->getDecorationSeparationFactor()*fm.ascent();
-    const double deco_height=parentMathText->getDecorationHeightFactor()*fm.ascent();
+    const double fascent=JKQTMathTextGetFontAscent(font, painter.device());
+    const double decoSeparation=parentMathText->getDecorationSeparationFactor()*fascent;
+    const double deco_height=parentMathText->getDecorationHeightFactor()*fascent;
     const double deco_ypos=cs.baselineHeight+decoSeparation;
-    const double decoAboveAscent_ypos=fm.ascent()+decoSeparation;
+    const double decoAboveAscent_ypos=fascent+decoSeparation;
     const double decobelow_ypos=cDescent+decoSeparation;
     const double italic_xcorrection=getNonItalicXCorretion(painter, cs.width, ev, getChild());
-    const double deco_miniwidth=((decoration==MTDtilde||decoration==MTDbreve)?fm.boundingRect("~").width():fm.boundingRect("^").width())-italic_xcorrection;
-    const double linewidth=qMax(parentMathText->ABS_MIN_LINEWIDTH, fm.lineWidth());
+    const double deco_miniwidth=((decoration==MTDtilde||decoration==MTDbreve)?JKQTMathTextGetBoundingRect(font,"~",painter.device()).width():JKQTMathTextGetBoundingRect(font,"^",painter.device()).width())-italic_xcorrection;
+    const double linewidth=qMax(parentMathText->ABS_MIN_LINEWIDTH, JKQTMathTextGetFontLineWidth(font, painter.device()));
 
 
 
@@ -227,20 +228,24 @@ const QHash<QString, JKQTMathTextDecoratedNode::DecorationType>& JKQTMathTextDec
 }
 
 double JKQTMathTextDecoratedNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) const {
+#ifdef JKQTBP_AUTOTIMER
+    JKQTPAutoOutputTimer jkaat(QString("JKQTMathTextDecoratedNode[]::draw()"));
+#endif
     doDrawBoxes(painter, x, y, currentEv);
     JKQTMathTextEnvironment ev=currentEv;
     auto cs=getChild()->getSize(painter, ev);
     const double cDescent=cs.overallHeight-cs.baselineHeight;
     const QFont font=ev.getFont(parentMathText);
     const QFontMetricsF fm(font, painter.device());
-    const double width_X=fm.boundingRect("X").width();
-    const double width_x=fm.boundingRect("x").width();
-    const double width_dot=fm.boundingRect(".").width()/2.0;
-    const double decoSeparation=parentMathText->getDecorationSeparationFactor()*fm.ascent();
-    const double linewidth=qMax(parentMathText->ABS_MIN_LINEWIDTH, fm.lineWidth());
+    const double width_X=JKQTMathTextGetBoundingRect(font,"X",painter.device()).width();
+    const double width_x=JKQTMathTextGetBoundingRect(font,"x",painter.device()).width();
+    const double width_dot=JKQTMathTextGetBoundingRect(font,".",painter.device()).width()/2.0;
+    const double ascent=JKQTMathTextGetFontLineWidth(font, painter.device());
+    const double decoSeparation=parentMathText->getDecorationSeparationFactor()*ascent;
+    const double linewidth=qMax(parentMathText->ABS_MIN_LINEWIDTH, JKQTMathTextGetFontLineWidth(font, painter.device()));
     const double linewidthArrow=linewidth*0.65;
-    const double deco_height=parentMathText->getDecorationHeightFactor()*fm.ascent();
-    const double decoAboveAscent_ypos=y-fm.ascent()-decoSeparation;
+    const double deco_height=parentMathText->getDecorationHeightFactor()*ascent;
+    const double decoAboveAscent_ypos=y-ascent-decoSeparation;
     const double strike_ypos=y-cs.baselineHeight/2.0;
     const double decobelow_ypos=y+cDescent+decoSeparation;
     const double italic_xcorrection=getNonItalicXCorretion(painter, cs.width, ev, getChild());
@@ -249,7 +254,7 @@ double JKQTMathTextDecoratedNode::draw(QPainter& painter, double x, double y, JK
     const double deco_vecwidth=width_x*0.25;
     const double deco_vecheight=deco_height*0.5;
     const double deco_accentwidth=deco_height/4.0;
-    const double deco_miniwidth=((decoration==MTDtilde||decoration==MTDbreve)?fm.boundingRect("j").width():fm.boundingRect("^").width())-italic_xcorrection;
+    const double deco_miniwidth=((decoration==MTDtilde||decoration==MTDbreve)?JKQTMathTextGetBoundingRect(font,"~",painter.device()).width():JKQTMathTextGetBoundingRect(font,"^",painter.device()).width())-italic_xcorrection;
     const double decotop_xcenter=x+italic_xcorrection+(cs.width-italic_xcorrection)/2.0;
     const double decotop_xstart=decotop_xcenter-deco_width/2.0+linewidth/2.0;
     const double decotop_xend=decotop_xcenter+deco_width/2.0-linewidth/2.0;
@@ -280,7 +285,7 @@ double JKQTMathTextDecoratedNode::draw(QPainter& painter, double x, double y, JK
     auto fDrawFontAccent=[&](QChar aDirect=QChar(), QChar aFallback=QChar()) -> bool {
         if (!aDirect.isNull() && fm.inFont(aDirect)) {
             painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-            const QRectF tbra=fm.tightBoundingRect(aDirect);
+            const QRectF tbra=JKQTMathTextGetBoundingRect(font, aDirect, painter.device());
             painter.translate(decotop_xcenter-tbra.width()/2.0, (deco_ytopcenter+deco_ytoptop)/2.0);
             //painter.setPen("red");
             //painter.drawEllipse(0-2,0-2,4,4);
@@ -298,7 +303,7 @@ double JKQTMathTextDecoratedNode::draw(QPainter& painter, double x, double y, JK
         }
         if (!aFallback.isNull() && fm.inFont(aFallback)) {
             painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-            const QRectF tbra=fm.tightBoundingRect(aFallback);
+            const QRectF tbra=JKQTMathTextGetBoundingRect(font, aFallback, painter.device());
             painter.translate(decotop_xcenter-tbra.width()/2.0, (deco_ytopcenter+deco_ytoptop)/2.0);
             //painter.setPen("yellow");
             //painter.drawEllipse(0-2,0-2,4,4);

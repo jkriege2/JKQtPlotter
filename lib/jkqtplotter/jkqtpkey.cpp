@@ -63,13 +63,15 @@ void JKQTPBaseKey::saveSettings(QSettings& settings, const QString& group) const
 
 void JKQTPBaseKey::drawKey(JKQTPEnhancedPainter &painter, const QRectF &rect, const KeySizeDescription& layout)
 {
+#ifdef JKQTBP_AUTOTIMER
+    JKQTPAutoOutputTimer jkaat(QString("JKQTPBaseKey[%1]::drawKey()").arg(objectName()));
+#endif
     if (!keyStyle().visible) return;
 
     QFont kf(JKQTMathTextFontSpecifier::fromFontSpec(keyStyle().fontName).fontName(), keyStyle().fontSize);
     kf.setPointSizeF(keyStyle().fontSize*getParent()->getFontSizeMultiplier());
-    const QFontMetricsF kfm(kf, painter.device());
-    const qreal Xwid=kfm.boundingRect('X').width();
-    const qreal FHeight=kfm.height();
+    const qreal Xwid=JKQTMathTextGetBoundingRect(kf,"X",painter.device()).width();
+    const qreal FHeight=JKQTMathTextGetFontHeight(kf, painter.device());
 
     // determine layouting info and size
     QPointF internalOffset(0,0);
@@ -130,6 +132,7 @@ void JKQTPBaseKey::drawKey(JKQTPEnhancedPainter &painter, const QRectF &rect, co
         // draw key table/contents
         x0=x0+internalOffset;
         QPointF xi=x0;
+        int ic=0;
         for (const auto& c: layout.d->columns) {
             xi.setY(x0.y());
             int ir=0;
@@ -137,12 +140,22 @@ void JKQTPBaseKey::drawKey(JKQTPEnhancedPainter &painter, const QRectF &rect, co
                 const QRectF sampleRect(xi, QSizeF(keyStyle().sampleLineLength*Xwid, keyStyle().sampleHeight*FHeight));
                 const double rowHeight=layout.d->calcRowHeight(ir, sampleRect.height());
                 const QRectF textRect(xi+QPointF((keyStyle().sampleLineLength+keyStyle().xSeparation)*Xwid, 0), QSize(r.size.width(), rowHeight));
-                drawEntrySample(r.id, painter, sampleRect),
-                getParentMathText()->setFontColor(keyStyle().textColor);
-                getParentMathText()->setFontPointSize(keyStyle().fontSize*getParent()->getFontSizeMultiplier());
-                getParentMathText()->setFontSpecial(keyStyle().fontName);
-                getParentMathText()->parse(r.text);
-                getParentMathText()->draw(painter, Qt::AlignLeft|Qt::AlignVCenter, textRect, getParent()->isDebugShowTextBoxesEnabled());
+                drawEntrySample(r.id, painter, sampleRect);
+                {
+                #ifdef JKQTBP_AUTOTIMER
+                    JKQTPAutoOutputTimer jkaatmt(QString("JKQTPBaseKey[%1]::drawKey()::drawEntryText(r=%2,c=%3)::parse").arg(objectName()).arg(ir).arg(ic));
+                #endif
+                    getParentMathText()->setFontColor(keyStyle().textColor);
+                    getParentMathText()->setFontPointSize(keyStyle().fontSize*getParent()->getFontSizeMultiplier());
+                    getParentMathText()->setFontSpecial(keyStyle().fontName);
+                    getParentMathText()->parse(r.text);
+                }
+                {
+                #ifdef JKQTBP_AUTOTIMER
+                    JKQTPAutoOutputTimer jkaatmt(QString("JKQTPBaseKey[%1]::drawKey()::drawEntryText(r=%2,c=%3)::parse").arg(objectName()).arg(ir).arg(ic));
+                #endif
+                    getParentMathText()->draw(painter, Qt::AlignLeft|Qt::AlignVCenter, textRect, getParent()->isDebugShowTextBoxesEnabled());
+                }
 
                 if (drawDebugRects) {
                     painter.save(); auto __finalpaintinner=JKQTPFinally([&painter]() {painter.restore();});
@@ -160,6 +173,7 @@ void JKQTPBaseKey::drawKey(JKQTPEnhancedPainter &painter, const QRectF &rect, co
                 ir++;
             }
             xi.setX(xi.x()+c.calcColumnWidth(keyStyle().sampleLineLength*Xwid, keyStyle().xSeparation*Xwid)+keyStyle().columnSeparation*Xwid);
+            ic++;
         }
 
     }
@@ -167,13 +181,15 @@ void JKQTPBaseKey::drawKey(JKQTPEnhancedPainter &painter, const QRectF &rect, co
 
 JKQTPBaseKey::KeySizeDescription JKQTPBaseKey::getSize(JKQTPEnhancedPainter &painter)
 {
+#ifdef JKQTBP_AUTOTIMER
+    JKQTPAutoOutputTimer jkaat(QString("JKQTPBaseKey[%1]::getSize()").arg(objectName()));
+#endif
     KeySizeDescription size;
     if (!keyStyle().visible) return size;
 
     QFont kf(JKQTMathTextFontSpecifier::fromFontSpec(keyStyle().fontName).fontName(), keyStyle().fontSize);
     kf.setPointSizeF(keyStyle().fontSize*getParent()->getFontSizeMultiplier());
-    const QFontMetricsF kfm(kf, painter.device());
-    const qreal Xwid=kfm.boundingRect('X').width();
+    const qreal Xwid=JKQTMathTextGetBoundingRect(kf,"X",painter.device()).width();
 
     // calculate layout of the "table" of samples and labels
     const KeyLayoutDescription layout=getKeyLayout(painter);
@@ -190,9 +206,8 @@ void JKQTPBaseKey::calcLayoutSize(JKQTPEnhancedPainter &painter, KeySizeDescript
 {
     QFont kf(JKQTMathTextFontSpecifier::fromFontSpec(keyStyle().fontName).fontName(), keyStyle().fontSize);
     kf.setPointSizeF(keyStyle().fontSize*getParent()->getFontSizeMultiplier());
-    const QFontMetricsF kfm(kf, painter.device());
-    const qreal Xwid=kfm.boundingRect('X').width();
-    const qreal FHeight=kfm.height();
+    const qreal Xwid=JKQTMathTextGetBoundingRect(kf,"X",painter.device()).width();
+    const qreal FHeight=JKQTMathTextGetFontHeight(kf, painter.device());
 
     layout.requiredSize=extendLayoutSize(QSizeF(layout.d->calcOverallWidth(keyStyle().sampleLineLength*Xwid, keyStyle().xSeparation*Xwid, keyStyle().columnSeparation*Xwid),
                                                 layout.d->calcOverallHeight(keyStyle().ySeparation*FHeight, keyStyle().sampleHeight*FHeight)), painter);
@@ -207,6 +222,9 @@ void JKQTPBaseKey::calcLayoutSize(JKQTPEnhancedPainter &painter, KeySizeDescript
 
 void JKQTPBaseKey::modifySize(JKQTPEnhancedPainter &painter, KeySizeDescription &currentKeyLayout, QSizeF preliminaryPlotSize)
 {
+#ifdef JKQTBP_AUTOTIMER
+    JKQTPAutoOutputTimer jkaat(QString("JKQTPBaseKey[%1]::modifySize()").arg(objectName()));
+#endif
     const auto lay=getLayout();
     if (lay==JKQTPKeyLayoutMultiColumn || lay==JKQTPKeyLayoutMultiRow) {
         std::function<bool(QSizeF, QSizeF)> fCompare=[](const QSizeF& requiredSize, const QSizeF& preliminaryPlotSize) {
@@ -264,11 +282,13 @@ void JKQTPBaseKey::setCurrentKeyStyle(const JKQTPKeyStyle &style)
 
 JKQTPBaseKey::KeyLayoutDescription JKQTPBaseKey::getKeyLayout(JKQTPEnhancedPainter &painter)
 {
+#ifdef JKQTBP_AUTOTIMER
+    JKQTPAutoOutputTimer jkaat(QString("JKQTPBaseKey[%1]::getKeyLayout()").arg(objectName()));
+#endif
     QFont kf(JKQTMathTextFontSpecifier::fromFontSpec(keyStyle().fontName).fontName(), keyStyle().fontSize);
     kf.setPointSizeF(keyStyle().fontSize*getParent()->getFontSizeMultiplier());
-    QFontMetricsF kfm(kf, painter.device());
-    //const qreal Xwid=kfm.boundingRect('X').width();
-    const qreal Fheight=kfm.height();
+    //const qreal Xwid=JKQTMathTextGetBoundingRect(kf,"X",painter.device()).width();
+    const qreal Fheight=JKQTMathTextGetFontHeight(kf, painter.device());
     //const double frameWidth=qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, getParent()->pt2px(painter, keyStyle().frameWidth*getParent()->getLineWidthMultiplier()));
 
 
@@ -303,10 +323,12 @@ JKQTPBaseKey::KeyLayoutDescription JKQTPBaseKey::getKeyLayout(JKQTPEnhancedPaint
 
 QSizeF JKQTPBaseKey::extendLayoutSize(QSizeF rawLayoutSize, JKQTPEnhancedPainter& painter, QPointF *offset) const
 {
+#ifdef JKQTBP_AUTOTIMER
+    JKQTPAutoOutputTimer jkaat(QString("JKQTPBaseKey[%1]::extendLayoutSize()").arg(objectName()));
+#endif
     QFont kf(JKQTMathTextFontSpecifier::fromFontSpec(keyStyle().fontName).fontName(), keyStyle().fontSize);
     kf.setPointSizeF(keyStyle().fontSize*getParent()->getFontSizeMultiplier());
-    QFontMetricsF kfm(kf, painter.device());
-    const qreal Xwid=kfm.boundingRect('X').width();
+    const qreal Xwid=JKQTMathTextGetBoundingRect(kf,"X",painter.device()).width();
     const double frameWidth=qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, getParent()->pt2px(painter, keyStyle().frameWidth*getParent()->getLineWidthMultiplier()));
 
     if (rawLayoutSize.width()>0) rawLayoutSize.setWidth(rawLayoutSize.width()+2.0*keyStyle().xMargin*Xwid+2.0*frameWidth);
@@ -531,6 +553,9 @@ QColor JKQTPMainKey::getEntryColor(int item) const
 
 void JKQTPMainKey::drawEntrySample(int item, JKQTPEnhancedPainter &painter, const QRectF &rect)
 {
+#ifdef JKQTBP_AUTOTIMER
+    JKQTPAutoOutputTimer jkaat(QString("JKQTPBaseKey[%1]::drawEntrySammple(%2)").arg(objectName()).arg(item));
+#endif
     auto g=getPlotElement(item);
     if (g) g->drawKeyMarker(painter, rect);
 }

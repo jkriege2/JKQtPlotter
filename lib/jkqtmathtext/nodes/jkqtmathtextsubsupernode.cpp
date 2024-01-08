@@ -24,6 +24,10 @@
 #include "jkqtmathtext/jkqtmathtext.h"
 #include "jkqtcommon/jkqtpcodestructuring.h"
 #include "jkqtcommon/jkqtpstringtools.h"
+#include "jkqtcommon/jkqtpdebuggingtools.h"
+#include "jkqtcommon/jkqtpdebuggingtools.h"
+#include "jkqtcommon/jkqtpdebuggingtools.h"
+#include "jkqtcommon/jkqtpdebuggingtools.h"
 #include <cmath>
 #include <QFontMetricsF>
 #include <QDebug>
@@ -50,7 +54,6 @@ JKQTMathTextNodeSize JKQTMathTextSuperscriptNode::getSizeWithSpecialPlacement(QP
     JKQTMathTextEnvironment ev=currentEv;
     ev.fontSize=ev.fontSize*parentMathText->getSubsuperSizeFactor();
     const QFont fnt=currentEv.getFont(parentMathText);
-    const QFontMetricsF fm(fnt, painter.device());
     //const QRectF tbr_of_letterM=JKQTMathTextGetTightBoundingRect(currentEv.getFont(parentMathText), "M", painter.device());
     const JKQTMathTextNodeSize cs=getChild()->getSize(painter, ev);
     const double childDescent=cs.getDescent();
@@ -67,7 +70,7 @@ JKQTMathTextNodeSize JKQTMathTextSuperscriptNode::getSizeWithSpecialPlacement(QP
     s.baselineHeight=s.overallHeight=cs.overallHeight+shiftToChildBottom;
     s.width=cs.width;
     if (prevNodeSizeForSpecialPlacement!=nullptr) s.strikeoutPos=prevNodeSizeForSpecialPlacement->strikeoutPos;
-    else s.strikeoutPos=fm.strikeOutPos();
+    else s.strikeoutPos=JKQTMathTextGetFontStrikoutPos(fnt, painter.device());
     return s;
 }
 
@@ -77,13 +80,15 @@ JKQTMathTextNodeSize JKQTMathTextSuperscriptNode::getSizeInternal(QPainter &pain
 }
 
 double JKQTMathTextSuperscriptNode::drawWithSpecialPlacement(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* prevNodeSizeForSpecialPlacement) const {
+#ifdef JKQTBP_AUTOTIMER
+    JKQTPAutoOutputTimer jkaat(QString("JKQTMathTextSuperscriptNode[]::draw()"));
+#endif
     doDrawBoxes(painter, x, y, currentEv);
     JKQTMathTextEnvironment ev=currentEv;
     ev.fontSize=ev.fontSize*parentMathText->getSubsuperSizeFactor();
 
     const JKQTMathTextNodeSize cs=getChild()->getSize(painter, ev);
     const QFont fnt=currentEv.getFont(parentMathText);
-    const QFontMetricsF fm(fnt, painter.device());
     const QRectF tbr=JKQTMathTextGetTightBoundingRect(fnt, "x", painter.device());
     const double xh=tbr.height();
     //qDebug()<<"x="<<x<<" prevNodeSizeForSpecialPlacement="<<prevNodeSizeForSpecialPlacement<<" font="<<currentEv.getFont(parentMathText);
@@ -98,11 +103,14 @@ double JKQTMathTextSuperscriptNode::drawWithSpecialPlacement(QPainter& painter, 
 
     double xx=x;
 
-    return getChild()->draw(painter, xx, y-(shiftToChildBottom+childDescent), ev);//+0.5*fm.boundingRect("A").width();
+    return getChild()->draw(painter, xx, y-(shiftToChildBottom+childDescent), ev);
 }
 
 double JKQTMathTextSuperscriptNode::draw(QPainter &painter, double x, double y, JKQTMathTextEnvironment currentEv) const
 {
+#ifdef JKQTBP_AUTOTIMER
+    JKQTPAutoOutputTimer jkaat(QString("JKQTMathTextSuperscriptNode[]::draw()"));
+#endif
     return drawWithSpecialPlacement(painter, x, y, currentEv, nullptr);
 }
 
@@ -141,7 +149,6 @@ JKQTMathTextNodeSize JKQTMathTextSubscriptNode::getSizeWithSpecialPlacement(QPai
     JKQTMathTextEnvironment ev=currentEv;
     ev.fontSize=ev.fontSize*parentMathText->getSubsuperSizeFactor();
     const QFont f(ev.getFont(parentMathText));
-    const QFontMetricsF fm(f, painter.device());
     //const QRectF tbr_of_letterM=JKQTMathTextGetTightBoundingRect(currentEv.getFont(parentMathText), "M", painter.device());
 
     const JKQTMathTextNodeSize cs=getChild()->getSize(painter, ev);
@@ -159,7 +166,7 @@ JKQTMathTextNodeSize JKQTMathTextSubscriptNode::getSizeWithSpecialPlacement(QPai
     s.baselineHeight=cs.baselineHeight-shift_to_childBaseline;
     s.overallHeight=cs.overallHeight;
     if (prevNodeSizeForSpecialPlacement!=nullptr) s.strikeoutPos=prevNodeSizeForSpecialPlacement->strikeoutPos;
-    else s.strikeoutPos=fm.strikeOutPos();
+    else s.strikeoutPos=JKQTMathTextGetFontStrikoutPos(f, painter.device());
     s.width=cs.width;
     return s;
 }
@@ -170,11 +177,13 @@ JKQTMathTextNodeSize JKQTMathTextSubscriptNode::getSizeInternal(QPainter &painte
 }
 
 double JKQTMathTextSubscriptNode::drawWithSpecialPlacement(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv, const JKQTMathTextNodeSize* prevNodeSizeForSpecialPlacement) const {
+#ifdef JKQTBP_AUTOTIMER
+    JKQTPAutoOutputTimer jkaat(QString("JKQTMathTextSubscriptNode[]::draw()"));
+#endif
     doDrawBoxes(painter, x, y, currentEv);
     JKQTMathTextEnvironment ev=currentEv;
     ev.fontSize=ev.fontSize*parentMathText->getSubsuperSizeFactor();
     QFont f=ev.getFont(parentMathText);
-    const QFontMetricsF fm(f, painter.device());
     //const QRectF tbr_of_letterM=JKQTMathTextGetTightBoundingRect(currentEv.getFont(parentMathText), "M", painter.device());
 
     const JKQTMathTextNodeSize cs=getChild()->getSize(painter, ev);
@@ -191,11 +200,14 @@ double JKQTMathTextSubscriptNode::drawWithSpecialPlacement(QPainter& painter, do
     //qDebug()<<"baselineHeight="<<baselineHeight<<", overallHeight="<<overallHeight<<", strikeoutPos="<<strikeoutPos;
     //qDebug()<<"shift="<<shift<<", yshift="<<yshift;
     double xx=x;
-    return getChild()->draw(painter, xx, y+shift_to_childBaseline, ev);//+0.5*fm.boundingRect("A").width();
+    return getChild()->draw(painter, xx, y+shift_to_childBaseline, ev);
 }
 
 double JKQTMathTextSubscriptNode::draw(QPainter &painter, double x, double y, JKQTMathTextEnvironment currentEv) const
 {
+#ifdef JKQTBP_AUTOTIMER
+    JKQTPAutoOutputTimer jkaat(QString("JKQTMathTextSubscriptNode[]::draw()"));
+#endif
     return drawWithSpecialPlacement(painter, x, y, currentEv, nullptr);
 }
 

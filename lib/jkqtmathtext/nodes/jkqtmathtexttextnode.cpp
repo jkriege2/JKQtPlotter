@@ -25,6 +25,7 @@
 #include "jkqtmathtext/jkqtmathtext.h"
 #include "jkqtcommon/jkqtpcodestructuring.h"
 #include "jkqtcommon/jkqtpstringtools.h"
+#include "jkqtcommon/jkqtpdebuggingtools.h"
 #include <cmath>
 #include <QFontMetricsF>
 #include <QDebug>
@@ -141,15 +142,7 @@ JKQTMathTextTextNode::LayoutInfo JKQTMathTextTextNode::calcLayout(QPainter &pain
     const QFont fUpright=JKQTMathTextGetNonItalic(f);
     const QFont fFallbackSym=currentEv.exchangedFontFor(MTEFallbackSymbols).getFont(parentMathText);
     const QFont fRoman=currentEv.exchangedFontForRoman().getFont(parentMathText);
-    const QFontMetricsF fmUpright(fUpright, painter.device());
-    const QFontMetricsF fm(f, painter.device());
-    const QFontMetricsF fmFallbackSym(fFallbackSym, painter.device());
-    const QFontMetricsF fmRoman(fRoman, painter.device());
-#if (QT_VERSION>=QT_VERSION_CHECK(5, 15, 0))
-    const double sp=fm.horizontalAdvance(' ');
-#else
-    const double sp=fm.width(' ');
-#endif
+    const double sp=JKQTMathTextGetHorAdvance(f, " ", painter.device());
     l.width=0;
     double ascent=0;
     double descent=0;
@@ -160,23 +153,23 @@ JKQTMathTextTextNode::LayoutInfo JKQTMathTextTextNode::calcLayout(QPainter &pain
         switch(l.fontMode[i]) {
             case FMasDefined:
             case FMasDefinedOutline:
-                br=fm.boundingRect(l.textpart[i]);
+                br=JKQTMathTextGetBoundingRect(f, l.textpart[i], painter.device());
                 tbr=JKQTMathTextGetTightBoundingRect(f, l.textpart[i], painter.device());
-                if (f.italic() && l.textpart[i].size()>0) l.baselineXCorrection=fm.rightBearing(l.textpart[i].operator[](l.textpart[i].size()-1));
+                if (f.italic() && l.textpart[i].size()>0) l.baselineXCorrection=JKQTMathTextGetRightBearing(f,l.textpart[i].operator[](l.textpart[i].size()-1),painter.device());
                 break;
             case FMasDefinedForceUpright:
-                br=fmUpright.boundingRect(l.textpart[i]);
+                br=JKQTMathTextGetBoundingRect(fUpright, l.textpart[i], painter.device());
                 tbr=JKQTMathTextGetTightBoundingRect(fUpright, l.textpart[i], painter.device());
                 break;
             case FMroman:
-                br=fmRoman.boundingRect(l.textpart[i]);
+                br=JKQTMathTextGetBoundingRect(fRoman, l.textpart[i], painter.device());
                 tbr=JKQTMathTextGetTightBoundingRect(fRoman, l.textpart[i], painter.device());
-                if (fRoman.italic() && l.textpart[i].size()>0) l.baselineXCorrection=fmRoman.rightBearing(l.textpart[i].operator[](l.textpart[i].size()-1));
+                if (fRoman.italic() && l.textpart[i].size()>0) l.baselineXCorrection=JKQTMathTextGetRightBearing(fRoman,l.textpart[i].operator[](l.textpart[i].size()-1),painter.device());
                 break;
             case FMfallbackSymbol:
-                br=fmFallbackSym.boundingRect(l.textpart[i]);
+                br=JKQTMathTextGetBoundingRect(fFallbackSym, l.textpart[i], painter.device());
                 tbr=JKQTMathTextGetTightBoundingRect(fFallbackSym, l.textpart[i], painter.device());
-                if (fFallbackSym.italic() && l.textpart[i].size()>0) l.baselineXCorrection=fmFallbackSym.rightBearing(l.textpart[i].operator[](l.textpart[i].size()-1));
+                if (fFallbackSym.italic() && l.textpart[i].size()>0) l.baselineXCorrection=JKQTMathTextGetRightBearing(fFallbackSym,l.textpart[i].operator[](l.textpart[i].size()-1),painter.device());
                 break;
         }
         l.textpartXPos.append(l.width);
@@ -193,7 +186,7 @@ JKQTMathTextTextNode::LayoutInfo JKQTMathTextTextNode::calcLayout(QPainter &pain
     }
     l.overallHeight=(ascent+descent); //fm.height();
     l.baselineHeight=ascent;
-    l.strikeoutPos=fm.strikeOutPos();
+    l.strikeoutPos=JKQTMathTextGetFontStrikoutPos(f, painter.device());
     return l;
 }
 
@@ -285,6 +278,9 @@ void JKQTMathTextTextNode::splitTextForLayout(QPainter &painter, JKQTMathTextEnv
 }
 
 double JKQTMathTextTextNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) const {
+#ifdef JKQTBP_AUTOTIMER
+    JKQTPAutoOutputTimer jkaat(QString("JKQTMathTextTextNode[]::draw()"));
+#endif
     const LayoutInfo l=calcLayout(painter, currentEv);
     doDrawBoxes(painter, x, y, l);
 

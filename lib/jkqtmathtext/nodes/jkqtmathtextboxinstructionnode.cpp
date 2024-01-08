@@ -24,8 +24,8 @@
 #include "jkqtmathtext/jkqtmathtext.h"
 #include "jkqtcommon/jkqtpcodestructuring.h"
 #include "jkqtcommon/jkqtpstringtools.h"
+#include "jkqtcommon/jkqtpdebuggingtools.h"
 #include <cmath>
-#include <QFontMetricsF>
 #include <QDebug>
 #include <QFontDatabase>
 #include <QFontInfo>
@@ -60,9 +60,9 @@ JKQTMathTextNodeSize JKQTMathTextBoxInstructionNode::getSizeInternal(QPainter& p
     inst.modifier(ev, getParameters());
     const QPen p=inst.pen(ev, getParameters(), parentMathText);
     const QBrush b=inst.brush(ev, getParameters(), parentMathText);
-    const QFontMetricsF fmNonItalic(JKQTMathTextGetNonItalic(currentEv.getFont(parentMathText)), painter.device());
+    const QFont fNonItalic=JKQTMathTextGetNonItalic(currentEv.getFont(parentMathText));
     const double lw=p.widthF();
-    const double padding=inst.paddingFactor*fmNonItalic.tightBoundingRect("x").width();
+    const double padding=inst.paddingFactor*JKQTMathTextGetBoundingRect(fNonItalic, "x", painter.device()).width();
 
     const JKQTMathTextNodeSize cs=getChild()->getSize(painter, ev);
     JKQTMathTextNodeSize s;
@@ -74,6 +74,9 @@ JKQTMathTextNodeSize JKQTMathTextBoxInstructionNode::getSizeInternal(QPainter& p
 }
 
 double JKQTMathTextBoxInstructionNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) const {
+#ifdef JKQTBP_AUTOTIMER
+    JKQTPAutoOutputTimer jkaat(QString("JKQTMathTextBoxInstructionNode[]::draw()"));
+#endif
     doDrawBoxes(painter, x, y, currentEv);
     JKQTMathTextEnvironment ev=currentEv;
 
@@ -81,10 +84,10 @@ double JKQTMathTextBoxInstructionNode::draw(QPainter& painter, double x, double 
     inst.modifier(ev, getParameters());
     const QPen p=inst.pen(ev, getParameters(), parentMathText);
     const QBrush b=inst.brush(ev, getParameters(), parentMathText);
-    const QFontMetricsF fmNonItalic(JKQTMathTextGetNonItalic(currentEv.getFont(parentMathText)), painter.device());
+    const QFont fNonItalic=JKQTMathTextGetNonItalic(currentEv.getFont(parentMathText));
     const double lw=p.widthF();
-    const double padding=inst.paddingFactor*fmNonItalic.tightBoundingRect("x").width();
-    const double rr=inst.roundingFactor*fmNonItalic.tightBoundingRect("x").width();
+    const double padding=inst.paddingFactor*JKQTMathTextGetBoundingRect(fNonItalic, "x", painter.device()).width();
+    const double rr=inst.roundingFactor*JKQTMathTextGetBoundingRect(fNonItalic, "x", painter.device()).width();
     const JKQTMathTextNodeSize cs=getChild()->getSize(painter, ev);
 
     {
@@ -116,10 +119,10 @@ bool JKQTMathTextBoxInstructionNode::toHtml(QString &html, JKQTMathTextEnvironme
     inst.modifier(ev, getParameters());
     const QPen p=inst.pen(ev, getParameters(), parentMathText);
     const QBrush b=inst.brush(ev, getParameters(), parentMathText);
-    const QFontMetricsF fmNonItalic(JKQTMathTextGetNonItalic(currentEv.getFont(parentMathText)));
+    const QFont fNonItalic=JKQTMathTextGetNonItalic(currentEv.getFont(parentMathText));
     //const double lw=p.widthF();
-    const double padding=inst.paddingFactor*fmNonItalic.tightBoundingRect("x").width();
-    //const double rr=inst.roundingFactor*fmNonItalic.tightBoundingRect("x").width();
+    const double padding=inst.paddingFactor*JKQTMathTextGetBoundingRect(fNonItalic, "x", nullptr).width();
+    //const double rr=inst.roundingFactor*JKQTMathTextGetBoundingRect(fNonItalic, "x", painter.device()).width();
     QString s=QString("padding: %1px").arg(padding);
     if (p!=Qt::NoPen) {
         if (s.size()>0 && s.right(2)!="; ") s=s+"; ";
@@ -310,7 +313,7 @@ JKQTMathTextBoxInstructionNode::InstructionProperties::ModifyEnvironmentFunctor 
         [](JKQTMathTextEnvironment& /*ev*/, const QStringList& /*parameters*/){};
 
 JKQTMathTextBoxInstructionNode::InstructionProperties::GetBoxPenFunctor JKQTMathTextBoxInstructionNode::InstructionProperties::DefaultPen=
-        [](JKQTMathTextEnvironment& ev, const QStringList& /*parameters*/, JKQTMathText* parent){ return QPen(ev.color, QFontMetricsF(ev.getFont(parent)).lineWidth(), Qt::SolidLine); };
+        [](JKQTMathTextEnvironment& ev, const QStringList& /*parameters*/, JKQTMathText* parent){ return QPen(ev.color, JKQTMathTextGetFontLineWidth(ev.getFont(parent),nullptr), Qt::SolidLine); };
 
 JKQTMathTextBoxInstructionNode::InstructionProperties::GetBoxPenFunctor JKQTMathTextBoxInstructionNode::InstructionProperties::NoPen=
         [](JKQTMathTextEnvironment& /*ev*/, const QStringList& /*parameters*/, JKQTMathText* /*parent*/){ return Qt::NoPen; };

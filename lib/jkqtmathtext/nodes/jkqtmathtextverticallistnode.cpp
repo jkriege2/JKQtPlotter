@@ -27,6 +27,7 @@
 #include "jkqtmathtext/jkqtmathtext.h"
 #include "jkqtcommon/jkqtpcodestructuring.h"
 #include "jkqtcommon/jkqtpstringtools.h"
+#include "jkqtcommon/jkqtpdebuggingtools.h"
 #include <cmath>
 #include <QFontMetricsF>
 #include <QDebug>
@@ -76,10 +77,10 @@ JKQTMathTextVerticalListNode::LayoutInfo JKQTMathTextVerticalListNode::calcLayou
     QList<double> ysFromFirstLine; // y-position of each line, where the first line is always at y=0 (i.e. ysFromFirstLine[0]==0)
     double y=0;
     for (int i=0; i<nodes.size(); i++) {
-        const QFontMetricsF fm(currentEv.getFont(parentMathText), painter.device());
-        const double linespacing=fm.lineSpacing()*lineSpacingFactor;
-        const double fleading=fm.leading();
-        const double synLeading=fm.lineWidth();
+        const QFont f=currentEv.getFont(parentMathText);
+        const double linespacing=JKQTMathTextGetFontLineSpacing(f, painter.device())*lineSpacingFactor;
+        const double fleading=JKQTMathTextGetFontLeading(f, painter.device());
+        const double synLeading=JKQTMathTextGetFontLineWidth(f, painter.device());
         const double lineLeading=((fabs(fleading)>1e-6)?fleading:synLeading)*lineSpacingFactor;
 
         const JKQTMathTextNodeSize loc=nodes[i]->getSize(painter, currentEv);
@@ -145,6 +146,9 @@ JKQTMathTextVerticalListNode::LayoutInfo JKQTMathTextVerticalListNode::calcLayou
 }
 
 double JKQTMathTextVerticalListNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment ev) const {
+#ifdef JKQTBP_AUTOTIMER
+    JKQTPAutoOutputTimer jkaat(QString("JKQTMathTextVerticalListNode[]::draw()"));
+#endif
     JKQTMathTextEnvironment currentEv=ev;
     doDrawBoxes(painter, x, y, currentEv);
     const LayoutInfo l=calcLayout(painter, currentEv);

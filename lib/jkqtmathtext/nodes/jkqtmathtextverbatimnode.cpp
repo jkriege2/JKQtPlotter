@@ -25,6 +25,7 @@
 #include "jkqtmathtext/jkqtmathtext.h"
 #include "jkqtcommon/jkqtpcodestructuring.h"
 #include "jkqtcommon/jkqtpstringtools.h"
+#include "jkqtcommon/jkqtpdebuggingtools.h"
 #include <cmath>
 #include <QFontMetricsF>
 #include <QDebug>
@@ -81,6 +82,9 @@ size_t JKQTMathTextVerbatimNode::getTabSize() const
 
 double JKQTMathTextVerbatimNode::draw(QPainter &painter, double x, double y, JKQTMathTextEnvironment currentEv) const
 {
+#ifdef JKQTBP_AUTOTIMER
+    JKQTPAutoOutputTimer jkaat(QString("JKQTMathTextVerbatimNode[]::draw()"));
+#endif
     transformEnvironment(currentEv);
     const LayoutInfo l=calcLayout(painter, currentEv);
     doDrawBoxes(painter, x, y, l);
@@ -134,10 +138,10 @@ JKQTMathTextVerbatimNode::LayoutInfo JKQTMathTextVerbatimNode::calcLayout(QPaint
     QFont f=currentEv.getFont(parentMathText);
     f.setStyleStrategy(QFont::PreferDefault);
     f.setFixedPitch(true);
-    const QFontMetricsF fm(f, painter.device());
-    const double linespacing=fm.lineSpacing()*lineSpacingFactor;
-    const double fleading=fm.leading();
-    const double synLeading=fm.lineWidth();
+    const qreal fascent=JKQTMathTextGetFontAscent(f, painter.device());
+    const double linespacing=JKQTMathTextGetFontLineSpacing(f, painter.device())*lineSpacingFactor;
+    const double fleading=JKQTMathTextGetFontLeading(f, painter.device());
+    const double synLeading=JKQTMathTextGetFontLineWidth(f, painter.device());
     const double lineLeading=((fabs(fleading)>1e-6)?fleading:synLeading)*lineSpacingFactor;
 
     if (text.size()<=0) {
@@ -154,18 +158,18 @@ JKQTMathTextVerbatimNode::LayoutInfo JKQTMathTextVerbatimNode::calcLayout(QPaint
     for (int i=0; i<l.lines.size(); i++) {
 
         if (i==0) {
-            heightSum=fm.ascent();
+            heightSum=fascent;
         } else if (i>0) {
-            const double deltaLine=qMax(linespacing, descents.last()+lineLeading+fm.ascent());
+            const double deltaLine=qMax(linespacing, descents.last()+lineLeading+fascent);
             heightSum=heightSum+deltaLine;
             y=y+deltaLine;
         }
-        widths<<fm.boundingRect(l.lines[i]).width();
+        widths<<JKQTMathTextGetBoundingRect(f,l.lines[i],painter.device()).width();
         l.width=qMax(l.width, widths.last());
-        heights<<fm.height();
-        ascents<<fm.ascent();
-        descents<<fm.descent();
-        strikeouts<<fm.strikeOutPos();
+        heights<<JKQTMathTextGetFontHeight(f, painter.device());
+        ascents<<fascent;
+        descents<<JKQTMathTextGetFontDescent(f, painter.device());
+        strikeouts<<JKQTMathTextGetFontStrikoutPos(f, painter.device());
         ysFromFirstLine<<y;
     }
     heightSum+=descents.last();

@@ -25,6 +25,9 @@
 #include "jkqtmathtext/jkqtmathtext.h"
 #include "jkqtcommon/jkqtpcodestructuring.h"
 #include "jkqtcommon/jkqtpstringtools.h"
+#include "jkqtcommon/jkqtpdebuggingtools.h"
+#include "jkqtcommon/jkqtpdebuggingtools.h"
+#include "jkqtcommon/jkqtpdebuggingtools.h"
 #include <cmath>
 #include <QFontMetricsF>
 #include <QDebug>
@@ -114,6 +117,9 @@ size_t JKQTMathTextWhitespaceNode::getWhitespaceCount() const
 
 double JKQTMathTextWhitespaceNode::draw(QPainter &painter, double x, double y, JKQTMathTextEnvironment currentEv) const
 {
+#ifdef JKQTBP_AUTOTIMER
+    JKQTPAutoOutputTimer jkaat(QString("JKQTMathTextWhitespaceNode[]::draw()"));
+#endif
     const JKQTMathTextNodeSize s=getSize(painter, currentEv);
     doDrawBoxes(painter, x,y,s);
     return x+s.width;
@@ -123,11 +129,10 @@ JKQTMathTextNodeSize JKQTMathTextWhitespaceNode::getSizeInternal(QPainter &paint
 {
     JKQTMathTextNodeSize s;
     const double singelWidthPIX=Type2PixelWidth(whitespace.type, currentEv, painter.device());
-    const QFontMetricsF fm(currentEv.getFont(parentMathText), painter.device());
     s.width=singelWidthPIX*static_cast<double>(whitespace.count);
     s.baselineHeight=0;
     s.overallHeight=0;
-    s.strikeoutPos=fm.strikeOutPos();
+    s.strikeoutPos=JKQTMathTextGetFontStrikoutPos(currentEv.getFont(parentMathText), painter.device());
     return s;
 }
 
@@ -179,14 +184,9 @@ QString JKQTMathTextWhitespaceNode::Type2String(Types type)
 
 double JKQTMathTextWhitespaceNode::Type2PixelWidth(Types type, JKQTMathTextEnvironment currentEv, QPaintDevice* pd) const
 {
-    const QFontMetricsF fm(currentEv.getFont(parentMathText), pd);
-#if (QT_VERSION>=QT_VERSION_CHECK(5, 15, 0))
-    const double em=fm.horizontalAdvance(QChar(0x2003));//currentEv.fontSize;
-    const double sp=fm.horizontalAdvance(' ');//currentEv.fontSize;
-#else
-    const double em=fm.width(QChar(0x2003));//currentEv.fontSize;
-    const double sp=fm.width(' ');//currentEv.fontSize;
-#endif
+    const QFont f=currentEv.getFont(parentMathText);
+    const double sp=JKQTMathTextGetHorAdvance(f, " ", pd);
+    const double em=JKQTMathTextGetHorAdvance(f, QChar(0x2003), pd);
     const double en=em/2.0;
     switch (type) {
         case WSTNormal: return sp;
@@ -255,13 +255,8 @@ double JKQTMathTextEmptyBoxNode::Units2PixelWidth(double value, Units unit, JKQT
 {
     QFont f=currentEv.getFont(parentMathText);
     f.setStyleStrategy(QFont::PreferDefault);
-    const QFontMetricsF fm(f, pd);
     if (unit==EBUem) {
-#if (QT_VERSION>=QT_VERSION_CHECK(5, 15, 0))
-        const double em=fm.horizontalAdvance(QChar(0x2003));//currentEv.fontSize;
-#else
-        const double em=fm.width(QChar(0x2003));//currentEv.fontSize;
-#endif
+        const double em=JKQTMathTextGetHorAdvance(f, QChar(0x2003), pd);
         //qDebug()<<"em="<<em<<"pix";
         return value*em;
     } else if (unit==EBUex) {
@@ -319,6 +314,9 @@ double JKQTMathTextEmptyBoxNode::getHeight() const
 
 double JKQTMathTextEmptyBoxNode::draw(QPainter &painter, double x, double y, JKQTMathTextEnvironment currentEv) const
 {
+#ifdef JKQTBP_AUTOTIMER
+    JKQTPAutoOutputTimer jkaat(QString("JKQTMathTextEmptyBoxNode[]::draw()"));
+#endif
     const auto s=getSize(painter, currentEv);
     doDrawBoxes(painter, x,y,s);
     return x+s.width;
@@ -327,7 +325,6 @@ double JKQTMathTextEmptyBoxNode::draw(QPainter &painter, double x, double y, JKQ
 JKQTMathTextNodeSize JKQTMathTextEmptyBoxNode::getSizeInternal(QPainter &painter, JKQTMathTextEnvironment currentEv) const
 {
     JKQTMathTextNodeSize s;
-    const QFontMetricsF fm(currentEv.getFont(parentMathText), painter.device());
     s.width=Units2PixelWidth(width, widthUnit, currentEv, painter.device());
     s.overallHeight=Units2PixelWidth(height, heightUnit, currentEv, painter.device());
     if (height>0) {
@@ -335,7 +332,7 @@ JKQTMathTextNodeSize JKQTMathTextEmptyBoxNode::getSizeInternal(QPainter &painter
     } else {
         s.baselineHeight=0;
     }
-    s.strikeoutPos=fm.strikeOutPos();
+    s.strikeoutPos=JKQTMathTextGetFontStrikoutPos(currentEv.getFont(parentMathText), painter.device());
     return s;
 }
 
@@ -400,6 +397,9 @@ JKQTMathTextNodeSize JKQTMathTextPhantomNode::getSizeInternal(QPainter& painter,
 }
 
 double JKQTMathTextPhantomNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) const {
+#ifdef JKQTBP_AUTOTIMER
+    JKQTPAutoOutputTimer jkaat(QString("JKQTMathTextPhantomNode[]::draw()"));
+#endif
     const JKQTMathTextNodeSize s=getSize(painter, currentEv);
     doDrawBoxes(painter, x, y, s);
     return x+s.width;

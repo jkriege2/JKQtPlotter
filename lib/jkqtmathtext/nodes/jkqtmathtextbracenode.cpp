@@ -24,6 +24,7 @@
 #include "jkqtmathtext/jkqtmathtext.h"
 #include "jkqtcommon/jkqtpcodestructuring.h"
 #include "jkqtcommon/jkqtpstringtools.h"
+#include "jkqtcommon/jkqtpdebuggingtools.h"
 #include <cmath>
 #include <QFontMetricsF>
 #include <QDebug>
@@ -55,8 +56,8 @@ JKQTMathTextBraceNode::NodeSize JKQTMathTextBraceNode::getSizeInternalAndBrace(Q
 {
     NodeSize s;
     const NodeSize childSize=getChild()->getSize(painter, currentEv);
-    const QFontMetricsF fm(currentEv.getFont(parentMathText), painter.device());
-    const double minChildHeight=fm.tightBoundingRect("l").height();
+    const QFont f=currentEv.getFont(parentMathText);
+    const double minChildHeight=JKQTMathTextGetTightBoundingRect(f, "l", painter.device()).height();
 
     double cAscentAboveStrike=0;
     double cDescentBelowStrike=0;
@@ -84,13 +85,16 @@ JKQTMathTextBraceNode::NodeSize JKQTMathTextBraceNode::getSizeInternalAndBrace(Q
 }
 
 double JKQTMathTextBraceNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) const {
+#ifdef JKQTBP_AUTOTIMER
+    JKQTPAutoOutputTimer jkaat(QString("JKQTMathTextBraceNode[]::draw()"));
+#endif
     //std::cout<<"drawing brace-node: '"<<openbrace.toStdString()<<"' ... '"<<closebrace.toStdString()<<"'\n";
 
     const NodeSize nodesize=getSizeInternalAndBrace(painter, currentEv);
     doDrawBoxes(painter, x, y, nodesize);
-    const QFontMetricsF fm(currentEv.getFont(parentMathText), painter.device());
+    const QFont f=currentEv.getFont(parentMathText);
 
-    const double lw=fm.lineWidth();
+    const double lw=JKQTMathTextGetFontLineWidth(f, painter.device());
 
     double xnew=x;
 
@@ -360,7 +364,6 @@ double JKQTMathTextBraceNode::draw(QPainter& painter, double x, double y, JKQTMa
         }
     }
 
-    //qDebug()<<" ==> "<<bc<<fm.boundingRect(bc).width();
     return xnew;
 }
 
@@ -466,20 +469,20 @@ JKQTMathTextBraceNode::NodeSize::NodeSize(const NodeSize &other):
 
 void JKQTMathTextBraceNode::calcBraceSizes(NodeSize& out, QPainter &painter, const JKQTMathTextEnvironment &ev, const JKQTMathTextNodeSize &childSize) const
 {
-    const QFontMetricsF fm(ev.getFont(parentMathText), painter.device());
-    const QSizeF openBraceS=calcBraceSize(fm, openbrace, childSize);
-    const QSizeF closeBraceS=calcBraceSize(fm, closebrace, childSize);
+    const QFont f=ev.getFont(parentMathText);
+    const QSizeF openBraceS=calcBraceSize(f, painter.device(), openbrace, childSize);
+    const QSizeF closeBraceS=calcBraceSize(f, painter.device(), closebrace, childSize);
     out.openBraceWidth=openBraceS.width();
     out.openBraceHeight=openBraceS.width();
     out.closeBraceWidth=closeBraceS.width();
     out.closeBraceHeight=closeBraceS.width();
 }
 
-QSizeF JKQTMathTextBraceNode::calcBraceSize(const QFontMetricsF &fm, JKQTMathTextBraceType bracetype, const JKQTMathTextNodeSize &childSize) const
+QSizeF JKQTMathTextBraceNode::calcBraceSize(const QFont &f, QPaintDevice *pd, JKQTMathTextBraceType bracetype, const JKQTMathTextNodeSize &childSize) const
 {
     double braceWidth=0.0;
     double braceHeight=0.0;
-    const double lw=fm.lineWidth();
+    const double lw=JKQTMathTextGetFontLineWidth(f, pd);
     const double dblline_distance=2.0*lw;
     braceHeight=childSize.overallHeight*parentMathText->getBraceFactor();
     braceWidth=lw*5.0;
@@ -489,7 +492,7 @@ QSizeF JKQTMathTextBraceNode::calcBraceSize(const QFontMetricsF &fm, JKQTMathTex
     if (bracetype==MTBTSingleLine)  braceWidth=3.0*lw;
     if (bracetype==MTBTSquareBracket || bracetype==MTBTCeilBracket || bracetype==MTBTFloorBracket)  braceWidth=7.0*lw;
 
-    const double overSizeFactor=braceHeight/fm.height();
+    const double overSizeFactor=braceHeight/JKQTMathTextGetFontHeight(f, pd);
     if (overSizeFactor>1.2) braceWidth=braceWidth*sqrt(overSizeFactor);
 
     return QSizeF(braceWidth, braceHeight);

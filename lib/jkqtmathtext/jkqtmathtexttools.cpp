@@ -22,6 +22,7 @@
 #include "jkqtmathtext/jkqtmathtexttools.h"
 #include "jkqtmathtext/jkqtmathtext.h"
 #include "jkqtcommon/jkqtpstringtools.h"
+#include "jkqtcommon/jkqtpcachingtools.h"
 #include <cmath>
 #include <QFontMetricsF>
 #include <QDebug>
@@ -29,6 +30,7 @@
 #include <QFontInfo>
 #include <QApplication>
 #include <QFont>
+#include <QReadWriteLock>
 #include <mutex>
 
 
@@ -877,81 +879,239 @@ QPainterPath JKQTMathTextMakeHBracePath(double x, double ybrace, double width, d
 }
 
 
-JKQTMathTextTBRData::JKQTMathTextTBRData(const QFont &f, const QString &text,  QPaintDevice *pd):
-    fm(f, pd)
-{
-    this->text=text;
-    this->tbr=this->fm.tightBoundingRect(text);
-    this->f=f;
-    //this->pd=pd;
-    if (pd) {
-        ldpiX=pd->logicalDpiX();
-        ldpiY=pd->logicalDpiY();
-        pdpiX=pd->physicalDpiX();
-        pdpiY=pd->physicalDpiY();
-    } else {
-        ldpiX=0;
-        ldpiY=0;
-        pdpiX=0;
-        pdpiY=0;
-    }
-}
 
-bool JKQTMathTextTBRData::operator==(const JKQTMathTextTBRData &other) const
-{
-    return ldpiX==other.ldpiX &&  ldpiY==other.ldpiY && text==other.text && f==other.f;
-}
+namespace {
 
-
-
-JKQTMathTextTBRDataH::JKQTMathTextTBRDataH(const QFont &f, const QString &text, QPaintDevice *pd)
-{
-    this->text=text;
-    this->f=f;
-    if (pd) {
-        ldpiX=pd->logicalDpiX();
-        ldpiY=pd->logicalDpiY();
-        pdpiX=pd->physicalDpiX();
-        pdpiY=pd->physicalDpiY();
-    } else {
-        ldpiX=0;
-        ldpiY=0;
-        pdpiX=0;
-        pdpiY=0;
-    }
-}
-
-bool JKQTMathTextTBRDataH::operator==(const JKQTMathTextTBRDataH &other) const
-{
-    return ldpiX==other.ldpiX &&  ldpiY==other.ldpiY && text==other.text && f==other.f;
-
-}
-
-
-
-QRectF JKQTMathTextGetTightBoundingRect(const QFont &fm, const QString &text, QPaintDevice *pd)
-{
-    thread_local QList<JKQTMathTextTBRData> JKQTMathText_tbrs=QList<JKQTMathTextTBRData>();
-    thread_local QHash<JKQTMathTextTBRDataH, QRectF> JKQTMathText_tbrh=QHash<JKQTMathTextTBRDataH, QRectF>();
-
-    JKQTMathTextTBRDataH  dh(fm, text, pd);
-    if (pd) {
-        if (JKQTMathText_tbrh.contains(dh)) return JKQTMathText_tbrh[dh];
-        /*for (int i=0; i<tbrs.size(); i++) {
-            if (tbrs[i].f==fm && tbrs[i].text==text && (tbrs[i].ldpiX==pd->logicalDpiX() && tbrs[i].ldpiY==pd->logicalDpiY() && tbrs[i].pdpiX==pd->physicalDpiX() && tbrs[i].pdpiY==pd->physicalDpiY())) {
-                //qDebug()<<"   ### "<<fm<<pd<<tbrs[i].text<<tbrs[i].tbr;
-                return tbrs[i].tbr;
+    struct JKQTMathTextCacheKeyBase {
+        inline explicit JKQTMathTextCacheKeyBase(const QFont& f_, QPaintDevice *pd):
+            f(f_)
+        {
+            if (pd) {
+                ldpiX=pd->logicalDpiX();
+                ldpiY=pd->logicalDpiY();
+                pdpiX=pd->physicalDpiX();
+                pdpiY=pd->physicalDpiY();
+            } else {
+                ldpiX=0;
+                ldpiY=0;
+                pdpiX=0;
+                pdpiY=0;
             }
-        }*/
-    } else {
-        //qDebug()<<"warning no pd";
+        }
+        QFont f;
+        int ldpiX, ldpiY, pdpiX, pdpiY;
+
+        inline bool operator==(const JKQTMathTextCacheKeyBase& other) const{
+            return ldpiX==other.ldpiX &&  ldpiY==other.ldpiY && pdpiX==other.pdpiX &&  pdpiY==other.pdpiY && f==other.f;
+
+        };
+    };
+
+#if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
+    inline size_t qHash(const JKQTMathTextCacheKeyBase& data, size_t seed=0) {
+#else
+    inline uint qHash(const JKQTMathTextCacheKeyBase& data) {
+        const size_t seed=0;
+#endif
+        return  qHash(data.f)+::qHash(data.ldpiX,seed)+::qHash(data.ldpiY)+::qHash(data.pdpiX)+::qHash(data.pdpiY);
     }
-    JKQTMathTextTBRData d(fm, text, pd);
-    JKQTMathText_tbrs.append(d);
-    JKQTMathText_tbrh[dh]=d.tbr;
-    //qDebug()<<"TBRs lits: "<<tbrs.size();
-    //qDebug()<<"+++ "<<fm<<pd<<d.text<<d.tbr;
-    return d.tbr;
+
+    struct JKQTMathTextCacheKeyBaseExt: public JKQTMathTextCacheKeyBase {
+        inline explicit JKQTMathTextCacheKeyBaseExt(const QFont& f_, QPaintDevice *pd_):
+            JKQTMathTextCacheKeyBase(f_,pd_), pd(pd_)
+        {}
+
+        QPaintDevice *pd;
+    };
+
+
+
+
+
+    template <class TText=QString>
+    struct JKQTMathTextTBRDataH: public JKQTMathTextCacheKeyBase {
+        inline explicit JKQTMathTextTBRDataH(const QFont& f_, const TText& text_, QPaintDevice *pd):
+            JKQTMathTextCacheKeyBase(f_, pd), text(text_)
+        {
+
+        }
+        TText text;
+
+        inline bool operator==(const JKQTMathTextTBRDataH& other) const{
+            return JKQTMathTextCacheKeyBase::operator==(other) && text==other.text;
+
+        };
+    };
+
+
+    template <class TText=QString>
+#if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
+    inline size_t qHash(const JKQTMathTextTBRDataH<TText>& data, size_t /*seed=0*/) {
+#else
+    inline uint qHash(const JKQTMathTextTBRDataH<TText>& data) {
+#endif
+        return  qHash(data.f)+qHash(data.text)+::qHash(data.ldpiX)+::qHash(data.ldpiY)+::qHash(data.pdpiX)+::qHash(data.pdpiY);
+    }
+
+    template <class TText=QString>
+    struct JKQTMathTextTBRDataHExt: public JKQTMathTextTBRDataH<TText> {
+        inline explicit JKQTMathTextTBRDataHExt(const QFont& f_, const TText& text_, QPaintDevice *pd_):
+            JKQTMathTextTBRDataH<TText>(f_,text_,pd_), pd(pd_)
+        {}
+
+        QPaintDevice *pd;
+    };
+
+
+
+}
+
+
+
+
+QRectF JKQTMathTextGetTightBoundingRect(const QFont &f, const QString &text, QPaintDevice *pd)
+{
+    //thread_local JKQTPDataCache<QRectF,JKQTMathTextTBRDataH,false,JKQTMathTextTBRDataHExt> cache(
+    static JKQTPDataCache<QRectF,JKQTMathTextTBRDataH<QString>,true,JKQTMathTextTBRDataHExt<QString>> cache(
+                    [](const JKQTMathTextTBRDataHExt<QString>& key) {
+                        const QFontMetricsF fm(key.f, key.pd);
+                        return fm.tightBoundingRect(key.text);
+                    });
+
+    return cache.get_inline(f, text, pd);
+
+}
+
+QRectF JKQTMathTextGetBoundingRect(const QFont &f, const QString &text, QPaintDevice *pd)
+{
+    //thread_local JKQTPDataCache<QRectF,JKQTMathTextTBRDataH,false,JKQTMathTextTBRDataHExt> cache(
+    static JKQTPDataCache<QRectF,JKQTMathTextTBRDataH<QString>,true,JKQTMathTextTBRDataHExt<QString>> cache(
+        [](const JKQTMathTextTBRDataHExt<QString>& key) {
+            const QFontMetricsF fm(key.f, key.pd);
+            return fm.boundingRect(key.text);
+        });
+
+    return cache.get_inline(f, text, pd);
+}
+
+
+qreal JKQTMathTextGetHorAdvance(const QFont &f, const QString &text, QPaintDevice *pd)
+{
+    //thread_local JKQTPDataCache<double,JKQTMathTextTBRDataH,false,JKQTMathTextTBRDataHExt> cache(
+    static JKQTPDataCache<qreal,JKQTMathTextTBRDataH<QString>,true,JKQTMathTextTBRDataHExt<QString>> cache(
+        [](const JKQTMathTextTBRDataHExt<QString>& key) {
+            const QFontMetricsF fm(key.f, key.pd);
+#if (QT_VERSION>=QT_VERSION_CHECK(5, 15, 0))
+            return fm.horizontalAdvance(key.text);
+#else
+            return fm.width(key.text);
+#endif
+        });
+
+    return cache.get_inline(f, text, pd);
+
+}
+
+qreal JKQTMathTextGetRightBearing(const QFont &f, const QChar &text, QPaintDevice *pd)
+{
+    //thread_local JKQTPDataCache<double,JKQTMathTextTBRDataH,false,JKQTMathTextTBRDataHExt> cache(
+    static JKQTPDataCache<qreal,JKQTMathTextTBRDataH<QChar>,true,JKQTMathTextTBRDataHExt<QChar>> cache(
+        [](const JKQTMathTextTBRDataHExt<QChar>& key) {
+            const QFontMetricsF fm(key.f, key.pd);
+            return fm.rightBearing(key.text);
+        });
+
+    return cache.get_inline(f, text, pd);
+}
+
+qreal JKQTMathTextGetLeftBearing(const QFont &f, const QChar &text, QPaintDevice *pd)
+{
+    //thread_local JKQTPDataCache<double,JKQTMathTextTBRDataH,false,JKQTMathTextTBRDataHExt> cache(
+    static JKQTPDataCache<qreal,JKQTMathTextTBRDataH<QChar>,true,JKQTMathTextTBRDataHExt<QChar>> cache(
+        [](const JKQTMathTextTBRDataHExt<QChar>& key) {
+            const QFontMetricsF fm(key.f, key.pd);
+            return fm.leftBearing(key.text);
+        });
+
+    return cache.get_inline(f, text, pd);
+
+}
+
+qreal JKQTMathTextGetFontAscent(const QFont &f, QPaintDevice *pd)
+{
+    static JKQTPDataCache<qreal,JKQTMathTextCacheKeyBase,true,JKQTMathTextCacheKeyBaseExt> cache(
+        [](const JKQTMathTextCacheKeyBaseExt& key) {
+            const QFontMetricsF fm(key.f, key.pd);
+            return fm.ascent();
+        });
+
+    return cache.get_inline(f, pd);
+}
+
+qreal JKQTMathTextGetFontDescent(const QFont &f, QPaintDevice *pd)
+{
+    static JKQTPDataCache<qreal,JKQTMathTextCacheKeyBase,true,JKQTMathTextCacheKeyBaseExt> cache(
+        [](const JKQTMathTextCacheKeyBaseExt& key) {
+            const QFontMetricsF fm(key.f, key.pd);
+            return fm.descent();
+        });
+
+    return cache.get_inline(f, pd);
+}
+
+qreal JKQTMathTextGetFontHeight(const QFont &f, QPaintDevice *pd)
+{
+    static JKQTPDataCache<qreal,JKQTMathTextCacheKeyBase,true,JKQTMathTextCacheKeyBaseExt> cache(
+        [](const JKQTMathTextCacheKeyBaseExt& key) {
+            const QFontMetricsF fm(key.f, key.pd);
+            return fm.height();
+        });
+
+    return cache.get_inline(f, pd);
+}
+
+qreal JKQTMathTextGetFontLineWidth(const QFont &f, QPaintDevice *pd)
+{
+    static JKQTPDataCache<qreal,JKQTMathTextCacheKeyBase,true,JKQTMathTextCacheKeyBaseExt> cache(
+        [](const JKQTMathTextCacheKeyBaseExt& key) {
+            const QFontMetricsF fm(key.f, key.pd);
+            return fm.lineWidth();
+        });
+
+    return cache.get_inline(f, pd);
+}
+
+qreal JKQTMathTextGetFontLeading(const QFont &f, QPaintDevice *pd)
+{
+    static JKQTPDataCache<qreal,JKQTMathTextCacheKeyBase,true,JKQTMathTextCacheKeyBaseExt> cache(
+        [](const JKQTMathTextCacheKeyBaseExt& key) {
+            const QFontMetricsF fm(key.f, key.pd);
+            return fm.leading();
+        });
+
+    return cache.get_inline(f, pd);
+}
+
+qreal JKQTMathTextGetFontLineSpacing(const QFont &f, QPaintDevice *pd)
+{
+    static JKQTPDataCache<qreal,JKQTMathTextCacheKeyBase,true,JKQTMathTextCacheKeyBaseExt> cache(
+        [](const JKQTMathTextCacheKeyBaseExt& key) {
+            const QFontMetricsF fm(key.f, key.pd);
+            return fm.lineSpacing();
+        });
+
+    return cache.get_inline(f, pd);
+}
+
+qreal JKQTMathTextGetFontStrikoutPos(const QFont &f, QPaintDevice *pd)
+{
+    static JKQTPDataCache<qreal,JKQTMathTextCacheKeyBase,true,JKQTMathTextCacheKeyBaseExt> cache(
+        [](const JKQTMathTextCacheKeyBaseExt& key) {
+            const QFontMetricsF fm(key.f, key.pd);
+            return fm.strikeOutPos();
+        });
+
+    return cache.get_inline(f, pd);
 }
 
 QFont JKQTMathTextGetNonItalic(const QFont &font)
@@ -1048,12 +1208,12 @@ JKQTMathTextBlackboradDrawingMode String2JKQTMathTextBlackboradDrawingMode(QStri
 
 void JKQTMathTextDrawStringSimBlackboard(QPainter &painter, const QFont &f, const QColor& color, double x, double y, const QString &txt)
 {
-    const QFontMetricsF fm(f, painter.device());
-    const QPen p(color, fm.lineWidth()/4.0, Qt::SolidLine);
+    const qreal lw=JKQTMathTextGetFontLineWidth(f, painter.device());
+    const QPen p(color, lw/4.0, Qt::SolidLine);
     painter.setPen(p);
     QPainterPath path;
     path.addText(QPointF(x, y), f, txt);
-    path.addText(QPointF(x+fm.lineWidth()/2.0, y), f, txt);
+    path.addText(QPointF(x+lw/2.0, y), f, txt);
     painter.drawPath(path);
 }
 
@@ -1074,3 +1234,4 @@ JKQTMathTextLineSpacingMode String2JKQTMathTextLineSpacingMode(QString tokenName
     if (tokenName=="minimal" || tokenName=="min" || tokenName=="minimum") return MTSMMinimalSpacing;
     return MTSMDefaultSpacing;
 }
+

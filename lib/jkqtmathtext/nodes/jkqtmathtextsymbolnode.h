@@ -156,9 +156,9 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextSymbolNode: public JKQTMathTextNode {
         friend inline bool has(GlobalSymbolFlags a, GlobalSymbolFlags b) { return (a&b)==b; }
 
         /** \brief calculates the bounding rect of \a text using \a fm and taking the flags from \a globalFlags into account */
-        static QRectF getBoundingRect(const QFontMetricsF& fm, const QString& text, GlobalSymbolFlags globalFlags);
+        static QRectF getBoundingRect(const QFont &fm, const QString& text, GlobalSymbolFlags globalFlags, QPaintDevice *pd);
         /** \brief calculates the tight bounding rect of \a text using \a fm and taking the flags from \a globalFlags into account */
-        static QRectF getTightBoundingRect(const QFontMetricsF& fm, const QString& text, GlobalSymbolFlags globalFlags);
+        static QRectF getTightBoundingRect(const QFont& fm, const QString& text, GlobalSymbolFlags globalFlags, QPaintDevice *pd);
         /** \brief draw \a text at (0,0) using QPainter \a p and taking  the flags from \a globalFlags into account */
         static void drawText(QPainter &p, const QString &text, GlobalSymbolFlags globalFlags, SymbolFlags symflags);
 
