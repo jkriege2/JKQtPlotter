@@ -21,7 +21,7 @@
 #include "jkqtcommon/jkqtpdebuggingtools.h"
 #include <QDebug>
 #include <QApplication>
-
+#include <QThread>
 
 namespace JKQTPAutoOutputTimer_private {
     thread_local int global_indent=0;
@@ -33,9 +33,9 @@ JKQTPAutoOutputTimer::JKQTPAutoOutputTimer(const QString& _message) :
     this->indent=QString(JKQTPAutoOutputTimer_private::global_indent, QLatin1Char(' '));
     JKQTPAutoOutputTimer_private::global_indent+=4;
 #if QT_VERSION >= 0x040800
-    qDebug()<<this->indent<<"TIMER_START:  "<<message;
+    qDebug()<<QThread::currentThread()<<": "+this->indent+"TIMER_START:  "+message;
 #else
-    qDebug()<<this->indent<<"TIMER_START:  "<<message;
+    qDebug()<<QThread::currentThread()<<": "+this->indent+"TIMER_START:  "+message;
 #endif
     start();
 }
@@ -43,9 +43,9 @@ JKQTPAutoOutputTimer::JKQTPAutoOutputTimer(const QString& _message) :
 JKQTPAutoOutputTimer::~JKQTPAutoOutputTimer()
 {
     #if QT_VERSION >= 0x040800
-        qDebug()<<this->indent<<"TIMER_END:  "<<message<<"    DUR: "<<double(nsecsElapsed())/1.0e6<<"ms";
+    qDebug()<<QThread::currentThread()<<": "+this->indent+"TIMER_END:  "+message+"    DUR: "<<double(nsecsElapsed())/1.0e6<<"ms";
     #else
-        qDebug()<<this->indent<<"TIMER_END:  "<<message<<"    DUR: "<<double(elapsed())/1.0e3<<"ms";
+        qDebug()<<QThread::currentThread()<<": "+this->indent+"TIMER_END:  "+message+"    DUR: "<<double(elapsed())/1.0e3<<"ms";
     #endif
     JKQTPAutoOutputTimer_private::global_indent-=4;
 
@@ -53,8 +53,8 @@ JKQTPAutoOutputTimer::~JKQTPAutoOutputTimer()
 
 void JKQTPAutoOutputTimer::write(const QString& message) const {
 #if QT_VERSION >= 0x040800
-    qDebug()<<this->indent<<"TIMER_MESSAGE:  "<<this->message<<" "<<message<<"    DUR: "<<double(nsecsElapsed())/1.0e6<<"ms";
+    qDebug()<<QThread::currentThread()<<": "+this->indent+"TIMER_MESSAGE:  "+this->message+" "+message+"    DUR: "<<double(nsecsElapsed())/1.0e6<<"ms";
 #else
-    qDebug()<<this->indent<<"TIMER_MESSAGE:  "<<this->message<<" "<<message<<"    DUR: "<<double(elapsed())/1.0e3<<"ms";
+    qDebug()<<QThread::currentThread()<<": "+this->indent+"TIMER_MESSAGE:  "+this->message+" "+message+"    DUR: "<<double(elapsed())/1.0e3<<"ms";
 #endif
 }
