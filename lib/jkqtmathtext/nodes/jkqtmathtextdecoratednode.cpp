@@ -240,7 +240,7 @@ double JKQTMathTextDecoratedNode::draw(QPainter& painter, double x, double y, JK
     const double width_X=JKQTMathTextGetBoundingRect(font,"X",painter.device()).width();
     const double width_x=JKQTMathTextGetBoundingRect(font,"x",painter.device()).width();
     const double width_dot=JKQTMathTextGetBoundingRect(font,".",painter.device()).width()/2.0;
-    const double ascent=JKQTMathTextGetFontLineWidth(font, painter.device());
+    const double ascent=JKQTMathTextGetFontAscent(font, painter.device());
     const double decoSeparation=parentMathText->getDecorationSeparationFactor()*ascent;
     const double linewidth=qMax(parentMathText->ABS_MIN_LINEWIDTH, JKQTMathTextGetFontLineWidth(font, painter.device()));
     const double linewidthArrow=linewidth*0.65;
@@ -248,7 +248,7 @@ double JKQTMathTextDecoratedNode::draw(QPainter& painter, double x, double y, JK
     const double decoAboveAscent_ypos=y-ascent-decoSeparation;
     const double strike_ypos=y-cs.baselineHeight/2.0;
     const double decobelow_ypos=y+cDescent+decoSeparation;
-    const double italic_xcorrection=getNonItalicXCorretion(painter, cs.width, ev, getChild());
+    const double italic_xcorrection=getNonItalicXCorretion(painter, cs.width, ev, getChild())*2.0;
     const double deco_xoffset=parentMathText->getDecorationWidthReductionXFactor()*width_X/2.0;
     const double deco_width=std::max<double>(width_x*0.5,cs.width-2.0*deco_xoffset-italic_xcorrection);
     const double deco_vecwidth=width_x*0.25;
@@ -285,7 +285,7 @@ double JKQTMathTextDecoratedNode::draw(QPainter& painter, double x, double y, JK
     auto fDrawFontAccent=[&](QChar aDirect=QChar(), QChar aFallback=QChar()) -> bool {
         if (!aDirect.isNull() && fm.inFont(aDirect)) {
             painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-            const QRectF tbra=JKQTMathTextGetBoundingRect(font, aDirect, painter.device());
+            const QRectF tbra=JKQTMathTextGetTightBoundingRect(font, aDirect, painter.device());
             painter.translate(decotop_xcenter-tbra.width()/2.0, (deco_ytopcenter+deco_ytoptop)/2.0);
             //painter.setPen("red");
             //painter.drawEllipse(0-2,0-2,4,4);
@@ -303,7 +303,7 @@ double JKQTMathTextDecoratedNode::draw(QPainter& painter, double x, double y, JK
         }
         if (!aFallback.isNull() && fm.inFont(aFallback)) {
             painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-            const QRectF tbra=JKQTMathTextGetBoundingRect(font, aFallback, painter.device());
+            const QRectF tbra=JKQTMathTextGetTightBoundingRect(font, aFallback, painter.device());
             painter.translate(decotop_xcenter-tbra.width()/2.0, (deco_ytopcenter+deco_ytoptop)/2.0);
             //painter.setPen("yellow");
             //painter.drawEllipse(0-2,0-2,4,4);
