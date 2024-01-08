@@ -27,6 +27,7 @@ set(SOURCES
   ${CMAKE_CURRENT_LIST_DIR}/jkqtpcodestructuring.cpp
   ${CMAKE_CURRENT_LIST_DIR}/jkqtpbasicimagetools.cpp
   ${CMAKE_CURRENT_LIST_DIR}/jkqtpconcurrencytools.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/jkqtpcachingtools.cpp
   ${CMAKE_CURRENT_LIST_DIR}/jkqtpgeometrytools.cpp
   ${CMAKE_CURRENT_LIST_DIR}/jkqtpdrawingtools.cpp
   ${CMAKE_CURRENT_LIST_DIR}/jkqtpenhancedpainter.cpp
@@ -62,6 +63,8 @@ set(HEADERS
   $<INSTALL_INTERFACE:jkqtpgeometrytools.h>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpconcurrencytools.h>
   $<INSTALL_INTERFACE:jkqtpconcurrencytools.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpcachingtools.h>
+  $<INSTALL_INTERFACE:jkqtpcachingtools.h>
 )
 
 include(CMakePackageConfigHelpers)
@@ -80,6 +83,10 @@ function(JKQtCommon_setDefaultLibOptions TARGETNAME)
       target_compile_options(${TARGETNAME} PUBLIC /EHsc)
       target_compile_definitions(${TARGETNAME} PUBLIC NOMINMAX)
     endif()
+    if(JKQtPlotter_BUILD_WITH_TIMING_INFO_OUTPUT)
+        target_compile_definitions(${TARGETNAME} PRIVATE JKQTBP_AUTOTIMER)
+    endif()
+
     target_include_directories(${TARGETNAME} PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/../>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
