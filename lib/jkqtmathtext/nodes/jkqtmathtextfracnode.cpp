@@ -412,7 +412,7 @@ double JKQTMathTextFracNode::draw(QPainter& painter, double x, double y, JKQTMat
 
 
     if (fracmode==JKQTMathTextFracNode::MTFMstfrac || fracmode==JKQTMathTextFracNode::MTFMsfrac) return x+size1.width+size2.width+deltaWidth;
-    else return x+maxWidth+deltaWidth
+    else return x+maxWidth+deltaWidth;
 }
 
 bool JKQTMathTextFracNode::toHtml(QString &/*html*/, JKQTMathTextEnvironment /*currentEv*/, JKQTMathTextEnvironment /*defaultEv*/) const {
