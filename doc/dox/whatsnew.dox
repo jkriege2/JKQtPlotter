@@ -22,7 +22,8 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>CLEANUP (BREAKING) of library structure</li>
     <li>NEW: Using precompiled headers in CMake-build to speed up build times</li>
     <li>NEW/BREAKING: split jkqtcommon into basic tools and jkqtmath for advanced math tools not used by all libs</li>
-    <li>NEW: When using a MSVC compiler, the generated PDB files are installed to \c CMAKE_INSTALL_PREFIX/bin/ </li>    
+    <li>NEW: When using a MSVC compiler, the generated PDB files are installed to \c CMAKE_INSTALL_PREFIX/bin/ </li>  
+    <li>NEW: Added CMake option \c JKQtPlotter_BUILD_WITH_TIMING_INFO_OUTPUT, which activates several runtime-measurement guards of type JKQTPAutoOutputTimer (output via qDebug())</li>    
   </ul></li>
   <li>JKQTPlotter:<ul>
     <li>BREAKING/REWORKED: Updated default styling of graphs. They are now more modern!</li>
@@ -109,7 +110,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: added JKQTBasePlotterStyle::plotLabelTopBorder to set the  spacing between top and plot label</li>
     <li>NEW: Due to addition of JKQTMathText::setFontOptions() and the matchign extension of JKQTMathText::setFontSpecial() (see below) you can now add modifiers like <tt>+BOLD+ITALIC</tt> to any font-name provided to JKQTPlotter and in style INI-files</li>
     <li>NEW: added JKQTPLabelMinBesides and JKQTPLabelMaxBesides to JKQTPLabelPosition, so labels can be set besides the axes</li>
-    <li>NEW/REWORKED JKQTBasePlottercan be used is re-entrant, i.e. different instances can be used from different threads in parallel (although there is significant overhead due to shared caches between the threads!). This is demonstrated and discussed in \ref JKQTPlotterMultiThreaded . </li>
+    <li>NEW/REWORKED all functions in JKQTBasePlotter are re-entrant, i.e. different instances can be used from different threads in parallel (although there is some overhead due to shared caches between the threads!). This is demonstrated and discussed in \ref JKQTPlotterMultiThreaded . </li>
   </ul></li>
   
   <li>JKQTMathText:<ul>
@@ -127,6 +128,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>IMPROVED: rendering of sqrt</li>
     <li>IMPROVED: rendering and size calculation of decorations</li>
     <li>IMPROVED: tokenizing and parsing of text in text-mode: now a lot of accents with commands like \c \\\"a, \c \\'e and variants (e.g. \c {\\\"a}, \c \\\"{a}, ...) are supported now</li>
+    <li>IMPROVED: all fucntions in JKQTMathText are re-entrant + diverse speed improvements for parallel use-cases (via caches)</li>
     <li>IMPROVED/BREAKING: refactored symbol node JKQTMathTextSymbolNode and changed font-lookup!</li>
     <li>IMPROVED/NEW/BREAKING: refactored whitespace-processing node JKQTMathTextWhitespaceNode, now all major LaTeX whitespace commands are supported properly</li>
     <li>IMPROVED/NEW/BREAKING: refactored LaTeX parser in JKQTMathText</li>
