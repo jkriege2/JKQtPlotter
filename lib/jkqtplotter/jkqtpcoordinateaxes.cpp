@@ -542,7 +542,7 @@ int JKQTPCoordinateAxis::calcLinearUnitDigits() {
 
 void JKQTPCoordinateAxis::calcPlotScaling(bool force) {
 #ifdef JKQTBP_AUTOTIMER
-    JKQTPAutoOutputTimer jkaat(QString("JKQTBasePlotter[%1]::calcPlotScaling()").arg(objectName()));
+    JKQTPAutoOutputTimer jkaat(QString("JKQTPCoordinateAxis[%1]::calcPlotScaling()").arg(objectName()));
 #endif
     if (!doUpdateScaling) return;
     if (!force && !paramsChanged) return;

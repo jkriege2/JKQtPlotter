@@ -127,8 +127,13 @@ JKQTMathTextNodeSize JKQTBasePlotter::getTextSizeDetail(const QFont &fm, const Q
 
 JKQTMathTextNodeSize JKQTBasePlotter::getTextSizeDetail(const QString &fontName, double fontSize, const QString &text, QPainter& painter)
 {
-    thread_local QHash<JKQTBasePlotter::textSizeKey, JKQTMathTextNodeSize> s_TextSizeDataCache;
     JKQTBasePlotter::textSizeKey  dh(fontName, fontSize, text, painter.device());
+    static QReadWriteLock s_TextSizeLock;
+    thread_local QHash<JKQTBasePlotter::textSizeKey, JKQTMathTextNodeSize> s_TextSizeDataCache;
+    QReadLocker lockR(&s_TextSizeLock);
+    if (s_TextSizeDataCache.contains(dh)) return s_TextSizeDataCache[dh];
+    lockR.unlock();
+    QWriteLocker lockW(&s_TextSizeLock);
     if (s_TextSizeDataCache.contains(dh)) return s_TextSizeDataCache[dh];
     mathText.setFontSpecial(fontName);
     mathText.setFontSize(fontSize);
@@ -863,6 +868,9 @@ void JKQTBasePlotter::calcPlotScaling(JKQTPEnhancedPainter& painter){
     // this needs to be done twice, as the kay size calculation needs the internalPlotWidth and internalPlotHeight
     // for a second step
     for (int i=0; i<2; i++) {
+    #ifdef JKQTBP_AUTOTIMER
+        JKQTPAutoOutputTimer jkaat(QString("JKQTBasePlotter[%1]::calcPlotScaling()::iteration%2").arg(objectName()).arg(i+1));
+    #endif
 
         internalPlotMargins[PlotMarginUse::muKey]=PlotMargin();
         switch(internalPlotKeyDescription.keyLocation) {
@@ -1252,7 +1260,7 @@ void JKQTBasePlotter::drawPlotLabel(JKQTPEnhancedPainter& painter) {
 
 void JKQTBasePlotter::drawPlot(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
-    JKQTPAutoOutputTimer jkaaot("JKQTBasePlotter::paintPlot");
+    JKQTPAutoOutputTimer jkaaot("JKQTBasePlotter::drawPlot()");
 #endif
 
 #if QT_VERSION<QT_VERSION_CHECK(6,0,0)
@@ -3752,9 +3760,11 @@ bool JKQTBasePlotter::saveAsPixelImage(const QString& filename, bool displayPrev
         }
 
         if (!displayPreview || exportpreview(gridPrintingSize, false)) {
-
+            QElapsedTimer timer;
+            timer.start();
             QImage png(QSizeF(double(printSizeX_Millimeter)+outputSizeIncrease.width(), double(printSizeY_Millimeter)+outputSizeIncrease.height()).toSize(), QImage::Format_ARGB32);
             png.fill(Qt::transparent);
+            const double durPrepImage=timer.nsecsElapsed();
             {
                 JKQTPEnhancedPainter painter;
                 painter.begin(&png);
@@ -3772,8 +3782,14 @@ bool JKQTBasePlotter::saveAsPixelImage(const QString& filename, bool displayPrev
                 exportpreviewPaintRequested(painter, QSize(jkqtp_roundTo<int>(printSizeX_Millimeter), jkqtp_roundTo<int>(printSizeY_Millimeter)));
                 painter.end();
             }
-            if (form=="NONE") return png.save(fn);
-            else return png.save(fn, form.toLatin1().data());
+            const double durPlot=timer.nsecsElapsed()-durPrepImage;
+            bool res=false;
+            if (form=="NONE") res= png.save(fn);
+            else res= png.save(fn, form.toLatin1().data());
+            const double durAll=timer.nsecsElapsed();
+            const double durSave=durAll-durPlot;
+            qDebug()<<"durPrepImage="<<durPrepImage/1e6<<"ms, durPlot="<<durPlot/1e6<<"ms, durSave="<<durSave/1e6<<"ms, durAll="<<durAll/1e6<<"ms";
+            return res;
         }
 
     }

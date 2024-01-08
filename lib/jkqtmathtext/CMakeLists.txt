@@ -148,6 +148,9 @@ function(JKQtMathText_setDefaultLibOptions TARGETNAME)
     if(JKQtPlotter_BUILD_INCLUDE_FIRAMATH_FONTS)
         target_compile_definitions(${TARGETNAME} PRIVATE JKQTMATHTEXT_COMPILED_WITH_FIRAMATH)
     endif(JKQtPlotter_BUILD_INCLUDE_FIRAMATH_FONTS)
+    if(JKQtPlotter_BUILD_WITH_TIMING_INFO_OUTPUT)
+        target_compile_definitions(${TARGETNAME} PRIVATE JKQTBP_AUTOTIMER)
+    endif()
 
     # precomiled headers to speed up compilation
     if (JKQtPlotter_BUILD_WITH_PRECOMPILED_HEADERS)

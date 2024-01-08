@@ -23,6 +23,7 @@
 #include "jkqtmathtext/nodes/jkqtmathtextnode.h"
 #include "jkqtcommon/jkqtpcodestructuring.h"
 #include "jkqtcommon/jkqtpstringtools.h"
+#include "jkqtcommon/jkqtpdebuggingtools.h"
 #include "jkqtmathtext/nodes/jkqtmathtextnodetools.h"
 #include "jkqtmathtext/nodes/jkqtmathtexttextnode.h"
 #include "jkqtmathtext/nodes/jkqtmathtextbracenode.h"
@@ -297,6 +298,9 @@ void JKQTMathText::saveSettings(QSettings& settings, const QString& group) const
 
 bool JKQTMathText::parse(const QString &markup, DefaultParserTypes markupType, ParseOptions options)
 {
+#ifdef JKQTBP_AUTOTIMER
+    JKQTPAutoOutputTimer jkaat(QString("JKQTMathText[%1]::parse('%2')").arg(objectName()).arg(markup));
+#endif
     if (markupType==LatexParser) return parse<JKQTMathTextLatexParser>(markup, options);
     return false;
 }
@@ -1250,6 +1254,9 @@ void JKQTMathText::modifyEnvironmentFromFontSettings(JKQTMathTextEnvironment &ev
 
 JKQTMathTextNodeSize JKQTMathText::getSizeDetail(QPainter &painter)
 {
+#ifdef JKQTBP_AUTOTIMER
+    JKQTPAutoOutputTimer jkaat(QString("JKQTMathText[%1]::getSizeDetail()").arg(objectName()));
+#endif
     JKQTMathTextNodeSize s;
     if (getNodeTree()!=nullptr) {
         JKQTMathTextEnvironment ev;
@@ -1265,6 +1272,9 @@ void JKQTMathText::draw(QPainter &painter, QPointF x, bool drawBoxes)
 }
 
 double JKQTMathText::draw(QPainter& painter, double x, double y, bool drawBoxes){
+#ifdef JKQTBP_AUTOTIMER
+    JKQTPAutoOutputTimer jkaat(QString("JKQTMathText[%1]::draw(x,y)").arg(objectName()));
+#endif
     if (getNodeTree()!=nullptr) {
         painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
         painter.setPen(fontColor);
@@ -1279,6 +1289,9 @@ double JKQTMathText::draw(QPainter& painter, double x, double y, bool drawBoxes)
 }
 
 void JKQTMathText::draw(QPainter& painter, unsigned int flags, QRectF rect, bool drawBoxes) {
+#ifdef JKQTBP_AUTOTIMER
+    JKQTPAutoOutputTimer jkaat(QString("JKQTMathText[%1]::draw(rect)").arg(objectName()));
+#endif
     if (getNodeTree()!=nullptr) {
         painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
         painter.setPen(fontColor);
@@ -1309,6 +1322,9 @@ void JKQTMathText::draw(QPainter& painter, unsigned int flags, QRectF rect, bool
 
 QPixmap JKQTMathText::drawIntoPixmap(bool drawBoxes, QColor backgroundColor, int sizeincrease, qreal devicePixelRatio)
 {
+#ifdef JKQTBP_AUTOTIMER
+    JKQTPAutoOutputTimer jkaat(QString("JKQTMathText[%1]::drawIntoPixmap()").arg(objectName()));
+#endif
     // 1. generate dummy QPixmap that is needed to use a QPainter
     //    we need the dummy, because we first need to determine the size of the render output
     //    for which we need a QPainter.
@@ -1351,6 +1367,9 @@ QPixmap JKQTMathText::drawIntoPixmap(bool drawBoxes, QColor backgroundColor, int
 
 QImage JKQTMathText::drawIntoImage(bool drawBoxes, QColor backgroundColor, int sizeincrease, qreal devicePixelRatio, unsigned int resolution_dpi)
 {
+#ifdef JKQTBP_AUTOTIMER
+    JKQTPAutoOutputTimer jkaat(QString("JKQTMathText[%1]::drawIntoImage()").arg(objectName()));
+#endif
     // 1. generate dummy QPixmap that is needed to use a QPainter
     //    we need the dummy, because we first need to determine the size of the render output
     //    for which we need a QPainter.
@@ -1397,6 +1416,9 @@ QImage JKQTMathText::drawIntoImage(bool drawBoxes, QColor backgroundColor, int s
 
 QPicture JKQTMathText::drawIntoPicture(bool drawBoxes)
 {
+#ifdef JKQTBP_AUTOTIMER
+    JKQTPAutoOutputTimer jkaat(QString("JKQTMathText[%1]::drawIntoPicture()").arg(objectName()));
+#endif
     // 1. generate dummy QPixmap that is needed to use a QPainter
     //    we need the dummy, because we first need to determine the size of the render output
     //    for which we need a QPainter.
