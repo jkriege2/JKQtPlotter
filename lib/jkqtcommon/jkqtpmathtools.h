@@ -30,6 +30,7 @@
 #include <vector>
 #include <QString>
 #include <functional>
+#include <type_traits>
 
 #ifdef max
 #  undef max
@@ -233,7 +234,7 @@ inline T jkqtp_boundedRoundTo(const double& v) {
     return jkqtp_boundedRoundTo<T>(std::numeric_limits<T>::min(), v, std::numeric_limits<T>::max());
 }
 
-/** \brief bounds a value \a v to the given range \a min ... \a max
+/** \brief limits a value \a v to the given range \a min ... \a max
  *  \ingroup jkqtptools_math_basic
  *
  *  \tparam T a numeric datatype (int, double, ...)
@@ -243,9 +244,25 @@ inline T jkqtp_boundedRoundTo(const double& v) {
  */
 template<typename T>
 inline T jkqtp_bounded(T min, T v, T max) {
-    if (v<min) return min;
-    if (v>max) return max;
-    return v;
+    return (v<min) ? min : ((v>max)? max : v);
+}
+
+/** \brief limits a value \a v to the range of the given type \a T , i.e.  \c std::numeric_limits<T>::min() ... \c std::numeric_limits<T>::max()
+ *  \ingroup jkqtptools_math_basic
+ *
+ *  \tparam T a numeric datatype (int, double, ...) for the output
+ *  \tparam TIn a numeric datatype (int, double, ...) or the input \a v
+ *  \param v the value to round and cast
+ *
+ *  \note As a special feature, this function detectes whether one of T or TIn are unsigned and then cmpares against a limit of 0 instead of \c std::numeric_limits<T>::min() .
+ */
+template<typename T, typename TIn>
+inline T jkqtp_bounded(TIn v) {
+    if (std::is_integral<T>::value && std::is_integral<TIn>::value && (std::is_signed<TIn>::value!=std::is_signed<T>::value)) {
+        return (v<TIn(0)) ? T(0) : ((v>std::numeric_limits<T>::max())? std::numeric_limits<T>::max() : static_cast<T>(v));
+    } else {
+        return (v<std::numeric_limits<T>::min()) ? std::numeric_limits<T>::min() : ((v>std::numeric_limits<T>::max())? std::numeric_limits<T>::max() : static_cast<T>(v));
+    }
 }
 
 /** \brief compare two floats \a a and \a b for euqality, where any difference smaller than \a epsilon is seen as equality

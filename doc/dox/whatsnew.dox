@@ -184,6 +184,10 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: Added JKQTMathText::useGuiFonts()</li>
     <li>NEW: Added JKQTMathText::setFontOptions(), which allows to make fonts initially e.g. bold, italic, ... and extended JKQTMathText::setFontSpecial() accordingly</li>
   </ul></li>
+  <li>JKQTPCommon:<ul>
+    <li>NEW: iadded variant of jkqtp_bounded<T>(TIn v), which limits to the limits of a type T and can cope with cases where TIn is signed, but T is unsigned</li>
+  </li>
+  </ul></li>
   <li>JKQTFastPloter:<ul>
     <li>BREAKING: This class/library is now deprecated and will be removed in future versions!</li>
   </ul></li>
