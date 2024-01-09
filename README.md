@@ -25,6 +25,7 @@ This software is licensed under the term of the [GNU Lesser General Public Licen
 [![Closed PRs](https://img.shields.io/github/issues-pr-closed/jkriege2/JKQtPlotter)](https://github.com/jkriege2/JKQtPlotter/pulls?q=is%3Apr+is%3Aclosed)
 
 [![CodeQL](https://github.com/jkriege2/JKQtPlotter/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/jkriege2/JKQtPlotter/actions/workflows/codeql-analysis.yml)
+[![MSVC-CodeAnalysis](https://github.com/jkriege2/JKQtPlotter/actions/workflows/msvc-codeanalysis.yml/badge.svg)](https://github.com/jkriege2/JKQtPlotter/actions/workflows/msvc-codeanalysis.yml)
 
 ![EXAMPLES-Page](./screenshots/examplesbanner.png)
 
