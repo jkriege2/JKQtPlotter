@@ -22,6 +22,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: '6.5.0'
+          host: 'windows'
+          target: 'desktop'
+          
       - name: Configure CMake
         run: cmake -B ${{ env.build }} -DCMAKE_BUILD_TYPE=${{ env.config }} "-DJKQtPlotter_BUILD_EXAMPLES:BOOL=OFF"
 
