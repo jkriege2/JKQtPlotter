@@ -33,6 +33,9 @@ jobs:
       - name: Configure CMake
         run: cmake -B ${{ env.build }} -DCMAKE_BUILD_TYPE=${{ env.config }} "-DJKQtPlotter_BUILD_EXAMPLES:BOOL=OFF"
 
+      - name: Build CMake
+        run: cmake --build ${{ env.build }} --config ${{ env.config }}
+
       - name: Run MSVC Code Analysis
         uses: microsoft/msvc-code-analysis-action@v0.1.1
         # Provide a unique ID to access the sarif output path
