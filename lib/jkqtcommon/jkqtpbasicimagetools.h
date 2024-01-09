@@ -30,6 +30,7 @@
 #include <QColor>
 #include <QReadWriteLock>
 #include <vector>
+#include <limits>
 #include "jkqtcommon/jkqtcommon_imexport.h"
 #include "jkqtcommon/jkqtpmathtools.h"
 
@@ -482,11 +483,12 @@ struct JKQTPImageTools {
             if (!dbl_in || width<=0 || height<=0)
                     return;
 
+            const long NPixels= width*height;
             double min = *dbl_in;
             double max = *dbl_in;
             if (jkqtp_approximatelyEqual(minColor, maxColor, JKQTP_DOUBLE_EPSILON)) {
                 bool first=true;
-                for (int i=1; i<width*height; ++i)
+                for (int i=1; i<NPixels; ++i)
                 {
                     T v=dbl_in[i];
                     if (!(std::isnan(static_cast<long double>(v)) || std::isinf(static_cast<long double>(v)))) {
@@ -511,8 +513,8 @@ struct JKQTPImageTools {
             QVector<T> dbl1;
             if (logScale) {
                 double logB=log10(logBase);
-                dbl1=QVector<T>(width*height, 0);
-                for (int i=0; i<width*height; i++) {
+                dbl1=QVector<T>(jkqtp_bounded<int>(NPixels), 0);
+                for (int i=0; i<NPixels; i++) {
                     dbl1[i]=log10(dbl_in[i])/logB;
                 }
                 dbl=dbl1.data();

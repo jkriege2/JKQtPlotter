@@ -252,11 +252,11 @@ QIcon JKQTPColorPaletteStyleAndToolsMixin::getPaletteIcon(JKQTPMathImageColorPal
 QImage JKQTPColorPaletteStyleAndToolsMixin::getPaletteImage(int i, size_t width)
 {
     QImage img;
-    std::vector<double> pic(static_cast<size_t>(width), 0.0);
+    std::vector<double> pic(width, 0.0);
     for (size_t j=0; j<width; j++) {
      pic[j]=j;
     }
-    JKQTPImageTools::array2image<double>(pic.data(), static_cast<int>(width), 1, img, static_cast<JKQTPMathImageColorPalette>(i), 0, width-1);
+    JKQTPImageTools::array2image<double>(pic.data(), jkqtp_bounded<int>(width), 1, img, static_cast<JKQTPMathImageColorPalette>(i), 0, width-1);
     return img;
 }
 
@@ -296,9 +296,10 @@ QImage JKQTPColorPaletteStyleAndToolsMixin::getPaletteKeyImage(int i, size_t wid
     const double w2x=double(width*width)/(8.0*8.0);
     const double w2y=double(height*height)/(8.0*8.0);
 
-    std::vector<double> pic(width*height, 0.0);
+    const size_t NPixels=jkqtp_bounded<size_t>(width*height);
+    std::vector<double> pic(NPixels, 0.0);
     double mmax=0;
-    for (size_t j=0; j<width*height; j++) {
+    for (size_t j=0; j<NPixels; j++) {
      const size_t x=j%width;
      const size_t y=j/width;
      pic[j]=exp(-0.5*(double((x-x01)*double(x-x01))/w1x+double((y-y01)*double(y-y01))/w1y))+0.7*exp(-0.5*(double((x-x02)*double(x-x02))/w2x+double((y-y02)*double(y-y02))/w2y));

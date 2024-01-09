@@ -2168,8 +2168,10 @@ QImage JKQTPImageTools::GetPaletteImage(int i, int width)
 QImage JKQTPImageTools::GetPaletteImage(int i, int width, int height)
 {
     QImage img;
-    QVector<double> pic(width*height,0);
-    for (int j=0; j<width*height; j++) {
+    const long NPixels=static_cast<int>(jkqtp_bounded<long>(0, width*height, std::numeric_limits<int>::max()));
+
+    QVector<double> pic(NPixels,0);
+    for (int j=0; j<NPixels; j++) {
         pic[j]=j%width;
     }
     JKQTPImageTools::array2image<double>(pic.data(), width, height, img, static_cast<JKQTPMathImageColorPalette>(i), Qt::black, Qt::black);
