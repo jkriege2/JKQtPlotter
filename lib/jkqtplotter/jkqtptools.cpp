@@ -32,7 +32,12 @@
 #include <cstdio>
 #include <ctype.h>
 #include <locale>
-
+#if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
+#include<QRegularExpression>
+#include<QRegularExpressionMatch>
+#else
+#include<QRegExp>
+#endif
 
 
 
