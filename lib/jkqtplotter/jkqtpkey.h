@@ -313,9 +313,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBaseKey: public QObject {
             /** \brief put all items into one column */
             void redistributeIntoOneColumn();
             /** \brief takes all elements in columns and redistributes them over the given number of rows, items are distributed as equally as possible (last row may have fewer items) */
-            void redistributeOverRows(int rows);
+            void redistributeOverRows(int rows, bool rowMajor=true);
             /** \brief takes all elements in columns and redistributes them over the given number of columns, items are distributed as equally as possible (last column may have fewer items) */
-            void redistributeOverColumns(int cols);
+            void redistributeOverColumns(int cols, bool colMajor=true);
         };
 
         /** \brief calculates all layout properties of the key/legend,necessary to size and draw it

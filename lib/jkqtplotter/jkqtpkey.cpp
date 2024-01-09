@@ -225,37 +225,71 @@ void JKQTPBaseKey::modifySize(JKQTPEnhancedPainter &painter, KeySizeDescription 
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaat(QString("JKQTPBaseKey[%1]::modifySize()").arg(objectName()));
 #endif
+    // in odd cases (many plots), the initial key size may be larger than the actual plot. then we can have negative sizes.
+    // in these cases we correct them preliminary plot size to 80% of the widget size (=available size)!
+    const auto widgetSize=QSizeF(parent->getWidth(), parent->getHeight());
+    if (preliminaryPlotSize.width()<0) preliminaryPlotSize.setWidth(widgetSize.width()*0.8);
+    if (preliminaryPlotSize.height()<0) preliminaryPlotSize.setHeight(widgetSize.height()*0.8);
+
+
     const auto lay=getLayout();
     if (lay==JKQTPKeyLayoutMultiColumn || lay==JKQTPKeyLayoutMultiRow) {
-        std::function<bool(QSizeF, QSizeF)> fCompare=[](const QSizeF& requiredSize, const QSizeF& preliminaryPlotSize) {
-            return true;
-        };
 
+        std::function<bool(QSizeF, QSizeF)> fcmpSizeTooLarge=[](const QSizeF& requiredSize, const QSizeF& preliminaryPlotSize) { return true; };
+
+        bool increaseColumnCount=true;
+        bool fillMaxMode=false;
         if (currentKeyLayout.keyLocation==KeySizeDescription::keyInside) {
-            fCompare=[](const QSizeF& requiredSize, const QSizeF& preliminaryPlotSize) {
+            fcmpSizeTooLarge=[](const QSizeF& requiredSize, const QSizeF& preliminaryPlotSize) {
                             return (requiredSize.width()>preliminaryPlotSize.width() || requiredSize.height()>preliminaryPlotSize.height());
-                        };
+            };
         } else if (currentKeyLayout.keyLocation==KeySizeDescription::keyOutsideTop || currentKeyLayout.keyLocation==KeySizeDescription::keyOutsideBottom) {
-            fCompare=[](const QSizeF& requiredSize, const QSizeF& preliminaryPlotSize) {
-                            return (requiredSize.height()>preliminaryPlotSize.height());
-                        };
+            fcmpSizeTooLarge=[widgetSize](const QSizeF& requiredSize, const QSizeF& preliminaryPlotSize) {
+                return (requiredSize.width()>preliminaryPlotSize.width());
+            };
+            increaseColumnCount=true;
+            fillMaxMode=true;
+
         } else if (currentKeyLayout.keyLocation==KeySizeDescription::keyOutsideLeft || currentKeyLayout.keyLocation==KeySizeDescription::keyOutsideRight) {
-            fCompare=[](const QSizeF& requiredSize, const QSizeF& preliminaryPlotSize) {
-                            return (requiredSize.width()>preliminaryPlotSize.width());
-                        };
+            fcmpSizeTooLarge=[widgetSize](const QSizeF& requiredSize, const QSizeF& preliminaryPlotSize) {
+                return (requiredSize.height()>preliminaryPlotSize.height());
+            };
+            increaseColumnCount=false;
+            fillMaxMode=true;
         }
 
         const int itemCnt=currentKeyLayout.d->countItems();
-        int newCount=1;
-        while ((newCount<=itemCnt) && (currentKeyLayout.requiredSize.width()>preliminaryPlotSize.width() || currentKeyLayout.requiredSize.height()>preliminaryPlotSize.height())) {
-            newCount++;
-            if (lay==JKQTPKeyLayoutMultiColumn) {
-                currentKeyLayout.d->redistributeOverColumns(newCount);
-            } else if (lay==JKQTPKeyLayoutMultiRow) {
-                currentKeyLayout.d->redistributeOverRows(newCount);
+        const auto initialLayout=currentKeyLayout;
+        if (fillMaxMode) {
+            int newCount=itemCnt+1;
+            bool notSizeOK=true;
+            while (newCount>1 && notSizeOK) {
+                newCount--; // increase number of rows/columns
+                currentKeyLayout=initialLayout; // reset to initial layout, which should have one column only!
+                    // this is required, so redistribute...() does not scramble the order
+                if (increaseColumnCount) {
+                    currentKeyLayout.d->redistributeOverColumns(newCount, lay==JKQTPKeyLayoutMultiColumn);
+                } else {
+                    currentKeyLayout.d->redistributeOverRows(newCount, lay==JKQTPKeyLayoutMultiRow);
+                }
+                calcLayoutSize(painter, currentKeyLayout);
+                notSizeOK=fcmpSizeTooLarge(currentKeyLayout.requiredSize, preliminaryPlotSize);
             }
-            calcLayoutSize(painter, currentKeyLayout);
+        } else {
+            int newCount=1;
+            while (newCount<itemCnt && fcmpSizeTooLarge(currentKeyLayout.requiredSize, preliminaryPlotSize)) {
+                newCount++; // increase number of rows/columns
+                currentKeyLayout=initialLayout; // reset to initial layout, which should have one column only!
+                                                // this is required, so redistribute...() does not scramble the order
+                if (increaseColumnCount) {
+                    currentKeyLayout.d->redistributeOverColumns(newCount, lay==JKQTPKeyLayoutMultiColumn);
+                } else {
+                    currentKeyLayout.d->redistributeOverRows(newCount, lay==JKQTPKeyLayoutMultiRow);
+                }
+                calcLayoutSize(painter, currentKeyLayout);
+            }
         }
+
     }
 }
 
@@ -380,6 +414,7 @@ JKQTPBaseKey::KeySizeDescription &JKQTPBaseKey::KeySizeDescription::operator=(co
     return *this;
 }
 
+
 JKQTPBaseKey::KeyColumnDescription::KeyColumnDescription():
     rows()
 {
@@ -470,12 +505,12 @@ void JKQTPBaseKey::KeyLayoutDescription::redistributeIntoOneColumn()
     }
 }
 
-void JKQTPBaseKey::KeyLayoutDescription::redistributeOverRows(int rowCnt)
+void JKQTPBaseKey::KeyLayoutDescription::redistributeOverRows(int rowCnt, bool rowMajor)
 {
     const int itemCnt=countItems();
     if (itemCnt>1) {
         const int colCnt=static_cast<int>(ceil(static_cast<float>(itemCnt)/static_cast<float>(rowCnt)));
-        if (colCnt>1) {
+        if (true) {
             redistributeIntoOneColumn();
             const auto items=columns[0].rows;
             columns.clear();
@@ -484,17 +519,26 @@ void JKQTPBaseKey::KeyLayoutDescription::redistributeOverRows(int rowCnt)
             for (int c=0; c<colCnt; c++) {
                 columns.push_back(KeyColumnDescription());
             }
-            for (int r=0; r<rowCnt; r++) {
+            if (rowMajor) {
+                for (int r=0; r<rowCnt; r++) {
+                    for (int c=0; c<colCnt; c++) {
+                        if (i<itemCnt) columns[c].rows.append(items[i]);
+                        i++;
+                    }
+                }
+            } else {
                 for (int c=0; c<colCnt; c++) {
-                    if (i<itemCnt) columns[c].rows.append(items[i]);
-                    i++;
+                    for (int r=0; r<rowCnt; r++) {
+                        if (i<itemCnt) columns[c].rows.append(items[i]);
+                        i++;
+                    }
                 }
             }
         }
     }
 }
 
-void JKQTPBaseKey::KeyLayoutDescription::redistributeOverColumns(int colCnt)
+void JKQTPBaseKey::KeyLayoutDescription::redistributeOverColumns(int colCnt, bool colMajor)
 {
     const int itemCnt=countItems();
     if (itemCnt>1) {
@@ -506,9 +550,20 @@ void JKQTPBaseKey::KeyLayoutDescription::redistributeOverColumns(int colCnt)
             int i=0;
             for (int c=0; c<colCnt; c++) {
                 columns.push_back(KeyColumnDescription());
+            }
+            if (colMajor) {
+                for (int c=0; c<colCnt; c++) {
+                    for (int r=0; r<rowCnt; r++) {
+                        if (i<itemCnt) columns[c].rows.append(items[i]);
+                        i++;
+                    }
+                }
+            } else {
                 for (int r=0; r<rowCnt; r++) {
-                    if (i<itemCnt) columns[c].rows.append(items[i]);
-                    i++;
+                    for (int c=0; c<colCnt; c++) {
+                        if (i<itemCnt) columns[c].rows.append(items[i]);
+                        i++;
+                    }
                 }
             }
         }

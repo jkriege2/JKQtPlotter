@@ -212,12 +212,12 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         functionplot/functionplot,functionplot_fy
         styledboxplot/test_styledboxplot
         multiplot/multiplot,multiplot_controlwindow
-        #symbols_and_styles
+        symbols_and_styles
         symbols_and_errors
         stepplots
         stackedbars/stackedbars,stackedbars_hor
-        #geo_arrows
-        #geo_simple
+        geo_arrows
+        geo_simple
         geometric
         imageplot/imageplot,imageplot__scale02,imageplot__smallscalelimitcolor,imageplot__smallscalecolor,imageplot__smallscaletransparent/--iteratefunctorsteps
         imageplot_modifier
