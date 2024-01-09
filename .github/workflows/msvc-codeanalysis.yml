@@ -31,7 +31,7 @@ jobs:
           target: 'desktop'
           
       - name: Configure CMake
-        run: cmake -B ${{ env.build }} -DCMAKE_BUILD_TYPE=${{ env.config }} "-DJKQtPlotter_BUILD_EXAMPLES:BOOL=OFF"
+        run: cmake -B ${{ env.build }} -DCMAKE_BUILD_TYPE=${{ env.config }} "-DJKQtPlotter_BUILD_EXAMPLES:BOOL=OFF" "-DJKQtPlotter_BUILD_TOOLS:BOOL=OFF" "-DJKQtPlotter_BUILD_WITH_PRECOMPILED_HEADERS:BOOL=OFF"
 
       - name: Build CMake
         run: cmake --build ${{ env.build }} --config ${{ env.config }}
