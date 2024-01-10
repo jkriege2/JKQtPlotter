@@ -1520,6 +1520,10 @@ void JKQTBasePlotter::print(QPrinter* printer, bool displayPreview) {
 
 
 bool JKQTBasePlotter::printpreviewNew(QPaintDevice* paintDevice, bool setAbsolutePaperSize, double printsizeX_inMM, double printsizeY_inMM, bool displayPreview) {
+
+    JKQTPASSERT_M(paintDevice, "INTERNAL ERROR: no QPaintDevice given to JKQTBasePlotter::printpreviewNew()!");
+
+
 #ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
     QPrinter *printer=dynamic_cast<QPrinter*>(paintDevice);
     QSvgGenerator* svg=dynamic_cast<QSvgGenerator*>(paintDevice);
@@ -1939,6 +1943,8 @@ void JKQTBasePlotter::updatePreviewLabel() {
 
 #ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
 void JKQTBasePlotter::printpreviewPaintRequested(QPrinter* printer) {
+    JKQTPASSERT_M(printer, "INTERNAL ERROR: no QPrinter given to JKQTBasePlotter::printpreviewPaintRequested()!");
+
     double lw=lineWidthMultiplier;
     double fs=fontSizeMultiplier;
     QBrush bc=plotterStyle.widgetBackgroundBrush;
@@ -2016,6 +2022,7 @@ void JKQTBasePlotter::printpreviewPaintRequested(QPrinter* printer) {
 
 
 void JKQTBasePlotter::printpreviewPaintRequestedNewPrinter(QPrinter* printer) {
+    JKQTPASSERT_M(printer, "INTERNAL ERROR: no QPrinter given to JKQTBasePlotter::printpreviewPaintRequestedNewPrinter()!");
     QPaintDevice* paintDevice=dynamic_cast<QPaintDevice*>(printer);
     printpreviewPaintRequestedNewPaintDevice(paintDevice);
 
@@ -2024,6 +2031,8 @@ void JKQTBasePlotter::printpreviewPaintRequestedNewPrinter(QPrinter* printer) {
 
 void JKQTBasePlotter::printpreviewPaintRequestedNewPaintDevice(QPaintDevice *paintDevice)
 {
+    JKQTPASSERT_M(paintDevice, "INTERNAL ERROR: no QPaintDevice given to JKQTBasePlotter::printpreviewPaintRequestedNewPaintDevice()!");
+
     //QPaintDevice* paintDevice=dynamic_cast<QPaintDevice*>(printer);
 #ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
     QPrinter* printer=dynamic_cast<QPrinter*>(paintDevice);

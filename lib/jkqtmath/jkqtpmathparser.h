@@ -261,6 +261,7 @@ class jkqtmath_LIB_EXPORT JKQTPMathParser
 
         /** \brief This struct is for managing temporary variables. It is generally like jkmpVariable. */
         struct jkqtmath_LIB_EXPORT jkmpTempVariable {
+          jkmpTempVariable();
           std::string name;       /*!< \brief name of the variable */
           jkmpResultType type;    /*!< \brief type of the variable */
           bool internal;          /*!< \brief this is an internal variable */
@@ -298,8 +299,9 @@ class jkqtmath_LIB_EXPORT JKQTPMathParser
 
         /** \brief description of a user registered function */
         struct jkqtmath_LIB_EXPORT jkmpFunctionDescriptor {
-          jkmpEvaluateFunc function;    /*!< \brief a pointer to the function implementation */
-          std::string name;             /*!< \brief name of the function */
+            jkmpFunctionDescriptor(jkmpEvaluateFunc function_=nullptr);
+            jkmpEvaluateFunc function;    /*!< \brief a pointer to the function implementation */
+            std::string name;             /*!< \brief name of the function */
         };
 
 
@@ -316,6 +318,7 @@ class jkqtmath_LIB_EXPORT JKQTPMathParser
             JKQTPMathParser* parser;  /*!< \brief points to the parser object that is used to evaluate this node */
             jkmpNode* parent;      /*!< \brief points to the parent node */
           public:
+            jkmpNode(JKQTPMathParser* parser_=nullptr, jkmpNode* parent_=nullptr);
             /** \brief virtual class destructor */
             virtual ~jkmpNode();
 

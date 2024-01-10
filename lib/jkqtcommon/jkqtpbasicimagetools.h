@@ -483,7 +483,7 @@ struct JKQTPImageTools {
             if (!dbl_in || width<=0 || height<=0)
                     return;
 
-            const long NPixels= width*height;
+            const int NPixels= jkqtp_bounded<int>(width*height);
             double min = *dbl_in;
             double max = *dbl_in;
             if (jkqtp_approximatelyEqual(minColor, maxColor, JKQTP_DOUBLE_EPSILON)) {

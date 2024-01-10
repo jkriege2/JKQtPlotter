@@ -90,7 +90,7 @@ QString JKQTPGraphSymbols2String(JKQTPGraphSymbols pos) {
         case JKQTPFemale: return "symbol_female";
         case JKQTPMale: return "symbol_male";
         case JKQTPCirclePeace: return "symbol_circle_peace";
-        case JKQTPSymbolCount: JKQTPGraphSymbols2String(JKQTPMaxSymbolID);
+        case JKQTPSymbolCount: return JKQTPGraphSymbols2String(JKQTPMaxSymbolID);
         case JKQTPCharacterSymbol:
         case JKQTPFilledCharacterSymbol:
         case JKQTPFirstCustomSymbol:
@@ -179,7 +179,7 @@ QString JKQTPGraphSymbols2NameString(JKQTPGraphSymbols pos) {
         case JKQTPFemale: return QObject::tr("female");
         case JKQTPMale: return QObject::tr("male");
         case JKQTPCirclePeace: return QObject::tr("circled peace");
-        case JKQTPSymbolCount: JKQTPGraphSymbols2NameString(JKQTPMaxSymbolID);
+        case JKQTPSymbolCount: return JKQTPGraphSymbols2NameString(JKQTPMaxSymbolID);
         case JKQTPCharacterSymbol:
         case JKQTPFilledCharacterSymbol:
         case JKQTPFirstCustomSymbol:

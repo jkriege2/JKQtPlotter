@@ -382,8 +382,42 @@ void JKQTPImage::copyImagePlotAsImage()
 
 
 
+JKQTPMathImageBase::JKQTPMathImageBase(JKQTBasePlotter *parent):
+    JKQTPImageBase(parent),
+    data(nullptr),
+    datatype(JKQTPMathImageDataType::DoubleArray),
+    Nx(0), Ny(0),
+    dataModifier(nullptr), datatypeModifier(JKQTPMathImageDataType::DoubleArray),
+    internalDataMin(0.0), internalDataMax(0.0),
+    internalModifierMin(0.0), internalModifierMax(0.0)
+{
+
+}
+
+JKQTPMathImageBase::JKQTPMathImageBase(double x, double y, double width, double height, JKQTBasePlotter *parent):
+    JKQTPImageBase(x,y,width,height,parent),
+    data(nullptr),
+    datatype(JKQTPMathImageDataType::DoubleArray),
+    Nx(0), Ny(0),
+    dataModifier(nullptr), datatypeModifier(JKQTPMathImageDataType::DoubleArray),
+    internalDataMin(0.0), internalDataMax(0.0),
+    internalModifierMin(0.0), internalModifierMax(0.0)
+{
+
+}
+
+JKQTPMathImageBase::JKQTPMathImageBase(JKQTPlotter *parent):
+    JKQTPMathImageBase(parent->getPlotter())
+{
+}
+
+JKQTPMathImageBase::JKQTPMathImageBase(double x, double y, double width, double height, JKQTPlotter *parent):
+    JKQTPMathImageBase(x,y,width,height,parent->getPlotter())
+{
+}
+
 JKQTPMathImageBase::JKQTPMathImageBase(double x, double y, double width, double height, JKQTPMathImageDataType datatype, const void* data, int Nx, int Ny, JKQTBasePlotter* parent):
-    JKQTPImageBase(x, y, width, height, parent)
+    JKQTPMathImageBase(x, y, width, height, parent)
 {
     this->data=data;
     this->datatype=datatype;
@@ -395,14 +429,9 @@ JKQTPMathImageBase::JKQTPMathImageBase(double x, double y, double width, double 
 
 
 JKQTPMathImageBase::JKQTPMathImageBase(double x, double y, double width, double height, JKQTPMathImageDataType datatype, const void* data, int Nx, int Ny, JKQTPlotter* parent):
-    JKQTPImageBase(x, y, width, height, parent)
+    JKQTPMathImageBase(x, y, width, height, datatype, data, Nx, Ny, parent->getPlotter())
 {
-    this->data=data;
-    this->datatype=datatype;
-    this->Nx=Nx;
-    this->Ny=Ny;
-    dataModifier=nullptr;
-    datatypeModifier=JKQTPMathImageDataType::DoubleArray;
+
 }
 void JKQTPMathImageBase::drawKeyMarker(JKQTPEnhancedPainter &/*painter*/, const QRectF &/*rect*/)
 {
@@ -411,138 +440,94 @@ void JKQTPMathImageBase::drawKeyMarker(JKQTPEnhancedPainter &/*painter*/, const 
 
 void JKQTPMathImageBase::setNx(int __value)
 {
-	this->Nx = __value;
+    Nx = __value;
 }
 
 void JKQTPMathImageBase::setNx(size_t __value)
 {
-	this->Nx = static_cast<int>(__value);
+    Nx = static_cast<int>(__value);
 }
 
 int JKQTPMathImageBase::getNx() const
 {
-    return this->Nx;
+    return Nx;
 }
 
 void JKQTPMathImageBase::setNy(int __value)
 {
-	this->Ny = __value;
+    Ny = __value;
 }
 
 void JKQTPMathImageBase::setNy(size_t __value)
 {
-	this->Ny = static_cast<int>(__value);
+    Ny = static_cast<int>(__value);
 }
 
 int JKQTPMathImageBase::getNy() const
 {
-    return this->Ny;
+    return Ny;
 }
 
 void JKQTPMathImageBase::setData(const void *__value)
 {
-    this->data = __value;
+    data = __value;
 }
 
 const void *JKQTPMathImageBase::getData() const
 {
-    return this->data;
+    return data;
 }
 
 void JKQTPMathImageBase::setDatatype(JKQTPMathImageDataType __value)
 {
-    this->datatype = __value;
+    datatype = __value;
 }
 
 JKQTPMathImageDataType JKQTPMathImageBase::getDatatype() const
 {
-    return this->datatype;
+    return datatype;
 }
 
 void JKQTPMathImageBase::setDataModifier(const void *__value)
 {
-    this->dataModifier = __value;
+    dataModifier = __value;
 }
 
 const void *JKQTPMathImageBase::getDataModifier() const
 {
-    return this->dataModifier;
+    return dataModifier;
 }
 
 void JKQTPMathImageBase::setDatatypeModifier(JKQTPMathImageDataType __value)
 {
-    this->datatypeModifier = __value;
+    datatypeModifier = __value;
 }
 
 JKQTPMathImageDataType JKQTPMathImageBase::getDatatypeModifier() const
 {
-    return this->datatypeModifier;
+    return datatypeModifier;
 }
 
 
 
 
-JKQTPMathImageBase::JKQTPMathImageBase(JKQTBasePlotter *parent):
-    JKQTPImageBase(parent)
-{
-    this->data=nullptr;
-    this->Nx=0;
-    this->Ny=0;
-    this->datatype=JKQTPMathImageDataType::DoubleArray;
-    dataModifier=nullptr;
-    datatypeModifier=JKQTPMathImageDataType::DoubleArray;
+void JKQTPMathImageBase::setData(const void *data_, int Nx_, int Ny_, JKQTPMathImageDataType datatype_) {
+    data=data_;
+    datatype=datatype_;
+    Nx=Nx_;
+    Ny=Ny_;
 }
 
-JKQTPMathImageBase::JKQTPMathImageBase(double x, double y, double width, double height, JKQTBasePlotter *parent):
-    JKQTPImageBase(x,y,width,height,parent)
-{
-    this->data=nullptr;
-    this->Nx=0;
-    this->Ny=0;
-    this->datatype=JKQTPMathImageDataType::DoubleArray;
-    dataModifier=nullptr;
-    datatypeModifier=JKQTPMathImageDataType::DoubleArray;
-}
-
-JKQTPMathImageBase::JKQTPMathImageBase(JKQTPlotter *parent):
-    JKQTPImageBase(parent)
-{
-    this->data=nullptr;
-    this->Nx=0;
-    this->Ny=0;
-    this->datatype=JKQTPMathImageDataType::DoubleArray;
-    dataModifier=nullptr;
-    datatypeModifier=JKQTPMathImageDataType::DoubleArray;
-}
-
-JKQTPMathImageBase::JKQTPMathImageBase(double x, double y, double width, double height, JKQTPlotter *parent):
-    JKQTPImageBase(x,y,width,height,parent)
-{
-    this->data=nullptr;
-    this->Nx=0;
-    this->Ny=0;
-    this->datatype=JKQTPMathImageDataType::DoubleArray;
-    dataModifier=nullptr;
-    datatypeModifier=JKQTPMathImageDataType::DoubleArray;
-}
-
-void JKQTPMathImageBase::setData(const void *data, int Nx, int Ny, JKQTPMathImageDataType datatype) {
-    this->data=data;
-    this->datatype=datatype;
-    this->Nx=Nx;
-    this->Ny=Ny;
-}
-
-void JKQTPMathImageBase::setData(const void* data, int Nx, int Ny) {
-    this->data=data;
-    this->Nx=Nx;
-    this->Ny=Ny;
+void JKQTPMathImageBase::setData(const void *data_, int Nx_, int Ny_) {
+    data=data_;
+    Nx=Nx_;
+    Ny=Ny_;
 }
 
 void JKQTPMathImageBase::setDataModifier(const void *data, JKQTPMathImageDataType datatype)
 {
-    this->dataModifier=data;
-    this->datatypeModifier=datatype;
+    dataModifier=data;
+    datatypeModifier=datatype;
 }
 
 
@@ -731,23 +716,25 @@ void JKQTPMathImage::initJKQTPMathImage() {
 
 
 
-    this->palette=JKQTPMathImageGRAY;
-    this->autoModifierRange=true;
+    palette=JKQTPMathImageGRAY;
+    autoModifierRange=true;
 }
 
 JKQTPMathImage::JKQTPMathImage(double x, double y, double width, double height, JKQTPMathImageDataType datatype, const void* data, int Nx, int Ny, JKQTPMathImageColorPalette palette, JKQTBasePlotter* parent):
     JKQTPMathImageBase(x, y, width, height, datatype, data, Nx, Ny, parent),
-    JKQTPColorPaletteWithModifierStyleAndToolsMixin(parent)
+    JKQTPColorPaletteWithModifierStyleAndToolsMixin(parent),
+    actCopyImage(nullptr),
+    actSaveImage(nullptr),
+    actCopyPalette(nullptr),
+    actSavePalette(nullptr)
 {
     initJKQTPMathImage();
     this->palette=palette;
 }
 
 JKQTPMathImage::JKQTPMathImage(JKQTBasePlotter *parent):
-    JKQTPMathImageBase(0, 0, 1, 1, JKQTPMathImageDataType::UInt8Array, nullptr, 0, 0, parent),
-    JKQTPColorPaletteWithModifierStyleAndToolsMixin(parent)
+    JKQTPMathImage(0, 0, 1, 1, JKQTPMathImageDataType::UInt8Array, nullptr, 0, 0, JKQTPMathImageGRAY, parent)
 {
-    initJKQTPMathImage();
     if (parent) this->palette=parent->getCurrentPlotterStyle().graphsStyle.defaultPalette;
 }
 

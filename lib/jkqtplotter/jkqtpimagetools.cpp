@@ -43,27 +43,27 @@ JKQTPColorPaletteStyleAndToolsMixin::JKQTPColorPaletteStyleAndToolsMixin(JKQTBas
     colorBarTopAxis->setAxisLabel("");
 
 
-    this->palette=JKQTPMathImageMATLAB;
-    this->imageNameFontName=parent->getDefaultTextFontName();
-    this->imageNameFontSize=parent->getDefaultTextSize();
-    this->imageName="";
-    this->showColorBar=true;
-    this->colorBarWidth=14;
-    this->colorBarRelativeHeight=0.75;
-    this->autoImageRange=true;
-    this->imageMin=0;
-    this->imageMax=1;
-    this->colorBarOffset=4;
-    this->rangeMinFailAction=JKQTPMathImageLastPaletteColor;
-    this->rangeMaxFailAction=JKQTPMathImageLastPaletteColor;
-    this->rangeMinFailColor=QColor("black");
-    this->rangeMaxFailColor=QColor("black");
-    this->nanColor=QColor("black");
-    this->infColor=QColor("black");
-    this->colorBarTopVisible=false;
-    this->colorBarRightVisible=true;
+    palette=JKQTPMathImageMATLAB;
+    imageNameFontName=parent->getDefaultTextFontName();
+    imageNameFontSize=parent->getDefaultTextSize();
+    imageName="";
+    showColorBar=true;
+    colorBarWidth=14;
+    colorBarRelativeHeight=0.75;
+    autoImageRange=true;
+    imageMin=0;
+    imageMax=1;
+    colorBarOffset=4;
+    rangeMinFailAction=JKQTPMathImageLastPaletteColor;
+    rangeMaxFailAction=JKQTPMathImageLastPaletteColor;
+    rangeMinFailColor=QColor("black");
+    rangeMaxFailColor=QColor("black");
+    nanColor=QColor("black");
+    infColor=QColor("black");
+    colorBarTopVisible=false;
+    colorBarRightVisible=true;
 
-    if (parent) this->palette=parent->getCurrentPlotterStyle().graphsStyle.defaultPalette;
+    if (parent) palette=parent->getCurrentPlotterStyle().graphsStyle.defaultPalette;
 
 }
 
@@ -328,208 +328,208 @@ void JKQTPColorPaletteStyleAndToolsMixin::cbSetParent(JKQTBasePlotter* parent) {
 
 void JKQTPColorPaletteStyleAndToolsMixin::setColorPalette(const JKQTPMathImageColorPalette &__value)
 {
-    this->palette = __value;
+    palette = __value;
 }
 
 JKQTPMathImageColorPalette JKQTPColorPaletteStyleAndToolsMixin::getColorPalette() const
 {
-    return this->palette;
+    return palette;
 }
 
 void JKQTPColorPaletteStyleAndToolsMixin::setRangeMinFailAction(const JKQTPMathImageColorRangeFailAction &__value)
 {
-    this->rangeMinFailAction = __value;
+    rangeMinFailAction = __value;
 }
 
 JKQTPMathImageColorRangeFailAction JKQTPColorPaletteStyleAndToolsMixin::getActionRangeMinFail() const
 {
-    return this->rangeMinFailAction;
+    return rangeMinFailAction;
 }
 
 void JKQTPColorPaletteStyleAndToolsMixin::setRangeMaxFailAction(const JKQTPMathImageColorRangeFailAction &__value)
 {
-    this->rangeMaxFailAction = __value;
+    rangeMaxFailAction = __value;
 }
 
 JKQTPMathImageColorRangeFailAction JKQTPColorPaletteStyleAndToolsMixin::getActionRangeMaxFail() const
 {
-    return this->rangeMaxFailAction;
+    return rangeMaxFailAction;
 }
 
 void JKQTPColorPaletteStyleAndToolsMixin::setRangeMinFailColor(const QColor &__value)
 {
-    this->rangeMinFailColor = __value;
+    rangeMinFailColor = __value;
 }
 
 QColor JKQTPColorPaletteStyleAndToolsMixin::getRangeMinFailColor() const
 {
-    return this->rangeMinFailColor;
+    return rangeMinFailColor;
 }
 
 void JKQTPColorPaletteStyleAndToolsMixin::setRangeMaxFailColor(const QColor &__value)
 {
-    this->rangeMaxFailColor = __value;
+    rangeMaxFailColor = __value;
 }
 
 QColor JKQTPColorPaletteStyleAndToolsMixin::getRangeMaxFailColor() const
 {
-    return this->rangeMaxFailColor;
+    return rangeMaxFailColor;
 }
 
 void JKQTPColorPaletteStyleAndToolsMixin::setNanColor(const QColor &__value)
 {
-    this->nanColor = __value;
+    nanColor = __value;
 }
 
 QColor JKQTPColorPaletteStyleAndToolsMixin::getNanColor() const
 {
-    return this->nanColor;
+    return nanColor;
 }
 
 void JKQTPColorPaletteStyleAndToolsMixin::setInfColor(const QColor &__value)
 {
-    this->infColor = __value;
+    infColor = __value;
 }
 
 QColor JKQTPColorPaletteStyleAndToolsMixin::getInfColor() const
 {
-    return this->infColor;
+    return infColor;
 }
 
 void JKQTPColorPaletteStyleAndToolsMixin::setShowColorBar(bool __value)
 {
-    this->showColorBar = __value;
+    showColorBar = __value;
 }
 
 bool JKQTPColorPaletteStyleAndToolsMixin::getShowColorBar() const
 {
-    return this->showColorBar;
+    return showColorBar;
 }
 
 void JKQTPColorPaletteStyleAndToolsMixin::setColorBarWidth(int __value)
 {
-    this->colorBarWidth = __value;
+    colorBarWidth = __value;
 }
 
 int JKQTPColorPaletteStyleAndToolsMixin::getColorBarWidth() const
 {
-    return this->colorBarWidth;
+    return colorBarWidth;
 }
 
 void JKQTPColorPaletteStyleAndToolsMixin::setColorBarOffset(int __value)
 {
-    this->colorBarOffset = __value;
+    colorBarOffset = __value;
 }
 
 int JKQTPColorPaletteStyleAndToolsMixin::getColorBarOffset() const
 {
-    return this->colorBarOffset;
+    return colorBarOffset;
 }
 
 void JKQTPColorPaletteStyleAndToolsMixin::setColorBarRelativeHeight(double __value)
 {
-    this->colorBarRelativeHeight = __value;
+    colorBarRelativeHeight = __value;
 }
 
 double JKQTPColorPaletteStyleAndToolsMixin::getColorBarRelativeHeight() const
 {
-    return this->colorBarRelativeHeight;
+    return colorBarRelativeHeight;
 }
 
 void JKQTPColorPaletteStyleAndToolsMixin::setImageMin(double __value)
 {
-    this->imageMin = __value;
+    imageMin = __value;
 }
 
 double JKQTPColorPaletteStyleAndToolsMixin::getImageMin() const
 {
-    return this->imageMin;
+    return imageMin;
 }
 
 void JKQTPColorPaletteStyleAndToolsMixin::setImageMax(double __value)
 {
-    this->imageMax = __value;
+    imageMax = __value;
 }
 
 double JKQTPColorPaletteStyleAndToolsMixin::getImageMax() const
 {
-    return this->imageMax;
+    return imageMax;
 }
 
 void JKQTPColorPaletteStyleAndToolsMixin::setAutoImageRange(bool __value)
 {
-    this->autoImageRange = __value;
+    autoImageRange = __value;
 }
 
 bool JKQTPColorPaletteStyleAndToolsMixin::getAutoImageRange() const
 {
-    return this->autoImageRange;
+    return autoImageRange;
 }
 
 void JKQTPColorPaletteStyleAndToolsMixin::setImageName(const QString &__value)
 {
-    this->imageName = __value;
+    imageName = __value;
 }
 
 QString JKQTPColorPaletteStyleAndToolsMixin::getImageName() const
 {
-    return this->imageName;
+    return imageName;
 }
 
 void JKQTPColorPaletteStyleAndToolsMixin::setImageNameFontName(const QString &__value)
 {
-    this->imageNameFontName = __value;
+    imageNameFontName = __value;
 }
 
 QString JKQTPColorPaletteStyleAndToolsMixin::getImageNameFontName() const
 {
-    return this->imageNameFontName;
+    return imageNameFontName;
 }
 
 void JKQTPColorPaletteStyleAndToolsMixin::setImageNameFontSize(double __value)
 {
-    this->imageNameFontSize = __value;
+    imageNameFontSize = __value;
 }
 
 double JKQTPColorPaletteStyleAndToolsMixin::getImageNameFontSize() const
 {
-    return this->imageNameFontSize;
+    return imageNameFontSize;
 }
 
 JKQTPVerticalIndependentAxis *JKQTPColorPaletteStyleAndToolsMixin::getColorBarRightAxis() {
-    return this->colorBarRightAxis;
+    return colorBarRightAxis;
 }
 
 JKQTPHorizontalIndependentAxis *JKQTPColorPaletteStyleAndToolsMixin::getColorBarTopAxis() {
-    return this->colorBarTopAxis;
+    return colorBarTopAxis;
 }
 
 const JKQTPVerticalIndependentAxis *JKQTPColorPaletteStyleAndToolsMixin::getColorBarRightAxis() const  {
-    return this->colorBarRightAxis;
+    return colorBarRightAxis;
 }
 
 const JKQTPHorizontalIndependentAxis *JKQTPColorPaletteStyleAndToolsMixin::getColorBarTopAxis() const  {
-    return this->colorBarTopAxis;
+    return colorBarTopAxis;
 }
 
 void JKQTPColorPaletteStyleAndToolsMixin::setColorBarTopVisible(bool __value)
 {
-    this->colorBarTopVisible = __value;
+    colorBarTopVisible = __value;
 }
 
 bool JKQTPColorPaletteStyleAndToolsMixin::getColorBarTopVisible() const
 {
-    return this->colorBarTopVisible;
+    return colorBarTopVisible;
 }
 
 void JKQTPColorPaletteStyleAndToolsMixin::setColorBarRightVisible(bool __value)
 {
-    this->colorBarRightVisible = __value;
+    colorBarRightVisible = __value;
 }
 
 bool JKQTPColorPaletteStyleAndToolsMixin::getColorBarRightVisible() const
 {
-    return this->colorBarRightVisible;
+    return colorBarRightVisible;
 }
 
 
@@ -540,8 +540,11 @@ JKQTPColorPaletteWithModifierStyleAndToolsMixin::JKQTPColorPaletteWithModifierSt
     modifierColorBarTopAxis->setAxisLabel("");
     modifierColorBarRightAxis=new JKQTPHorizontalIndependentAxis (0, 100, 0, 100, parent);
     modifierColorBarRightAxis->setAxisLabel("");
-    this->colorBarModifiedWidth=80;
+    colorBarModifiedWidth=80;
     modifierMode=JKQTPMathImageModifierMode::ModifyNone;
+    modifierMin=0;
+    modifierMax=0;
+    autoModifierRange=true;
 }
 
 
@@ -735,12 +738,12 @@ void JKQTPColorPaletteWithModifierStyleAndToolsMixin::cbSetParent(JKQTBasePlotte
 
 void JKQTPColorPaletteWithModifierStyleAndToolsMixin::setModifierMode(const JKQTPMathImageModifierMode &__value)
 {
-    this->modifierMode = __value;
+    modifierMode = __value;
 }
 
 JKQTPMathImageModifierMode JKQTPColorPaletteWithModifierStyleAndToolsMixin::getModifierMode() const
 {
-    return this->modifierMode;
+    return modifierMode;
 }
 
 
@@ -752,59 +755,59 @@ void JKQTPColorPaletteWithModifierStyleAndToolsMixin::modifyImage(QImage &img, c
 
 void JKQTPColorPaletteWithModifierStyleAndToolsMixin::setColorBarModifiedWidth(double __value)
 {
-    this->colorBarModifiedWidth = __value;
+    colorBarModifiedWidth = __value;
 }
 
 double JKQTPColorPaletteWithModifierStyleAndToolsMixin::getColorBarModifiedWidth() const
 {
-    return this->colorBarModifiedWidth;
+    return colorBarModifiedWidth;
 }
 
 
 JKQTPVerticalIndependentAxis *JKQTPColorPaletteWithModifierStyleAndToolsMixin::getModifierColorBarTopAxis()  {
-    return this->modifierColorBarTopAxis;
+    return modifierColorBarTopAxis;
 }
 
 JKQTPHorizontalIndependentAxis *JKQTPColorPaletteWithModifierStyleAndToolsMixin::getModifierColorBarRightAxis()   {
-    return this->modifierColorBarRightAxis ;
+    return modifierColorBarRightAxis ;
 }
 
 
 const JKQTPVerticalIndependentAxis *JKQTPColorPaletteWithModifierStyleAndToolsMixin::getModifierColorBarTopAxis() const {
-    return this->modifierColorBarTopAxis;
+    return modifierColorBarTopAxis;
 }
 
 const JKQTPHorizontalIndependentAxis *JKQTPColorPaletteWithModifierStyleAndToolsMixin::getModifierColorBarRightAxis() const {
-    return this->modifierColorBarRightAxis ;
+    return modifierColorBarRightAxis ;
 }
 
 
 void JKQTPColorPaletteWithModifierStyleAndToolsMixin::setAutoModifierRange(bool __value)
 {
-    this->autoModifierRange = __value;
+    autoModifierRange = __value;
 }
 
 bool JKQTPColorPaletteWithModifierStyleAndToolsMixin::getAutoModifierRange() const
 {
-    return this->autoModifierRange;
+    return autoModifierRange;
 }
 
 void JKQTPColorPaletteWithModifierStyleAndToolsMixin::setModifierMin(double __value)
 {
-    this->modifierMin = __value;
+    modifierMin = __value;
 }
 
 double JKQTPColorPaletteWithModifierStyleAndToolsMixin::getModifierMin() const
 {
-    return this->modifierMin;
+    return modifierMin;
 }
 
 void JKQTPColorPaletteWithModifierStyleAndToolsMixin::setModifierMax(double __value)
 {
-    this->modifierMax = __value;
+    modifierMax = __value;
 }
 
 double JKQTPColorPaletteWithModifierStyleAndToolsMixin::getModifierMax() const
 {
-    return this->modifierMax;
+    return modifierMax;
 }

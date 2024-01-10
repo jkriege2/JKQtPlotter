@@ -947,13 +947,17 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPDatastore{
         template<typename T>
         size_t addCopiedColumn(const T* data, size_t rows, const QString& name=QString("")){
             double* d=static_cast<double*>(malloc(static_cast<size_t>(rows)*sizeof(double)));
-            if (data) {
-                for (size_t r=0; r<rows; r++) {
-                    d[r]=jkqtp_todouble(data[r]);
+            if (d) {
+                if (data) {
+                    for (size_t r=0; r<rows; r++) {
+                        d[r]=jkqtp_todouble(data[r]);
+                    }
                 }
+                const size_t itemid=addInternalItem(d, rows);
+                return addColumnForItem(itemid, 0, name);
+            } else {
+                throw std::runtime_error("could not allocate memory in JKQTPDataStore::addCopiedColumn()");
             }
-            size_t itemid=addInternalItem(d, rows);
-            return addColumnForItem(itemid, 0, name);
         }
 
         /** \brief copy an external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
@@ -980,13 +984,17 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPDatastore{
         template<typename T>
         size_t addCopiedColumn(const T* data, size_t rows, size_t stride, int start, const QString& name) {
             double* d=static_cast<double*>(malloc(static_cast<size_t>(rows)*sizeof(double)));
-            if (data) {
-                for (size_t r=0; r<rows; r++) {
-                    d[r]=jkqtp_todouble(data[static_cast<size_t>(start+static_cast<int64_t>(r*stride))]);
+            if (d) {
+                if (data) {
+                    for (size_t r=0; r<rows; r++) {
+                        d[r]=jkqtp_todouble(data[static_cast<size_t>(start+static_cast<int64_t>(r*stride))]);
+                    }
                 }
+                size_t itemid=addInternalItem(d, rows);
+                return addColumnForItem(itemid, 0, name);
+            } else {
+                throw std::runtime_error("could not allocate memory in JKQTPDataStore::addCopiedColumn()");
             }
-            size_t itemid=addInternalItem(d, rows);
-            return addColumnForItem(itemid, 0, name);
         }
 
         /** \brief copy an external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
@@ -1761,7 +1769,7 @@ class JKQTPColumnIterator {
 
         /** \brief dereferences the iterator, throws an exception if the iterator is invalid (see isValid() ) or the value does not exist in the column */
         inline reference operator*() const {
-            JKQTPASSERT(col_!=nullptr && pos_>=0 && pos_<static_cast<int>(col_->getRows()));
+            JKQTPASSERT((col_!=nullptr) && (pos_>=0) && (pos_<static_cast<int>(col_->getRows())));
             return col_->at(pos_);
         }
         inline reference operator[](difference_type off) const
@@ -1769,7 +1777,7 @@ class JKQTPColumnIterator {
             if (!isValid() && off<0) {
                 return col_->at(static_cast<int>(col_->getRows())+off);
             }
-            JKQTPASSERT(col_!=nullptr && pos_+off>=0 && pos_+off<static_cast<int>(col_->getRows()));
+            JKQTPASSERT((col_!=nullptr) && (pos_+off>=0) && (pos_+off<static_cast<int>(col_->getRows())));
             return col_->at(pos_+off);
         }
         /** \brief comparison operator (less than)
@@ -2092,6 +2100,7 @@ class JKQTPColumnConstIterator {
         inline reference operator[](difference_type off) const
         {
             if (!isValid() && off<0) {
+                JKQTPASSERT(col_!=nullptr);
                 return col_->at(static_cast<int>(col_->getRows())+off);
             }
             JKQTPASSERT(col_!=nullptr && pos_+off>=0 && pos_+off<static_cast<int>(col_->getRows()));

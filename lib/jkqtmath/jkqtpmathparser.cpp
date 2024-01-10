@@ -28,6 +28,7 @@
 #include <iostream>
 #include <float.h>
 #include <ctime>
+#include <array>
 #include "jkqtcommon/jkqtpstringtools.h"
 
 
@@ -1784,14 +1785,14 @@ JKQTPMathParser::jkmpFunctionNode::jkmpFunctionNode(const std::string& name, JKQ
 }
 
 JKQTPMathParser::jkmpResult JKQTPMathParser::jkmpFunctionNode::evaluate() {
-  JKQTPMathParser::jkmpResult data[257];
+  std::array<JKQTPMathParser::jkmpResult,257> data;
   if (n>0) {
     for (int i=0; i<n; i++) {
       data[i]=child[i]->evaluate();
     }
   }
 //  JKQTPMathParser::jkmpResult r= getParser()->evaluateFunction(fun, data,n);
-  return function(data,n, parser);
+  return function(data.data(),n, parser);
 }
 
 
@@ -1885,6 +1886,12 @@ const char *JKQTPMathParser::jkmpException::what() const noexcept {
     return errormessage.c_str();
 }
 
+JKQTPMathParser::jkmpNode::jkmpNode(JKQTPMathParser *parser_, jkmpNode *parent_):
+    parser(parser_), parent(parent_)
+{
+
+}
+
 JKQTPMathParser *JKQTPMathParser::jkmpNode::getParser(){ return parser; }
 
 void JKQTPMathParser::jkmpNode::setParser(JKQTPMathParser *mp){ parser=mp; }
@@ -1892,3 +1899,20 @@ void JKQTPMathParser::jkmpNode::setParser(JKQTPMathParser *mp){ parser=mp; }
 JKQTPMathParser::jkmpNode *JKQTPMathParser::jkmpNode::getParent(){ return parent; }
 
 void JKQTPMathParser::jkmpNode::setParent(JKQTPMathParser::jkmpNode *par) { parent=par; }
+
+JKQTPMathParser::jkmpFunctionDescriptor::jkmpFunctionDescriptor(jkmpEvaluateFunc function_):
+    function(function_)
+{
+
+}
+
+JKQTPMathParser::jkmpTempVariable::jkmpTempVariable()
+{
+    type=jkmpDouble;
+    name="";
+    internal=false;
+    str=nullptr;
+    num=nullptr;
+    boolean=nullptr;
+
+}

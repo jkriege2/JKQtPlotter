@@ -36,17 +36,19 @@
 
 
 JKQTPViolinplotElementBase::JKQTPViolinplotElementBase(JKQTBasePlotter* parent):
-    JKQTPPlotElement(parent)
+    JKQTPPlotElement(parent),
+    pos(JKQTP_NAN),
+    median(JKQTP_NAN),
+    mean(JKQTP_NAN),
+    min(JKQTP_NAN),
+    max(JKQTP_NAN),
+    drawMean(false),
+    drawMinMax(false),
+    drawMedian(false),
+    violinPositionColumn(-1),
+    violinFrequencyColumn(-1)
 {
-    pos=JKQTP_NAN;
-    median=JKQTP_NAN;
-    mean=JKQTP_NAN;
-    min=JKQTP_NAN;
-    max=JKQTP_NAN;
-    drawMean=false;
-    drawMinMax=false;
-    violinPositionColumn=-1;
-    violinFrequencyColumn=-1;
+
 
     initViolinplotStyle(parent, parentPlotStyle);
     setMeanSymbolType(JKQTPPlus);

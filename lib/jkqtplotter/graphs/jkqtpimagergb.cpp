@@ -218,6 +218,16 @@ void JKQTPRGBMathImage::getOutsideSize(JKQTPEnhancedPainter& painter, int& leftS
 }
 
 struct RGBOutsizeData {
+    RGBOutsizeData():
+        internalDataMin(0),
+        internalDataMax(0),
+        data(nullptr),
+        colorBarRightAxis(nullptr),
+        colorBarTopAxis(nullptr),
+        name(),
+        palette(JKQTPMathImageMATLAB),
+        paletteImage()
+    {}
     double internalDataMin;
     double internalDataMax;
     const void* data;

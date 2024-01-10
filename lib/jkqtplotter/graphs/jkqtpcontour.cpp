@@ -35,11 +35,12 @@
 # include <QVector3D>
 
 JKQTPContourPlot::JKQTPContourPlot(JKQTBasePlotter *parent) :
-    JKQTPMathImage(parent)
+    JKQTPMathImage(parent),
+    ignoreOnPlane(false),
+    contourColoringMode(ColorContoursFromPaletteByValue),
+    relativeLevels(false),
+    contourLinesCachedForChecksum(0)
 {
-    ignoreOnPlane=false;
-    contourColoringMode=ColorContoursFromPaletteByValue;
-    relativeLevels=false;
 
     initLineStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Default);
 }
@@ -428,7 +429,8 @@ void JKQTPContourPlot::calcContourLines(QList<QVector<QLineF> > &ContourLines)
 
 
 JKQTPColumnContourPlot::JKQTPColumnContourPlot(JKQTBasePlotter *parent):
-    JKQTPContourPlot(parent)
+    JKQTPContourPlot(parent),
+    imageColumn(-1)
 {
     this->datatype=JKQTPMathImageDataType::DoubleArray;
 }

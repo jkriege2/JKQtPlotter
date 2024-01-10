@@ -308,7 +308,7 @@ void JKQTMathTextMatrixNode::parseColumnSpec(const QString &columnSpec)
 
 
 JKQTMathTextMatrixNode::LayoutInfo::LayoutInfo():
-    JKQTMathTextNodeSize(), colwidth(), rowheight()
+    JKQTMathTextNodeSize(), colwidth(), rowheight(), leftPadding(0), rightPadding(0), topPadding(0), bottomPadding(0)
 {
 
 }

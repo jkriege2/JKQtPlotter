@@ -36,12 +36,11 @@
 
 
 JKQTPSingleColumnSymbolsGraph::JKQTPSingleColumnSymbolsGraph(JKQTBasePlotter *parent):
-    JKQTPSingleColumnGraph(parent), seedValue(123456)
+    JKQTPSingleColumnGraph(parent), seedValue(123456), positionScatterStyle(NoScatter), position(0), width(1)
+
 {
     parentPlotStyle=-1;
     dataDirection=DataDirection::Y;
-    position=0;
-    width=1;
 
     initSymbolStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Default);
 }

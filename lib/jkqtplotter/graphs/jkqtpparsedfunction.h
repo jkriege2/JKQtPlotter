@@ -78,6 +78,7 @@ protected:
     /** \brief INTERNAL data structure combining a JKQTPMathParser and a JKQTPMathParser::jkmpNode
       */
     struct ParsedFunctionLineGraphFunctionData {
+        inline ParsedFunctionLineGraphFunctionData(): varcount(0) {};
         std::shared_ptr<JKQTPMathParser> parser;
         std::shared_ptr<JKQTPMathParser::jkmpNode> node;
         int varcount;
