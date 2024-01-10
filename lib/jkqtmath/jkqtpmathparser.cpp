@@ -1785,7 +1785,8 @@ JKQTPMathParser::jkmpFunctionNode::jkmpFunctionNode(const std::string& name, JKQ
 }
 
 JKQTPMathParser::jkmpResult JKQTPMathParser::jkmpFunctionNode::evaluate() {
-  std::array<JKQTPMathParser::jkmpResult,257> data;
+  std::vector<JKQTPMathParser::jkmpResult> data;
+  data.resize(257);
   if (n>0) {
     for (int i=0; i<n; i++) {
       data[i]=child[i]->evaluate();

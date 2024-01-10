@@ -274,6 +274,7 @@ JKQTPBoxplotElementBase::JKQTPBoxplotElementBase(JKQTBasePlotter* parent):
     min=JKQTP_NAN;
     max=JKQTP_NAN;
     drawMean=false;
+    drawMedian=true;
     drawMinMax=false;
     percentile25=JKQTP_NAN;
     percentile75=JKQTP_NAN;
