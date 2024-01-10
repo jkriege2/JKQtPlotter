@@ -18,6 +18,7 @@ In the code we take these step to set up a plot with two secondary axes and thre
     size_t columnY1=ds->addColumnCalculatedFromColumn(columnX, [](double x) { return x; }, "y1");
     size_t columnY2=ds->addColumnCalculatedFromColumn(columnX, [](double x) { return cos(x); }, "y2");
     size_t columnY3=ds->addColumnCalculatedFromColumn(columnX, [](double x) { return x*x; }, "y3");
+    size_t columnY4=ds->addColumnCalculatedFromColumn(columnX, [](double x) { return sqrt(x); }, "y3");
 ```
 
 3. create a second y-axis and set its formating options, so it only draws an axis on the right
@@ -31,7 +32,7 @@ In the code we take these step to set up a plot with two secondary axes and thre
     plot.getYAxis(yAxisRef2)->setShowZeroAxis(false);
 ```
 
-... and ctreate third y-axis
+... and create third y-axis 
 
 ```.cpp
     auto yAxisRef3=plot.getPlotter()->addSecondaryYAxis(new JKQTPVerticalAxis(plot.getPlotter(), JKQTPPrimaryAxis));
@@ -40,6 +41,17 @@ In the code we take these step to set up a plot with two secondary axes and thre
     plot.getYAxis(yAxisRef3)->setDrawMode2(JKQTPCADMcomplete);
     plot.getYAxis(yAxisRef3)->setDrawMode0(JKQTPCADMnone);
     plot.getYAxis(yAxisRef3)->setShowZeroAxis(false);
+```
+
+... and a fourth y-axis (on the primary side)
+
+```.cpp
+    auto yAxisRef4=plot.getPlotter()->addSecondaryYAxis(new JKQTPVerticalAxis(plot.getPlotter(), JKQTPPrimaryAxis));
+    plot.getYAxis(yAxisRef4)->setDrawGrid(false);
+    plot.getYAxis(yAxisRef4)->setDrawMode1(JKQTPCADMcomplete);
+    plot.getYAxis(yAxisRef4)->setDrawMode2(JKQTPCADMnone);
+    plot.getYAxis(yAxisRef4)->setDrawMode0(JKQTPCADMnone);
+    plot.getYAxis(yAxisRef4)->setShowZeroAxis(false);
 ```
 
 ... reformat the major y-axis, so it does not draw on the right and thus the secondary axis yAxisRef2 replaces it there. If this step is omitted, the secondary axes stack on the right of the primary.
@@ -98,15 +110,27 @@ set axis label
     plot.getYAxis(yAxisRef3)->setColor(graph3->getLineColor());
     plot.getYAxis(yAxisRef3)->setAxisLabel("graph3");
     graph3->setYAxis(yAxisRef3);
+```
 
+3.5 the fourth graph uses the default (primary) x-axis, but the secondary axis yAxisRef4 as y-axis
 
+```.cpp
+    JKQTPXYLineGraph* graph4=new JKQTPXYLineGraph(&plot);
+    graph4->setKeyColumn(columnX);
+    graph4->setValueColumn(columnY4);
+    plot.addGraph(graph3);
+    plot.getYAxis(yAxisRef4)->setColor(graph4->getLineColor());
+    plot.getYAxis(yAxisRef4)->setAxisLabel("graph4");
+    graph4->setYAxis(yAxisRef4);
 ```
 
 4. autoscale the plot so the graph is contained. This auto-scales all axes using the graphs (and their data) as assigned to the axes, i.e.:
-- all 3 graphs for x-axis, 
-- graph1 for primary y-axis, 
-- graph2 for secondary axis yAxisRef2
-- graph3 for secondary axis yAxisRef3
+  - all 3 graphs for x-axis, 
+  - graph1 for primary y-axis, 
+  - graph2 for secondary axis yAxisRef2
+  - graph3 for secondary axis yAxisRef3
+  - graph4 for secondary axis yAxisRef4
+.
 
 ```.cpp
     plot.zoomToFit();

@@ -1201,6 +1201,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         QMap<JKQTPCoordinateAxisRef, JKQTPVerticalAxisBase*> getYAxes(bool includePrimary=true);
         /** \brief returns all available x- or y-axes */
         QList<JKQTPCoordinateAxis*> getAxes(bool includePrimaries=true);
+        /** \brief returns all available x- or y-axes */
+        QList<const JKQTPCoordinateAxis*> getAxes(bool includePrimaries=true) const;
 
         /** \brief adds a secondary x-axis
          *

@@ -919,12 +919,16 @@ void JKQTBasePlotter::calcPlotScaling(JKQTPEnhancedPainter& painter){
 
         // read size required by secondary axes
         for (const auto& ax: qAsConst(secondaryYAxis)) {
-            internalPlotMargins[PlotMarginUse::muAxesOutside].left+=ax->getSize1(painter).requiredSize+plotterStyle.secondaryAxisSeparation;
-            internalPlotMargins[PlotMarginUse::muAxesOutside].right+=ax->getSize2(painter).requiredSize+plotterStyle.secondaryAxisSeparation;
+            const auto s1=ax->getSize1(painter);
+            const auto s2=ax->getSize2(painter);
+            internalPlotMargins[PlotMarginUse::muAxesOutside].left+=s1.requiredSize+((fabs(s1.requiredSize)>0.1)?pt2px(painter, plotterStyle.secondaryAxisSeparation):0.0);
+            internalPlotMargins[PlotMarginUse::muAxesOutside].right+=s2.requiredSize+((fabs(s2.requiredSize)>0.1)?pt2px(painter, plotterStyle.secondaryAxisSeparation):0.0);
         }
         for (const auto& ax: qAsConst(secondaryXAxis)) {
-            internalPlotMargins[PlotMarginUse::muAxesOutside].bottom+=ax->getSize1(painter).requiredSize+plotterStyle.secondaryAxisSeparation;
-            internalPlotMargins[PlotMarginUse::muAxesOutside].top+=ax->getSize2(painter).requiredSize+plotterStyle.secondaryAxisSeparation;
+            const auto s1=ax->getSize1(painter);
+            const auto s2=ax->getSize2(painter);
+            internalPlotMargins[PlotMarginUse::muAxesOutside].bottom+=s1.requiredSize+((fabs(s1.requiredSize)>0.1)?pt2px(painter, plotterStyle.secondaryAxisSeparation):0.0);
+            internalPlotMargins[PlotMarginUse::muAxesOutside].top+=s2.requiredSize+((fabs(s2.requiredSize)>0.1)?pt2px(painter, plotterStyle.secondaryAxisSeparation):0.0);
         }
 
         if (internalPlotMargins.calcRight()<elongateRight) internalPlotMargins[PlotMarginUse::muAxesOutsideExtend].right=elongateRight-internalPlotMargins.calcRight();
@@ -1079,16 +1083,18 @@ void JKQTBasePlotter::drawSystemXAxis(JKQTPEnhancedPainter& painter) {
 
     if (secondaryXAxis.size()>0) {
         double ibMove1=xAxis->getSize1(painter).requiredSize;
-        if (ibMove1>0) ibMove1+=plotterStyle.secondaryAxisSeparation;
+        //if (ibMove1>0) ibMove1+=pt2px(painter, plotterStyle.secondaryAxisSeparation);
         double ibMove2=xAxis->getSize2(painter).requiredSize;
-        if (ibMove2>0) ibMove1+=plotterStyle.secondaryAxisSeparation;
+        //if (ibMove2>0) ibMove2+=pt2px(painter, plotterStyle.secondaryAxisSeparation);
 
         for (auto& ax: secondaryXAxis) {
-            ax->drawAxes(painter, ibMove1, ibMove2);
             const double add1=ax->getSize1(painter).requiredSize;
             const double add2=ax->getSize2(painter).requiredSize;
-            if (add1>0) ibMove1+=add1+plotterStyle.secondaryAxisSeparation;
-            if (add2>0) ibMove2+=add2+plotterStyle.secondaryAxisSeparation;
+            if (add1>0) ibMove1+=pt2px(painter, plotterStyle.secondaryAxisSeparation);
+            if (add2>0) ibMove2+=pt2px(painter, plotterStyle.secondaryAxisSeparation);
+            ax->drawAxes(painter, ibMove1, ibMove2);
+            ibMove1+=add1;
+            ibMove2+=add2;
         }
     }
 }
@@ -1103,16 +1109,18 @@ void JKQTBasePlotter::drawSystemYAxis(JKQTPEnhancedPainter& painter) {
 
     if (secondaryYAxis.size()>0) {
         double ibMove1=yAxis->getSize1(painter).requiredSize;
-        if (ibMove1>0) ibMove1+=plotterStyle.secondaryAxisSeparation;
+        //if (ibMove1>0) ibMove1+=pt2px(painter, plotterStyle.secondaryAxisSeparation);
         double ibMove2=yAxis->getSize2(painter).requiredSize;
-        if (ibMove2>0) ibMove1+=plotterStyle.secondaryAxisSeparation;
+        //if (ibMove2>0) ibMove2+=pt2px(painter, plotterStyle.secondaryAxisSeparation);
 
         for (auto& ax: secondaryYAxis) {
-            ax->drawAxes(painter, ibMove1, ibMove2);
             const double add1=ax->getSize1(painter).requiredSize;
             const double add2=ax->getSize2(painter).requiredSize;
-            if (add1>0) ibMove1+=add1+plotterStyle.secondaryAxisSeparation;
-            if (add2>0) ibMove2+=add2+plotterStyle.secondaryAxisSeparation;
+            if (add1>0) ibMove1+=pt2px(painter, plotterStyle.secondaryAxisSeparation);
+            if (add2>0) ibMove2+=pt2px(painter, plotterStyle.secondaryAxisSeparation);
+            ax->drawAxes(painter, ibMove1, ibMove2);
+            ibMove1+=add1;
+            ibMove2+=add2;
         }
     }
 }
@@ -3064,11 +3072,20 @@ QMap<JKQTPCoordinateAxisRef, JKQTPVerticalAxisBase *> JKQTBasePlotter::getYAxes(
 
 QList<JKQTPCoordinateAxis *> JKQTBasePlotter::getAxes(bool includePrimaries)
 {
-  QList<JKQTPCoordinateAxis *> res;
-  if (includePrimaries) res<<xAxis<<yAxis;
-  for (auto& ax: secondaryXAxis) res<<ax;
-  for (auto& ax: secondaryYAxis) res<<ax;
-  return res;
+    QList<JKQTPCoordinateAxis *> res;
+    if (includePrimaries) res<<xAxis<<yAxis;
+    for (auto& ax: secondaryXAxis) res<<ax;
+    for (auto& ax: secondaryYAxis) res<<ax;
+    return res;
+}
+
+QList<const JKQTPCoordinateAxis *> JKQTBasePlotter::getAxes(bool includePrimaries) const
+{
+    QList<const JKQTPCoordinateAxis *> res;
+    if (includePrimaries) res<<xAxis<<yAxis;
+    for (auto& ax: secondaryXAxis) res<<ax;
+    for (auto& ax: secondaryYAxis) res<<ax;
+    return res;
 }
 
 JKQTPCoordinateAxisRef JKQTBasePlotter::addSecondaryXAxis(JKQTPHorizontalAxisBase *axis)

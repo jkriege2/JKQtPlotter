@@ -907,6 +907,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         /** \brief calculate the position of the zero-axis (and whether to draw  it or not) */
         double getZeroAxisPos(bool*  drawZeroAxis=nullptr);
 
+        /** \brief figures out (possibly by probing the parent JKQTBasePloter), whether this axis is a secondary axis */
+        virtual bool isSecondaryAxis() const;
+
 
 };
 

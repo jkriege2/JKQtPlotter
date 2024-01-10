@@ -22,6 +22,7 @@ void exampleSecondYAxis(JKQTPlotter& plot, const QString& title)
     size_t columnY1=ds->addColumnCalculatedFromColumn(columnX, [](double x) { return x; }, "y1");
     size_t columnY2=ds->addColumnCalculatedFromColumn(columnX, [](double x) { return cos(x); }, "y2");
     size_t columnY3=ds->addColumnCalculatedFromColumn(columnX, [](double x) { return x*x; }, "y3");
+    size_t columnY4=ds->addColumnCalculatedFromColumn(columnX, [](double x) { return sqrt(x); }, "y3");
 
     // 3. create a second y-axis and set its formating options, so it only draws an axis on the right
     auto yAxisRef2=plot.getPlotter()->addSecondaryYAxis(new JKQTPVerticalAxis(plot.getPlotter(), JKQTPPrimaryAxis));
@@ -30,13 +31,20 @@ void exampleSecondYAxis(JKQTPlotter& plot, const QString& title)
     plot.getYAxis(yAxisRef2)->setDrawMode2(JKQTPCADMcomplete);
     plot.getYAxis(yAxisRef2)->setDrawMode0(JKQTPCADMnone);
     plot.getYAxis(yAxisRef2)->setShowZeroAxis(false);
-    //   ... and ctreate third y-axis
+    //   ... and create third y-axis
     auto yAxisRef3=plot.getPlotter()->addSecondaryYAxis(new JKQTPVerticalAxis(plot.getPlotter(), JKQTPPrimaryAxis));
     plot.getYAxis(yAxisRef3)->setDrawGrid(false);
     plot.getYAxis(yAxisRef3)->setDrawMode1(JKQTPCADMnone);
     plot.getYAxis(yAxisRef3)->setDrawMode2(JKQTPCADMcomplete);
     plot.getYAxis(yAxisRef3)->setDrawMode0(JKQTPCADMnone);
     plot.getYAxis(yAxisRef3)->setShowZeroAxis(false);
+    //   ... and create fourth y-axis
+    auto yAxisRef4=plot.getPlotter()->addSecondaryYAxis(new JKQTPVerticalAxis(plot.getPlotter(), JKQTPPrimaryAxis));
+    plot.getYAxis(yAxisRef4)->setDrawGrid(false);
+    plot.getYAxis(yAxisRef4)->setDrawMode1(JKQTPCADMcomplete);
+    plot.getYAxis(yAxisRef4)->setDrawMode2(JKQTPCADMnone);
+    plot.getYAxis(yAxisRef4)->setDrawMode0(JKQTPCADMnone);
+    plot.getYAxis(yAxisRef4)->setShowZeroAxis(false);
     //   ... reformat the major y-axis, so it does not draw on the right and thus the secondary axis yAxisRef2 replaces it there
     //       if this step is omitted, the secondary axes stack on the right of the primary.
     plot.getYAxis()->setDrawMode2(JKQTPCADMnone);
@@ -72,6 +80,15 @@ void exampleSecondYAxis(JKQTPlotter& plot, const QString& title)
     plot.getYAxis(yAxisRef3)->setAxisLabel("graph3");
     graph3->setYAxis(yAxisRef3);
 
+    // 3.4 the fourth graph uses the default (primary) x-axis, but the ternary axis yAxisRef4 as y-axis
+    JKQTPXYLineGraph* graph4=new JKQTPXYLineGraph(&plot);
+    graph4->setKeyColumn(columnX);
+    graph4->setValueColumn(columnY4);
+    plot.addGraph(graph3);
+    plot.getYAxis(yAxisRef4)->setColor(graph4->getLineColor());
+    plot.getYAxis(yAxisRef4)->setAxisLabel("graph4");
+    graph4->setYAxis(yAxisRef4);
+
 
     // 4. autoscale the plot so the graph is contained
     //    This auto-scales all axes using the graphs (and their data) as assigned to the axes!
@@ -99,6 +116,7 @@ void exampleSecondXAxis(JKQTPlotter& plot, const QString& title)
     size_t columnX1=ds->addColumnCalculatedFromColumn(columnY, [](double x) { return x; }, "x1");
     size_t columnX2=ds->addColumnCalculatedFromColumn(columnY, [](double x) { return cos(x); }, "x2");
     size_t columnX3=ds->addColumnCalculatedFromColumn(columnY, [](double x) { return x*x; }, "x3");
+    size_t columnX4=ds->addColumnCalculatedFromColumn(columnY, [](double x) { return sqrt(x); }, "x4");
 
     JKQTPXYLineGraph* graph1=new JKQTPXYLineGraph(&plot);
     graph1->setXColumn(columnX1);
@@ -112,6 +130,10 @@ void exampleSecondXAxis(JKQTPlotter& plot, const QString& title)
     graph3->setXColumn(columnX3);
     graph3->setYColumn(columnY);
     plot.addGraph(graph3);
+    JKQTPXYLineGraph* graph4=new JKQTPXYLineGraph(&plot);
+    graph4->setXColumn(columnX4);
+    graph4->setYColumn(columnY);
+    plot.addGraph(graph4);
 
     plot.getXAxis()->setDrawMode2(JKQTPCADMLineTicksTickLabels);
     plot.getXAxis()->setColor(graph1->getLineColor());
@@ -137,6 +159,16 @@ void exampleSecondXAxis(JKQTPlotter& plot, const QString& title)
     plot.getXAxis(xAxisRef3)->setAxisLabel("graph3");
     graph3->setXAxis(xAxisRef3);
 
+    auto xAxisRef4=plot.getPlotter()->addSecondaryXAxis(new JKQTPHorizontalAxis(plot.getPlotter(), JKQTPPrimaryAxis));
+    plot.getXAxis(xAxisRef4)->setDrawGrid(false);
+    plot.getXAxis(xAxisRef4)->setDrawMode1(JKQTPCADMcomplete);
+    plot.getXAxis(xAxisRef4)->setDrawMode2(JKQTPCADMnone);
+    plot.getXAxis(xAxisRef4)->setDrawMode0(JKQTPCADMnone);
+    plot.getXAxis(xAxisRef4)->setShowZeroAxis(false);
+    plot.getXAxis(xAxisRef4)->setColor(graph4->getLineColor());
+    plot.getXAxis(xAxisRef4)->setAxisLabel("graph4");
+    graph4->setXAxis(xAxisRef4);
+
     plot.zoomToFit();
 
     plot.setWindowTitle(title);
@@ -152,8 +184,10 @@ int main(int argc, char* argv[])
 
 
     JKQTPlotter plotsecondY;
+    //plotsecondY.getPlotter()->enableDebugShowRegionBoxes(true);
     exampleSecondYAxis(plotsecondY, "1: Second Y-Axis");
     JKQTPlotter plotsecondX;
+    //plotsecondX.getPlotter()->enableDebugShowRegionBoxes(true);
     exampleSecondXAxis(plotsecondX, "2: Second X-Axis");
 
     return app.exec();
