@@ -411,6 +411,10 @@ struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextNodeSize {
     double topXCorrection;
     /** \brief calculate the descent (overallHeight-baselineHeight) */
     inline double getDescent() const { return overallHeight-baselineHeight; }
+    /** \brief calculate the ascent (=baselineHeight), for convenience and naming */
+    inline double getAscent() const { return baselineHeight; }
+    /** \brief calculate the height (=baselineHeight), for convenience and naming */
+    inline double getHeight() const { return overallHeight; }
     /** \brief calculate the overall size in floating-point precision */
     inline QSizeF getSize() const { return QSizeF(width, overallHeight); }
     /** \brief calculate the overall size in floating-point precision */
