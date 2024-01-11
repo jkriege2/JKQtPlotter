@@ -124,7 +124,7 @@ bool JKQTMathTextVerbatimNode::toHtml(QString &html, JKQTMathTextEnvironment cur
 JKQTMathTextNodeSize JKQTMathTextVerbatimNode::getSizeInternal(QPainter &painter, JKQTMathTextEnvironment currentEv) const
 {
     transformEnvironment(currentEv);
-    return calcLayout(painter, currentEv);
+    return calcLayout(painter, currentEv).sliceToNodeSize();
 }
 
 void JKQTMathTextVerbatimNode::transformEnvironment(JKQTMathTextEnvironment &currentEv) const

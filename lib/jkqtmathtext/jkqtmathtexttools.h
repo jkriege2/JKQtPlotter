@@ -391,7 +391,7 @@ struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextEnvironment {
  *  \ingroup jkqtmathtext_tools
  */
 struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextNodeSize {
-    JKQTMathTextNodeSize();
+    JKQTMathTextNodeSize(double width=0, double baselineHeight=0, double overallHeight=0, double strikeoutPos=0, double baselineXCorrection=0,double topXCorrection=0);
     /** \brief width of whole block */
     double width;
     /** \brief baselineHeight of whole block, i.e. the ascent */
@@ -419,6 +419,8 @@ struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextNodeSize {
     inline QSizeF getSize() const { return QSizeF(width, overallHeight); }
     /** \brief calculate the overall size in floating-point precision */
     inline QSize getIntSize() const { return QSize(qCeil(width+1.0), qCeil(overallHeight+1.0)); }
+    /** \brief helper function, which generates a copy of this object, used to suppress slicing warning due to GSL E.63: https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Res-slice */
+    inline JKQTMathTextNodeSize sliceToNodeSize() const { return *this; }
 };
 
 /** \brief summarizes all information available on a font for a specific MTenvironmentFont

@@ -757,13 +757,13 @@ QString JKQTMathTextEnvironment::toHtmlAfter(JKQTMathTextEnvironment /*defaultEv
     return "</span>";
 }
 
-JKQTMathTextNodeSize::JKQTMathTextNodeSize():
-    width(0),
-    baselineHeight(0),
-    overallHeight(0),
-    strikeoutPos(),
-    baselineXCorrection(0),
-    topXCorrection(0)
+JKQTMathTextNodeSize::JKQTMathTextNodeSize(double width_, double baselineHeight_, double overallHeight_, double strikeoutPos_, double baselineXCorrection_, double topXCorrection_):
+    width(width_),
+    baselineHeight(baselineHeight_),
+    overallHeight(overallHeight_),
+    strikeoutPos(strikeoutPos_),
+    baselineXCorrection(baselineXCorrection_),
+    topXCorrection(topXCorrection_)
 {
 
 }

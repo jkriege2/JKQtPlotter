@@ -58,7 +58,7 @@ QString JKQTMathTextVerticalListNode::getTypeName() const
 }
 
 JKQTMathTextNodeSize JKQTMathTextVerticalListNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv) const {
-    return calcLayout(painter, currentEv);
+    return calcLayout(painter, currentEv).sliceToNodeSize();
 }
 
 JKQTMathTextVerticalListNode::LayoutInfo JKQTMathTextVerticalListNode::calcLayout(QPainter &painter, JKQTMathTextEnvironment ev) const

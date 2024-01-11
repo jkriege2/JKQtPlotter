@@ -369,7 +369,7 @@ JKQTMathTextMatrixNode::LayoutInfo JKQTMathTextMatrixNode::calcLayout(QPainter &
 }
 
 JKQTMathTextNodeSize JKQTMathTextMatrixNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv) const {
-    return calcLayout(painter, currentEv);
+    return calcLayout(painter, currentEv).sliceToNodeSize();
 }
 
 double JKQTMathTextMatrixNode::draw(QPainter& painter, double x, double y, JKQTMathTextEnvironment currentEv) const {

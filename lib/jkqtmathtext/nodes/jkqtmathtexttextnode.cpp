@@ -128,7 +128,7 @@ JKQTMathTextTextNode::JKQTMathTextTextNode(JKQTMathText* _parent, const QString&
 JKQTMathTextTextNode::~JKQTMathTextTextNode() = default;
 
 JKQTMathTextNodeSize JKQTMathTextTextNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv) const {
-    return calcLayout(painter, currentEv);
+    return calcLayout(painter, currentEv).sliceToNodeSize();
 }
 
 JKQTMathTextTextNode::LayoutInfo JKQTMathTextTextNode::calcLayout(QPainter &painter, JKQTMathTextEnvironment currentEv) const

@@ -49,7 +49,7 @@ JKQTMathTextBraceNode::~JKQTMathTextBraceNode() {
 }
 
 JKQTMathTextNodeSize JKQTMathTextBraceNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv) const {
-    return getSizeInternalAndBrace(painter, currentEv);
+    return getSizeInternalAndBrace(painter, currentEv).sliceToNodeSize();
 }
 
 JKQTMathTextBraceNode::NodeSize JKQTMathTextBraceNode::getSizeInternalAndBrace(QPainter &painter, JKQTMathTextEnvironment currentEv) const

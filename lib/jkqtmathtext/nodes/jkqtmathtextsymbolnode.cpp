@@ -52,7 +52,7 @@ QString JKQTMathTextSymbolNode::getTypeName() const
 
 
 JKQTMathTextNodeSize JKQTMathTextSymbolNode::getSizeInternal(QPainter& painter, JKQTMathTextEnvironment currentEv) const {
-    return getSymbolSize(painter, currentEv);
+    return getSymbolSize(painter, currentEv).sliceToNodeSize();
 }
 
 QRectF JKQTMathTextSymbolNode::getBoundingRect(const QFont &f, const QString &text, GlobalSymbolFlags globalFlags, QPaintDevice *pd)
