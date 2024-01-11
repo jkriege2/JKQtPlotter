@@ -432,14 +432,14 @@ JKQTMathTextFontSpecifier JKQTMathTextFontSpecifier::getAppFontFamilies()
             }
         }
         if (!set) {
-            if (f.styleHint()==QFont::SansSerif) {
-                const JKQTMathTextFontSpecifier fira=getFIRAFamilies();
-                if (fira.hasFallbackSymbolFontName()) fontSpec.m_fallbackSymbolFont=fira.fallbackSymbolsFontName();
-                if (fira.hasMathFontName()) fontSpec.m_mathFontName=fira.mathFontName();
-            } else {
+            if (f.styleHint()==QFont::Serif) {
                 const JKQTMathTextFontSpecifier xits=getXITSFamilies();
                 if (xits.hasFallbackSymbolFontName()) fontSpec.m_fallbackSymbolFont=xits.fallbackSymbolsFontName();
                 if (xits.hasMathFontName()) fontSpec.m_mathFontName=xits.mathFontName();
+            } else {
+                const JKQTMathTextFontSpecifier fira=getFIRAFamilies();
+                if (fira.hasFallbackSymbolFontName()) fontSpec.m_fallbackSymbolFont=fira.fallbackSymbolsFontName();
+                if (fira.hasMathFontName()) fontSpec.m_mathFontName=fira.mathFontName();
             }
         }
         return fontSpec;
@@ -450,14 +450,15 @@ JKQTMathTextFontSpecifier JKQTMathTextFontSpecifier::getAppFontFamilies()
 JKQTMathTextFontSpecifier JKQTMathTextFontSpecifier::getAppFontSFFamilies()
 {
     static JKQTMathTextFontSpecifier fontSpec=[]() -> JKQTMathTextFontSpecifier {
+        JKQTMathTextFontSpecifier fontSpec;
         const QFont f=QGuiApplication::font().family();
         QFont testFnt;
-        if (f.styleHint()==QFont::SansSerif) {
-            testFnt.setStyleHint(QFont::StyleHint::Serif);
-            fontSpec.m_fontName=fontSpec.m_mathFontName=testFnt.defaultFamily();
-        } else {
+        if (f.styleHint()==QFont::Serif) {
             testFnt.setStyleHint(QFont::StyleHint::SansSerif);
-            fontSpec.m_fontName=fontSpec.m_mathFontName=testFnt.defaultFamily();
+            fontSpec.m_fontName=fontSpec.m_mathFontName=testFnt.defaultFamily();;
+        } else {
+            testFnt.setStyleHint(QFont::StyleHint::Serif);
+            fontSpec.m_fontName=fontSpec.m_mathFontName=testFnt.defaultFamily();;
         }
         return fontSpec;
     }();

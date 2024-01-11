@@ -39,10 +39,18 @@ TestForm::TestForm(QWidget *parent) :
                             "  text: & abc123+d/e\\\\\n"
                             "  textit: & \\textit{abc123+d/e}\\\\\n"
                             "  textbf: & \\textbf{abc123+d/e}\\\\\n"
+                            "  textsf: & \\textsf{abc123+d/e}\\\\\n"
+                            "  textrm: & \\textrm{abc123+d/e}\\\\\n"
+                            "  texttt: & \\texttt{abc123+d/e}\\\\\n"
+                            "  textcal: & \\textcal{abc123+d/e}\\\\\n"
+                            "  textfrak: & \\textfrak{abc123+d/e}\\\\\n"
                             "  math: & $abc123+d/e$\\\\\n"
                             "  mathrm: & $\\mathrm{abc123+d/e}$\\\\\n"
+                            "  mathsf: & $\\mathsf{abc123+d/e}$\\\\\n"
+                            "  mathtt: & $\\mathtt{abc123+d/e}$\\\\\n"
                             "  mathit: & $\\mathit{abc123+d/e}$\\\\\n"
                             "  mathbf: & $\\mathbf{abc123+d/e}$\\\\\n"
+                            "  mathcal: & $\\mathcal{abc123+d/e}$\n"
                             "  mathfrak: & $\\mathfrak{abc123+d/e}$\n"
                             "\\end{matrix}");
     ui->cmbTestset->addItem("text: umlaute", umla);

@@ -147,7 +147,7 @@ struct JKQTMATHTEXT_LIB_EXPORT JKQTMathTextFontSpecifier {
      *  font with symbols is "Segoe UI Symbol" ...
      */
     static JKQTMathTextFontSpecifier getAppFontFamilies();
-    /** \brief initialize with the default app font-families for "serif" text and math and tries to find a matching fallback-font. This may be used to initialize sans-serif-fonts
+    /** \brief initialize with the default app font-families for "sans-serif" text and math and tries to find a matching fallback-font. This may be used to initialize sans-serif-fonts
      *
      *  This method encodes some pre-coded knowledge of suitable combinations of fonts for different systems.
      *
