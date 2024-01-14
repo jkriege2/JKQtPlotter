@@ -24,6 +24,9 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 # Find includes in the build directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
+# error message when user tries to make in-source build!
+include(jkqtplotter_noInsourceBuilds)
+
 # Common Includes for JKQtPlotter
 include(jkqtplotter_common_include)
 
