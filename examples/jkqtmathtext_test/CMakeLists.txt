@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.23)
 
 set(EXAMPLE_NAME jkqtmathtext_test)
 set(EXENAME jkqtptest_${EXAMPLE_NAME})

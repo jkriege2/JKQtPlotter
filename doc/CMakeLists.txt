@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.23)
 
 add_custom_target(JKQTMathText_GenerateDocImages
     COMMENT "Building JKQTMathText Documentation Images ..."

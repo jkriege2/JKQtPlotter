@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.23)
 
 set(EXAMPLE_NAME jkqtplotter_doc_imagegenerator)
 set(EXENAME ${EXAMPLE_NAME})
