@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.23)
 
 # Project Name and Version
 # starting from 2020: using semantic version number <major>.<minor>.<patch>
