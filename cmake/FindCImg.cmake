@@ -14,7 +14,7 @@ macro(_cimg_check_path)
     message(STATUS "CImg include path was specified but no CImg.h file was found: ${CIMG_INCLUDE_DIR}")
   endif()
 
-endmacro()
+endmacro(_cimg_check_path)
 
 if(NOT CIMG_INCLUDE_DIR)
   message(STATUS "CImg: trying to locate CImg library")
@@ -45,62 +45,62 @@ if(NOT CIMG_INCLUDE_DIR)
 	${KDE4_INCLUDE_DIR}/cimg/include
   )
 
-endif()
+endif(NOT CIMG_INCLUDE_DIR)
 
 if(CIMG_INCLUDE_DIR)
   _cimg_check_path()
-endif()
+endif(CIMG_INCLUDE_DIR)
 
 
-if (CIMG_FOUND)
+if(CIMG_FOUND)
   list(APPEND CIMG_INCLUDE_DIRS
     ${CIMG_INCLUDE_DIR}
   )
 
   ### DISPLAY :: X11 on unix-based system and GDI on windows ###
-    if (UNIX OR APPLE)
+    if(UNIX OR APPLE)
         find_package (X11 QUIET) # xshm xrandr are detected as well
-        if (X11_FOUND)
+        if(X11_FOUND)
             set (CIMG_INCLUDE_DIRS ${CIMG_INCLUDE_DIRS} ${X11_INCLUDE_DIR} )
             set (CIMG_LIBRARIES ${CIMG_LIBRARIES} ${X11_LIBRARIES})
             message (STATUS "FindCImg.cmake: X11 found.")
             
     ### X11 extension :: XSHM ###
-            if (X11_XShm_FOUND)
+            if(X11_XShm_FOUND)
                 set (CIMG_DEFINITIONS ${CIMG_DEFINITIONS} -Dcimg_use_xshm)
                 message(STATUS "FindCImg.cmake: xshm found")
-            else (X11_XShm_FOUND)
+            else(X11_XShm_FOUND)
                 message(STATUS "!!! FindCIMG.cmake !!! xshm NOT found.")
-            endif (X11_XShm_FOUND)
+            endif(X11_XShm_FOUND)
     
     ### X11 extension :: XRANDR ###
-            if (X11_Xrandr_FOUND)
+            if(X11_Xrandr_FOUND)
                 set (CIMG_DEFINITIONS ${CIMG_DEFINITIONS} -Dcimg_use_xrandr)
                 set (CIMG_LIBRARIES ${CIMG_LIBRARIES} ${X11_Xrandr_LIB})
                 message(STATUS "FindCImg.cmake: xrandr found")
-            else (X11_Xrandr_FOUND)
+            else(X11_Xrandr_FOUND)
                 message(STATUS "!!! FindCIMG.cmake !!! xrandr NOT found")
-            endif (X11_Xrandr_FOUND)
+            endif(X11_Xrandr_FOUND)
             
     ### PThread is required when using X11 display engine ###
             find_package (Threads QUIET)
-            if (Threads_FOUND)
+            if(Threads_FOUND)
                 set (CIMG_INCLUDE_DIRS ${CIMG_INCLUDE_DIRS})
                 set (CIMG_LIBRARIES ${CIMG_LIBRARIES} Threads::Threads)
                 message(STATUS "FindCImg.cmake: pthread found")
-            else (PTHREAD_FOUND)
+            else(PTHREAD_FOUND)
                 message(STATUS "!!! FindCIMG.cmake !!! pthread NOT found. pthread required by cimg for running X11.")
                 message(FATAL_ERROR "You need a display engine such as X11 (linux, macosx) or GDI (windows) to compile this program. Please install libs and developpement headers")
-            endif (PTHREAD_FOUND)
+            endif()
             
-        else (X11_FOUND)
+        else(X11_FOUND)
             message (STATUS "!!! FindCIMG.cmake !!! X11 NOT found.")
             message(WARNING "FindCImg.cmake: display disabled")
             set (CIMG_DEFINITIONS ${CIMG_DEFINITIONS} -Dcimg_display=0)
-        endif (X11_FOUND)
-    endif (UNIX OR APPLE)
+        endif(X11_FOUND)
+    endif(UNIX OR APPLE)
 
-endif()
+endif(CIMG_FOUND)
 
 set (CIMG_INCLUDE_DIRS ${CIMG_INCLUDE_DIRS} CACHE STRING "include directories for cimg dependancies")
 set (CIMG_LIBRARIES ${CIMG_LIBRARIES} CACHE STRING "cimg required and optional 3rd party libraries")
@@ -115,7 +115,7 @@ find_package_handle_standard_args(CImg DEFAULT_MSG CIMG_INCLUDE_DIR CIMG_FOUND)
 
 mark_as_advanced(CIMG_INCLUDE_DIR)
 
-if (CIMG_FOUND)
+if(CIMG_FOUND)
   # Library definition
   add_library(CImg::CImg INTERFACE IMPORTED)
    
