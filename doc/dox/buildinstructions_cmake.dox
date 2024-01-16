@@ -97,7 +97,7 @@ The build/install above generates several CMake targets that can be used to link
   - \c JKQTPlotter6::JKQTMathText6 / \c JKQTPlotter5::JKQTMathText5 : the LaTeX rendering library containing JKQTMathText
   - \c JKQTPlotter6::JKQTCommmon6 / \c JKQTPlotter5::JKQTCommon5 : basic tools and facilities for the other libraries
   - \c JKQTPlotter6::JKQTMath6 / \c JKQTPlotter5::JKQTMath5 : additional mathematical algorithms to be used with JKQTPlotter (e.g. a statistics library with histograming, KDE or regression)
-  - \DEPRECATED: c JKQTPlotter6::JKQTFastPlotter6 / \c JKQTPlotter5::JKQTFastPlotter5 : an alternative plotting library with less features, but which is supposed to be fast,conatins JKQTFastPlotter
+  - DEPRECATED: \c JKQTPlotter6::JKQTFastPlotter6 / \c JKQTPlotter5::JKQTFastPlotter5 : an alternative plotting library with less features, but which is supposed to be fast,conatins JKQTFastPlotter
 
 You can find an example project that uses a complete cmake-build here: \ref JKQTCMakeLinkExample (online: <a href="https://github.com/jkriege2/JKQtPlotter/blob/master/examples/cmake_link_example"><code>examples/cmake_link_example</code></a>).
 

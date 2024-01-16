@@ -108,7 +108,7 @@ or on a Qt-version agnostic way via:
   find_package(JKQTPlotter${QT_VERSION_MAJOR} REQUIRED)
   target_link_libraries(${PROJECT_NAME} JKQTPlotter${QT_VERSION_MAJOR}::JKQTPlotter${QT_VERSION_MAJOR})
 ```
-See http://jkriege2.github.io/JKQtPlotter/page_buildinstructions_cmake.html for details.
+See https://jkriege2.github.io/JKQtPlotter/page_buildinstructions__c_m_a_k_e.html for details.
 
 ## Stargazers over time
 
