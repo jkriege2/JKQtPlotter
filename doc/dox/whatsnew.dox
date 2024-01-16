@@ -14,7 +14,7 @@ This page lists release notes for the different version of JKQTPlotter
 \subsection page_whatsnew_TRUNK_OVERVIEW trunk: Overview
 Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
 <ul>
-  <li>General:<ul>
+  <li>General/Build-System:<ul>
     <li>BREAKING: renamed library JKQTCommonStatisticsAndMath to JKQTMath. <i>Note: A CMake-ALIAS-Library JKQTCommonStatisticsAndMath was also added to ease transition for users</i></li>
     <li>BREAKING: JKQTFastPlotter class and library are now deprecated and will be removed in future versions!</li>
     <li>BREAKING: The QMake build system is deprecated and will not get the same love and atttention as the recommended CMake system. The QMake scripts might be removed in future versions!</li>
@@ -24,7 +24,12 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW/BREAKING: split jkqtcommon into basic tools and jkqtmath for advanced math tools not used by all libs</li>
     <li>NEW: When using a MSVC compiler, the generated PDB files are installed to \c CMAKE_INSTALL_PREFIX/bin/ </li>  
     <li>NEW: Added CMake option \c JKQtPlotter_BUILD_WITH_TIMING_INFO_OUTPUT, which activates several runtime-measurement guards of type JKQTPAutoOutputTimer (output via qDebug())</li>    
+    <li>NEW/BREAKING: provide general targets JKQTPlotter5/6::JKQTPlotter5/6, JKQTPlotter5/6::JKQTMathText5/6, ... which are independent of the type of build (shared/static)</li>    
+    <li>NEW/BREAKING: refactor CMake-Code, so static/dynamic switch is done via <code>BUILD_SHARED_LIBS</code>, which retires <code>JKQtPlotter_BUILD_STATIC_LIBS</code>, <code>JKQtPlotter_BUILD_SHARED_LIBS</code> and removes the capability to build static and shared libraries in one location (fixes issue #104)</li>    
+    <li>NEW: prepareed library for CMake's <a href="https://cmake.org/cmake/help/latest/module/FetchContent.html">FetchContent</a>-API</li>    
+    <li>NEW: the different sub-libraries JKQTPlotter, JKQTFastPlotter (DEPRECATED), JKQTMath, JKQTMathText can be activated/deactivated with CMake options JKQtPlotter_BUILD_LIB_JKQTPLOTTER, JKQtPlotter_BUILD_LIB_JKQTFASTPLOTTER, JKQtPlotter_BUILD_LIB_JKQTMATHTEXT, JKQtPlotter_BUILD_LIB_JKQTMATH</li>    
   </ul></li>
+
   <li>JKQTPlotter:<ul>
     <li>BREAKING/REWORKED: Updated default styling of graphs. They are now more modern!</li>
     <li>BREAKING/REWORKED: Implement better/more access functions to the graphs (inlcuding sorting, moving up/down, appending/prepending, graphs-iterators ...), solves issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/97">#97</a>, thanks to <a href="https://github.com/sim186">user:sim186</a> for bringing this up</li>
