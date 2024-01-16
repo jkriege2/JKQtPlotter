@@ -133,7 +133,7 @@ for:
       - cmd: if %USE_CMAKE%==false call %MAKETOOL% 
       - cmd: cd ..
 
-    install:
+    install_script:
       - cmd: echo == INSTALL JKQtPlotter ==========================================================================
       - cmd: cd %APPVEYOR_BUILD_FOLDER%
       - cmd: cd build
@@ -222,7 +222,7 @@ for:
               make -j$(getconf _NPROCESSORS_ONLN) 
             fi
 
-    install:
+    install_script:
       - sh: echo == INSTALL JKQtPlotter ==========================================================================
       - sh: cd %APPVEYOR_BUILD_FOLDER%
       - sh: cd build
