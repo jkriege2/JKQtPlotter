@@ -1,0 +1,67 @@
+cmake_minimum_required(VERSION 3.23)
+
+# add source files
+target_sources(${lib_name} PRIVATE
+    jkqtpscatter.cpp
+    jkqtprange.cpp
+    jkqtpspecialline.cpp
+    jkqtpbarchartbase.cpp
+    jkqtpbarchart.cpp
+    jkqtpboxplot.cpp
+    jkqtpboxplotbase.cpp
+    jkqtpboxplotstylingmixins.cpp
+    jkqtpevaluatedfunctionbase.cpp
+    jkqtpevaluatedfunction.cpp
+    jkqtpfilledcurve.cpp
+    jkqtpgeometric.cpp
+    jkqtpgeoannotations.cpp
+    jkqtpgeobase.cpp
+    jkqtpgeolines.cpp
+    jkqtpgeoshapes.cpp
+    jkqtpimage.cpp
+    jkqtpimpulses.cpp
+    jkqtpparsedfunction.cpp
+    jkqtppeakstream.cpp
+    jkqtpsinglecolumnsymbols.cpp
+    jkqtpimageoverlays.cpp
+    jkqtpcontour.cpp
+    jkqtpimagergb.cpp
+    jkqtpviolinplot.cpp
+    jkqtpviolinplotstylingmixins.cpp
+    jkqtpstatisticsadaptors.cpp
+    jkqtpevaluatedparametriccurve.cpp
+    jkqtplines.cpp
+)
+# ... and add headers
+target_sources(${lib_name} PUBLIC FILE_SET HEADERS TYPE HEADERS
+    FILES
+      jkqtpboxplot.h
+      jkqtpboxplotbase.h
+      jkqtpboxplotstylingmixins.h
+      jkqtpevaluatedfunctionbase.h
+      jkqtpevaluatedfunction.h
+      jkqtpfilledcurve.h
+      jkqtpgeometric.h
+      jkqtpgeoannotations.h
+      jkqtpgeobase.h
+      jkqtpgeolines.h
+      jkqtpgeoshapes.h
+      jkqtpimage.h
+      jkqtpimpulses.h
+      jkqtpparsedfunction.h
+      jkqtppeakstream.h
+      jkqtpsinglecolumnsymbols.h
+      jkqtpimageoverlays.h
+      jkqtpcontour.h
+      jkqtpimagergb.h
+      jkqtpviolinplot.h
+      jkqtpviolinplotstylingmixins.h
+      jkqtpstatisticsadaptors.h
+      jkqtpscatter.h
+      jkqtprange.h
+      jkqtpspecialline.h
+      jkqtpbarchartbase.h
+      jkqtpbarchart.h
+      jkqtpevaluatedparametriccurve.h
+      jkqtplines.h
+)

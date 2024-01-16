@@ -4,64 +4,80 @@ This project (see [`cmake_link_example`](https://github.com/jkriege2/JKQtPlotter
 
 This example uses very simple code, which simply displays a plotter and shows some data. The important part of this example is the ´CMakeLists.txt`-file:
 ```
-	# set minimum required CMake-Version
-	cmake_minimum_required(VERSION 3.20)
+# set minimum required CMake-Version
+cmake_minimum_required(VERSION 3.23)
 
-	# set Project name
-	set(EXAMPLE_NAME simpletest)
-	set(EXENAME jkqtptest_${EXAMPLE_NAME})
-	project(${EXAMPLE_NAME} LANGUAGES CXX)
+# set Project name
+project(simpletest_cmake LANGUAGES CXX)
 
-	# some basic configurations
-	set(CMAKE_AUTOMOC ON)
-	set(CMAKE_INCLUDE_CURRENT_DIR ON)
-	set(CMAKE_CXX_STANDARD 11)    # for Qt5
-	#set(CMAKE_CXX_STANDARD 17)   # for QT6
-	#set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+# some basic configurations
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-  # Configure project for usage of Qt5/Qt6
-  find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Gui Widgets PrintSupport Svg Xml OpenGl REQUIRED)
-  find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Widgets PrintSupport Svg Xml OpenGL REQUIRED)
+# Configure project for usage of Qt5/Qt6
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Gui Widgets PrintSupport Svg Xml OpenGl REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Widgets PrintSupport Svg Xml OpenGL REQUIRED)
 
-	# include JKQTPlotter
-	find_package(JKQTCommonLib REQUIRED)
-	find_package(JKQTMathTextLib REQUIRED)
-	find_package(JKQTPlotterLib REQUIRED)
 
-	# For Visual Studio, we need to set some additional compiler options
-	if(MSVC)
-		add_compile_options(/EHsc)
-		# To enable M_PI, M_E,...
-		add_definitions(/D_USE_MATH_DEFINES)
-		# To Prevent Errors with min() and max()
-		add_definitions(/DNOMINMAX)
-		# To fix error: C2338: va_start argument must not
-		# have reference type and must not be parenthesized
-		add_definitions(/D_CRT_NO_VA_START_VALIDATION)
-	endif()
+# include JKQTPlotter
+find_package(JKQTPlotter${QT_VERSION_MAJOR} REQUIRED)
 
-	# add the example executable 
-	add_executable(${EXENAME} WIN32 simpletest.cpp)
-	# ... link against Qt5 and JKQTPlotterLib
-	#    (you could use JKQTPlotterSharedLib if you don't want to link againast the 
-	#     static version, but against the shared/DLL version).
-	target_link_libraries(${EXENAME} Qt5::Core Qt5::Widgets Qt5::Gui Qt5::PrintSupport Qt5::Svg Qt5::Xml JKQTPlotterLib)
+# For Visual Studio, we need to set some additional compiler options
+if(MSVC)
+    add_compile_options(/EHsc)
+    # To enable M_PI, M_E,...
+    add_definitions(/D_USE_MATH_DEFINES)
+    # To Prevent Errors with min() and max()
+    add_definitions(/DNOMINMAX)
+    # To fix error: C2338: va_start argument must not
+    # have reference type and must not be parenthesized
+    add_definitions(/D_CRT_NO_VA_START_VALIDATION)
+endif()
 
-	# Installation
-	install(TARGETS ${EXENAME} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+# add the example executable 
+add_executable(${PROJECT_NAME} WIN32 simpletest.cpp)
+# ... link against Qt5/6 and JKQTPlotterLib
+#    (you could use JKQTPlotterSharedLib if you don't want to link againast the 
+#     static version, but against the shared/DLL version).
+target_link_libraries(${PROJECT_NAME} Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Gui Qt${QT_VERSION_MAJOR}::PrintSupport Qt${QT_VERSION_MAJOR}::Svg Qt${QT_VERSION_MAJOR}::Xml)
+# ... link against JKQTPlotter: As the Targets contain the Qt-Version-Number in their names, we can
+#     link against 'JKQTPlotter${QT_VERSION_MAJOR}::JKQTPlotter${QT_VERSION_MAJOR}' and it works
+#     for Qt5 AND Qt6 ...
+#     if you have a speific Qt-Version, you can also write e.g. 'JKQTPlotter6::JKQTPlotter6'
+target_link_libraries(${PROJECT_NAME} JKQTPlotter${QT_VERSION_MAJOR}::JKQTPlotter${QT_VERSION_MAJOR})
 
-	#Installation of Qt DLLs on Windows
-	include(${CMAKE_CURRENT_SOURCE_DIR}/../../cmake/jkqtplotter_deployqt.cmake)
-	jkqtplotter_deployqt(${EXENAME})
+
+# Installation
+install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 ```
+
+The important steps here are
+```
+# find JKQTPlotter
+find_package(JKQTPlotter${QT_VERSION_MAJOR} REQUIRED)
+
+# ...
+
+# link against JKQtPlotter:
+target_link_libraries(${EXENAME} JKQTPlotter${QT_VERSION_MAJOR}::JKQTPlotter${QT_VERSION_MAJOR})
+```
+
+We are using `${QT_VERSION_MAJOR}` here, as this file is supposed to work with both Qt5 AND Qt6. If you only use say Qt6, you can also write:
+```
+find_package(JKQTPlotter6 REQUIRED)
+target_link_libraries(${EXENAME} JKQTPlotter6::JKQTPlotter6)
+```
+
+
 
 To build this example, you first need to make a subdirectory `build` and then call CMake form that subdirectory:
 ```.sh
     $ mkdir build
     $ cd build
-    $ cmake .. -G "<GENERATOR>" "-DCMAKE_PREFIX_PATH=<path_to_your_qt_sources> -DCMAKE_MODULE_PATH=<path_to_lib/cmake_dir_of_JKQTPLOTTER>"
+    $ cmake .. -G "<GENERATOR>" "-DCMAKE_PREFIX_PATH=<path_to_your_qt_sources>;<path_to_JKQTPlotter_installdir>"
 ```
 The you can use the generated makefiles (e.g. load them in an editor, or build them jsing `make`). In the last line above, you need to specify two directories:
   - `<path_to_your_qt_sources>` points to you Qt installation
-  - `<path_to_lib/cmake_dir_of_JKQTPLOTTER>` points to the directory containing the `XYZ.cmake`-files from the JKQTPlotter build. Typically this is `<JKQTPLOTTER_INSTALL_DIR>/lib/cmake`, where `<JKQTPLOTTER_INSTALL_DIR>` is the directory into which you installed JKQTPlotter.
+  - `<path_to_JKQTPlotter_installdir>` points to the directory containing the JKQTPlotter build. Typically this is will conatin a subdirectory`<JKQTPLOTTER_INSTALL_DIR>/lib/cmake/JKQtPlottr6` with all necessary CMake-scripts. Here `<JKQTPLOTTER_INSTALL_DIR>` is the directory into which you installed JKQTPlotter.
+  

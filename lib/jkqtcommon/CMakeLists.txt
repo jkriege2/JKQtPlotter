@@ -1,142 +1,57 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.23)
 
-set(libBasename JKQTCommon)
-set(libIncludeSubdir jkqtcommon)
+set(libBaseName JKQTCommon)
+set(lib_name ${libBaseName}${jkqtplotter_LIBNAME_VERSION_PART})
 
-if(JKQtPlotter_BUILD_SHARED_LIBS)
-    set(libsh_name ${libBasename}SharedLib)
-    set(libsh_name_decorated ${libsh_name}${JKQtPlotter_LIBNAME_ADDITION})
-    set(${libBasename}_SHARED_LIBRARY ${libsh_name_decorated}  CACHE STRING "name of static library for ${libBasename}" FORCE)
-    message( STATUS "-- Building ${libsh_name}" )
-endif(JKQtPlotter_BUILD_SHARED_LIBS)
+message( STATUS "-- Building ${lib_name}" )
 
-if(JKQtPlotter_BUILD_STATIC_LIBS)
-    set(lib_name ${libBasename}Lib)
-    set(lib_name_decorated ${lib_name}${JKQtPlotter_LIBNAME_ADDITION})
-    set(${libBasename}_STATIC_LIBRARY ${lib_name_decorated}  CACHE STRING "name of static library for ${libBasename}" FORCE)
-    message( STATUS "-- Building ${lib_name}" )
-endif(JKQtPlotter_BUILD_STATIC_LIBS)
+# create the library (SHARED/STATIC is controlled by the CMake option BUILD_SHARED_LIBS
+jkqtplotter_add_library(${lib_name} )
 
-set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+# set all default library options
+jkqtplotter_setDefaultLibOptions(${lib_name} ${libBaseName} "${CMAKE_CURRENT_LIST_DIR}/private/jkqtcommon_precomp.h")
 
-# Set up source files
-set(SOURCES
-  ${CMAKE_CURRENT_LIST_DIR}/jkqtpdebuggingtools.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/jkqtpmathtools.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/jkqtpstringtools.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/jkqtpcodestructuring.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/jkqtpbasicimagetools.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/jkqtpconcurrencytools.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/jkqtpcachingtools.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/jkqtpgeometrytools.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/jkqtpdrawingtools.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/jkqtpenhancedpainter.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/jkqtphighrestimer.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/jkqttools.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/jkqtpicons.cpp
+# DEPENDENCIES: Qt
+target_link_libraries(${lib_name} PUBLIC Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Gui Qt${QT_VERSION_MAJOR}::Xml Qt${QT_VERSION_MAJOR}::Widgets)
+
+# add source files
+target_sources(${lib_name} PRIVATE
+    jkqtpdebuggingtools.cpp
+    jkqtpmathtools.cpp
+    jkqtpstringtools.cpp
+    jkqtpcodestructuring.cpp
+    jkqtpbasicimagetools.cpp
+    jkqtpconcurrencytools.cpp
+    jkqtpcachingtools.cpp
+    jkqtpgeometrytools.cpp
+    jkqtpdrawingtools.cpp
+    jkqtpenhancedpainter.cpp
+    jkqtphighrestimer.cpp
+    jkqttools.cpp
+    jkqtpicons.cpp
 )
-
-set(HEADERS
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtcommon_imexport.h>
-  $<INSTALL_INTERFACE:jkqtcommon_imexport.h>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpdebuggingtools.h>
-  $<INSTALL_INTERFACE:jkqtpdebuggingtools.h>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpmathtools.h>
-  $<INSTALL_INTERFACE:jkqtpmathtools.h>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpstringtools.h>
-  $<INSTALL_INTERFACE:jkqtpstringtools.h>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpcodestructuring.h>
-  $<INSTALL_INTERFACE:jkqtpcodestructuring.h>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpbasicimagetools.h>
-  $<INSTALL_INTERFACE:jkqtpbasicimagetools.h>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpdrawingtools.h>
-  $<INSTALL_INTERFACE:jkqtpdrawingtools.h>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpenhancedpainter.h>
-  $<INSTALL_INTERFACE:jkqtpenhancedpainter.h>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtphighrestimer.h>
-  $<INSTALL_INTERFACE:jkqtphighrestimer.h>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqttools.h>
-  $<INSTALL_INTERFACE:jkqttools.h>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpicons.h>
-  $<INSTALL_INTERFACE:jkqtpicons.h>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpgeometrytools.h>
-  $<INSTALL_INTERFACE:jkqtpgeometrytools.h>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpconcurrencytools.h>
-  $<INSTALL_INTERFACE:jkqtpconcurrencytools.h>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpcachingtools.h>
-  $<INSTALL_INTERFACE:jkqtpcachingtools.h>
+# ... and add headers
+target_sources(${lib_name} PUBLIC FILE_SET HEADERS TYPE HEADERS
+    FILES
+    jkqtcommon_imexport.h
+    jkqtpdebuggingtools.h
+    jkqtpmathtools.h
+    jkqtpstringtools.h
+    jkqtpcodestructuring.h
+    jkqtpbasicimagetools.h
+    jkqtpdrawingtools.h
+    jkqtpenhancedpainter.h
+    jkqtphighrestimer.h
+    jkqttools.h
+    jkqtpicons.h
+    jkqtpgeometrytools.h
+    jkqtpconcurrencytools.h
+    jkqtpcachingtools.h
 )
-
-include(CMakePackageConfigHelpers)
-
-function(JKQtCommon_setDefaultLibOptions TARGETNAME)
-    set_property(TARGET ${TARGETNAME} PROPERTY VERSION "${PROJECT_VERSION}")
-    target_link_libraries(${TARGETNAME} PUBLIC Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Gui Qt${QT_VERSION_MAJOR}::Xml Qt${QT_VERSION_MAJOR}::Widgets)
-    set_property(TARGET ${TARGETNAME} PROPERTY CXX_STANDARD ${JKQtPlotter_QT_CXX_STANDARD})
-    set_property(TARGET ${TARGETNAME} PROPERTY CXX_STANDARD_REQUIRED ${JKQtPlotter_QT_CXX_STANDARD_REQUIRED})
-    target_compile_features(${TARGETNAME} PUBLIC ${JKQtPlotter_QT_CXX_COMPILE_FEATURE})
-    if(MINGW)
-      # COMPILER-SETTINGS FOR MINGW
-      target_compile_options(${TARGETNAME} PUBLIC -fexceptions)
-    elseif(MSVC)
-      # COMPILER-SETTINGS FOR MS VISUAL C++
-      target_compile_options(${TARGETNAME} PUBLIC /EHsc)
-      target_compile_definitions(${TARGETNAME} PUBLIC NOMINMAX)
-    endif()
-    if(JKQtPlotter_BUILD_WITH_TIMING_INFO_OUTPUT)
-        target_compile_definitions(${TARGETNAME} PRIVATE JKQTBP_AUTOTIMER)
-    endif()
-
-    target_include_directories(${TARGETNAME} PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/../>
-        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
-    )
-    # precomiled headers to speed up compilation
-    if (JKQtPlotter_BUILD_WITH_PRECOMPILED_HEADERS)
-      target_precompile_headers(${TARGETNAME} PRIVATE ${CMAKE_CURRENT_LIST_DIR}/private/jkqtcommon_precomp.h)
-      target_sources(${TARGETNAME} PRIVATE ${CMAKE_CURRENT_LIST_DIR}/private/jkqtcommon_precomp.h)
-    endif(JKQtPlotter_BUILD_WITH_PRECOMPILED_HEADERS)
-endfunction()
-
-
-if(JKQtPlotter_BUILD_SHARED_LIBS)
-    add_library(${libsh_name} SHARED ${SOURCES}  ${HEADERS} )
-    JKQtCommon_setDefaultLibOptions(${libsh_name})
-    set_property(TARGET ${libsh_name} PROPERTY OUTPUT_NAME  "${libsh_name_decorated}")
-    target_compile_definitions(${libsh_name} PUBLIC JKQTCOMMON_LIB_IN_DLL)
-    target_compile_definitions(${libsh_name} PRIVATE JKQTCOMMON_LIB_EXPORT_LIBRARY)
-    set_target_properties(${libsh_name} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS "ON")
-    write_basic_package_version_file(${CMAKE_CURRENT_BINARY_DIR}/${libsh_name}Version.cmake 
-                                     VERSION ${PROJECT_VERSION} 
-                                     COMPATIBILITY AnyNewerVersion )    
-endif()
-
-if(JKQtPlotter_BUILD_STATIC_LIBS)
-    add_library(${lib_name} STATIC ${SOURCES} ${HEADERS})
-    JKQtCommon_setDefaultLibOptions(${lib_name})
-    set_property(TARGET ${lib_name} PROPERTY OUTPUT_NAME  "${lib_name_decorated}")
-    write_basic_package_version_file(${CMAKE_CURRENT_BINARY_DIR}/${lib_name}Version.cmake
-                                     VERSION ${PROJECT_VERSION} 
-                                     COMPATIBILITY AnyNewerVersion )    
-endif()
 
 
 
 # Installation
-if(JKQtPlotter_BUILD_SHARED_LIBS)
-    jkqtplotter_installlibrary(${libsh_name} ${libIncludeSubdir} "Shared")
-endif(JKQtPlotter_BUILD_SHARED_LIBS)
+jkqtplotter_installlibrary_new(${lib_name} ${libBaseName} ${CMAKE_CURRENT_LIST_DIR})
 
-if(JKQtPlotter_BUILD_STATIC_LIBS)
-    jkqtplotter_installlibrary(${lib_name} ${libIncludeSubdir} "")
-endif(JKQtPlotter_BUILD_STATIC_LIBS)
-
-install(FILES ${HEADERS}
-        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${libIncludeSubdir}
-        COMPONENT Headers)
-
-
-configure_file(${PROJECT_SOURCE_DIR}/readme.txt.in ${CMAKE_CURRENT_BINARY_DIR}/${libBasename}_Readme.txt @ONLY)
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${libBasename}_Readme.txt" DESTINATION doc/JKQtPlotter )
-install(FILES "${PROJECT_SOURCE_DIR}/LICENSE" DESTINATION doc/JKQtPlotter RENAME "${libBasename}_LICENSE.txt" )
 

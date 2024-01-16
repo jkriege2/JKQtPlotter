@@ -1,14 +1,14 @@
 /*!
 
 
-\page page_buildinstructions_QMAKE Build using QMake
+\page page_buildinstructions_QMAKE DEPRECATED: Build using QMake
 
 \warning The <a href="https://doc.qt.io/qt-6/qmake-manual.html">QMake</a> build system is deprecated and will 
          not get the same love and atttention as the recommended CMake system, see \ref page_buildinstructions_CMAKE !
 
 \tableofcontents
 
-\section page_buildinstructions_QMAKEINCLUDE QMake Include Project
+\section page_buildinstructions_QMAKEINCLUDE DEPRECATED: QMake Include Project
 
 If you want to simply include the JKQTPlotter Source code into your projects, without build a shared or static library and linking against it, you can use one of  these QMake-Include files:
   - <a href="https://github.com/jkriege2/JKQtPlotter/blob/master/lib/jkqtplotter.pri">lib/jkqtplotter.pri</a> includes the complete library (JKQTPlotter, JKQTFastPlotter, JKQTMathText)
@@ -21,7 +21,7 @@ In your <a href="https://doc.qt.io/qt-6/qmake-manual.html">QMake</a>-projects it
   include(<PATHTOJKQTPLOTTERDIR>/lib/jkqtplotter.pri)
 \endcode
 
-\section page_buildinstructions_QMAKESTATIC QMake Static Library
+\section page_buildinstructions_QMAKESTATIC DEPRECATED: QMake Static Library
 
 There are several `.PRO`-files, that can be used to build the full library, or a limited subsets of it as static link library:
   - <a href="https://github.com/jkriege2/JKQtPlotter/blob/master/qmake/staticlib/jkqtplotterlib/jkqtplotterlib.pro">qmake/staticlib/jkqtplotterlib/jkqtplotterlib.pro</a> builds the complete library (JKQTPlotter, JKQTFastPlotter, JKQTMathText) as static link library
@@ -64,7 +64,7 @@ SUBDIRS +=  jkqtplotterlib_static test_styling
 
 
 
-\section page_buildinstructions_QMAKEDYNAMIC QMake Dynamic Library
+\section page_buildinstructions_QMAKEDYNAMIC DEPRECATED: QMake Dynamic Library
 
 There are several `.PRO`-files, that can be used to build the full library, or a limited subsets of it as shred library:
   - <a href="https://github.com/jkriege2/JKQtPlotter/blob/master/qmake/sharedlib/jkqtplotterlib/jkqtplotterlib.pro">qmake/sharedlib/jkqtplotterlib/jkqtplotterlib.pro</a> builds the complete library (JKQTPlotter, JKQTFastPlotter, JKQTMathText) as shared library
@@ -118,7 +118,7 @@ SUBDIRS +=  jkqtplotterlib_shared test_styling
 
 
 
-\section page_buildinstructions_QMAKEQTCREATOR QMake in QTCreator
+\section page_buildinstructions_QMAKEQTCREATOR DEPRECATED: QMake in QTCreator
 
 You can load the file \c JKQtPlotterBuildAllExamples.pro in te base directory of the project directly in QtCreator and use it to build the library and the examples.
 

@@ -17,11 +17,7 @@ set(UIS testform.ui )
 
 add_executable(${EXENAME} WIN32 ${SOURCES} ${HEADERS} ${RESOURCES} ${UIS})
 target_include_directories(${EXENAME} PRIVATE ../../lib)
-if(JKQtPlotter_BUILD_STATIC_LIBS)
-    target_link_libraries(${EXENAME} JKQTMathTextLib)
-elseif(JKQtPlotter_BUILD_SHARED_LIBS)
-    target_link_libraries(${EXENAME} JKQTMathTextSharedLib)
-endif()
+target_link_libraries(${EXENAME} ${jkqtplotter_namespace}JKQTMathText${jkqtplotter_LIBNAME_VERSION_PART})
 
 
 

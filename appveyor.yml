@@ -121,17 +121,33 @@ for:
 
     build_script:
       - cmd: echo == BUILD JKQtPlotter ============================================================================
+      - cmd: cd %APPVEYOR_BUILD_FOLDER%
       - cmd: mkdir build
+      - cmd: mkdir install
       - cmd: cd build
       - cmd: if %USE_CMAKE%==true cmake --version 
-      - cmd: if %USE_CMAKE%==true cmake -G "%CMAKE_GENERATOR%" "-DCMAKE_PREFIX_PATH=%QTDIR%;%CIMG_INCLUDE_DIR%" .. 
+      - cmd: if %USE_CMAKE%==true cmake -G "%CMAKE_GENERATOR%" "-DCMAKE_PREFIX_PATH=%QTDIR%;%CIMG_INCLUDE_DIR%" "-DCMAKE_INSTALL_PREFIX=%APPVEYOR_BUILD_FOLDER%\install" .. 
       - cmd: if %USE_CMAKE%==true cmake --build . --config "%CONFIGURATION%" -j%NUMBER_OF_PROCESSORS% -- %CMAKE_BUILDFLAGS%
       - cmd: if %USE_CMAKE%==false qmake.exe -v 
       - cmd: if %USE_CMAKE%==false qmake.exe CONFIG+=%CONFIGURATION% ..\JKQtPlotterBuildAllExamples.pro 
       - cmd: if %USE_CMAKE%==false call %MAKETOOL% 
       - cmd: cd ..
 
+    install:
+      - cmd: echo == INSTALL JKQtPlotter ==========================================================================
+      - cmd: cd %APPVEYOR_BUILD_FOLDER%
+      - cmd: cd build
+      - cmd: if %USE_CMAKE%==true cmake --install . --config "%CONFIGURATION%" -j%NUMBER_OF_PROCESSORS% -- %CMAKE_BUILDFLAGS%
 
+    test_usage:
+      - cmd: echo == TEST: USE JKQtPlotter CMAKE BUILD ============================================================
+      - cmd: if %USE_CMAKE%==true cd %APPVEYOR_BUILD_FOLDER%
+      - cmd: if %USE_CMAKE%==true cd examples\cmake_link_example
+      - cmd: mkdir build
+      - cmd: cd build
+      - cmd: if %USE_CMAKE%==true cmake -G "%CMAKE_GENERATOR%" "-DCMAKE_PREFIX_PATH=%QTDIR%;%CIMG_INCLUDE_DIR%;%APPVEYOR_BUILD_FOLDER%\install" .. 
+      - cmd: if %USE_CMAKE%==true cmake --build . --config "%CONFIGURATION%" -j%NUMBER_OF_PROCESSORS% -- %CMAKE_BUILDFLAGS%
+      - cmd: cd ..
 
 
   # Linux (Ubuntu2004)
@@ -185,13 +201,15 @@ for:
 
     build_script:
       - sh: echo == BUILD JKQtPlotter ============================================================================
+      - sh: cd %APPVEYOR_BUILD_FOLDER%
       - sh: mkdir build
+      - sh: mkdir install
       - sh: cd build
       - sh: |
             if [ "$USE_CMAKE" = true ]; then 
               echo --- Run CMake Configure ----------------------------------------------------------------------------- 
               cmake --version 
-              cmake -G "$CMAKE_GENERATOR" "-DCMAKE_PREFIX_PATH=$QTDIR;$CIMG_INCLUDE_DIR" .. 
+              cmake -G "$CMAKE_GENERATOR" "-DCMAKE_PREFIX_PATH=$QTDIR;$CIMG_INCLUDE_DIR"  "-DCMAKE_INSTALL_PREFIX=%APPVEYOR_BUILD_FOLDER%/install" .. 
               echo --- Build using CMake ------------------------------------------------------------------------------- 
               cmake --build . --config "$CONFIGURATION" -j$(getconf _NPROCESSORS_ONLN)  -- $CMAKE_BUILDFLAGS
             fi
@@ -204,7 +222,29 @@ for:
               make -j$(getconf _NPROCESSORS_ONLN) 
             fi
 
+    install:
+      - sh: echo == INSTALL JKQtPlotter ==========================================================================
+      - sh: cd %APPVEYOR_BUILD_FOLDER%
+      - sh: cd build
+      - sh: |
+            if [ "$USE_CMAKE" = true ]; then 
+              echo --- Install using CMake ------------------------------------------------------------------------------- 
+              cmake --install . --config "$CONFIGURATION" -j$(getconf _NPROCESSORS_ONLN)  -- $CMAKE_BUILDFLAGS
+            fi
 
+
+    test_usage:
+      - sh: echo == TEST: USE JKQtPlotter CMAKE BUILD ============================================================
+      - sh: cd %APPVEYOR_BUILD_FOLDER%
+      - sh: if %USE_CMAKE%==true cd examples\cmake_link_example
+      - sh: mkdir build
+      - sh: cd build
+      - sh: |
+            if [ "$USE_CMAKE" = true ]; then 
+              cmake -G "%CMAKE_GENERATOR%" "-DCMAKE_PREFIX_PATH=%QTDIR%;%CIMG_INCLUDE_DIR%;%APPVEYOR_BUILD_FOLDER%\install" .. 
+              cmake --build . --config "%CONFIGURATION%" -j%NUMBER_OF_PROCESSORS% -- %CMAKE_BUILDFLAGS%
+            fi
+      - sh: cd ..
 
 
 

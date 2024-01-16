@@ -93,10 +93,22 @@ JKQTPlotter contains two different build systems: A modern [CMake](https://cmake
 With [CMake](https://cmake.org/) you can easily build JKQTPlotter and all its examples, by calling something like:
 ```
     $ mkdir build; cd build
-    $ cmake .. -G "<cmake_generator>" "-DCMAKE_PREFIX_PATH=<path_to_your_qt_sources>"
+    $ cmake .. -G "<cmake_generator>" "-DCMAKE_PREFIX_PATH=<path_to_your_qt_sources>" "-DCMAKE_INSTALL_PREFIX=<where_to_install>"
     $ cmake --build . --config "Debug"
+    $ cmake --install . --config "Debug"
 ```
 
+This will create CMake targets, which you can easily link against. For the main plotter library, the target's name is \c JKQTPlotter5::JKQTPlotter5 or  \c JKQTPlotter6::JKQTPlotter6 depending on the Qt-Version you use. You can then simmply link against this via:
+```
+  find_package(JKQTPlotter6 REQUIRED)
+  target_link_libraries(${PROJECT_NAME} JKQTPlotter6::JKQTPlotter6)
+```
+or on a Qt-version agnostic way via:
+```
+  find_package(JKQTPlotter${QT_VERSION_MAJOR} REQUIRED)
+  target_link_libraries(${PROJECT_NAME} JKQTPlotter${QT_VERSION_MAJOR}::JKQTPlotter${QT_VERSION_MAJOR})
+```
+See http://jkriege2.github.io/JKQtPlotter/page_buildinstructions_cmake.html for details.
 
 ## Stargazers over time
 

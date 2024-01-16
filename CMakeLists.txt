@@ -45,20 +45,31 @@ include(jkqtplotter_common_qtsettings)
 # additionnal common macros
 include(jkqtplotter_macros)
 
+set(jkqtplotter_LIBNAME_VERSION_PART ${QT_VERSION_MAJOR})
+# defines the CMake-namespace for all libraries
+set(jkqtplotter_namespace JKQTPlotter${jkqtplotter_LIBNAME_VERSION_PART}::)
+# defines the subdirectory for CMake-files, when installing
+set(jkqtplotter_cmakeSubdir JKQTPlotter${jkqtplotter_LIBNAME_VERSION_PART})
+
 
 
 # now add subdirectories with the library code ...
 add_subdirectory(lib)
-# ... and optionally the examples
-if(JKQtPlotter_BUILD_EXAMPLES)
-    add_subdirectory(examples)
+
+if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
+    # We're in the root, define additional targets for developers.
+    # This prepares the library to be used with CMake's FetchContent
+
+    # ... and optionally the examples
+    if(JKQtPlotter_BUILD_EXAMPLES)
+        add_subdirectory(examples)
+    endif()
+
+    if(JKQtPlotter_BUILD_TOOLS)
+        add_subdirectory(tools)
+    endif()
+
+    add_subdirectory(doc)
+
 endif()
-
-if(JKQtPlotter_BUILD_TOOLS)
-    add_subdirectory(tools)
-endif()
-
-add_subdirectory(doc)
-
-
 

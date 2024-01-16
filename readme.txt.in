@@ -1,6 +1,6 @@
 =============================================================================
 == JKQTPlotters is a library for scientific plotting using Qt5/6           ==
-==     sub-library: @libBasename@
+==     sub-library: @lib_name@
 =============================================================================
 
 Library Information:
@@ -14,7 +14,11 @@ Library Information:
 Build information:
   used compiler:          @CMAKE_CXX_COMPILER_ID@ @CMAKE_CXX_COMPILER_VERSION@
   used Qt version:        @QT_VERSION@
-  built static libs:      @BUILD_STATIC_LIBS@
   built shared libs:      @BUILD_SHARED_LIBS@
-  built examples:         @BUILD_EXAMPLES@
-  included XITS fonts:    @BUILD_INCLUDE_XITS_FONTS@
+  witho print support:    @JKQtPlotter_BUILD_WITH_PRINTER_SUPPORT@ 
+  C++20 support:          @JKQtPlotter_ENABLED_CXX20@
+  timing debug output:    @JKQtPlotter_BUILD_WITH_TIMING_INFO_OUTPUT@
+  built tools:            @JKQtPlotter_BUILD_TOOLS@
+  included XITS fonts:    @JKQtPlotter_BUILD_INCLUDE_XITS_FONTS@
+  included FIRA fonts:    @JKQtPlotter_BUILD_INCLUDE_FIRAMATH_FONTS@
+  built examples:         @JKQtPlotter_BUILD_EXAMPLES@

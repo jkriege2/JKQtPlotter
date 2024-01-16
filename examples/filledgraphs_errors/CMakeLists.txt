@@ -15,11 +15,7 @@ set(UIS  )
 add_executable(${EXENAME} WIN32 ${SOURCES} ${HEADERS} ${RESOURCES} ${UIS})
 target_link_libraries(${EXENAME} JKQTPExampleToolsLib)
 target_include_directories(${EXENAME} PRIVATE ../../lib)
-if(JKQtPlotter_BUILD_STATIC_LIBS)
-    target_link_libraries(${EXENAME} JKQTPlotterLib)
-elseif(JKQtPlotter_BUILD_SHARED_LIBS)
-    target_link_libraries(${EXENAME} JKQTPlotterSharedLib)
-endif()
+target_link_libraries(${EXENAME} ${jkqtplotter_namespace}JKQTPlotter${jkqtplotter_LIBNAME_VERSION_PART})
 
 # precomiled headers to speed up compilation
 if (JKQtPlotter_BUILD_WITH_PRECOMPILED_HEADERS)

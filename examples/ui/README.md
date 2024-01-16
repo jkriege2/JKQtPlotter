@@ -16,45 +16,7 @@ For this to work you have to follow the steps shown below:
    
    
    
-# QMake-Project of this example
-
-The QMake project for such a project looks like this (see [`ui.pro`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/ui/ui.pro):
-```.qmake
-# source code for this simple demo
-SOURCES =  ui.cpp \
-           formwithjkqtplotter.cpp
-
-FORMS +=   formwithjkqtplotter.ui
-
-HEADERS += formwithjkqtplotter.h
-
-# configure Qt
-CONFIG += qt
-QT += core gui xml svg
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
-
-# output executable name
-TARGET = ui
-
-# include JKQTPlotter source headers and link against library
-DEPENDPATH += ../../lib  ../../qmake/staticlib/jkqtplotterlib
-INCLUDEPATH += ../../lib
-CONFIG (debug, debug|release) {
-    LIBS += -L../../qmake/staticlib/jkqtplotterlib/debug -ljkqtplotterlib_debug
-} else {
-    LIBS += -L../../qmake/staticlib/jkqtplotterlib/release -ljkqtplotterlib
-}
-message("LIBS = $$LIBS")
-
-win32-msvc*: DEFINES += _USE_MATH_DEFINES
-win32-msvc*: DEFINES += NOMINMAX
-
-
-
-
-```
-
-As you can see there is a main CPP-file (shown below) and a `formwithjkqtplotter.ui`-file with the `formwithjkqtplotter.cpp/.h`-files that are used to implement the functionality behind the form (see next chapter).
+In the example, there is a main CPP-file (shown below) and a `formwithjkqtplotter.ui`-file with the `formwithjkqtplotter.cpp/.h`-files that are used to implement the functionality behind the form (see next chapter).
 
 The source code of the main application is simply instanciating the Form class `FormWithJKQTPlotter` from `formwithjkqtplotter.ui/.h/.cpp`:
 ```.cpp
