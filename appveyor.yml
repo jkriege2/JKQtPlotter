@@ -199,7 +199,7 @@ for:
 
     build_script:
       - sh: echo == BUILD JKQtPlotter ============================================================================
-      - sh: cd %APPVEYOR_BUILD_FOLDER%
+      - sh: cd $APPVEYOR_BUILD_FOLDER
       - sh: mkdir build
       - sh: mkdir install
       - sh: cd build
@@ -207,7 +207,7 @@ for:
             if [ "$USE_CMAKE" = true ]; then 
               echo --- Run CMake Configure ----------------------------------------------------------------------------- 
               cmake --version 
-              cmake -G "$CMAKE_GENERATOR" "-DCMAKE_PREFIX_PATH=$QTDIR;$CIMG_INCLUDE_DIR"  "-DCMAKE_INSTALL_PREFIX=%APPVEYOR_BUILD_FOLDER%/install" .. 
+              cmake -G "$CMAKE_GENERATOR" "-DCMAKE_PREFIX_PATH=$QTDIR;$CIMG_INCLUDE_DIR"  "-DCMAKE_INSTALL_PREFIX=$APPVEYOR_BUILD_FOLDER/install" .. 
               echo --- Build using CMake ------------------------------------------------------------------------------- 
               cmake --build . --config "$CONFIGURATION" -j$(getconf _NPROCESSORS_ONLN)  -- $CMAKE_BUILDFLAGS
             fi
@@ -220,7 +220,7 @@ for:
               make -j$(getconf _NPROCESSORS_ONLN) 
             fi
       - sh: echo == INSTALL JKQtPlotter ==========================================================================
-      - sh: cd %APPVEYOR_BUILD_FOLDER%
+      - sh: cd $APPVEYOR_BUILD_FOLDER
       - sh: cd build
       - sh: |
             if [ "$USE_CMAKE" = true ]; then 
@@ -231,13 +231,13 @@ for:
 
     after_build:
       - sh: echo == TEST USE JKQtPlotter CMAKE BUILD ============================================================
-      - sh: cd %APPVEYOR_BUILD_FOLDER%
+      - sh: cd $APPVEYOR_BUILD_FOLDER
       - sh: if %USE_CMAKE%==true cd examples\cmake_link_example
       - sh: mkdir build
       - sh: cd build
       - sh: |
             if [ "$USE_CMAKE" = true ]; then 
-              cmake -G "%CMAKE_GENERATOR%" "-DCMAKE_PREFIX_PATH=%QTDIR%;%CIMG_INCLUDE_DIR%;%APPVEYOR_BUILD_FOLDER%\install" .. 
+              cmake -G "%CMAKE_GENERATOR%" "-DCMAKE_PREFIX_PATH=%QTDIR%;%CIMG_INCLUDE_DIR%;$APPVEYOR_BUILD_FOLDER\install" .. 
               cmake --build . --config "%CONFIGURATION%" -j%NUMBER_OF_PROCESSORS% -- %CMAKE_BUILDFLAGS%
             fi
       - sh: cd ..
