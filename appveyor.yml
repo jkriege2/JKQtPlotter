@@ -140,7 +140,7 @@ for:
       - cmd: if %USE_CMAKE%==true cmake --install . --config "%CONFIGURATION%" -j%NUMBER_OF_PROCESSORS% -- %CMAKE_BUILDFLAGS%
 
     test_usage:
-      - cmd: echo == TEST: USE JKQtPlotter CMAKE BUILD ============================================================
+      - cmd: echo == TEST USE JKQtPlotter CMAKE BUILD ============================================================
       - cmd: if %USE_CMAKE%==true cd %APPVEYOR_BUILD_FOLDER%
       - cmd: if %USE_CMAKE%==true cd examples\cmake_link_example
       - cmd: mkdir build
@@ -234,7 +234,7 @@ for:
 
 
     test_usage:
-      - sh: echo == TEST: USE JKQtPlotter CMAKE BUILD ============================================================
+      - sh: echo == TEST USE JKQtPlotter CMAKE BUILD ============================================================
       - sh: cd %APPVEYOR_BUILD_FOLDER%
       - sh: if %USE_CMAKE%==true cd examples\cmake_link_example
       - sh: mkdir build
