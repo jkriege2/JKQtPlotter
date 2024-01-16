@@ -132,14 +132,12 @@ for:
       - cmd: if %USE_CMAKE%==false qmake.exe CONFIG+=%CONFIGURATION% ..\JKQtPlotterBuildAllExamples.pro 
       - cmd: if %USE_CMAKE%==false call %MAKETOOL% 
       - cmd: cd ..
-
-    install_script:
       - cmd: echo == INSTALL JKQtPlotter ==========================================================================
       - cmd: cd %APPVEYOR_BUILD_FOLDER%
       - cmd: cd build
       - cmd: if %USE_CMAKE%==true cmake --install . --config "%CONFIGURATION%" -j%NUMBER_OF_PROCESSORS% -- %CMAKE_BUILDFLAGS%
 
-    test_usage:
+    after_build:
       - cmd: echo == TEST USE JKQtPlotter CMAKE BUILD ============================================================
       - cmd: if %USE_CMAKE%==true cd %APPVEYOR_BUILD_FOLDER%
       - cmd: if %USE_CMAKE%==true cd examples\cmake_link_example
@@ -221,8 +219,6 @@ for:
               echo --- Build for QMake --------------------------------------------------------------------------------- 
               make -j$(getconf _NPROCESSORS_ONLN) 
             fi
-
-    install_script:
       - sh: echo == INSTALL JKQtPlotter ==========================================================================
       - sh: cd %APPVEYOR_BUILD_FOLDER%
       - sh: cd build
@@ -233,7 +229,7 @@ for:
             fi
 
 
-    test_usage:
+    after_build:
       - sh: echo == TEST USE JKQtPlotter CMAKE BUILD ============================================================
       - sh: cd %APPVEYOR_BUILD_FOLDER%
       - sh: if %USE_CMAKE%==true cd examples\cmake_link_example
