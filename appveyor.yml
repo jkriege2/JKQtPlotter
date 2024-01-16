@@ -135,7 +135,7 @@ for:
       - cmd: echo == INSTALL JKQtPlotter ==========================================================================
       - cmd: cd %APPVEYOR_BUILD_FOLDER%
       - cmd: cd build
-      - cmd: if %USE_CMAKE%==true cmake --install . --config "%CONFIGURATION%" -j%NUMBER_OF_PROCESSORS% -- %CMAKE_BUILDFLAGS%
+      - cmd: if %USE_CMAKE%==true cmake --install . --config "%CONFIGURATION%" -j%NUMBER_OF_PROCESSORS% 
 
     after_build:
       - cmd: echo == TEST USE JKQtPlotter CMAKE BUILD ============================================================
@@ -225,7 +225,7 @@ for:
       - sh: |
             if [ "$USE_CMAKE" = true ]; then 
               echo --- Install using CMake ------------------------------------------------------------------------------- 
-              cmake --install . --config "$CONFIGURATION" -j$(getconf _NPROCESSORS_ONLN)  -- $CMAKE_BUILDFLAGS
+              cmake --install . --config "$CONFIGURATION" -j$(getconf _NPROCESSORS_ONLN)  
             fi
 
 
