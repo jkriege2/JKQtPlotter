@@ -135,14 +135,15 @@ for:
       - cmd: echo == INSTALL JKQtPlotter ==========================================================================
       - cmd: cd %APPVEYOR_BUILD_FOLDER%
       - cmd: cd build
-      - cmd: if %USE_CMAKE%==true cmake --install . --config "%CONFIGURATION%" -j%NUMBER_OF_PROCESSORS% 
+      - cmd: if %USE_CMAKE%==true cmake --install . --config "%CONFIGURATION%"
 
     after_build:
       - cmd: echo == TEST USE JKQtPlotter CMAKE BUILD ============================================================
-      - cmd: if %USE_CMAKE%==true cd %APPVEYOR_BUILD_FOLDER%
-      - cmd: if %USE_CMAKE%==true cd examples\cmake_link_example
-      - cmd: mkdir build
-      - cmd: cd build
+      - cmd: cd %APPVEYOR_BUILD_FOLDER%
+      - cmd: if %USE_CMAKE%==true cd examples
+      - cmd: if %USE_CMAKE%==true cd cmake_link_example
+      - cmd: if %USE_CMAKE%==true mkdir build
+      - cmd: if %USE_CMAKE%==true cd build
       - cmd: if %USE_CMAKE%==true cmake -G "%CMAKE_GENERATOR%" "-DCMAKE_PREFIX_PATH=%QTDIR%;%CIMG_INCLUDE_DIR%;%APPVEYOR_BUILD_FOLDER%\install" .. 
       - cmd: if %USE_CMAKE%==true cmake --build . --config "%CONFIGURATION%" -j%NUMBER_OF_PROCESSORS% -- %CMAKE_BUILDFLAGS%
       - cmd: cd ..
@@ -225,22 +226,22 @@ for:
       - sh: |
             if [ "$USE_CMAKE" = true ]; then 
               echo --- Install using CMake ------------------------------------------------------------------------------- 
-              cmake --install . --config "$CONFIGURATION" -j$(getconf _NPROCESSORS_ONLN)  
+              cmake --install . --config "$CONFIGURATION" 
             fi
 
 
     after_build:
       - sh: echo == TEST USE JKQtPlotter CMAKE BUILD ============================================================
-      - sh: cd $APPVEYOR_BUILD_FOLDER
-      - sh: if %USE_CMAKE%==true cd examples\cmake_link_example
-      - sh: mkdir build
-      - sh: cd build
       - sh: |
             if [ "$USE_CMAKE" = true ]; then 
+              cd $APPVEYOR_BUILD_FOLDER
+              cd examples/cmake_link_example
+              mkdir build
+              cd build
               cmake -G "%CMAKE_GENERATOR%" "-DCMAKE_PREFIX_PATH=%QTDIR%;%CIMG_INCLUDE_DIR%;$APPVEYOR_BUILD_FOLDER\install" .. 
               cmake --build . --config "%CONFIGURATION%" -j%NUMBER_OF_PROCESSORS% -- %CMAKE_BUILDFLAGS%
+              cd ..
             fi
-      - sh: cd ..
 
 
 
