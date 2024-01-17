@@ -19,7 +19,8 @@ include(FetchContent) # once in the project to include the module
 # ... now declare JKQTPlotter5/6
 FetchContent_Declare(JKQTPlotter${QT_VERSION_MAJOR}
                      GIT_REPOSITORY https://github.com/jkriege2/JKQtPlotter.git
-                     # GIT_TAG        v5.0.0)
+                     # GIT_TAG        v5.0.0
+                     )
 # ... finally make JKQTPlotter5/6 available
 FetchContent_MakeAvailable(JKQTPlotter${QT_VERSION_MAJOR})
 
