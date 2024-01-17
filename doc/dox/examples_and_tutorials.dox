@@ -269,6 +269,9 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 <tr><td> \image html jkqtplotter_cmakelink_small.png
     <td> \subpage JKQTCMakeLinkExample
 	<td> explains how to link against JKQTPlotter with CMake
+<tr><td> \image html jkqtplotter_cmakelink_small.png
+    <td> \subpage JKQTCMakeFetchContentExample
+	<td> explains how to link against JKQTPlotter with CMake's FetchCOntent-API
 </table>	
 	
 	
