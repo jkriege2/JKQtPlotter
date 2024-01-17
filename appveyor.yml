@@ -31,6 +31,15 @@ environment:
  
   matrix:
       
+
+    - QTABI: gcc_64
+      COMPILER: GCC
+      QTVER: 6.4
+      APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
+      CMAKE_GENERATOR: "Unix Makefiles"
+      INSTALL_QMAKE5: true
+      TEST_FETCHCONTENT: true
+
     - QTABI: gcc_64
       COMPILER: GCC
       QTVER: 5.15
@@ -38,6 +47,7 @@ environment:
       APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
       CMAKE_GENERATOR: "Unix Makefiles"
       INSTALL_QMAKE5: true
+      TEST_FETCHCONTENT: false
            
     - QTABI: msvc2019_64
       COMPILER: MSVC
@@ -45,6 +55,7 @@ environment:
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
       CMAKE_GENERATOR: "Visual Studio 16 2019"
       CMAKE_BUILDFLAGS: /verbosity:minimal /maxcpucount
+      TEST_FETCHCONTENT: false
            
     - QTABI: msvc2019_64
       COMPILER: MSVC
@@ -52,6 +63,7 @@ environment:
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
       CMAKE_GENERATOR: "Visual Studio 16 2019"
       CMAKE_BUILDFLAGS: /verbosity:minimal /maxcpucount
+      TEST_FETCHCONTENT: false
       
     - QTABI: gcc_64
       COMPILER: GCC
@@ -59,6 +71,7 @@ environment:
       APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
       CMAKE_GENERATOR: "Unix Makefiles"
       INSTALL_QMAKE5: true
+      TEST_FETCHCONTENT: false
 
     - QTABI: gcc_64
       COMPILER: GCC
@@ -66,12 +79,14 @@ environment:
       APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
       CMAKE_GENERATOR: "Unix Makefiles"
       INSTALL_QMAKE5: true
+      TEST_FETCHCONTENT: false
 
     - QTABI: macos
       COMPILER: CLANG
       QTVER: 6.4
       APPVEYOR_BUILD_WORKER_IMAGE: macos-monterey
       CMAKE_GENERATOR: "Unix Makefiles"
+      TEST_FETCHCONTENT: false
   
 
 for:
@@ -203,37 +218,49 @@ for:
       - sh: cd $APPVEYOR_BUILD_FOLDER
       - sh: mkdir build
       - sh: mkdir install
-      - sh: cd build
       - sh: |
-            if [ "$USE_CMAKE" = true ]; then 
+            if [ "$USE_CMAKE" = true ] && [ "$TEST_FETCHCONTENT" = false ]; then 
+              cd build
               echo --- Run CMake Configure ----------------------------------------------------------------------------- 
               cmake --version 
               cmake -G "$CMAKE_GENERATOR" "-DCMAKE_PREFIX_PATH=$QTDIR;$CIMG_INCLUDE_DIR"  "-DCMAKE_INSTALL_PREFIX=$APPVEYOR_BUILD_FOLDER/install" .. 
               echo --- Build using CMake ------------------------------------------------------------------------------- 
               cmake --build . --config "$CONFIGURATION" -j$(getconf _NPROCESSORS_ONLN)  -- $CMAKE_BUILDFLAGS
             fi
+            if [ "$USE_CMAKE" = true ] && [ "$TEST_FETCHCONTENT" = true ]; then 
+              cd examples/cmake_fetchcontent_example
+              mkdir build 
+              cd build
+              echo --- Run CMake Configure with FetchCOntent ----------------------------------------------------------- 
+              cmake --version 
+              cmake -G "$CMAKE_GENERATOR" "-DCMAKE_PREFIX_PATH=$QTDIR;$CIMG_INCLUDE_DIR"  "-DCMAKE_INSTALL_PREFIX=$APPVEYOR_BUILD_FOLDER/install" .. 
+              echo --- Build using CMake with FetchCOntent ------------------------------------------------------------- 
+              cmake --build . --config "$CONFIGURATION" -j$(getconf _NPROCESSORS_ONLN)  -- $CMAKE_BUILDFLAGS
+            fi
       - sh: |
             if [ "$USE_CMAKE" = false ]; then 
+              cd build
               echo --- Run QMake Configure ----------------------------------------------------------------------------- 
               $QTDIR/bin/qmake -v 
               $QTDIR/bin/qmake -makefile -o Makefile "CONFIG+=%CONFIGURATION%" ../JKQtPlotterAppveyorBuild.pro
               echo --- Build for QMake --------------------------------------------------------------------------------- 
               make -j$(getconf _NPROCESSORS_ONLN) 
             fi
-      - sh: echo == INSTALL JKQtPlotter ==========================================================================
-      - sh: cd $APPVEYOR_BUILD_FOLDER
-      - sh: cd build
+      - sh:
       - sh: |
-            if [ "$USE_CMAKE" = true ]; then 
+            if [ "$USE_CMAKE" = true ] && [ "$TEST_FETCHCONTENT" = false ]; then 
+              echo == INSTALL JKQtPlotter ==========================================================================
+              cd $APPVEYOR_BUILD_FOLDER
+              cd build
               echo --- Install using CMake ------------------------------------------------------------------------------- 
               cmake --install . --config "$CONFIGURATION" 
             fi
 
 
     after_build:
-      - sh: echo == TEST USE JKQtPlotter CMAKE BUILD ============================================================
       - sh: |
-            if [ "$USE_CMAKE" = true ]; then 
+            if [ "$USE_CMAKE" = true ] && [ "$TEST_FETCHCONTENT" = false ]; then 
+              echo == TEST USE JKQtPlotter CMAKE BUILD ============================================================
               cd $APPVEYOR_BUILD_FOLDER
               cd examples/cmake_link_example
               mkdir build

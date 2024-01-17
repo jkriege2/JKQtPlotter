@@ -83,7 +83,7 @@ The [Screenshots-page](./screenshots/) contains several screenshots, partly take
 
 [![EXAMPLES-Page](./screenshots/screenshotsbanner.png)](./screenshots/README.md)
 
-## Building
+## Building Using CMake
 
 [![Lates Release](https://img.shields.io/github/v/release/jkriege2/JKQtPlotter)](https://github.com/jkriege2/JKQtPlotter/releases)
 
@@ -109,6 +109,27 @@ or on a Qt-version agnostic way via:
   target_link_libraries(${PROJECT_NAME} JKQTPlotter${QT_VERSION_MAJOR}::JKQTPlotter${QT_VERSION_MAJOR})
 ```
 See https://jkriege2.github.io/JKQtPlotter/page_buildinstructions__c_m_a_k_e.html for details.
+
+## Usage via CMake's FetchConten-API
+
+In addition to the method described above (i.e. build and install the library and then use it), you can also use JKQTPlotter via CMake's [FetchContent-API](https://cmake.org/cmake/help/latest/module/FetchContent.html). 
+
+For this method, you need to add these lines to your CMake project:
+```
+include(FetchContent) # once in the project to include the module
+# ... now declare JKQTPlotter5/6
+FetchContent_Declare(JKQTPlotter${QT_VERSION_MAJOR}
+                     GIT_REPOSITORY https://github.com/jkriege2/JKQtPlotter.git
+                     # GIT_TAG        v5.0.0)
+# ... finally make JKQTPlotter5/6 available
+FetchContent_MakeAvailable(JKQTPlotter${QT_VERSION_MAJOR})
+```
+
+These declare JKQTPlotter and make it available in your project. Afterwards you should be able to link against it, using
+```
+target_link_libraries(${PROJECT_NAME} JKQTPlotter${QT_VERSION_MAJOR}::JKQTPlotter${QT_VERSION_MAJOR})
+```
+
 
 ## Stargazers over time
 

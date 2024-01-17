@@ -1,6 +1,6 @@
 # Example (JKQTPlotter): CMake Example  {#JKQTCMakeLinkExample}
 
-This project (see [`cmake_link_example`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/cmake_link_example) demonstrates how to link against JKQTPlotter using CMake. See http://jkriege2.github.io/JKQtPlotter/page_buildinstructions.html for details on how to build JKQTPlotter with CMake
+This project (see [`cmake_link_example`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/cmake_link_example) demonstrates how to link against JKQTPlotter using CMake. See https://jkriege2.github.io/JKQtPlotter/page_buildinstructions__c_m_a_k_e.html for details on how to build JKQTPlotter with CMake
 
 This example uses very simple code, which simply displays a plotter and shows some data. The important part of this example is the ´CMakeLists.txt`-file:
 ```

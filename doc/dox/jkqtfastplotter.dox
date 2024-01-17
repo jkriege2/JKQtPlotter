@@ -1,6 +1,6 @@
 /*!
 
-\defgroup jkqtfastplotter JKQTFastPlotter: Speed-Optimized Plotter class
+\defgroup jkqtfastplotter DEPRECATED: JKQTFastPlotter: Speed-Optimized Plotter class
 
   \deprecated The class JKQTFastPlotter and all its support classes are deprecated and will be removed in future versions. 
 

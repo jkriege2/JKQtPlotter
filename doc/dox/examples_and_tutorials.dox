@@ -288,7 +288,7 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 </table>
 	
 	
-\section jkqtp_extut_jkqtfastplotter Examples for JKQTFastPlotter
+\section jkqtp_extut_jkqtfastplotter DEPRECATED: Examples for JKQTFastPlotter
 
 <table>
 <tr><th> Screenshot    <th> Description   <th> Notes  
