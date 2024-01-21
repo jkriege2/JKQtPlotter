@@ -20,6 +20,7 @@
 
 #include "jkqtcommon/jkqtpcsstools.h"
 #include "jkqtcommon/jkqtpstringtools.h"
+#include "jkqtcommon/jkqtpcodestructuring.h"
 #include <exception>
 #include <QMetaEnum>
 
