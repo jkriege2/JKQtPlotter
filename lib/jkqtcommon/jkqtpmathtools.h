@@ -143,6 +143,24 @@ inline T jkqtp_roundTo(const double& v) {
     return static_cast<T>(round(v));
 }
 
+/** \brief round a double \a v using round() to a given number of decimal digits
+ *  \ingroup jkqtptools_math_basic
+ *
+ *  \param v the value to round and cast
+ *  \param decDigits number of decimal digits, i.e. precision of the result
+ *
+ *  this is equivalent to
+ *  \code
+ *     round(v * pow(10.0,(double)decDigits))/pow(10.0,(double)decDigits);
+ *  \endcode
+ *
+ * \callergraph
+ */
+inline double jkqtp_roundToDigits(const double& v, const int decDigits) {
+    const double fac=pow(10.0,(double)decDigits);
+    return round(v * fac) / fac;
+}
+
 /** \brief round a double \a v using ceil() and convert it to a specified type T (static_cast!)
  *  \ingroup jkqtptools_math_basic
  *
