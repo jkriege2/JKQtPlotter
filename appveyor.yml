@@ -163,6 +163,15 @@ for:
       - cmd: if %USE_CMAKE%==true cmake --build . --config "%CONFIGURATION%" -j%NUMBER_OF_PROCESSORS% -- %CMAKE_BUILDFLAGS%
       - cmd: cd ..
 
+    test_script:
+      - cmd: if %USE_CMAKE%==true echo == RUNNING UNIT TESTS FOR JKQtPlotter CMAKE BUILD ===============================================
+      - cmd: cd %APPVEYOR_BUILD_FOLDER%
+      - cmd: cd build
+      - cmd: if %USE_CMAKE%==true ctest -C --config "%CONFIGURATION%" --output-on-failure --output-junit test-results.xml
+
+    after_test:
+      - find "$APPVEYOR_BUILD_FOLDER" -type f -name 'test-results.xml' -print0 | xargs -0 -I '{}' curl -F 'file=@{}' "https://ci.appveyor.com/api/testresults/junit/$APPVEYOR_JOB_ID" 
+
 
   # Linux (Ubuntu2004)
   - 
@@ -265,12 +274,23 @@ for:
               cd examples/cmake_link_example
               mkdir build
               cd build
-              cmake -G "%CMAKE_GENERATOR%" "-DCMAKE_PREFIX_PATH=%QTDIR%;%CIMG_INCLUDE_DIR%;$APPVEYOR_BUILD_FOLDER\install" .. 
-              cmake --build . --config "%CONFIGURATION%" -j%NUMBER_OF_PROCESSORS% -- %CMAKE_BUILDFLAGS%
+              cmake -G "$CONFIGURATION" "-DCMAKE_PREFIX_PATH=$QTDIR;$CIMG_INCLUDE_DIR;$APPVEYOR_BUILD_FOLDER\install" .. 
+              cmake --build . --config "$CONFIGURATION" -j$(getconf _NPROCESSORS_ONLN) -- $CMAKE_BUILDFLAGS
               cd ..
             fi
 
+    test_script:
+      - sh: |
+            if [ "$USE_CMAKE" = true ] && [ "$TEST_FETCHCONTENT" = false ]; then 
+              echo == RUNNING UNIT TESTS FOR JKQtPlotter CMAKE BUILD ===============================================
+              cd $APPVEYOR_BUILD_FOLDER
+              cd build
+              ctest -C --config "$CONFIGURATION" --output-on-failure --output-junit test-results.xml
+            fi
+    after_test:
+      - find "$APPVEYOR_BUILD_FOLDER" -type f -name 'test-results.xml' -print0 | xargs -0 -I '{}' curl -F 'file=@{}' "https://ci.appveyor.com/api/testresults/junit/$APPVEYOR_JOB_ID" 
 
+          
 
   #  MacOS (Monterey)
   - 
@@ -306,3 +326,10 @@ for:
       - sh: cmake -G "$CMAKE_GENERATOR" "-DCMAKE_PREFIX_PATH=$QTDIR" .. 
       - sh: echo --- Build using CMake ------------------------------------------------------------------------------- 
       - sh: cmake --build . --config "$CONFIGURATION" -j$(getconf _NPROCESSORS_ONLN)  -- $CMAKE_BUILDFLAGS
+
+
+artifacts:
+  - path: 'build/CMakeFiles/*.log'
+    name: logs
+  - path: 'build/Testing/**/*.xml'
+    name: test_results

@@ -70,6 +70,10 @@ if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
     endif()
 
     add_subdirectory(doc)
+    
+    if (JKQtPlotter_BUILD_TESTS)
+      add_subdirectory(tests)
+    endif()
 
 endif()
 

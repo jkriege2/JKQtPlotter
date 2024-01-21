@@ -1,0 +1,19 @@
+cmake_minimum_required(VERSION 3.23)
+
+message( STATUS )
+message( STATUS "............................................................................." )
+message( STATUS ".. BUILDING UNIT TESTS" )
+message( STATUS "............................................................................." )
+if (JKQtPlotter_BUILD_WITH_PRECOMPILED_HEADERS)
+  message( STATUS "..   - Precompiled Header:  ON" )
+else()
+  message( STATUS "..   - Precompiled Header:  OFF")
+endif()
+message( STATUS "............................................................................." )
+
+enable_testing()
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Test REQUIRED)
+
+message( STATUS ".. BUILDING UNIT TESTS FOR JKQTCommon:" )
+add_subdirectory(jkqtcommmon)
+

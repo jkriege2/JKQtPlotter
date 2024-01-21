@@ -62,6 +62,7 @@ The CMake build system offers several configuration variables that you may set/c
   - \c JKQtPlotter_BUILD_WITH_TIMING_INFO_OUTPUT : If enabled (\c ON ), additional tiing code is activated (and built into the library), which outputs timming information for several functions of the library into \c qDebug() . This is intended for development putposes only, NOT for productive builds!  (default: \c OFF )
   - \c JKQtPlotter_BUILD_EXAMPLES : Build examples (default: \c ON )
   - \c JKQtPlotter_BUILD_TOOLS : Build tools (default: \c ON )
+  - \c JKQtPlotter_BUILD_TESTS : Build unit-tests (default: \c ON )
   - \c JKQtPlotter_BUILD_LIB_JKQTMATH : Build sub-library JKQTMath (default: \c ON )
   - \c JKQtPlotter_BUILD_LIB_JKQTMATHTEXT : Build sub-library JKQTMathText (default: \c ON )
   - DEPRECATED: \c JKQtPlotter_BUILD_LIB_JKQTFASTPLOTTER : Build sub-library JKQTFastPlotter (default: \c ON ) ... Note: This option may change to default=OFF in future ... and may be removed thereafter!
