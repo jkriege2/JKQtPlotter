@@ -20,6 +20,7 @@
 
 #include "jkqtcommon/jkqtpstringtools.h"
 #include "jkqtcommon/jkqtpmathtools.h"
+#include "jkqtcommon/jkqtpcsstools.h"
 #include <QDateTime>
 #include <cmath>
 #include <QDebug>
@@ -34,6 +35,11 @@
 #include <ctype.h>
 #include <sstream>
 #include <locale>
+#include <QCache>
+#include <QSharedPointer>
+#include <QMetaEnum>
+#include <QGradient>
+#include <QGradientStops>
 #if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
 #include<QRegularExpression>
 #include<QRegularExpressionMatch>
@@ -330,26 +336,73 @@ QString jkqtp_QBrushStyle2String(Qt::BrushStyle style) {
     }
 }
 
+namespace {
+    static QMap<QString,Qt::BrushStyle> s_String2QBrushStyleMap = []() {
+        QMap<QString,Qt::BrushStyle> m;
+        m["none"]=Qt::NoBrush;
+        m["d1"]=Qt::Dense1Pattern;
+        m["d2"]=Qt::Dense2Pattern;
+        m["d3"]=Qt::Dense3Pattern;
+        m["d4"]=Qt::Dense4Pattern;
+        m["d5"]=Qt::Dense5Pattern;
+        m["d6"]=Qt::Dense6Pattern;
+        m["d7"]=Qt::Dense7Pattern;
+        m["hor"]=Qt::HorPattern;
+        m["ver"]=Qt::VerPattern;
+        m["cross"]=Qt::CrossPattern;
+        m["bdiag"]=Qt::BDiagPattern;
+        m["vdiag"]=Qt::FDiagPattern;
+        m["diagcross"]=Qt::DiagCrossPattern;
+        return m;
+    }();
+
+    static QMap<QString,QGradient::Preset> s_GradientPresets = []() {
+        QMap<QString,QGradient::Preset> m;
+        for (int i=1; i<QGradient::Preset::NumPresets; i++) {
+            const QString id=QString(QMetaEnum::fromType<QGradient::Preset>().valueToKey(static_cast<QGradient::Preset>(i))).toLower().trimmed().simplified();
+            if (id.size()>0) m[id]=static_cast<QGradient::Preset>(i);
+        }
+        return m;
+    }();
+
+}
+
 Qt::BrushStyle jkqtp_String2QBrushStyle(const QString& style) {
     QString s=style.toLower().trimmed();
-    if (s=="none") return Qt::NoBrush;
-    if (s=="d1") return Qt::Dense1Pattern;
-    if (s=="d2") return Qt::Dense2Pattern;
-    if (s=="d3") return Qt::Dense3Pattern;
-    if (s=="d4") return Qt::Dense4Pattern;
-    if (s=="d5") return Qt::Dense5Pattern;
-    if (s=="d6") return Qt::Dense6Pattern;
-    if (s=="d7") return Qt::Dense7Pattern;
-    if (s=="hor") return Qt::HorPattern;
-    if (s=="ver") return Qt::VerPattern;
-    if (s=="cross") return Qt::CrossPattern;
-    if (s=="bdiag") return Qt::BDiagPattern;
-    if (s=="vdiag") return Qt::FDiagPattern;
-    if (s=="diagcross") return Qt::DiagCrossPattern;
-    /*if (s=="lingrad") return Qt::LinearGradientPattern;
-    if (s=="radgrad") return Qt::RadialGradientPattern;
-    if (s=="congrad") return Qt::ConicalGradientPattern;*/
-    return Qt::SolidPattern;
+    return s_String2QBrushStyleMap.value(s, Qt::SolidPattern);
+}
+
+
+Qt::BrushStyle jkqtp_String2QBrushStyleExt(const QString &style, QColor *color, QGradient *gradient, QPixmap *image, double* rotationAngleDeg)
+{
+    const QString s=style.toLower().trimmed().simplified();
+    QStringList caps;
+
+    if (s.startsWith("linear-gradient(")) {
+        try {
+            const auto grad=JKQTPCSSParser::readGradient(s);
+            if (gradient) *gradient=grad;
+            return Qt::LinearGradientPattern;
+        } catch(std::exception& E) {
+            qWarning()<<"error converting '"<<style<<"' into a QGradient: "<<E.what();
+            return Qt::SolidPattern;
+       }
+    } else if (s_GradientPresets.contains(s)) {
+        QGradient g(s_GradientPresets[s]);
+        g.setCoordinateMode(QGradient::ObjectBoundingMode);
+        if (gradient) *gradient=g;
+        if (g.type()==QGradient::Type::RadialGradient) return Qt::RadialGradientPattern;
+        else if (g.type()==QGradient::Type::ConicalGradient) return Qt::ConicalGradientPattern;
+        else return Qt::LinearGradientPattern;
+    } else if (jkqtp_rxExactlyMatches(s, "\\s*image\\s*\\(\\s*[\\\"\\\']?(.*)[\\\"\\\']?\\s*\\)\\s*", &caps)) {
+        if (image) *image=QPixmap(caps[1]);
+        return Qt::TexturePattern;
+    } else {
+        // now we parse:
+        //   pattern ::= none | d1 | d2 | ... | cross | bdiag | ...
+        return jkqtp_String2QBrushStyle(s);
+    }
+
 }
 
 
@@ -576,36 +629,37 @@ QString jkqtp_QColor2String(QColor color, bool useSpecialTransparencySyntax) {
 
 QColor jkqtp_lookupQColorName(const QString &color, bool namesOnly, bool *nameFound) {
     if (nameFound) *nameFound=true;
-   const QString col=color.toLower().trimmed();
-   if (col=="window") return QGuiApplication::palette().color(QPalette::Window);
-   if (col=="windowtext") return QGuiApplication::palette().color(QPalette::WindowText);
-   if (col=="button") return QGuiApplication::palette().color(QPalette::Button);
-   if (col=="light") return QGuiApplication::palette().color(QPalette::Light);
-   if (col=="midlight") return QGuiApplication::palette().color(QPalette::Midlight);
-   if (col=="dark") return QGuiApplication::palette().color(QPalette::Dark);
-   if (col=="mid") return QGuiApplication::palette().color(QPalette::Mid);
-   if (col=="text") return QGuiApplication::palette().color(QPalette::Text);
-   if (col=="brightttext") return QGuiApplication::palette().color(QPalette::BrightText);
-   if (col=="base") return QGuiApplication::palette().color(QPalette::Base);
-   if (col=="shadow") return QGuiApplication::palette().color(QPalette::Shadow);
-   if (col=="highlight") return QGuiApplication::palette().color(QPalette::Highlight);
-   if (col=="highlightedtext") return QGuiApplication::palette().color(QPalette::HighlightedText);
-   if (col=="link") return QGuiApplication::palette().color(QPalette::Link);
-   if (col=="linkvisited") return QGuiApplication::palette().color(QPalette::LinkVisited);
-   if (col=="alternatebase") return QGuiApplication::palette().color(QPalette::AlternateBase);
-   if (col=="norole") return QGuiApplication::palette().color(QPalette::NoRole);
-   if (col=="tooltipbase") return QGuiApplication::palette().color(QPalette::ToolTipBase);
-   if (col=="tooltiptext") return QGuiApplication::palette().color(QPalette::ToolTipText);
+    const QString col=color.toLower().trimmed();
+    if (col=="transparent") return QColor::fromRgb(0,0,0,0);
+    if (col=="window") return QGuiApplication::palette().color(QPalette::Window);
+    if (col=="windowtext") return QGuiApplication::palette().color(QPalette::WindowText);
+    if (col=="button") return QGuiApplication::palette().color(QPalette::Button);
+    if (col=="light") return QGuiApplication::palette().color(QPalette::Light);
+    if (col=="midlight") return QGuiApplication::palette().color(QPalette::Midlight);
+    if (col=="dark") return QGuiApplication::palette().color(QPalette::Dark);
+    if (col=="mid") return QGuiApplication::palette().color(QPalette::Mid);
+    if (col=="text") return QGuiApplication::palette().color(QPalette::Text);
+    if (col=="brightttext") return QGuiApplication::palette().color(QPalette::BrightText);
+    if (col=="base") return QGuiApplication::palette().color(QPalette::Base);
+    if (col=="shadow") return QGuiApplication::palette().color(QPalette::Shadow);
+    if (col=="highlight") return QGuiApplication::palette().color(QPalette::Highlight);
+    if (col=="highlightedtext") return QGuiApplication::palette().color(QPalette::HighlightedText);
+    if (col=="link") return QGuiApplication::palette().color(QPalette::Link);
+    if (col=="linkvisited") return QGuiApplication::palette().color(QPalette::LinkVisited);
+    if (col=="alternatebase") return QGuiApplication::palette().color(QPalette::AlternateBase);
+    if (col=="norole") return QGuiApplication::palette().color(QPalette::NoRole);
+    if (col=="tooltipbase") return QGuiApplication::palette().color(QPalette::ToolTipBase);
+    if (col=="tooltiptext") return QGuiApplication::palette().color(QPalette::ToolTipText);
 #if (QT_VERSION>=QT_VERSION_CHECK(5, 12, 0))
-   if (col=="placeholdertext") return QGuiApplication::palette().color(QPalette::PlaceholderText);
+    if (col=="placeholdertext") return QGuiApplication::palette().color(QPalette::PlaceholderText);
 #endif
 
-   for (int i=0; i<rgbTblSize; i++) {
+    for (int i=0; i<rgbTblSize; i++) {
        if (col==rgbTbl[i].name) return QColor(rgbTbl[i].value);
-   }
-   if (!namesOnly) return QColor(color);
-   if (nameFound) *nameFound=false;
-   return Qt::black;
+    }
+    if (!namesOnly) return QColor(color);
+    if (nameFound) *nameFound=false;
+    return Qt::black;
 }
 
 QColor jkqtp_String2QColor(QString color)
@@ -616,8 +670,7 @@ QColor jkqtp_String2QColor(QString color)
     if (color.startsWith('"')||color.startsWith('\'')) color=color.mid(1);
     if (color.endsWith('"')||color.endsWith('\'')) color=color.left(color.size()-1);
     if (color.isEmpty()) return Qt::black;
-    // fish out all #RGB #RRGGBB, ... sequences, withoud added alpha/transparency-value after comma
-    if (color.startsWith("#") && !color.contains(",")) return QColor(color);
+
     // check whether we have a names color
     {
         bool nameFound=false;
@@ -652,91 +705,37 @@ QColor jkqtp_String2QColor(QString color)
     // now we check for diverse special syntaxes
     //      P: "color,NN%"     NN=TRANSPARENCY in percent
     //     AP: "color,aNN\%"   NN=ALPHA in percent
-    //     NP: "color,[a]NN\%" NN=ALPHA 0..255
+    //     NP: "color,[a]NN"   NN=ALPHA 0..255
     //   Frac: "grey25"
-    // ColMod: "rgb(R,G,B)", "hsl(H,S,V)" ... (CSS-Syntax)
 #if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
-    static QRegularExpression rxP("(.+)\\s*,\\s*t?\\s*(\\d+\\.?\\d+)\\%");
+    static QRegularExpression rxP("([^,\\(\\)]+)\\s*,\\s*t?\\s*(\\d+\\.?\\d+)\\%");
     static QRegularExpression rxFrac("([a-zA-Z]{3,})(\\d{1,3})\\%?");
-    static QRegularExpression rxColMod("\\s*(rgb|hsl|hsv|rgba|gray|grey|red|green|blue)\\(\\s*(\\d+\\.?\\d*)(%|deg)?(?:\\s+|\\s*,\\s*|\\s\\/\\s)?(\\d+\\.?\\d*)?(%)?(?:\\s+|\\s*,\\s*|\\s\\/\\s)?(\\d+\\.?\\d*)?(%)?(?:\\s+|\\s*,\\s*|\\s*\\/\\s*)?(\\d+\\.?\\d*)?(%)?\\s*\\)\\s*");
-    static QRegularExpression rxAP("(.+)\\s*,\\s*a\\s*(\\d+\\.?\\d+)\\%");
-    static QRegularExpression rxNP("(.+)\\s*,\\s*a?\\s*([\\d]+)");
+    static QRegularExpression rxAP("([^,\\(\\)]+)\\s*,\\s*a\\s*(\\d+\\.?\\d+)\\%");
+    static QRegularExpression rxNP("([^,\\(\\)]+)\\s*,\\s*a?\\s*([\\d]+)");
     const auto mP=rxP.match(color);
 
-    const auto mColMod=rxColMod.match(color);
-    if (mColMod.hasMatch()) {
-        QColor col(Qt::black);
-        const QString name=mColMod.captured(1);
-        const int v1=valUnitToInt(mColMod.captured(2), mColMod.captured(3));
-        const int h1=valUnitToInt(mColMod.captured(2), mColMod.captured(3), INT_MAX);
-        const int v2=valUnitToInt(mColMod.captured(4), mColMod.captured(5));
-        const int a2=valUnitToAlphaInt(mColMod.captured(4), mColMod.captured(5));
-        const int v3=valUnitToInt(mColMod.captured(6), mColMod.captured(7));
-        const int a4=valUnitToAlphaInt(mColMod.captured(8), mColMod.captured(9));
-        if (name=="gray"||name=="grey") {
-            if (v2<0) col.setRgb(v1,v1,v1);
-            else col.setRgb(v1,v1,v1,a2);
-            return col;
-        }
-        else if (name=="red") {
-            col.setRed(v1);
-            if (v2>=0) col.setAlpha(a2);
-            return col;
-        }
-        else if (name=="green") {
-            col.setGreen(v1);
-            if (v2>=0) col.setAlpha(a2);
-            return col;
-        }
-        else if (name=="blue") {
-            col.setBlue(v1);
-            if (v2>=0) col.setAlpha(a2);
-            return col;
-        }
-        else if (name=="rgb") {
-            if (a4<0) col.setRgb(v1,v2,v3);
-            else col.setRgb(v1,v2,v3,a2);
-            return col;
-        }
-        else if (name=="rgba") {
-            col.setRgb(v1,v2,v3,a2);
-            return col;
-        }
-        else if (name=="hsl") {
-            if (a4<0) col.setHsl(h1,v2,v3);
-            else col.setHsl(h1,v2,v3,a2);
-            return col;
-        }
-        else if (name=="hsv") {
-            if (a4<0) col.setHsv(h1,v2,v3);
-            else col.setHsv(h1,v2,v3,a2);
-            return col;
-        } else {
-            qDebug()<<"unrecognized CSS-color:'"<<color<<"'";
-        }
-    }
-    if (mP.hasMatch()) {
-        QColor col=jkqtp_lookupQColorName(mP.captured(1));
+    if (mP.hasMatch() && mP.captured(0).size()==color.size()) {
+        QColor col=jkqtp_String2QColor(mP.captured(1));
         const double a=QLocale::c().toDouble(mP.captured(2));
         col.setAlphaF(1.0-a/100.0);
         return col;
     }
     const auto mAP=rxAP.match(color);
-    if (mAP.hasMatch()) {
-        QColor col=jkqtp_lookupQColorName(mAP.captured(1));
+    if (mAP.hasMatch() && mAP.captured(0).size()==color.size()) {
+        QColor col=jkqtp_String2QColor(mAP.captured(1));
         const double a=QLocale::c().toDouble(mAP.captured(2));
         col.setAlphaF(a/100.0);
         return col;
     }
     const auto mNP=rxNP.match(color);
-    if (mNP.hasMatch()) {
-        QColor col=jkqtp_lookupQColorName(mNP.captured(1));
+    if (mNP.hasMatch() && mNP.captured(0).size()==color.size()) {
+        QColor col=jkqtp_String2QColor(mNP.captured(1));
         const double a=QLocale::c().toInt(mNP.captured(2));
         col.setAlphaF(a/255.0);
         return col;
     }
     const auto mFrac=rxFrac.match(color);
-    if (mFrac.hasMatch()) {
+    if (mFrac.hasMatch() && mFrac.captured(0).size()==color.size()) {
         QColor col=jkqtp_lookupQColorName(mFrac.captured(1));
         const double a=static_cast<double>(QLocale::c().toInt(mFrac.captured(2)))/100.0;
         if (mFrac.captured(1)=="grey"||mFrac.captured(1)=="gray") col.setRgbF(a,a,a);
@@ -744,62 +743,10 @@ QColor jkqtp_String2QColor(QString color)
         return col;
     }
 #else
-    QRegExp rxP("(.+)\\s*,\\s*t?\\s*(\\d+\\.?\\d+)\\%");
-    QRegExp rxAP("(.+)\\s*,\\s*a\\s*(\\d+\\.?\\d+)\\%");
-    QRegExp rxNP("(.+)\\s*,\\s*a?\\s*([\\d]+)");
+    QRegExp rxP("([^,\\(\\)]+)\\s*,\\s*t?\\s*(\\d+\\.?\\d+)\\%");
+    QRegExp rxAP("([^,\\(\\)]+)\\s*,\\s*a\\s*(\\d+\\.?\\d+)\\%");
+    QRegExp rxNP("([^,\\(\\)]+)\\s*,\\s*a?\\s*([\\d]+)");
     QRegExp rxFrac("([a-zA-Z]{3,})(\\d{1,3})\\%?");
-    QRegExp rxColMod("\\s*(rgb|hsl|hsv|rgba|gray|grey|red|green|blue)\\(\\s*(\\d+\\.?\\d*)(%|deg)?(?:\\s+|\\s*,\\s*|\\s\\/\\s)?(\\d+\\.?\\d*)?(%)?(?:\\s+|\\s*,\\s*|\\s\\/\\s)?(\\d+\\.?\\d*)?(%)?(?:\\s+|\\s*,\\s*|\\s*\\/\\s*)?(\\d+\\.?\\d*)?(%)?\\s*\\)\\s*");
-    if (rxColMod.exactMatch(color)) {
-        QColor col(Qt::black);
-        const QString name=rxColMod.cap(1);
-        const int v1=valUnitToInt(rxColMod.cap(2), rxColMod.cap(3));
-        const int h1=valUnitToInt(rxColMod.cap(2), rxColMod.cap(3), INT_MAX);
-        const int v2=valUnitToInt(rxColMod.cap(4), rxColMod.cap(5));
-        const int a2=valUnitToAlphaInt(rxColMod.cap(4), rxColMod.cap(5));
-        const int v3=valUnitToInt(rxColMod.cap(6), rxColMod.cap(7));
-        const int a4=valUnitToAlphaInt(rxColMod.cap(8), rxColMod.cap(9));
-        if (name=="gray"||name=="grey") {
-            if (v2<0) col.setRgb(v1,v1,v1);
-            else col.setRgb(v1,v1,v1,a2);
-            return col;
-        }
-        else if (name=="red") {
-            col.setRed(v1);
-            if (v2>=0) col.setAlpha(a2);
-            return col;
-        }
-        else if (name=="green") {
-            col.setGreen(v1);
-            if (v2>=0) col.setAlpha(a2);
-            return col;
-        }
-        else if (name=="blue") {
-            col.setBlue(v1);
-            if (v2>=0) col.setAlpha(a2);
-            return col;
-        }
-        else if (name=="rgb") {
-            if (a4<0) col.setRgb(v1,v2,v3);
-            else col.setRgb(v1,v2,v3,a2);
-            return col;
-        }
-        else if (name=="rgba") {
-            col.setRgb(v1,v2,v3,a2);
-            return col;
-        }
-        else if (name=="hsl") {
-            if (a4<0) col.setHsl(h1,v2,v3);
-            else col.setHsl(h1,v2,v3,a2);
-            return col;
-        }
-        else if (name=="hsv") {
-            if (a4<0) col.setHsv(h1,v2,v3);
-            else col.setHsv(h1,v2,v3,a2);
-            return col;
-        } else {
-            qDebug()<<"unrecognized CSS-color:'"<<color<<"'";
-        }
-    }
     if (rxP.exactMatch(color)) {
         QColor col=jkqtp_lookupQColorName(rxP.cap(1));
         double a=QLocale::c().toDouble(rxP.cap(2));
@@ -826,7 +773,13 @@ QColor jkqtp_String2QColor(QString color)
         return col;
     }
 #endif
-    return jkqtp_lookupQColorName(color);
+
+    try {
+        return JKQTPCSSParser::readColor(color);
+    } catch(std::exception& E) {
+        qWarning()<<"error converting '"<<color<<"' into a QColor: "<<E.what();
+        return jkqtp_lookupQColorName(color);
+    }
 }
 
 std::string jkqtp_to_valid_variable_name(const std::string& input) {
@@ -1091,4 +1044,126 @@ QString jkqtp_backslashEscape(const QString &txt)
         else res+=c;
     }
     return res;
+}
+
+
+namespace JKQTCommon_private {
+#if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
+    thread_local QCache<QString, QRegularExpression> rxCache(500);
+#else
+    thread_local QCache<QString, QRegExp> rxCache(500);
+#endif
+}
+
+bool jkqtp_rxContains(const QString& text, const QString &regex, qsizetype offset, QStringList* caps)
+{
+#if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
+    if (!JKQTCommon_private::rxCache.contains(regex)) JKQTCommon_private::rxCache.insert(regex, new QRegularExpression(regex));
+    QRegularExpression* rx=JKQTCommon_private::rxCache.object(regex);
+    QSharedPointer<QRegularExpression> tempRX;
+    if (!rx) {
+        tempRX.reset(new QRegularExpression(regex));
+        rx=tempRX.data();
+    }
+    const auto m=rx->match(text, offset);
+    if (caps) *caps=m.capturedTexts();
+    return m.hasMatch();
+#else
+    if (!JKQTCommon_private::rxCache.contains(regex)) JKQTCommon_private::rxCache.insert(regex, new QRegExp(regex));
+    QRegExp* rx=JKQTCommon_private::rxCache.object(regex);
+    QSharedPointer<QRegExp> tempRX;
+    if (!rx) {
+        tempRX.reset(new QRegExp(regex));
+        rx=tempRX.data();
+    }
+    const bool res= rx->indexIn(text, offset)>=0;
+    if (caps) *caps=rx->capturedTexts();
+    return res;
+#endif
+}
+
+
+qsizetype jkqtp_rxIndexIn(const QString& text, const QString &regex, qsizetype offset, QStringList* caps)
+{
+#if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
+    if (!JKQTCommon_private::rxCache.contains(regex)) JKQTCommon_private::rxCache.insert(regex, new QRegularExpression(regex));
+    QRegularExpression* rx=JKQTCommon_private::rxCache.object(regex);
+    QSharedPointer<QRegularExpression> tempRX;
+    if (!rx) {
+        tempRX.reset(new QRegularExpression(regex));
+        rx=tempRX.data();
+    }
+    QRegularExpressionMatch rmatch;
+    const qsizetype idx=text.indexOf(*rx, offset, &rmatch);
+    if (caps) *caps=rmatch.capturedTexts();
+    return idx;
+#else
+    if (!JKQTCommon_private::rxCache.contains(regex)) JKQTCommon_private::rxCache.insert(regex, new QRegExp(regex));
+    QRegExp* rx=JKQTCommon_private::rxCache.object(regex);
+    QSharedPointer<QRegExp> tempRX;
+    if (!rx) {
+        tempRX.reset(new QRegExp(regex));
+        rx=tempRX.data();
+    }
+    const qsizetype idx = rx->indexIn(text, offset);
+    if (caps) *caps=rx->capturedTexts();
+    return idx;
+#endif
+}
+
+
+bool jkqtp_rxPartiallyMatchesAt(const QString& text, const QString &regex, qsizetype offset, QStringList* caps)
+{
+#if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
+    if (!JKQTCommon_private::rxCache.contains(regex)) JKQTCommon_private::rxCache.insert(regex, new QRegularExpression(regex));
+    QRegularExpression* rx=JKQTCommon_private::rxCache.object(regex);
+    QSharedPointer<QRegularExpression> tempRX;
+    if (!rx) {
+        tempRX.reset(new QRegularExpression(regex));
+        rx=tempRX.data();
+    }
+    const auto m=rx->match(text, offset, QRegularExpression::NormalMatch, QRegularExpression::AnchorAtOffsetMatchOption);
+    if (caps) *caps=m.capturedTexts();
+    return m.hasMatch();
+#else
+    if (!JKQTCommon_private::rxCache.contains(regex)) JKQTCommon_private::rxCache.insert(regex, new QRegExp(regex));
+    QRegExp* rx=JKQTCommon_private::rxCache.object(regex);
+    QSharedPointer<QRegExp> tempRX;
+    if (!rx) {
+        tempRX.reset(new QRegExp(regex));
+        rx=tempRX.data();
+    }
+    const bool res= (rx->indexIn(text, offset)==offset);
+    if (caps) *caps=rx->capturedTexts();
+    return res;
+#endif
+}
+
+
+
+bool jkqtp_rxExactlyMatches(const QString& text, const QString &regex, QStringList* caps)
+{
+#if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
+    if (!JKQTCommon_private::rxCache.contains(regex)) JKQTCommon_private::rxCache.insert(regex, new QRegularExpression(regex));
+    QRegularExpression* rx=JKQTCommon_private::rxCache.object(regex);
+    QSharedPointer<QRegularExpression> tempRX;
+    if (!rx) {
+        tempRX.reset(new QRegularExpression(regex));
+        rx=tempRX.data();
+    }
+    const auto m=rx->match(text);
+    if (caps) *caps=m.capturedTexts();
+    return m.hasMatch() && m.captured(0).size()==text.size();
+#else
+    if (!JKQTCommon_private::rxCache.contains(regex)) JKQTCommon_private::rxCache.insert(regex, new QRegExp(regex));
+    QRegExp* rx=JKQTCommon_private::rxCache.object(regex);
+    QSharedPointer<QRegExp> tempRX;
+    if (!rx) {
+        tempRX.reset(new QRegExp(regex));
+        rx=tempRX.data();
+    }
+    const bool res= rx->exactMatch(text);
+    if (caps) *caps=rx->capturedTexts();
+    return res;
+#endif
 }

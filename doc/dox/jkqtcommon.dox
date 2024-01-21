@@ -20,6 +20,11 @@ This group assembles a variety of mathematical tool functions that are used in d
 
 Offers diverse function to convert different datatypes (e.g. double, int, diverse enums) to and from strings and for string manipulation.
 
+\defgroup jkqtptools_css CSS Parsing Tools
+\ingroup jkqtptools_jkqtcommon
+
+Offers parser(s) for certain subsets of css, that are used e.g. in JKQTPlotter's styling INI files (e.g. for gradients)
+
 \defgroup jkqtptools_qt Tools around Qt's clasess
 \ingroup jkqtptools_jkqtcommon
 

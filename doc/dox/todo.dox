@@ -30,7 +30,6 @@ This page lists several todos and wishes for future version of JKQTPlotter
     <li>plot: elongated grid to left of tick labels</li>
     <li>plot: refactor print preview/export preview code </li>
     <li>sryling: better styling/more styling options for data-tooltips</li>
-    <li>styling: color gradients as fill-styles in style-INIs</li>
     <li>user interactions: dialog(s) to edit x/y-range</li>
     <li></li>
   </ul></li>

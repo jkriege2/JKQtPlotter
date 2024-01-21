@@ -29,6 +29,7 @@ target_sources(${lib_name} PRIVATE
     jkqtphighrestimer.cpp
     jkqttools.cpp
     jkqtpicons.cpp
+    jkqtpcsstools.cpp
 )
 # ... and add headers
 target_sources(${lib_name} PUBLIC FILE_SET HEADERS TYPE HEADERS
@@ -47,6 +48,7 @@ target_sources(${lib_name} PUBLIC FILE_SET HEADERS TYPE HEADERS
     jkqtpgeometrytools.h
     jkqtpconcurrencytools.h
     jkqtpcachingtools.h
+    jkqtpcsstools.h
     jkqtpexpected.h
 )
 

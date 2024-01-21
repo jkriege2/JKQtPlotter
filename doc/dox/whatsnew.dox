@@ -28,8 +28,8 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW/BREAKING: refactor CMake-Code, so static/dynamic switch is done via <code>BUILD_SHARED_LIBS</code>, which retires <code>JKQtPlotter_BUILD_STATIC_LIBS</code>, <code>JKQtPlotter_BUILD_SHARED_LIBS</code> and removes the capability to build static and shared libraries in one location (fixes issue #104)</li>    
     <li>NEW: prepareed library for CMake's <a href="https://cmake.org/cmake/help/latest/module/FetchContent.html">FetchContent</a>-API</li>    
     <li>NEW: the different sub-libraries JKQTPlotter, JKQTFastPlotter (DEPRECATED), JKQTMath, JKQTMathText can be activated/deactivated with CMake options JKQtPlotter_BUILD_LIB_JKQTPLOTTER, JKQtPlotter_BUILD_LIB_JKQTFASTPLOTTER, JKQtPlotter_BUILD_LIB_JKQTMATHTEXT, JKQtPlotter_BUILD_LIB_JKQTMATH</li>   
-    <li>NEW add JKQTPExpected datatype</li>    
-    <li>NEW add jkqtp_roundToDigits()</li>
+    <li>NEW add JKQTPExpected datatype, jkqtp_roundToDigits(), generic RegularExpression functions (jkqtp_rxExactlyMatches(), jkqtp_rxIndexIn(), jkqtp_rxContains(), jkqtp_rxPartiallyMatchesAt() )</li>
+    <li>NEW CSS-parser JKQTPCSSParser in order to parse e.g. \c linear-gradient() specifications in jkqtp_String2QBrushStyleExt()</li>
   </ul></li>
 
   <li>JKQTPlotter:<ul>

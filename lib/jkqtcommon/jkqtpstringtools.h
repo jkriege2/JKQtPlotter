@@ -28,6 +28,8 @@
 #include <QtGlobal>
 #include <limits>
 
+class QGradient; // forward
+
 /** \brief converts a QT::PenStyle into a string
  * \ingroup jkqtptools_string
  */
@@ -45,8 +47,23 @@ JKQTCOMMON_LIB_EXPORT QString jkqtp_QBrushStyle2String(Qt::BrushStyle style);
 
 /** \brief converts a QString into a Qt::BrushStyle
  * \ingroup jkqtptools_string
+ * \see jkqtp_String2QBrushStyleExt() for a more complex parser
  */
 JKQTCOMMON_LIB_EXPORT Qt::BrushStyle jkqtp_String2QBrushStyle(const QString& style);
+
+/** \brief converts a QString into a Qt::BrushStyle. commpared to jkqtp_String2QBrushStyle(), this method can parse
+ *         more complex pattern/brush descriptions, such as for colors, gradients or images, which are output in \a color, \a gradient and \a image
+ * \ingroup jkqtptools_string
+ *
+ * \param style the string to be parsed
+ * \param[out] color output parameter for a parsed color
+ * \param[out] gradient output parameter for a parsed gradient
+ * \param[out] image output parameter for a parsed image
+ * \param[out] rotationAngleDeg output parameter for a parsed rotation angle of the pattern in degrees, where the direction equals the direction of a clock hand, i.e. 0=12o'clock, 180=6o'clock, ...
+ *
+ * \see jkqtp_String2QBrushStyle()
+ */
+JKQTCOMMON_LIB_EXPORT Qt::BrushStyle jkqtp_String2QBrushStyleExt(const QString& style, QColor* color=nullptr, QGradient* gradient=nullptr, QPixmap* image=nullptr, double *rotationAngleDeg=nullptr);
 
 
 /** \brief converts a Unicode codepoint into a UTF8-sequence
@@ -325,6 +342,52 @@ JKQTCOMMON_LIB_EXPORT QString jkqtp_MouseButton2String(Qt::MouseButton button, b
  *  \see jkqtp_MouseButton2String()
  */
 JKQTCOMMON_LIB_EXPORT Qt::MouseButton jkqtp_String2MouseButton(const QString &button);
+
+/** \brief returns \c true, if \a text contains a match to the given regular expression \a regex,
+ *         starts from \a offset and optionally returns the match in \a caps \c =[fullmatch, cap1,cap2,...]
+ *  \ingroup jkqtptools_string
+ *
+ *  \note this function uses an internal cache, so the \a regex does not have
+ *        to be compiled every time this is called (with the same \a regex ).
+ *
+ *  \see jkqtp_rxExactlyMatches(), jkqtp_rxIndexIn(), jkqtp_rxContains(), jkqtp_rxPartiallyMatchesAt()
+ */
+JKQTCOMMON_LIB_EXPORT bool jkqtp_rxContains(const QString& text, const QString &regex, qsizetype offset=0, QStringList* caps=nullptr);
+
+/** \brief returns the next match (i.e. its index) of the given regular expression \a regex within \a text,
+ *         starts from \a offset and optionally returns the match in \a caps \c =[fullmatch, cap1,cap2,...]
+ *  \ingroup jkqtptools_string
+ *
+ *  \note this function uses an internal cache, so the \a regex does not have
+ *        to be compiled every time this is called (with the same \a regex ).
+ *
+ *  \see jkqtp_rxExactlyMatches(), jkqtp_rxIndexIn(), jkqtp_rxContains(), jkqtp_rxPartiallyMatchesAt()
+ */
+JKQTCOMMON_LIB_EXPORT qsizetype jkqtp_rxIndexIn(const QString& text, const QString &regex, qsizetype offset=0, QStringList* caps=nullptr);
+
+/** \brief returns \c true, if \a text exactly matches the given regular expression \a regex,
+ *         starts from \a offset and optionally returns the match in \a caps \c =[fullmatch, cap1,cap2,...]
+ *  \ingroup jkqtptools_string
+ *
+ *  \note this function uses an internal cache, so the \a regex does not have
+ *        to be compiled every time this is called (with the same \a regex ).
+ *
+ *  \see jkqtp_rxExactlyMatches(), jkqtp_rxIndexIn(), jkqtp_rxContains(), jkqtp_rxPartiallyMatchesAt()
+ */
+JKQTCOMMON_LIB_EXPORT bool jkqtp_rxExactlyMatches(const QString& text, const QString &regex, QStringList* caps=nullptr);
+
+
+/** \brief returns \c true, if \a text partially matches the given regular expression \a regex,
+ *         starting from \a offset (and the match starts at \a offset !!!)
+ *         and optionally returns the match in \a caps \c =[fullmatch, cap1,cap2,...]
+ *  \ingroup jkqtptools_string
+ *
+ *  \note this function uses an internal cache, so the \a regex does not have
+ *        to be compiled every time this is called (with the same \a regex ).
+ *
+ *  \see jkqtp_rxExactlyMatches(), jkqtp_rxIndexIn(), jkqtp_rxContains(), jkqtp_rxPartiallyMatchesAt()
+ */
+JKQTCOMMON_LIB_EXPORT bool jkqtp_rxPartiallyMatchesAt(const QString& text, const QString &regex, qsizetype offset=0, QStringList* caps=nullptr);
 
 
 #endif // JKQTPSTRINGTOOLS_H_INCLUDED
