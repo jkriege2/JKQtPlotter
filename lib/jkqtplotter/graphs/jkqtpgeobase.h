@@ -193,6 +193,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoBaseFilled: public JKQTPGeoBaseLine, public
         /** \brief set several of the style properties with one call */
         virtual void setStyle(QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle) ;
         /** \brief set several of the style properties with one call */
+        virtual void setStyle(QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, const JKQTFillStyleSummmary& fillStyle) ;
+        /** \brief set several of the style properties with one call */
         virtual void setStyle(QColor color, double lineWidth, Qt::PenStyle style) override;
         /** \brief set several of the style properties with one call */
         virtual void setStyle(QColor color, Qt::PenStyle style) override;

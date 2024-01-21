@@ -291,6 +291,29 @@ public:
 
 
 };
+
+/** \brief Support Class for JKQTBasePlotter, which summarizes a fill style
+ *  \ingroup jkqtpplotter_styling_classes
+ *
+ *  \see JKQTBasePlotter, JKQTGraphsBaseStyle, \ref jkqtpplotter_styling
+ */
+class JKQTPLOTTER_LIB_EXPORT JKQTFillStyleSummmary {
+#ifndef JKQTPLOTTER_WORKAROUND_QGADGET_BUG
+    Q_GADGET
+#endif
+public:
+    JKQTFillStyleSummmary(Qt::BrushStyle style=Qt::SolidPattern, const QGradient& grad=QGradient(), double rotAngleDeg=0.0);
+
+    Qt::BrushStyle brushStyle;
+    QGradient gradient;
+    double rotationAngleDeg;
+
+    QBrush brush(const QColor& color=QColor(Qt::black)) const;
+
+    static JKQTFillStyleSummmary fromString(const QString& style);
+};
+
+
 /** \brief Support Class for JKQTBasePlotter, which summarizes all properties that define the visual styling of a JKQTBasePlotter
  *  \ingroup jkqtpplotter_styling_classes
  *
@@ -358,7 +381,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTGraphsBaseStyle {
         /** \brief JKQTPGraphSymbols used to automatically assign to different graphs */
         QVector<JKQTPGraphSymbols> defaultGraphSymbols;
         /** \brief Qt::BrushStyle used to automatically style different graphs differently */
-        QVector<Qt::BrushStyle> defaultGraphFillStyles;
+        QVector<JKQTFillStyleSummmary> defaultGraphFillStyles;
 
         /** \brief standard color palette for the default style */
         static QVector<QColor> getDefaultGraphColors();
@@ -367,7 +390,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTGraphsBaseStyle {
         /** \brief list of JKQTPGraphSymbols used to automatically assign to different graphs in the default style */
         static QVector<JKQTPGraphSymbols> getDefaultGraphSymbols();
         /** \brief list of Qt::BrushStyle used to automatically style different graphs differently in the default style */
-        static QVector<Qt::BrushStyle> getDefaultGraphFillStyles();
+        static QVector<JKQTFillStyleSummmary> getDefaultGraphFillStyles();
 
 };
 

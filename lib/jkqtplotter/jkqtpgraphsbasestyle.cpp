@@ -236,9 +236,9 @@ QVector<JKQTPGraphSymbols> JKQTGraphsBaseStyle::getDefaultGraphSymbols()
     return syms;
 }
 
-QVector<Qt::BrushStyle> JKQTGraphsBaseStyle::getDefaultGraphFillStyles()
+QVector<JKQTFillStyleSummmary> JKQTGraphsBaseStyle::getDefaultGraphFillStyles()
 {
-    return QVector<Qt::BrushStyle>()<<Qt::SolidPattern;
+    return QVector<JKQTFillStyleSummmary>()<<JKQTFillStyleSummmary(Qt::SolidPattern);
 }
 
 void JKQTGraphsBaseStyle::loadSettings(const QSettings &settings, const QString &group, const JKQTGraphsBaseStyle &defaultStyle, const JKQTBasePlotterStyle& parent)
@@ -302,7 +302,7 @@ void JKQTGraphsBaseStyle::loadSettings(const QSettings &settings, const QString 
         }
         id=readID(k, group+"auto_styles/fill_style");
         if (id>=0) {
-            defaultGraphFillStyles.push_back(jkqtp_String2QBrushStyle(settings.value(group+"auto_styles/fill_style"+QString::number(id), jkqtp_QBrushStyle2String(Qt::SolidPattern)).toString()));
+            defaultGraphFillStyles.push_back(JKQTFillStyleSummmary::fromString(settings.value(group+"auto_styles/fill_style"+QString::number(id), jkqtp_QBrushStyle2String(Qt::SolidPattern)).toString()));
         }
     }
     if (defaultGraphColors.size()==0) {
@@ -398,7 +398,7 @@ void JKQTGraphsBaseStyle::saveSettings(QSettings &settings, const QString &group
         for (auto& gs: defaultGraphFillStyles) {
             QString num=QString::number(cnt);
             while (num.size()<maxnum.size()) num.prepend('0');
-            settings.setValue(group+"auto_styles/fill_style"+num, jkqtp_QBrushStyle2String(gs));
+            settings.setValue(group+"auto_styles/fill_style"+num, jkqtp_QBrushStyle2String(gs.brushStyle));
             cnt++;
         }
     }
@@ -499,3 +499,30 @@ void JKQTImpulseSpecificStyleProperties::saveSettings(QSettings &settings, const
 }
 
 
+
+JKQTFillStyleSummmary::JKQTFillStyleSummmary(Qt::BrushStyle style, const QGradient& grad, double rotAngleDeg):
+    brushStyle(style), gradient(grad), rotationAngleDeg(rotAngleDeg)
+{
+
+}
+
+QBrush JKQTFillStyleSummmary::brush(const QColor &color) const
+{
+    QBrush b;
+    b.setColor(color);
+    if (brushStyle==Qt::LinearGradientPattern || brushStyle==Qt::RadialGradientPattern || brushStyle==Qt::ConicalGradientPattern) {
+        QGradient g=gradient;
+        g.setCoordinateMode(QGradient::ObjectMode);
+        b=QBrush(g);
+    } else {
+        b.setStyle(brushStyle);
+    }
+    return b;
+}
+
+JKQTFillStyleSummmary JKQTFillStyleSummmary::fromString(const QString &style)
+{
+    JKQTFillStyleSummmary res;
+    res.brushStyle=jkqtp_String2QBrushStyleExt(style, nullptr, &(res.gradient), nullptr, &(res.rotationAngleDeg));
+    return res;
+}

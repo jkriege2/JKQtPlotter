@@ -1151,21 +1151,21 @@ JKQTBasePlotter::JKQTPPen JKQTBasePlotter::getPlotStyle(int i, JKQTPPlotStyleTyp
     //std::cout<<"style "<<styleI<<std::endl;
     const JKQTGraphsSpecificStyleProperties& baseProps=plotterStyle.graphsStyle.getGraphStyleByType(type);
     Qt::PenStyle basePenStyle=plotterStyle.graphsStyle.defaultGraphPenStyles[styleI];
-    Qt::BrushStyle basebrushStyle=plotterStyle.graphsStyle.defaultGraphFillStyles[brushI];
+    JKQTFillStyleSummmary basebrushStyle=plotterStyle.graphsStyle.defaultGraphFillStyles[brushI];
     JKQTPGraphSymbols baseSymbol=plotterStyle.graphsStyle.defaultGraphSymbols[symbolI];
     QColor baseColor=plotterStyle.graphsStyle.defaultGraphColors[colorI];
     double baseWidth=baseProps.defaultLineWidth;
     if (type==JKQTPPlotStyleType::Annotation || type==JKQTPPlotStyleType::Geometric) {
         baseColor=plotterStyle.graphsStyle.annotationStyle.defaultColor;
         basePenStyle=plotterStyle.graphsStyle.annotationStyle.defaultLineStyle;
-        basebrushStyle=plotterStyle.graphsStyle.annotationStyle.defaultFillStyle;
+        basebrushStyle=JKQTFillStyleSummmary(plotterStyle.graphsStyle.annotationStyle.defaultFillStyle);
         baseSymbol=plotterStyle.graphsStyle.annotationStyle.defaultSymbol;
     }
     if (type==JKQTPPlotStyleType::Barchart || type==JKQTPPlotStyleType::Boxplot || type==JKQTPPlotStyleType::Impulses) {
         basePenStyle=Qt::SolidLine;
     }
     if (type==JKQTPPlotStyleType::Boxplot) {
-        basebrushStyle=Qt::SolidPattern;
+        basebrushStyle=JKQTFillStyleSummmary(Qt::SolidPattern);
     }
     if (type==JKQTPPlotStyleType::Impulses) {
     }
@@ -4965,7 +4965,7 @@ void JKQTBasePlotter::JKQTPPen::setErrorLineColor(const QColor &col)
     m_errorColor=col;
 }
 
-void JKQTBasePlotter::JKQTPPen::setFillStyle(Qt::BrushStyle s) {
+void JKQTBasePlotter::JKQTPPen::setFillStyle(const JKQTFillStyleSummmary &s) {
     m_fillStyle=s;
 }
 
@@ -4977,7 +4977,7 @@ void JKQTBasePlotter::JKQTPPen::setSymbolFillColor(QColor c) {
     m_symbolFillColor=c;
 }
 
-Qt::BrushStyle JKQTBasePlotter::JKQTPPen::fillStyle() const {
+JKQTFillStyleSummmary JKQTBasePlotter::JKQTPPen::fillStyle() const {
     return m_fillStyle;
 }
 

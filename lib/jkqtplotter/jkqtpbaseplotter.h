@@ -773,7 +773,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
                 double m_symbolLineWidth;
                 Qt::PenStyle m_style;
                 double m_symbolSize;
-                Qt::BrushStyle m_fillStyle;
+                JKQTFillStyleSummmary m_fillStyle;
                 Qt::BrushStyle m_errorFillStyle;
                 JKQTPGraphSymbols m_symbol;
 
@@ -800,9 +800,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
                 void setFillColor(const QColor& col);
                 void setErrorFillColor(const QColor& col);
                 void setErrorLineColor(const QColor& col);
-                void setFillStyle(Qt::BrushStyle s);
+                void setFillStyle(const JKQTFillStyleSummmary& s);
                 void setErrorFillStyle(Qt::BrushStyle s);
-                Qt::BrushStyle fillStyle() const;
+                JKQTFillStyleSummmary fillStyle() const;
                 Qt::BrushStyle errorFillStyle() const;
                 JKQTPGraphSymbols symbol() const;
                 void setSymbolType(JKQTPGraphSymbols symbol);

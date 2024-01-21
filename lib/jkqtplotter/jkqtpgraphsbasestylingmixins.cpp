@@ -398,8 +398,7 @@ void JKQTPGraphFillStyleMixin::initFillStyle(JKQTBasePlotter *parent, int &paren
         if (parentPlotStyle<0) parentPlotStyle=parent->getNextStyle();
         const JKQTBasePlotter::JKQTPPen pen=parent->getPlotStyle(parentPlotStyle, styletype);
         m_fillColor=pen.fillColor();
-        m_fillBrush.setColor(m_fillColor);
-        m_fillBrush.setStyle(pen.fillStyle());
+        m_fillBrush=pen.fillStyle().brush(m_fillColor);
     }
 }
 

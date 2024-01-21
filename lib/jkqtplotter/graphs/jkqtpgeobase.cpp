@@ -115,6 +115,14 @@ void JKQTPGeoBaseFilled::setStyle(QColor color, double lineWidth, Qt::PenStyle s
     setFillStyle(fillStyle);
 }
 
+void JKQTPGeoBaseFilled::setStyle(QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, const JKQTFillStyleSummmary &fillStyle)
+{
+    setLineColor(color);
+    setLineWidth(lineWidth);
+    setLineStyle(style);
+    setFillBrush(fillStyle.brush(fillColor));
+}
+
 void JKQTPGeoBaseFilled::setStyle(QColor color, double lineWidth, Qt::PenStyle style)
 {
     setLineColor(color);

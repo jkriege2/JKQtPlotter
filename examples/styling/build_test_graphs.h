@@ -304,7 +304,7 @@ inline void buildLineSymbolSampler(JKQTBasePlotter* plotExtra, JKQTBasePlotter* 
     double dx=(xmax-xlineend-1.0)/static_cast<double>(cntFillTests);
     for (int i=0; i<cntFillTests; i++) {
         const auto col=baseplot->getCurrentPlotterStyle().graphsStyle.defaultGraphColors.value(i%baseplot->getCurrentPlotterStyle().graphsStyle.defaultGraphColors.size(), Qt::black);
-        const auto fs=baseplot->getCurrentPlotterStyle().graphsStyle.defaultGraphFillStyles.value(i%baseplot->getCurrentPlotterStyle().graphsStyle.defaultGraphFillStyles.size(), Qt::SolidPattern);
+        const auto fs=baseplot->getCurrentPlotterStyle().graphsStyle.defaultGraphFillStyles.value(i%baseplot->getCurrentPlotterStyle().graphsStyle.defaultGraphFillStyles.size(), JKQTFillStyleSummmary(Qt::SolidPattern));
         JKQTPGeoLine* l;
         plotExtra->addGraph(l=new JKQTPGeoLine(plotExtra, x,ycoltest,x,y-0.5)); l->setStyle(col,5);
         JKQTPGeoRectangle* r;
