@@ -47,6 +47,7 @@ target_sources(${lib_name} PUBLIC FILE_SET HEADERS TYPE HEADERS
     jkqtpgeometrytools.h
     jkqtpconcurrencytools.h
     jkqtpcachingtools.h
+    jkqtpexpected.h
 )
 
 
