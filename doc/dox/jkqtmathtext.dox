@@ -27,6 +27,8 @@
   \defgroup jkqtmathtext_general_languages Supported Markup Languages
   \ingroup jkqtmathtext_general
   
+  JKQTMathText was designed to support different math markup parsers. By default only a \ref jkqtmathtext_general_latex parser is available, but it would be possible to e.g. add support for MathML or other markup languages. You simply have to implement a new JKQTMathTextParser.
+  
   \defgroup jkqtmathtext_general_latex LaTeX Markup
   \ingroup jkqtmathtext_general_languages
 
@@ -61,6 +63,9 @@
 
   \defgroup jkqtmathtext_parser Math Markup Parser Classes
   \ingroup jkqtmathtext_interaltools
+  
+  JKQTMathText was designed to support different math markup parsers. By default only a \ref jkqtmathtext_general_latex JKQTMathTextLatexParser parser is available, but it would be possible to e.g. add support for MathML or other markup languages. You simply have to implement a new JKQTMathTextParser.
+  
 
   \defgroup jkqtmathtext_tools Tool Functions and Types for JKQTMathText
   \ingroup jkqtmathtext_interaltools

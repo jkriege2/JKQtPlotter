@@ -3,6 +3,8 @@
        
   \defgroup jkqtplotter_general_usage Usage of JKQTPlotter
   \ingroup jkqtplotter_general
+  
+  \see See \ref page_buildinstructions for detailed build-instructions and on how to link against JKQTPlotter!
 
   \defgroup jkqtplotter_general_usage_jkqtbaseplotter Usage of JKQTBasePlotter Non-Visible Class
   \ingroup jkqtplotter_general_usage

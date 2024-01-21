@@ -82,6 +82,9 @@ class JKQTMathTextVerticalListNode; // forward
 
     \section JKQTMathTextUsage Usage
 
+    \see See \ref page_buildinstructions for detailed build-instructions and on how to link against JKQTMathText!
+
+
     \subsection JKQTMathTextUsageParsing Parsing Functions
     The class provieds two flavours of a parsing function:
       - There is a function \c parse(markup, markupType) that accepts the markup, the type of markup (as enum DefaultParserTypes)  and parser options.

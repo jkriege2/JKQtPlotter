@@ -14,12 +14,12 @@
   
  
 
-  \defgroup jkqtfastplotter_PlotItems Plot Elements available in JKQTFastPlotter 
+  \defgroup jkqtfastplotter_PlotItems DEPRECATED: Plot Elements available in JKQTFastPlotter 
   \ingroup jkqtfastplotter
   \deprecated The class JKQTFastPlotter and all its support classes are deprecated and will be removed in future versions. 
   
   
-  \defgroup jkqtfastplotter_tools Tool Functions, Enums, Classes for JKQTFastPlotter
+  \defgroup jkqtfastplotter_tools Tool DEPRECATED: Functions, Enums, Classes for JKQTFastPlotter
   \ingroup jkqtfastplotter
   \deprecated The class JKQTFastPlotter and all its support classes are deprecated and will be removed in future versions. 
 

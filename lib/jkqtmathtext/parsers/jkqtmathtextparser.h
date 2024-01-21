@@ -34,8 +34,10 @@
 
 class JKQTMathTextNode; // forward
 
-/*! \brief base class for all parsers used by JKQTMathText
+/*! \brief base class for all math markup parsers used by JKQTMathText
     \ingroup jkqtmathtext_parser
+
+    \see JKQTMathTextLatexParser for an implementation of a JKQTMathTextParser that parses LaTeX markup.
 
  */
 class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextParser : public QObject {
