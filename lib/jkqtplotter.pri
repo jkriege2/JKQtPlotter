@@ -21,7 +21,6 @@ isEmpty(JKQTP_PLOTTER_PRI_INCLUDED) {
                $$PWD/jkqtplotter/jkqtpgraphsbasestylingmixins.h \
                $$PWD/jkqtplotter/jkqtplotter.h \
                $$PWD/jkqtplotter/jkqtplotterstyle.h \
-               $$PWD/jkqtplotter/jkqtpkeystyle.h \
                $$PWD/jkqtplotter/jkqtpbaseplotterstyle.h \
                $$PWD/jkqtplotter/jkqtpcoordinateaxes.h \
                $$PWD/jkqtplotter/jkqtpcoordinateaxesstyle.h \
@@ -77,7 +76,6 @@ isEmpty(JKQTP_PLOTTER_PRI_INCLUDED) {
                $$PWD/jkqtplotter/jkqtpimagetools.cpp \
                $$PWD/jkqtplotter/jkqtplotter.cpp \
                $$PWD/jkqtplotter/jkqtplotterstyle.cpp \
-               $$PWD/jkqtplotter/jkqtpkeystyle.cpp \
                $$PWD/jkqtplotter/jkqtpbaseplotterstyle.cpp \
                $$PWD/jkqtplotter/jkqtpcoordinateaxes.cpp \
                $$PWD/jkqtplotter/jkqtpcoordinateaxesstyle.cpp \
