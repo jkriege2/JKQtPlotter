@@ -380,7 +380,7 @@ JKQTPCSSParser::Token::Token(double num, const QString &unit_):
 }
 
 JKQTPCSSParser::Token::Token(const QString &str, TokenType type_):
-    StringValue(str), type(type_)
+    StringValue(str), type(type_), NumberValue(0.0)
 {
     if (type_==NUMBER) NumberValue=str.toDouble();
     if (type_==HEXSTRING) NumberValue=str.toInt(nullptr,16);
