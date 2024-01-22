@@ -21,7 +21,7 @@
 #ifndef JKQTPEXPECTED_H_INCLUDED
 #define JKQTPEXPECTED_H_INCLUDED
 
-#include <exception>
+#include <stdexcept>
 
 
 /** \brief tag type for an unexpected/error result in JKQTPExpected

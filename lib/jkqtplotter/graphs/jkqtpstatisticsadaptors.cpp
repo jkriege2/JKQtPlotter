@@ -22,7 +22,7 @@
 #include "jkqtplotter/graphs/jkqtpstatisticsadaptors.h"
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/jkqtpgraphsbase.h"
-
+#include <stdexcept>
 
 JKQTPXFunctionLineGraph *jkqtpstatAddLinearRegression(JKQTPXYGraph *datagraph, double *coeffA, double *coeffB, bool fixA, bool fixB) {
     JKQTBasePlotter* plt=datagraph->getParent();

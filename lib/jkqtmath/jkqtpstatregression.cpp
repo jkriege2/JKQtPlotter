@@ -20,7 +20,7 @@
 
 
 #include "jkqtpstatregression.h"
-
+#include <stdexcept>
 
 std::function<double (double, double, double)> jkqtpStatGenerateRegressionModel(JKQTPStatRegressionModelType type) {
     switch(type) {

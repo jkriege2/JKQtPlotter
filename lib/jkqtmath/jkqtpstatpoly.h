@@ -38,7 +38,7 @@
 #include "jkqtmath/jkqtplinalgtools.h"
 #include "jkqtmath/jkqtparraytools.h"
 #include "jkqtcommon/jkqtpdebuggingtools.h"
-
+#include <stdexcept>
 
 
 

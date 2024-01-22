@@ -39,7 +39,7 @@
 #include <QStringList>
 #include <QAbstractTableModel>
 #include <QObject>
-
+#include <stdexcept>
 
 class JKQTPColumn; // forward declaration
 class JKQTPColumnIterator; // forward declaration
