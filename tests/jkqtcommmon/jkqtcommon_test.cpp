@@ -2,6 +2,16 @@
 #include <QtTest>
 #include "jkqtcommon/jkqtpcsstools.h"
 
+#ifndef QCOMPARE_EQ
+#define QCOMPARE_EQ(A,B) if (!static_cast<bool>((A)==(B))) {qDebug()<<QTest::toString(A)<< "!=" << QTest::toString(B); } QVERIFY((A)==(B))
+#endif
+#ifndef QVERIFY_THROWS_NO_EXCEPTION
+#define QVERIFY_THROWS_NO_EXCEPTION(B) B
+#endif
+#ifndef QVERIFY_THROWS_EXCEPTION
+#define QVERIFY_THROWS_EXCEPTION(type, A) QVERIFY_EXCEPTION_THROWN(A, type)
+#endif
+
 namespace QTest {
     template<>
     char *toString(const JKQTPCSSParser::NumberWithUnit &n)
