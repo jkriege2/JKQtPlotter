@@ -21,6 +21,7 @@
 #include "jkqtcommon/jkqtpstringtools.h"
 #include "jkqtcommon/jkqtpmathtools.h"
 #include "jkqtcommon/jkqtpcsstools.h"
+#include "jkqtcommon/jkqtpdrawingtools.h"
 #include <QDateTime>
 #include <cmath>
 #include <QDebug>
@@ -653,6 +654,12 @@ QColor jkqtp_lookupQColorName(const QString &color, bool namesOnly, bool *nameFo
 #if (QT_VERSION>=QT_VERSION_CHECK(5, 12, 0))
     if (col=="placeholdertext") return QGuiApplication::palette().color(QPalette::PlaceholderText);
 #endif
+    if (col=="currentcolor") return JKQTPlotterDrawingTools::CurrentColorPlaceholder;
+    if (col=="currentcolor10") return JKQTPlotterDrawingTools::CurrentColorPlaceholder_Trans10;
+    if (col=="currentcolor25") return JKQTPlotterDrawingTools::CurrentColorPlaceholder_Trans25;
+    if (col=="currentcolor50") return JKQTPlotterDrawingTools::CurrentColorPlaceholder_Trans50;
+    if (col=="currentcolor75") return JKQTPlotterDrawingTools::CurrentColorPlaceholder_Trans75;
+    if (col=="currentcolor90") return JKQTPlotterDrawingTools::CurrentColorPlaceholder_Trans90;
 
     for (int i=0; i<rgbTblSize; i++) {
        if (col==rgbTbl[i].name) return QColor(rgbTbl[i].value);

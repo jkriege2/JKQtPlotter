@@ -79,6 +79,36 @@ typedef std::function<void(QPainter& p)> JKQTPCustomGraphSymbolFunctor;
    \ingroup jkqtptools_drawing
    */
 struct JKQTPlotterDrawingTools {
+    /** \brief a special placeholder that can be used to indicate that a color should be replaced by the "current color" in a certain context
+     *
+     *  \see JKQTPReplaceCurrentColor()
+     */
+    static JKQTCOMMON_LIB_EXPORT const QColor CurrentColorPlaceholder;
+    /** \brief a special placeholder that can be used to indicate that a color should be replaced by the "current color", but with 10% transparency in a certain context
+     *
+     *  \see JKQTPReplaceCurrentColor(), JKQTPlotterDrawingTools::CurrentColorPlaceholder_Trans10, ...
+      */
+    static JKQTCOMMON_LIB_EXPORT const QColor CurrentColorPlaceholder_Trans10;
+    /** \brief a special placeholder that can be used to indicate that a color should be replaced by the "current color", but with 25% transparency in a certain context
+     *
+     *  \see JKQTPReplaceCurrentColor(), JKQTPlotterDrawingTools::CurrentColorPlaceholder, ...
+      */
+    static JKQTCOMMON_LIB_EXPORT const QColor CurrentColorPlaceholder_Trans25;
+    /** \brief a special placeholder that can be used to indicate that a color should be replaced by the "current color", but with 50% transparency in a certain context
+     *
+     *  \see JKQTPReplaceCurrentColor(), JKQTPlotterDrawingTools::CurrentColorPlaceholder, JKQTPlotterDrawingTools::CurrentColorPlaceholder_Trans10, ...
+      */
+    static JKQTCOMMON_LIB_EXPORT const QColor CurrentColorPlaceholder_Trans50;
+    /** \brief a special placeholder that can be used to indicate that a color should be replaced by the "current color", but with 75% transparency in a certain context
+     *
+     *  \see JKQTPReplaceCurrentColor(), JKQTPlotterDrawingTools::CurrentColorPlaceholder, JKQTPlotterDrawingTools::CurrentColorPlaceholder_Trans10, ...
+      */
+    static JKQTCOMMON_LIB_EXPORT const QColor CurrentColorPlaceholder_Trans75;
+    /** \brief a special placeholder that can be used to indicate that a color should be replaced by the "current color", but with 90% transparency in a certain context
+     *
+     *  \see JKQTPReplaceCurrentColor(), JKQTPlotterDrawingTools::CurrentColorPlaceholder, JKQTPlotterDrawingTools::CurrentColorPlaceholder_Trans10, ...
+      */
+    static JKQTCOMMON_LIB_EXPORT const QColor CurrentColorPlaceholder_Trans90;
     /** \brief smallest linewidth any line in JKQTPlotter/JKQTBasePlotter may have
      */
     static JKQTCOMMON_LIB_EXPORT const double ABS_MIN_LINEWIDTH;
@@ -92,6 +122,19 @@ struct JKQTPlotterDrawingTools {
 };
 
 
+
+/*! \brief check whether \a col equals JKQTPlotterDrawingTools::CurrentColorPlaceholder (or one of its variants) and then replace it by \a currentColor
+   \ingroup jkqtptools_drawing
+
+    \see JKQTPlotterDrawingTools::CurrentColorPlaceholder, JKQTPlotterDrawingTools::CurrentColorPlaceholder_Trans10, ...
+   */
+JKQTCOMMON_LIB_EXPORT void JKQTPReplaceCurrentColor(QColor& col, const QColor& currentColor);
+/*! \brief check whether any color in \a grad equals JKQTPlotterDrawingTools::CurrentColorPlaceholder (or one of its variants) and then replace it by \a currentColor
+   \ingroup jkqtptools_drawing
+
+    \see JKQTPlotterDrawingTools::CurrentColorPlaceholder, JKQTPlotterDrawingTools::CurrentColorPlaceholder_Trans10, ...
+   */
+JKQTCOMMON_LIB_EXPORT void JKQTPReplaceCurrentColor(QGradient& grad, const QColor& currentColor);
 
 
 /** \brief symbols that can be used to plot a datapoint for a graph

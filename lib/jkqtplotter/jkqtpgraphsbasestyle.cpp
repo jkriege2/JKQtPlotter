@@ -146,7 +146,7 @@ void JKQTGeometricSpecificStyleProperties::loadSettings(const QSettings &setting
     defaultColor=jkqtp_String2QColor(settings.value(group+"color", jkqtp_QColor2String(defaultColor)).toString());
     defaultLineStyle=jkqtp_String2QPenStyle(settings.value(group+"line_style", jkqtp_QPenStyle2String(defaultLineStyle)).toString());
     defaultSymbol=String2JKQTPGraphSymbols(settings.value(group+"symbol", JKQTPGraphSymbols2String(defaultSymbol)).toString());
-    defaultFillStyle=jkqtp_String2QBrushStyle(settings.value(group+"fill_style", jkqtp_QBrushStyle2String(defaultFillStyle)).toString());
+    defaultFillStyle=JKQTFillStyleSummmary::fromString(settings.value(group+"fill_style", defaultFillStyle.toCSSString()).toString());
 }
 
 void JKQTGeometricSpecificStyleProperties::saveSettings(QSettings &settings, const QString &group) const
@@ -155,7 +155,7 @@ void JKQTGeometricSpecificStyleProperties::saveSettings(QSettings &settings, con
     settings.setValue(group+"color", jkqtp_QColor2String(defaultColor));
     settings.setValue(group+"line_style", jkqtp_QPenStyle2String(defaultLineStyle));
     settings.setValue(group+"symbol", JKQTPGraphSymbols2String(defaultSymbol));
-    settings.setValue(group+"fill_style", jkqtp_QBrushStyle2String(defaultFillStyle));
+    settings.setValue(group+"fill_style", defaultFillStyle.toCSSString());
 }
 
 JKQTAnnotationsSpecificStyleProperties::JKQTAnnotationsSpecificStyleProperties(const JKQTBasePlotterStyle& parent):
@@ -512,6 +512,7 @@ QBrush JKQTFillStyleSummmary::brush(const QColor &color) const
     b.setColor(color);
     if (brushStyle==Qt::LinearGradientPattern || brushStyle==Qt::RadialGradientPattern || brushStyle==Qt::ConicalGradientPattern) {
         QGradient g=gradient;
+        JKQTPReplaceCurrentColor(g, color);
         g.setCoordinateMode(QGradient::ObjectMode);
         b=QBrush(g);
     } else {
@@ -523,6 +524,11 @@ QBrush JKQTFillStyleSummmary::brush(const QColor &color) const
 JKQTFillStyleSummmary JKQTFillStyleSummmary::fromString(const QString &style)
 {
     JKQTFillStyleSummmary res;
-    res.brushStyle=jkqtp_String2QBrushStyleExt(style, nullptr, &(res.gradient), nullptr, &(res.rotationAngleDeg));
+    res.brushStyle=jkqtp_String2QBrushStyleExt(style, nullptr, &(res.gradient), &(res.texture), &(res.rotationAngleDeg));
     return res;
+}
+
+QString JKQTFillStyleSummmary::toCSSString() const
+{
+    return jkqtp_QBrushStyle2String(brushStyle);
 }

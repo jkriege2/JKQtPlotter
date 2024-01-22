@@ -1155,11 +1155,17 @@ JKQTBasePlotter::JKQTPPen JKQTBasePlotter::getPlotStyle(int i, JKQTPPlotStyleTyp
     JKQTPGraphSymbols baseSymbol=plotterStyle.graphsStyle.defaultGraphSymbols[symbolI];
     QColor baseColor=plotterStyle.graphsStyle.defaultGraphColors[colorI];
     double baseWidth=baseProps.defaultLineWidth;
-    if (type==JKQTPPlotStyleType::Annotation || type==JKQTPPlotStyleType::Geometric) {
+    if (type==JKQTPPlotStyleType::Annotation) {
         baseColor=plotterStyle.graphsStyle.annotationStyle.defaultColor;
         basePenStyle=plotterStyle.graphsStyle.annotationStyle.defaultLineStyle;
-        basebrushStyle=JKQTFillStyleSummmary(plotterStyle.graphsStyle.annotationStyle.defaultFillStyle);
+        basebrushStyle=plotterStyle.graphsStyle.annotationStyle.defaultFillStyle;
         baseSymbol=plotterStyle.graphsStyle.annotationStyle.defaultSymbol;
+    }
+    if (type==JKQTPPlotStyleType::Geometric) {
+        baseColor=plotterStyle.graphsStyle.geometricStyle.defaultColor;
+        basePenStyle=plotterStyle.graphsStyle.geometricStyle.defaultLineStyle;
+        basebrushStyle=plotterStyle.graphsStyle.geometricStyle.defaultFillStyle;
+        baseSymbol=plotterStyle.graphsStyle.geometricStyle.defaultSymbol;
     }
     if (type==JKQTPPlotStyleType::Barchart || type==JKQTPPlotStyleType::Boxplot || type==JKQTPPlotStyleType::Impulses) {
         basePenStyle=Qt::SolidLine;

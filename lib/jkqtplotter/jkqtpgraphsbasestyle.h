@@ -39,6 +39,30 @@
 
 class JKQTBasePlotterStyle; // forward
 
+/** \brief Support Class for JKQTBasePlotter, which summarizes a fill style
+ *  \ingroup jkqtpplotter_styling_classes
+ *
+ *  \see JKQTBasePlotter, JKQTGraphsBaseStyle, \ref jkqtpplotter_styling
+ */
+class JKQTPLOTTER_LIB_EXPORT JKQTFillStyleSummmary {
+#ifndef JKQTPLOTTER_WORKAROUND_QGADGET_BUG
+    Q_GADGET
+#endif
+public:
+    JKQTFillStyleSummmary(Qt::BrushStyle style=Qt::SolidPattern, const QGradient& grad=QGradient(), double rotAngleDeg=0.0);
+
+    Qt::BrushStyle brushStyle;
+    QGradient gradient;
+    QPixmap texture;
+    double rotationAngleDeg;
+
+    QBrush brush(const QColor& color) const;
+
+    /** \brief reads object contents from a string representation, e.g. as created by JKQTFillStyleSummmary::toCSSString() */
+    static JKQTFillStyleSummmary fromString(const QString& style);
+    /** \brief converst the contents to a string representation */
+    QString toCSSString() const;
+};
 
 /** \brief Support Class for JKQTBasePlotter, which summarizes all properties that define the visual styling of graphs
  *  \ingroup jkqtpplotter_styling_classes
@@ -155,7 +179,7 @@ public:
      /** \brief graph symbol used */
      JKQTPGraphSymbols defaultSymbol;
      /** \brief graph fill style used */
-     Qt::BrushStyle defaultFillStyle;
+     JKQTFillStyleSummmary defaultFillStyle;
 
 
 };
@@ -292,26 +316,6 @@ public:
 
 };
 
-/** \brief Support Class for JKQTBasePlotter, which summarizes a fill style
- *  \ingroup jkqtpplotter_styling_classes
- *
- *  \see JKQTBasePlotter, JKQTGraphsBaseStyle, \ref jkqtpplotter_styling
- */
-class JKQTPLOTTER_LIB_EXPORT JKQTFillStyleSummmary {
-#ifndef JKQTPLOTTER_WORKAROUND_QGADGET_BUG
-    Q_GADGET
-#endif
-public:
-    JKQTFillStyleSummmary(Qt::BrushStyle style=Qt::SolidPattern, const QGradient& grad=QGradient(), double rotAngleDeg=0.0);
-
-    Qt::BrushStyle brushStyle;
-    QGradient gradient;
-    double rotationAngleDeg;
-
-    QBrush brush(const QColor& color=QColor(Qt::black)) const;
-
-    static JKQTFillStyleSummmary fromString(const QString& style);
-};
 
 
 /** \brief Support Class for JKQTBasePlotter, which summarizes all properties that define the visual styling of a JKQTBasePlotter

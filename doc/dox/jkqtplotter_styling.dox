@@ -91,6 +91,10 @@ Here is a table with all available ready-made styles:
     <td><a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/simple_gridandticks.ini"><code>:/JKQTPlotter/styles/simple_gridandticks.ini</code></a>
     <td>\image html simple_gridandticks.ini.png
     <td>\image html simple_gridandticks.ini.symbols.png
+  <tr>
+    <td><a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/simple_noaxes.ini"><code>:/JKQTPlotter/styles/simple_noaxes.ini</code></a>
+    <td>\image html simple_noaxes.ini.png
+    <td>\image html simple_noaxes.ini.symbols.png
 </table>
 <!--/include:styles.dox-->
 
