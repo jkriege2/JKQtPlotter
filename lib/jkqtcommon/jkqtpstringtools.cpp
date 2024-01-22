@@ -715,9 +715,9 @@ QColor jkqtp_String2QColor(QString color)
     //     NP: "color,[a]NN"   NN=ALPHA 0..255
     //   Frac: "grey25"
 #if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
-    static QRegularExpression rxP("([^,\\(\\)]+)\\s*,\\s*t?\\s*(\\d+\\.?\\d+)\\%");
+    static QRegularExpression rxP("([^,\\(\\)]+)\\s*,\\s*t?\\s*(\\d+\\.?\\d*)\\%");
     static QRegularExpression rxFrac("([a-zA-Z]{3,})(\\d{1,3})\\%?");
-    static QRegularExpression rxAP("([^,\\(\\)]+)\\s*,\\s*a\\s*(\\d+\\.?\\d+)\\%");
+    static QRegularExpression rxAP("([^,\\(\\)]+)\\s*,\\s*a\\s*(\\d+\\.?\\d*)\\%");
     static QRegularExpression rxNP("([^,\\(\\)]+)\\s*,\\s*a?\\s*([\\d]+)");
     const auto mP=rxP.match(color);
 
@@ -750,24 +750,24 @@ QColor jkqtp_String2QColor(QString color)
         return col;
     }
 #else
-    QRegExp rxP("([^,\\(\\)]+)\\s*,\\s*t?\\s*(\\d+\\.?\\d+)\\%");
-    QRegExp rxAP("([^,\\(\\)]+)\\s*,\\s*a\\s*(\\d+\\.?\\d+)\\%");
+    QRegExp rxP("([^,\\(\\)]+)\\s*,\\s*t?\\s*(\\d+\\.?\\d*)\\%");
+    QRegExp rxAP("([^,\\(\\)]+)\\s*,\\s*a\\s*(\\d+\\.?\\d*)\\%");
     QRegExp rxNP("([^,\\(\\)]+)\\s*,\\s*a?\\s*([\\d]+)");
     QRegExp rxFrac("([a-zA-Z]{3,})(\\d{1,3})\\%?");
     if (rxP.exactMatch(color)) {
-        QColor col=jkqtp_lookupQColorName(rxP.cap(1));
+        QColor col=jkqtp_String2QColor(rxP.cap(1));
         double a=QLocale::c().toDouble(rxP.cap(2));
         col.setAlphaF(1.0-a/100.0);
         return col;
     }
     if (rxAP.exactMatch(color)) {
-        QColor col=jkqtp_lookupQColorName(rxAP.cap(1));
+        QColor col=jkqtp_String2QColor(rxAP.cap(1));
         double a=QLocale::c().toDouble(rxAP.cap(2));
         col.setAlphaF(a/100.0);
         return col;
     }
     if (rxNP.exactMatch(color)) {
-        QColor col=jkqtp_lookupQColorName(rxNP.cap(1));
+        QColor col=jkqtp_String2QColor(rxNP.cap(1));
         double a=QLocale::c().toInt(rxNP.cap(2));
         col.setAlphaF(a/255.0);
         return col;
