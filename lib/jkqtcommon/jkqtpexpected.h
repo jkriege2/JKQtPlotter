@@ -35,7 +35,7 @@ struct JKQTPExpectedUnexpectedType {};
  *
  *  \see JKQTPExpected, JKQTPExpectedUnexpectedType
  */
-inline constexpr JKQTPExpectedUnexpectedType JKQTPUnexpected {};
+#define JKQTPUnexpected JKQTPExpectedUnexpectedType()
 
 /** \brief an "expected" datatype, which can either represent a function result of type \c T or an error of type \c E
  *  \ingroup jkqtptools_general

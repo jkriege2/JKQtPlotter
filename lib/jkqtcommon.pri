@@ -48,7 +48,8 @@ isEmpty(JKQTP_COMMON_PRI_INCLUDED) {
                $$PWD/jkqtcommon/jkqtpicons.cpp \
                $$PWD/jkqtcommon/jkqtpcsstools.cpp \
                $$PWD/jkqtcommon/jkqtpcachingtools.cpp \
-               $$PWD/jkqtcommon/jkqtpconcurrencytools.cpp 
+               $$PWD/jkqtcommon/jkqtpconcurrencytools.cpp \
+               $$PWD/jkqtcommon/jkqtpexpected.cpp
 
 
     INCLUDEPATH += $$PWD

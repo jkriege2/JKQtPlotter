@@ -23,6 +23,8 @@
 #include "jkqtcommon/jkqtpcodestructuring.h"
 #include <exception>
 #include <QMetaEnum>
+#include <QSet>
+#include <QVector>
 
 
 JKQTPCSSParser::RawErrorTag_t JKQTPCSSParser::RawErrorTag={};

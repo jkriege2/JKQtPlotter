@@ -30,6 +30,7 @@ target_sources(${lib_name} PRIVATE
     jkqttools.cpp
     jkqtpicons.cpp
     jkqtpcsstools.cpp
+    jkqtpexpected.cpp
 )
 # ... and add headers
 target_sources(${lib_name} PUBLIC FILE_SET HEADERS TYPE HEADERS
