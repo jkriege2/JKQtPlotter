@@ -101,6 +101,7 @@ function(jkqtplotter_installlibrary_new lib_name libIncludeSubdir libSrcDir)
     )
     # generate ...Config.cmake
     set(JKQTP_CURRENT_TARGET_FILENAME "${lib_name}Targets.cmake")
+    set(libBasename "${libIncludeSubdir}")
     configure_file(${libSrcDir}/LibTarget.cmake.in "${CMAKE_CURRENT_BINARY_DIR}/${lib_name}Config.cmake" @ONLY)
     # install export files
     install(EXPORT ${lib_name}_TARGETS

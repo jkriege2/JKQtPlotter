@@ -13,5 +13,5 @@ find_package(Qt@QT_VERSION_MAJOR@ COMPONENTS Core Gui Widgets Xml REQUIRED)
 include("${CMAKE_CURRENT_LIST_DIR}/@JKQTP_CURRENT_TARGET_FILENAME@")
 
 if(NOT TARGET JKQTPlotter::@libBasename@)
-  add_library(JKQTPlotter::@libBasename@ ALIAS JKQTPlotter@QT_VERSION_MAJOR@@libBasename@
+  add_library(JKQTPlotter::@libBasename@ ALIAS JKQTPlotter@QT_VERSION_MAJOR@::@lib_name@
 endif()
