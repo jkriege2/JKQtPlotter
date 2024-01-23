@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
         JKQTPXYLineGraph* graph=new JKQTPXYLineGraph(&plot);
 
         // copy data into datastore and immediately set the yColumn
-        graph->setXColumn((symbolID<=JKQTPMaxSymbolID/2)?columnX1:columnX2);
+        graph->setXColumn((symbolID<=static_cast<int>(JKQTPMaxSymbolID)/2)?columnX1:columnX2);
         graph->setYColumn(ds->addCopiedColumn(Y, "y"+QString::number(symbolID)));
 
         // set symbol + pen style and color

@@ -1178,35 +1178,35 @@ public:
     inline JKQTPPaletteList(): ListType() {};
 #if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
     inline JKQTPPaletteList(qsizetype size): ListType(size) {};
-    inline JKQTPPaletteList(qsizetype size, parameter_type value): ListType(size, value) {};
+    inline JKQTPPaletteList(qsizetype size, parameter_type value): ListType(size, value) {}
 #endif
     template <class T>
-    inline JKQTPPaletteList(std::initializer_list<QPair<double, QRgb>> args): ListType(args) {};
+    inline JKQTPPaletteList(std::initializer_list<QPair<double, QRgb>> args): ListType(args) {}
     inline JKQTPPaletteList(std::initializer_list<QRgb> args):
         ListType()
     {
         for(const auto& v: args) {
             push_back(v);
         }
-    };
+    }
     inline JKQTPPaletteList(std::initializer_list<QColor> args):
         ListType()
     {
         for(const auto& v: args) {
             push_back(v);
         }
-    };
+    }
     inline JKQTPPaletteList(std::initializer_list<QPair<double, QColor>> args):
         ListType()
     {
         for(const auto& v: args) {
             push_back(v.first, v.second);
         }
-    };
+    }
     template <typename InputIterator, QtPrivate::IfIsInputIterator<InputIterator> = true>
-    inline JKQTPPaletteList(InputIterator first, InputIterator last): ListType(first, last) {};
-    inline JKQTPPaletteList(ListType &&other):ListType(std::forward<ListType>(other)) {};
-    inline JKQTPPaletteList(const ListType &other):ListType(other) {};
+    inline JKQTPPaletteList(InputIterator first, InputIterator last): ListType(first, last) {}
+    inline JKQTPPaletteList(ListType &&other):ListType(std::forward<ListType>(other)) {}
+    inline JKQTPPaletteList(const ListType &other):ListType(other) {}
 
     using ListType::push_back;
     inline void push_back(QRgb rgb) {

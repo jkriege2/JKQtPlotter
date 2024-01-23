@@ -374,7 +374,7 @@ Qt::BrushStyle jkqtp_String2QBrushStyle(const QString& style) {
 }
 
 
-Qt::BrushStyle jkqtp_String2QBrushStyleExt(const QString &style, QColor *color, QGradient *gradient, QPixmap *image, double* rotationAngleDeg)
+Qt::BrushStyle jkqtp_String2QBrushStyleExt(const QString &style, QGradient *gradient, QPixmap *image)
 {
     const QString s=style.toLower().trimmed().simplified();
     QStringList caps;
@@ -684,30 +684,6 @@ QColor jkqtp_String2QColor(QString color)
         const QColor col=jkqtp_lookupQColorName(color, true, &nameFound);
         if (nameFound) return col;
     }
-
-    // declare som helper functors
-    static auto valUnitToInt=[](const QString& v, const QString& unit="", int intMax=255) {
-        if (v.isEmpty()) return -1;
-        if (unit=="%") {
-            return qBound<int>(0, QLocale::c().toDouble(v)/100.0*intMax, intMax);
-        } else if (unit=="deg") {
-            int vv=qBound<int>(0, QLocale::c().toDouble(v), intMax);;
-            if (vv<0) vv=vv+static_cast<int>(qCeil(static_cast<double>(-vv)/360.0)*360.0);
-            return vv;
-        }
-        return qBound<int>(0, QLocale::c().toDouble(v), intMax);
-    };
-    static auto valUnitToAlphaInt=[](const QString& v, const QString& unit="", int intMax=255) {
-        if (v.isEmpty()) return -1;
-        if (unit=="%") {
-            return intMax-qBound<int>(0, QLocale::c().toDouble(v)/100.0*intMax, intMax);
-        } else if (unit=="deg") {
-            int vv=qBound<int>(0, QLocale::c().toDouble(v), intMax);;
-            if (vv<0) vv=vv+static_cast<int>(qCeil(static_cast<double>(-vv)/360.0)*360.0);
-            return vv;
-        }
-        return qBound<int>(0, QLocale::c().toDouble(v), intMax);
-    };
 
     // now we check for diverse special syntaxes
     //      P: "color,NN%"     NN=TRANSPARENCY in percent

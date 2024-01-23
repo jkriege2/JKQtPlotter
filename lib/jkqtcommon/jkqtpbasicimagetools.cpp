@@ -201,7 +201,7 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
     {
         const auto fR= [](float v) -> float { return  ((v < 0.5) ? 128.0*sin(JKQTPSTATISTICS_PI*(2.0*v-0.5))+128.0 : 255.0)/255.0; };
         const auto fG= [](float v) -> float { return  ((v < 0.5) ? 512.0*v+128.0 : 512.0-512.0*v)/255.0; };
-        const auto fB= [](float v) -> float { return  0.0; };
+        const auto fB= [](float ) -> float { return  0.0; };
         const auto& normLUT=lutstore[JKQTPMathImageTRAFFICLIGHT]=JKQTPImageTools::LUTData(JKQTPBuildColorPaletteLUT(fR, fG, fB), "Trafficlight", QObject::tr("Trafficlight"));
         lutstore[JKQTPMathImageINVERTED_TRAFFICLIGHT]=JKQTPImageTools::LUTData(jkqtp_reversed(normLUT.lut), "invtrafficlight", QObject::tr("inv. Trafficlight"));
 

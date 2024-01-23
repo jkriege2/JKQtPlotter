@@ -90,7 +90,7 @@ double JKQTMathTextSimpleInstructionNode::draw(QPainter &painter, double x, doub
     return x+bb.width();
 }
 
-bool JKQTMathTextSimpleInstructionNode::toHtml(QString &html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) const
+bool JKQTMathTextSimpleInstructionNode::toHtml(QString &html, JKQTMathTextEnvironment /*currentEv*/, JKQTMathTextEnvironment /*defaultEv*/) const
 {
     const QString txt=executeInstruction();
     html+=txt;

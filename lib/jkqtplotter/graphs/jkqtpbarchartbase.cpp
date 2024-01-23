@@ -36,12 +36,14 @@
 
 JKQTPBarGraphBase::JKQTPBarGraphBase(JKQTBasePlotter* parent):
     JKQTPXYBaselineGraph(parent),
-    width(0.9), shift(0),
+    width(0.9),
+    shift(0),
+    rectRadiusAtValue(0),
+    rectRadiusAtBaseline(0),
+    m_drawBaseline(parent->getCurrentPlotterStyle().graphsStyle.barchartStyle.drawBaseline),
     m_fillMode(FillMode::SingleFilling),
-    m_useCustomDrawFunctor(false),
     m_lineColorDerivationModeForSpecialFill(parent->getCurrentPlotterStyle().graphsStyle.barchartStyle.graphColorDerivationMode),
-    rectRadiusAtBaseline(0),rectRadiusAtValue(0),
-    m_drawBaseline(parent->getCurrentPlotterStyle().graphsStyle.barchartStyle.drawBaseline)
+    m_useCustomDrawFunctor(false)
 {
     initFillStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Barchart);
     initLineStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Barchart);

@@ -232,7 +232,7 @@ QVector<Qt::PenStyle> JKQTGraphsBaseStyle::getDefaultGraphPenStyles()
 QVector<JKQTPGraphSymbols> JKQTGraphsBaseStyle::getDefaultGraphSymbols()
 {
     QVector<JKQTPGraphSymbols> syms;
-    for (int i=2; i<=JKQTPMaxSymbolID; i++) syms.push_back(static_cast<JKQTPGraphSymbols>(i));
+    for (int i=2; i<=static_cast<int>(JKQTPMaxSymbolID); i++) syms.push_back(static_cast<JKQTPGraphSymbols>(i));
     return syms;
 }
 
@@ -444,7 +444,7 @@ JKQTBarchartSpecificStyleProperties::JKQTBarchartSpecificStyleProperties(const J
 
 }
 
-JKQTBarchartSpecificStyleProperties::JKQTBarchartSpecificStyleProperties(const JKQTBasePlotterStyle& parent, const JKQTGraphsSpecificStyleProperties &other):
+JKQTBarchartSpecificStyleProperties::JKQTBarchartSpecificStyleProperties(const JKQTBasePlotterStyle& /*parent*/, const JKQTGraphsSpecificStyleProperties &other):
     JKQTGraphsSpecificStyleProperties(JKQTPPlotStyleType::Barchart, other),
     defaultRectRadiusAtValue(0),
     defaultRectRadiusAtBaseline(0),
@@ -478,7 +478,7 @@ JKQTImpulseSpecificStyleProperties::JKQTImpulseSpecificStyleProperties(const JKQ
 
 }
 
-JKQTImpulseSpecificStyleProperties::JKQTImpulseSpecificStyleProperties(const JKQTBasePlotterStyle& parent, const JKQTGraphsSpecificStyleProperties &other):
+JKQTImpulseSpecificStyleProperties::JKQTImpulseSpecificStyleProperties(const JKQTBasePlotterStyle& /*parent*/, const JKQTGraphsSpecificStyleProperties &other):
     JKQTGraphsSpecificStyleProperties(JKQTPPlotStyleType::Impulses, other),
     drawBaseline(false)
 {
@@ -500,8 +500,8 @@ void JKQTImpulseSpecificStyleProperties::saveSettings(QSettings &settings, const
 
 
 
-JKQTFillStyleSummmary::JKQTFillStyleSummmary(Qt::BrushStyle style, const QGradient& grad, double rotAngleDeg):
-    brushStyle(style), gradient(grad), rotationAngleDeg(rotAngleDeg)
+JKQTFillStyleSummmary::JKQTFillStyleSummmary(Qt::BrushStyle style, const QGradient& grad):
+    brushStyle(style), gradient(grad)
 {
 
 }
@@ -524,7 +524,7 @@ QBrush JKQTFillStyleSummmary::brush(const QColor &color) const
 JKQTFillStyleSummmary JKQTFillStyleSummmary::fromString(const QString &style)
 {
     JKQTFillStyleSummmary res;
-    res.brushStyle=jkqtp_String2QBrushStyleExt(style, nullptr, &(res.gradient), &(res.texture), &(res.rotationAngleDeg));
+    res.brushStyle=jkqtp_String2QBrushStyleExt(style, &(res.gradient), &(res.texture));
     return res;
 }
 

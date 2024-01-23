@@ -42,13 +42,13 @@ protected:
         std::function<JKQTPlotter*(void)> plotf;
         JKQTPlotter* p;
         inline Data(const std::function<void(void)>& f_):
-            type(FunctorType), f(f_), p(nullptr), plotf()
+            type(FunctorType), f(f_), plotf(), p(nullptr)
         {}
         inline Data(JKQTPlotter* p_):
-            type(PlotterType), p(p_), f(), plotf()
+            type(PlotterType), f(), plotf(), p(p_)
         {}
         inline Data(std::function<JKQTPlotter*(void)> p_):
-            type(PlotterFunctorType), plotf(p_), f(), p(nullptr)
+            type(PlotterFunctorType), f(), plotf(p_), p(nullptr)
         {}
     };
 
@@ -56,5 +56,5 @@ protected:
     void readCmdLine();
     QRect getBoundsWithoutColor(QImage qImage, const QColor &exclusionColor = Qt::white);
 
-    void saveWidget(QWidget* w, int iVisible);;
+    void saveWidget(QWidget* w, int iVisible);
 };

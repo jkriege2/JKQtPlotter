@@ -29,7 +29,7 @@ void doExample(JKQTPlotter& plot, const QString& title)
     graph->setValueColumn(columnV);
     // set TwoColor fill Mode
     graph->setFillMode(JKQTPBarGraphBase::FillMode::FunctorFilling);
-    graph->setFillBrushFunctor([](double key, double value) {return QBrush(QColor::fromHsvF(key/12.0, 1.0, 1.0)); });
+    graph->setFillBrushFunctor([](double key, double /*value*/) {return QBrush(QColor::fromHsvF(key/12.0, 1.0, 1.0)); });
     plot.addGraph(graph);
 
     // 4 autoscale the plot so the graph is contained

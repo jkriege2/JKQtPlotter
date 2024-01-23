@@ -374,13 +374,13 @@ JKQTPCSSParser::Token::Token(TokenType type):
 }
 
 JKQTPCSSParser::Token::Token(double num, const QString &unit_):
-    NumberValue(num), StringValue(unit_), type(NUMBER)
+    type(NUMBER), StringValue(unit_), NumberValue(num)
 {
 
 }
 
 JKQTPCSSParser::Token::Token(const QString &str, TokenType type_):
-    StringValue(str), type(type_), NumberValue(0.0)
+    type(type_), StringValue(str), NumberValue(0.0)
 {
     if (type_==NUMBER) NumberValue=str.toDouble();
     if (type_==HEXSTRING) NumberValue=str.toInt(nullptr,16);

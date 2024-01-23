@@ -168,21 +168,19 @@ private slots:
         Qt::BrushStyle bs;
         QGradient n, g;
         QLinearGradient lg;
-        //QPixmap pix;
-        QColor col;
 
 
-        QVERIFY_THROWS_NO_EXCEPTION(bs=jkqtp_String2QBrushStyleExt("warmflame", &col, &n, nullptr));
+        QVERIFY_THROWS_NO_EXCEPTION(bs=jkqtp_String2QBrushStyleExt("warmflame", &n, nullptr));
         g = QGradient(QGradient::WarmFlame);
         g.setCoordinateMode(QGradient::ObjectBoundingMode);
         QCOMPARE_EQ(n, g);
         QCOMPARE_EQ(bs, Qt::LinearGradientPattern);
 
-        QVERIFY_THROWS_NO_EXCEPTION(bs=jkqtp_String2QBrushStyleExt("d1", &col, &n, nullptr));
+        QVERIFY_THROWS_NO_EXCEPTION(bs=jkqtp_String2QBrushStyleExt("d1", &n, nullptr));
         QCOMPARE_EQ(bs, Qt::Dense1Pattern);
 
 
-        QVERIFY_THROWS_NO_EXCEPTION(bs=jkqtp_String2QBrushStyleExt("linear-gradient(to left, red, blue)", &col, &n, nullptr));
+        QVERIFY_THROWS_NO_EXCEPTION(bs=jkqtp_String2QBrushStyleExt("linear-gradient(to left, red, blue)", &n, nullptr));
         lg = QLinearGradient(1,0.5,0,0.5);
         lg.setCoordinateMode(QGradient::ObjectBoundingMode);
         lg.setStops({QGradientStop(0, QColor("red")), QGradientStop(1, QColor("blue"))});

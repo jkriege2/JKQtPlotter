@@ -193,7 +193,7 @@ JKQTMathTextNodeSize JKQTMathTextFracNode::getSizeInternal(QPainter& painter, JK
         const double top_ascent=line_ascent;
         const double newascent=size1.overallHeight+top_ascent;
         const double newdescent=qMax(size2.overallHeight-size2.baselineHeight, qheight-xheight);
-        const double deltaWidth=xwidth*((fracmode==JKQTMathTextFracNode::MTFMstfrac)?0.8:0.7);
+        //const double deltaWidth=xwidth*((fracmode==JKQTMathTextFracNode::MTFMstfrac)?0.8:0.7);
 
         size.width=size1.width+size2.width+xwidth*0.666;
         size.strikeoutPos=line_ascent;

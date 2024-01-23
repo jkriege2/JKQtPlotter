@@ -18,8 +18,8 @@ public:
         QThread(parent),
         m_plotindex(plotindex),
         m_runtimeNanoseconds(0),
-        m_filenamepart(filenamepart),
         m_filename(),
+        m_filenamepart(filenamepart),
         m_NUM_GRAPHS(NUM_GRAPHS),
         m_NUM_DATAPOINTS(NUM_DATAPOINTS),
         m_labeltemplate(labeltemplate)

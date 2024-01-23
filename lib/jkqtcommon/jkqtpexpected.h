@@ -72,12 +72,12 @@ struct JKQTPExpected {
         if (!m_hasValue) return m_error;
         throw std::runtime_error("error not available");
     }
-    const bool has_value() const { return m_hasValue; }
+    bool has_value() const { return m_hasValue; }
     operator bool() const { return m_hasValue; }
 private:
     const bool m_hasValue;
-    const E m_error;
     const T m_value;
+    const E m_error;
 };
 
 

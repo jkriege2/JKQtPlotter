@@ -118,7 +118,7 @@ void JKQTMathTextFontSpecifier::setFallbackSymbolsFontName(const QString &name)
     m_fallbackSymbolFont=name;
 }
 
-QString JKQTMathTextFontSpecifier::transformFontName(const QString &fontName, bool mathmode)
+QString JKQTMathTextFontSpecifier::transformFontName(const QString &fontName, bool /*mathmode*/)
 {
     const QString fnt=fontName.trimmed().toLower();
     QFont testFnt;

@@ -56,14 +56,13 @@ JKQTCOMMON_LIB_EXPORT Qt::BrushStyle jkqtp_String2QBrushStyle(const QString& sty
  * \ingroup jkqtptools_string
  *
  * \param style the string to be parsed
- * \param[out] color output parameter for a parsed color
  * \param[out] gradient output parameter for a parsed gradient
  * \param[out] image output parameter for a parsed image
  * \param[out] rotationAngleDeg output parameter for a parsed rotation angle of the pattern in degrees, where the direction equals the direction of a clock hand, i.e. 0=12o'clock, 180=6o'clock, ...
  *
  * \see jkqtp_String2QBrushStyle()
  */
-JKQTCOMMON_LIB_EXPORT Qt::BrushStyle jkqtp_String2QBrushStyleExt(const QString& style, QColor* color=nullptr, QGradient* gradient=nullptr, QPixmap* image=nullptr, double *rotationAngleDeg=nullptr);
+JKQTCOMMON_LIB_EXPORT Qt::BrushStyle jkqtp_String2QBrushStyleExt(const QString& style, QGradient* gradient=nullptr, QPixmap* image=nullptr);
 
 
 /** \brief converts a Unicode codepoint into a UTF8-sequence

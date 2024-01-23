@@ -36,7 +36,7 @@
 
 
 JKQTPSingleColumnSymbolsGraph::JKQTPSingleColumnSymbolsGraph(JKQTBasePlotter *parent):
-    JKQTPSingleColumnGraph(parent), seedValue(123456), positionScatterStyle(NoScatter), position(0), width(1)
+    JKQTPSingleColumnGraph(parent), position(0), width(1), positionScatterStyle(NoScatter), seedValue(123456)
 
 {
     parentPlotStyle=-1;

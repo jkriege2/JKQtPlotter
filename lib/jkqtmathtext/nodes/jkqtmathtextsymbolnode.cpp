@@ -829,7 +829,7 @@ JKQTMathTextSymbolNode::SymbolFullProps JKQTMathTextSymbolNode::NarrowMathOperat
     return NarrowMathOperatorSymbolStd(symbol,symbol);
 }
 
-JKQTMathTextSymbolNode::SymbolFullProps JKQTMathTextSymbolNode::NarrowMathOperatorSymbolStd(const QString &symbol, const QString &symbolHTML)
+JKQTMathTextSymbolNode::SymbolFullProps JKQTMathTextSymbolNode::NarrowMathOperatorSymbolStd(const QString &symbol, const QString &/*symbolHTML*/)
 {
     return SymbolFullProps(MTFEStandard, SymbolProps(symbol, ItalicOff|BoldOff, 1.0, 0.0)).addHtml(symbol, ItalicOff|BoldOff, 1.0, 0.0).addGlobalFlags(SmallExtendWidthInMathmode|MakeWhitespaceHalf);
 }

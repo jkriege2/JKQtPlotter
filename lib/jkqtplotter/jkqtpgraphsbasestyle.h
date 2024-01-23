@@ -49,13 +49,16 @@ class JKQTPLOTTER_LIB_EXPORT JKQTFillStyleSummmary {
     Q_GADGET
 #endif
 public:
-    JKQTFillStyleSummmary(Qt::BrushStyle style=Qt::SolidPattern, const QGradient& grad=QGradient(), double rotAngleDeg=0.0);
+    JKQTFillStyleSummmary(Qt::BrushStyle style=Qt::SolidPattern, const QGradient& grad=QGradient());
 
+    /** \brief a brushStyle (e.g. pattern) to use for filling */
     Qt::BrushStyle brushStyle;
+    /** \brief a QGradient to use for filling */
     QGradient gradient;
+    /** \brief a texture to use for filling */
     QPixmap texture;
-    double rotationAngleDeg;
 
+    /** \brief constructs a QBrush from the data in this object, possibly using \a color to replace JKQTPlotterDrawingTools::CurrentColorPlaceholder color stops and a color for a pattern defined via e.g. \c brushStyle=Qt::BDiagPattern */
     QBrush brush(const QColor& color) const;
 
     /** \brief reads object contents from a string representation, e.g. as created by JKQTFillStyleSummmary::toCSSString() */

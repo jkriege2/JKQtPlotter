@@ -142,7 +142,7 @@ JKQTMathTextTextNode::LayoutInfo JKQTMathTextTextNode::calcLayout(QPainter &pain
     const QFont fUpright=JKQTMathTextGetNonItalic(f);
     const QFont fFallbackSym=currentEv.exchangedFontFor(MTEFallbackSymbols).getFont(parentMathText);
     const QFont fRoman=currentEv.exchangedFontForRoman().getFont(parentMathText);
-    const double sp=JKQTMathTextGetHorAdvance(f, " ", painter.device());
+    //const double sp=JKQTMathTextGetHorAdvance(f, " ", painter.device());
     l.width=0;
     double ascent=0;
     double descent=0;

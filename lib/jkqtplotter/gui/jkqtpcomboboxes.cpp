@@ -78,7 +78,7 @@ JKQTPSymbolComboBox::JKQTPSymbolComboBox(QWidget *parent):
 {
     clear();
     setEditable(false);
-    for (int i=0; i<=JKQTPMaxSymbolID; i++) {
+    for (int i=0; i<=static_cast<int>(JKQTPMaxSymbolID); i++) {
         addSymbol(static_cast<JKQTPGraphSymbols>(i), JKQTPGraphSymbols2NameString(static_cast<JKQTPGraphSymbols>(i)));
     }
     setCurrentIndex(0);

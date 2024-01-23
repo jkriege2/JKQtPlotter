@@ -9,8 +9,10 @@
 #include "jkqtplotter/graphs/jkqtpscatter.h"
 #include "jkqtmath/jkqtpstatisticstools.h"
 
+#define NUM_DATAPOINTS 500
+
 SpeedTestPlot::SpeedTestPlot():
-    JKQTPlotter(), NDATA(500), dx(1.0/500.0*4.0*JKQTPSTATISTICS_PI), x0(0)
+    JKQTPlotter(), dx(1.0/static_cast<double>(NUM_DATAPOINTS)*4.0*JKQTPSTATISTICS_PI), x0(0), NDATA(NUM_DATAPOINTS)
 
 {
     X.fill(0);
@@ -127,7 +129,7 @@ SpeedTestPlot::SpeedTestPlot():
         QAction* act=actGroup->addAction(QString::number(a));
         act->setCheckable(true);
         act->setChecked(a==1.0);
-        connect(act, &QAction::toggled, std::bind([](bool enabled,JKQTPXYLineGraph* g, JKQTPXYLineGraph* g2,SpeedTestPlot* p, double a){
+        connect(act, &QAction::toggled, std::bind([](bool /*enabled*/,JKQTPXYLineGraph* g, JKQTPXYLineGraph* g2,SpeedTestPlot* p, double a){
                     g->setNonvisibleLineCompressionAgressiveness(a);
                     g2->setNonvisibleLineCompressionAgressiveness(a);
                     if (!p->actAnimation->isChecked()) p->redrawPlot();

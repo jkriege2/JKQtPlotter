@@ -177,7 +177,7 @@ int main(int argc, char* argv[])
     JKQTPlotter* plot1=showPlot<JKQTPViolinplotHorizontalElement,JKQTPSingleColumnSymbolsGraph::DataDirection::X>("1: JKQTPViolinplotHorizontalElement");
     //plot1->resize(500,450);
     plot1->getPlotter()->setKeyPosition(JKQTPKeyInsideTopLeft);
-    JKQTPlotter* plot2=showPlot<JKQTPViolinplotVerticalElement,JKQTPSingleColumnSymbolsGraph::DataDirection::Y>("2: JKQTPViolinplotVerticalElement");
+    /*JKQTPlotter* plot2=*/showPlot<JKQTPViolinplotVerticalElement,JKQTPSingleColumnSymbolsGraph::DataDirection::Y>("2: JKQTPViolinplotVerticalElement");
 
 
     return app.exec();

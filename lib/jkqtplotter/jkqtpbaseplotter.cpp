@@ -644,9 +644,9 @@ QRectF JKQTBasePlotter::calcPlotMarginRect(PlotMarginUse use, PlotMarginSide sid
     if (internalPlotMargins.contains(use)) {
         const double marginSize=internalPlotMargins[use].getMargin(side);
         const double allTop=internalPlotMargins.calcTop();
-        const double allBottom=internalPlotMargins.calcBottom();
+        //const double allBottom=internalPlotMargins.calcBottom();
         const double allLeft=internalPlotMargins.calcLeft();
-        const double allRight=internalPlotMargins.calcRight();
+        //const double allRight=internalPlotMargins.calcRight();
         const double allHeight=internalPlotBorderTop+internalPlotHeight+internalPlotBorderBottom;
         const double allWidth=internalPlotBorderLeft+internalPlotWidth+internalPlotBorderRight;
         if (marginSize>0.0) {
@@ -3632,7 +3632,7 @@ bool JKQTBasePlotter::saveImage(const QString& filename, bool displayPreview) {
             for (const auto& ext: jkqtpPaintDeviceAdapters.get()[i]->getFileExtension()) filterextensions.last()<<ext.toLower();
         }
     }
-    const bool isWithSpecialDeviceAdapter=(filterstrings.size()>filtersIndexFirstExporterPLugin);
+    //const bool isWithSpecialDeviceAdapter=(filterstrings.size()>filtersIndexFirstExporterPLugin);
     // add remaining QImageWriter exporters
     const int filtersIndexFirstQtWriter=filterstrings.size();
     const QList<QByteArray> writerformats=QImageWriter::supportedImageFormats();

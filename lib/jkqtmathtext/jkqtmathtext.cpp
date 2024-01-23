@@ -1316,7 +1316,7 @@ void JKQTMathText::draw(QPainter& painter, unsigned int flags, QRectF rect, bool
         else if ((flags & Qt::AlignVCenter) != 0) y=y+(rect.height()-size.overallHeight)/2.0;
 
         // finally draw
-        const double xend=getNodeTree()->draw(painter, x, y, ev);
+        /*const double xend=*/getNodeTree()->draw(painter, x, y, ev);
     }
 }
 

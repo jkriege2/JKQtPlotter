@@ -862,7 +862,7 @@ JKQTMathTextNode* JKQTMathTextLatexParser::parseLatexString(bool get, JKQTMathTe
                 bool first=true;
                 bool firstLine=true;
                 QVector<JKQTMathTextNode*> line;
-                size_t colCount=0;
+                qsizetype colCount=0;
                 //std::cout<<"found \\begin{matrix}\n";
                 while (first || currentToken==MTTampersand || currentToken==MTTinstructionNewline) {
                     while (getToken()==MTTwhitespace) ; // eat whitespace
@@ -908,10 +908,10 @@ JKQTMathTextNode* JKQTMathTextLatexParser::parseLatexString(bool get, JKQTMathTe
                             line.append(it);
                         }
                         if (currentToken==MTTinstructionNewline || line.size()>0) {
-                            colCount=qMax(colCount, static_cast<size_t>(line.size()));
-                            if (line.size()==0 || (line.size()>1 && line.size()==colCount)) {
+                            colCount=qMax(colCount, static_cast<qsizetype>(line.size()));
+                            if (line.size()==0 || (line.size()>1 && static_cast<qsizetype>(line.size())==colCount)) {
                                 items.append(line);
-                            } else if (line.size()>1 && line.size()!=colCount) {
+                            } else if (line.size()>1 && static_cast<qsizetype>(line.size())!=colCount) {
                                 addToErrorList(tr("error @ ch. %1: wrong number of entries widthin '\\begin{%2}...\\end{%2}'").arg(currentTokenID).arg(envname));
                             }
                         }
@@ -974,7 +974,7 @@ JKQTMathTextNode* JKQTMathTextLatexParser::parseLatexString(bool get, JKQTMathTe
     return simplifyJKQTMathTextNode(nl);
 }
 
-JKQTMathTextVerticalListNode *JKQTMathTextLatexParser::parseMultilineLatexString(bool get, const QString &quitOnEnvironmentEnd, JKQTMathTextHorizontalAlignment _alignment, double _linespacingFactor, JKQTMathTextLineSpacingMode spacingMode_, JKQTMathTextVerticalOrientation _verticalOrientation)
+JKQTMathTextVerticalListNode *JKQTMathTextLatexParser::parseMultilineLatexString(bool /*get*/, const QString &quitOnEnvironmentEnd, JKQTMathTextHorizontalAlignment _alignment, double _linespacingFactor, JKQTMathTextLineSpacingMode spacingMode_, JKQTMathTextVerticalOrientation _verticalOrientation)
 {
     JKQTMathTextVerticalListNode* vlist = new JKQTMathTextVerticalListNode(parentMathText, _alignment, _linespacingFactor, spacingMode_, _verticalOrientation );
     bool first=true;

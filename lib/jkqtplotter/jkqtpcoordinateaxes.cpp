@@ -1155,7 +1155,7 @@ void JKQTPCoordinateAxis::setColor(QColor c)
     setTickLabelColor(c);
 }
 
-JKQTPCoordinateAxis::Axis0ElementsSizeDescription JKQTPCoordinateAxis::getSize0(JKQTPEnhancedPainter &painter)
+JKQTPCoordinateAxis::Axis0ElementsSizeDescription JKQTPCoordinateAxis::getSize0(JKQTPEnhancedPainter &/*painter*/)
 {
     return JKQTPCoordinateAxis::Axis0ElementsSizeDescription();
 }
@@ -2136,7 +2136,7 @@ double JKQTPVerticalIndependentAxis::getParentOtheraxisOffset() const {
 }
 
 
-double JKQTPVerticalIndependentAxis::parentOtherAxisX2P(double x) const
+double JKQTPVerticalIndependentAxis::parentOtherAxisX2P(double /*x*/) const
 {
     return qQNaN();
 }
@@ -2933,7 +2933,7 @@ double JKQTPHorizontalIndependentAxis::getParentOtheraxisOffset() const {
     return otherAxisOffset;
 }
 
-double JKQTPHorizontalIndependentAxis::parentOtherAxisX2P(double x) const
+double JKQTPHorizontalIndependentAxis::parentOtherAxisX2P(double /*x*/) const
 {
     return qQNaN();
 }

@@ -40,8 +40,8 @@ JKQTPKeyStyle::JKQTPKeyStyle():
     xOffset(1),
     yOffset(1),
     xSeparation(0.85),
-    columnSeparation(0.75),
     ySeparation(0.35),
+    columnSeparation(0.75),
     position(JKQTPKeyInsideTopRight),
     layout(JKQTPKeyLayoutOneColumn)
 {

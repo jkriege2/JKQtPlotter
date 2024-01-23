@@ -723,10 +723,10 @@ void JKQTPMathImage::initJKQTPMathImage() {
 JKQTPMathImage::JKQTPMathImage(double x, double y, double width, double height, JKQTPMathImageDataType datatype, const void* data, int Nx, int Ny, JKQTPMathImageColorPalette palette, JKQTBasePlotter* parent):
     JKQTPMathImageBase(x, y, width, height, datatype, data, Nx, Ny, parent),
     JKQTPColorPaletteWithModifierStyleAndToolsMixin(parent),
-    actCopyImage(nullptr),
     actSaveImage(nullptr),
-    actCopyPalette(nullptr),
-    actSavePalette(nullptr)
+    actCopyImage(nullptr),
+    actSavePalette(nullptr),
+    actCopyPalette(nullptr)
 {
     initJKQTPMathImage();
     this->palette=palette;

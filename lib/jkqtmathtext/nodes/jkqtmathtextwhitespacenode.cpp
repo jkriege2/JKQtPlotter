@@ -287,7 +287,7 @@ QString JKQTMathTextEmptyBoxNode::getTypeName() const
     return QString("JKQTMathTextEmptyBoxNode(%1%2 x %3%4)").arg(getWidth()).arg(JKQTMathTextEmptyBoxNode::Units2String(getWidthUnit())).arg(getHeight()).arg(JKQTMathTextEmptyBoxNode::Units2String(getHeightUnit()));
 }
 
-bool JKQTMathTextEmptyBoxNode::toHtml(QString &html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) const
+bool JKQTMathTextEmptyBoxNode::toHtml(QString &/*html*/, JKQTMathTextEnvironment /*currentEv*/, JKQTMathTextEnvironment /*defaultEv*/) const
 {
     return false;
 }
@@ -405,8 +405,7 @@ double JKQTMathTextPhantomNode::draw(QPainter& painter, double x, double y, JKQT
     return x+s.width;
 }
 
-bool JKQTMathTextPhantomNode::toHtml(QString &html, JKQTMathTextEnvironment currentEv, JKQTMathTextEnvironment defaultEv) const {
-    JKQTMathTextEnvironment ev=currentEv;
+bool JKQTMathTextPhantomNode::toHtml(QString &/*html*/, JKQTMathTextEnvironment /*currentEv*/, JKQTMathTextEnvironment /*defaultEv*/) const {
     return "&nbsp;";
 }
 

@@ -189,7 +189,7 @@ JKQTPBaseKey::KeySizeDescription JKQTPBaseKey::getSize(JKQTPEnhancedPainter &pai
 
     QFont kf(JKQTMathTextFontSpecifier::fromFontSpec(keyStyle().fontName).fontName(), keyStyle().fontSize);
     kf.setPointSizeF(keyStyle().fontSize*getParent()->getFontSizeMultiplier());
-    const qreal Xwid=JKQTMathTextGetBoundingRect(kf,"X",painter.device()).width();
+    //const qreal Xwid=JKQTMathTextGetBoundingRect(kf,"X",painter.device()).width();
 
     // calculate layout of the "table" of samples and labels
     const KeyLayoutDescription layout=getKeyLayout(painter);
@@ -235,7 +235,7 @@ void JKQTPBaseKey::modifySize(JKQTPEnhancedPainter &painter, KeySizeDescription 
     const auto lay=getLayout();
     if (lay==JKQTPKeyLayoutMultiColumn || lay==JKQTPKeyLayoutMultiRow) {
 
-        std::function<bool(QSizeF, QSizeF)> fcmpSizeTooLarge=[](const QSizeF& requiredSize, const QSizeF& preliminaryPlotSize) { return true; };
+        std::function<bool(QSizeF, QSizeF)> fcmpSizeTooLarge=[](const QSizeF& /*requiredSize*/, const QSizeF& /*preliminaryPlotSize*/) { return true; };
 
         bool increaseColumnCount=true;
         bool fillMaxMode=false;

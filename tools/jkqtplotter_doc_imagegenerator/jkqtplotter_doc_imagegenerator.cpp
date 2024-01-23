@@ -148,7 +148,7 @@ void doListPalettes(const QDir& outputDir, QSize iconsize) {
 }
 
 
-void doListErrorIndicators(const QDir& outputDir, int iconsize, QColor backgroundColor) {
+void doListErrorIndicators(const QDir& outputDir, int /*iconsize*/, QColor /*backgroundColor*/) {
     JKQTBasePlotter plot(true);
     JKQTPDatastore* ds=plot.getDatastore();
     size_t cx=ds->addCopiedColumn(QVector<double>{-1.5,-0.5,0.5,1.5,2.5},"x");
@@ -211,7 +211,7 @@ void doListErrorIndicators(const QDir& outputDir, int iconsize, QColor backgroun
     }
 }
 
-void doListAxisStyling(const QDir& outputDir, int iconsize, QColor backgroundColor) {
+void doListAxisStyling(const QDir& outputDir, int iconsize, QColor /*backgroundColor*/) {
     JKQTBasePlotter plot(true);
 
     plot.setXY(0,1,0.9,110);
@@ -409,7 +409,7 @@ void doListAxisStyling(const QDir& outputDir, int iconsize, QColor backgroundCol
     plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,0,plot.getWidth(),plot.getHeight()).save(outputDir.absoluteFilePath("axis_unit_scaling_pi.png"), "png");
 }
 
-void doListAxisTickLabelAngles(const QDir& outputDir, int iconsize, QColor backgroundColor) {
+void doListAxisTickLabelAngles(const QDir& outputDir, int iconsize, QColor /*backgroundColor*/) {
     JKQTBasePlotter plot(true);
 
     plot.setXY(0,1000,0,1000);
@@ -439,7 +439,7 @@ void doListAxisTickLabelAngles(const QDir& outputDir, int iconsize, QColor backg
     }
 }
 
-void doListLabelPosition(const QDir& outputDir, int iconsize, QColor backgroundColor) {
+void doListLabelPosition(const QDir& outputDir, int iconsize, QColor /*backgroundColor*/) {
     JKQTBasePlotter plot(true);
 
     plot.setXY(0,100,0,100);
@@ -526,7 +526,7 @@ void plotStyle(const QSettings& style, QSize examplePlotSize, const QString& exa
 
 
 
-void doListStyles(const QDir& outputDir, const QStringList& doctomodify, int iconsize, QColor backgroundColor) {
+void doListStyles(const QDir& outputDir, const QStringList& doctomodify, int iconsize, QColor /*backgroundColor*/) {
     QDir dir(":/JKQTPlotter/styles/", "*.ini");
     QString doc;
     {
@@ -622,7 +622,7 @@ inline QString JKQTPKeyPosition2CPPString(JKQTPKeyPosition pos) {
 }
 
 
-void doListKeyPositions(const QDir& outputDir, int iconsize, QColor backgroundColor) {
+void doListKeyPositions(const QDir& outputDir, int iconsize, QColor /*backgroundColor*/) {
     JKQTBasePlotter plot(true);
 
     plot.setWidgetSize(iconsize,iconsize);
@@ -671,7 +671,7 @@ void doListKeyPositions(const QDir& outputDir, int iconsize, QColor backgroundCo
     }
 }
 
-void doListKeyLayouts(const QDir& outputDir, int iconsize, QColor backgroundColor) {
+void doListKeyLayouts(const QDir& outputDir, int iconsize, QColor /*backgroundColor*/) {
     JKQTBasePlotter plot(true);
 
     plot.setWidgetSize(iconsize*2.0,iconsize);
