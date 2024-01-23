@@ -338,7 +338,7 @@ for:
 
 
 artifacts:
-  - path: '$APPVEYOR_BUILD_FOLDER/build/CMakeFiles/*.log'
+  - path: 'build/CMakeFiles/*.log'
     name: logs
-  - path: '$APPVEYOR_BUILD_FOLDER/build/Testing/**/*.xml'
+  - path: 'build/Testing/**/*.xml'
     name: test_results
