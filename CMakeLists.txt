@@ -72,6 +72,7 @@ if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
     add_subdirectory(doc)
     
     if (JKQtPlotter_BUILD_TESTS)
+      include(CTest)
       add_subdirectory(tests)
     endif()
 

@@ -10,7 +10,7 @@ else()
   message( STATUS "..   - Precompiled Header:  OFF")
 endif()
 message( STATUS "............................................................................." )
-
+include(CTest)
 enable_testing()
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Test REQUIRED)
 

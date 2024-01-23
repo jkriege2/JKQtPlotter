@@ -288,6 +288,10 @@ for:
               echo == RUNNING UNIT TESTS FOR JKQtPlotter CMAKE BUILD ===============================================
               cd $APPVEYOR_BUILD_FOLDER
               cd build
+              ls *.
+              ls -l *.*
+              ls -l Testing/*
+              ls -l Testing/*.*
               ctest --version
               ctest --print-labels --build-config "$CONFIGURATION"
               ctest --build-config "$CONFIGURATION" -VV --output-on-failure --output-junit test-results.xml
@@ -334,7 +338,7 @@ for:
 
 
 artifacts:
-  - path: 'build/CMakeFiles/*.log'
+  - path: '$APPVEYOR_BUILD_FOLDER/build/CMakeFiles/*.log'
     name: logs
-  - path: 'build/Testing/**/*.xml'
+  - path: '$APPVEYOR_BUILD_FOLDER/build/Testing/**/*.xml'
     name: test_results
