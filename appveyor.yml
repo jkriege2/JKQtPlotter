@@ -291,7 +291,7 @@ for:
               ctest --version
               ctest --print-labels --build-config "$CONFIGURATION"
               ctest --build-config "$CONFIGURATION" -VV --output-on-failure --output-junit test-results.xml
-           fi
+            fi
     after_test:
       - find "$APPVEYOR_BUILD_FOLDER" -type f -name 'test-results.xml' -print0 | xargs -0 -I '{}' curl -F 'file=@{}' "https://ci.appveyor.com/api/testresults/junit/$APPVEYOR_JOB_ID" 
 
