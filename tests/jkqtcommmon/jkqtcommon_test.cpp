@@ -1,6 +1,7 @@
 #include <QObject>
 #include <QtTest>
 #include "jkqtcommon/jkqtpcsstools.h"
+#include "jkqtcommon/jkqtpcachingtools.h"
 
 #ifndef QCOMPARE_EQ
 #define QCOMPARE_EQ(A,B) if (!static_cast<bool>((A)==(B))) {qDebug()<<QTest::toString(A)<< "!=" << QTest::toString(B); } QVERIFY((A)==(B))
@@ -238,6 +239,74 @@ private slots:
         QCOMPARE_EQ(n, QColor::fromRgbF(0.52,0.52,0.52,240.0/255.0));
     }
 
+
+    inline void test_JKQTPCSSParser_JKQTPDataCache_ThreadSafe() {
+        JKQTPDataCache<QString, int, JKQTPDataCacheThreadSafe> cache([](int key) { return QString::number(key);}, 100,0.8);
+
+        QString sum;
+        for (int i=0; i<100; i++) {
+            sum+=cache.get(i);
+        }
+        qDebug()<<"sum.size()="<<sum.size();
+        QCOMPARE_EQ(cache.size(), 100);
+        for (int i=0; i<100; i++) {
+            QVERIFY(cache.contains(i));
+        }
+        sum+=cache.get(5000);
+        QCOMPARE_EQ(cache.size(), 81);
+        for (int i=1000; i<1005; i++) {
+            sum+=cache.get(i);
+        }
+        QCOMPARE_EQ(cache.size(), 86);
+
+        qDebug()<<"sum.size()="<<sum.size();
+
+    }
+
+    inline void test_JKQTPCSSParser_JKQTPDataCache_NotThreadSafe() {
+        JKQTPDataCache<QString, int, JKQTPDataCacheNotThreadSafe> cache([](int key) { return QString::number(key);}, 100,0.8);
+
+        QString sum;
+        for (int i=0; i<100; i++) {
+            sum+=cache.get(i);
+        }
+        qDebug()<<"sum.size()="<<sum.size();
+        QCOMPARE_EQ(cache.size(), 100);
+        for (int i=0; i<100; i++) {
+            QVERIFY(cache.contains(i));
+        }
+        sum+=cache.get(5000);
+        QCOMPARE_EQ(cache.size(), 81);
+        for (int i=1000; i<1005; i++) {
+            sum+=cache.get(i);
+        }
+        QCOMPARE_EQ(cache.size(), 86);
+
+        qDebug()<<"sum.size()="<<sum.size();
+
+    }
+
+    inline void benchmark_JKQTPCSSParser_JKQTPDataCache_ThreadSafe() {
+        JKQTPDataCache<QString, int, JKQTPDataCacheThreadSafe> cache([](int key) { return QString::number(key);}, 100,0.8);
+
+        int sum=cache.get(1).size();
+        QBENCHMARK(sum+=cache.get(1).size());
+        int i=1;
+        QBENCHMARK(sum+=cache.get(++i).size());
+        qDebug()<<"sum.size()="<<sum<<", i="<<i;
+
+    }
+
+    inline void benchmark_JKQTPCSSParser_JKQTPDataCache_NotThreadSafe() {
+        JKQTPDataCache<QString, int, JKQTPDataCacheNotThreadSafe> cache([](int key) { return QString::number(key);}, 100,0.8);
+
+        int sum=cache.get(1).size();
+        QBENCHMARK(sum+=cache.get(1).size());
+        int i=1;
+        QBENCHMARK(sum+=cache.get(++i).size());
+        qDebug()<<"sum.size()="<<sum<<", i="<<i;
+
+    }
 };
 
 
