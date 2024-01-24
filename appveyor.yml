@@ -167,9 +167,13 @@ for:
       - cmd: if %USE_CMAKE%==true echo == RUNNING UNIT TESTS FOR JKQtPlotter CMAKE BUILD ===============================================
       - cmd: if %USE_CMAKE%==true cd %APPVEYOR_BUILD_FOLDER%
       - cmd: if %USE_CMAKE%==true cd build
+      - cmd: if %USE_CMAKE%==true dir *.*
+      - cmd: if %USE_CMAKE%==true dir Testing\*.*
       - cmd: if %USE_CMAKE%==true ctest --version
       - cmd: if %USE_CMAKE%==true ctest --print-labels --build-config "%CONFIGURATION%"
       - cmd: if %USE_CMAKE%==true ctest --build-config "%CONFIGURATION%" -VV --output-on-failure --output-junit test-results.xml
+      - cmd: if %USE_CMAKE%==true dir *.*
+      - cmd: if %USE_CMAKE%==true dir Testing\*.*
 
 
     after_test:
@@ -238,6 +242,7 @@ for:
               cmake -G "$CMAKE_GENERATOR" "-DCMAKE_PREFIX_PATH=$QTDIR;$CIMG_INCLUDE_DIR"  "-DCMAKE_INSTALL_PREFIX=$APPVEYOR_BUILD_FOLDER/install" .. 
               echo --- Build using CMake ------------------------------------------------------------------------------- 
               cmake --build . --config "$CONFIGURATION" -j$(getconf _NPROCESSORS_ONLN)  -- $CMAKE_BUILDFLAGS
+              
             fi
             if [ "$USE_CMAKE" = true ] && [ "$TEST_FETCHCONTENT" = true ]; then 
               cd examples/cmake_fetchcontent_example
@@ -288,13 +293,15 @@ for:
               echo == RUNNING UNIT TESTS FOR JKQtPlotter CMAKE BUILD ===============================================
               cd $APPVEYOR_BUILD_FOLDER
               cd build
-              ls *.
               ls -l *.*
               ls -l Testing/*
               ls -l Testing/*.*
               ctest --version
               ctest --print-labels --build-config "$CONFIGURATION"
               ctest --build-config "$CONFIGURATION" -VV --output-on-failure --output-junit test-results.xml
+              ls -l *.*
+              ls -l Testing/*
+              ls -l Testing/*.*
             fi
     after_test:
       - find "$APPVEYOR_BUILD_FOLDER" -type f -name 'test-results.xml' -print0 | xargs -0 -I '{}' curl -F 'file=@{}' "https://ci.appveyor.com/api/testresults/junit/$APPVEYOR_JOB_ID" 
@@ -335,6 +342,38 @@ for:
       - sh: cmake -G "$CMAKE_GENERATOR" "-DCMAKE_PREFIX_PATH=$QTDIR" .. 
       - sh: echo --- Build using CMake ------------------------------------------------------------------------------- 
       - sh: cmake --build . --config "$CONFIGURATION" -j$(getconf _NPROCESSORS_ONLN)  -- $CMAKE_BUILDFLAGS
+
+    after_build:
+      - sh: |
+            if [ "$USE_CMAKE" = true ] && [ "$TEST_FETCHCONTENT" = false ]; then 
+              echo == TEST USE JKQtPlotter CMAKE BUILD ============================================================
+              cd $APPVEYOR_BUILD_FOLDER
+              cd examples/cmake_link_example
+              mkdir build
+              cd build
+              cmake -G "$CMAKE_GENERATOR" "-DCMAKE_PREFIX_PATH=$QTDIR;$CIMG_INCLUDE_DIR;$APPVEYOR_BUILD_FOLDER\install" .. 
+              cmake --build . --config "$CONFIGURATION" -j$(getconf _NPROCESSORS_ONLN) -- $CMAKE_BUILDFLAGS
+              cd ..
+            fi
+
+    test_script:
+      - sh: |
+            if [ "$USE_CMAKE" = true ] && [ "$TEST_FETCHCONTENT" = false ]; then 
+              echo == RUNNING UNIT TESTS FOR JKQtPlotter CMAKE BUILD ===============================================
+              cd $APPVEYOR_BUILD_FOLDER
+              cd build
+              ls -l *.*
+              ls -l Testing/*
+              ls -l Testing/*.*
+              ctest --version
+              ctest --print-labels --build-config "$CONFIGURATION"
+              ctest --build-config "$CONFIGURATION" -VV --output-on-failure --output-junit test-results.xml
+              ls -l *.*
+              ls -l Testing/*
+              ls -l Testing/*.*
+            fi
+    after_test:
+      - find "$APPVEYOR_BUILD_FOLDER" -type f -name 'test-results.xml' -print0 | xargs -0 -I '{}' curl -F 'file=@{}' "https://ci.appveyor.com/api/testresults/junit/$APPVEYOR_JOB_ID" 
 
 
 artifacts:
