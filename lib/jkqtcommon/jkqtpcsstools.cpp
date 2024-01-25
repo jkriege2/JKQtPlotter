@@ -137,7 +137,7 @@ JKQTPExpected<QColor, JKQTPCSSParser::GeneralError> JKQTPCSSParser::parseColor(b
             return {JKQTPUnexpected, UnconvertobleError("#"+hex, "HEX-RGB value", pos) };
         }
     } else if (CurrentToken.is(Token::TokenType::NAME)) {
-        static QMap<QString,QPair<int,int>> rgbFuncs={
+        static QMap<QString,QPair<int,int> > rgbFuncs={
             {"rgb", QPair<int,int>(3,4)},
             {"rgba",QPair<int,int>(4,4)},
             {"hsl",QPair<int,int>(3,4)},

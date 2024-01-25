@@ -33,6 +33,7 @@
 #include <chrono>
 #include <atomic>
 #include <algorithm>
+#include <memory>
 #include <unordered_map>
 
 /** \brief tag type to configure JKQTPDataCache for thread-safety
@@ -106,7 +107,7 @@ struct JKQTPDataCache {
             return it->second;
         }
         if (m_maxEntries>0 && m_cache.size()>=static_cast<size_t>(m_maxEntries)) cleanCache_notThreadSafe();
-        m_cacheLastUseTimestamps.emplace(cacheKey, std::make_shared<std::atomic<int64_t>>(currenTimestamp()));
+        m_cacheLastUseTimestamps.emplace(cacheKey, std::make_shared<std::atomic<int64_t> >(currenTimestamp()));
         const auto newData=m_generateData(key);
         m_cache.emplace(cacheKey,newData);
         return newData;
@@ -124,7 +125,7 @@ struct JKQTPDataCache {
         if (m_maxEntries>0 && m_cache.size()>=static_cast<size_t>(m_maxEntries)) cleanCache_notThreadSafe();
         const auto newData=m_generateData(key);
         m_cache.emplace(cacheKey,newData);
-        m_cacheLastUseTimestamps.emplace(cacheKey, std::make_shared<std::atomic<int64_t>>(currenTimestamp()));
+        m_cacheLastUseTimestamps.emplace(cacheKey, std::make_shared<std::atomic<int64_t> >(currenTimestamp()));
         return newData;
     }
 
@@ -182,7 +183,7 @@ private:
     const int m_maxEntries;
     const double m_retainFraction;
     std::unordered_map<TKey, TData> m_cache;
-    std::unordered_map<TKey, std::shared_ptr<std::atomic<int64_t>>> m_cacheLastUseTimestamps;
+    std::unordered_map<TKey, std::shared_ptr<std::atomic<int64_t> > > m_cacheLastUseTimestamps;
     mutable QReadWriteLock m_mutex;
     const std::function<TData(TKeyInSignature)> m_generateData;
 };
