@@ -34,6 +34,7 @@
 #include <atomic>
 #include <algorithm>
 #include <memory>
+#include <vector>
 #include <unordered_map>
 
 /** \brief tag type to configure JKQTPDataCache for thread-safety
@@ -169,10 +170,10 @@ private:
     inline void cleanCache_notThreadSafe() {
         if (m_maxEntries<0 || m_cache.size()<static_cast<size_t>(m_maxEntries)) return;
         const int deleteItems=jkqtp_boundedRoundTo<int>(1, (1.0-m_retainFraction)*static_cast<double>(m_cache.size()), m_cache.size());
-        QList<QPair<TKey,int64_t> > allItems;
+        std::vector<QPair<TKey,int64_t> > allItems;
         allItems.reserve(m_cacheLastUseTimestamps.size());
         for (auto it=m_cacheLastUseTimestamps.begin(); it!=m_cacheLastUseTimestamps.end(); ++it) {
-            allItems.emplaceBack(it->first, it->second->load());
+            allItems.emplace_back(it->first, it->second->load());
         }
         std::sort(allItems.begin(), allItems.end(), [](const QPair<TKey,int64_t>&a, const QPair<TKey,int64_t>&b) {return a.second>b.second;});
         for (int i=0; i<deleteItems; i++) {
