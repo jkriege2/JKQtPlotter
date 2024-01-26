@@ -183,7 +183,14 @@ for:
 
 
     after_test:
-      - find "$APPVEYOR_BUILD_FOLDER" -type f -name 'test-results.xml' -print0 | xargs -0 -I '{}' curl -F 'file=@{}' "https://ci.appveyor.com/api/testresults/junit/$APPVEYOR_JOB_ID" 
+      - ps: |
+            If (Test-Path %APPVEYOR_BUILD_FOLDER%\build\test-results.xml) {
+              (new-object net.webclient).UploadFile(
+                "https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)",
+                (Resolve-Path %APPVEYOR_BUILD_FOLDER%\build\test-results.xml)
+              )
+            }
+            $LastExitCode = 0
 
 
   # Linux (Ubuntu2004)
