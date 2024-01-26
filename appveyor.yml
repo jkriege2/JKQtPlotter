@@ -384,8 +384,6 @@ for:
 
 
 artifacts:
-  - path: 'build/**/*.log'
-    name: logs
   - path: 'install'
     name: install-results
     type: zip
