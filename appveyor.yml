@@ -28,6 +28,7 @@ environment:
     CMAKE_BUILDFLAGS: 
     USE_CMAKE: true
     INSTALL_QMAKE5: false
+    BUILD_CONFIG: Debug
  
   matrix:
       
@@ -148,15 +149,15 @@ for:
       - cmd: cd build
       - cmd: if %USE_CMAKE%==true cmake --version 
       - cmd: if %USE_CMAKE%==true cmake -G "%CMAKE_GENERATOR%" "-DCMAKE_PREFIX_PATH=%QTDIR%;%CIMG_INCLUDE_DIR%" "-DCMAKE_INSTALL_PREFIX=%APPVEYOR_BUILD_FOLDER%\install" .. 
-      - cmd: if %USE_CMAKE%==true cmake --build . --config "%CONFIGURATION%" -j%NUMBER_OF_PROCESSORS% -- %CMAKE_BUILDFLAGS%
+      - cmd: if %USE_CMAKE%==true cmake --build . --config "%BUILD_CONFIG%" -j%NUMBER_OF_PROCESSORS% -- %CMAKE_BUILDFLAGS%
       - cmd: if %USE_CMAKE%==false qmake.exe -v 
-      - cmd: if %USE_CMAKE%==false qmake.exe CONFIG+=%CONFIGURATION% ..\JKQtPlotterBuildAllExamples.pro 
+      - cmd: if %USE_CMAKE%==false qmake.exe CONFIG+=%BUILD_CONFIG% ..\JKQtPlotterBuildAllExamples.pro 
       - cmd: if %USE_CMAKE%==false call %MAKETOOL% 
       - cmd: cd ..
       - cmd: echo == INSTALL JKQtPlotter ==========================================================================
       - cmd: cd %APPVEYOR_BUILD_FOLDER%
       - cmd: cd build
-      - cmd: if %USE_CMAKE%==true cmake --install . --config "%CONFIGURATION%"
+      - cmd: if %USE_CMAKE%==true cmake --install . --config "%BUILD_CONFIG%"
 
     after_build:
       - cmd: echo == TEST USE JKQtPlotter CMAKE BUILD ============================================================
@@ -166,7 +167,7 @@ for:
       - cmd: if %USE_CMAKE%==true mkdir build
       - cmd: if %USE_CMAKE%==true cd build
       - cmd: if %USE_CMAKE%==true cmake -G "%CMAKE_GENERATOR%" "-DCMAKE_PREFIX_PATH=%QTDIR%;%CIMG_INCLUDE_DIR%;%APPVEYOR_BUILD_FOLDER%\install" .. 
-      - cmd: if %USE_CMAKE%==true cmake --build . --config "%CONFIGURATION%" -j%NUMBER_OF_PROCESSORS% -- %CMAKE_BUILDFLAGS%
+      - cmd: if %USE_CMAKE%==true cmake --build . --config "%BUILD_CONFIG%" -j%NUMBER_OF_PROCESSORS% -- %CMAKE_BUILDFLAGS%
       - cmd: cd ..
 
     test_script:
@@ -174,8 +175,8 @@ for:
       - cmd: if %USE_CMAKE%==true cd %APPVEYOR_BUILD_FOLDER%
       - cmd: if %USE_CMAKE%==true cd build
       - cmd: if %USE_CMAKE%==true ctest --version
-      - cmd: if %USE_CMAKE%==true ctest --print-labels --build-config "%CONFIGURATION%"
-      - cmd: if %USE_CMAKE%==true ctest --build-config "%CONFIGURATION%" -VV --output-on-failure --output-junit %APPVEYOR_BUILD_FOLDER%\build\test-results.xml
+      - cmd: if %USE_CMAKE%==true ctest --print-labels --build-config "%BUILD_CONFIG%"
+      - cmd: if %USE_CMAKE%==true ctest --build-config "%BUILD_CONFIG%" -VV --output-on-failure --output-junit %APPVEYOR_BUILD_FOLDER%\build\test-results.xml
 
 
     after_test:
@@ -250,7 +251,7 @@ for:
               cmake --version 
               cmake -G "$CMAKE_GENERATOR" "-DCMAKE_PREFIX_PATH=$QTDIR;$CIMG_INCLUDE_DIR"  "-DCMAKE_INSTALL_PREFIX=$APPVEYOR_BUILD_FOLDER/install" .. 
               echo --- Build using CMake ------------------------------------------------------------------------------- 
-              cmake --build . --config "$CONFIGURATION" -j$(getconf _NPROCESSORS_ONLN)  -- $CMAKE_BUILDFLAGS
+              cmake --build . --config "$BUILD_CONFIG" -j$(getconf _NPROCESSORS_ONLN)  -- $CMAKE_BUILDFLAGS
               
             fi
             if [ "$USE_CMAKE" = true ] && [ "$TEST_FETCHCONTENT" = true ]; then 
@@ -261,14 +262,14 @@ for:
               cmake --version 
               cmake -G "$CMAKE_GENERATOR" "-DCMAKE_PREFIX_PATH=$QTDIR;$CIMG_INCLUDE_DIR"  "-DCMAKE_INSTALL_PREFIX=$APPVEYOR_BUILD_FOLDER/install" .. 
               echo --- Build using CMake with FetchCOntent ------------------------------------------------------------- 
-              cmake --build . --config "$CONFIGURATION" -j$(getconf _NPROCESSORS_ONLN)  -- $CMAKE_BUILDFLAGS
+              cmake --build . --config "$BUILD_CONFIG" -j$(getconf _NPROCESSORS_ONLN)  -- $CMAKE_BUILDFLAGS
             fi
       - sh: |
             if [ "$USE_CMAKE" = false ]; then 
               cd build
               echo --- Run QMake Configure ----------------------------------------------------------------------------- 
               $QTDIR/bin/qmake -v 
-              $QTDIR/bin/qmake -makefile -o Makefile "CONFIG+=$CONFIGURATION" ../JKQtPlotterAppveyorBuild.pro
+              $QTDIR/bin/qmake -makefile -o Makefile "CONFIG+=$BUILD_CONFIG" ../JKQtPlotterAppveyorBuild.pro
               echo --- Build for QMake --------------------------------------------------------------------------------- 
               make -j$(getconf _NPROCESSORS_ONLN) 
             fi
@@ -279,7 +280,7 @@ for:
               cd $APPVEYOR_BUILD_FOLDER
               cd build
               echo --- Install using CMake ------------------------------------------------------------------------------- 
-              cmake --install . --config "$CONFIGURATION" 
+              cmake --install . --config "$BUILD_CONFIG" 
             fi
 
 
@@ -292,7 +293,7 @@ for:
               mkdir build
               cd build
               cmake -G "$CMAKE_GENERATOR" "-DCMAKE_PREFIX_PATH=$QTDIR;$CIMG_INCLUDE_DIR;$APPVEYOR_BUILD_FOLDER\install" .. 
-              cmake --build . --config "$CONFIGURATION" -j$(getconf _NPROCESSORS_ONLN) -- $CMAKE_BUILDFLAGS
+              cmake --build . --config "$BUILD_CONFIG" -j$(getconf _NPROCESSORS_ONLN) -- $CMAKE_BUILDFLAGS
               cd ..
             fi
 
@@ -303,8 +304,8 @@ for:
               cd $APPVEYOR_BUILD_FOLDER
               cd build
               ctest --version
-              ctest --print-labels --build-config "$CONFIGURATION"
-              ctest --build-config "$CONFIGURATION" -VV --output-on-failure --output-junit test-results.xml
+              ctest --print-labels --build-config "$BUILD_CONFIG"
+              ctest --build-config "$BUILD_CONFIG" -VV --output-on-failure --output-junit test-results.xml
             fi
     after_test:
       - find "$APPVEYOR_BUILD_FOLDER" -type f -name 'test-results.xml' -print0 | xargs -0 -I '{}' curl -F 'file=@{}' "https://ci.appveyor.com/api/testresults/junit/$APPVEYOR_JOB_ID" 
@@ -344,7 +345,7 @@ for:
       - sh: cmake --version 
       - sh: cmake -G "$CMAKE_GENERATOR" "-DCMAKE_PREFIX_PATH=$QTDIR" .. 
       - sh: echo --- Build using CMake ------------------------------------------------------------------------------- 
-      - sh: cmake --build . --config "$CONFIGURATION" -j$(getconf _NPROCESSORS_ONLN)  -- $CMAKE_BUILDFLAGS
+      - sh: cmake --build . --config "$BUILD_CONFIG" -j$(getconf _NPROCESSORS_ONLN)  -- $CMAKE_BUILDFLAGS
 
     after_build:
       - sh: |
@@ -355,7 +356,7 @@ for:
               mkdir build
               cd build
               cmake -G "$CMAKE_GENERATOR" "-DCMAKE_PREFIX_PATH=$QTDIR;$CIMG_INCLUDE_DIR;$APPVEYOR_BUILD_FOLDER\install" .. 
-              cmake --build . --config "$CONFIGURATION" -j$(getconf _NPROCESSORS_ONLN) -- $CMAKE_BUILDFLAGS
+              cmake --build . --config "$BUILD_CONFIG" -j$(getconf _NPROCESSORS_ONLN) -- $CMAKE_BUILDFLAGS
               cd ..
             fi
 
@@ -366,8 +367,8 @@ for:
               cd $APPVEYOR_BUILD_FOLDER
               cd build
               ctest --version
-              ctest --print-labels --build-config "$CONFIGURATION"
-              ctest --build-config "$CONFIGURATION" -VV --output-on-failure --output-junit test-results.xml
+              ctest --print-labels --build-config "$BUILD_CONFIG"
+              ctest --build-config "$BUILD_CONFIG" -VV --output-on-failure --output-junit test-results.xml
             fi
     after_test:
       - find "$APPVEYOR_BUILD_FOLDER" -type f -name 'test-results.xml' -print0 | xargs -0 -I '{}' curl -F 'file=@{}' "https://ci.appveyor.com/api/testresults/junit/$APPVEYOR_JOB_ID" 
