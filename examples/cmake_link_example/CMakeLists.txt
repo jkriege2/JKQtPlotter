@@ -13,6 +13,23 @@ find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Gui Widgets PrintSupport Svg Xml O
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Widgets PrintSupport Svg Xml OpenGL REQUIRED)
 
 
+message( STATUS )
+message( STATUS "=============================================================================" )
+message( STATUS "== JKQTPlotterLib:simpletest_cmake Build Information                       ==" )
+message( STATUS "=============================================================================" )
+message( STATUS "Version:               ${PROJECT_VERSION}")
+message( STATUS "Build type:            ${CMAKE_BUILD_TYPE}")
+message( STATUS "Build types:           ${CMAKE_CONFIGURATION_TYPES}")
+message( STATUS "Using CMake:           ${CMAKE_VERSION}")
+message( STATUS "Using CMake Generator: ${CMAKE_GENERATOR}")
+message( STATUS "Using compiler:        ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION}, platform: ${CMAKE_CXX_PLATFORM_ID}" )
+message( STATUS "LIB-Architecture:      CXX: ${CMAKE_CXX_LIBRARY_ARCHITECTURE} / BASE: ${CMAKE_LIBRARY_ARCHITECTURE}" )
+message( STATUS "System Name:           ${CMAKE_SYSTEM_NAME}" )
+message( STATUS "Processor Name:        ${CMAKE_SYSTEM_PROCESSOR}" )
+message( STATUS "Using Qt:              ${QT_VERSION}" )
+message( STATUS "                       [at ${QT_DIR}]" )
+
+
 # include JKQTPlotter
 find_package(JKQTPlotter${QT_VERSION_MAJOR} REQUIRED)
 

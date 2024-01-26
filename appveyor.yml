@@ -32,15 +32,8 @@ environment:
   matrix:
       
 
-    - QTABI: gcc_64
-      COMPILER: GCC
-      QTVER: 6.4
-      APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
-      CMAKE_GENERATOR: "Unix Makefiles"
-      INSTALL_QMAKE5: true
-      TEST_FETCHCONTENT: true
-
-    - QTABI: gcc_64
+    - NAME: "Ubuntu2004: QMake, Qt6"
+      QTABI: gcc_64
       COMPILER: GCC
       QTVER: 5.15
       USE_CMAKE: false
@@ -49,7 +42,8 @@ environment:
       INSTALL_QMAKE5: true
       TEST_FETCHCONTENT: false
            
-    - QTABI: msvc2019_64
+    - NAME: "MSVC64: CMake, Qt5"
+      QTABI: msvc2019_64
       COMPILER: MSVC
       QTVER: 5.15
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
@@ -57,7 +51,8 @@ environment:
       CMAKE_BUILDFLAGS: /verbosity:minimal /maxcpucount
       TEST_FETCHCONTENT: false
            
-    - QTABI: msvc2019_64
+    - NAME: "MSVC64: CMake, Qt6"
+      QTABI: msvc2019_64
       COMPILER: MSVC
       QTVER: 6.4
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
@@ -65,7 +60,8 @@ environment:
       CMAKE_BUILDFLAGS: /verbosity:minimal /maxcpucount
       TEST_FETCHCONTENT: false
       
-    - QTABI: gcc_64
+    - NAME: "Ubuntu2004: CMake, Qt5"
+      QTABI: gcc_64
       COMPILER: GCC
       QTVER: 5.15
       APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
@@ -73,7 +69,8 @@ environment:
       INSTALL_QMAKE5: true
       TEST_FETCHCONTENT: false
 
-    - QTABI: gcc_64
+    - NAME: "Ubuntu2004: CMake, Qt6"
+      QTABI: gcc_64
       COMPILER: GCC
       QTVER: 6.4
       APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
@@ -81,7 +78,16 @@ environment:
       INSTALL_QMAKE5: true
       TEST_FETCHCONTENT: false
 
-    - QTABI: macos
+    - NAME: "Ubuntu2004: CMake-FetchContent, Qt6"
+      QTABI: gcc_64
+      COMPILER: GCC
+      QTVER: 6.4
+      APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
+      CMAKE_GENERATOR: "Unix Makefiles"
+      TEST_FETCHCONTENT: true
+
+    - NAME: "MacOS: CMake, Qt6"
+      QTABI: macos
       COMPILER: CLANG
       QTVER: 6.4
       APPVEYOR_BUILD_WORKER_IMAGE: macos-monterey
@@ -171,7 +177,7 @@ for:
       - cmd: if %USE_CMAKE%==true dir Testing\*.*
       - cmd: if %USE_CMAKE%==true ctest --version
       - cmd: if %USE_CMAKE%==true ctest --print-labels --build-config "%CONFIGURATION%"
-      - cmd: if %USE_CMAKE%==true ctest --build-config "%CONFIGURATION%" -VV --output-on-failure --output-junit test-results.xml
+      - cmd: if %USE_CMAKE%==true ctest --build-config "%CONFIGURATION%" -VV --output-on-failure --output-junit %APPVEYOR_BUILD_FOLDER%\build\test-results.xml
       - cmd: if %USE_CMAKE%==true dir *.*
       - cmd: if %USE_CMAKE%==true dir Testing\*.*
 
@@ -259,7 +265,7 @@ for:
               cd build
               echo --- Run QMake Configure ----------------------------------------------------------------------------- 
               $QTDIR/bin/qmake -v 
-              $QTDIR/bin/qmake -makefile -o Makefile "CONFIG+=%CONFIGURATION%" ../JKQtPlotterAppveyorBuild.pro
+              $QTDIR/bin/qmake -makefile -o Makefile "CONFIG+=$CONFIGURATION" ../JKQtPlotterAppveyorBuild.pro
               echo --- Build for QMake --------------------------------------------------------------------------------- 
               make -j$(getconf _NPROCESSORS_ONLN) 
             fi
@@ -376,8 +382,12 @@ for:
       - find "$APPVEYOR_BUILD_FOLDER" -type f -name 'test-results.xml' -print0 | xargs -0 -I '{}' curl -F 'file=@{}' "https://ci.appveyor.com/api/testresults/junit/$APPVEYOR_JOB_ID" 
 
 
+
 artifacts:
-  - path: 'build/CMakeFiles/*.log'
+  - path: 'build/**/*.log'
     name: logs
-  - path: 'build/Testing/**/*.xml'
-    name: test_results
+  - path: 'install'
+    name: install-results
+    type: zip
+  - path: 'build/**/test-results.xml'
+    name: test_results  
