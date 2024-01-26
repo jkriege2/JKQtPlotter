@@ -173,13 +173,9 @@ for:
       - cmd: if %USE_CMAKE%==true echo == RUNNING UNIT TESTS FOR JKQtPlotter CMAKE BUILD ===============================================
       - cmd: if %USE_CMAKE%==true cd %APPVEYOR_BUILD_FOLDER%
       - cmd: if %USE_CMAKE%==true cd build
-      - cmd: if %USE_CMAKE%==true dir *.*
-      - cmd: if %USE_CMAKE%==true dir Testing\*.*
       - cmd: if %USE_CMAKE%==true ctest --version
       - cmd: if %USE_CMAKE%==true ctest --print-labels --build-config "%CONFIGURATION%"
       - cmd: if %USE_CMAKE%==true ctest --build-config "%CONFIGURATION%" -VV --output-on-failure --output-junit %APPVEYOR_BUILD_FOLDER%\build\test-results.xml
-      - cmd: if %USE_CMAKE%==true dir *.*
-      - cmd: if %USE_CMAKE%==true dir Testing\*.*
 
 
     after_test:
@@ -306,15 +302,9 @@ for:
               echo == RUNNING UNIT TESTS FOR JKQtPlotter CMAKE BUILD ===============================================
               cd $APPVEYOR_BUILD_FOLDER
               cd build
-              ls -l *.*
-              ls -l Testing/*
-              ls -l Testing/*.*
               ctest --version
               ctest --print-labels --build-config "$CONFIGURATION"
               ctest --build-config "$CONFIGURATION" -VV --output-on-failure --output-junit test-results.xml
-              ls -l *.*
-              ls -l Testing/*
-              ls -l Testing/*.*
             fi
     after_test:
       - find "$APPVEYOR_BUILD_FOLDER" -type f -name 'test-results.xml' -print0 | xargs -0 -I '{}' curl -F 'file=@{}' "https://ci.appveyor.com/api/testresults/junit/$APPVEYOR_JOB_ID" 
@@ -375,15 +365,9 @@ for:
               echo == RUNNING UNIT TESTS FOR JKQtPlotter CMAKE BUILD ===============================================
               cd $APPVEYOR_BUILD_FOLDER
               cd build
-              ls -l *.*
-              ls -l Testing/*
-              ls -l Testing/*.*
               ctest --version
               ctest --print-labels --build-config "$CONFIGURATION"
               ctest --build-config "$CONFIGURATION" -VV --output-on-failure --output-junit test-results.xml
-              ls -l *.*
-              ls -l Testing/*
-              ls -l Testing/*.*
             fi
     after_test:
       - find "$APPVEYOR_BUILD_FOLDER" -type f -name 'test-results.xml' -print0 | xargs -0 -I '{}' curl -F 'file=@{}' "https://ci.appveyor.com/api/testresults/junit/$APPVEYOR_JOB_ID" 
