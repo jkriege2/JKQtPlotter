@@ -62,29 +62,6 @@ endfunction()
 
 include(GNUInstallDirs)
 
-function(jkqtplotter_installlibrary lib_name libIncludeSubdir BuildTypePart)
-    install(TARGETS ${lib_name} EXPORT ${lib_name}_TARGETS
-        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${libIncludeSubdir}
-    )
-    if(WIN32 AND MSVC AND (NOT MSVC_VERSION LESS 1600) AND (NOT CMAKE_VERSION VERSION_LESS "3.1") AND (NOT BuildTypePart STREQUAL ""))
-        install(FILES $<TARGET_PDB_FILE:${lib_name}> DESTINATION ${CMAKE_INSTALL_BINDIR} OPTIONAL)
-    endif()
-    set(JKQTP_CURRENT_TARGET_SHAREDPART "${BuildTypePart}")
-    set(JKQTP_CURRENT_TARGET_FILENAME "${lib_name}Targets.cmake")
-    configure_file(LibTarget.cmake.in "${CMAKE_CURRENT_BINARY_DIR}/${lib_name}Config.cmake" @ONLY)
-    install(EXPORT ${lib_name}_TARGETS
-        FILE "${JKQTP_CURRENT_TARGET_FILENAME}"
-        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake
-    )
-
-    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${lib_name}Version.cmake"
-                    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake  )
-    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${lib_name}Config.cmake"
-                                DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake  )
-endfunction(jkqtplotter_installlibrary)
 
 
 
@@ -132,3 +109,44 @@ function(jkqtplotter_installlibrary_new lib_name libIncludeSubdir libSrcDir)
     # install license
     install(FILES "${PROJECT_SOURCE_DIR}/LICENSE" DESTINATION ${CMAKE_INSTALL_DOCDIR}) # RENAME "${lib_name}_LICENSE.txt" )
 endfunction(jkqtplotter_installlibrary_new)
+
+
+function(jkqtplotter_add_test TEST_NAME)
+
+    set(EXENAME ${TEST_NAME})
+
+    message( STATUS "..   Building Unit Test ${TEST_NAME}" )
+
+    add_executable(${EXENAME} WIN32)
+    target_include_directories(${EXENAME} PRIVATE ../../lib)
+    target_link_libraries(${EXENAME} PRIVATE Qt${QT_VERSION_MAJOR}::Test)
+
+    target_sources(${EXENAME} PRIVATE ${TEST_NAME}.cpp)
+
+    # Installation
+    install(TARGETS ${EXENAME} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+    add_test(NAME ${TEST_NAME} COMMAND COMMAND $<TARGET_FILE:${EXENAME}>)
+
+    #Installation of Qt DLLs on Windows
+    jkqtplotter_deployqt(${EXENAME})
+endfunction(jkqtplotter_add_test)
+
+function(jkqtplotter_add_jkqtcommmon_test TEST_NAME)
+    jkqtplotter_add_test(${TEST_NAME})
+    target_link_libraries(${TEST_NAME} PRIVATE ${jkqtplotter_namespace}JKQTCommon${jkqtplotter_LIBNAME_VERSION_PART})
+endfunction(jkqtplotter_add_test)
+
+function(jkqtplotter_add_jkqtmath_test TEST_NAME)
+    jkqtplotter_add_test(${TEST_NAME})
+    target_link_libraries(${TEST_NAME} PRIVATE ${jkqtplotter_namespace}JKQTMath${jkqtplotter_LIBNAME_VERSION_PART})
+endfunction(jkqtplotter_add_test)
+
+function(jkqtplotter_add_jkqtmathtext_test TEST_NAME)
+    jkqtplotter_add_test(${TEST_NAME})
+    target_link_libraries(${TEST_NAME} PRIVATE ${jkqtplotter_namespace}JKQTMathText${jkqtplotter_LIBNAME_VERSION_PART})
+endfunction(jkqtplotter_add_test)
+
+function(jkqtplotter_add_jkqtplotter_test TEST_NAME)
+    jkqtplotter_add_test(${TEST_NAME})
+    target_link_libraries(${TEST_NAME} PRIVATE ${jkqtplotter_namespace}JKQTPlotter${jkqtplotter_LIBNAME_VERSION_PART})
+endfunction(jkqtplotter_add_test)
