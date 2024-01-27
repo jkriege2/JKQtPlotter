@@ -249,7 +249,7 @@ for:
               cd build
               echo --- Run CMake Configure ----------------------------------------------------------------------------- 
               cmake --version 
-              cmake -G "$CMAKE_GENERATOR" "-DCMAKE_PREFIX_PATH=$QTDIR;$CIMG_INCLUDE_DIR"  "-DCMAKE_INSTALL_PREFIX=$APPVEYOR_BUILD_FOLDER/install" .. 
+              cmake -G "$CMAKE_GENERATOR" "-DCMAKE_PREFIX_PATH=$QTDIR;$CIMG_INCLUDE_DIR"  "-DCMAKE_INSTALL_PREFIX=$APPVEYOR_BUILD_FOLDER/install" "-DCMAKE_BUILD_TYPE=$BUILD_CONFIG" .. 
               echo --- Build using CMake ------------------------------------------------------------------------------- 
               cmake --build . --config "$BUILD_CONFIG" -j$(getconf _NPROCESSORS_ONLN)  -- $CMAKE_BUILDFLAGS
               
@@ -260,7 +260,7 @@ for:
               cd build
               echo --- Run CMake Configure with FetchCOntent ----------------------------------------------------------- 
               cmake --version 
-              cmake -G "$CMAKE_GENERATOR" "-DCMAKE_PREFIX_PATH=$QTDIR;$CIMG_INCLUDE_DIR"  "-DCMAKE_INSTALL_PREFIX=$APPVEYOR_BUILD_FOLDER/install" .. 
+              cmake -G "$CMAKE_GENERATOR" "-DCMAKE_PREFIX_PATH=$QTDIR;$CIMG_INCLUDE_DIR" "-DCMAKE_BUILD_TYPE=$BUILD_CONFIG"  "-DCMAKE_INSTALL_PREFIX=$APPVEYOR_BUILD_FOLDER/install" .. 
               echo --- Build using CMake with FetchCOntent ------------------------------------------------------------- 
               cmake --build . --config "$BUILD_CONFIG" -j$(getconf _NPROCESSORS_ONLN)  -- $CMAKE_BUILDFLAGS
             fi
@@ -291,7 +291,7 @@ for:
               cd examples/cmake_link_example
               mkdir build
               cd build
-              cmake -G "$CMAKE_GENERATOR" "-DCMAKE_PREFIX_PATH=$QTDIR;$CIMG_INCLUDE_DIR;$APPVEYOR_BUILD_FOLDER/install" .. 
+              cmake -G "$CMAKE_GENERATOR" "-DCMAKE_BUILD_TYPE=$BUILD_CONFIG" "-DCMAKE_PREFIX_PATH=$QTDIR;$CIMG_INCLUDE_DIR;$APPVEYOR_BUILD_FOLDER/install" .. 
               cmake --build . --config "$BUILD_CONFIG" -j$(getconf _NPROCESSORS_ONLN) -- $CMAKE_BUILDFLAGS
               cd ..
             fi
@@ -342,7 +342,7 @@ for:
       - sh: cd build
       - sh: echo --- Run CMake Configure ----------------------------------------------------------------------------- 
       - sh: cmake --version 
-      - sh: cmake -G "$CMAKE_GENERATOR" "-DCMAKE_PREFIX_PATH=$QTDIR"  "-DCMAKE_INSTALL_PREFIX=$APPVEYOR_BUILD_FOLDER/install" ..  .. 
+      - sh: cmake -G "$CMAKE_GENERATOR" "-DCMAKE_PREFIX_PATH=$QTDIR" "-DCMAKE_BUILD_TYPE=$BUILD_CONFIG"  "-DCMAKE_INSTALL_PREFIX=$APPVEYOR_BUILD_FOLDER/install" ..  .. 
       - sh: echo --- Build using CMake ------------------------------------------------------------------------------- 
       - sh: cmake --build . --config "$BUILD_CONFIG" -j$(getconf _NPROCESSORS_ONLN)  -- $CMAKE_BUILDFLAGS
       - sh: |
@@ -362,7 +362,7 @@ for:
               cd examples/cmake_link_example
               mkdir build
               cd build
-              cmake -G "$CMAKE_GENERATOR" "-DCMAKE_PREFIX_PATH=$QTDIR;$CIMG_INCLUDE_DIR;$APPVEYOR_BUILD_FOLDER/install" .. 
+              cmake -G "$CMAKE_GENERATOR" "-DCMAKE_BUILD_TYPE=$BUILD_CONFIG" "-DCMAKE_PREFIX_PATH=$QTDIR;$CIMG_INCLUDE_DIR;$APPVEYOR_BUILD_FOLDER/install" .. 
               cmake --build . --config "$BUILD_CONFIG" -j$(getconf _NPROCESSORS_ONLN) -- $CMAKE_BUILDFLAGS
               cd ..
             fi

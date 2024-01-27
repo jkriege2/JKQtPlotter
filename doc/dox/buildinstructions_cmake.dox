@@ -19,9 +19,9 @@ The first step is to configure the bild,using:
 \code{.sh}
     $ mkdir build
     $ cd build
-    $ cmake .. -G "<GENERATOR>" "-DCMAKE_PREFIX_PATH=<path_to_your_qt_sources>"
+    $ cmake -G "<GENERATOR>" "-DCMAKE_PREFIX_PATH=<path_to_your_qt_sources>" "-DCMAKE_BUILD_TYPE=Debug" ..
 \endcode
-This configures the CMake build. The Parameter \c <GENERATOR> tells CMake, which build-file generator  to use (e.g. use <code>MinGW Makefiles</code> for MinGW Makefiles on Windows or <code>Unix Makefiles</code> on Unix, see <a href="https://cmake.org/cmake/help/latest/manual/cmake-generators.7.html">https://cmake.org/cmake/help/latest/manual/cmake-generators.7.html</a> for a list of available generators). The parameter \c <path_to_your_qt_sources> should be the path to your Qt installation. You can also add (separated by semicolon) paths to other libraries that JKQTPlotter should use, e.g. <a href="https://cimg.eu/">CImg</a> or <a href="https://cimg.eu/">OpenCV</a>. JKQTPlotter does not have any neccessary dependencies,  apart from Qt5 or 6, but it contains binding code to somme popular 3rd party libraries (as e.g. CImmg or OpenCV). Also see \ref page_buildinstructions_CMAKE_CONFIG  for a listing of additional configuration options for JKQTPlotter. You might e.g. want to set \c CMAKE_INSTALL_PREFIX to a path in which you want to install the build results. This also has to be done at this stage.
+This configures the CMake build. The Parameter \c <GENERATOR> tells CMake, which build-file generator  to use (e.g. use <code>MinGW Makefiles</code> for MinGW Makefiles on Windows or <code>Unix Makefiles</code> on Unix, see <a href="https://cmake.org/cmake/help/latest/manual/cmake-generators.7.html">https://cmake.org/cmake/help/latest/manual/cmake-generators.7.html</a> for a list of available generators). For single-configuration generators (e.g. <code>Unix Makefiles</code>, ..., as opposed to multi-config, like \c Ninja, \c XCode or <code>Visual Studio</code>) you will have to explicitly set the build type using \c -DCMAKE_BUILD_TYPE=Debug (note, you can choose any other allowed build type instead of \c Debug, as e.g. \c Release or \c RelWithDepInfo ). The parameter \c <path_to_your_qt_sources> should be the path to your Qt installation. You can also add (separated by semicolon) paths to other libraries that JKQTPlotter should use, e.g. <a href="https://cimg.eu/">CImg</a> or <a href="https://cimg.eu/">OpenCV</a>. JKQTPlotter does not have any neccessary dependencies,  apart from Qt5 or 6, but it contains binding code to somme popular 3rd party libraries (as e.g. CImmg or OpenCV). Also see \ref page_buildinstructions_CMAKE_CONFIG  for a listing of additional configuration options for JKQTPlotter. You might e.g. want to set \c CMAKE_INSTALL_PREFIX to a path in which you want to install the build results. This also has to be done at this stage.
 
 Of course you can also perform this step in the <a href="https://cmake.org/cmake/help/latest/manual/cmake-gui.1.html">CMake GUI</a> or <a href="https://cmake.org/cmake/help/latest/manual/ccmake.1.html">ccmake</a>.
 
@@ -38,7 +38,7 @@ For Visual Studio / Visual C++ the build looks similar, but you will have to sel
 \code{.sh}
     $ mkdir build
     $ cd build
-    $ cmake .. -G "Visual Studio 16 2019 Win64" "-DCMAKE_PREFIX_PATH=<path_to_your_qt_sources>"
+    $ cmake -G "Visual Studio 16 2019 Win64" "-DCMAKE_PREFIX_PATH=<path_to_your_qt_sources>"  ..
 \endcode
 
 Where \c \<path_to_your_qt_sources\> could be e.g. \c C:/Qt/6.5.0/msvc2019_64 . This call results in a Visual Studio solution \c build/JKQTPlotter.sln that you can load and compile from the Visual Studio IDE. Alternatively you can also build the solution directly calling:

@@ -47,6 +47,17 @@ if(NOT DEFINED CMAKE_INSTALL_PREFIX)
     option(CMAKE_INSTALL_PREFIX "Install directory" ${CMAKE_CURRENT_SOURCE_DIR}/install)
 endif()
 
+set(jkqtplotter_default_build_type "Debug")
+get_property(JKQtPlotter_isMultiConfigGenerator GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
+if(NOT JKQtPlotter_isMultiConfigGenerator)
+  if(NOT CMAKE_BUILD_TYPE)
+      warning(STATUS "Setting build type to '${jkqtplotter_default_build_type}' as none was specified.")
+    set(CMAKE_BUILD_TYPE ${jkqtplotter_default_build_type} CACHE STRING "Choose the type of build." FORCE)
+    set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+  endif()
+endif()
+
+
 include(GNUInstallDirs)
 
 #evaluate the settings above
@@ -83,3 +94,4 @@ if(JKQtPlotter_BUILD_LIB_JKQTPLOTTER)
     set(JKQtPlotter_BUILD_LIB_JKQTMATH "ON")
     set(JKQtPlotter_BUILD_LIB_JKQTMATHTEXT "ON")
 endif()
+
