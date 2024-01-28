@@ -382,9 +382,9 @@ for:
 
 
 
-artifacts:
-  - path: 'install'
-    name: install-results
-    type: zip
-  - path: 'build/**/test-results.xml'
-    name: test_results  
+#artifacts:
+#  - path: 'install'
+#    name: install-results
+#    type: zip
+#  - path: 'build/**/test-results.xml'
+#    name: test_results  
