@@ -561,6 +561,11 @@ JKQTMathTextLatexParser::tokenType JKQTMathTextLatexParser::getToken() {
         //std::cout<<"found ampersand\n";
         return currentToken=MTTampersand;
     //----------------------------------------------------------
+    // check for ~ character
+    } else if (c=='~') {
+        //std::cout<<"found tilde\n";
+        return currentToken=MTTtilde;
+    //----------------------------------------------------------
     // check for { character
     } else if (c=='{') {
         //----------------------------------------------------------
@@ -703,6 +708,8 @@ JKQTMathTextNode* JKQTMathTextLatexParser::parseLatexString(bool get, JKQTMathTe
             break;
         } else if (currentToken==MTTwhitespace) {
             if (!parsingMathEnvironment) nl->addChild(new JKQTMathTextWhitespaceNode(parentMathText));
+        } else if (currentToken==MTTtilde) {
+            nl->addChild(new JKQTMathTextWhitespaceNode(JKQTMathTextWhitespaceNode::WSTNonbreaking, parentMathText));
         } else if (currentToken==MTTendash) {
             nl->addChild(new JKQTMathTextSymbolNode(parentMathText, "endash"));
         } else if (currentToken==MTTemdash) {
@@ -1337,6 +1344,7 @@ QString JKQTMathTextLatexParser::tokenType2String(tokenType type)
       case MTTinstructionVerbatimVisibleSpace: return "MTTinstructionVerbatimVisibleSpace";
       case MTTinstructionBegin: return "MTTinstructionBegin";
       case MTTinstructionEnd: return "MTTinstructionEnd";
+      case MTTtilde: return "MTTtilde";
     }
     return "???";
 }

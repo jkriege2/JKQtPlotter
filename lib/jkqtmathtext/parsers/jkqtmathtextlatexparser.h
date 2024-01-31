@@ -92,6 +92,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextLatexParser : public JKQTMathTextParse
             MTThyphen,  /*!< \brief the single hyphen character \c "-" in text-mode \note MTTendash and MTTemdash take precedence over MTThypen  */
             MTTendash,  /*!< \brief the en-dash character sequence \c "--" in text-mode */
             MTTemdash,  /*!< \brief the em-dash character sequence \c "---" in text-mode */
+            MTTtilde,   /*!< \brief the tilde character \c "~"  */
 
         };
         /** \brief convert a tokenType into a string, e.g. for debugging output */
