@@ -46,9 +46,9 @@
 #include <typeinfo>
 
 
-QSet<QChar> JKQTMathTextLatexParser::TokenCharacters=QSet<QChar>()<<'-'<<'_'<<'^'<<'\\'<<'$'<<'&'<<'}'<<'{'<<'['<<']';
+QSet<QChar> JKQTMathTextLatexParser::TokenCharacters=QSet<QChar>()<<'-'<<'_'<<'^'<<'\\'<<'$'<<'&'<<'}'<<'{'<<'['<<']'<<'~';
 QSet<QChar> JKQTMathTextLatexParser::mathEnvironmentSpecialChars=QSet<QChar>()<<'(' << '[' << '|' << ')' << ']' << '+' << '-' << '*' << '/' << '<' << '>' << '=';
-QSet<QChar> JKQTMathTextLatexParser::mathEnvironmentSpecialEndChars=QSet<QChar>()<<'(' << '&' << '[' << '|' << ')' << ']' << '\\' << '$' << '{' << '}' << '_' << '^' << '+' << '-' << '/' << '*' << '=' << '<' << '>';
+QSet<QChar> JKQTMathTextLatexParser::mathEnvironmentSpecialEndChars=QSet<QChar>()<<'(' << '&' << '[' << '|' << ')' << ']' << '\\' << '$' << '{' << '}' << '_' << '^' << '+' << '-' << '/' << '*' << '=' << '<' << '>' << '~';
 QSet<QChar> JKQTMathTextLatexParser::SingleCharInstructions=QSet<QChar>()<<'|'<<';'<<':'<<'!'<<','<<'_'<<'\\'<<'$'<<'%'<<'&'<<'#'<<'}'<<'{'<<' '<<'['<<']';
 QSet<QString> JKQTMathTextLatexParser::mathEnvironmentSpecialText=QSet<QString>()<<"+"<<"-"<<"="<<"*"<<"<"<<">";
 QHash<QString, QChar> JKQTMathTextLatexParser::accentLetters=QHash<QString, QChar>();
