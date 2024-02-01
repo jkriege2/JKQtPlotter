@@ -180,6 +180,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: added \c \\unicode{HEX} and \c \\utfeight{HEX} instruction to draw unicide characters by code</li>
     <li>NEW: added \c \\substack[lcr]{...\\\\...} , \c \\lsubstack{...\\\\...} , \c \\rsubstack{...\\\\...} instructions</li>
     <li>NEW: added \c \\phantom{xXy} , \c \\vphantom{xXy} and \c \\hphantom{xXy} instructions for whitespaces with the size of \c xXy </li>
+    <li>NEW: added \c \\~{} , \c \\^{}, \c \\`{}, ... instructions </li>
     <li>NEW: added support for flushleft/flushright/center-environments with linebreaks</li>
     <li>NEW: added support for framed/shaded/snugshade-environments with linebreaks and framed</li>
     <li>NEW: added support for -- and --- for en- and em-dashes</li>

@@ -74,7 +74,17 @@ void JKQTMathTextLatexParser::initStaticStructures()
                 accentLetters[i]=ch; accentLetters_LenCurly.insert(i.size());
                 i="\\"+cmd+"{"+letter+"}";
                 accentLetters[i]=ch;  accentLetters_LenBackslash.insert(i.size());
-            } else if  (cmd.size()>0 && letter.isNull()) {
+            } else if (cmd.size()>0 && letter.isNull()) {
+                i="{\\"+cmd+"{}}";
+                accentLetters[i]=ch; accentLetters_LenCurly.insert(i.size());
+                i="\\"+cmd+"{}";
+                accentLetters[i]=ch; accentLetters_LenCurly.insert(i.size());
+            }
+
+        };
+        auto fAddCharInstr=[](const QString& cmd, const QChar& ch) {
+            QString i;
+            if  (cmd.size()>0 ) {
                 i="\\"+cmd+" ";
                 accentLetters[i]=ch; accentLetters_LenBackslash.insert(i.size());
                 i="\\"+cmd+"\t";
@@ -127,6 +137,7 @@ void JKQTMathTextLatexParser::initStaticStructures()
         fAddUml("'", 'z', QChar(0x17A));
         fAddUml("'", 'G', QChar(0x1F4));
         fAddUml("'", 'g', QChar(0x1F5));
+        fAddUml("'", QChar(), QChar('\''));
 
         fAddUml("`", 'A', QChar(0xC0));
         fAddUml("`", 'E', QChar(0xC8));
@@ -140,6 +151,8 @@ void JKQTMathTextLatexParser::initStaticStructures()
         fAddUml("`", 'u', QChar(0xF9));
         fAddUml("`", 'N', QChar(0x1F8));
         fAddUml("`", 'n', QChar(0x1F9));
+        fAddUml("`", QChar(), QChar('`'));
+        fAddUml("´", QChar(), QChar(0xB4));
 
         fAddUml("^", 'A', QChar(0xC2));
         fAddUml("^", 'E', QChar(0xCA));
@@ -165,6 +178,7 @@ void JKQTMathTextLatexParser::initStaticStructures()
         fAddUml("^", 'w', QChar(0x175));
         fAddUml("^", 'Y', QChar(0x176));
         fAddUml("^", 'y', QChar(0x177));
+        fAddUml("^", QChar(), QChar('^'));
 
         fAddUml("v", 'C', QChar(0x10C));
         fAddUml("v", 'c', QChar(0x10D));
@@ -210,6 +224,7 @@ void JKQTMathTextLatexParser::initStaticStructures()
         fAddUml("~", 'i', QChar(0x129));
         fAddUml("~", 'U', QChar(0x168));
         fAddUml("~", 'u', QChar(0x169));
+        fAddUml("~", QChar(), QChar('~'));
 
         fAddUml("r", 'A', QChar(0xC5));
         fAddUml("r", 'a', QChar(0xE5));
@@ -326,18 +341,18 @@ void JKQTMathTextLatexParser::initStaticStructures()
         fAddUml("k", 'u', QChar(0x1EB));
 
         // ligatures, instructions without {letter}
-        fAddUml("ss", QChar(), QChar(0xDF));
-        fAddUml("ae", QChar(), QChar(0xE6));
-        fAddUml("AE", QChar(), QChar(0xC6));
-        fAddUml("oe", QChar(), QChar(0x153));
-        fAddUml("OE", QChar(), QChar(0x152));
-        fAddUml("o", QChar(), QChar(0xF8));
-        fAddUml("O", QChar(), QChar(0xD8));
-        fAddUml("S", QChar(), QChar(0xA7));
-        fAddUml("l", QChar(), QChar(0x142));
-        fAddUml("L", QChar(), QChar(0x141));
-        fAddUml("aa", QChar(), QChar(0xE5));
-        fAddUml("AA", QChar(), QChar(0xC5));
+        fAddCharInstr("ss", QChar(0xDF));
+        fAddCharInstr("ae", QChar(0xE6));
+        fAddCharInstr("AE", QChar(0xC6));
+        fAddCharInstr("oe", QChar(0x153));
+        fAddCharInstr("OE", QChar(0x152));
+        fAddCharInstr("o", QChar(0xF8));
+        fAddCharInstr("O", QChar(0xD8));
+        fAddCharInstr("S", QChar(0xA7));
+        fAddCharInstr("l", QChar(0x142));
+        fAddCharInstr("L", QChar(0x141));
+        fAddCharInstr("aa", QChar(0xE5));
+        fAddCharInstr("AA", QChar(0xC5));
 
 
 
