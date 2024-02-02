@@ -207,7 +207,12 @@ int main(int argc, char* argv[])
             fileList<<"   <table>\n";
             fileList<<"     <tr>\n";
             i=1;
-            std::sort(symbolsAll.begin(), symbolsAll.end(), [](const QString& a, const QString& b) {  if (a.contains("harpoon") && !b.contains("harpoon")) return false;
+#if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
+            std::sort
+#else
+            qSort
+#endif
+            (symbolsAll.begin(), symbolsAll.end(), [](const QString& a, const QString& b) {  if (a.contains("harpoon") && !b.contains("harpoon")) return false;
                                                                                                 else if (a.isLower() && b.isUpper()) return true;
                                                                                                 else if (a.isUpper() && b.isLower()) return false;
                                                                                                 else return a<b;
