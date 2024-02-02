@@ -75,8 +75,8 @@ int main(int argc, char* argv[])
     // show plotter and make it a decent size
     plot.show();
     plot.resize(600,400);
-
-    app.addExportStepFunctor([&]() { std::sort(datastore->begin(YCol), datastore->end(YCol)); });
+    app.addExportStepFunctor([&]() {});
+    app.addExportStepFunctor([&]() { std::sort(datastore->begin(YCol), datastore->end(YCol)); plot.zoomToFit(); plot.redrawPlot(); });
     app.addExportStepFunctor([&]() {
         std::replace_if(datastore->begin(YCol2), datastore->end(YCol2), [](double v) { return v<-0.5; }, 1.0); linegraph->setYColumn(YCol2); plot.zoomToFit(); });
 
