@@ -346,27 +346,27 @@ JKQTPDatastore::ConstColumnIterator JKQTPDatastore::end() const
 ////////////////////////////////////////////////////////////////////////////////////////////////
 JKQTPColumnIterator JKQTPDatastore::begin(int i)
 {
-    if (i<0) return m_invalidColumn->end();
+    if (i<0) throw std::runtime_error("column "+std::to_string(i)+" does not exist in JKQTPDatastore");
     auto it=columns.find(static_cast<size_t>(i));
-    if (it==columns.end()) return m_invalidColumn->end();
+    if (it==columns.end()) throw std::runtime_error("column "+std::to_string(i)+" does not exist in JKQTPDatastore");
     else return it->begin();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 JKQTPColumnIterator JKQTPDatastore::end(int i)
 {
-    if (i<0) return m_invalidColumn->end();
+    if (i<0) throw std::runtime_error("column "+std::to_string(i)+" does not exist in JKQTPDatastore");
     auto it=columns.find(static_cast<size_t>(i));
-    if (it==columns.end()) return m_invalidColumn->end();
+    if (it==columns.end()) throw std::runtime_error("column "+std::to_string(i)+" does not exist in JKQTPDatastore");
     else return it->end();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 JKQTPColumnConstIterator JKQTPDatastore::begin(int i) const
 {
-    if (i<0) return m_invalidColumn->end();
+    if (i<0) throw std::runtime_error("column "+std::to_string(i)+" does not exist in JKQTPDatastore");
     auto it=columns.find(static_cast<size_t>(i));
-    if (it==columns.end()) return m_invalidColumn->end();
+    if (it==columns.end()) throw std::runtime_error("column "+std::to_string(i)+" does not exist in JKQTPDatastore");
     else return it->begin();
 }
 
@@ -375,7 +375,7 @@ JKQTPColumnConstIterator JKQTPDatastore::end(int i) const
 {
     if (i<0) return m_invalidColumn->end();
     auto it=columns.find(static_cast<size_t>(i));
-    if (it==columns.end()) return m_invalidColumn->end();
+    if (it==columns.end()) throw std::runtime_error("column "+std::to_string(i)+" does not exist in JKQTPDatastore");
     else return it->end();
 }
 
@@ -383,7 +383,7 @@ JKQTPColumnConstIterator JKQTPDatastore::end(int i) const
 JKQTPColumnIterator JKQTPDatastore::begin(size_t i)
 {
     auto it=columns.find(i);
-    if (it==columns.end()) return m_invalidColumn->end();
+    if (it==columns.end()) throw std::runtime_error("column "+std::to_string(i)+" does not exist in JKQTPDatastore");
     else return it->begin();
 }
 
@@ -391,7 +391,7 @@ JKQTPColumnIterator JKQTPDatastore::begin(size_t i)
 JKQTPColumnIterator JKQTPDatastore::end(size_t i)
 {
     auto it=columns.find(i);
-    if (it==columns.end()) return m_invalidColumn->end();
+    if (it==columns.end()) throw std::runtime_error("column "+std::to_string(i)+" does not exist in JKQTPDatastore");
     else return it->end();
 }
 
@@ -399,7 +399,7 @@ JKQTPColumnIterator JKQTPDatastore::end(size_t i)
 JKQTPColumnConstIterator JKQTPDatastore::begin(size_t i) const
 {
     auto it=columns.find(i);
-    if (it==columns.end()) return m_invalidColumn->end();
+    if (it==columns.end()) throw std::runtime_error("column "+std::to_string(i)+" does not exist in JKQTPDatastore");
     else return it->begin();
 }
 
@@ -407,7 +407,7 @@ JKQTPColumnConstIterator JKQTPDatastore::begin(size_t i) const
 JKQTPColumnConstIterator JKQTPDatastore::end(size_t i) const
 {
     auto it=columns.find(i);
-    if (it==columns.end()) return m_invalidColumn->end();
+    if (it==columns.end()) throw std::runtime_error("column "+std::to_string(i)+" does not exist in JKQTPDatastore");
     else return it->end();
 }
 

@@ -1763,21 +1763,28 @@ class JKQTPColumnIterator {
             if (!isValid() && !rhs.isValid()) return 0;
             if (!isValid() && rhs.isValid() && col_==rhs.col_) return static_cast<difference_type>(col_->getRows())-rhs.pos_;
             if (isValid() && !rhs.isValid() && col_==rhs.col_) return pos_-static_cast<difference_type>(col_->getRows());
-            JKQTPASSERT(isValid() && rhs.isValid() && col_==rhs.col_);
+            JKQTPASSERT(isValid());
+            JKQTPASSERT(rhs.isValid());
+            JKQTPASSERT(col_==rhs.col_);
             return pos_-rhs.pos_;
         }
 
         /** \brief dereferences the iterator, throws an exception if the iterator is invalid (see isValid() ) or the value does not exist in the column */
         inline reference operator*() const {
-            JKQTPASSERT((col_!=nullptr) && (pos_>=0) && (pos_<static_cast<int>(col_->getRows())));
+            JKQTPASSERT((col_!=nullptr) );
+            JKQTPASSERT( (pos_>=0) );
+            JKQTPASSERT( (pos_<static_cast<int>(col_->getRows())));
             return col_->at(pos_);
         }
+        /** \brief dereferences the iterator at offset \a off, throws an exception if the iterator is invalid (see isValid() ) or the value does not exist in the column */
         inline reference operator[](difference_type off) const
         {
             if (!isValid() && off<0) {
                 return col_->at(static_cast<int>(col_->getRows())+off);
             }
-            JKQTPASSERT((col_!=nullptr) && (pos_+off>=0) && (pos_+off<static_cast<int>(col_->getRows())));
+            JKQTPASSERT((col_!=nullptr) );
+            JKQTPASSERT( (pos_+off>=0) );
+            JKQTPASSERT( (pos_+off<static_cast<int>(col_->getRows())));
             return col_->at(pos_+off);
         }
 
@@ -1798,6 +1805,60 @@ class JKQTPColumnIterator {
                 return pos_==rhs.pos_;
             }
             return false;
+        }
+        /** \brief comparison operator (less than)
+         *
+         * rules:
+         *   - ivalid iterators are never smaller than valid operators
+         *   - two valid operator must reference the same column
+         *   - a valid operator is smaller than another, if it points to a pos_ before another
+         * .
+         *
+         * \see operator<=(), operator>(), operator>=()
+         * */
+        inline bool operator<(const self_type& rhs) const {
+            if (!isValid() && !rhs.isValid()) return false;
+            else if (!isValid() && rhs.isValid()) {
+                return false;
+            } else if (isValid() && !rhs.isValid()) {
+                return true;
+            } else {
+                JKQTPASSERT(col_ == rhs.col_);
+                return pos_<rhs.pos_;
+            }
+        }
+        /** \brief comparison operator (less than, or equal)
+         * \see operator==(), operator<(), operator>(), operator>=()
+         * */
+        inline bool operator<=(const self_type& rhs) const {
+            return operator==(rhs) || operator<(rhs);
+        }
+        /** \brief comparison operator (larger than)
+         *
+         * rules:
+         *   - ivalid iterators are always larger than valid operators
+         *   - two valid operator must reference the same column
+         *   - a valid operator is smaller than another, if it points to a pos_ before another
+         * .
+         *
+         * \see operator<=(), operator<(), operator>=()
+         * */
+        inline bool operator>(const self_type& rhs) const {
+            if (!isValid() && !rhs.isValid()) return false;
+            else if (!isValid() && rhs.isValid()) {
+                return true;
+            } else if (isValid() && !rhs.isValid()) {
+                return false;
+            } else {
+                JKQTPASSERT(col_ == rhs.col_);
+                return pos_>rhs.pos_;
+            }
+        }
+        /** \brief comparison operator (larger than, or equal)
+         * \see operator==(), operator<(), operator>(), operator<=()
+         * */
+        inline bool operator>=(const self_type& rhs) const {
+            return operator==(rhs) || operator>(rhs);
         }
         /** \brief comparison operator (unequals), inverse result of operator==()
          *
@@ -2035,13 +2096,17 @@ class JKQTPColumnConstIterator {
             if (!isValid() && !rhs.isValid()) return 0;
             if (!isValid() && rhs.isValid() && col_==rhs.col_) return static_cast<difference_type>(col_->getRows())-rhs.pos_;
             if (isValid() && !rhs.isValid() && col_==rhs.col_) return pos_-static_cast<difference_type>(col_->getRows());
-            JKQTPASSERT(isValid() && rhs.isValid() && col_==rhs.col_);
+            JKQTPASSERT(isValid() );
+            JKQTPASSERT( rhs.isValid() );
+            JKQTPASSERT( col_==rhs.col_);
             return pos_-rhs.pos_;
         }
 
         /** \brief dereferences the iterator, throws an exception if the iterator is invalid (see isValid() ) or the value does not exist in the column */
         inline reference operator*() {
-            JKQTPASSERT(col_!=nullptr && pos_>=0 && pos_<static_cast<int>(col_->getRows()));
+            JKQTPASSERT(col_!=nullptr );
+            JKQTPASSERT( pos_>=0 );
+            JKQTPASSERT( pos_<static_cast<int>(col_->getRows()));
             return col_->at(pos_);
         }
         inline reference operator[](difference_type off) const
@@ -2050,15 +2115,72 @@ class JKQTPColumnConstIterator {
                 JKQTPASSERT(col_!=nullptr);
                 return col_->at(static_cast<int>(col_->getRows())+off);
             }
-            JKQTPASSERT(col_!=nullptr && pos_+off>=0 && pos_+off<static_cast<int>(col_->getRows()));
+            JKQTPASSERT(col_!=nullptr );
+            JKQTPASSERT( pos_+off>=0 );
+            JKQTPASSERT( pos_+off<static_cast<int>(col_->getRows()));
             return col_->at(pos_+off);
         }
         /** \brief dereferences the iterator, throws an exception if the iterator is invalid (see isValid() ) or the value does not exist in the column */
         inline const_reference operator*() const {
-            JKQTPASSERT(col_!=nullptr && pos_>=0 && pos_<static_cast<int>(col_->getRows()));
+            JKQTPASSERT(col_!=nullptr );
+            JKQTPASSERT( pos_>=0 );
+            JKQTPASSERT( pos_<static_cast<int>(col_->getRows()));
             return col_->at(pos_);
         }
-
+        /** \brief comparison operator (less than)
+         *
+         * rules:
+         *   - ivalid iterators are never smaller than valid operators
+         *   - two valid operator must reference the same column
+         *   - a valid operator is smaller than another, if it points to a pos_ before another
+         * .
+         *
+         * \see operator<=(), operator>(), operator>=()
+         * */
+        inline bool operator<(const self_type& rhs) const {
+            if (!isValid() && !rhs.isValid()) return false;
+            else if (!isValid() && rhs.isValid()) {
+                return false;
+            } else if (isValid() && !rhs.isValid()) {
+                return true;
+            } else {
+                JKQTPASSERT(col_ == rhs.col_);
+                return pos_<rhs.pos_;
+            }
+        }
+        /** \brief comparison operator (less than, or equal)
+         * \see operator==(), operator<(), operator>(), operator>=()
+         * */
+        inline bool operator<=(const self_type& rhs) const {
+            return operator==(rhs) || operator<(rhs);
+        }
+        /** \brief comparison operator (larger than)
+         *
+         * rules:
+         *   - ivalid iterators are always larger than valid operators
+         *   - two valid operator must reference the same column
+         *   - a valid operator is smaller than another, if it points to a pos_ before another
+         * .
+         *
+         * \see operator<=(), operator<(), operator>=()
+         * */
+        inline bool operator>(const self_type& rhs) const {
+            if (!isValid() && !rhs.isValid()) return false;
+            else if (!isValid() && rhs.isValid()) {
+                return true;
+            } else if (isValid() && !rhs.isValid()) {
+                return false;
+            } else {
+                JKQTPASSERT(col_ == rhs.col_);
+                return pos_>rhs.pos_;
+            }
+        }
+        /** \brief comparison operator (larger than, or equal)
+         * \see operator==(), operator<(), operator>(), operator<=()
+         * */
+        inline bool operator>=(const self_type& rhs) const {
+            return operator==(rhs) || operator>(rhs);
+        }
         /** \brief comparison operator (equals)
          *
          * two iterators are equal, if:
@@ -2469,14 +2591,16 @@ inline double JKQTPColumn::getValue(int n) const {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 inline const double& JKQTPColumn::at(int n) const {
-    JKQTPASSERT(datastore && datastore->getItem(datastoreItem));
+    JKQTPASSERT(datastore );
+    JKQTPASSERT( datastore->getItem(datastoreItem));
     JKQTPASSERT(n>=0);
     return datastore->getItem(datastoreItem)->at(datastoreOffset, static_cast<size_t>(n));
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 inline double& JKQTPColumn::at(int n) {
-    JKQTPASSERT(datastore && datastore->getItem(datastoreItem));
+    JKQTPASSERT(datastore );
+    JKQTPASSERT( datastore->getItem(datastoreItem));
     JKQTPASSERT(n>=0);
     return datastore->getItem(datastoreItem)->at(datastoreOffset, static_cast<size_t>(n));
 }
