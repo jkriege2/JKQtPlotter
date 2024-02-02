@@ -1072,6 +1072,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPVerticalIndependentAxis: public JKQTPVerticalA
         virtual double getParentOtheraxisOffset() const override;
         /** copydoc JKQTPCoordinateAxis::parentOtherAxisX2P() */
         virtual double parentOtherAxisX2P(double x) const override;
+
+        /** copydoc JKQTPCoordinateAxis::drawAxes() */
+        virtual void drawAxes(JKQTPEnhancedPainter& painter, int move1=0, int move2=0) override;
+
     public Q_SLOTS:
         /** \brief set the axis offset */
         virtual void setAxisOffset(double __value) ;
@@ -1255,6 +1259,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPHorizontalIndependentAxis: public JKQTPHorizon
         virtual double getParentOtheraxisOffset() const override;
         /** copydoc JKQTPCoordinateAxis::parentOtherAxisX2P() */
         virtual double parentOtherAxisX2P(double x) const override;
+        /** copydoc JKQTPCoordinateAxis::drawAxes() */
+        virtual void drawAxes(JKQTPEnhancedPainter& painter, int move1=0, int move2=0) override;
     public Q_SLOTS:
         /** \brief set the axis offset */
         virtual void setAxisOffset(double __value);

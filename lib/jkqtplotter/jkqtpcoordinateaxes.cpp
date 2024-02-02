@@ -2141,6 +2141,40 @@ double JKQTPVerticalIndependentAxis::parentOtherAxisX2P(double /*x*/) const
     return qQNaN();
 }
 
+void JKQTPVerticalIndependentAxis::drawAxes(JKQTPEnhancedPainter &painter, int move1, int move2)
+{
+    JKQTPVerticalAxisBase::drawAxes(painter,move1,move2);
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+    const QPen pmain=axisStyle.getAxisPen(painter, parent);
+    const bool isSecondAxis=isSecondaryAxis();
+    // correct move1,move2 for the length of inside ticks for secondary axes
+    double moveForTicks1=0, moveForTicks2=0;
+    if (isSecondAxis && axisStyle.drawMode1.testFlag(JKQTPCADMTicks)) moveForTicks1=qMax(axisStyle.minorTickInsideLength,axisStyle.tickInsideLength);
+    if (isSecondAxis && axisStyle.drawMode2.testFlag(JKQTPCADMTicks)) moveForTicks2=qMax(axisStyle.minorTickInsideLength,axisStyle.tickInsideLength);
+    // determine pixel coordinates of important positions
+    double top=x2p(axismax);
+    double bottom=x2p(axismin);
+    double left=0;
+    double right=0;
+    if (inverted) {
+        qSwap(top, bottom);
+    }
+    if (getParentOtheraxisInverted()) {
+        left=getParentOtheraxisOffset()-getParentOtheraxisWidth();//;
+        right=getParentOtheraxisOffset();//;
+    } else {
+        left=getParentOtheraxisOffset();//;
+        right=getParentOtheraxisOffset()+getParentOtheraxisWidth();//;
+    }
+    // move axes outside plot rectangle, if required
+    left-=parent->pt2px(painter, axisStyle.axisLineOffset)+move1+moveForTicks1;
+    right+=parent->pt2px(painter, axisStyle.axisLineOffset)+move2+moveForTicks2;
+
+    painter.setPen(pmain);
+    painter.drawLine(QLineF(left,top,right,top));
+    painter.drawLine(QLineF(left,bottom,right,bottom));
+}
+
 
 
 
@@ -2936,4 +2970,40 @@ double JKQTPHorizontalIndependentAxis::getParentOtheraxisOffset() const {
 double JKQTPHorizontalIndependentAxis::parentOtherAxisX2P(double /*x*/) const
 {
     return qQNaN();
+}
+
+
+void JKQTPHorizontalIndependentAxis::drawAxes(JKQTPEnhancedPainter &painter, int move1, int move2)
+{
+    JKQTPHorizontalAxisBase::drawAxes(painter,move1,move2);
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+    const QPen pmain=axisStyle.getAxisPen(painter, parent);
+    const bool isSecondAxis=isSecondaryAxis();
+    // correct move1,move2 for the length of inside ticks for secondary axes
+    double moveForTicks1=0, moveForTicks2=0;
+    if (isSecondAxis && axisStyle.drawMode1.testFlag(JKQTPCADMTicks)) moveForTicks1=qMax(axisStyle.minorTickInsideLength,axisStyle.tickInsideLength);
+    if (isSecondAxis && axisStyle.drawMode2.testFlag(JKQTPCADMTicks)) moveForTicks2=qMax(axisStyle.minorTickInsideLength,axisStyle.tickInsideLength);
+    // determine pixel coordinates of important positions
+    // determine pixel coordinates of important positions
+    double right=x2p(axismax);
+    double left=x2p(axismin);
+    double bottom=0;
+    double top=0;
+    if (inverted) {
+        qSwap(left, right);
+    }
+    if (getParentOtheraxisInverted()) {
+        top=getParentOtheraxisOffset()-getParentOtheraxisWidth();//;
+        bottom=getParentOtheraxisOffset();//;
+    } else {
+        top=getParentOtheraxisOffset();//;
+        bottom=getParentOtheraxisOffset()+getParentOtheraxisWidth();//;
+    }
+    // move axes outside plot rectangle, if required
+    top-=parent->pt2px(painter, axisStyle.axisLineOffset)+move2+moveForTicks2;
+    bottom+=parent->pt2px(painter, axisStyle.axisLineOffset)+move1+moveForTicks1;
+
+    painter.setPen(pmain);
+    painter.drawLine(QLineF(left,top,left,bottom));
+    painter.drawLine(QLineF(right,top,right,bottom));
 }
