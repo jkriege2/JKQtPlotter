@@ -130,6 +130,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>FIXED/IMPROVED: JKQTMathText renders several LaTeX strings better (simple braces in math mode, \c +-*... as symbols with proper sizes in math mode, added some missing instruction aliases, improved size of \\vec and \\hat, corrrected fonts usage for \\mathrm</li>
     <li>FIXED: \c \\sum and \c \\prod used the wrong symbol in XITS-mode</li>
     <li>FIXED issue <a href="https://github.com/jkriege2/JKQtPlotter/issues/117">#117: Unnecessary printing of tilde symbol in math</a> (thanks to <a href="https://github.com/igormironchik">user:igormironchik</a> for reporting):<br/>Tilde was not recognized as a LaTeX instruction, now is interpreted as non-breaking whitespace</li>
+    <li>FIXED issue <a href="https://github.com/jkriege2/JKQtPlotter/issues/118">#118: Dangerous warning in MacOS and clang</a> (thanks to <a href="https://github.com/igormironchik">user:igormironchik</a> for reporting):<br/>a forward-declared class (i.e. incomplete type) was deleted</li>
     <li>IMPROVED: high-dpr-support in JKQTMathText</li>
     <li>IMPROVED: typesetting of sub-/supercripts, especially for large math operators and braces</li>
     <li>MODIFIED: brace node  now calculates the extension of the child height above or below the strikeoutPos, in order to center braces around the strikeoutPos</li>

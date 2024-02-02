@@ -242,9 +242,8 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         inline bool parse(const QString &markup, ParseOptions options=DefaultParseOptions) {
             static_assert(std::is_base_of<JKQTMathTextParser, TParser>::value, "in parse<TParser>() the type TParser has to be derived from JKQTMathTextParser to work!");
             std::unique_ptr<TParser> p=std::unique_ptr<TParser>(new TParser(this));
-            if (parsedNode) delete parsedNode;
-            parsedNode=nullptr;
-                        clearErrorList();
+            deleteParsedNode();
+            clearErrorList();
             parsedNode=p->parse(markup, options);
             return parsedNode!=nullptr;
         }
@@ -878,7 +877,8 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
 
         /** \brief the syntax tree of JKQTMathTextNode's that was created by the last parse() call */
         JKQTMathTextNode* parsedNode;
-
+        /** \brief this function moves a <code>delete parsedNode</code>-call into the cpp-file, as JKQTMathTextNode is "only" forward declared here and therefore, deleting it  may cause undefined behaviour */
+        void deleteParsedNode();
 
 
         /** \brief table with font replacements to use (e.g. if it is known that a certain font is not good for rendering, you can add

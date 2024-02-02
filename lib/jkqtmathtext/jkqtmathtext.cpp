@@ -202,8 +202,7 @@ JKQTMathText::JKQTMathText(QObject* parent, bool useFontsForGUI):
 }
 
 JKQTMathText::~JKQTMathText() {
-    if (parsedNode!=nullptr) delete parsedNode;
-    parsedNode=nullptr;
+    deleteParsedNode();
 }
 
 void JKQTMathText::loadSettings(const QSettings& settings, const QString& group){
@@ -1193,6 +1192,12 @@ void JKQTMathText::addToErrorList(const QString &error)
 void JKQTMathText::clearErrorList()
 {
     error_list.clear();
+}
+
+void JKQTMathText::deleteParsedNode()
+{
+    if (parsedNode) delete parsedNode;
+    parsedNode=nullptr;
 }
 
 
