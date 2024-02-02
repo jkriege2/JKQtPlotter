@@ -433,7 +433,7 @@ QString JKQTPCoordinateAxis::floattolabel(double data, int past_comma) const {
         case JKQTPCALTscientific:
             return addTickUnit(floattostringWithFormat(loc, data, 'e', past_comma, remove_trail0));
         case JKQTPCALTexponent:
-            return addTickUnit(QString(jkqtp_floattolatexstr(data, past_comma, remove_trail0, belowIsZero, pow(10, -past_comma), pow(10, past_comma+1)).c_str()));
+            return addTickUnit(QString(jkqtp_floattolatexstr(data, past_comma, remove_trail0, belowIsZero, pow(10.0, -static_cast<double>(past_comma)-0.0001), pow(10.0, static_cast<double>(past_comma)+1)).c_str()));
         case JKQTPCALTexponentCharacter:
             return addTickUnit(QString(jkqtp_floattolatexunitstr(data, past_comma, remove_trail0).c_str()));
         case JKQTPCALTintfrac:
@@ -446,7 +446,7 @@ QString JKQTPCoordinateAxis::floattolabel(double data, int past_comma) const {
             uint64_t denom=0;
             uint64_t intpart=0;
             int sign=+1;
-            const double powfac=pow(10,past_comma);
+            const double powfac=pow(10.0,static_cast<double>(past_comma));
             const double rounded=round(data*powfac)/powfac;
             jkqtp_estimateFraction(rounded, sign, intpart, num, denom);
             //std::cout<<"\n"<<data<<" => "<<rounded<<", "<<sign<<"*( "<<intpart<<" + "<<num<<"/"<<denom<<" )\n";

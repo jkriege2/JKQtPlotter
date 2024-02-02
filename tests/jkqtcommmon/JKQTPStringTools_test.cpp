@@ -102,6 +102,37 @@ private slots:
         QCOMPARE_EQ(n, QColor::fromRgbF(0.52,0.52,0.52,240.0/255.0));
     }
 
+    inline void test_jkqtp_floattounitstr() {
+        QCOMPARE_EQ(jkqtp_floattounitstr(0, 1, true), "0");
+        QCOMPARE_EQ(jkqtp_floattounitstr(0, 1, false), "0");
+        QCOMPARE_EQ(jkqtp_floattounitstr(1.0, 1, true), "1");
+        QCOMPARE_EQ(jkqtp_floattounitstr(1.0, 1, false), "1.0");
+        QCOMPARE_EQ(jkqtp_floattounitstr(1.2e3, 1, false), "1.2k");
+        QCOMPARE_EQ(jkqtp_floattounitstr(-1.2e6, 1, false), "-1.2M");
+        QCOMPARE_EQ(jkqtp_floattounitstr(-1.2e30, 1, false), "-1.2Q");
+        QCOMPARE_EQ(jkqtp_floattounitstr(1.2e30, 1, false), "1.2Q");
+        QCOMPARE_EQ(jkqtp_floattounitstr(1.2e-3, 1, false), "1.2m");
+        QCOMPARE_EQ(jkqtp_floattounitstr(-1.2e-6, 1, false), "-1.2\xB5");
+        QCOMPARE_EQ(jkqtp_floattounitstr(-1.2e-30, 1, false), "-1.2q");
+        QCOMPARE_EQ(jkqtp_floattounitstr(1.2e-30, 1, false), "1.2q");
+        QCOMPARE_EQ(jkqtp_floattounitstr(1.234e-30, 1, false), "1.2q");
+    }
+
+    inline void test_jkqtp_floattolatexunitstr() {
+        QCOMPARE_EQ(jkqtp_floattolatexunitstr(0, 1, true), "0");
+        QCOMPARE_EQ(jkqtp_floattolatexunitstr(0, 1, false), "0");
+        QCOMPARE_EQ(jkqtp_floattolatexunitstr(1.0, 1, true), "1");
+        QCOMPARE_EQ(jkqtp_floattolatexunitstr(1.0, 1, false), "1.0");
+        QCOMPARE_EQ(jkqtp_floattolatexunitstr(1.2e3, 1, false), "1.2\\;\\mathrm{k}");
+        QCOMPARE_EQ(jkqtp_floattolatexunitstr(-1.2e6, 1, false), "-1.2\\;\\mathrm{M}");
+        QCOMPARE_EQ(jkqtp_floattolatexunitstr(-1.2e30, 1, false), "-1.2\\;\\mathrm{Q}");
+        QCOMPARE_EQ(jkqtp_floattolatexunitstr(1.2e30, 1, false), "1.2\\;\\mathrm{Q}");
+        QCOMPARE_EQ(jkqtp_floattolatexunitstr(1.2e-3, 1, false), "1.2\\;\\mathrm{m}");
+        QCOMPARE_EQ(jkqtp_floattolatexunitstr(-1.2e-6, 1, false), "-1.2\\;\\mathrm{\\mu}");
+        QCOMPARE_EQ(jkqtp_floattolatexunitstr(-1.2e-30, 1, false), "-1.2\\;\\mathrm{q}");
+        QCOMPARE_EQ(jkqtp_floattolatexunitstr(1.2e-30, 1, false), "1.2\\;\\mathrm{q}");
+        QCOMPARE_EQ(jkqtp_floattolatexunitstr(1.234e-30, 1, false), "1.2\\;\\mathrm{q}");
+    }
 
 };
 

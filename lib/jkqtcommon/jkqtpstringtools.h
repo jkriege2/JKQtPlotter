@@ -188,10 +188,6 @@ JKQTCOMMON_LIB_EXPORT std::string jkqtp_uinttostr(unsigned long data);
  */
 JKQTCOMMON_LIB_EXPORT std::string jkqtp_floattostr(double data, int past_comma=-1, bool remove_trail0=false, double belowIsZero=1e-16);
 
-/** \brief convert a double to a string, encoding powers of ten as characters, e.g. \c jkqtp_floattounitstr(1000,"g") will result in "1kg"
- * \ingroup jkqtptools_string
- */
-JKQTCOMMON_LIB_EXPORT std::string jkqtp_floattounitstr(double dataa, const std::string& unitname);
 /** \brief convert a boolean to a string
  * \ingroup jkqtptools_string
  */

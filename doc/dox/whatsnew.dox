@@ -75,6 +75,9 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>IMPROVED/REWORKED: The functions JKQTBasePlotter::saveImage(), JKQTBasePlotter::saveAsPixelImage(), JKQTBasePlotter::saveAsPDF(), JKQTBasePlotter::saveSVG(), ... gained a bool return value to indicate whether sacing was successful.</li>
     <li>IMPROVED/REWORKED: More <code>save...()</code> functions will appear in the API of JKQTPlotter, so you don't have to go via JKQTPlotter::getPlotter(). These are merely forwarding the call to the internel JKQTBasePlotter instance.</li>
     <li>IMPROVED: documentation of styles: automatized doc image generation.</li>
+    <li>IMPROVED: axis labeling: there were some minor differences between compilers</li>
+    <li>IMPROVED: jkqtp_floattounitstr()/jkqtp_floattolatexunitstr(): add all SI-Prefixes from 10^-30...10^30</li>
+    <li>BREAKING removed unused function variant of jkqtp_floattounitstr()</li>
     <li>NEW: JKQTPFilledCurveXGraph and JKQTPFilledCurveYGraph can now plot wiggle plots with different fill styles above and below the baseline (feature request <a href="https://github.com/jkriege2/JKQtPlotter/issues/68">#68 Wiggle Plots</a> from <a href="https://github.com/xichaoqiang">user:xichaoqiang</a>   </li>
     <li>NEW/BREAKING CHANGE: data tooltip can now also be shown when "just" moving the mouse (so far this was only possible when dragging the mouse with a button pressed). This also removes JKQtPlotter::getActMouseLeftAsToolTip() and adds JKQtPlotter::getActMouseMoveToolTip() instead! Also the default toolbars and context menus changed!</li>
     <li>NEW: new "seaborn" style for plots, see \ref jkqtpplotter_styling </li>

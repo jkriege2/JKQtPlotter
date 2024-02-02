@@ -156,42 +156,49 @@ std::string jkqtp_tolower(const std::string& s){
   return r;
 }
 
- std::string jkqtp_floattounitstr(double dataa, const std::string& unitname){
-  if (dataa==0) return jkqtp_floattostr(dataa)+unitname;
-  std::string u="";
-  double factor=1;
-  double data=fabs(dataa);
-  if (data>=1e3) { u="k"; factor=1e3; }
-  if (data>=1e6) { u="M"; factor=1e6; }
-  if (data>=1e9) { u="G"; factor=1e9; }
-  if (data>=1e12) { u="T"; factor=1e12; }
-  if (data>=1e15) { u="P"; factor=1e15; }
-  if (data>=1e18) { u="E"; factor=1e18; }
-  if (data<1) {u="m"; factor=1e-3; }
-  if (data<1e-3) {u="u"; factor=1e-6; }
-  if (data<1e-6) {u="n"; factor=1e-9; }
-  if (data<1e-9) {u="p"; factor=1e-12; }
-  if (data<1e-12) {u="f"; factor=1e-15; }
-  if (data<1e-15) {u="a"; factor=1e-18; }
-
-  return jkqtp_floattostr(dataa/factor)+u+unitname;
-};
-
 
  std::string jkqtp_floattounitstr(double data, int past_comma, bool remove_trail0, double belowIsZero){
    if (fabs(data)<=belowIsZero) return "0";
    std::string form="%."+jkqtp_inttostr(past_comma)+"lf";
    std::string res=jkqtp_format(form,data);
    std::string unit="";
-   if (fabs(data)>=1e3) {res=jkqtp_format(form,data/1e3); unit="k";}
-   if (fabs(data)>=1e6) {res=jkqtp_format(form,data/1e6); unit="M";}
-   if (fabs(data)>=1e9) {res=jkqtp_format(form,data/1e9); unit="G";}
-   if (fabs(data)>=1e12) {res=jkqtp_format(form,data/1e12); unit="T";}
-   if (fabs(data)>=1e15) {res=jkqtp_format(form,data/1e15); unit="P";}
-   if (fabs(data)<1) {res=jkqtp_format(form,data/1e-3); unit="m";}
-   if (fabs(data)<1e-3) {res=jkqtp_format(form,data/1e-6); unit="u";}
-   if (fabs(data)<1e-6) {res=jkqtp_format(form,data/1e-9); unit="n";}
-   if (fabs(data)<1e-9) {res=jkqtp_format(form,data/1e-12); unit="f";}
+   static std::map<double, std::string> SIUnits = {
+                                                   {1e3, "k"},
+                                                   {1e6, "M"},
+                                                   {1e9, "G"},
+                                                   {1e12, "T"},
+                                                   {1e15, "P"},
+                                                   {1e18, "E"},
+                                                   {1e21, "Z"},
+                                                   {1e24, "Y"},
+                                                   {1e27, "R"},
+                                                   {1e30, "Q"},
+                                                   };
+   static std::map<double, std::string> SIUnitsBelow1 = {
+                                                         {1e-3, "m"},
+                                                         {1e-6, "\xB5"},
+                                                         {1e-9, "n"},
+                                                         {1e-12, "p"},
+                                                         {1e-15, "f"},
+                                                         {1e-18, "a"},
+                                                         {1e-21, "z"},
+                                                         {1e-24, "y"},
+                                                         {1e-27, "r"},
+                                                         {1e-30, "q"},
+                                                         };
+   const double absData=fabs(data);
+   for (auto it=SIUnits.begin(); it!=SIUnits.end(); it++) {
+       if (absData>=it->first) {
+           res=jkqtp_format(form,data/it->first);
+           unit=it->second;
+       }
+   }
+   for (auto it=SIUnitsBelow1.rbegin(); it!=SIUnitsBelow1.rend(); it++) {
+       if (absData<it->first*1e3) {
+           res=jkqtp_format(form,data/it->first);
+           unit=it->second;
+       }
+   }
    if (fabs(data)==0) res=jkqtp_format(form,data);
    if (remove_trail0) {
        if (fabs(data)<=belowIsZero) return "0";
@@ -212,16 +219,43 @@ std::string jkqtp_tolower(const std::string& s){
    std::string form="%."+jkqtp_inttostr(past_comma)+"lf";
    std::string res=jkqtp_format(form,data);
    std::string unit="";
-   if (fabs(data)>=1e3) {res=jkqtp_format(form,data/1e3); unit="\\mathrm{k}";}
-   if (fabs(data)>=1e6) {res=jkqtp_format(form,data/1e6); unit="\\;\\mathrm{M}";}
-   if (fabs(data)>=1e9) {res=jkqtp_format(form,data/1e9); unit="\\;\\mathrm{G}";}
-   if (fabs(data)>=1e12) {res=jkqtp_format(form,data/1e12); unit="\\;\\mathrm{T}";}
-   if (fabs(data)>=1e15) {res=jkqtp_format(form,data/1e15); unit="\\;\\mathrm{P}";}
-   if (fabs(data)<1) {res=jkqtp_format(form,data/1e-3); unit="\\;\\mathrm{m}";}
-   if (fabs(data)<1e-3) {res=jkqtp_format(form,data/1e-6); unit="\\;\\mathrm{\\mu}";}
-   if (fabs(data)<1e-6) {res=jkqtp_format(form,data/1e-9); unit="\\;\\mathrm{n}";}
-   if (fabs(data)<1e-9) {res=jkqtp_format(form,data/1e-12); unit="\\;\\mathrm{f}";}
-   if (fabs(data)==0) res=jkqtp_format(form,data);
+   static std::map<double, std::string> SIUnits = {
+                                                   {1e3, "k"},
+                                                   {1e6, "M"},
+                                                   {1e9, "G"},
+                                                   {1e12, "T"},
+                                                   {1e15, "P"},
+                                                   {1e18, "E"},
+                                                   {1e21, "Z"},
+                                                   {1e24, "Y"},
+                                                   {1e27, "R"},
+                                                   {1e30, "Q"},
+                                                   };
+   static std::map<double, std::string> SIUnitsBelow1 = {
+                                                   {1e-3, "m"},
+                                                   {1e-6, "\\mu"},
+                                                   {1e-9, "n"},
+                                                   {1e-12, "p"},
+                                                   {1e-15, "f"},
+                                                   {1e-18, "a"},
+                                                   {1e-21, "z"},
+                                                   {1e-24, "y"},
+                                                   {1e-27, "r"},
+                                                   {1e-30, "q"},
+                                                   };
+   const double absData=fabs(data);
+   for (auto it=SIUnits.begin(); it!=SIUnits.end(); it++) {
+       if (absData>=it->first) {
+           res=jkqtp_format(form,data/it->first);
+           unit="\\;\\mathrm{"+it->second+"}";
+       }
+   }
+   for (auto it=SIUnitsBelow1.rbegin(); it!=SIUnitsBelow1.rend(); it++) {
+       if (absData<it->first*1e3) {
+           res=jkqtp_format(form,data/it->first);
+           unit="\\;\\mathrm{"+it->second+"}";
+       }
+   }
    if (remove_trail0) {
        if (fabs(data)<=belowIsZero) return "0";
        if (res.find('.')==std::string::npos) return res+unit;
@@ -250,7 +284,7 @@ std::string jkqtp_tolower(const std::string& s){
 
    long exp=static_cast<long>(floor(log(adata)/JKQTPSTATISTICS_LN10));
    if ((minNoExponent>fabs(data)) || (fabs(data)>maxNoExponent)) {
-       std::string v=jkqtp_floattostr(data/pow(10.0, static_cast<double>(exp)), past_comma, remove_trail0);
+       const std::string v=jkqtp_floattostr(data/pow(10.0, static_cast<double>(exp)), past_comma, remove_trail0);
        if (v!="1" && v!="10")  {
            res=v+std::string("{")+multOperator+std::string("}10^{")+jkqtp_inttostr(exp)+"}";
        } else {
