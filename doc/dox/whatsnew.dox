@@ -18,6 +18,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>BREAKING: renamed library JKQTCommonStatisticsAndMath to JKQTMath. <i>Note: A CMake-ALIAS-Library JKQTCommonStatisticsAndMath was also added to ease transition for users</i></li>
     <li>BREAKING: JKQTFastPlotter class and library are now deprecated and will be removed in future versions!</li>
     <li>BREAKING: The QMake build system is deprecated and will not get the same love and atttention as the recommended CMake system. The QMake scripts might be removed in future versions!</li>
+    <li>FIXED/SECURITY not using \c sprintf() any more ... replaced by e.g. \c snprintf() , which is more secure.</li>
     <li>FIXED issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/102">#102: Fix CMake Compile Error: JKQTCommonLib no properly linked in JKQTMath static build</a> (thanks to <a href="https://github.com/Neumann-A">user:Neumann-A</a> for reporting)</li>
     <li>CLEANUP (BREAKING) of library structure</li>
     <li>NEW: Using precompiled headers in CMake-build to speed up build times</li>

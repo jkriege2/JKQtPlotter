@@ -125,7 +125,7 @@ inline std::string jkqtplinalgMatrixToString(T* matrix, long L, long C, int widt
         for (long c=0; c<C; c++) {
             if (c>0) ost<<", ";
             char buf[500];
-            sprintf(buf, format.c_str(), jkqtp_todouble(matrix[jkqtplinalgMatIndex(l,c,C)]));
+            snprintf(buf, 500, format.c_str(), jkqtp_todouble(matrix[jkqtplinalgMatIndex(l,c,C)]));
             ost<<buf;
             /*ost.precision(precision);
             ost.width(width);
@@ -236,14 +236,14 @@ inline std::string jkqtplinalgMatrixToHTMLString(T* matrix, long L, long C, int 
                     jkqtplinalgPM1ToRWBColors(valrel, r,g,b);
                 }
                 char buf[500];
-                sprintf(buf, " bgcolor=\"#%02X%02X%02X\"", int(r), int(g), int(b));
+                snprintf(buf, 500, " bgcolor=\"#%02X%02X%02X\"", int(r), int(g), int(b));
                 cols=buf;
             }
             ost<<"<td align=\"center\" valign=\"middle\" width=\""<<(100.0/double(C))<<"%\" "<<cols<<"><nobr>";
             ost.precision(precision);
             ost.width(width);
             char buf[500];
-            sprintf(buf, format.c_str(), val);
+            snprintf(buf, 500, format.c_str(), val);
             ost<<prenumber<<buf<<postnumber;
             ost<<"</nobr></td>";
         }
@@ -277,7 +277,7 @@ inline std::string jkqtplinalgMatrixToHTMLString(T* matrix, long L, long C, int 
             jkqtplinalgPM1ToRWBColors(0.5, rcp, gcp, bcp);
             jkqtplinalgPM1ToRWBColors(1, rp, gp, bp);
         }
-        sprintf(buf, "<table %s cellpadding=\"2\" cellspacing=\"0\" border=\"1\"><tr><td><table width=\"100%%\" cellpadding=\"3\" cellspacing=\"0\" border=\"0\"><tr>"
+        snprintf(buf, 8192, "<table %s cellpadding=\"2\" cellspacing=\"0\" border=\"1\"><tr><td><table width=\"100%%\" cellpadding=\"3\" cellspacing=\"0\" border=\"0\"><tr>"
                      "<td bgcolor=\"#%02X%02X%02X\" width=\"20%%\"><nobr>&nbsp;%9.3lg&nbsp;</nobr></td>"
                      "<td bgcolor=\"#%02X%02X%02X\" width=\"20%%\"><nobr>&nbsp;&nbsp;&nbsp;&mdash;&nbsp;&nbsp;&nbsp;</nobr></td>"
                      "<td bgcolor=\"#%02X%02X%02X\" width=\"20%%\"><nobr>&nbsp;%9.3lg&nbsp;</nobr></td>"
