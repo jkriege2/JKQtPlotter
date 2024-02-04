@@ -125,8 +125,8 @@ int main(int argc, char* argv[])
             datastore->setPixel(imgColumn2, ix, iy, sin(ix*iy/30.0));
         }
     }
-    // the loop above can be written more compact using addColumnCalculatedFromColumn():
-    //imgColumn=datastore->addColumnCalculatedFromColumn(colLinXY.first, colLinXY.second, [](double x, double y)->double { return cos((x-15.0))/(x-15.0)*cos((y-2.0))/(x-2.0); },  "image value");
+    // the loop above can be written more compact using addCalculatedColumnFromColumn():
+    //imgColumn=datastore->addCalculatedColumnFromColumn(colLinXY.first, colLinXY.second, [](double x, double y)->double { return cos((x-15.0))/(x-15.0)*cos((y-2.0))/(x-2.0); },  "image value");
     // finally we can use a JKQTPXYParametrizedScatterGraph to display the data from our three columns
     // by using colLinXY->first and colLinXY->second as positions for symbols that are colored, based
     // on the respective value in imgColumn:

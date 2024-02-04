@@ -814,7 +814,7 @@ size_t JKQTPDatastore::addCalculatedImageColumn(size_t cols, size_t rows, const 
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-size_t JKQTPDatastore::addColumnCalculatedFromColumn(size_t otherColumn, const std::function<double (double)> &f, const QString &name)
+size_t JKQTPDatastore::addCalculatedColumnFromColumn(size_t otherColumn, const std::function<double (double)> &f, const QString &name)
 {
     const JKQTPColumn& oc=columns.value(otherColumn);
     JKQTPDatastoreItem* it=new JKQTPDatastoreItem(1, oc.getRows());
@@ -826,7 +826,7 @@ size_t JKQTPDatastore::addColumnCalculatedFromColumn(size_t otherColumn, const s
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-size_t JKQTPDatastore::addColumnCalculatedFromColumn(size_t otherColumnX, size_t otherColumnY, const std::function<double (double, double)> &f, const QString &name)
+size_t JKQTPDatastore::addCalculatedColumnFromColumn(size_t otherColumnX, size_t otherColumnY, const std::function<double (double, double)> &f, const QString &name)
 {
     const JKQTPColumn& ocx=columns.value(otherColumnX);
     const JKQTPColumn& ocy=columns.value(otherColumnY);

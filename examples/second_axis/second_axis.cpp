@@ -19,10 +19,10 @@ void exampleSecondYAxis(JKQTPlotter& plot, const QString& title)
 
     // 2. now we create two columns for key and value
     size_t columnX=ds->addLinearColumn(40, 0,10,"x");
-    size_t columnY1=ds->addColumnCalculatedFromColumn(columnX, [](double x) { return x; }, "y1");
-    size_t columnY2=ds->addColumnCalculatedFromColumn(columnX, [](double x) { return cos(x); }, "y2");
-    size_t columnY3=ds->addColumnCalculatedFromColumn(columnX, [](double x) { return x*x; }, "y3");
-    size_t columnY4=ds->addColumnCalculatedFromColumn(columnX, [](double x) { return sqrt(x); }, "y3");
+    size_t columnY1=ds->addCalculatedColumnFromColumn(columnX, [](double x) { return x; }, "y1");
+    size_t columnY2=ds->addCalculatedColumnFromColumn(columnX, [](double x) { return cos(x); }, "y2");
+    size_t columnY3=ds->addCalculatedColumnFromColumn(columnX, [](double x) { return x*x; }, "y3");
+    size_t columnY4=ds->addCalculatedColumnFromColumn(columnX, [](double x) { return sqrt(x); }, "y3");
 
     // 3. create a second y-axis and set its formating options, so it only draws an axis on the right
     auto yAxisRef2=plot.getPlotter()->addSecondaryYAxis(new JKQTPVerticalAxis(plot.getPlotter(), JKQTPPrimaryAxis));
@@ -113,10 +113,10 @@ void exampleSecondXAxis(JKQTPlotter& plot, const QString& title)
     JKQTPDatastore* ds=plot.getDatastore();
 
     size_t columnY=ds->addLinearColumn(30, 0,12,"y");
-    size_t columnX1=ds->addColumnCalculatedFromColumn(columnY, [](double x) { return x; }, "x1");
-    size_t columnX2=ds->addColumnCalculatedFromColumn(columnY, [](double x) { return cos(x); }, "x2");
-    size_t columnX3=ds->addColumnCalculatedFromColumn(columnY, [](double x) { return x*x; }, "x3");
-    size_t columnX4=ds->addColumnCalculatedFromColumn(columnY, [](double x) { return sqrt(x); }, "x4");
+    size_t columnX1=ds->addCalculatedColumnFromColumn(columnY, [](double x) { return x; }, "x1");
+    size_t columnX2=ds->addCalculatedColumnFromColumn(columnY, [](double x) { return cos(x); }, "x2");
+    size_t columnX3=ds->addCalculatedColumnFromColumn(columnY, [](double x) { return x*x; }, "x3");
+    size_t columnX4=ds->addCalculatedColumnFromColumn(columnY, [](double x) { return sqrt(x); }, "x4");
 
     JKQTPXYLineGraph* graph1=new JKQTPXYLineGraph(&plot);
     graph1->setXColumn(columnX1);

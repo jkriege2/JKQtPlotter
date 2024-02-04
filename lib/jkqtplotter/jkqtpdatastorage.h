@@ -124,7 +124,7 @@ enum class JKQTPDatastoreItemFormat {
   *   <li> addLinearGridColumns() adds two columns which represent x- and y- coordinates of points
   *     on a rectangular grid (useful for calculating image data)
   *   <li> addCalculatedColumn() calculates a column, based on row numbers and a C++ functor
-  *   <li> addColumnCalculatedFromColumn() calculates a column, based on another column data
+  *   <li> addCalculatedColumnFromColumn() calculates a column, based on another column data
   *   <li> addCopiedMap() copies data from a std::map/QMap into two columns
   *   <li> ... several more functions for specific cases exist.
   *   <li> Also note that there are even library extensions that allow to import data directly from OpenCV matrices: JKQTPCopyCvMatToColumn()
@@ -1252,7 +1252,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPDatastore{
          *          x-coordinates are linearly distributed between \a startX and \a endX and the x-coordinates are linearly
          *          distributed between \a startY and \a endY .
          *
-         *  \see addLogGridColumns(), addDecadeLogGridColumns(), addColumnCalculatedFromColumn(), JKQTPXYParametrizedScatterGraph, \ref JKQTPlotterBasicJKQTPDatastore
+         *  \see addLogGridColumns(), addDecadeLogGridColumns(), addCalculatedColumnFromColumn(), JKQTPXYParametrizedScatterGraph, \ref JKQTPlotterBasicJKQTPDatastore
          */
         std::pair<size_t,size_t> addLinearGridColumns(size_t width, double startX, double endX, size_t height, double startY, double endY, const QString& nameX=QString(""), const QString& nameY=QString(""));
 
@@ -1267,7 +1267,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPDatastore{
          *   return newColumn;
          * \endcode
          *
-         *  \see addColumnCalculatedFromColumn(), \ref JKQTPlotterBasicJKQTPDatastore
+         *  \see addCalculatedColumnFromColumn(), \ref JKQTPlotterBasicJKQTPDatastore
          */
         size_t addCalculatedColumn(size_t rows, const std::function<double(size_t, JKQTPDatastore*)>& f, const QString& name=QString(""));
         /** \brief add a column with \a rows entries, that is calculated by calling \a f for each entry
@@ -1280,7 +1280,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPDatastore{
          *   return newColumn;
          * \endcode
          *
-         *  \see addColumnCalculatedFromColumn(), \ref JKQTPlotterBasicJKQTPDatastore
+         *  \see addCalculatedColumnFromColumn(), \ref JKQTPlotterBasicJKQTPDatastore
          */
         size_t addCalculatedColumn(size_t rows, const std::function<double(size_t)>& f, const QString& name=QString(""));
         /** \brief add an image column with width \a cols and height \a rows (i.e. \a rows * \a cols entries), that is calculated by calling \a f for each entry
@@ -1295,7 +1295,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPDatastore{
          *   return newColumn;
          * \endcode
          *
-         *  \see addColumnCalculatedFromColumn(), \ref JKQTPlotterBasicJKQTPDatastore
+         *  \see addCalculatedColumnFromColumn(), \ref JKQTPlotterBasicJKQTPDatastore
          */
         size_t addCalculatedImageColumn(size_t cols, size_t rows, const std::function<double(size_t,size_t)>& f, const QString& name=QString(""));
         /** \brief add a column with the same number of entries, as in the other column \a otherColumn , that are calculated by calling \a f for each entry in \a otherColumn
@@ -1310,7 +1310,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPDatastore{
          *
          *  \see addCalculatedColumn(), \ref JKQTPlotterBasicJKQTPDatastore
          */
-        size_t addColumnCalculatedFromColumn(size_t otherColumn, const std::function<double(double)>& f, const QString& name=QString(""));
+        size_t addCalculatedColumnFromColumn(size_t otherColumn, const std::function<double(double)>& f, const QString& name=QString(""));
+        inline size_t addColumnCalculatedFromColumn(size_t otherColumn, const std::function<double(double)>& f, const QString& name=QString("")) {
+            return addCalculatedColumnFromColumn(otherColumn, f, name);
+        }
         /** \brief add a column with the same number of entries, as in the other column \a otherColumn , that are calculated by calling \a f for each pair of entries in \a otherColumnX and  \a otherColumnY
          *
          * Pseudocode:
@@ -1323,7 +1326,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPDatastore{
          *
          *  \see addCalculatedColumn(), \ref JKQTPlotterBasicJKQTPDatastore
          */
-        size_t addColumnCalculatedFromColumn(size_t otherColumnX, size_t otherColumnY, const std::function<double(double,double)>& f, const QString& name=QString(""));
+        size_t addCalculatedColumnFromColumn(size_t otherColumnX, size_t otherColumnY, const std::function<double(double,double)>& f, const QString& name=QString(""));
+        inline size_t addColumnCalculatedFromColumn(size_t otherColumnX, size_t otherColumnY, const std::function<double(double,double)>& f, const QString& name=QString("")) {
+            return addCalculatedColumnFromColumn(otherColumnX, otherColumnY,  f, name);
+        }
 
         /** \brief returns the number of (logical) columns currently managed by the datastore */
         inline size_t getColumnCount() const { return static_cast<size_t>(columns.size()); }

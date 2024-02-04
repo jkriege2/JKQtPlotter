@@ -24,12 +24,12 @@ void doExample(JKQTPlotter& plot, const QString& title)
     size_t columnK=ds->addLinearColumn(9, 0.1*JKQTPSTATISTICS_PI, 1.0*JKQTPSTATISTICS_PI,"k");
     size_t columnK2=ds->addLinearColumn(9, 1.1*JKQTPSTATISTICS_PI, 2.0*JKQTPSTATISTICS_PI,"k2");
     size_t columnK3=ds->addLinearColumn(9, 2.1*JKQTPSTATISTICS_PI, 3.0*JKQTPSTATISTICS_PI,"k2");
-    size_t columnV=ds->addColumnCalculatedFromColumn(columnK, [](double x) { return sin(x); }, "v");
-    size_t columnV2=ds->addColumnCalculatedFromColumn(columnK2, [](double x) { return -sin(x); }, "v2");
-    size_t columnV3=ds->addColumnCalculatedFromColumn(columnK3, [](double x) { return sin(x); }, "v3");
-    size_t columnE=ds->addColumnCalculatedFromColumn(columnV, [](double x) { return 0.2*x; }, "error");
-    size_t columnE2=ds->addColumnCalculatedFromColumn(columnV2, [](double x) { return 0.2*x; }, "error");
-    size_t columnE3=ds->addColumnCalculatedFromColumn(columnV3, [](double x) { return 0.2*x; }, "error");
+    size_t columnV=ds->addCalculatedColumnFromColumn(columnK, [](double x) { return sin(x); }, "v");
+    size_t columnV2=ds->addCalculatedColumnFromColumn(columnK2, [](double x) { return -sin(x); }, "v2");
+    size_t columnV3=ds->addCalculatedColumnFromColumn(columnK3, [](double x) { return sin(x); }, "v3");
+    size_t columnE=ds->addCalculatedColumnFromColumn(columnV, [](double x) { return 0.2*x; }, "error");
+    size_t columnE2=ds->addCalculatedColumnFromColumn(columnV2, [](double x) { return 0.2*x; }, "error");
+    size_t columnE3=ds->addCalculatedColumnFromColumn(columnV3, [](double x) { return 0.2*x; }, "error");
 
     // 3. create a graph in the plot, which plots the dataset with symmetric:
     TCHART* graph1=new TCHART(&plot);

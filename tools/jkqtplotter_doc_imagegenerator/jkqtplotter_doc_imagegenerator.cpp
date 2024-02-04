@@ -637,9 +637,9 @@ void doListKeyPositions(const QDir& outputDir, int iconsize, QColor /*background
 
 
     const size_t colX=plot.getDatastore()->addLinearColumn(30,0,1);
-    const size_t colY1=plot.getDatastore()->addColumnCalculatedFromColumn(colX, [](double x) { return x; });
-    const size_t colY2=plot.getDatastore()->addColumnCalculatedFromColumn(colX, [](double x) { return x*x; });
-    const size_t colY3=plot.getDatastore()->addColumnCalculatedFromColumn(colX, [](double x) { return sqrt(x); });
+    const size_t colY1=plot.getDatastore()->addCalculatedColumnFromColumn(colX, [](double x) { return x; });
+    const size_t colY2=plot.getDatastore()->addCalculatedColumnFromColumn(colX, [](double x) { return x*x; });
+    const size_t colY3=plot.getDatastore()->addCalculatedColumnFromColumn(colX, [](double x) { return sqrt(x); });
     JKQTPXYLineGraph* g;
     plot.addGraph(g=new JKQTPXYLineGraph(&plot));
     g->setTitle("linear");
@@ -688,7 +688,7 @@ void doListKeyLayouts(const QDir& outputDir, int iconsize, QColor /*backgroundCo
     JKQTPXYLineGraph* g;
     const size_t colX=plot.getDatastore()->addLinearColumn(70,0,1);
     for (int i=0; i<8; i++) {
-        const size_t colY1=plot.getDatastore()->addColumnCalculatedFromColumn(colX, [i](double x) { return pow(x, pow(2,(i-4)/4.0)); });
+        const size_t colY1=plot.getDatastore()->addCalculatedColumnFromColumn(colX, [i](double x) { return pow(x, pow(2,(i-4)/4.0)); });
         plot.addGraph(g=new JKQTPXYLineGraph(&plot));
         g->setTitle(QString::number(i+1)+": $f(x)=x^{"+QString::number(pow(2,(i-4)/4.0), 'f', 2)+"}$");
         g->setDrawLine(true);

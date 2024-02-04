@@ -21,7 +21,7 @@ void doExample(JKQTPlotter& plot, const QString& title)
 
     // 2. now we create two columns for key and value
     size_t columnK=ds->addLinearColumn(11, 0, 10, "k");
-    size_t columnV=ds->addColumnCalculatedFromColumn(columnK, [](double x) { return 5.0+x; }, "v");
+    size_t columnV=ds->addCalculatedColumnFromColumn(columnK, [](double x) { return 5.0+x; }, "v");
 
     // 3. create graph in the plot, which plots the dataset:
     JKQTPBarGraphBase* graph=new TCHART(&plot);

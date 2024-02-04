@@ -37,7 +37,7 @@ public:
             JKQTPXYLineGraph* g;
             plot.addGraph(g=new JKQTPXYLineGraph(&plot));
             g->setXColumn(colX);
-            g->setYColumn(plot.getDatastore()->addColumnCalculatedFromColumn(colX, [&](double x) { return cos(x+double(i+plotIndex)/8.0*JKQTPSTATISTICS_PI)+rng.generateDouble()*0.2-0.1;}));
+            g->setYColumn(plot.getDatastore()->addCalculatedColumnFromColumn(colX, [&](double x) { return cos(x+double(i+plotIndex)/8.0*JKQTPSTATISTICS_PI)+rng.generateDouble()*0.2-0.1;}));
             g->setTitle(labeltemplate.arg(i+plotIndex+1));
             g->setDrawLine(true);
             g->setSymbolType(JKQTPNoSymbol);

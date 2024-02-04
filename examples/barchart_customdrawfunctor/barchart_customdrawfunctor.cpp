@@ -21,7 +21,7 @@ void doExample(JKQTPlotter& plot, const QString& title)
 
     // 2. now we create two columns for key and value
     size_t columnK=ds->addLinearColumn(7, 0, 6, "k");
-    size_t columnV=ds->addColumnCalculatedFromColumn(columnK, [](double x) { return jkqtp_sign(2.0*x-2.5)*qMax(2.0,fabs(2.0*x-2.5)); }, "v");
+    size_t columnV=ds->addCalculatedColumnFromColumn(columnK, [](double x) { return jkqtp_sign(2.0*x-2.5)*qMax(2.0,fabs(2.0*x-2.5)); }, "v");
 
     // 3. load a stylesheet
     plot.loadCurrentPlotterStyle(QSettings(":/JKQTPlotter/styles/seaborn.ini", QSettings::IniFormat));
