@@ -464,15 +464,29 @@ void JKQTBasePlotter::initSettings() {
 void JKQTBasePlotter::zoomIn(double factor) {
     //std::cout<<(double)event->delta()/120.0<<":   "<<factor<<std::endl;
 
+
+
     for (auto ax: getXAxes(true)) {
-        const double xmin=ax->p2x(static_cast<long>(round(static_cast<double>(internalPlotWidth)/2.0-static_cast<double>(internalPlotWidth)/(2.0*factor))));
-        const double xmax=ax->p2x(static_cast<long>(round(static_cast<double>(internalPlotWidth)/2.0+static_cast<double>(internalPlotWidth)/(2.0*factor))));
-        ax->setRange(xmin, xmax);
+        const double old_mi=ax->x2p(ax->getMin());
+        const double old_ma=ax->x2p(ax->getMax());
+        const double range=fabs(old_ma-old_mi);
+        const double new_range=range/factor;
+        const double new_mi=qMin(old_mi,old_ma)-(new_range-range)/2.0;
+        const double new_ma=qMax(old_mi,old_ma)+(new_range-range)/2.0;
+        const double xmin=ax->p2x(new_mi);
+        const double xmax=ax->p2x(new_ma);
+        ax->setRange(qMin(xmin, xmax), qMax(xmin, xmax));
     }
     for (auto ax: getYAxes(true)) {
-        const double ymin=ax->p2x(static_cast<long>(round(static_cast<double>(internalPlotHeight)/2.0+static_cast<double>(internalPlotHeight)/(2.0*factor))));
-        const double ymax=ax->p2x(static_cast<long>(round(static_cast<double>(internalPlotHeight)/2.0-static_cast<double>(internalPlotHeight)/(2.0*factor))));
-        ax->setRange(ymin, ymax);
+        const double old_mi=ax->x2p(ax->getMin());
+        const double old_ma=ax->x2p(ax->getMax());
+        const double range=fabs(old_ma-old_mi);
+        const double new_range=range/factor;
+        const double new_mi=qMin(old_mi,old_ma)-(new_range-range)/2.0;
+        const double new_ma=qMax(old_mi,old_ma)+(new_range-range)/2.0;
+        const double xmin=ax->p2x(new_mi);
+        const double xmax=ax->p2x(new_ma);
+        ax->setRange(qMin(xmin, xmax), qMax(xmin, xmax));
     }
 
     redrawPlot();
