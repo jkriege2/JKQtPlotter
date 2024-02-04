@@ -144,9 +144,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoSymbol: public JKQTPPlotAnnotationElement, 
         /** \brief returns x and y at the same time \see x, y */
         QPointF getP() const;
 
-        /** \copydoc JKQTPPlotAnnotationElement::getXMinMax()        */
+        /** \copydoc JKQTPPlotElement::getXMinMax() */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
-        /** \copydoc JKQTPPlotAnnotationElement::getYMinMax()        */
+        /** \copydoc JKQTPPlotElement::getYMinMax() */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
         /** \brief plots the graph to the plotter object specified as parent */

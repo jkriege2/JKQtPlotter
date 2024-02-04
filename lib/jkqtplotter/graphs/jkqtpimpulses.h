@@ -126,9 +126,9 @@ public:
     virtual int getValueColumn() const override;
 
 
-    /** \copydoc JKQTPXYGraph::getXMinMax() */
+    /** \copydoc JKQTPPlotElement::getXMinMax() */
     virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
-    /** \copydoc JKQTPXYGraph::getYMinMax() */
+    /** \copydoc JKQTPPlotElement::getYMinMax() */
     virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
 public Q_SLOTS:
@@ -158,7 +158,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPImpulsesHorizontalErrorGraph: public JKQTPImpu
         /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int c) const override;
 
-        /** \copydoc JKQTPXYGraph::getXMinMax() */
+        /** \copydoc JKQTPPlotElement::getXMinMax() */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
 
         /** \brief returns the column that contains the bar height errors */
@@ -214,9 +214,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPImpulsesVerticalGraph: public JKQTPImpulsesGra
         virtual void draw(JKQTPEnhancedPainter& painter) override;
         /** \brief plots a key marker inside the specified rectangle \a rect */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, const QRectF& rect) override;
-        /** \copydoc JKQTPXYGraph::getXMinMax() */
+        /** \copydoc JKQTPPlotElement::getXMinMax() */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
-        /** \copydoc JKQTPXYGraph::getYMinMax() */
+        /** \copydoc JKQTPPlotElement::getYMinMax() */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 };
 

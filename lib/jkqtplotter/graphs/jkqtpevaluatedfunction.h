@@ -323,14 +323,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPFunctorLineGra
         /** \copydoc JKQTPEvaluatedFunctionWithErrorsGraphBase::buildPlotFunctorSpec() */
         virtual std::function<QPointF(double)> buildErrorFunctorSpec() override;
 
-        /** \brief get the maximum and minimum x-value of the graph
-         *
-         * This functions returns 0 for both parameters, so that the plotter uses the predefined
-         * min and max values.
-         */
+        /** \copydoc JKQTPPlotElement::getXMinMax() */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
-        /** \brief get the maximum and minimum y-value of the graph
-         */
+        /** \copydoc JKQTPPlotElement::getYMinMax() */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
 
@@ -379,11 +374,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPYFunctionLineGraph: public JKQTPFunctorLineGra
         virtual std::function<QPointF(double)> buildErrorFunctorSpec() override;
 
 
-        /** \brief get the maximum and minimum x-value of the graph
-         */
-        virtual bool getXMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
-        /** \brief get the maximum and minimum y-value of the graph
-         */
+        /** \copydoc JKQTPPlotElement::getXMinMax() */
+        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
+        /** \copydoc JKQTPPlotElement::getYMinMax() */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
 

@@ -120,9 +120,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoLine: public JKQTPGeoBaseDecoratedLine {
 
 
 
-        /** \copydoc JKQTPGeometricPlotElement::getXMinMax()        */
+        /** \copydoc JKQTPPlotElement::getXMinMax() */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
-        /** \copydoc JKQTPGeometricPlotElement::getYMinMax()        */
+        /** \copydoc JKQTPPlotElement::getYMinMax() */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
         /** \brief plots the graph to the plotter object specified as parent
@@ -299,9 +299,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoInfiniteLine: public JKQTPGeoBaseDecoratedH
         JKQTPGeoInfiniteLine(JKQTPlotter* parent, double x, double y, double dx, double dy);
 
 
-        /** \copydoc JKQTPGeometricPlotElement::getXMinMax()        */
+        /** \copydoc JKQTPPlotElement::getXMinMax() */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
-        /** \copydoc JKQTPGeometricPlotElement::getYMinMax()        */
+        /** \copydoc JKQTPPlotElement::getYMinMax() */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
         /** \brief plots the graph to the plotter object specified as parent
@@ -402,9 +402,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoPolyLines: public JKQTPGeoBaseDecoratedLine
         JKQTPGeoPolyLines(JKQTPlotter* parent);
 
 
-        /** \copydoc JKQTPGeometricPlotElement::getXMinMax()        */
+        /** \copydoc JKQTPPlotElement::getXMinMax() */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
-        /** \copydoc JKQTPGeometricPlotElement::getYMinMax()        */
+        /** \copydoc JKQTPPlotElement::getYMinMax() */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
         /** \brief plots the graph to the plotter object specified as parent
@@ -494,9 +494,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoArc: public JKQTPGeoBaseLine {
          */
         JKQTPGeoArc(JKQTPlotter* parent, double x, double y, double width, double height, double angleStart, double angleStop);
 
-        /** \copydoc JKQTPGeometricPlotElement::getXMinMax()        */
+        /** \copydoc JKQTPPlotElement::getXMinMax() */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
-        /** \copydoc JKQTPGeometricPlotElement::getYMinMax()        */
+        /** \copydoc JKQTPPlotElement::getYMinMax() */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
 

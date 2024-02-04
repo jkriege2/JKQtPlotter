@@ -215,10 +215,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPFilledCurveYGraph: public JKQTPFilledCurveGrap
         /** \brief class constructor */
         JKQTPFilledCurveYGraph(JKQTPlotter* parent);
 
-        /** \brief get the maximum and minimum x-value of the graph
-         *
-         * The result is given in the two parameters which are call-by-reference parameters!
-         */
+        /** \copydoc JKQTPPlotElement::getXMinMax() */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
 
         /** \brief plots the graph to the plotter object specified as parent */
@@ -253,10 +250,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPFilledCurveYErrorGraph: public JKQTPFilledCurv
         /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int c) const override;
 
-        /** \brief get the maximum and minimum x-value of the graph
-         *
-         * The result is given in the two parameters which are call-by-reference parameters!
-         */
+        /** \copydoc JKQTPPlotElement::getXMinMax() */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
 
 

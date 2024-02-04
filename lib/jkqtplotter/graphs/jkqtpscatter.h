@@ -101,15 +101,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXYScatterErrorGraph: public JKQTPXYScatterGrap
         /** \brief class constructor */
         JKQTPXYScatterErrorGraph(JKQTPlotter* parent);
 
-        /** \brief get the maximum and minimum x-value of the graph
-         *
-         * The result is given in the two parameters which are call-by-reference parameters!
-         */
+        /** \copydoc JKQTPPlotElement::getXMinMax() */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
-        /** \brief get the maximum and minimum y-value of the graph
-         *
-         * The result is given in the two parameters which are call-by-reference parameters!
-         */
+        /** \copydoc JKQTPPlotElement::getYMinMax() */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
         /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int c) const override;
@@ -441,15 +435,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXYParametrizedErrorScatterGraph: public JKQTPX
         JKQTPXYParametrizedErrorScatterGraph(JKQTPlotter* parent);
 
 
-        /** \brief get the maximum and minimum x-value of the graph
-         *
-         * The result is given in the two parameters which are call-by-reference parameters!
-         */
+        /** \copydoc JKQTPPlotElement::getXMinMax() */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
-        /** \brief get the maximum and minimum y-value of the graph
-         *
-         * The result is given in the two parameters which are call-by-reference parameters!
-         */
+        /** \copydoc JKQTPPlotElement::getYMinMax() */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
         /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int c) const override;

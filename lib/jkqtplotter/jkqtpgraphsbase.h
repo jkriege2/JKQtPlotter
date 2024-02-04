@@ -81,11 +81,21 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPPlotElement: public QObject {
         /** \brief get the maximum and minimum x-value of the graph
          *
          * The result is given in the two parameters which are call-by-reference parameters!
+         *
+         * \param[out] minx minimal x-value used in the graph
+         * \param[out] maxx maximal x-value used in the graph
+         * \param[out] smallestGreaterZero the smalles x-value in the graph, which is larger than 0 (this is used in auto-sizing for logarithmic axes)
+         * \return \c true on success, i.e. if there were datapoints in the plot, or \c false on failure (e.g. when the graph is empty)
          */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero)=0;
         /** \brief get the maximum and minimum y-value of the graph
          *
          * The result is given in the two parameters which are call-by-reference parameters!
+         *
+         * \param[out] miny minimal y-value used in the graph
+         * \param[out] maxy maximal y-value used in the graph
+         * \param[out] smallestGreaterZero the smalles y-value in the graph, which is larger than 0 (this is used in auto-sizing for logarithmic axes)
+         * \return \c true on success, i.e. if there were datapoints in the plot, or \c false on failure (e.g. when the graph is empty)
          */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero)=0;
         /** \brief returns the color to be used for the key label */
@@ -388,7 +398,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPPlotElement: public QObject {
 
 
 
-        /** \brief dataset with graph-points and associated data fro the function hitTest()
+        /** \brief dataset with graph-points and associated data from the function hitTest()
          * \see hitTest(), HitTestLocation
          */
         QVector<HitTestLocation> m_hitTestData;
@@ -590,15 +600,9 @@ public:
     /** \brief class constructor */
     JKQTPXYGraph(JKQTBasePlotter* parent=nullptr);
 
-    /** \brief get the maximum and minimum x-value of the graph
-     *
-     * The result is given in the two parameters which are call-by-reference parameters!
-     */
+    /** \copydoc JKQTPPlotElement::getXMinMax() */
     virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
-    /** \brief get the maximum and minimum y-value of the graph
-     *
-     * The result is given in the two parameters which are call-by-reference parameters!
-     */
+    /** \copydoc JKQTPPlotElement::getYMinMax() */
     virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
     /** \copydoc JKQTPGraph::usesColumn() */
@@ -752,10 +756,7 @@ public:
     JKQTPXYYGraph(JKQTBasePlotter* parent=nullptr);
 
 
-    /** \brief get the maximum and minimum y-value of the graph
-     *
-     * The result is given in the two parameters which are call-by-reference parameters!
-     */
+    /** \copydoc JKQTPPlotElement::getYMinMax() */
     virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
     /** \copydoc JKQTPGraph::usesColumn() */
@@ -813,10 +814,7 @@ public:
     JKQTPXXYGraph(JKQTBasePlotter* parent=nullptr);
 
 
-    /** \brief get the maximum and minimum x-value of the graph
-     *
-     * The result is given in the two parameters which are call-by-reference parameters!
-     */
+    /** \copydoc JKQTPPlotElement::getXMinMax() */
     virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
 
     /** \copydoc JKQTPGraph::usesColumn() */

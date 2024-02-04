@@ -115,9 +115,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoRectangle: public JKQTPGeoBaseFilled {
 
 
 
-        /** \copydoc JKQTPGeometricPlotElement::getXMinMax()        */
+        /** \copydoc JKQTPPlotElement::getXMinMax() */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
-        /** \copydoc JKQTPGeometricPlotElement::getYMinMax()        */
+        /** \copydoc JKQTPPlotElement::getYMinMax() */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
         /** \brief plots the graph to the plotter object specified as parent
@@ -231,9 +231,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoPolygon: public JKQTPGeoBaseFilled {
         JKQTPGeoPolygon(JKQTPlotter* parent, DrawMode drawMode=DrawAsGraphicElement);
 
 
-        /** \copydoc JKQTPGeometricPlotElement::getXMinMax()        */
+        /** \copydoc JKQTPPlotElement::getXMinMax() */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
-        /** \copydoc JKQTPGeometricPlotElement::getYMinMax()        */
+        /** \copydoc JKQTPPlotElement::getYMinMax() */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
         /** \brief plots the graph to the plotter object specified as parent
@@ -430,9 +430,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoPie: public JKQTPGeoEllipse {
         JKQTPGeoPie(JKQTPlotter* parent, double x, double y, double width, double height, double angleStart, double angleStop, DrawMode drawMode=DrawAsGraphicElement);
 
 
-        /** \copydoc JKQTPGeometricPlotElement::getXMinMax()        */
+        /** \copydoc JKQTPPlotElement::getXMinMax() */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
-        /** \copydoc JKQTPGeometricPlotElement::getYMinMax()        */
+        /** \copydoc JKQTPPlotElement::getYMinMax() */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
 
@@ -502,9 +502,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoChord: public JKQTPGeoPie {
          */
         JKQTPGeoChord(JKQTPlotter* parent, double x, double y, double width, double height, double angleStart, double angleStop, DrawMode drawMode=DrawAsGraphicElement);
 
-        /** \copydoc JKQTPGeometricPlotElement::getXMinMax()        */
+        /** \copydoc JKQTPPlotElement::getXMinMax() */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
-        /** \copydoc JKQTPGeometricPlotElement::getYMinMax()        */
+        /** \copydoc JKQTPPlotElement::getYMinMax() */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
         /** \brief plots the graph to the plotter object specified as parent

@@ -73,15 +73,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPImageBase: public JKQTPGraph {
         /** \brief plots a key marker inside the specified rectangle \a rect */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, const QRectF& rect) override;
 
-        /** \brief get the maximum and minimum x-value of the graph
-         *
-         * The result is given in the two parameters which are call-by-reference parameters!
-         */
+        /** \copydoc JKQTPPlotElement::getXMinMax() */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
-        /** \brief get the maximum and minimum y-value of the graph
-         *
-         * The result is given in the two parameters which are call-by-reference parameters!
-         */
+        /** \copydoc JKQTPPlotElement::getYMinMax() */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
         /** \brief returns the color to be used for the key label */
         virtual QColor getKeyLabelColor() const override;

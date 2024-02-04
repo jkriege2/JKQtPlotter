@@ -104,15 +104,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarVerticalGraph: public JKQTPBarGraphBase {
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 
-        /** \brief get the maximum and minimum x-value of the graph
-         *
-         * The result is given in the two parameters which are call-by-reference parameters!
-         */
+        /** \copydoc JKQTPPlotElement::getXMinMax() */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
-        /** \brief get the maximum and minimum y-value of the graph
-         *
-         * The result is given in the two parameters which are call-by-reference parameters!
-         */
+        /** \copydoc JKQTPPlotElement::getYMinMax() */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
     public Q_SLOTS:
@@ -242,15 +236,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarHorizontalGraph: public JKQTPBarGraphBase {
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 
-        /** \brief get the maximum and minimum x-value of the graph
-         *
-         * The result is given in the two parameters which are call-by-reference parameters!
-         */
+        /** \copydoc JKQTPPlotElement::getXMinMax() */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
-        /** \brief get the maximum and minimum y-value of the graph
-         *
-         * The result is given in the two parameters which are call-by-reference parameters!
-         */
+        /** \copydoc JKQTPPlotElement::getYMinMax() */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
         /** \brief returns the column used as "key" for the current graph (typically this call getXColumn(), but for horizontal graphs like filled curves or barcharts it may call getYColumn() ) */
         virtual int getKeyColumn() const override;
@@ -290,10 +278,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarHorizontalErrorGraph: public JKQTPBarHorizo
 
         /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int c) const override;
-        /** \brief get the maximum and minimum x-value of the graph
-         *
-         * The result is given in the two parameters which are call-by-reference parameters!
-         */
+        /** \copydoc JKQTPPlotElement::getXMinMax() */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
 
 

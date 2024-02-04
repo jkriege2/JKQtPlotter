@@ -84,14 +84,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPEvaluatedFunctionGraphBase: public JKQTPGraph 
         /** \brief class destructor */
         virtual ~JKQTPEvaluatedFunctionGraphBase() ;
 
-        /** \brief get the maximum and minimum x-value of the graph
-         *
-         * This functions returns 0 for both parameters, so that the plotter uses the predefined
-         * min and max values.
-         */
+        /** \copydoc JKQTPPlotElement::getXMinMax() */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
-        /** \brief get the maximum and minimum y-value of the graph
-         */
+        /** \copydoc JKQTPPlotElement::getYMinMax() */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
         /** \brief sets the params as a pointer to an internal COPY of the given vector (not the data of the vector, as then the size would be unknown!!!) */

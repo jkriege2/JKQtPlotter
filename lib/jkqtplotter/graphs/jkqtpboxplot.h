@@ -114,15 +114,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBoxplotVerticalGraph: public JKQTPBoxplotGraph
         /** \brief plots a key marker inside the specified rectangle \a rect */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, const QRectF& rect) override;
 
-        /** \brief get the maximum and minimum x-value of the graph
-         *
-         * The result is given in the two parameters which are call-by-reference parameters!
-         */
+        /** \copydoc JKQTPPlotElement::getXMinMax() */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
-        /** \brief get the maximum and minimum y-value of the graph
-         *
-         * The result is given in the two parameters which are call-by-reference parameters!
-         */
+        /** \copydoc JKQTPPlotElement::getYMinMax() */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
     protected:
@@ -156,15 +150,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBoxplotHorizontalGraph: public JKQTPBoxplotGra
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, const QRectF& rect) override;
 
 
-        /** \brief get the maximum and minimum x-value of the graph
-         *
-         * The result is given in the two parameters which are call-by-reference parameters!
-         */
+        /** \copydoc JKQTPPlotElement::getXMinMax() */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
-        /** \brief get the maximum and minimum y-value of the graph
-         *
-         * The result is given in the two parameters which are call-by-reference parameters!
-         */
+        /** \copydoc JKQTPPlotElement::getYMinMax() */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 };
 
@@ -211,15 +199,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBoxplotVerticalElement: public JKQTPBoxplotEle
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, const QRectF& rect) override;
 
 
-        /** \brief get the maximum and minimum x-value of the graph
-         *
-         * The result is given in the two parameters which are call-by-reference parameters!
-         */
+        /** \copydoc JKQTPPlotElement::getXMinMax() */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
-        /** \brief get the maximum and minimum y-value of the graph
-         *
-         * The result is given in the two parameters which are call-by-reference parameters!
-         */
+        /** \copydoc JKQTPPlotElement::getYMinMax() */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
 
@@ -258,15 +240,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBoxplotHorizontalElement: public JKQTPBoxplotE
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, const QRectF& rect) override;
 
 
-        /** \brief get the maximum and minimum x-value of the graph
-         *
-         * The result is given in the two parameters which are call-by-reference parameters!
-         */
+        /** \copydoc JKQTPPlotElement::getXMinMax() */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
-        /** \brief get the maximum and minimum y-value of the graph
-         *
-         * The result is given in the two parameters which are call-by-reference parameters!
-         */
+        /** \copydoc JKQTPPlotElement::getYMinMax() */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 };
 

@@ -161,9 +161,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphErrorStyleMixin {
         double m_errorLineWidth;
 
 
-        /** \brief fill style of the graph */
+        /** \brief fill brush for the error indicators */
         QBrush m_errorFillBrush;
-        /** \brief last fill color of the graph  */
+        /** \brief fill color for the error indicators  */
         QColor m_errorFillColor;
 
 
