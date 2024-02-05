@@ -68,6 +68,7 @@
 #include <QGridLayout>
 #include <QGuiApplication>
 #include <QHash>
+#include <QHashFunctions>
 #include <QIcon>
 #include <QImage>
 #include <QKeyEvent>

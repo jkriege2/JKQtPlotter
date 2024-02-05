@@ -4808,11 +4808,9 @@ void JKQTBasePlotter::setEmittingSignalsEnabled(bool enabled)
 
 
 
-JKQTBasePlotter::textSizeKey::textSizeKey(const QFont &f, const QString &text, QPaintDevice *pd):
-    text(), f(), ldpiX(0), ldpiY(0), pdpiX(0), pdpiY(0)
+JKQTBasePlotter::textSizeKey::textSizeKey(const QFont &f_, const QString &text_, QPaintDevice *pd):
+    text(text_), f(f_), ldpiX(0), ldpiY(0), pdpiX(0), pdpiY(0)
 {
-    this->text=text;
-    this->f=f;
     if (pd) {
         ldpiX=pd->logicalDpiX();
         ldpiY=pd->logicalDpiY();
@@ -4826,14 +4824,14 @@ JKQTBasePlotter::textSizeKey::textSizeKey(const QFont &f, const QString &text, Q
     }
 }
 
-JKQTBasePlotter::textSizeKey::textSizeKey(const QString &fontName, double fontSize, const QString &text, QPaintDevice *pd):
-    text(), f(), ldpiX(0), ldpiY(0), pdpiX(0), pdpiY(0)
+JKQTBasePlotter::textSizeKey::textSizeKey(const QString &fontName, double fontSize, const QString &text_, QPaintDevice *pd):
+    text(text_), f([&](){
+        QFont fnew;
+        fnew.setFamily(JKQTMathTextFontSpecifier::fromFontSpec(fontName).fontName());
+        fnew.setPointSizeF(fontSize);
+        return fnew;
+    }()), ldpiX(0), ldpiY(0), pdpiX(0), pdpiY(0)
 {
-    QFont f;
-    f.setFamily(JKQTMathTextFontSpecifier::fromFontSpec(fontName).fontName());
-    f.setPointSizeF(fontSize);
-    this->text=text;
-    this->f=f;
     if (pd) {
         ldpiX=pd->logicalDpiX();
         ldpiY=pd->logicalDpiY();

@@ -105,7 +105,7 @@ void JKQTPEnhancedPainter::drawComplexRoundedRect(const QRectF &rin, double rTop
     drawPath(path);
 }
 
-void JKQTPEnhancedPainter::drawRoundedRectOrRect(const QRectF &r, double radius, Qt::SizeMode mode)
+void JKQTPEnhancedPainter::drawRoundedRectOrRect(const QRectF &r, double radius, Qt::SizeMode /*mode*/)
 {
     if (radius<=0) {
         drawRect(r);

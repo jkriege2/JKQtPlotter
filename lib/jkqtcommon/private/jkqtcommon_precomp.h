@@ -31,6 +31,7 @@
 #include <QColor>
 #include <QDebug>
 #include <QElapsedTimer>
+#include <QHashFunctions>
 #include <QIcon>
 #include <QImage>
 #include <QLine>

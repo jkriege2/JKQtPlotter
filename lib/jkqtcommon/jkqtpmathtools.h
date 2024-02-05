@@ -31,6 +31,7 @@
 #include <QString>
 #include <functional>
 #include <type_traits>
+#include <QHashFunctions>
 
 #ifdef max
 #  undef max
@@ -582,6 +583,42 @@ JKQTCOMMON_LIB_EXPORT void jkqtp_estimateFraction(double input, int &sign, uint6
 template <class T>
 inline T jkqtp_reversed(const T& l) {
     return T(l.rbegin(), l.rend());
+}
+
+/*! \brief can be used to build a hash-values from several hash-values
+    \ingroup jkqtptools_math_basic
+
+    \code
+        std::size_t seed=0;
+        jkqtp_hash_combine(seed, valA);
+        jkqtp_hash_combine(seed, valB);
+        //...
+        // finally seed contains the combined hash
+    \endcode
+
+*/
+template <class T>
+inline void jkqtp_hash_combine(std::size_t& seed, const T& v)
+{
+    const auto hsh=::qHash(v,0);
+    seed ^= hsh + 0x9e3779b9 + (seed<<6) + (seed>>2);
+}
+
+/*! \brief can be used to build a hash-values from several hash-values
+    \ingroup jkqtptools_math_basic
+
+    \code
+        std::size_t seed=0;
+        jkqtp_combine_hash(seed, qHash(valA));
+        jkqtp_combine_hash(seed, qHash(valB));
+        //...
+        // finally seed contains the combined hash
+    \endcode
+
+*/
+inline void jkqtp_combine_hash(std::size_t& seed,  std::size_t hsh)
+{
+    seed ^= hsh + 0x9e3779b9 + (seed<<6) + (seed>>2);
 }
 
 #endif // jkqtpmathtools_H_INCLUDED

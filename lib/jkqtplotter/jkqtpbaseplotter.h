@@ -2821,7 +2821,10 @@ inline size_t qHash(const JKQTBasePlotter::textSizeKey& data, size_t /*seed=0*/)
 #else
 inline uint qHash(const JKQTBasePlotter::textSizeKey& data, uint /*seed=0*/) {
 #endif
-    return qHash(data.f.family())+qHash(data.text);
+    std::size_t seed=0;
+    jkqtp_hash_combine(seed, data.f);
+    jkqtp_hash_combine(seed, data.text);
+    return seed;
 }
 
 #endif // JKQTPBASEPLOTTER_H

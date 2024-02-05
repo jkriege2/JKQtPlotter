@@ -45,6 +45,7 @@
 #include <QFontInfo>
 #include <QFontMetricsF>
 #include <QHash>
+#include <QHashFunctions>
 #include <QIcon>
 #include <QImage>
 #include <QLabel>
