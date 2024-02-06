@@ -18,7 +18,7 @@
 template <class TCHART>
 std::pair<TCHART*, JKQTPXYGraphLabels*> doExample(JKQTPlotter& plot, const QString& title, JKQTPGraphLabelPosition labPos)
 {
-    // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
+    // 1. setup a plotter window and get a pointer to the internal datastore (for convenience)
     plot.getPlotter()->setUseAntiAliasingForGraphs(true); // nicer (but slower) plotting
     plot.getPlotter()->setUseAntiAliasingForSystem(true); // nicer (but slower) plotting
     plot.getPlotter()->setUseAntiAliasingForText(true); // nicer (but slower) text rendering
