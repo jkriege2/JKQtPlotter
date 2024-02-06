@@ -57,6 +57,7 @@ isEmpty(JKQTP_PLOTTER_PRI_INCLUDED) {
                $$PWD/jkqtplotter/graphs/jkqtpbarchart.h \
                $$PWD/jkqtplotter/graphs/jkqtpevaluatedparametriccurve.h \
                $$PWD/jkqtplotter/graphs/jkqtplines.h \
+               $$PWD/jkqtplotter/graphs/jkqtpgraphlabels.h \
                $$PWD/jkqtplotter/gui/jkqtpcomboboxes.h \
                $$PWD/jkqtplotter/gui/jkqtpenhancedspinboxes.h \
                $$PWD/jkqtplotter/gui/jkqtpenhancedtableview.h \
@@ -111,6 +112,7 @@ isEmpty(JKQTP_PLOTTER_PRI_INCLUDED) {
                $$PWD/jkqtplotter/graphs/jkqtpbarchart.cpp  \
                $$PWD/jkqtplotter/graphs/jkqtpevaluatedparametriccurve.cpp  \
                $$PWD/jkqtplotter/graphs/jkqtplines.cpp  \
+               $$PWD/jkqtplotter/graphs/jkqtpgraphlabels.cpp  \
                $$PWD/jkqtplotter/gui/jkqtpcomboboxes.cpp \
                $$PWD/jkqtplotter/gui/jkqtpenhancedspinboxes.cpp \
                $$PWD/jkqtplotter/gui/jkqtpenhancedtableview.cpp \

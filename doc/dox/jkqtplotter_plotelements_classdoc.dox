@@ -29,7 +29,10 @@ These classes are used by JKQTPlotterBase to output the plot.
 \defgroup jkqtplotter_basegraphserrors Mix-In Classes for Error Indicators
 \ingroup jkqtplotter_mixins
 
-\defgroup jkqtplotter_basegraphs_stylemixins Mix-In Classes for Plot Styling
+\defgroup jkqtplotter_basegraphs_stylemixins Mix-In Classes for Styling General Graphs
+\ingroup jkqtplotter_mixins
+
+\defgroup jkqtplotter_specialgraphs_stylemixins Mix-In Classes for Styling Specialized Graphs (Boxplots etz.)
 \ingroup jkqtplotter_mixins
 
 
@@ -114,6 +117,21 @@ This group assembles graphs that show their data with symbols and optionally wit
       <td>\image html evalcurve_small.png
       <td> JKQTPXYFunctionLineGraph
 </table>
+
+
+\defgroup jkqtplotter_graphlabels Labeling Datapoints
+\ingroup jkqtplotter_concretegraphs
+
+This group assembles graphs that add (textual) labels to the datapoints in a plot:
+<table>
+    <tr>
+      <th> Screenshot
+      <th> Classes
+    <tr>
+      <td>\image html JKQTPGLSimpleBoxAndLineONLYLABELS_small.png
+      <td> JKQTPXYGraphLabels
+</table>
+
 
 
 \defgroup jkqtplotter_filledgraphs Filled Polygon/Area Graphs
@@ -243,6 +261,9 @@ Examples:
     <tr>
       <td>\image html geo_text_small.png
       <td> JKQTPGeoText
+    <tr>
+      <td>\image html JKQTPGLSimpleBoxAndLineONLYLABELS_small.png
+      <td> JKQTPXYGraphLabels
     <tr>
       <td>\image html JKQTPHorizontalRange_small.png
       <td> JKQTPHorizontalRange, JKQTPVerticalRange

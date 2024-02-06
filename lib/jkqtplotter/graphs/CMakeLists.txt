@@ -31,6 +31,8 @@ target_sources(${lib_name} PRIVATE
     jkqtpstatisticsadaptors.cpp
     jkqtpevaluatedparametriccurve.cpp
     jkqtplines.cpp
+    jkqtpgraphlabelstylemixin.cpp
+    jkqtpgraphlabels.cpp
 )
 # ... and add headers
 target_sources(${lib_name} PUBLIC FILE_SET HEADERS TYPE HEADERS
@@ -64,4 +66,6 @@ target_sources(${lib_name} PUBLIC FILE_SET HEADERS TYPE HEADERS
       jkqtpbarchart.h
       jkqtpevaluatedparametriccurve.h
       jkqtplines.h
+      jkqtpgraphlabelstylemixin.h
+      jkqtpgraphlabels.h
 )

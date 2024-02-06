@@ -36,13 +36,22 @@ JKQTPGraphLineStyleMixin::JKQTPGraphLineStyleMixin()
 void JKQTPGraphLineStyleMixin::initLineStyle(JKQTBasePlotter* parent, int &parentPlotStyle, JKQTPPlotStyleType styletype)
 {
     if (parent) { // get style settings from parent object
-        if (parentPlotStyle<0) parentPlotStyle=parent->getNextStyle();
-        const JKQTBasePlotter::JKQTPPen pen=parent->getPlotStyle(parentPlotStyle, styletype);
-        m_linePen.setColor(pen.color());
-        m_linePen.setStyle(pen.style());
-        m_lineWidth=pen.widthF();
-        m_highlightingLineColor=getLineColor();
-        m_highlightingLineColor.setAlphaF(0.5);
+        if (styletype==JKQTPPlotStyleType::Annotation) {
+            m_linePen=QPen(parent->getCurrentPlotterStyle().graphsStyle.annotationStyle.defaultLineStyle);
+            m_linePen.setColor(parent->getCurrentPlotterStyle().graphsStyle.annotationStyle.defaultColor);
+            m_linePen.setWidthF(parent->getCurrentPlotterStyle().graphsStyle.annotationStyle.defaultLineWidth);
+            m_lineWidth=m_linePen.widthF();
+            m_highlightingLineColor=getLineColor();
+            m_highlightingLineColor.setAlphaF(0.5);
+        } else {
+            if (parentPlotStyle<0) parentPlotStyle=parent->getNextStyle();
+            const JKQTBasePlotter::JKQTPPen pen=parent->getPlotStyle(parentPlotStyle, styletype);
+            m_linePen.setColor(pen.color());
+            m_linePen.setStyle(pen.style());
+            m_lineWidth=pen.widthF();
+            m_highlightingLineColor=getLineColor();
+            m_highlightingLineColor.setAlphaF(0.5);
+        }
     }
 }
 
@@ -219,14 +228,22 @@ JKQTPGraphSymbolStyleMixin::JKQTPGraphSymbolStyleMixin()
 void JKQTPGraphSymbolStyleMixin::initSymbolStyle(JKQTBasePlotter *parent, int& parentPlotStyle, JKQTPPlotStyleType styletype)
 {
     if (parent) { // get style settings from parent object
-        if (parentPlotStyle<0) parentPlotStyle=parent->getNextStyle();
-        const JKQTBasePlotter::JKQTPPen pen=parent->getPlotStyle(parentPlotStyle, styletype);
-        m_symbolColor=pen.color();
-        m_symbolSize=pen.symbolSize();
-        m_symbolLineWidth=pen.symbolLineWidthF();
-        m_symbolType=pen.symbol();
-        m_symbolFillColor=pen.symbolFillColor();
-        m_symbolFontName=parent->getDefaultTextFontName();
+        if (styletype==JKQTPPlotStyleType::Annotation) {
+            m_symbolType=parent->getCurrentPlotterStyle().graphsStyle.annotationStyle.defaultSymbol;
+            m_symbolColor=parent->getCurrentPlotterStyle().graphsStyle.annotationStyle.defaultColor;
+            m_symbolLineWidth=parent->getCurrentPlotterStyle().graphsStyle.annotationStyle.defaultSymbolLineWidth;
+            m_symbolSize=parent->getCurrentPlotterStyle().graphsStyle.annotationStyle.defaultSymbolSize;
+            m_symbolFillColor=JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphsStyle.annotationStyle.symbolFillColorDerivationMode, m_symbolColor);
+        } else {
+            if (parentPlotStyle<0) parentPlotStyle=parent->getNextStyle();
+            const JKQTBasePlotter::JKQTPPen pen=parent->getPlotStyle(parentPlotStyle, styletype);
+            m_symbolColor=pen.color();
+            m_symbolSize=pen.symbolSize();
+            m_symbolLineWidth=pen.symbolLineWidthF();
+            m_symbolType=pen.symbol();
+            m_symbolFillColor=pen.symbolFillColor();
+            m_symbolFontName=parent->getDefaultTextFontName();
+        }
     }
 }
 
@@ -395,10 +412,15 @@ void JKQTPGraphFillStyleMixin::initFillStyleInvertedColor(JKQTPGraphFillStyleMix
 void JKQTPGraphFillStyleMixin::initFillStyle(JKQTBasePlotter *parent, int &parentPlotStyle, JKQTPPlotStyleType styletype)
 {
     if (parent) { // get style settings from parent object
-        if (parentPlotStyle<0) parentPlotStyle=parent->getNextStyle();
-        const JKQTBasePlotter::JKQTPPen pen=parent->getPlotStyle(parentPlotStyle, styletype);
-        m_fillColor=pen.fillColor();
-        m_fillBrush=pen.fillStyle().brush(m_fillColor);
+        if (styletype==JKQTPPlotStyleType::Annotation) {
+            m_fillColor=JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphsStyle.annotationStyle.fillColorDerivationMode, parent->getCurrentPlotterStyle().graphsStyle.annotationStyle.defaultColor);
+            m_fillBrush=parent->getCurrentPlotterStyle().graphsStyle.annotationStyle.defaultFillStyle.brush(m_fillColor);
+        } else {
+            if (parentPlotStyle<0) parentPlotStyle=parent->getNextStyle();
+            const JKQTBasePlotter::JKQTPPen pen=parent->getPlotStyle(parentPlotStyle, styletype);
+            m_fillColor=pen.fillColor();
+            m_fillBrush=pen.fillStyle().brush(m_fillColor);
+        }
     }
 }
 
@@ -537,10 +559,14 @@ JKQTPGraphTextStyleMixin::JKQTPGraphTextStyleMixin(JKQTBasePlotter *parent)
 
 void JKQTPGraphTextStyleMixin::initTextStyle(JKQTBasePlotter *parent, int &/*parentPlotStyle*/, JKQTPPlotStyleType styletype)
 {
-    if (parent && styletype==JKQTPPlotStyleType::Annotation) { // get style settings from parent object
-        m_textFontSize=parent->getCurrentPlotterStyle().graphsStyle.annotationStyle.defaultFontSize;
+    if (parent) { // get style settings from parent object
         m_textColor=parent->getCurrentPlotterStyle().graphsStyle.annotationStyle.defaultTextColor;
         m_textFontName=parent->getCurrentPlotterStyle().graphsStyle.annotationStyle.defaultFontName;
+        if (styletype==JKQTPPlotStyleType::Annotation) {
+            m_textFontSize=parent->getCurrentPlotterStyle().graphsStyle.annotationStyle.defaultFontSize;
+        } else {
+            m_textFontSize=QApplication::font().pointSizeF();
+        }
     }
 }
 

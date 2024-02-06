@@ -113,6 +113,9 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 <tr><td> \image html geo_coordinateaxis0_small.png
     <td> \subpage JKQTPlotterGeometricCoordinateAxis0
     <td> `JKQTPCoordinateAxisStyle::drawMode0`, `JKQTPGeoPolygon`, `JKQTPGeoEllipse`
+<tr><td> \image html JKQTPGLSimpleBoxAndLineONLYLABELS_small.png
+    <td> \subpage JKQTPXYGraphLabels
+    <td> `JKQTPXYGraphLabels`
 </table>
 
 \subsection jkqtp_extut_keyaxesstyles  Examples for Styling the Plot, Keys, Axes, ...

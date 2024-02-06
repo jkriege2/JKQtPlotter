@@ -34,7 +34,7 @@
 
 
 /*! \brief Styling Mix-In for Boxplots
-    \ingroup jkqtplotter_basegraphs_stylemixins
+    \ingroup jkqtplotter_specialgraphs_stylemixins
 
 
     \image html plot_boxplothorizontalelement.png

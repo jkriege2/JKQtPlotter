@@ -244,6 +244,7 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         datastore_statistics_2d/datastore_statistics_2d
         multithreaded/multithreaded/--mdfile=${CMAKE_CURRENT_LIST_DIR}/../examples/multithreaded/README.md
         #"multithreaded_complex[multithreaded]/multithreaded_complex/--mdfile=${CMAKE_CURRENT_LIST_DIR}/../examples/multithreaded/README.md --complexlabel"
+        graphlabels/graphlabels,graphlabels_hor
     )
 
 
@@ -271,6 +272,7 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         symbols_and_errors/JKQTPXYLineErrorGraph_JKQTPErrorBars,JKQTPXYLineErrorGraph_JKQTPErrorLines,JKQTPXYLineErrorGraph_JKQTPErrorPolygons/--iteratefunctorsteps--iteratefunctorsteps_suppressinitial--smallscreenshotplot
         boxplot/JKQTPBoxplotVerticalGraph,JKQTPBoxplotHorizontalGraph/--iteratefunctorsteps--iteratefunctorsteps_suppressinitial--smallscreenshotplot
         second_axis/JKQTBasePlotter_addSecondaryYAxis,JKQTBasePlotter_addSecondaryXAxis
+        graphlabels/JKQTPGLabelAwayFromXAxis,JKQTPGLabelAwayFromYAxis,JKQTPGLabelTowardsXAxis,JKQTPGLabelTowardsYAxis,JKQTPGLabelAboveData,JKQTPGLabelRightHandSide,JKQTPGLabelBelowData,JKQTPGLabelLeftHandSide,JKQTPGLSimple,JKQTPGLSimpleVertical,JKQTPGLSimpleBoxAndLine,JKQTPGLSimpleBoxAndLineVertical,JKQTPGLSimpleBoxAndLineONLYLABELS,JKQTPGLSimpleBoxAndLineONLYLABELSVertical/--iteratefunctorsteps--smallscreenshotplot
     )
 
 

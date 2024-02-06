@@ -127,6 +127,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW/REWORKED all functions in JKQTBasePlotter are re-entrant, i.e. different instances can be used from different threads in parallel (although there is some overhead due to shared caches between the threads!). This is demonstrated and discussed in \ref JKQTPlotterMultiThreaded . </li>
     <li>NEW: allow linear-gradient(), currentcolor, ... in brush definitions of style.ini-file ... and using it is cyberpunk and dark styles</li>
     <li>NEW: style simple_noaxes.ini</li>
+    <li>NEW: JKQTPXYGraphLabels which can draw a label next to each datapoint in the given x/y-dataset. The labels can be x-/y- or x&y-coordinates or custom, then defined by a user-supplied functor (+example \ref JKQTPlotterGraphLabels)</li>
   </ul></li>
   
   <li>JKQTMathText:<ul>

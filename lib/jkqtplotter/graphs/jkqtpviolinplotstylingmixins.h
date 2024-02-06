@@ -34,7 +34,7 @@
 
 
 /*! \brief Styling Mix-In for Violinplots
-    \ingroup jkqtplotter_basegraphs_stylemixins
+    \ingroup jkqtplotter_specialgraphs_stylemixins
 
 
     \image html JKQTPViolinplotHorizontalElement_elements.png

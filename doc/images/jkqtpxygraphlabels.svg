@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="103.33672mm"
+   height="28.842316mm"
+   id="svg3219"
+   sodipodi:version="0.32"
+   inkscape:version="1.1.2 (b8e25be833, 2022-02-05)"
+   sodipodi:docname="jkqtpxygraphlabels.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   inkscape:export-filename="C:\Jan\Programmieren\JKQtPlotter\doc\images\jkqtpxygraphlabels.png"
+   inkscape:export-xdpi="61.449596"
+   inkscape:export-ydpi="61.449596"
+   version="1.1"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <defs
+     id="defs3221">
+    <marker
+       style="overflow:visible"
+       id="Arrow1Send"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Send"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.2,0,0,-0.2,-1.2,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path5531" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker5794"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Sstart"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.3,0,0,0.3,-0.69,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path5792" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Sstart"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Sstart"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.3,0,0,0.3,-0.69,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path5546" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Mend"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Mend"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path5525" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow2Lend"
+       style="overflow:visible">
+      <path
+         id="path3942"
+         style="font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Lstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow2Lstart"
+       style="overflow:visible">
+      <path
+         id="path3939"
+         style="font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="matrix(1.1,0,0,1.1,1.1,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lstart"
+       style="overflow:visible">
+      <path
+         id="path3921"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="matrix(0.8,0,0,0.8,10,0)" />
+    </marker>
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : -452.24953 : 1"
+       inkscape:vp_y="0 : 1066.6667 : 0"
+       inkscape:vp_z="793.70078 : -452.24953 : 1"
+       inkscape:persp3d-origin="396.85039 : -639.33614 : 1"
+       id="perspective3227" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.2314489"
+     inkscape:cx="252.54803"
+     inkscape:cy="-73.084639"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="2240"
+     inkscape:window-height="1329"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:pagecheckerboard="0"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata3224">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-21.442405,-12.040758)">
+    <g
+       id="g5366"
+       style="fill:#cccccc"
+       transform="matrix(1.4976605,0,0,1.4976605,-324.58377,-31.251985)"
+       inkscape:export-filename="C:\Jan\Programmieren\JKQtPlotter\doc\images\jkqtpxygraphlabels.png"
+       inkscape:export-xdpi="61.449596"
+       inkscape:export-ydpi="61.449596">
+      <rect
+         style="fill:#cccccc;stroke:#000000;stroke-width:1.00353;stroke-linejoin:round;stroke-miterlimit:10"
+         id="rect3209"
+         width="61.61441"
+         height="27.73167"
+         x="298.22592"
+         y="42.927017" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:22.4671px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.561677"
+         x="303.16748"
+         y="65.748497"
+         id="text4093"><tspan
+           sodipodi:role="line"
+           id="tspan4091"
+           x="303.16748"
+           y="65.748497"
+           style="fill:#000000;stroke-width:0.561677">label</tspan></text>
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:16.6981px;line-height:0%;font-family:'Bitstream Vera Sans';text-align:center;text-anchor:middle;fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:1.39151px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="138.41815"
+       y="116.77113"
+       id="text6295"
+       transform="scale(1.0899925,0.91743751)"
+       inkscape:export-filename="C:\Jan\Programmieren\JKQtPlotter\doc\images\jkqtpxygraphlabels.png"
+       inkscape:export-xdpi="61.449596"
+       inkscape:export-ydpi="61.449596"><tspan
+         sodipodi:role="line"
+         id="tspan6297"
+         x="138.41815"
+         y="116.77113"
+         style="font-size:30.0009px;line-height:1.25;fill:#0000ff;stroke:none;stroke-width:1.39151px">+</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:23.4608px;line-height:0%;font-family:'Bitstream Vera Sans';text-align:center;text-anchor:middle;fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:1.95506px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="176.46564"
+       y="115.88972"
+       id="text6299"
+       inkscape:export-filename="C:\Jan\Programmieren\JKQtPlotter\doc\images\jkqtpxygraphlabels.png"
+       inkscape:export-xdpi="61.449596"
+       inkscape:export-ydpi="61.449596"><tspan
+         sodipodi:role="line"
+         x="176.46564"
+         y="115.88972"
+         style="font-size:21.5057px;line-height:1.25;fill:#0000ff;stroke-width:1.95506px"
+         id="tspan6303">(x, y)</tspan></text>
+    <path
+       style="fill:none;stroke:#ff0000;stroke-width:1.46956px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#Arrow2Sstart);marker-end:url(#Arrow1Send)"
+       d="M 145.35723,95.464988 V 77.489556"
+       id="path5401"
+       inkscape:export-filename="C:\Jan\Programmieren\JKQtPlotter\doc\images\jkqtpxygraphlabels.png"
+       inkscape:export-xdpi="61.449596"
+       inkscape:export-ydpi="61.449596" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:21.9208px;line-height:1.25;font-family:sans-serif;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.548019"
+       x="19.316088"
+       y="96.100845"
+       id="text6890"
+       inkscape:export-filename="C:\Jan\Programmieren\JKQtPlotter\doc\images\jkqtpxygraphlabels.png"
+       inkscape:export-xdpi="61.449596"
+       inkscape:export-ydpi="61.449596"><tspan
+         sodipodi:role="line"
+         id="tspan6888"
+         x="19.316088"
+         y="96.100845"
+         style="stroke-width:0.548019">LabelOffset</tspan></text>
+    <path
+       style="fill:none;stroke:#ff0000;stroke-width:0.645401px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#Arrow2Sstart);marker-end:url(#Arrow1Send)"
+       d="M 161.49675,40.391734 V 35.019722"
+       id="path8100"
+       inkscape:export-filename="C:\Jan\Programmieren\JKQtPlotter\doc\images\jkqtpxygraphlabels.png"
+       inkscape:export-xdpi="61.449596"
+       inkscape:export-ydpi="61.449596" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:21.9208px;line-height:1.25;font-family:sans-serif;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.548019"
+       x="98.085098"
+       y="28.700565"
+       id="text8104"
+       inkscape:export-filename="C:\Jan\Programmieren\JKQtPlotter\doc\images\jkqtpxygraphlabels.png"
+       inkscape:export-xdpi="61.449596"
+       inkscape:export-ydpi="61.449596"><tspan
+         sodipodi:role="line"
+         id="tspan8102"
+         x="98.085098"
+         y="28.700565"
+         style="stroke-width:0.548019">LabelYPadding</tspan></text>
+    <path
+       style="fill:none;stroke:#ff0000;stroke-width:0.99328px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#Arrow2Sstart);marker-end:url(#Arrow1Send)"
+       d="m 212.15832,51.099655 h -8.26759"
+       id="path11778"
+       inkscape:export-filename="C:\Jan\Programmieren\JKQtPlotter\doc\images\jkqtpxygraphlabels.png"
+       inkscape:export-xdpi="61.449596"
+       inkscape:export-ydpi="61.449596" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:21.9208px;line-height:1.25;font-family:sans-serif;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.548019"
+       x="217.15215"
+       y="58.137436"
+       id="text11782"
+       inkscape:export-filename="C:\Jan\Programmieren\JKQtPlotter\doc\images\jkqtpxygraphlabels.png"
+       inkscape:export-xdpi="61.449596"
+       inkscape:export-ydpi="61.449596"><tspan
+         sodipodi:role="line"
+         id="tspan11780"
+         x="217.15215"
+         y="58.137436"
+         style="stroke-width:0.548019">LabelXPadding</tspan></text>
+    <path
+       style="fill:none;stroke:#ff0000;stroke-width:0.99328px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Send)"
+       d="m 203.23396,70.791905 h 8.26759"
+       id="path13399"
+       inkscape:export-filename="C:\Jan\Programmieren\JKQtPlotter\doc\images\jkqtpxygraphlabels.png"
+       inkscape:export-xdpi="61.449596"
+       inkscape:export-ydpi="61.449596" />
+    <path
+       style="fill:none;stroke:#ff0000;stroke-width:0.99328px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Send)"
+       d="m 224.74512,70.791905 h -8.26759"
+       id="path13401"
+       inkscape:export-filename="C:\Jan\Programmieren\JKQtPlotter\doc\images\jkqtpxygraphlabels.png"
+       inkscape:export-xdpi="61.449596"
+       inkscape:export-ydpi="61.449596" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:21.9208px;line-height:1.25;font-family:sans-serif;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.548019"
+       x="226.49074"
+       y="81.483917"
+       id="text13419"
+       inkscape:export-filename="C:\Jan\Programmieren\JKQtPlotter\doc\images\jkqtpxygraphlabels.png"
+       inkscape:export-xdpi="61.449596"
+       inkscape:export-ydpi="61.449596"><tspan
+         sodipodi:role="line"
+         id="tspan13417"
+         x="226.49074"
+         y="81.483917"
+         style="stroke-width:0.548019">LabelBorderWidth</tspan></text>
+  </g>
+</svg>
