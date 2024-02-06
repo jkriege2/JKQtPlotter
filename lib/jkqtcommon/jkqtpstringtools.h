@@ -188,6 +188,16 @@ JKQTCOMMON_LIB_EXPORT std::string jkqtp_uinttostr(unsigned long data);
  */
 JKQTCOMMON_LIB_EXPORT std::string jkqtp_floattostr(double data, int past_comma=-1, bool remove_trail0=false, double belowIsZero=1e-16);
 
+/** \brief convert a float to a string using \a format (\c f|e|E|g|G ) with given number of decimals after comma \a past_comma and optional removal of trailing zeros behind decimal separator \a remove_trail0. Uses given QLocal \a loc .
+ * \ingroup jkqtptools_string
+ */
+JKQTCOMMON_LIB_EXPORT QString jkqtp_floattoqstr(const QLocale & loc, double data, char format='f', int past_comma=-1, bool remove_trail0=false);
+
+/** \brief convert a float to a string using \a format (\c f|e|E|g|G ) with given number of decimals after comma \a past_comma and optional removal of trailing zeros behind decimal separator \a remove_trail0. Uses system local, disables not use Group-Separator
+ * \ingroup jkqtptools_string
+ */
+JKQTCOMMON_LIB_EXPORT QString jkqtp_floattoqstr(double data, char format='f', int past_comma=-1, bool remove_trail0=false);
+
 /** \brief convert a boolean to a string
  * \ingroup jkqtptools_string
  */
@@ -279,6 +289,10 @@ JKQTCOMMON_LIB_EXPORT QString jkqtp_floattolatexqstr(double data, int past_comma
  * \ingroup jkqtptools_string
  */
 JKQTCOMMON_LIB_EXPORT QString jkqtp_floattohtmlqstr(double data, int past_comma=5, bool remove_trail0=false, double belowIsZero=1e-16, double minNoExponent=1e-3, double maxNoExponent=1e4);
+/** \brief convert a double to a LaTeX-encoded string, encoding powers of ten as characters, e.g. \c jkqtp_floattounitqstr(1000) will result in "1k"
+ * \ingroup jkqtptools_string
+ */
+JKQTCOMMON_LIB_EXPORT QString jkqtp_floattolatexunitqstr(double data, int past_comma=5, bool remove_trail0=false, double belowIsZero=std::numeric_limits<double>::min()*4);
 
 /** \brief convert a character to a string
  * \ingroup jkqtptools_string

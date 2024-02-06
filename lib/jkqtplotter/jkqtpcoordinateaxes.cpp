@@ -373,31 +373,6 @@ double JKQTPCoordinateAxis::calcLogTickSpacing() {
 
 }
 
-QString JKQTPCoordinateAxis::floattostringWithFormat(const QLocale & loc, double data, char format, int past_comma, bool remove_trail0) const
-{
-    QString res=loc.toString(data, format, past_comma);
-    if (remove_trail0 && res.contains(QLocale::system().decimalPoint())) {
-        QString expo="";
-        const int expIdx=res.toLower().indexOf('e');
-        if (expIdx>=0) {
-            expo=res.mid(expIdx);
-            res=res.left(expIdx);
-        }
-        while (res.size()>0 && res[res.size()-1]=='0') {
-            res=res.left(res.size()-1);
-        }
-        if (res.size()>0 && res[res.size()-1]==loc.decimalPoint()) res=res.left(res.size()-1);
-        res=res+expo;
-    }
-    return res;
-
-}
-QString JKQTPCoordinateAxis::floattostringWithFormat(double data, char format, int past_comma, bool remove_trail0) const
-{
-    QLocale loc=QLocale::system();
-    loc.setNumberOptions(QLocale::OmitGroupSeparator);
-    return floattostringWithFormat(loc, data, format, past_comma, remove_trail0);
-}
 
 QString JKQTPCoordinateAxis::floattolabel(double data) const {
     const int past_comma=axisStyle.labelDigits;
@@ -429,9 +404,9 @@ QString JKQTPCoordinateAxis::floattolabel(double data, int past_comma) const {
         case JKQTPCALTcount:
             return "";
         case JKQTPCALTdefault:
-            return addTickUnit(floattostringWithFormat(loc, data, 'f', past_comma, remove_trail0));
+            return addTickUnit(jkqtp_floattoqstr(loc, data, 'f', past_comma, remove_trail0));
         case JKQTPCALTscientific:
-            return addTickUnit(floattostringWithFormat(loc, data, 'e', past_comma, remove_trail0));
+            return addTickUnit(jkqtp_floattoqstr(loc, data, 'e', past_comma, remove_trail0));
         case JKQTPCALTexponent:
             return addTickUnit(QString(jkqtp_floattolatexstr(data, past_comma, remove_trail0, belowIsZero, pow(10.0, -static_cast<double>(past_comma)-0.0001), pow(10.0, static_cast<double>(past_comma)+1)).c_str()));
         case JKQTPCALTexponentCharacter:

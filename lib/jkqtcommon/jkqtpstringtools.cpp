@@ -835,6 +835,31 @@ QString jkqtp_floattohtmlqstr(double data, int past_comma, bool remove_trail0, d
     return QString::fromStdString(jkqtp_floattohtmlstr(data, past_comma, remove_trail0, belowIsZero, minNoExponent, maxNoExponent));
 }
 
+QString jkqtp_floattoqstr(const QLocale & loc, double data, char format, int past_comma, bool remove_trail0)
+{
+    QString res=loc.toString(data, format, past_comma);
+    if (remove_trail0 && res.contains(loc.decimalPoint())) {
+        QString expo="";
+        const int expIdx=res.toLower().indexOf('e');
+        if (expIdx>=0) {
+            expo=res.mid(expIdx);
+            res=res.left(expIdx);
+        }
+        while (res.size()>0 && res[res.size()-1]=='0') {
+            res=res.left(res.size()-1);
+        }
+        if (res.size()>0 && res[res.size()-1]==loc.decimalPoint()) res=res.left(res.size()-1);
+        res=res+expo;
+    }
+    return res;
+
+}
+QString jkqtp_floattoqstr(double data, char format, int past_comma, bool remove_trail0)
+{
+    QLocale loc=QLocale::system();
+    loc.setNumberOptions(QLocale::OmitGroupSeparator);
+    return jkqtp_floattoqstr(loc, data, format, past_comma, remove_trail0);
+}
 
 QString jkVariantListToString(const QList<QVariant>& data, const QString& separator) {
     QString r="";
@@ -1183,4 +1208,9 @@ bool jkqtp_rxExactlyMatches(const QString& text, const QString &regex, QStringLi
     if (caps) *caps=rx->capturedTexts();
     return res;
 #endif
+}
+
+QString jkqtp_floattolatexunitqstr(double data, int past_comma, bool remove_trail0, double belowIsZero)
+{
+    return QString::fromStdString(jkqtp_floattolatexunitstr(data, past_comma, remove_trail0, belowIsZero));
 }
