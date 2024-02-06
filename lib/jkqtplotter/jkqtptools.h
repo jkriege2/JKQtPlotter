@@ -442,7 +442,7 @@ JKQTPLOTTER_LIB_EXPORT QString JKQTPCADrawMode2String(JKQTPCADrawMode pos);
 JKQTPLOTTER_LIB_EXPORT JKQTPCADrawMode String2JKQTPCADrawMode(const QString& pos);
 
 
-/** \brief display mode for the axis labels
+/** \brief display mode for the (axis) labels
  * \ingroup jkqtpplottersupprt */
 enum JKQTPCALabelType {
     JKQTPCALTdefault=0, /*!< \brief simply print the numbers \image html axisstyle/JKQTPCALTdefault.png */
@@ -649,6 +649,7 @@ enum JKQTPKeyLayout {
 };
 
 
+
 /** \brief converts a JKQTPKeyLayout variable into a human-readable string
  * \ingroup jkqtpplottersupprt
  */
@@ -762,7 +763,6 @@ JKQTPLOTTER_LIB_EXPORT QString JKQTPSpecialLineType2String(JKQTPSpecialLineType 
  * \ingroup jkqtplotter_linesymbolgraphs_line
  */
 JKQTPLOTTER_LIB_EXPORT JKQTPSpecialLineType String2JKQTPSpecialLineType(const QString& pos);
-
 
 
 
