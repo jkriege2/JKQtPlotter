@@ -53,6 +53,10 @@ class JKQTPDatastore;
 
     \image html JKQTPGLabelAwayFromXAxis.png
 
+    Also other styles of boxes are available:
+
+    \image html JKQTPGLSimpleBoxAndLine.png
+
     To achieve this, use code like this:
     \code
         // create barchart and line-chart to display the data:
