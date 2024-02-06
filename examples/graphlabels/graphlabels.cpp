@@ -1,7 +1,7 @@
 /** \example graphlabels.cpp
  * Shows how to draw datapoint labels using JKQTPXYGraphLabels
  *
- * \ref JKQTPlotterGraphLabels
+ * \ref JKQTPlotterGraphLabelsExample
  */
  
 #include "jkqtpexampleapplication.h"

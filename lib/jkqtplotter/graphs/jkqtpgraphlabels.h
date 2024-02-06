@@ -97,7 +97,7 @@ class JKQTPDatastore;
       - setXDefaultConverter(), setXDefaultPrecision(), setXBelowIsZero(), ... (all these exist in X and Y variants!)
     .
 
-    \see \ref JKQTPlotterGraphLabels
+    \see \ref JKQTPlotterGraphLabelsExample
 
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPXYGraphLabels: public JKQTPXYGraph, public JKQTPGraphValueLabelStyleMixin, public JKQTPXYLabelsGeneratorMixin {
