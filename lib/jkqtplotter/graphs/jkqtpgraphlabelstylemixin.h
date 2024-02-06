@@ -107,7 +107,7 @@ JKQTPLOTTER_LIB_EXPORT JKQTPGraphLabelBoxType String2JKQTPGraphLabelBoxType(cons
       - styling for the box around the label
     .
 
-    \image html jkqtpxygraphlabels.png
+    \image html jkqtpxygraphlabelsmixin.png
 
     \see JKQTPGraphTextStyleMixin, JKQTPGraphLineStyleMixin, JKQTPGraphFillStyleMixin, JKQTPXYGraphLabels
  */
@@ -242,21 +242,34 @@ protected:
 private:
     /** \brief offset of the box rectangle to the actual data point location [pt], this is used for simple boxes and is a rather close distance (e.g. JKQTPGLSimpleBox)
      *
+     *  \image html jkqtpxygraphlabelsmixin.png
+     *
      *  \see setLabelOffset(), getLabelOffset(), setLabelOffsetWithConnector(), getLabelOffsetWithConnector()
      */
     double m_labelOffset;
     /** \brief offset of the box rectangle to the actual data point location [pt], this variant is used when a visible connector is shown (e.g. JKQTPGLSimpleBoxAndLine)
+     *
+     *  \image html jkqtpxygraphlabelsmixin.png
      *
      *  \see setLabelOffsetWithConnector(), getLabelOffsetWithConnector(), setLabelOffset(), getLabelOffset()
      */
     double m_labelOffsetWithConnector;
     /** \brief rounding radius of the box rectangle (<=0 -> no rounded rectangle) [pt] */
     double m_labelBoxRounding;
-    /** \brief padding in x-direction between label and surrounding box [pt] */
+    /** \brief padding in x-direction between label and surrounding box [pt]
+     *
+     *  \image html jkqtpxygraphlabelsmixin.png
+     */
     double m_labelXPadding;
-    /** \brief padding in y-direction between label and surrounding box [pt] */
+    /** \brief padding in y-direction between label and surrounding box [pt] *
+     *
+     *  \image html jkqtpxygraphlabelsmixin.png
+     */
     double m_labelYPadding;
-    /** \brief indicates whether to draw a frame around the box */
+    /** \brief indicates whether to draw a frame around the box *
+     *
+     *  \image html jkqtpxygraphlabelsmixin.png
+     */
     bool m_drawLabelBoxFrame;
     /** \brief position of the label
      *
