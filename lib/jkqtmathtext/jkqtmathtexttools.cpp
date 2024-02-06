@@ -922,7 +922,6 @@ namespace {
     inline size_t qHash(const JKQTMathTextCacheKeyBase& data, size_t /*seedin=0*/) {
 #else
     inline uint qHash(const JKQTMathTextCacheKeyBase& data, uint /*seedin=0*/) {
-        const size_t seed=0;
 #endif
         std::size_t seed=0;
         jkqtp_combine_hash(seed, ::qHash(data.f,0));
