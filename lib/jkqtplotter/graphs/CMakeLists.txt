@@ -33,6 +33,7 @@ target_sources(${lib_name} PRIVATE
     jkqtplines.cpp
     jkqtpgraphlabelstylemixin.cpp
     jkqtpgraphlabels.cpp
+    jkqtpvectorfield.cpp
 )
 # ... and add headers
 target_sources(${lib_name} PUBLIC FILE_SET HEADERS TYPE HEADERS
@@ -68,4 +69,5 @@ target_sources(${lib_name} PUBLIC FILE_SET HEADERS TYPE HEADERS
       jkqtplines.h
       jkqtpgraphlabelstylemixin.h
       jkqtpgraphlabels.h
+      jkqtpvectorfield.h
 )

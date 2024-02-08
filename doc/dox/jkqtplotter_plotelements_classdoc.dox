@@ -285,6 +285,21 @@ Examples:
       <td> JKQTPPeakStreamGraph
 </table>
 
+
+\defgroup jkqtplotter_vectorfieldgraphs Vector Fields
+\ingroup jkqtplotter_concretegraphs
+
+This group assembles graphs that represent vector fields (i.e. sets of quadruples (x,y,dx,dy) or (x,y,angle,lengthh) in a plot:
+<table>
+    <tr>
+      <th> Screenshot
+      <th> Classes
+    <tr>
+      <td>\image html vectorfield_small.png
+      <td> JKQTPVectorFieldGraph
+</table>
+
+
 \defgroup jkqtplotter_imagelots Matrix/Image Plotting
 \ingroup jkqtplotter_concretegraphs
 

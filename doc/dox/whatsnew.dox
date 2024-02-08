@@ -128,6 +128,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: allow linear-gradient(), currentcolor, ... in brush definitions of style.ini-file ... and using it is cyberpunk and dark styles</li>
     <li>NEW: style simple_noaxes.ini</li>
     <li>NEW: JKQTPXYGraphLabels which can draw a label next to each datapoint in the given x/y-dataset. The labels can be x-/y- or x&y-coordinates or custom, then defined by a user-supplied functor (+example \ref JKQTPlotterGraphLabelsExample)</li>
+    <li>NEW: Base class JKQTPXYAndVectorGraph for graphs like vector fields, e.g. (x,y,dx,dy) or (x,y,angle,length) and an actual implementation JKQTPVectorFieldGraph (+example \ref JKQTPlotterVectorFieldExample)</li>
   </ul></li>
   
   <li>JKQTMathText:<ul>

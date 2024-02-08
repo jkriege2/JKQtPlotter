@@ -1164,3 +1164,145 @@ JKQTPPlotAnnotationElement::~JKQTPPlotAnnotationElement()
 {
 
 }
+
+JKQTPXYAndVectorGraph::JKQTPXYAndVectorGraph(JKQTBasePlotter *parent):
+    JKQTPXYGraph(parent),
+    vectorDataLayout(DefaultVectorDataLayout),
+    dxColumn(-1), dyColumn(-1),
+    angleColumn(-1), lengthColumn(-1)
+{
+
+}
+
+bool JKQTPXYAndVectorGraph::getXMinMax(double &minx, double &maxx, double &smallestGreaterZero)
+{
+    return JKQTPXYGraph::getXMinMax(minx,maxx,smallestGreaterZero);
+}
+
+bool JKQTPXYAndVectorGraph::getYMinMax(double &miny, double &maxy, double &smallestGreaterZero)
+{
+    return JKQTPXYGraph::getYMinMax(miny,maxy,smallestGreaterZero);
+}
+
+bool JKQTPXYAndVectorGraph::usesColumn(int column) const
+{
+    if (vectorDataLayout==DeltaXDeltaYLayout) {
+        return (column==dxColumn) || (column==dyColumn) || JKQTPXYGraph::usesColumn(column);
+    } else {
+        return (column==angleColumn) || (column==lengthColumn) || JKQTPXYGraph::usesColumn(column);
+    }
+}
+
+int JKQTPXYAndVectorGraph::getDxColumn() const
+{
+    return dxColumn;
+}
+
+int JKQTPXYAndVectorGraph::getDyColumn() const
+{
+    return dyColumn;
+}
+
+int JKQTPXYAndVectorGraph::getAngleColumn() const
+{
+    return angleColumn;
+}
+
+int JKQTPXYAndVectorGraph::getLengthColumn() const
+{
+    return lengthColumn;
+}
+
+JKQTPXYAndVectorGraph::VectorDataLayout JKQTPXYAndVectorGraph::getVectorDataLayout() const
+{
+    return vectorDataLayout;
+}
+
+double JKQTPXYAndVectorGraph::hitTest(const QPointF &posSystem, QPointF *closestSpotSystem, QString *label, HitTestMode mode) const
+{
+    return JKQTPXYGraph::hitTest(posSystem, closestSpotSystem, label, mode);
+}
+
+void JKQTPXYAndVectorGraph::setDxColumn(int col)
+{
+    dxColumn=col;
+    vectorDataLayout=DeltaXDeltaYLayout;
+}
+
+void JKQTPXYAndVectorGraph::setDyColumn(int col)
+{
+    dyColumn=col;
+    vectorDataLayout=DeltaXDeltaYLayout;
+}
+
+void JKQTPXYAndVectorGraph::setDxDyColumn(int colDx, int colDy)
+{
+    dxColumn=colDx;
+    dyColumn=colDy;
+    vectorDataLayout=DeltaXDeltaYLayout;
+
+}
+
+void JKQTPXYAndVectorGraph::setAngleColumn(int col)
+{
+    angleColumn=col;
+    vectorDataLayout=AngleAndLengthLayout;
+}
+
+void JKQTPXYAndVectorGraph::setAngleAndLengthColumn(int colAngle, int colLength)
+{
+    angleColumn=colAngle;
+    lengthColumn=colLength;
+    vectorDataLayout=AngleAndLengthLayout;
+}
+
+void JKQTPXYAndVectorGraph::setLengthColumn(int col)
+{
+    lengthColumn=col;
+    vectorDataLayout=AngleAndLengthLayout;
+}
+
+QPointF JKQTPXYAndVectorGraph::getVectorDxDy(int i) const
+{
+
+    const JKQTPDatastore* datastore=parent->getDatastore();
+    if (datastore) {
+        switch(vectorDataLayout) {
+        case DeltaXDeltaYLayout: {
+            const double dx=datastore->get(static_cast<size_t>(dxColumn),static_cast<size_t>(i));
+            const double dy=datastore->get(static_cast<size_t>(dyColumn),static_cast<size_t>(i));
+            return QPointF(dx,dy);
+        } break;
+        case AngleAndLengthLayout: {
+            const double a=datastore->get(static_cast<size_t>(angleColumn),static_cast<size_t>(i));
+            const double l=(lengthColumn<0) ? 1.0 : datastore->get(static_cast<size_t>(lengthColumn),static_cast<size_t>(i));
+            return QPointF(l*cos(a),l*sin(a));
+        } break;
+        }
+    }
+    return QPointF(JKQTP_NAN, JKQTP_NAN);
+}
+
+bool JKQTPXYAndVectorGraph::getIndexRange(int &imin, int &imax) const
+{
+    bool ok=JKQTPXYGraph::getIndexRange(imin, imax);
+    if (ok) {
+        if (vectorDataLayout==DeltaXDeltaYLayout) {
+            if (parent==nullptr)  return false;
+            if (dxColumn<0||dyColumn<0) return false;
+            const JKQTPDatastore* datastore=parent->getDatastore();
+            const int rowsDX=static_cast<int>(datastore->getRows(static_cast<size_t>(dxColumn)));
+            const int rowsDY=static_cast<int>(datastore->getRows(static_cast<size_t>(dyColumn)));
+            imax=qMin<int>(imax, qMin<int>(rowsDX,rowsDY));
+        } else  if (vectorDataLayout==AngleAndLengthLayout) {
+            if (parent==nullptr)  return false;
+            if (angleColumn<0 && lengthColumn<0) return false;
+            if (angleColumn<0) return false;
+            const JKQTPDatastore* datastore=parent->getDatastore();
+            const int rowsA=static_cast<int>(datastore->getRows(static_cast<size_t>(angleColumn)));
+            const int rowsL=(lengthColumn>=0)?static_cast<int>(datastore->getRows(static_cast<size_t>(lengthColumn))):0;
+            imax=qMin<int>(imax, qMin<int>(rowsA,rowsL));
+        }
+    }
+    return ok;
+}

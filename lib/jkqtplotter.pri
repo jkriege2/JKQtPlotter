@@ -59,11 +59,12 @@ isEmpty(JKQTP_PLOTTER_PRI_INCLUDED) {
                $$PWD/jkqtplotter/graphs/jkqtplines.h \
                $$PWD/jkqtplotter/graphs/jkqtpgraphlabelstylemixin.h \
                $$PWD/jkqtplotter/graphs/jkqtpgraphlabels.h \
+               $$PWD/jkqtplotter/graphs/jkqtpvectorfield.h \
                $$PWD/jkqtplotter/gui/jkqtpcomboboxes.h \
                $$PWD/jkqtplotter/gui/jkqtpenhancedspinboxes.h \
                $$PWD/jkqtplotter/gui/jkqtpenhancedtableview.h \
                $$PWD/jkqtplotter/gui/jkqtpgraphsmodel.h \
-               $$PWD/jkqtplotter/gui/jkvanishqtoolbar.h
+               $$PWD/jkqtplotter/gui/jkvanishqtoolbar.h 
 
 
 
@@ -115,6 +116,7 @@ isEmpty(JKQTP_PLOTTER_PRI_INCLUDED) {
                $$PWD/jkqtplotter/graphs/jkqtplines.cpp  \
                $$PWD/jkqtplotter/graphs/jkqtpgraphlabelstylemixin.cpp  \
                $$PWD/jkqtplotter/graphs/jkqtpgraphlabels.cpp  \
+               $$PWD/jkqtplotter/graphs/jkqtpvectorfield.cpp \
                $$PWD/jkqtplotter/gui/jkqtpcomboboxes.cpp \
                $$PWD/jkqtplotter/gui/jkqtpenhancedspinboxes.cpp \
                $$PWD/jkqtplotter/gui/jkqtpenhancedtableview.cpp \

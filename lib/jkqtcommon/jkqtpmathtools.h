@@ -27,6 +27,8 @@
 #include <limits>
 #include <QPoint>
 #include <QPointF>
+#include <QLineF>
+#include <QRectF>
 #include <vector>
 #include <QString>
 #include <functional>
@@ -483,6 +485,18 @@ inline double jkqtp_distance(const QPoint& p1, const QPoint& p2){
 template <typename T>
 inline bool JKQTPIsOKFloat(T v) {
     return std::isfinite(v)&&(!std::isinf(v))&&(!std::isnan(v));
+}
+
+inline bool JKQTPIsOKFloat(const QPointF& v) {
+    return JKQTPIsOKFloat<qreal>(v.x()) && JKQTPIsOKFloat<qreal>(v.y());
+}
+
+inline bool JKQTPIsOKFloat(const QLineF& v) {
+    return JKQTPIsOKFloat<qreal>(v.x1()) && JKQTPIsOKFloat<qreal>(v.x2()) && JKQTPIsOKFloat<qreal>(v.y1()) && JKQTPIsOKFloat<qreal>(v.y2());
+}
+
+inline bool JKQTPIsOKFloat(const QRectF& v) {
+    return JKQTPIsOKFloat<qreal>(v.x()) && JKQTPIsOKFloat<qreal>(v.x()) && JKQTPIsOKFloat<qreal>(v.width()) && JKQTPIsOKFloat<qreal>(v.height());
 }
 
 /** \brief evaluates a gaussian propability density function

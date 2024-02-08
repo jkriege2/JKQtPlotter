@@ -245,6 +245,7 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         multithreaded/multithreaded/--mdfile=${CMAKE_CURRENT_LIST_DIR}/../examples/multithreaded/README.md
         #"multithreaded_complex[multithreaded]/multithreaded_complex/--mdfile=${CMAKE_CURRENT_LIST_DIR}/../examples/multithreaded/README.md --complexlabel"
         graphlabels/graphlabels,graphlabels_hor
+        vectorfield
     )
 
 
@@ -273,6 +274,7 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         boxplot/JKQTPBoxplotVerticalGraph,JKQTPBoxplotHorizontalGraph/--iteratefunctorsteps--iteratefunctorsteps_suppressinitial--smallscreenshotplot
         second_axis/JKQTBasePlotter_addSecondaryYAxis,JKQTBasePlotter_addSecondaryXAxis
         graphlabels/JKQTPGLabelAwayFromXAxis,JKQTPGLabelAwayFromYAxis,JKQTPGLabelTowardsXAxis,JKQTPGLabelTowardsYAxis,JKQTPGLabelAboveData,JKQTPGLabelRightHandSide,JKQTPGLabelBelowData,JKQTPGLabelLeftHandSide,JKQTPGLSimpleBox,JKQTPGLSimpleBoxVertical,JKQTPGLSimpleBoxAndLine,JKQTPGLSimpleBoxAndLineVertical,JKQTPGLSimpleBoxAndLineONLYLABELS,JKQTPGLSimpleBoxAndLineONLYLABELSVertical/--iteratefunctorsteps--smallscreenshotplot
+        vectorfield/JKQTPVectorFieldGraph,JKQTPVectorFieldGraphAnchorBottom,JKQTPVectorFieldGraphAnchorMid,JKQTPVectorFieldGraphAnchorTip/--iteratefunctorsteps
     )
 
 

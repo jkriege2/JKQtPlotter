@@ -957,5 +957,123 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPSingleColumnGraph: public JKQTPGraph {
 
 
 
+/** \brief This virtual JKQTPGraph descendent extends JKQTPXYGraph with two additional columns that encode for a vector starting at (x,y), i.e. either two distances along the x- and y-axis (\f$ \Delta x, \Delta y \f$), or a rotation angle \f$ \alpha \f$ and a vector length \f$ \l \f$ .
+ *  \ingroup jkqtplotter_basegraphs
+ *
+ *  \see
+ */
+class JKQTPLOTTER_LIB_EXPORT JKQTPXYAndVectorGraph: public JKQTPXYGraph {
+    Q_OBJECT
+public:
+    /** \brief values from this enum indicates how to interpret the data columns provided to this graph */
+    enum VectorDataLayout {
+        DeltaXDeltaYLayout,
+        AngleAndLengthLayout,
+
+        DefaultVectorDataLayout=DeltaXDeltaYLayout,
+    };
+    Q_ENUM(VectorDataLayout)
+
+    /** \brief class constructor */
+    JKQTPXYAndVectorGraph(JKQTBasePlotter* parent=nullptr);
+
+
+    /** \copydoc JKQTPPlotElement::getXMinMax() */
+    virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
+    /** \copydoc JKQTPPlotElement::getYMinMax() */
+    virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
+
+    /** \copydoc JKQTPGraph::usesColumn() */
+    virtual bool usesColumn(int column) const override;
+
+    /** \copydoc dxColumn */
+    int getDxColumn() const;
+    /** \copydoc dyColumn */
+    int getDyColumn() const;
+    /** \copydoc angleColumn */
+    int getAngleColumn() const;
+    /** \copydoc lengthColumn */
+    int getLengthColumn() const;
+    /** \copydoc vectorDataLayout */
+    VectorDataLayout getVectorDataLayout() const;
+
+    /** \copydoc JKQTPXYGraph::hitTest() */
+    virtual double hitTest(const QPointF &posSystem, QPointF* closestSpotSystem=nullptr, QString* label=nullptr, HitTestMode mode=HitTestXY) const override;
+
+    Q_PROPERTY(VectorDataLayout vectorDataLayout READ getVectorDataLayout)
+    Q_PROPERTY(int dxColumn READ getDxColumn WRITE setDxColumn)
+    Q_PROPERTY(int dyColumn READ getDyColumn WRITE setDyColumn)
+    Q_PROPERTY(int angleColumn READ getAngleColumn WRITE setAngleColumn)
+    Q_PROPERTY(int lengthColumn READ getLengthColumn WRITE setLengthColumn)
+public Q_SLOTS:
+    /** \copydoc dxColumn */
+    void setDxColumn(int col);
+    /** \copydoc dyColumn */
+    void setDyColumn(int col) ;
+    /** \brief det dxColumn and dyColumn column at the same time! ALso ensures that vectorDataLayout is set accordingly.
+     *
+     *  \see dxColumn, dyColumn
+     */
+    void setDxDyColumn(int colDx, int colDy) ;
+    /** \copydoc angleColumn */
+    void setAngleColumn(int col) ;
+    /** \brief det angleColumn and lengthColumn column at the same time! ALso ensures that vectorDataLayout is set accordingly.
+     *
+     *  \see angleColumn, lengthColumn
+     */
+    void setAngleAndLengthColumn(int colAngle, int colLength) ;
+    /** \copydoc lengthColumn */
+    void setLengthColumn(int col) ;
+protected:
+    /** \brief this function interprets vectorDataLayout together with (dxColumn, dyColumn) or (angleColumn, lengthColumn) or ... and returns the \a i -th vectors \f$ \Delta x, \Delta y \f$ */
+    QPointF getVectorDxDy(int i) const;
+
+    /** \brief indicates, which column pairs to use (dxColumn, dyColumn), (angleColumn, lengthColumn), ... */
+    VectorDataLayout vectorDataLayout;
+    /** \brief the column that contains the delta along the x-axis.
+     *
+     *  \note Note that this column is only used, when vectorDataLayout is set accordingly to DeltaXDeltaYLayout!
+     *        Also note that Setter-functions (e.g. setDxColumn() ) will ensure that vectorDataLayout is set accordingly.
+     *
+     *  \see setDxColumn(), setDyColumn(), setDxDyColumn(), getDxColumn(), getDyColumn()
+     */
+    int dxColumn;
+    /** \brief the column that contains the delta along the y-axis.
+     *
+     *  \note Note that this column is only used, when vectorDataLayout is set accordingly to DeltaXDeltaYLayout!
+     *        Also note that Setter-functions (e.g. setDyColumn() ) will ensure that vectorDataLayout is set accordingly.
+     *
+     *  \see setDxColumn(), setDyColumn(), setDxDyColumn(), getDxColumn(), getDyColumn()
+     */
+    int dyColumn;
+    /** \brief the column that contains the rotation angle [in radian]
+     *
+     *  An angle of 0 means a right-pointing vector and angle is measured count-clockwise,
+     *  so angle \f$ \alpha \f$ and length \f$ l \f$ can be converted to \f$ \Delta x, \Delta y \f$ via:
+     *    \f[ \Delta x = l\cdot \cos\alpha \f]
+     *    \f[ \Delta y = l\cdot \sin\alpha \f]
+     *  Note that these calculations are performed in the coordinate-axis-space, NOT in screen pixel space!
+     *
+     *  \note Note that this column is only used, when vectorDataLayout is set accordingly to AngleAndLengthLayout!
+     *        Also note that Setter-functions (e.g. setAngleColumn() ) will ensure that vectorDataLayout is set accordingly.
+     *
+     *  \see setAngleColumn(), setLengthColumn(), getAngleColumn(), getLengthColumn()
+     */
+    int angleColumn;
+    /** \brief the column that contains the vector length
+     *
+     *  \copydetails angleColumn
+     */
+    int lengthColumn;
+
+
+    /** \brief determines the range of row indexes available in the data columns of this graph
+     *
+     * \param[out] imin first usable row-index
+     * \param[out] imax last usable row-index
+     *  \return \c true on success and \c false if the information is not available
+     */
+    virtual bool getIndexRange(int &imin, int &imax) const override;
+};
 
 #endif // JKQTPGRAPHSBASE_H

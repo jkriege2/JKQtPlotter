@@ -1330,6 +1330,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPDatastore{
         inline size_t addColumnCalculatedFromColumn(size_t otherColumnX, size_t otherColumnY, const std::function<double(double,double)>& f, const QString& name=QString("")) {
             return addCalculatedColumnFromColumn(otherColumnX, otherColumnY,  f, name);
         }
+        inline size_t addCalculatedColumnFromColumn(const std::pair<size_t, size_t>& otherColumn, const std::function<double(double,double)>& f, const QString& name=QString("")) {
+            return addCalculatedColumnFromColumn(otherColumn.first, otherColumn.second,  f, name);
+        }
 
         /** \brief returns the number of (logical) columns currently managed by the datastore */
         inline size_t getColumnCount() const { return static_cast<size_t>(columns.size()); }
