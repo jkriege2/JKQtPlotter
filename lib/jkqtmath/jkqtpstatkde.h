@@ -120,14 +120,14 @@ jkqtmath_LIB_EXPORT double jkqtpstatKernel1DCosine(double t);
 
 
 
-/*! \brief a 1D Gaussian kernel function, e.g. for Kernel Density Estimation
+/*! \brief a 2D Gaussian kernel function, e.g. for Kernel Density Estimation
     \ingroup jkqtptools_math_statistics_2dkde_kernels
 
     \f[ k(t_x, t_y):=\frac{1}{2\pi}\exp \left(-\frac{t_x^2+t_y^2}{2}\right) \f]
 */
 jkqtmath_LIB_EXPORT double jkqtpstatKernel2DGaussian(double tx, double ty);
 
-/*! \brief a 1D Gaussian kernel function, e.g. for Kernel Density Estimation
+/*! \brief a 2D Uniform kernel function, e.g. for Kernel Density Estimation
     \ingroup jkqtptools_math_statistics_2dkde_kernels
 
     \f[ k(t_x, t_y):=\begin{cases}\frac{1}{4},  & \text{if }t_x,t_y\in [-1;1]\\0, & \text{else}\end{cases} \f]
