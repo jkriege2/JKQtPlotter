@@ -27,7 +27,7 @@ This software is licensed under the term of the [GNU Lesser General Public Licen
 [![CodeQL](https://github.com/jkriege2/JKQtPlotter/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/jkriege2/JKQtPlotter/actions/workflows/codeql-analysis.yml)
 [![MSVC-CodeAnalysis](https://github.com/jkriege2/JKQtPlotter/actions/workflows/msvc-codeanalysis.yml/badge.svg)](https://github.com/jkriege2/JKQtPlotter/actions/workflows/msvc-codeanalysis.yml)
 
-![EXAMPLES-Page](./screenshots/examplesbanner.png)
+[![EXAMPLES-Page](./screenshots/examplesbanner.png)](https://jkriege2.github.io/JKQtPlotter/example_tutorial_projects.html)
 
 ## Main Features
 - 2D Plotter widget class [JKQTPlotter](http://jkriege2.github.io/JKQtPlotter/group__jkqtplotter.html):
@@ -76,6 +76,9 @@ There are also some subpage of general intetest:
 - [Release Notes & Version Overview](http://jkriege2.github.io/JKQtPlotter/page_whatsnew.html)
 
 ## [Examples](https://jkriege2.github.io/JKQtPlotter/example_tutorial_projects.html)
+
+[![EXAMPLES-Page](./screenshots/examplesbanner.png)](https://jkriege2.github.io/JKQtPlotter/example_tutorial_projects.html)
+
 There is a [large set of usage examples (with explanations for each) and tutorials](https://jkriege2.github.io/JKQtPlotter/example_tutorial_projects.html) in the folder [`./examples/`](./examples).
 All test-projects are Qt-projects that use tcmake to build. Some of them are also available with additional qmake build-files.
 
