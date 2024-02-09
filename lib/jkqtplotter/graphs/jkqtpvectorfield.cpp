@@ -129,7 +129,7 @@ void JKQTPVectorFieldGraph::draw(JKQTPEnhancedPainter &painter)
                 const QPointF vec_orig=getVectorDxDy(i);
                 const QPointF vecv=[&](QPointF vec) {
                     if (m_vectorLengthMode==IgnoreLength) {
-                        const double veclen=getVectorMagnitude(vecv);
+                        const double veclen=getVectorMagnitude(vec);
                         if (qFuzzyIsNull(veclen)) vec=QPointF(0,0);
                         else vec/=veclen; // normalize vector
                     }
