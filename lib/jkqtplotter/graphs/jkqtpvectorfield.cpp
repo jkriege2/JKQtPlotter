@@ -34,6 +34,7 @@
 JKQTPVectorFieldGraph::JKQTPVectorFieldGraph(JKQTBasePlotter *parent):
     JKQTPXYAndVectorGraph(parent),
     m_autoscaleLength(true),
+    m_autoscaleLengthFactor(0.9),
     m_lengthScaleFactor(1),
     m_anchorPoint(AnchorBottom)
 {
@@ -97,7 +98,7 @@ void JKQTPVectorFieldGraph::draw(JKQTPEnhancedPainter &painter)
                 avgVecLength/=NDatapoints;
                 const double plotsize=qMax(fabs(xmax-xmin),fabs(ymax-ymin));
                 const double aproxNPerSide=sqrt(NDatapoints);
-                scale=plotsize/aproxNPerSide/avgVecLength;
+                scale=plotsize/aproxNPerSide/avgVecLength*m_autoscaleLengthFactor;
             } else {
                 scale=m_lengthScaleFactor;
             }
@@ -151,6 +152,16 @@ bool JKQTPVectorFieldGraph::getAutoscaleLength() const
 void JKQTPVectorFieldGraph::setAutoscaleLength(bool newAutoscaleLength)
 {
     m_autoscaleLength = newAutoscaleLength;
+}
+
+double JKQTPVectorFieldGraph::getAutoscaleLengthFactor() const
+{
+    return m_autoscaleLengthFactor;
+}
+
+void JKQTPVectorFieldGraph::setAutoscaleLengthFactor(double newAutoscaleLengthFactor)
+{
+    m_autoscaleLengthFactor=newAutoscaleLengthFactor;
 }
 
 double JKQTPVectorFieldGraph::getLengthScaleFactor() const

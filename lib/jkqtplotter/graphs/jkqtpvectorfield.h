@@ -39,9 +39,11 @@ class JKQTPDatastore;
 
 
 /*! \brief This graph plots a vector field, i.e. a set of vectors (dx,dy) or (angle,length) at positions (x,y).
-           This type of plot is sometimes also refered  to as quicver plot (e.g. in Matlab or matplotlib)
+           This class immplements the most basic form of vector plot, i.e. the vector are drawn with a length
+           corresponding to their magnitude.
     \ingroup jkqtplotter_vectorfieldgraphs
 
+    \note This type of plot is sometimes also refered to as quiver plot (e.g. in Matlab or matplotlib)
 
     \image html JKQTPVectorFieldGraph.png
 
@@ -98,6 +100,11 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPVectorFieldGraph: public JKQTPXYAndVectorGraph
         /** \copydoc m_autoscaleLength */
         void setAutoscaleLength(bool newAutoscaleLength);
 
+        /** \copydoc m_autoscaleLengthFactor */
+        double getAutoscaleLengthFactor() const;
+        /** \copydoc m_autoscaleLengthFactor */
+        void setAutoscaleLengthFactor(double newAutoscaleLengthFactor);
+
         /** \copydoc m_lengthScaleFactor */
         double getLengthScaleFactor() const;
         /** \copydoc m_lengthScaleFactor */
@@ -110,19 +117,36 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPVectorFieldGraph: public JKQTPXYAndVectorGraph
         void setAnchorPoint(VectorAnchorPoint newAnchorPoint);
 
         Q_PROPERTY(bool autoscaleLength READ getAutoscaleLength WRITE setAutoscaleLength )
+        Q_PROPERTY(bool autoscaleLengthFactor READ getAutoscaleLengthFactor WRITE setAutoscaleLengthFactor )
         Q_PROPERTY(double lengthScaleFactor READ getLengthScaleFactor WRITE setLengthScaleFactor )
         Q_PROPERTY(VectorAnchorPoint anchorPoint READ getAnchorPoint WRITE setAnchorPoint )
     protected:
     private:
         /** \brief enables or disables the autoscaling of vector lengths
          *
-         *  If disabled (\c false ) the vector is drawn from (x,y) to (x+dx*m_lengthScaleFactor,y+dy*m_lengthScaleFactor),
-         *  otherweise to (x+dx*autoscale,y+dy*autoscale)
+         *  If disabled (\c false ) the vector is drawn from \c (x,y) to \c (x+dx,y+dy)*m_lengthScaleFactor ,
+         *  otherweise to \c (x+dx,y+dy)*autoscale*m_autoscaleLengthFactor .
+         *  The autoscaled length is calculated by a siple algorithm that uses the average vector length in the data:
+         *      \c autoscale=plotwidth/VectorPerWidth/avgVectorLength .
+         *
+         *  \see m_autoscaleFactor, m_autoscaleLengthFactor, setAutoscaleLength(), getAutoscaleLength()
          */
         bool m_autoscaleLength;
-        /** \brief if m_autoscaleLength \c ==false, this is the scale-factor used to calculate the vector length */
+        /** \brief a scaling factor that can be used to modify the result of the autoscaling algorithm (m_autoscaleLength \c ==true)
+         *
+         *  The vector length is further scaled by this value.
+         *  \see m_autoscaleLength, setAutoscaleFactor(), getAutoscaleFactor()
+         */
+        double m_autoscaleLengthFactor;
+        /** \brief if m_autoscaleLength \c ==false, this is the scale-factor used to calculate the vector length
+         *
+         *  \see setLengthScaleFactor(), getLengthScaleFactor(), m_autoscaleLength
+         */
         double m_lengthScaleFactor;
-        /** \brief defines where the vector is anchored */
+        /** \brief defines where the vector is anchored
+         *
+         *  \see VectorAnchorPoint
+         */
         VectorAnchorPoint m_anchorPoint;
 
 };
