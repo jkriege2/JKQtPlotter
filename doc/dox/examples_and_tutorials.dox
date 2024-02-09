@@ -97,6 +97,9 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 <tr><td> \image html vectorfield_small.png
     <td> \subpage JKQTPlotterVectorFieldExample
     <td> `JKQTPVectorFieldGraph`
+<tr><td> \image html paramvectorfield_small.png
+    <td> \subpage JKQTPParametrizedVectorFieldGraphExample
+    <td> `JKQTPParametrizedVectorFieldGraph`
 </table>
 
 

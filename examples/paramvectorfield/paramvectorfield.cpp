@@ -36,13 +36,16 @@ int main(int argc, char* argv[])
     const auto columnXY=ds->addLinearGridColumns(NX, 0, 6, NY, -3, 3,"x","y");
     const auto columnDX=ds->addCalculatedColumnFromColumn(columnXY.first, columnXY.second, [](double x,double y) { return sin(y)*sqrt(x/3.0); });
     const auto columnDY=ds->addCalculatedColumnFromColumn(columnXY.first, columnXY.second, [](double x,double y) { return cos(x)*sqrt(x/3.0); });
+    // now we also calulate a column that encodes some other information that can be color-coded
+    const auto columnC=ds->addCalculatedColumnFromColumn(columnXY.first, columnXY.second, [](double x,double y) { return sqrt(fabs(y)); });
 
 
     // 3. create JKQTPVectorFieldGraph to display the data:
-    JKQTPVectorFieldGraph* graph1=new JKQTPVectorFieldGraph(&plot);
+    JKQTPParametrizedVectorFieldGraph* graph1=new JKQTPParametrizedVectorFieldGraph(&plot);
     graph1->setXYColumns(columnXY);
     graph1->setDxColumn(columnDX);
     graph1->setDyColumn(columnDY);
+    graph1->setColorColumn(columnC);
     graph1->setTitle(QObject::tr("$\\vec{f}(x,y)=\\bigl[\\sin(y)\\cdot\\sqrt{x/3}, \\cos(x)\\cdot\\sqrt{x/3}\\bigr]^\\mathrm{T}$"));
 
     // 4. add the graphs to the plot, so it is actually displayed
@@ -55,65 +58,29 @@ int main(int argc, char* argv[])
     plot.getPlotter()->setMaintainAspectRatio(true);
     plot.zoomToFit();
 
+
     // show plotter and make it a decent size
     plot.setWindowTitle("JKQTPVectorFieldGraph example");
     plot.show();
     plot.resize(400/plot.devicePixelRatioF(),430/plot.devicePixelRatioF());
 
 
-    JKQTPXYScatterGraph* g2;
+
     app.addExportStepFunctor([&](){
-        g2=new JKQTPXYScatterGraph(&plot);
-        g2->setXYColumns(columnXY);
-        g2->setTitle("anchor points");
-        g2->setSymbolSize(5);
-        g2->setSymbolType(JKQTPFilledCircle);
-        plot.addGraph(g2);
-        plot.redrawPlot();
-    });
-    app.addExportStepFunctor([&](){
-        graph1->setAnchorPoint(JKQTPVectorFieldGraph::AnchorMid);
+        graph1->setVectorColorMode(JKQTPParametrizedVectorFieldGraph::ColorFromMagnitude);
         plot.redrawPlot();
     });
 
     app.addExportStepFunctor([&](){
-        graph1->setAnchorPoint(JKQTPVectorFieldGraph::AnchorTip);
+        graph1->setVectorColorMode(JKQTPParametrizedVectorFieldGraph::ColorFromAngle);
         plot.redrawPlot();
     });
 
     app.addExportStepFunctor([&](){
-        graph1->setAnchorPoint(JKQTPVectorFieldGraph::AnchorBottom);
-        graph1->setVectorLengthMode(JKQTPVectorFieldGraph::AutoscaleLength);
-        plot.redrawPlot();
-    });
-    app.addExportStepFunctor([&](){
-        graph1->setAnchorPoint(JKQTPVectorFieldGraph::AnchorBottom);
-        graph1->setVectorLengthMode(JKQTPVectorFieldGraph::LengthFromData);
-        plot.redrawPlot();
-    });
-    app.addExportStepFunctor([&](){
-        graph1->setAnchorPoint(JKQTPVectorFieldGraph::AnchorBottom);
-        graph1->setVectorLengthMode(JKQTPVectorFieldGraph::IgnoreLength);
+        graph1->setVectorColorMode(JKQTPParametrizedVectorFieldGraph::DefaultColor);
         plot.redrawPlot();
     });
 
-    app.addExportStepFunctor([&](){
-        g2->setVisible(false);
-        graph1->setAnchorPoint(JKQTPVectorFieldGraph::AnchorBottom);
-        graph1->setVectorLengthMode(JKQTPVectorFieldGraph::IgnoreLength);
-        graph1->setVectorLineWidthMode(JKQTPVectorFieldGraph::AutoscaleLineWidthFromLength);
-        graph1->setLineWidth(4);
-        plot.redrawPlot();
-    });
-
-    app.addExportStepFunctor([&](){
-        g2->setVisible(false);
-        graph1->setAnchorPoint(JKQTPVectorFieldGraph::AnchorBottom);
-        graph1->setVectorLengthMode(JKQTPVectorFieldGraph::AutoscaleLength);
-        graph1->setVectorLineWidthMode(JKQTPVectorFieldGraph::AutoscaleLineWidthFromLength);
-        graph1->setLineWidth(4);
-        plot.redrawPlot();
-    });
 
     return app.exec();
 }

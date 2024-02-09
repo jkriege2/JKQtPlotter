@@ -246,6 +246,7 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         #"multithreaded_complex[multithreaded]/multithreaded_complex/--mdfile=${CMAKE_CURRENT_LIST_DIR}/../examples/multithreaded/README.md --complexlabel"
         graphlabels/graphlabels,graphlabels_hor
         vectorfield
+        paramvectorfield
     )
 
 
@@ -275,6 +276,7 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         second_axis/JKQTBasePlotter_addSecondaryYAxis,JKQTBasePlotter_addSecondaryXAxis
         graphlabels/JKQTPGLabelAwayFromXAxis,JKQTPGLabelAwayFromYAxis,JKQTPGLabelTowardsXAxis,JKQTPGLabelTowardsYAxis,JKQTPGLabelAboveData,JKQTPGLabelRightHandSide,JKQTPGLabelBelowData,JKQTPGLabelLeftHandSide,JKQTPGLabelCenteredOnData,JKQTPGLabelCenteredOnDataVertical,JKQTPGLSimpleBox,JKQTPGLSimpleBoxVertical,JKQTPGLSimpleBoxAndLine,JKQTPGLSimpleBoxAndLineVertical,JKQTPGLSimpleBoxAndLineONLYLABELS,JKQTPGLSimpleBoxAndLineONLYLABELSVertical/--iteratefunctorsteps--smallscreenshotplot
         vectorfield/JKQTPVectorFieldGraph,JKQTPVectorFieldGraphAnchorBottom,JKQTPVectorFieldGraphAnchorMid,JKQTPVectorFieldGraphAnchorTip,JKQTPVectorFieldGraphAutoscaleLength,JKQTPVectorFieldGraphLengthFromData,JKQTPVectorFieldGraphIgnoreLength,JKQTPVectorFieldGraphIgnoreLengthAutoscaleLineWidthFromLength,JKQTPVectorFieldGraphAutoscaleLengthAutoscaleLineWidthFromLength/--iteratefunctorsteps
+        paramvectorfield/JKQTPParametrizedVectorFieldGraph,JKQTPParametrizedVectorFieldGraphColorFromMagnitude,JKQTPParametrizedVectorFieldGraphColorFromAngle,JKQTPParametrizedVectorFieldGraphDefaultColor/--iteratefunctorsteps
     )
 
 

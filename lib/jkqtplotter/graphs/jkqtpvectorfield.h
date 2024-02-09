@@ -90,7 +90,7 @@ class JKQTPDatastore;
            \image html JKQTPVectorFieldGraphIgnoreLengthAutoscaleLineWidthFromLength.png
     .
 
-    \see \ref JKQTPlotterVectorFieldExample , JKQTPGraphDecoratedLineStyleMixin , JKQTPXYAndVectorGraph
+    \see \ref JKQTPlotterVectorFieldExample , JKQTPGraphDecoratedLineStyleMixin , JKQTPXYAndVectorGraph and JKQTPParametrizedVectorFieldGraph for a user-colored alternative
 
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPVectorFieldGraph: public JKQTPXYAndVectorGraph, public JKQTPGraphDecoratedLineStyleMixin {
@@ -129,11 +129,11 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPVectorFieldGraph: public JKQTPXYAndVectorGraph
         /** \brief class constructor */
         JKQTPVectorFieldGraph(JKQTPlotter* parent);
 
-        /** \brief plots the graph to the plotter object specified as parent */
+        /** \copydoc JKQTPXYAndVectorGraph::draw() */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
-        /** \brief plots a key marker inside the specified rectangle \a rect */
+        /** \copydoc JKQTPXYAndVectorGraph::drawKeyMarker() */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, const QRectF& rect) override;
-        /** \brief returns the color to be used for the key label */
+        /** \copydoc JKQTPXYAndVectorGraph::getKeyLabelColor() */
         virtual QColor getKeyLabelColor() const override;
 
         /** \copydoc m_vectorLengthMode */
@@ -174,6 +174,17 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPVectorFieldGraph: public JKQTPXYAndVectorGraph
         Q_PROPERTY(double minLineWidth READ getMinLineWIdth WRITE setMinLineWidth )
         Q_PROPERTY(VectorLineWidthMode vectorLineWidthMode READ getVectorLineWidthMode WRITE setVectorLineWidthMode )
     protected:
+        /** \brief internal color functor, a customization point for derived classes
+         *
+         *  Overwrite this in a derived class to be able to color each vector differently */
+        virtual QColor getLocalVectorColor(int i,double x,double y,double dx,double dy) const;
+        /** \brief acess to internally calculated (before draw() actually draws) minimum vector length
+         */
+        inline double getMinVecLen() const { return m_minVecLen; };
+        /** \brief acess to internally calculated (before draw() actually draws) maximum vector length
+         */
+        inline double getMaxVecLen() const { return m_maxVecLen; };
+
     private:
         /** \brief indicates how the length of the drawn vectors are determined from the data
          *
@@ -221,9 +232,131 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPVectorFieldGraph: public JKQTPXYAndVectorGraph
          */
         double m_minLineWidth;
 
+        /** \brief internally calculated (before draw() actually draws) minimum vector length
+         *  \internal
+         */
+        double m_minVecLen;
+        /** \brief internally calculated (before draw() actually draws) maximum vector length
+         *  \internal
+         */
+        double m_maxVecLen;
+
 };
 
 
 
+/*! \brief This graph plots a vector field, i.e. a set of vectors (dx,dy) or (angle,length) at positions (x,y).
+           This class is an extension of JKQTPVectorFieldGraph and additionally supports setting the line-color
+           from an additional data column.
+    \ingroup jkqtplotter_vectorfieldgraphs
+
+    \note This type of plot is sometimes also refered to as <b>quiver plot</b> (e.g. in Matlab or matplotlib)
+
+    \image html JKQTPParametrizedVectorFieldGraph.png
+
+    To achieve this, use code like this:
+    \code
+        // 1. setup a plotter window and get a pointer to the internal datastore (for convenience)
+        JKQTPlotter plot;
+        JKQTPDatastore* ds=plot.getDatastore();
+
+        // 2. make up some arbitrary data to be used for plotting
+        //    this generates a 2D grid of x/y-coordinates and then calculates dx=cos(y)*sqrt(x/3.0) and dy=sin(x)*sqrt(x/3.0)
+        const auto columnXY=ds->addLinearGridColumns(NX, 0, 6, NY, -3, 3,"x","y");
+        const auto columnDX=ds->addCalculatedColumnFromColumn(columnXY.first, columnXY.second, [](double x,double y) { return sin(y)*sqrt(x/3.0); });
+        const auto columnDY=ds->addCalculatedColumnFromColumn(columnXY.first, columnXY.second, [](double x,double y) { return cos(x)*sqrt(x/3.0); });
+
+        // 3. create JKQTPVectorFieldGraph to display the data:
+        JKQTPVectorFieldGraph* graph1=new JKQTPVectorFieldGraph(&plot);
+        graph1->setXYColumns(columnXY);
+        graph1->setDxColumn(columnDX);
+        graph1->setDyColumn(columnDY);
+        graph1->setTitle(QObject::tr("$\\vec{f}(x,y)=\\bigl[\\sin(y)\\cdot\\sqrt{x/3}, \\cos(x)\\cdot\\sqrt{x/3}\\bigr]^\\mathrm{T}$"));
+
+        // 4. add the graphs to the plot, so it is actually displayed
+        plot.addGraph(graph1);
+    \endcode
+
+    Use setVectorColorMode() if you don't want to use a custom column, but just use the vector's magnitude/length or
+    rotation angle as parameter for the color.
+
+    \see \ref JKQTPParametrizedVectorFieldGraphExample , JKQTPVectorFieldGraph , JKQTPColorPaletteStyleAndToolsMixin
+
+ */
+class JKQTPLOTTER_LIB_EXPORT JKQTPParametrizedVectorFieldGraph: public JKQTPVectorFieldGraph, public JKQTPColorPaletteStyleAndToolsMixin {
+    Q_OBJECT
+public:
+    /** \brief determines how the  color of the vector is determined */
+    enum VectorColorMode {
+        DefaultColor,         //!< \brief no color-coding, just use getLineColor() \image html JKQTPParametrizedVectorFieldGraphDefaultColor.png
+        ColorFromMagnitude,   //!< \brief color-coding by vector magnitude/length \image html JKQTPParametrizedVectorFieldGraphColorFromMagnitude.png
+        ColorFromAngle,       //!< \brief color-coding by vector angle \image html JKQTPParametrizedVectorFieldGraphColorFromAngle.png
+        ColorFromCustomColumn //!< \brief color-coding from getColorColumn() column \image html JKQTPParametrizedVectorFieldGraph.png
+    };
+    Q_ENUM(VectorColorMode)
+
+    /** \brief class constructor */
+    explicit JKQTPParametrizedVectorFieldGraph(JKQTBasePlotter* parent=nullptr);
+    /** \brief class constructor */
+    JKQTPParametrizedVectorFieldGraph(JKQTPlotter* parent);
+
+    /** \copydoc JKQTPVectorFieldGraph::drawKeyMarker() */
+    virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, const QRectF& rect) override;
+    /** \copydoc JKQTPVectorFieldGraph::draw() */
+    virtual void draw(JKQTPEnhancedPainter& painter) override;
+
+    /** \copydoc  JKQTPGraph::setParent() */
+    virtual void setParent(JKQTBasePlotter* parent) override;
+    /** \copydoc  JKQTPGraph::getOutsideSize() */
+    virtual void getOutsideSize(JKQTPEnhancedPainter& painter, int& leftSpace, int& rightSpace, int& topSpace, int& bottomSpace) override;
+    /** \copydoc  JKQTPGraph::drawOutside() */
+    virtual void drawOutside(JKQTPEnhancedPainter& painter, QRect leftSpace, QRect rightSpace, QRect topSpace, QRect bottomSpace) override;
+    /** \brief determine min/max data value of the image */
+    virtual void cbGetDataMinMax(double& imin, double& imax) override;
+    /** \copydoc JKQTPGraph::usesColumn() */
+    virtual bool usesColumn(int c) const override;
+
+
+    /** \copydoc colorColumn */
+    void setColorColumn(int __value);
+    /** \copydoc colorColumn */
+    int getColorColumn() const;
+    /** \copydoc colorColumn */
+    void setColorColumn (size_t __value);
+    /** \copydoc colorColumnContainsRGB */
+    void setColorColumnContainsRGB(bool __value);
+    /** \copydoc colorColumnContainsRGB */
+    bool getColorColumnContainsRGB() const;
+    /** \copydoc m_vectorColorMode */
+    void setVectorColorMode(VectorColorMode __value);
+    /** \copydoc m_vectorColorMode */
+    VectorColorMode getVectorColorMode() const;
+
+protected:
+    /** \copdydoc JKQTPVectorFieldGraph::getLocalVectorColor() */
+    virtual QColor getLocalVectorColor(int i,double x,double y,double dx,double dy) const override;
+private:
+    /** \brief this column contains the symbol color
+     *
+     *  \see setColorColumn(), getColorColumn()
+     */
+    int m_colorColumn;
+    /** \brief if this is true, the value in the colorColumn is converted to an integer, representing a color in ARGB format (as in QRgb)
+     *
+     *  \see setColorColumnContainsRGB(), getColorColumnContainsRGB()
+     */
+    bool m_colorColumnContainsRGB;
+    /** \brief internally used to store the range of the color column
+     *  \internal
+     */
+    double m_intColMin;
+    /** \brief internally used to store the range of the color column
+     *  \internal
+     */
+    double m_intColMax;
+    /** \brief indicates how color is determined from data (either from the vector or from m_colorColumn) */
+    VectorColorMode m_vectorColorMode;
+
+};
 
 #endif // jkqtpvectorfield_H

@@ -270,6 +270,7 @@ JKQTPXYParametrizedScatterGraph::JKQTPXYParametrizedScatterGraph(JKQTBasePlotter
     symbolFillDerivationMode=JKQTPColorDerivationMode::JKQTPFFCMLighterColor;
     if (parent) {
         symbolFillDerivationMode=parent->getCurrentPlotterStyle().graphsStyle.defaultGraphStyle.fillColorDerivationMode;
+        palette=parent->getCurrentPlotterStyle().graphsStyle.defaultPalette;
     }
 
     clearSizeColumnFunctor();

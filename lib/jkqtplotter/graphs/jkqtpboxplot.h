@@ -111,7 +111,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBoxplotVerticalGraph: public JKQTPBoxplotGraph
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
-        /** \brief plots a key marker inside the specified rectangle \a rect */
+        /** \copydoc JKQTPBoxplotGraphBase::drawKeyMarker() */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, const QRectF& rect) override;
 
         /** \copydoc JKQTPPlotElement::getXMinMax() */

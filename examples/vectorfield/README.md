@@ -1,5 +1,5 @@
 # Example (JKQTPlotter): Vector Field Plot Example {#JKQTPlotterVectorFieldExample}
-This project (see [`vectorfield`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/vectorfield) demonstrates the use of JKQTPXYvectorfield to add labels to the datapoints of a graph. 
+This project (see [`vectorfield`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/vectorfield) demonstrates the use of JKQTPVectorFieldGraph to visualize a vector field. 
 
 The source code of the main application is (see [`vectorfield.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/vectorfield/vectorfield.cpp).
 

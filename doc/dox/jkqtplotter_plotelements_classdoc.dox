@@ -297,6 +297,9 @@ This group assembles graphs that represent vector fields (i.e. sets of quadruple
     <tr>
       <td>\image html vectorfield_small.png
       <td> JKQTPVectorFieldGraph
+    <tr>
+      <td>\image html paramvectorfield_small.png
+      <td> JKQTPParametrizedVectorFieldGraph
 </table>
 
 

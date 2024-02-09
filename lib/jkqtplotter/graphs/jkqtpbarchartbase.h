@@ -123,9 +123,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarGraphBase: public JKQTPXYBaselineGraph, pub
         /** \brief class constructor */
         JKQTPBarGraphBase(JKQTPlotter* parent);
 
-        /** \brief plots a key marker inside the specified rectangle \a rect */
+        /** \copydoc JKQTPXYBaselineGraph::drawKeyMarker() */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, const QRectF& rect) override;
-        /** \brief returns the color to be used for the key label */
+        /** \copydoc JKQTPXYBaselineGraph::getKeyLabelColor() */
         virtual QColor getKeyLabelColor() const override;
 
 

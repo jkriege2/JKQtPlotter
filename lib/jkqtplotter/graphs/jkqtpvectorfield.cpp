@@ -39,7 +39,9 @@ JKQTPVectorFieldGraph::JKQTPVectorFieldGraph(JKQTBasePlotter *parent):
     m_lengthScaleFactor(1.0),
     m_anchorPoint(AnchorBottom),
     m_vectorLineWidthMode(DefaultVectorLineWidth),
-    m_minLineWidth(0.001)
+    m_minLineWidth(0.001),
+    m_minVecLen(0),
+    m_maxVecLen(0)
 {
     initDecoratedLineStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Default);
     setTailDecoratorStyle(JKQTPNoDecorator);
@@ -75,13 +77,13 @@ void JKQTPVectorFieldGraph::draw(JKQTPEnhancedPainter &painter)
         int imin=0;
         double scale=1;
         if (getIndexRange(imin, imax)) {
-            double minVecLen=0, maxVecLen=0;
+            m_minVecLen=m_maxVecLen=0;
             // first determine (auto-scale) factor
             if (m_vectorLengthMode==AutoscaleLength || m_vectorLengthMode==IgnoreLength) {
                 double avgVecLength=0;
                 double NDatapoints=0;
                 double xmin=0, xmax=0,ymin=0,ymax=0;
-                QVector<double> lengths;
+                std::vector<double> lengths;
                 lengths.reserve(imax-imin);
                 for (int iii=imin; iii<imax; iii++) {
                     const int i=qBound(imin, getDataIndex(iii), imax);
@@ -89,20 +91,20 @@ void JKQTPVectorFieldGraph::draw(JKQTPEnhancedPainter &painter)
                     const double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
                     const QPointF vecv=getVectorDxDy(i);
                     if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv) && JKQTPIsOKFloat(vecv)) {
-                        const double l=sqrt(jkqtp_sqr(vecv.x())+jkqtp_sqr(vecv.y()));
-                        lengths<<l;
+                        const double l=getVectorMagnitude(vecv);
+                        lengths.push_back(l);
                         avgVecLength+=l;
                         if (NDatapoints==0) {
                             xmin=xmax=xv;
                             ymin=ymax=yv;
-                            minVecLen=maxVecLen=l;
+                            m_minVecLen=m_maxVecLen=l;
                         } else {
                             xmin=qMin(xmin,xv);
                             xmax=qMax(xmax,xv);
                             ymin=qMin(ymin,yv);
                             ymax=qMax(ymax,yv);
-                            minVecLen=qMin(minVecLen,l);
-                            maxVecLen=qMax(maxVecLen,l);
+                            m_minVecLen=qMin(m_minVecLen,l);
+                            m_maxVecLen=qMax(m_maxVecLen,l);
                         }
                         NDatapoints++;
                     }
@@ -127,7 +129,7 @@ void JKQTPVectorFieldGraph::draw(JKQTPEnhancedPainter &painter)
                 const QPointF vec_orig=getVectorDxDy(i);
                 const QPointF vecv=[&](QPointF vec) {
                     if (m_vectorLengthMode==IgnoreLength) {
-                        const double veclen=sqrt(jkqtp_sqr(vec.x())+jkqtp_sqr(vec.y()));
+                        const double veclen=getVectorMagnitude(vecv);
                         if (qFuzzyIsNull(veclen)) vec=QPointF(0,0);
                         else vec/=veclen; // normalize vector
                     }
@@ -143,14 +145,15 @@ void JKQTPVectorFieldGraph::draw(JKQTPEnhancedPainter &painter)
                 }();
                 if (JKQTPIsOKFloat(l) && l.length()>0) {
                     double actualLW=p.widthF();
+                    QPen plw=p;
                     if (m_vectorLineWidthMode==AutoscaleLineWidthFromLength) {
-                        const double vec_origlen=sqrt(jkqtp_sqr(vec_orig.x())+jkqtp_sqr(vec_orig.y()));
-                        QPen plw=p;
-                        plw.setWidthF(m_minLineWidth+(vec_origlen-minVecLen)/(maxVecLen-minVecLen)*(lw-m_minLineWidth));
-                        painter.setPen(plw);
+                        const double vec_origlen=getVectorMagnitude(vec_orig);
+                        plw.setWidthF(m_minLineWidth+(vec_origlen-m_minVecLen)/(m_maxVecLen-m_minVecLen)*(lw-m_minLineWidth));
                         actualLW=plw.widthF();
                     }
-
+                    plw.setColor(getLocalVectorColor(i,xv,yv,vec_orig.x(),vec_orig.y()));
+                    painter.setPen(plw);
+                    painter.setBrush(plw.color());
                     JKQTPPlotDecoratedLine(painter,l, getTailDecoratorStyle(), calcTailDecoratorSize(actualLW), getHeadDecoratorStyle(), calcHeadDecoratorSize(actualLW));
                 }
             }
@@ -233,4 +236,236 @@ void JKQTPVectorFieldGraph::setMinLineWidth(double lw)
 double JKQTPVectorFieldGraph::getMinLineWIdth() const
 {
     return m_minLineWidth;
+}
+
+QColor JKQTPVectorFieldGraph::getLocalVectorColor(int /*i*/, double /*x*/, double /*y*/, double /*dx*/, double /*dy*/) const
+{
+    return getLineColor();
+}
+
+JKQTPParametrizedVectorFieldGraph::JKQTPParametrizedVectorFieldGraph(JKQTBasePlotter *parent):
+    JKQTPVectorFieldGraph(parent),
+    JKQTPColorPaletteStyleAndToolsMixin(parent),
+    m_colorColumn(-1),
+    m_colorColumnContainsRGB(false),
+    m_vectorColorMode(ColorFromMagnitude)
+{
+    palette=JKQTPMathImageMATLAB;
+    if (parent) {
+        palette=parent->getCurrentPlotterStyle().graphsStyle.defaultPalette;
+    }
+
+}
+
+JKQTPParametrizedVectorFieldGraph::JKQTPParametrizedVectorFieldGraph(JKQTPlotter *parent):
+    JKQTPParametrizedVectorFieldGraph(parent->getPlotter())
+{
+
+}
+
+void JKQTPParametrizedVectorFieldGraph::drawKeyMarker(JKQTPEnhancedPainter &painter, const QRectF &rect)
+{
+    if (m_vectorColorMode==DefaultColor) {
+        JKQTPVectorFieldGraph::drawKeyMarker(painter,rect);
+    } else {
+        QColor color1=getKeyLabelColor();
+        QColor color2=getKeyLabelColor();
+
+        if (m_colorColumn>=0) {
+            if (m_colorColumnContainsRGB) {
+                color1=QColor("red");
+                color2=QColor("blue");
+            } else {
+                QImage img;
+                double colorval[]={0,1};
+                JKQTPImageTools::array2image<double>(colorval, 2, 1, img, getColorPalette(), double(0.0), double(1.0));
+                color1=img.pixel(0,0);
+                color2=img.pixel(1,0);
+            }
+        }
+        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+        QPen p=getKeyLinePen(painter, rect, parent);
+        p.setColor(color1);
+        painter.setPen(p);
+        painter.setBrush(p.color());
+        const QLineF l(rect.left(), rect.bottom(), rect.right(), (rect.top()+rect.bottom())/2.0);
+        JKQTPPlotDecoratedLine(painter,l, getTailDecoratorStyle(), calcTailDecoratorSize(p.widthF()), getHeadDecoratorStyle(), calcHeadDecoratorSize(p.widthF()));
+
+        p=getKeyLinePen(painter, rect, parent);
+        p.setColor(color2);
+        painter.setPen(p);
+        painter.setBrush(p.color());
+        const QLineF l2(rect.left(), (rect.top()+rect.bottom())/2.0, rect.right(), rect.top());
+        JKQTPPlotDecoratedLine(painter,l2, getTailDecoratorStyle(), calcTailDecoratorSize(p.widthF()), getHeadDecoratorStyle(), calcHeadDecoratorSize(p.widthF()));
+    }
+}
+
+void JKQTPParametrizedVectorFieldGraph::draw(JKQTPEnhancedPainter &painter)
+{
+    cbGetDataMinMax(m_intColMin, m_intColMax);
+    JKQTPVectorFieldGraph::draw(painter);
+}
+
+void JKQTPParametrizedVectorFieldGraph::setParent(JKQTBasePlotter *parent)
+{
+    JKQTPVectorFieldGraph::setParent(parent);
+    cbSetParent(parent);
+}
+
+void JKQTPParametrizedVectorFieldGraph::getOutsideSize(JKQTPEnhancedPainter &painter, int &leftSpace, int &rightSpace, int &topSpace, int &bottomSpace)
+{
+    JKQTPVectorFieldGraph::getOutsideSize(painter, leftSpace, rightSpace, topSpace, bottomSpace);
+    if (showColorBar&& m_colorColumn>=0 && !m_colorColumnContainsRGB) cbGetOutsideSize(painter, leftSpace, rightSpace, topSpace, bottomSpace);
+}
+
+void JKQTPParametrizedVectorFieldGraph::drawOutside(JKQTPEnhancedPainter &painter, QRect leftSpace, QRect rightSpace, QRect topSpace, QRect bottomSpace)
+{
+    JKQTPVectorFieldGraph::drawOutside(painter, leftSpace, rightSpace, topSpace, bottomSpace);
+    if (showColorBar&& m_colorColumn>=0 && !m_colorColumnContainsRGB) cbDrawOutside(painter, leftSpace, rightSpace, topSpace, bottomSpace);
+}
+
+void JKQTPParametrizedVectorFieldGraph::cbGetDataMinMax(double &dmin, double &dmax)
+{
+    dmin=dmax=0;
+    if (autoImageRange) {
+        if (parent==nullptr) return;
+        JKQTPDatastore* datastore=parent->getDatastore();
+        if (datastore==nullptr) return;
+        int imin=0, imax=0;
+        if (getIndexRange(imin, imax)) {
+            if (m_vectorColorMode==ColorFromCustomColumn) {
+                if (m_colorColumn<0) return;
+                bool first=true;
+                for (int iii=imin; iii<imax; iii++) {
+                    const int i=qBound(imin, getDataIndex(iii), imax);
+                    const double xv=datastore->get(m_colorColumn,i);
+                    if (JKQTPIsOKFloat(xv)) {
+                        if (first) {
+                            dmin=dmax=xv;
+                            first=false;
+                        } else {
+                            dmin=qMin(xv, dmin);
+                            dmax=qMax(xv, dmax);
+                        }
+                    }
+                }
+            } else if (m_vectorColorMode==ColorFromMagnitude) {
+                bool first=true;
+                for (int iii=imin; iii<imax; iii++) {
+                    const int i=qBound(imin, getDataIndex(iii), imax);
+                    const double vecLen=getVectorMagnitude(i);
+                    if (JKQTPIsOKFloat(vecLen)) {
+                        if (first) {
+                            dmin=dmax=vecLen;
+                            first=false;
+                        } else {
+                            dmin=qMin(vecLen, dmin);
+                            dmax=qMax(vecLen, dmax);
+                        }
+                    }
+                }
+            } else if (m_vectorColorMode==ColorFromAngle) {
+                bool first=true;
+                for (int iii=imin; iii<imax; iii++) {
+                    const int i=qBound(imin, getDataIndex(iii), imax);
+                    const double vecAngle=getVectorAngle(i);
+                    if (JKQTPIsOKFloat(vecAngle)) {
+                        if (first) {
+                            dmin=dmax=vecAngle;
+                            first=false;
+                        } else {
+                            dmin=qMin(vecAngle, dmin);
+                            dmax=qMax(vecAngle, dmax);
+                        }
+                    }
+                }
+            }
+        }
+    } else {
+        dmin=imageMin;
+        dmax=imageMax;
+    }
+}
+
+bool JKQTPParametrizedVectorFieldGraph::usesColumn(int c) const
+{
+    return (c==m_colorColumn) || JKQTPVectorFieldGraph::usesColumn(c);
+}
+
+void JKQTPParametrizedVectorFieldGraph::setColorColumn(int __value)
+{
+    m_colorColumn = __value;
+    if (__value<0) m_vectorColorMode=ColorFromMagnitude;
+    else m_vectorColorMode=ColorFromCustomColumn;
+}
+
+int JKQTPParametrizedVectorFieldGraph::getColorColumn() const
+{
+    return  m_colorColumn;
+}
+
+void JKQTPParametrizedVectorFieldGraph::setColorColumn(size_t __value)
+{
+    m_colorColumn = static_cast<int>(__value);
+    m_vectorColorMode=ColorFromCustomColumn;
+}
+
+void JKQTPParametrizedVectorFieldGraph::setColorColumnContainsRGB(bool __value)
+{
+    m_colorColumnContainsRGB=__value;
+}
+
+bool JKQTPParametrizedVectorFieldGraph::getColorColumnContainsRGB() const
+{
+    return m_colorColumnContainsRGB;
+}
+
+void JKQTPParametrizedVectorFieldGraph::setVectorColorMode(VectorColorMode __value)
+{
+    m_vectorColorMode=__value;
+}
+
+JKQTPParametrizedVectorFieldGraph::VectorColorMode JKQTPParametrizedVectorFieldGraph::getVectorColorMode() const
+{
+    return m_vectorColorMode;
+}
+
+QColor JKQTPParametrizedVectorFieldGraph::getLocalVectorColor(int i, double x, double y, double dx, double dy) const
+{
+    if (parent==nullptr) return getLineColor();
+    const JKQTPDatastore* datastore=parent->getDatastore();
+    if (datastore==nullptr) return getLineColor();
+    if (m_colorColumn<0 && m_vectorColorMode==ColorFromCustomColumn) return getLineColor();
+    if (m_colorColumn>=0 && m_vectorColorMode==ColorFromCustomColumn && (i<0 || i>=(int64_t)datastore->getRows(m_colorColumn))) return getLineColor();
+
+    double colValue=0;
+    double colMin=m_intColMin;
+    double colMax=m_intColMax;
+    switch(m_vectorColorMode) {
+    case ColorFromCustomColumn:
+        colValue=datastore->get(m_colorColumn,i);
+        if (m_intColMin==m_intColMax) {
+            colMin=0;
+            colMax=datastore->getRows(m_colorColumn)-1;
+        }
+        break;
+    case ColorFromMagnitude:
+        colValue=getVectorMagnitude(QPointF(dx,dy));
+        break;
+    case ColorFromAngle:
+        colValue=getVectorAngle(QPointF(dx,dy));
+        break;
+    case DefaultColor:
+        return getLineColor();
+    }
+
+
+    if (m_colorColumnContainsRGB && m_vectorColorMode==ColorFromCustomColumn) {
+        return QRgb(round(colValue));
+    } else {
+        QImage img;
+        JKQTPImageTools::array2image(&colValue, 1, 1, img, palette, colMin, colMax);
+        return img.pixel(0,0);
+    }
+
 }

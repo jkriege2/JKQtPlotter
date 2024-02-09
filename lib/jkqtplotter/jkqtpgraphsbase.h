@@ -960,7 +960,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPSingleColumnGraph: public JKQTPGraph {
 /** \brief This virtual JKQTPGraph descendent extends JKQTPXYGraph with two additional columns that encode for a vector starting at (x,y), i.e. either two distances along the x- and y-axis (\f$ \Delta x, \Delta y \f$), or a rotation angle \f$ \alpha \f$ and a vector length \f$ \l \f$ .
  *  \ingroup jkqtplotter_basegraphs
  *
- *  \see JKQTPVectorFieldGraph
+ *  \see JKQTPVectorFieldGraph, JKQTPParametrizedVectorFieldGraph
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPXYAndVectorGraph: public JKQTPXYGraph {
     Q_OBJECT
@@ -1025,6 +1025,22 @@ public Q_SLOTS:
     /** \copydoc lengthColumn */
     void setLengthColumn(int col) ;
 protected:
+    /** \brief calculates the magnitude/length of a vector \a v */
+    static inline double getVectorMagnitude(const QPointF& v) {
+        return sqrt(jkqtp_sqr(v.x())+jkqtp_sqr(v.y()));
+    }
+    inline double getVectorMagnitude(int i) const {
+        return getVectorMagnitude(getVectorDxDy(i));
+    }
+    /** \brief calculates the rotation angle (3 o'clock is 0) in radians \f$ [0...2\pi] \f$ of a vector \a v */
+    static inline double getVectorAngle(const QPointF& v) {
+        double colValue=atan2(v.y(),v.x());
+        if (colValue<0) colValue=2.0*JKQTPSTATISTICS_PI+colValue;
+        return colValue;
+    }
+    inline double getVectorAngle(int i) const {
+        return getVectorAngle(getVectorDxDy(i));
+    }
     /** \brief this function interprets vectorDataLayout together with (dxColumn, dyColumn) or (angleColumn, lengthColumn) or ... and returns the \a i -th vectors \f$ \Delta x, \Delta y \f$ */
     QPointF getVectorDxDy(int i) const;
 
