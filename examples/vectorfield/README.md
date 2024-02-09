@@ -53,3 +53,15 @@ Alternatively you can also set
 which will draw all vectors with the same length. You can scale this length by setting  JKQTPVectorFieldGraph::setAutoscaleLengthFactor() ). The result then looks like this:
 
 ![vectorfield](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/doc/images/JKQTPVectorFieldGraphIgnoreLength.png)
+
+
+Finally it is also possibly to scale the vector's line width with its length:
+
+```.cpp
+        graph1->setVectorLengthMode(JKQTPVectorFieldGraph::AutoscaleLength);
+        graph1->setVectorLineWidthMode(JKQTPVectorFieldGraph::AutoscaleLineWidthFromLength);
+```
+
+This will result in a plot like this:
+
+![vectorfield](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/doc/images/JKQTPVectorFieldGraphAutoscaleLengthAutoscaleLineWidthFromLength.png)

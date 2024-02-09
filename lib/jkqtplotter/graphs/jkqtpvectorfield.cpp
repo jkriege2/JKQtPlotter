@@ -25,7 +25,7 @@
 #include <QDebug>
 #include <QDateTime>
 #include "jkqtcommon/jkqtpdrawingtools.h"
-#include "jkqtmath/jkqtpstatisticstools.h"
+#include "jkqtmath/jkqtpstatbasics.h"
 #include "jkqtplotter/jkqtptools.h"
 
 #define SmallestGreaterZeroCompare_xvsgz() if ((xvsgz>10.0*DBL_MIN)&&((smallestGreaterZero<10.0*DBL_MIN) || (xvsgz<smallestGreaterZero))) smallestGreaterZero=xvsgz;
@@ -37,7 +37,9 @@ JKQTPVectorFieldGraph::JKQTPVectorFieldGraph(JKQTBasePlotter *parent):
     m_vectorLengthMode(AutoscaleLength),
     m_autoscaleLengthFactor(0.8),
     m_lengthScaleFactor(1.0),
-    m_anchorPoint(AnchorBottom)
+    m_anchorPoint(AnchorBottom),
+    m_vectorLineWidthMode(DefaultVectorLineWidth),
+    m_minLineWidth(0.001)
 {
     initDecoratedLineStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Default);
     setTailDecoratorStyle(JKQTPNoDecorator);
@@ -65,6 +67,7 @@ void JKQTPVectorFieldGraph::draw(JKQTPEnhancedPainter &painter)
     {
         painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
         const QPen p=getLinePen(painter, parent);
+        const double lw=getLineWidth();
         painter.setPen(p);
         painter.setBrush(p.color());
 
@@ -72,6 +75,7 @@ void JKQTPVectorFieldGraph::draw(JKQTPEnhancedPainter &painter)
         int imin=0;
         double scale=1;
         if (getIndexRange(imin, imax)) {
+            double minVecLen=0, maxVecLen=0;
             // first determine (auto-scale) factor
             if (m_vectorLengthMode==AutoscaleLength || m_vectorLengthMode==IgnoreLength) {
                 double avgVecLength=0;
@@ -91,11 +95,14 @@ void JKQTPVectorFieldGraph::draw(JKQTPEnhancedPainter &painter)
                         if (NDatapoints==0) {
                             xmin=xmax=xv;
                             ymin=ymax=yv;
+                            minVecLen=maxVecLen=l;
                         } else {
                             xmin=qMin(xmin,xv);
                             xmax=qMax(xmax,xv);
                             ymin=qMin(ymin,yv);
                             ymax=qMax(ymax,yv);
+                            minVecLen=qMin(minVecLen,l);
+                            maxVecLen=qMax(maxVecLen,l);
                         }
                         NDatapoints++;
                     }
@@ -117,15 +124,15 @@ void JKQTPVectorFieldGraph::draw(JKQTPEnhancedPainter &painter)
                 const double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
                 const double x=transformX(xv);
                 const double y=transformY(yv);
-                const QPointF vecv=[&]() {
-                    QPointF vec=getVectorDxDy(i);
+                const QPointF vec_orig=getVectorDxDy(i);
+                const QPointF vecv=[&](QPointF vec) {
                     if (m_vectorLengthMode==IgnoreLength) {
                         const double veclen=sqrt(jkqtp_sqr(vec.x())+jkqtp_sqr(vec.y()));
                         if (qFuzzyIsNull(veclen)) vec=QPointF(0,0);
                         else vec/=veclen; // normalize vector
                     }
                     return vec;
-                }();
+                }(vec_orig);
                 const QLineF l=[&]() {
                     switch (m_anchorPoint) {
                     case AnchorBottom: return QLineF(x,y,transformX(xv+scale*vecv.x()),transformY(yv+scale*vecv.y()));
@@ -135,7 +142,16 @@ void JKQTPVectorFieldGraph::draw(JKQTPEnhancedPainter &painter)
                     return QLineF(JKQTP_NAN,JKQTP_NAN,JKQTP_NAN,JKQTP_NAN);
                 }();
                 if (JKQTPIsOKFloat(l) && l.length()>0) {
-                    JKQTPPlotDecoratedLine(painter,l, getTailDecoratorStyle(), calcTailDecoratorSize(p.widthF()), getHeadDecoratorStyle(), calcHeadDecoratorSize(p.widthF()));
+                    double actualLW=p.widthF();
+                    if (m_vectorLineWidthMode==AutoscaleLineWidthFromLength) {
+                        const double vec_origlen=sqrt(jkqtp_sqr(vec_orig.x())+jkqtp_sqr(vec_orig.y()));
+                        QPen plw=p;
+                        plw.setWidthF(m_minLineWidth+(vec_origlen-minVecLen)/(maxVecLen-minVecLen)*(lw-m_minLineWidth));
+                        painter.setPen(plw);
+                        actualLW=plw.widthF();
+                    }
+
+                    JKQTPPlotDecoratedLine(painter,l, getTailDecoratorStyle(), calcTailDecoratorSize(actualLW), getHeadDecoratorStyle(), calcHeadDecoratorSize(actualLW));
                 }
             }
 
@@ -197,4 +213,24 @@ JKQTPVectorFieldGraph::VectorAnchorPoint JKQTPVectorFieldGraph::getAnchorPoint()
 void JKQTPVectorFieldGraph::setAnchorPoint(VectorAnchorPoint newAnchorPoint)
 {
     m_anchorPoint = newAnchorPoint;
+}
+
+void JKQTPVectorFieldGraph::setVectorLineWidthMode(VectorLineWidthMode m)
+{
+    m_vectorLineWidthMode=m;
+}
+
+JKQTPVectorFieldGraph::VectorLineWidthMode JKQTPVectorFieldGraph::getVectorLineWidthMode() const
+{
+    return m_vectorLineWidthMode;
+}
+
+void JKQTPVectorFieldGraph::setMinLineWidth(double lw)
+{
+    m_minLineWidth=lw;
+}
+
+double JKQTPVectorFieldGraph::getMinLineWIdth() const
+{
+    return m_minLineWidth;
 }

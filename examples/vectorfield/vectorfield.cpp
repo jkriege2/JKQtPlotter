@@ -61,9 +61,9 @@ int main(int argc, char* argv[])
     plot.resize(400/plot.devicePixelRatioF(),430/plot.devicePixelRatioF());
 
 
-
+    JKQTPXYScatterGraph* g2;
     app.addExportStepFunctor([&](){
-        JKQTPXYScatterGraph* g2=new JKQTPXYScatterGraph(&plot);
+        g2=new JKQTPXYScatterGraph(&plot);
         g2->setXYColumns(columnXY);
         g2->setTitle("anchor points");
         g2->setSymbolSize(5);
@@ -94,6 +94,24 @@ int main(int argc, char* argv[])
     app.addExportStepFunctor([&](){
         graph1->setAnchorPoint(JKQTPVectorFieldGraph::AnchorBottom);
         graph1->setVectorLengthMode(JKQTPVectorFieldGraph::IgnoreLength);
+        plot.redrawPlot();
+    });
+
+    app.addExportStepFunctor([&](){
+        g2->setVisible(false);
+        graph1->setAnchorPoint(JKQTPVectorFieldGraph::AnchorBottom);
+        graph1->setVectorLengthMode(JKQTPVectorFieldGraph::IgnoreLength);
+        graph1->setVectorLineWidthMode(JKQTPVectorFieldGraph::AutoscaleLineWidthFromLength);
+        graph1->setLineWidth(4);
+        plot.redrawPlot();
+    });
+
+    app.addExportStepFunctor([&](){
+        g2->setVisible(false);
+        graph1->setAnchorPoint(JKQTPVectorFieldGraph::AnchorBottom);
+        graph1->setVectorLengthMode(JKQTPVectorFieldGraph::AutoscaleLength);
+        graph1->setVectorLineWidthMode(JKQTPVectorFieldGraph::AutoscaleLineWidthFromLength);
+        graph1->setLineWidth(4);
         plot.redrawPlot();
     });
 

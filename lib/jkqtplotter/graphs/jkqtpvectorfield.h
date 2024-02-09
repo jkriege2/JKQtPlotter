@@ -83,6 +83,11 @@ class JKQTPDatastore;
          VectorLengthMode.
       3. By default, vector start at \c (x,y). But you can also make them be centered around  or
          point to \c (x,y) . This can be set by setAnchorPoint().
+      4. Using setVectorLineWidthMode(JKQTPVectorFieldGraph::AutoscaleLineWidthFromLength) you can also
+         scale the line width of each vector by the vector's length. This sometimes gives an easier to read
+         representation of the vector properties, especially if combined with
+         setVectorLengthMode(JKQTPVectorFieldGraph::IgnoreLength) :
+           \image html JKQTPVectorFieldGraphIgnoreLengthAutoscaleLineWidthFromLength.png
     .
 
     \see \ref JKQTPlotterVectorFieldExample , JKQTPGraphDecoratedLineStyleMixin , JKQTPXYAndVectorGraph
@@ -109,6 +114,15 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPVectorFieldGraph: public JKQTPXYAndVectorGraph
             IgnoreLength      //!< \brief all vectors have the same length \image html JKQTPVectorFieldGraphAnchorTip.png
         };
         Q_ENUM(VectorLengthMode)
+
+        /** \brief describes how the line width scales with the vector properties (or not) */
+        enum VectorLineWidthMode {
+            DefaultVectorLineWidth, //!< \brief line width is equal to JKQTPGraphLineStyleMixin::getLineWidth() for all vectors \image html JKQTPVectorFieldGraphIgnoreLength.png
+            AutoscaleLineWidthFromLength,     //!< \brief line width is determined from the vector length. The maximum line width is given by JKQTPGraphLineStyleMixin::getLineWidth() and the minim line width by getMinLineWidth() \image html JKQTPVectorFieldGraphAutoscaleLengthAutoscaleLineWidthFromLength.png
+
+
+        };
+        Q_ENUM(VectorLineWidthMode)
 
         /** \brief class constructor */
         explicit JKQTPVectorFieldGraph(JKQTBasePlotter* parent=nullptr);
@@ -143,10 +157,22 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPVectorFieldGraph: public JKQTPXYAndVectorGraph
         /** \copydoc m_anchorPoint */
         void setAnchorPoint(VectorAnchorPoint newAnchorPoint);
 
+
+        /** \copydoc m_vectorLineWidthMode */
+        void setVectorLineWidthMode(VectorLineWidthMode m);
+        /** \copydoc m_vectorLineWidthMode */
+        VectorLineWidthMode getVectorLineWidthMode() const;
+        /** \copydoc m_minLineWidth */
+        void setMinLineWidth(double lw);
+        /** \copydoc m_minLineWidth */
+        double getMinLineWIdth() const;
+
         Q_PROPERTY(VectorLengthMode vectorLengthMode READ getVectorLengthMode WRITE setVectorLengthMode )
         Q_PROPERTY(bool autoscaleLengthFactor READ getAutoscaleLengthFactor WRITE setAutoscaleLengthFactor )
         Q_PROPERTY(double lengthScaleFactor READ getLengthScaleFactor WRITE setLengthScaleFactor )
         Q_PROPERTY(VectorAnchorPoint anchorPoint READ getAnchorPoint WRITE setAnchorPoint )
+        Q_PROPERTY(double minLineWidth READ getMinLineWIdth WRITE setMinLineWidth )
+        Q_PROPERTY(VectorLineWidthMode vectorLineWidthMode READ getVectorLineWidthMode WRITE setVectorLineWidthMode )
     protected:
     private:
         /** \brief indicates how the length of the drawn vectors are determined from the data
@@ -163,7 +189,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPVectorFieldGraph: public JKQTPXYAndVectorGraph
          *      \image html JKQTPVectorFieldGraphIgnoreLength.png
          *  .
          *
-         *  \see VectorLengthMode, setVectorLengthMode(), getVectorLengthMode(), m_autoscaleFactor, m_autoscaleLengthFactor
+         *  \see VectorLengthMode, setVectorLengthMode(), getVectorLengthMode(), m_lengthScaleFactor, m_autoscaleLengthFactor
          */
         VectorLengthMode m_vectorLengthMode;
         /** \brief a scaling factor that can be used to modify the result of the autoscaling algorithm (m_vectorLengthMode \c ==AutoscaleLength)
@@ -179,9 +205,21 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPVectorFieldGraph: public JKQTPXYAndVectorGraph
         double m_lengthScaleFactor;
         /** \brief defines where the vector is anchored
          *
-         *  \see VectorAnchorPoint
+         *  \see VectorAnchorPoint, setAnchorPoint(), getAnchorPoint()
          */
         VectorAnchorPoint m_anchorPoint;
+        /** \brief determines how the line width of the vectors is derived.
+         *
+         *  \note the available options are described with VectorLineWidthMode
+         *
+         *  \see setVectorLineWidthMode(), getVectorLineWidthMode(), VectorLineWidthMode, m_minLineWidth
+         */
+        VectorLineWidthMode m_vectorLineWidthMode;
+        /** \brief minimum line-width in pt, used for some modes of m_vectorLineWidthMode
+         *
+         *  \see setMinLineWidth(), getMinLineWidth(), m_vectorLineWidthMode
+         */
+        double m_minLineWidth;
 
 };
 
