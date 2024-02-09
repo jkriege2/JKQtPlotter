@@ -110,7 +110,19 @@ int main(int argc, char* argv[])
         plotV.redrawPlot();
         plotH.redrawPlot();
     });
+
     app.addExportStepFunctor([&](){
+        gV.second->setLabelPosition(JKQTPGLabelCenteredOnData);
+        gH.second->setLabelPosition(JKQTPGLabelCenteredOnData);
+        gV.first->setVisible(false);
+        gH.first->setVisible(false);
+        plotV.redrawPlot();
+        plotH.redrawPlot();
+    });
+
+    app.addExportStepFunctor([&](){
+        gV.first->setVisible(true);
+        gH.first->setVisible(true);
         gV.second->setLabelPosition(JKQTPGLabelAwayFromXAxis);
         gV.second->setLabelBoxType(JKQTPGLSimpleBox);
         gV.second->setDrawLabelBoxFrame(true);

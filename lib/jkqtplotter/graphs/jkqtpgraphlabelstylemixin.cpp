@@ -35,6 +35,7 @@ QString JKQTPGraphLabelPosition2String(JKQTPGraphLabelPosition pos)
     case JKQTPGLabelAwayFromYAxis: return "label_away_from_yaxis";
     case JKQTPGLabelTowardsXAxis: return "label_towards_xaxis";
     case JKQTPGLabelTowardsYAxis: return "label_towards_xaxis";
+    case JKQTPGLabelCenteredOnData: return "label_centered";
     }
     return "label_away_from_xaxis";
 }
@@ -50,6 +51,7 @@ JKQTPGraphLabelPosition String2JKQTPGraphLabelPosition(const QString &pos)
     if (m=="label_away_from_yaxis" || m=="away_from_yaxis") return JKQTPGLabelAwayFromYAxis;
     if (m=="label_towars_xaxis" || m=="towars_xaxis") return JKQTPGLabelTowardsXAxis;
     if (m=="label_towars_yaxis" || m=="towars_yaxis") return JKQTPGLabelTowardsYAxis;
+    if (m=="label_centered" || m=="centered" || m=="label_centered_on_data" || m=="centered_on_data") return JKQTPGLabelCenteredOnData;
     return JKQTPGraphLabelDefault;
 }
 
@@ -185,6 +187,7 @@ bool JKQTPGraphValueLabelStyleMixin::isLabelPositioningGrowingInX() const
     case JKQTPGLabelAwayFromXAxis:
     case JKQTPGLabelTowardsXAxis:
     case JKQTPGLabelTowardsYAxis:
+    case JKQTPGLabelCenteredOnData:
         return false;
     }
     return false;
@@ -202,6 +205,7 @@ bool JKQTPGraphValueLabelStyleMixin::isLabelPositioningGrowingInY() const
     case JKQTPGLabelTowardsYAxis:
     case JKQTPGLabelLeftHandSide:
     case JKQTPGLabelRightHandSide:
+    case JKQTPGLabelCenteredOnData:
         return false;
     }
     return false;
@@ -257,7 +261,8 @@ void JKQTPGraphValueLabelStyleMixin::drawLabel(JKQTPEnhancedPainter &painter, co
         case LabelGeometry::BoxBottom:
             painter.drawLine(xDataPixel, QPointF(xDataPixel.x(), qMin(g.boxRect.top(),g.boxRect.bottom())));
             break;
-
+        case LabelGeometry::BoxCentered:
+            break;
         }
     }
 
@@ -296,6 +301,9 @@ JKQTPGraphValueLabelStyleMixin::LabelGeometry JKQTPGraphValueLabelStyleMixin::ca
         // rhs
         res.textRect=QRectF(xDataPixel.x()+res.labelOffsetPx+res.padX+res.lw/2.0, xDataPixel.y()-res.textSize.overallHeight/2.0, res.textSize.width, res.textSize.overallHeight);
         res.boxpos=LabelGeometry::BoxRight;
+    } else if (m_labelPosition==JKQTPGLabelCenteredOnData) {
+        res.textRect=QRectF(xDataPixel.x()-res.textSize.width/2.0, xDataPixel.y()-res.textSize.overallHeight/2.0, res.textSize.width, res.textSize.overallHeight);
+        res.boxpos=LabelGeometry::BoxCentered;
     }
 
     res.boxRect=QRectF(res.textRect.x()-res.padX-res.lw/2.0, res.textRect.y()-res.padY-res.lw/2.0, res.textRect.width()+res.padX*2.0+res.lw, res.textRect.height()+res.padY*2.0+res.lw);

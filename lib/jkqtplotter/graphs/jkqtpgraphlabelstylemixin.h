@@ -52,6 +52,8 @@ enum JKQTPGraphLabelPosition {
     JKQTPGLabelLeftHandSide, /*!< \brief all labels always on the left-hand side of the datapoint \image html JKQTPGLabelLeftHandSide.png */
     JKQTPGLabelTowardsYAxis, /*!< \brief all labels between the datapoint and the y-axis the datapoint \image html JKQTPGLabelTowardsYAxis.png */
     JKQTPGLabelAwayFromYAxis, /*!< \brief all labels pointing away from the y-axis \image html JKQTPGLabelAwayFromYAxis.png */
+    JKQTPGLabelCenteredOnData, /*!< \brief graph label is drawn centered arond the data point \c (x,y) \image html JKQTPGLabelCenteredOnData.png */
+
 
     JKQTPGraphLabelDefault=JKQTPGLabelAwayFromXAxis,
 };
@@ -223,7 +225,8 @@ protected:
             BoxLeft,
             BoxRight,
             BoxTop,
-            BoxBottom
+            BoxBottom,
+            BoxCentered
         };
         BoxPos boxpos;
     };
