@@ -25,6 +25,7 @@
 #include <QDebug>
 #include <QDateTime>
 #include "jkqtcommon/jkqtpdrawingtools.h"
+#include "jkqtmath/jkqtpstatisticstools.h"
 #include "jkqtplotter/jkqtptools.h"
 
 #define SmallestGreaterZeroCompare_xvsgz() if ((xvsgz>10.0*DBL_MIN)&&((smallestGreaterZero<10.0*DBL_MIN) || (xvsgz<smallestGreaterZero))) smallestGreaterZero=xvsgz;
@@ -33,9 +34,9 @@
 
 JKQTPVectorFieldGraph::JKQTPVectorFieldGraph(JKQTBasePlotter *parent):
     JKQTPXYAndVectorGraph(parent),
-    m_autoscaleLength(true),
-    m_autoscaleLengthFactor(0.9),
-    m_lengthScaleFactor(1),
+    m_vectorLengthMode(AutoscaleLength),
+    m_autoscaleLengthFactor(0.8),
+    m_lengthScaleFactor(1.0),
     m_anchorPoint(AnchorBottom)
 {
     initDecoratedLineStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Default);
@@ -72,17 +73,21 @@ void JKQTPVectorFieldGraph::draw(JKQTPEnhancedPainter &painter)
         double scale=1;
         if (getIndexRange(imin, imax)) {
             // first determine (auto-scale) factor
-            if (m_autoscaleLength) {
+            if (m_vectorLengthMode==AutoscaleLength || m_vectorLengthMode==IgnoreLength) {
                 double avgVecLength=0;
                 double NDatapoints=0;
                 double xmin=0, xmax=0,ymin=0,ymax=0;
+                QVector<double> lengths;
+                lengths.reserve(imax-imin);
                 for (int iii=imin; iii<imax; iii++) {
                     const int i=qBound(imin, getDataIndex(iii), imax);
                     const double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
                     const double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
                     const QPointF vecv=getVectorDxDy(i);
                     if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv) && JKQTPIsOKFloat(vecv)) {
-                        avgVecLength+=sqrt(jkqtp_sqr(vecv.x())+jkqtp_sqr(vecv.y()));
+                        const double l=sqrt(jkqtp_sqr(vecv.x())+jkqtp_sqr(vecv.y()));
+                        lengths<<l;
+                        avgVecLength+=l;
                         if (NDatapoints==0) {
                             xmin=xmax=xv;
                             ymin=ymax=yv;
@@ -95,10 +100,12 @@ void JKQTPVectorFieldGraph::draw(JKQTPEnhancedPainter &painter)
                         NDatapoints++;
                     }
                 }
-                avgVecLength/=NDatapoints;
+                //avgVecLength/=NDatapoints;
+                avgVecLength=jkqtpstatQuantile(lengths.begin(), lengths.end(), 0.9);
                 const double plotsize=qMax(fabs(xmax-xmin),fabs(ymax-ymin));
-                const double aproxNPerSide=sqrt(NDatapoints);
-                scale=plotsize/aproxNPerSide/avgVecLength*m_autoscaleLengthFactor;
+                const double aproxNPerSide=sqrt(NDatapoints);                
+                if (m_vectorLengthMode==IgnoreLength) scale=plotsize/aproxNPerSide*m_autoscaleLengthFactor; // we can assume that the elngths of all vectors have been normalized beforehand
+                else scale=plotsize/aproxNPerSide/avgVecLength*m_autoscaleLengthFactor;
             } else {
                 scale=m_lengthScaleFactor;
             }
@@ -110,7 +117,15 @@ void JKQTPVectorFieldGraph::draw(JKQTPEnhancedPainter &painter)
                 const double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
                 const double x=transformX(xv);
                 const double y=transformY(yv);
-                const QPointF vecv=getVectorDxDy(i);
+                const QPointF vecv=[&]() {
+                    QPointF vec=getVectorDxDy(i);
+                    if (m_vectorLengthMode==IgnoreLength) {
+                        const double veclen=sqrt(jkqtp_sqr(vec.x())+jkqtp_sqr(vec.y()));
+                        if (qFuzzyIsNull(veclen)) vec=QPointF(0,0);
+                        else vec/=veclen; // normalize vector
+                    }
+                    return vec;
+                }();
                 const QLineF l=[&]() {
                     switch (m_anchorPoint) {
                     case AnchorBottom: return QLineF(x,y,transformX(xv+scale*vecv.x()),transformY(yv+scale*vecv.y()));
@@ -119,7 +134,7 @@ void JKQTPVectorFieldGraph::draw(JKQTPEnhancedPainter &painter)
                     }
                     return QLineF(JKQTP_NAN,JKQTP_NAN,JKQTP_NAN,JKQTP_NAN);
                 }();
-                if (JKQTPIsOKFloat(l)) {
+                if (JKQTPIsOKFloat(l) && l.length()>0) {
                     JKQTPPlotDecoratedLine(painter,l, getTailDecoratorStyle(), calcTailDecoratorSize(p.widthF()), getHeadDecoratorStyle(), calcHeadDecoratorSize(p.widthF()));
                 }
             }
@@ -144,14 +159,14 @@ QColor JKQTPVectorFieldGraph::getKeyLabelColor() const
     return getLineColor();
 }
 
-bool JKQTPVectorFieldGraph::getAutoscaleLength() const
+JKQTPVectorFieldGraph::VectorLengthMode JKQTPVectorFieldGraph::getVectorLengthMode() const
 {
-    return m_autoscaleLength;
+    return m_vectorLengthMode;
 }
 
-void JKQTPVectorFieldGraph::setAutoscaleLength(bool newAutoscaleLength)
+void JKQTPVectorFieldGraph::setVectorLengthMode(VectorLengthMode newMode)
 {
-    m_autoscaleLength = newAutoscaleLength;
+    m_vectorLengthMode = newMode;
 }
 
 double JKQTPVectorFieldGraph::getAutoscaleLengthFactor() const
