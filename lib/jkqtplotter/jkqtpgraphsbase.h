@@ -960,15 +960,15 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPSingleColumnGraph: public JKQTPGraph {
 /** \brief This virtual JKQTPGraph descendent extends JKQTPXYGraph with two additional columns that encode for a vector starting at (x,y), i.e. either two distances along the x- and y-axis (\f$ \Delta x, \Delta y \f$), or a rotation angle \f$ \alpha \f$ and a vector length \f$ \l \f$ .
  *  \ingroup jkqtplotter_basegraphs
  *
- *  \see
+ *  \see JKQTPVectorFieldGraph
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPXYAndVectorGraph: public JKQTPXYGraph {
     Q_OBJECT
 public:
     /** \brief values from this enum indicates how to interpret the data columns provided to this graph */
     enum VectorDataLayout {
-        DeltaXDeltaYLayout,
-        AngleAndLengthLayout,
+        DeltaXDeltaYLayout,   //!< \brief Data is given in the form of two vector components (along x- and y-axis)
+        AngleAndLengthLayout, //!< \brief Data is given in the form of an angle and a length that describe the vector together
 
         DefaultVectorDataLayout=DeltaXDeltaYLayout,
     };
