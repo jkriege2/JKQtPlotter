@@ -47,7 +47,7 @@ This software is licensed under the term of the [GNU Lesser General Public Licen
   - complete with GUI (table view)
   - export capabilities (e.g. to CSV, SYLK, ...)
   - C++ standard iterator interface
-  - [statistics library](http://jkriege2.github.io/JKQtPlotter/group__jkqtcommon__statistics__and__math.html) (basic statistics, boxplots, histograms, kernel density estimates, regression analysis, polynomial fitting)
+  - [statistics library](https://jkriege2.github.io/JKQtPlotter/group__jkqtptools__math__statistics.html) (basic statistics, boxplots, histograms, kernel density estimates, regression analysis, polynomial fitting)
 - large variety of [graphs](https://jkriege2.github.io/JKQtPlotter/group__jkqtplotter__concretegraphs.html) that can be added to a plot, e.g.:
   - [scatter plot](https://jkriege2.github.io/JKQtPlotter/group__jkqtplotter__linesymbolgraphs__scatter.html) and [parametrized scatter plots (e.g. bubble charts)](http://jkriege2.github.io/JKQtPlotter/group__jkqtplotter__linesymbolgraphs__param.html) 
   - [line graphs](https://jkriege2.github.io/JKQtPlotter/group__jkqtplotter__linesymbolgraphs__line.html), [step graphs](http://jkriege2.github.io/JKQtPlotter/class_j_k_q_t_p_special_line_horizontal_graph.html), [impulses](https://jkriege2.github.io/JKQtPlotter/group__jkqtplotter__sticks.html)
