@@ -79,10 +79,7 @@ There are also some subpage of general intetest:
 There is a [large set of usage examples (with explanations for each) and tutorials](https://jkriege2.github.io/JKQtPlotter/example_tutorial_projects.html) in the folder [`./examples/`](./examples).
 All test-projects are Qt-projects that use tcmake to build. Some of them are also available with additional qmake build-files.
 
-## [Screenshots](./screenshots/)
-The [Screenshots-page](./screenshots/) contains several screenshots, partly taken from the provided examples, but also from other software using this libarary (e.g. [QuickFit 3.0](https://github.com/jkriege2/QuickFit3))
-
-[![EXAMPLES-Page](./screenshots/screenshotsbanner.png)](./screenshots/README.md)
+In addition: The [Screenshots-folder](./screenshots/) contains several screenshots, partly taken from the provided examples, but also from other software using this libarary (e.g. [QuickFit 3.0](https://github.com/jkriege2/QuickFit3))
 
 ## Building Using CMake
 
