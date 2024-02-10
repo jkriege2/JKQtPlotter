@@ -27,7 +27,7 @@ This software is licensed under the term of the [GNU Lesser General Public Licen
 [![CodeQL](https://github.com/jkriege2/JKQtPlotter/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/jkriege2/JKQtPlotter/actions/workflows/codeql-analysis.yml)
 [![MSVC-CodeAnalysis](https://github.com/jkriege2/JKQtPlotter/actions/workflows/msvc-codeanalysis.yml/badge.svg)](https://github.com/jkriege2/JKQtPlotter/actions/workflows/msvc-codeanalysis.yml)
 
-[![EXAMPLES-Page](./screenshots/examplesbanner.png)](https://jkriege2.github.io/JKQtPlotter/example_tutorial_projects.html)
+[![EXAMPLES-Page](./doc/images/socialmediabanner.png)](http://jkriege2.github.io/JKQtPlotter/index.html)
 
 ## Main Features
 - 2D Plotter widget class [JKQTPlotter](http://jkriege2.github.io/JKQtPlotter/group__jkqtplotter.html):
