@@ -32,66 +32,21 @@
 #include "jkqtplotter/graphs/jkqtpbarchartbase.h"
 
 
-/*! \brief This implements a vertical bar graph with bars between \f$ y=\mbox{baseline} \f$ and \f$ y=f(x) \f$
-    \ingroup jkqtplotter_barcharts
-
-    This class plots a bargraph. This image explains the parameters:
-
-    \image html bargraph_basics.png
-
-    By default the shift parameter is, so the bar is centered at the x-value. The width is 0.9,
-    so adjacent bars are plotted with a small distance between them. It is possible to use these two parameters
-    to plot multiple bars for every x-value, by having on JKQTPSpecialLineHorizontalGraph object per
-    set of bars that belong together. For example for three bars per x-value one would set:
-    \verbatim
-          width=0.3
-          shift=-0.3 / 0 / +0.3
-    \endverbatim
-    This results in a bargraph, as shown here:
-
-    \image html JKQTPBarVerticalGraph.png
-
-
-    You can also set JKQTPBarGraphBase::FillMode::TwoColorFilling, which uses different fill styles for bars above and below
-    the baseline of the graph:
-
-    \image html JKQTPBarVerticalGraphTwoColorFilling.png
-
-   If you use JKQTPBarGraphBase::FillMode::FunctorFilling you can specify the fill style by a functor, e.g.
-   \code
-     graph->setFillMode(JKQTPBarGraphBase::FillMode::FunctorFilling);
-     graph->setFillBrushFunctor(
-       [](double key, double value) {
-         return QBrush(QColor::fromHsvF(key/12.0, 1.0, 1.0));
-       }
-     );
-   \endcode
-
-   The result may look like this:
-
-   \image html JKQTPBarVerticalGraphFunctorFilling.png
-
-
-   You can also completely customize the drawing by defining a custom draw functor:
-   \code
-     graph->setCustomDrawingFunctor(
-       [](JKQTPEnhancedPainter& painter, const QRectF& bar_px, const QPointF& datapoint, Qt::Orientation orientation, JKQTPBarGraphBase* graph) {
-         // draw the bar (if required), pen and brush are already set properly
-         painter.drawRect(bar_px);
-         // now we can add some decoration or replace the instruction above:
-         // ........
-       }
-     );
-     // enable usage of cutom draw functor
-     graph->setUseCustomDrawFunctor(true);
-   \endcode
-
-   See \ref JKQTPlotterBarchartsCustomDrawFunctor for a detailed example.
-   The result may look like this:
-
-   \image html JKQTPBarVerticalGraphCustomDrawFunctor.png
-
-   \see JKQTPBarHorizontalGraph, \ref JKQTPlotterBarcharts, jkqtpstatAddHHistogram1D(), jkqtpstatAddHHistogram1DAutoranged()
+/** \brief This implements a vertical bar graph with bars between \f$ y=\mbox{baseline} \f$ and \f$ y=f(x) \f$
+ *  \ingroup jkqtplotter_barcharts
+ *
+ *
+ *  This class draws vertical bargraphs. The basic properties are defined and documented with JKQTPBarGraphBase .
+ *
+ *  The a horizontal is defined by a series of datapoints \c (x,y=f(x)) .
+ *  Bars are then drawn fromm a baseline (often \c =0 ) to the value \c y=f(x) at each position \c x .
+ *  Thus the class is derived from JKQTPXYBaselineGraph, which provides a baseline as well as columns for \c x and \c y values.
+ *
+ *  \image html JKQTPBarVerticalGraph.png
+ *
+ *  \see \ref JKQTPlotterBarcharts, jkqtpstatAddHHistogram1D(), jkqtpstatAddHHistogram1DAutoranged()
+ *
+ *
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPBarVerticalGraph: public JKQTPBarGraphBase {
         Q_OBJECT
@@ -123,8 +78,12 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarVerticalGraph: public JKQTPBarGraphBase {
  *         and error indicator
  *  \ingroup jkqtplotter_barcharts
  *
- *  This works much the same as JKQTPBarHorizontalGraph. Here is an example output:
+ *  This works much the same as JKQTPBarHorizontalGraph, but also draws error indicators.
+ *  Here is an example output:
+ *
  *  \image html JKQTPBarVerticalErrorGraph.png
+ *
+ *  Error indicators are defined and styled with the functions from JKQTPYGraphErrors .
  *
  * \see jkqtpstatAddYErrorBarGraph(), JKQTPBarVerticalGraph, \ref JKQTPlotterBarcharts
  */
@@ -178,52 +137,20 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarVerticalErrorGraph: public JKQTPBarVertical
 
 
 
-/*! \brief This implements a horizontal bar graph with bars between \f$ x=\mbox{baseline} \f$ and \f$ x=f(y) \f$
-    \ingroup jkqtplotter_barcharts
-
-    This works much the same as JKQTPBarHorizontalGraph. Here is an example output:
-
-    \image html JKQTPBarHorizontalGraph.png
-
-    You can also set JKQTPBarGraphBase::FillMode::TwoColorFilling, which uses different fill styles for bars above and below
-    the baseline of the graph:
-
-    \image html JKQTPBarHorizontalGraphTwoColorFilling.png
-
-   If you use JKQTPBarGraphBase::FillMode::FunctorFilling you can specify the fill style by a functor, e.g.
-   \code
-     graph->setFillMode(JKQTPBarGraphBase::FillMode::FunctorFilling);
-     graph->setFillBrushFunctor(
-       [](double key, double value) {
-         return QBrush(QColor::fromHsvF(key/12.0, 1.0, 1.0));
-       }
-     );
-   \endcode
-
-   The result may look like this:
-
-   \image html JKQTPBarHorizontalGraphFunctorFilling.png
-
-   You can also completely customize the drawing by defining a custom draw functor:
-   \code
-     graph->setCustomDrawingFunctor(
-       [](JKQTPEnhancedPainter& painter, const QRectF& bar_px, const QPointF& datapoint, Qt::Orientation orientation, JKQTPBarGraphBase* graph) {
-         // draw the bar (if required), pen and brush are already set properly
-         painter.drawRect(bar_px);
-         // now we can add some decoration or replace the instruction above:
-         // ........
-       }
-     );
-     // enable usage of cutom draw functor
-     graph->setUseCustomDrawFunctor(true);
-   \endcode
-
-   See \ref JKQTPlotterBarchartsCustomDrawFunctor for a detailed example.
-   The result may look like this:
-
-   \image html JKQTPBarHorizontalGraphCustomDrawFunctor.png
-
-    \see \ref JKQTPlotterBarcharts, jkqtpstatAddVHistogram1D(), jkqtpstatAddVHistogram1DAutoranged()
+/** \brief This implements a horizontal bar graph with bars between \f$ x=\mbox{baseline} \f$ and \f$ x=f(y) \f$
+ *  \ingroup jkqtplotter_barcharts
+ *
+ *  This class draws horizontal bargraphs. The basic properties are defined and documented with JKQTPBarGraphBase .
+ *
+ *  The a horizontal is defined by a series of datapoints \c (y,x=f(y)) .
+ *  Bars are then drawn fromm a baseline (often \c =0 ) to the value \c x=f(y) at each position \c y.
+ *  Thus the class is derived from JKQTPXYBaselineGraph, which provides a baseline as well as columns for \c x and \c y values.
+ *
+ *  \image html JKQTPBarHorizontalGraph.png
+ *
+ *  \see \ref JKQTPlotterBarcharts, jkqtpstatAddVHistogram1D(), jkqtpstatAddVHistogram1DAutoranged()
+ *
+ *
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPBarHorizontalGraph: public JKQTPBarGraphBase {
         Q_OBJECT
@@ -262,8 +189,12 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarHorizontalGraph: public JKQTPBarGraphBase {
  *         and error indicator
  *  \ingroup jkqtplotter_barcharts
  *
- *  This works much the same as JKQTPBarHorizontalGraph. Here is an example output:
+ *  This works much the same as JKQTPBarHorizontalGraph, but also draws error indicators.
+ *  Here is an example output:
+ *
  *  \image html JKQTPBarHorizontalErrorGraph.png
+ *
+ * Error indicators are defined and styled by functions from JKQTPXGraphErrors.
  *
  * \see jkqtpstatAddXErrorBarGraph(), JKQTPBarHorizontalGraph, \ref JKQTPlotterBarcharts
  *

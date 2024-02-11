@@ -48,7 +48,7 @@ JKQTPBarVerticalGraph::JKQTPBarVerticalGraph(JKQTPlotter* parent):
 
 void JKQTPBarVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
-    JKQTPAutoOutputTimer jkaaot("JKQTPBarHorizontalGraph::draw");
+    JKQTPAutoOutputTimer jkaaot("JKQTPBarVerticalGraph::draw");
 #endif
     if (parent==nullptr) return;
     const JKQTPDatastore* datastore=parent->getDatastore();
