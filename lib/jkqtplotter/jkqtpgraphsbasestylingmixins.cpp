@@ -578,7 +578,7 @@ void JKQTPGraphTextStyleMixin::initTextStyle(JKQTBasePlotter *parent, int &/*par
         if (styletype==JKQTPPlotStyleType::Annotation) {
             m_textFontSize=parent->getCurrentPlotterStyle().graphsStyle.annotationStyle.defaultFontSize;
         } else {
-            m_textFontSize=QApplication::font().pointSizeF();
+            m_textFontSize=QApplication::font().pointSizeF()*1.2;
         }
     }
 }

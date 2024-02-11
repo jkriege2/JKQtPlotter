@@ -349,7 +349,7 @@ bool JKQTMathText::useFiraMath(bool mathModeOnly, bool useAsFallbackSymbol)
 {
     const JKQTMathTextFontSpecifier fira=JKQTMathTextFontSpecifier::getFIRAFamilies();
     bool res=false;
-    qDebug()<<"useFiraMath("<<mathModeOnly<<", "<<useAsFallbackSymbol<<")";
+    //qDebug()<<"useFiraMath("<<mathModeOnly<<", "<<useAsFallbackSymbol<<")";
 
     if (!mathModeOnly && !fira.fontName().isEmpty()) {
         setFontRoman(fira.fontName(), MTFEUnicode);
