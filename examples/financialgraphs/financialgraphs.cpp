@@ -10,7 +10,9 @@
 #include "jkqtplotter/graphs/jkqtpfinancial.h"
 #include "jkqtpexampleapplication.h"
 #include <random>
-
+#include <QDate>
+#include <QDateTime>
+#include <QTime>
 
 int main(int argc, char* argv[])
 {
