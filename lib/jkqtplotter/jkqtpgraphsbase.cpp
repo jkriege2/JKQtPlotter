@@ -1306,3 +1306,127 @@ bool JKQTPXYAndVectorGraph::getIndexRange(int &imin, int &imax) const
     }
     return ok;
 }
+
+JKQTPXGraph::JKQTPXGraph(JKQTBasePlotter *parent):
+    JKQTPGraph(parent), xColumn(-1), sortData(Unsorted)
+{
+
+}
+
+bool JKQTPXGraph::getXMinMax(double &minx, double &maxx, double &smallestGreaterZero)
+{
+    bool start=true;
+    minx=0;
+    maxx=0;
+    smallestGreaterZero=0;
+
+    if (parent==nullptr)  return false;
+
+    const JKQTPDatastore* datastore=parent->getDatastore();
+    int imin=0;
+    int imax=0;
+    getIndexRange(imin, imax);
+
+    for (int i=imin; i<imax; i++) {
+        double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
+        if (JKQTPIsOKFloat(xv)) {
+            if (start || xv>maxx) maxx=xv;
+            if (start || xv<minx) minx=xv;
+            double xvsgz;
+            xvsgz=xv; SmallestGreaterZeroCompare_xvsgz();
+            start=false;
+        }
+    }
+    return !start;
+}
+
+bool JKQTPXGraph::usesColumn(int column) const
+{
+    return (column==xColumn);
+}
+
+int JKQTPXGraph::getXColumn() const
+{
+    return xColumn;
+}
+
+JKQTPXGraph::DataSortOrder JKQTPXGraph::getDataSortOrder() const
+{
+    return sortData;
+}
+
+int JKQTPXGraph::getKeyColumn() const
+{
+    return getXColumn();
+}
+
+void JKQTPXGraph::setDataSortOrder(int __value)
+{
+    sortData=static_cast<DataSortOrder>(__value);
+}
+
+void JKQTPXGraph::setDataSortOrder(DataSortOrder __value)
+{
+    sortData=__value;
+}
+
+void JKQTPXGraph::setXColumn(int __value)
+{
+    xColumn = static_cast<int>(__value);
+}
+
+void JKQTPXGraph::setXColumn(size_t __value)
+{
+    xColumn = static_cast<int>(__value);
+}
+
+void JKQTPXGraph::setKeyColumn(int __value)
+{
+    setXColumn(__value);
+}
+
+void JKQTPXGraph::intSortData()
+{
+    sortedIndices.clear();
+
+
+
+    if (parent==nullptr)  return ;
+    if (sortData==JKQTPXYLineGraph::Unsorted) return ;
+
+    JKQTPDatastore* datastore=parent->getDatastore();
+    int imin=0;
+    int imax=0;
+    getIndexRange(imin, imax);
+
+    QVector<double> datas;
+
+    if (sortData==SortedX) {
+
+        for (int i=0; i<imax; i++) {
+            double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
+            sortedIndices<<i;
+            datas<<xv;
+        }
+
+        jkqtpQuicksortDual(datas.data(), sortedIndices.data(), datas.size());
+
+    }
+}
+
+bool JKQTPXGraph::getIndexRange(int &imin, int &imax) const
+{
+    if (parent==nullptr)  return false;
+    if (xColumn>=0) {
+        JKQTPDatastore* datastore=parent->getDatastore();
+        imin=0;
+        imax=static_cast<int>(datastore->getRows(static_cast<size_t>(xColumn)));
+        // ensure correct order, i.e. imin<=imax
+        if (imax<imin) qSwap(imin,imax);
+        // ranges are always >=0
+        if (imin<0) imin=0;
+        if (imax<0) imax=0;
+        return true;
+    }
+    return false;
+}

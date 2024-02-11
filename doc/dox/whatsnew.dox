@@ -131,6 +131,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: Base class JKQTPXYAndVectorGraph for graphs like vector fields, e.g. (x,y,dx,dy) or (x,y,angle,length) </li>
     <li>NEW: JKQTPVectorFieldGraph for drawing "simple" vector fields/quiver plots (+example \ref JKQTPlotterVectorFieldExample)</li>
     <li>NEW: JKQTPParametrizedVectorFieldGraph for drawing color-coded vector fields/quiver plots (+example \ref JKQTPParametrizedVectorFieldGraphExample)</li>
+    <li>NEW: JKQTPFinancialGraph for drawing candlestick or OHLC graphs of financial data, such as stock amrket prices (+example \ref JKQTPlotterFinancialChartExample)</li>
   </ul></li>
   
   <li>JKQTMathText:<ul>

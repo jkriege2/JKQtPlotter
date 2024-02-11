@@ -60,6 +60,7 @@ This software is licensed under the term of the [GNU Lesser General Public Licen
   - large variety of [image plots](http://jkriege2.github.io/JKQtPlotter/group__jkqtplotter__imagelots.html) (inclusing different color-scale modes, RGBA-plots, overlays/masks)
   - [contour plots](https://jkriege2.github.io/JKQtPlotter/group__jkqtplotter__imagelots__contour.html)
   - [vector field graphs/quiver plots](https://jkriege2.github.io/JKQtPlotter/group__jkqtplotter__vectorfieldgraphs.html)
+  - [financial graphs (candlestick/OHLC)](https://jkriege2.github.io/JKQtPlotter/group__jkqtplotter__financialgraphs.html)
   - [geometric forms](http://jkriege2.github.io/JKQtPlotter/group__jkqtplotter__geoplots.html) / [annotations](http://jkriege2.github.io/JKQtPlotter/group__jkqtplotter__annotations.html)
   - can be easily extended by deriving a new graph from [JKQTPPlotElement](http://jkriege2.github.io/JKQtPlotter/class_j_k_q_t_p_plot_element.html), [JKQTPPlotAnnotationElement](http://jkriege2.github.io/JKQtPlotter/class_j_k_q_t_p_plot_annotation_element.html), [JKQTPGeometricPlotElement](http://jkriege2.github.io/JKQtPlotter/class_j_k_q_t_p_geometric_plot_element.html), [JKQTPGraph](http://jkriege2.github.io/JKQtPlotter/class_j_k_q_t_p_graph.html)
 - optional: [OpenCV interface](http://jkriege2.github.io/JKQtPlotter/group__jkqtpinterfaceopencv.html), [CImg interfaces](http://jkriege2.github.io/JKQtPlotter/group__jkqtpinterfacecimg.html)

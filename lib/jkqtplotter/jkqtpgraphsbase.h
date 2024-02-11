@@ -1092,4 +1092,102 @@ protected:
     virtual bool getIndexRange(int &imin, int &imax) const override;
 };
 
+
+
+/** \brief This virtual JKQTPGraph descendent may be used as base for all graphs that use at least one column
+ *         that specifies x coordinates for the single plot points.
+ *  \ingroup jkqtplotter_basegraphs
+ *
+ *  This class implements basic management facilities for the data columns:
+ *    - setXColumn() to set the columns to be used for the graph data
+ *    - setDataSortOrder() to specify whether and how the data should be sorted before drawing
+ *      \image html jkqtplotter_unsorted.png "Unsorted Data"
+ *      \image html jkqtplotter_sortedx.png "Data sorted along x-axis (DataSortOrder::SortedX)"
+ *  .
+ *
+ *  ... and overrides/implements the functions:
+ *    - getXMinMax()
+ *    - usesColumn()
+ *  .
+ *
+ */
+class JKQTPLOTTER_LIB_EXPORT JKQTPXGraph: public JKQTPGraph {
+    Q_OBJECT
+public:
+    /** \brief specifies how to sort the data in a JKQTPXGraph before drawing
+     *
+     * \image html jkqtplotter_unsorted.png "Unsorted Data"
+     *
+     * \image html jkqtplotter_sortedx.png "Data sorted along x-axis (DataSortOrder::SortedX)"
+     */
+    enum DataSortOrder {
+        Unsorted=0, /*!< \brief the data for a JKQTPXYGraph is not sorted before drawing */
+        SortedX=1, /*!< \brief the data for a JKQTPXYGraph is sorted so the x-values appear in ascending before drawing */
+    };
+    Q_ENUM(DataSortOrder)
+
+
+    /** \brief class constructor */
+    JKQTPXGraph(JKQTBasePlotter* parent=nullptr);
+
+    /** \copydoc JKQTPGraph::getXMinMax() */
+    virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
+
+    /** \copydoc JKQTPGraph::usesColumn() */
+    virtual bool usesColumn(int column) const override;
+
+    /** \copydoc xColumn */
+    int getXColumn() const;
+    /** \copydoc sortData */
+    DataSortOrder getDataSortOrder() const;
+    /** \brief returns the column used as "key" for the current graph (typically this call getXColumn(), but for horizontal graphs like filled curves or barcharts it may call getYColumn() ) */
+    virtual int getKeyColumn() const;
+
+    Q_PROPERTY(DataSortOrder sortData READ getDataSortOrder WRITE setDataSortOrder)
+    Q_PROPERTY(int xColumn READ getXColumn WRITE setXColumn)
+
+
+public Q_SLOTS:
+    /** \copydoc sortData */
+    void setDataSortOrder(int __value);
+    /** \copydoc sortData */
+    void setDataSortOrder(DataSortOrder  __value);
+    /** \copydoc xColumn */
+    void setXColumn(int __value);
+    /** \copydoc xColumn */
+    void setXColumn (size_t __value);
+    /** \brief sets the column used as "key" for the current graph (typically this call setXColumn(), but for horizontal graphs like filled curves or barcharts it may call setYColumn() ) */
+    virtual void setKeyColumn(int __value);
+protected:
+
+    /** \brief the column that contains the x-component of the datapoints */
+    int xColumn;
+
+    /** \brief if \c !=Unsorted, the data is sorted before plotting */
+    DataSortOrder sortData;
+    /** \brief this array contains the order of indices, in which to access the data in the data columns */
+    QVector<int> sortedIndices;
+    /** \brief sorts data according to the specified criterion in \a sortData ... The result is stored as a index-map in sorted Indices */
+    virtual void intSortData();
+    /** \brief returns the index of the i-th datapoint (where i is an index into the SORTED datapoints)
+     *
+     * This function can beu used to get the correct datapoint after sorting the datapoints,
+     * As sorting is done by sorting an index and not reordering the data in the columns themselves.
+     *
+     * \see setDataSortOrder(), getDataSortOrder()
+     * */
+    inline int getDataIndex(int i) const {
+        if (sortData==Unsorted) return i;
+        return sortedIndices.value(i,i);
+    }
+
+    /** \brief determines the range of row indexes available in the data columns of this graph
+     *
+     * \param[out] imin first usable row-index
+     * \param[out] imax last usable row-index
+     *  \return \c true on success and \c false if the information is not available
+     */
+    virtual bool getIndexRange(int &imin, int &imax) const;
+};
+
 #endif // JKQTPGRAPHSBASE_H

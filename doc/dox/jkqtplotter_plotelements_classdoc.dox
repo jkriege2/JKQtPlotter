@@ -303,6 +303,20 @@ This group assembles graphs that represent vector fields (i.e. sets of quadruple
 </table>
 
 
+
+\defgroup jkqtplotter_financialgraphs Financial Graphs
+\ingroup jkqtplotter_concretegraphs
+
+This group assembles graphs that represent financial data (such as price mmovement of stocks, derivatives, ... and other traded goods)  in a plot:
+<table>
+    <tr>
+      <th> Screenshot
+      <th> Classes
+    <tr>
+      <td>\image html financialgraphs_small.png
+      <td> JKQTPFinancialGraph
+</table>
+
 \defgroup jkqtplotter_imagelots Matrix/Image Plotting
 \ingroup jkqtplotter_concretegraphs
 

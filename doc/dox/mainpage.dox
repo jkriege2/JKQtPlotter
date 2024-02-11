@@ -42,6 +42,7 @@
   - \ref jkqtplotter_imagelots_elements "extensive library of image plots" (inclusing different color-scale modes, RGBA-plots, overlays/masks)
   - \ref jkqtplotter_imagelots_contour "contour plots"
   - \ref jkqtplotter_vectorfieldgraphs "vector field plots"
+  - \ref jkqtplotter_financialgraphs "financial charts (candlestick, OHLC, ...)
   - \ref jkqtplotter_geoplots "geometric forms/annotations"
   - can be easily extended by deriving a new graph from JKQTPPlotElement or JKQTPGeometricPlotElement
 - <b>OPTIONAL: Interfaces to external libraries</b>

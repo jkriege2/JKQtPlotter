@@ -247,6 +247,7 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         graphlabels/graphlabels,graphlabels_hor
         vectorfield
         paramvectorfield
+        financialgraphs
     )
 
 
@@ -277,6 +278,7 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         graphlabels/JKQTPGLabelAwayFromXAxis,JKQTPGLabelAwayFromYAxis,JKQTPGLabelTowardsXAxis,JKQTPGLabelTowardsYAxis,JKQTPGLabelAboveData,JKQTPGLabelRightHandSide,JKQTPGLabelBelowData,JKQTPGLabelLeftHandSide,JKQTPGLabelCenteredOnData,JKQTPGLabelCenteredOnDataVertical,JKQTPGLSimpleBox,JKQTPGLSimpleBoxVertical,JKQTPGLSimpleBoxAndLine,JKQTPGLSimpleBoxAndLineVertical,JKQTPGLSimpleBoxAndLineONLYLABELS,JKQTPGLSimpleBoxAndLineONLYLABELSVertical/--iteratefunctorsteps--smallscreenshotplot
         vectorfield/JKQTPVectorFieldGraph,JKQTPVectorFieldGraphAnchorBottom,JKQTPVectorFieldGraphAnchorMid,JKQTPVectorFieldGraphAnchorTip,JKQTPVectorFieldGraphAutoscaleLength,JKQTPVectorFieldGraphLengthFromData,JKQTPVectorFieldGraphIgnoreLength,JKQTPVectorFieldGraphIgnoreLengthAutoscaleLineWidthFromLength,JKQTPVectorFieldGraphAutoscaleLengthAutoscaleLineWidthFromLength/--iteratefunctorsteps
         paramvectorfield/JKQTPParametrizedVectorFieldGraph,JKQTPParametrizedVectorFieldGraphColorFromMagnitude,JKQTPParametrizedVectorFieldGraphColorFromAngle,JKQTPParametrizedVectorFieldGraphDefaultColor/--iteratefunctorsteps
+        financialgraphs/JKQTPFinancialGraph,JKQTPFinancialGraphCandleStick,JKQTPFinancialGraphSetCandlestickTwoColor,JKQTPFinancialGraphSetCandlestickTwoColor2,JKQTPFinancialGraphSetCandlestickOneColor,JKQTPFinancialGraphOHLC,JKQTPFinancialGraphSetOHLCTwoColor,JKQTPFinancialGraphSidyBySide/--iteratefunctorsteps
     )
 
 

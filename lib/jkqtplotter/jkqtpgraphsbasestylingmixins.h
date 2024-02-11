@@ -55,7 +55,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphLineStyleMixin {
         JKQTPGraphLineStyleMixin();
         /** \brief initiaize the line style (from the parent plotter) */
         void initLineStyle(JKQTBasePlotter *parent, int &parentPlotStyle, JKQTPPlotStyleType styletype=JKQTPPlotStyleType::Default);
-
         virtual ~JKQTPGraphLineStyleMixin();
 
         /** \brief set the color of the graph line */
@@ -64,6 +63,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphLineStyleMixin {
         void setLineColor(const QColor & __value, double alpha);
         /** \brief get the color of the graph line */
         QColor getLineColor() const;
+        /** \brief sets the line-color as an inverted version of the given color */
+        void setLineColorInvertedFrom(QColor __noninvertedColor);
 
         /** \brief set the style of the graph line */
         void setLineStyle(Qt::PenStyle __value);

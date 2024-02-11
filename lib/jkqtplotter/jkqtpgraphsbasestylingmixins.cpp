@@ -77,6 +77,19 @@ QColor JKQTPGraphLineStyleMixin::getLineColor() const
     return m_linePen.color();
 }
 
+void JKQTPGraphLineStyleMixin::setLineColorInvertedFrom(QColor __noninvertedColor)
+{
+#if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
+    float h=0,s=0,v=0,a=0;
+#else
+    qreal h=0,s=0,v=0,a=0;
+#endif
+    __noninvertedColor.getHsvF(&h, &s, &v, &a);
+    h=std::fmod(h+120.0/360.0, 1.0);
+    __noninvertedColor.setHsvF(h,s,v,a);
+    setLineColor(__noninvertedColor);
+}
+
 void JKQTPGraphLineStyleMixin::setLineStyle(Qt::PenStyle __value)
 {
     m_linePen.setStyle(__value);

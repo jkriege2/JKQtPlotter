@@ -13,6 +13,7 @@ target_sources(${lib_name} PRIVATE
     jkqtpevaluatedfunctionbase.cpp
     jkqtpevaluatedfunction.cpp
     jkqtpfilledcurve.cpp
+    jkqtpfinancial.cpp
     jkqtpgeometric.cpp
     jkqtpgeoannotations.cpp
     jkqtpgeobase.cpp
@@ -44,6 +45,7 @@ target_sources(${lib_name} PUBLIC FILE_SET HEADERS TYPE HEADERS
       jkqtpevaluatedfunctionbase.h
       jkqtpevaluatedfunction.h
       jkqtpfilledcurve.h
+      jkqtpfinancial.h
       jkqtpgeometric.h
       jkqtpgeoannotations.h
       jkqtpgeobase.h
