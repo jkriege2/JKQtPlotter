@@ -248,6 +248,8 @@ JKQTPParametrizedVectorFieldGraph::JKQTPParametrizedVectorFieldGraph(JKQTBasePlo
     JKQTPColorPaletteStyleAndToolsMixin(parent),
     m_colorColumn(-1),
     m_colorColumnContainsRGB(false),
+    m_intColMin(0),
+    m_intColMax(0),
     m_vectorColorMode(ColorFromMagnitude)
 {
     palette=JKQTPMathImageMATLAB;
