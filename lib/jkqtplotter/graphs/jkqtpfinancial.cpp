@@ -31,7 +31,11 @@
 
 
 
+QSet<JKQTBasePlotter*> JKQTPFinancialGraph::parentsAlreadySeen={};
 
+void JKQTPFinancialGraph::clearColorAssignStore() {
+    parentsAlreadySeen.clear();
+}
 
 
 JKQTPFinancialGraph::JKQTPFinancialGraph(JKQTBasePlotter* parent):
@@ -45,24 +49,31 @@ JKQTPFinancialGraph::JKQTPFinancialGraph(JKQTBasePlotter* parent):
     shift(0)
 
 {
-    m_fillStylePositive.initFillStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Boxplot);
-    m_fillStyleNegative.initFillStyleInvertedColor(&m_fillStylePositive);
+    //qDebug()<<"1: pos: "<<m_lineStylePositive.getLineColor()<<", fill: "<<m_fillStylePositive.getFillColor();
+    //qDebug()<<"1: neg: "<<m_lineStyleNegative.getLineColor()<<", fill: "<<m_fillStyleNegative.getFillColor();
+    m_fillStylePositive.initFillStyle(parent, parentPlotStyle, JKQTPPlotStyleType::FinancialPositive);
+    m_fillStyleNegative.initFillStyle(parent, parentPlotStyle, JKQTPPlotStyleType::FinancialNegative);
 
-    m_lineStylePositive.initLineStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Boxplot);
-    m_lineStyleNegative.initLineStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Boxplot);
-    m_lineStyleNegative.setLineColor(m_fillStyleNegative.getFillColor());
+    m_lineStylePositive.initLineStyle(parent, parentPlotStyle, JKQTPPlotStyleType::FinancialPositive);
+    m_lineStyleNegative.initLineStyle(parent, parentPlotStyle, JKQTPPlotStyleType::FinancialNegative);
+    //qDebug()<<"2: pos: "<<m_lineStylePositive.getLineColor()<<", fill: "<<m_fillStylePositive.getFillColor();
+    //qDebug()<<"2: neg: "<<m_lineStyleNegative.getLineColor()<<", fill: "<<m_fillStyleNegative.getFillColor();
 
-    static QSet<JKQTBasePlotter*> parentsAlreadySeen;
-    if (!parentsAlreadySeen.contains(parent)) {
+
+
+    if (parent && !parentsAlreadySeen.contains(parent)) {
         // ensure, the first graph in a plot has default red/green colors
         // further plots will have colors
-        m_fillStylePositive.setFillColor(QColor("darkgreen"));
-        m_fillStyleNegative.setFillColor(QColor("maroon"));
-        m_lineStylePositive.setLineColor(QColor("darkgreen"));
-        m_lineStyleNegative.setLineColor(QColor("maroon"));
+        //qDebug()<<"FIRST!"<<parent;
+        m_fillStylePositive.setFillColor(parent->getCurrentPlotterStyle().graphsStyle.financialStyle.positiveDefaultColor);
+        m_fillStyleNegative.setFillColor(parent->getCurrentPlotterStyle().graphsStyle.financialStyle.negativeDefaultColor);
+        m_lineStylePositive.setLineColor(parent->getCurrentPlotterStyle().graphsStyle.financialStyle.positiveDefaultColor);
+        m_lineStyleNegative.setLineColor(parent->getCurrentPlotterStyle().graphsStyle.financialStyle.negativeDefaultColor);
     }
     parentsAlreadySeen.insert(parent);
 
+    //qDebug()<<"3: pos: "<<m_lineStylePositive.getLineColor()<<", fill: "<<m_fillStylePositive.getFillColor();
+    //qDebug()<<"3: neg: "<<m_lineStyleNegative.getLineColor()<<", fill: "<<m_fillStyleNegative.getFillColor();
 }
 
 

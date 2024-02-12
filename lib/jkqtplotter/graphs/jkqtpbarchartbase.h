@@ -223,6 +223,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarGraphBase: public JKQTPXYBaselineGraph, pub
         bool usesCustomDrawFunctor() const;
         /** \copydoc m_drawBaseline */
         bool getDrawBaseline() const;
+        /** \copydoc m_stackSeparation */
+        double getStackSeparation() const;
         /** \copydoc m_baselineStyle */
         JKQTPGraphLineStyleMixin &baselineStyle();
         /** \copydoc m_baselineStyle */
@@ -255,10 +257,31 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarGraphBase: public JKQTPXYBaselineGraph, pub
          *  \param shrinkFactor factor, by which the bar are shrinked compared to the available space
          *
          *  \note This function will scale ALL graphs of the parent plot, which were derived from JKQTPBarHorizontalGraph, that match in orientation (as returned by isHorizontal() ).
+         *
+         *  Using \c autoscaleBarWidthAndSHift(0.75,1.0) You can separate the different groups by soe distance, but the bars touch each other:
+         *
+         *  \image html JKQTPBarVerticalAutoscaleMaxWidthOnly.png
+         *
+         *  On the other hand, using the other extreme \c autoscaleBarWidthAndSHift(1.0,0.9) there is no grouping of the bars, but they have a slight distance between each other.
+         *
+         *  \image html JKQTPBarVerticalAutoscaleShrinkOnly.png
+         *
+         *  Finally the default parameters \c autoscaleBarWidthAndSHift(0.75,0.9) will lead to a separation of the bars AND a grouping:
+         *
+         *  \image html JKQTPBarVerticalGraph.png
+         *
          */
-        virtual void autoscaleBarWidthAndShift(double maxWidth=0.9, double shrinkFactor=0.8);
+        virtual void autoscaleBarWidthAndShift(double maxWidth=0.75, double shrinkFactor=0.9);
 
-        /** \brief equivalent to \c autoscaleBarWidthAndShift(groupWidth,1);
+        /** \brief equivalent to \c autoscaleBarWidthAndShift(groupWidth,0.9);
+         *
+         *  The default parameters \c autoscaleBarWidthAndShiftSeparatedGroups(0.75) will lead to a separation of the bars AND a grouping:
+         *
+         *  \image html JKQTPBarVerticalGraph.png
+         *
+         *  On the other hand, using \c autoscaleBarWidthAndShiftSeparatedGroups(1.0) there is no grouping of the bars, but they have a slight distance between each other.
+         *
+         *  \image html JKQTPBarVerticalAutoscaleShrinkOnly.png
          */
         void autoscaleBarWidthAndShiftSeparatedGroups(double groupWidth=0.75);
         /** \copydoc shift */
@@ -268,6 +291,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarGraphBase: public JKQTPXYBaselineGraph, pub
         /** \copydoc m_drawBaseline */
         void setDrawBaseline(bool __value);
 
+        /** \copydoc m_stackSeparation */
+        void setStackSeparation(double __value);
         /** \copydoc rectRadiusAtValue */
         void setRectRadiusAtValue(double __value);
         /** \copydoc rectRadiusAtBaseline */
@@ -302,13 +327,19 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarGraphBase: public JKQTPXYBaselineGraph, pub
         /** \brief the width of the bargraphs, relative to the distance between the current and the next x-value
          *
          * See the following graphic to understand this concept:
-         *     \image html bargraph_basics.png
+         *     \image html bargraph_basics_width.png
+         *
+         * \note this parameter can be combined with shift !
+         *
+         * \see setWidth(), getWidth(), setShift(), getShift(), shift, autoscaleBarWidthAndShift(), autoscaleBarWidthAndShiftSeparatedGroups()
          */
         double width;
         /** \brief the shift of the bargraphs, relative to the distance between the current and the next x-value
          *
          * See the following graphic to understand this concept:
          *     \image html bargraph_basics.png
+         *
+         * \see setShift(), getShift(), setWidth(), getWidth(), autoscaleBarWidthAndShift(), autoscaleBarWidthAndShiftSeparatedGroups()
          */
         double shift;
         /** \brief corner radius (in pt) for bars at the "value" end */
@@ -329,6 +360,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarGraphBase: public JKQTPXYBaselineGraph, pub
          *  \see baselineStyle() , setDrawBaseline() , m_baselineStyle
          */
         bool m_drawBaseline;
+        /** \brief separation (in pt) between two bars in a stack of bars */
+        double m_stackSeparation;
         /** \brief specifies how the area of the graph is filles
          *
          *  \note If any fill style other than FillStyle::SingleFill is used, the peroperty m_lineColorDerivationModeForSpecialFill
@@ -411,7 +444,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarGraphBase: public JKQTPXYBaselineGraph, pub
         virtual FillBrushFunctor constructFillBrushFunctor() const;
 
         /** \brief this function is used by autoscaleBarWidthAndShift() to determine whether a given graph shall be taken into account when autoscaling. 
-		 *         Typically this returns \c true for all JKQTPBarGraphBase-derved objects with the same orientation (horizontal or vertical) */
+         *         Typically this returns \c true for all JKQTPBarGraphBase-derived objects with the same orientation (horizontal or vertical). For stacked
+         *         graphs it excludes everything except the bottom of the stack
+         */
         virtual bool considerForAutoscaling( JKQTPBarGraphBase* other) const=0;
 
         /** \brief used to generate stacked plots: returns the upper boundary of the parent plot in a stack, for the index-th datapoint */
@@ -434,7 +469,23 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarGraphBase: public JKQTPXYBaselineGraph, pub
 
 
 
+/** \brief This is an interface-class for all stackable bargraphs ... it is used internally for autoscaling only
+ *  \ingroup jkqtplotter_barcharts
+ *
+ *  \c dynamic_cast 'ing to this indicates that a barchart is stackable.
+ *
+ *
+ */
+class JKQTPLOTTER_LIB_EXPORT JKQTPBarGraphStackInternalInterface {
+public:
+    inline virtual ~JKQTPBarGraphStackInternalInterface() {};
+protected:
 
+    /** \brief returns the barchart at the bottom of this stack (i.e. traverses the stack until there are no more parents */
+    virtual JKQTPBarGraphBase* getBottomOfStack()=0;
+
+    friend class JKQTPBarGraphBase;
+};
 
 
 

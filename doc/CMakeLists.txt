@@ -260,7 +260,7 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         stackedbars/JKQTPbarVerticalGraphStacked,JKQTPbarHorizontalGraphStacked/--smallscreenshotplot
         scatter/JKQTPXYScatterGraph,JKQTPXYScatterErrorGraph/--smallscreenshotplot
         simpletest/JKQTPXYLineGraph/--smallscreenshotplot
-        barchart/JKQTPBarVerticalGraph,JKQTPBarHorizontalGraph,JKQTPBarVerticalGraphNoBaseline,JKQTPBarHorizontalGraphNoBaseline,JKQTPBarVerticalGraphBaseline,JKQTPBarHorizontalGraphBaseline/--iteratefunctorsteps--smallscreenshotplot
+        barchart/JKQTPBarVerticalGraph,JKQTPBarHorizontalGraph,JKQTPBarVerticalGraphNoBaseline,JKQTPBarHorizontalGraphNoBaseline,JKQTPBarVerticalGraphBaseline,JKQTPBarHorizontalGraphBaseline,JKQTPBarVerticalAutoscaleShrinkOnly,JKQTPBarHorizontalAutoscaleShrinkOnly,JKQTPBarVerticalAutoscaleMaxWidthOnly,JKQTPBarHorizontalAutoscaleMaxWidthOnly/--iteratefunctorsteps--smallscreenshotplot
         barchart_twocolor/JKQTPBarVerticalGraphTwoColorFilling,JKQTPBarHorizontalGraphTwoColorFilling/--smallscreenshotplot
         barchart_errorbars/JKQTPBarVerticalErrorGraph,JKQTPBarHorizontalErrorGraph/--smallscreenshotplot
         barchart_functorfill/JKQTPBarVerticalGraphFunctorFilling,JKQTPBarHorizontalGraphFunctorFilling/--smallscreenshotplot

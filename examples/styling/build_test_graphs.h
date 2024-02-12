@@ -5,6 +5,7 @@
 #include "jkqtplotter/graphs/jkqtpbarchart.h"
 #include "jkqtplotter/graphs/jkqtpimage.h"
 #include "jkqtplotter/graphs/jkqtpgeometric.h"
+#include "jkqtplotter/graphs/jkqtpfinancial.h"
 #include "jkqtplotter/graphs/jkqtpgeoannotations.h"
 #include "jkqtplotter/graphs/jkqtpboxplot.h"
 #include "jkqtplotter/graphs/jkqtpfilledcurve.h"
@@ -30,6 +31,7 @@ inline void setupGridPrintingAndDatastores(QVector<JKQTBasePlotter*>& plots, QSi
 }
 
 inline void buildPlots(QVector<JKQTBasePlotter*>& plots) {
+    JKQTPFinancialGraph::clearColorAssignStore();
 
     // 0. get a pointer to the internal datastore (for convenience)
     JKQTPDatastore* ds=plots.first()->getDatastore();
@@ -41,7 +43,7 @@ inline void buildPlots(QVector<JKQTBasePlotter*>& plots) {
     ds->clear();
 
     // 2. now we create data for a simple plot (a sine curve)
-    QVector<double> X, Y1, Y2, img, X3, Y3, Y3err, Xbar, Ybar, Ybar2, Ybar3, Y4, Y5, XImp, YImp, XBP, MinBP, Q25BP, MeanBP, MedianBP, Q75BP, MaxBP;
+    QVector<double> X, Y1, Y2, img, X3, Y3, Y3err, Xbar, Ybar, Ybar2, Ybar2s1, Ybar2s2, Ybar3, Y4, Y5, XImp, YImp, XBP, MinBP, Q25BP, MeanBP, MedianBP, Q75BP, MaxBP, TFin, OFin1,CFin1,LFin1,HFin1, OFin2,CFin2,LFin2,HFin2;
     const int Ndata=50;
     for (int i=0; i<Ndata; i++) {
         const double x=double(i)/double(Ndata)*8.0*JKQTPSTATISTICS_PI;
@@ -58,7 +60,9 @@ inline void buildPlots(QVector<JKQTBasePlotter*>& plots) {
         if (i>0 && i%16==0) {
             Xbar<<x;
             Ybar<<(double(i+5)/double(Ndata)*(1.5));
-            Ybar2<<(double(i+5)/double(Ndata)*(1.2));
+            Ybar2<<(double(i+5)/double(Ndata)*(0.6));
+            Ybar2s1 << 0.1+(double(i+5)/double(Ndata)*(0.3));
+            Ybar2s2 << 0.5-(double(i+5)/double(Ndata)*(0.4));
             Ybar3<<(3.0-(double(i+5)/double(Ndata)*(3.7)));
         }
         if (i%8==0) {
@@ -73,6 +77,17 @@ inline void buildPlots(QVector<JKQTBasePlotter*>& plots) {
             MedianBP<<(i*1.2+3.5);
             Q75BP<<(i*1.3+6.0);
             MaxBP<<(i*1.35+7.5);
+        }
+        if (i<=10) {
+            TFin << (i+1);
+            OFin1 << CFin1.value(CFin1.size()-1,30)+3.0*sin(i);
+            CFin1 << OFin1.value(OFin1.size()-1,30)+3.0*cos(i);
+            HFin1 << qMax(OFin1.last(),CFin1.last())+2;
+            LFin1 << qMin(OFin1.last(),CFin1.last())-2;
+            OFin2 << CFin2.value(CFin2.size()-1,20)+2.0*cos(i);
+            CFin2 << OFin2.value(OFin2.size()-1,20)+2.0*sin(i);
+            HFin2 << qMax(OFin2.last(),CFin2.last())+2;
+            LFin2 << qMin(OFin2.last(),CFin2.last())-2;
         }
     }
     auto fgauss=[](double x, double y, double x0, double y0, double sx, double sy) {
@@ -99,6 +114,8 @@ inline void buildPlots(QVector<JKQTBasePlotter*>& plots) {
     size_t columnXbar=ds->addCopiedColumn(Xbar, "xbar");
     size_t columnYbar=ds->addCopiedColumn(Ybar, "ybar");
     size_t columnYbar2=ds->addCopiedColumn(Ybar2, "Ybar2");
+    size_t columnYbar2s1=ds->addCopiedColumn(Ybar2s1, "Ybar2, stack1");
+    size_t columnYbar2s2=ds->addCopiedColumn(Ybar2s2, "Ybar2, stack2");
     size_t columnYbar3=ds->addCopiedColumn(Ybar3, "Ybar3");
     size_t columnY4=ds->addCopiedColumn(Y4, "y4");
     size_t columnY5=ds->addCopiedColumn(Y5, "y5");
@@ -112,6 +129,8 @@ inline void buildPlots(QVector<JKQTBasePlotter*>& plots) {
     size_t columnMedianBP=ds->addCopiedColumn(MedianBP, "MedianBP");
     size_t columnQ75BP=ds->addCopiedColumn(Q75BP, "Q75BP");
     size_t columnMaxBP=ds->addCopiedColumn(MaxBP, "MaxBP");
+
+    size_t columnFinT=ds->addCopiedColumn(TFin, "FinT");
 
     // 4. create diverse graphs in the plot:
     JKQTPFilledCurveXGraph* graphf4=new JKQTPFilledCurveXGraph(plots[2]);
@@ -201,18 +220,33 @@ inline void buildPlots(QVector<JKQTBasePlotter*>& plots) {
     graphb->setTitle(QObject::tr("barchart"));
     plots[3]->addGraph(graphb);
 
-    JKQTPBarVerticalGraph* graphb2=new JKQTPBarVerticalGraph(plots[3]);
+    JKQTPBarVerticalStackableGraph* graphb2=new JKQTPBarVerticalStackableGraph(plots[3]);
     graphb2->setXColumn(columnXbar);
     graphb2->setYColumn(columnYbar2);
     graphb2->setTitle(QObject::tr("2^{nd} barchart"));
     plots[3]->addGraph(graphb2);
 
+    JKQTPBarVerticalStackableGraph* graphb2s1=new JKQTPBarVerticalStackableGraph(plots[3]);
+    graphb2s1->setXColumn(columnXbar);
+    graphb2s1->setYColumn(columnYbar2s1);
+    graphb2s1->setTitle(QObject::tr("3^{rd} barchart"));
+    plots[3]->addGraph(graphb2s1);
+    graphb2s1->stackUpon(graphb2);
+
+    JKQTPBarVerticalStackableGraph* graphb2s2=new JKQTPBarVerticalStackableGraph(plots[3]);
+    graphb2s2->setXColumn(columnXbar);
+    graphb2s2->setYColumn(columnYbar2s2);
+    graphb2s2->setTitle(QObject::tr("4^{th} barchart"));
+    plots[3]->addGraph(graphb2s2);
+    graphb2s2->stackUpon(graphb2s1);
+
     JKQTPBarVerticalGraph* graphb3=new JKQTPBarVerticalGraph(plots[3]);
     graphb3->setXColumn(columnXbar);
     graphb3->setYColumn(columnYbar3);
-    graphb3->setTitle(QObject::tr("3^{nd} barchart"));
+    graphb3->setTitle(QObject::tr("5^{th} barchart"));
     plots[3]->addGraph(graphb3);
     graphb3->autoscaleBarWidthAndShiftSeparatedGroups();
+    plots[3]->getMainKey()->setPosition(JKQTPKeyInsideTopLeft);
 
 
     JKQTPBoxplotVerticalGraph* graphBP=new JKQTPBoxplotVerticalGraph(plots[plots.size()/2]);
@@ -224,6 +258,26 @@ inline void buildPlots(QVector<JKQTBasePlotter*>& plots) {
     graphBP->setPercentile75Column(columnQ75BP);
     graphBP->setMaxColumn(columnMaxBP);
     plots[plots.size()/2]->addGraph(graphBP);
+
+
+    JKQTPFinancialGraph* graphF1=new JKQTPFinancialGraph(plots[plots.size()/2+1]);
+    graphF1->setXColumn(columnFinT);
+    graphF1->setOpenColumn(ds->addCopiedColumn(OFin1, "OFin1"));
+    graphF1->setHighColumn(ds->addCopiedColumn(HFin1, "HFin1"));
+    graphF1->setLowColumn(ds->addCopiedColumn(LFin1, "LFin1"));
+    graphF1->setCloseColumn(ds->addCopiedColumn(CFin1, "CFin1"));
+    graphF1->setGraphType(JKQTPFinancialGraph::OHLC);
+    graphF1->setTitle("OHLC");
+    plots[plots.size()/2+1]->addGraph(graphF1);
+    JKQTPFinancialGraph* graphF2=new JKQTPFinancialGraph(plots[plots.size()/2+1]);
+    graphF2->setXColumn(columnFinT);
+    graphF2->setOpenColumn(ds->addCopiedColumn(OFin2, "OFin2"));
+    graphF2->setHighColumn(ds->addCopiedColumn(HFin2, "HFin2"));
+    graphF2->setLowColumn(ds->addCopiedColumn(LFin2, "LFin2"));
+    graphF2->setCloseColumn(ds->addCopiedColumn(CFin2, "CFin2"));
+    graphF2->setGraphType(JKQTPFinancialGraph::CandleStick);
+    graphF2->setTitle("CandleStick");
+    plots[plots.size()/2+1]->addGraph(graphF2);
 
     auto plotgeo=*(plots.rbegin()+1);
     JKQTPGeoSymbol* annotSym=new JKQTPGeoSymbol(plotgeo, -1.5, 3);
@@ -253,6 +307,8 @@ inline void buildPlots(QVector<JKQTBasePlotter*>& plots) {
     plotgeo->setMaintainAxisAspectRatio(true);
     plotgeo->getXAxis()->setRange(-2.5,4);
     plotgeo->getYAxis()->setRange(-2.5,4);
+    plots[plots.size()/2+1]->getXAxis()->setAxisLabel("time");
+    plots[plots.size()/2+1]->getYAxis()->setAxisLabel("price [\\euro]");
 
 
     plots[0]->setPlotLabel("Line Graphs");
@@ -260,6 +316,7 @@ inline void buildPlots(QVector<JKQTBasePlotter*>& plots) {
     plots[2]->setPlotLabel("Filled Graphs");
     plots[3]->setPlotLabel("Bar Charts");
     plots[plots.size()/2]->setPlotLabel("Boxplots");
+    plots[plots.size()/2+1]->setPlotLabel("Financial Graphs");
     plotgeo->setPlotLabel("Geometry & Annotations");
     plots.last()->setPlotLabel("Image Plot");
 

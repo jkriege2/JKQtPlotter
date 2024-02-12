@@ -166,6 +166,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPFinancialGraph: public JKQTPXGraph {
         Q_PROPERTY(int lowColumn READ getLowColumn WRITE setLowColumn)
         Q_PROPERTY(FinancialGraphType graphType READ getGraphType WRITE setGraphType)
 
+        static void clearColorAssignStore();
     public Q_SLOTS:
 
         /** \brief finds all financial charts of the same orientation and determines width and shift, so they stand side by side
@@ -260,6 +261,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPFinancialGraph: public JKQTPXGraph {
         void setLowColumn (size_t __value);
 
     protected:
+        static QSet<JKQTBasePlotter*> parentsAlreadySeen;
         /** \brief type of the financial graph (OHLC or candle-stick)
          *
          *  \see setGraphType(), getGraphType(), FinancialGraphType

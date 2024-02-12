@@ -73,6 +73,8 @@ enum class JKQTPPlotStyleType {
     Impulses, /*!< impulse-type graphs  */
     Geometric, /*!< geometric elements (e.g. rectangles, circles, lines, ...) */
     Annotation, /*!< annotation elements */
+    FinancialPositive, /*!< financial positive elements */
+    FinancialNegative, /*!< financial negative elements */
 };
 
 /** \brief Styles in which to mark single positions during user actions in JKQTPlotter

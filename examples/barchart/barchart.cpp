@@ -66,7 +66,7 @@ std::vector<TCHART*> doExample(JKQTPlotter& plot, const QString& title)
     //    This function searches all JKQTPBarHorizontalGraph in the current
     //    plot and sets their shift/scale so they form a nice plot with
     //    side-by-side groups
-    graph1->autoscaleBarWidthAndShift(0.75, 1);
+    graph1->autoscaleBarWidthAndShift();
 
     if (dynamic_cast<JKQTPBarVerticalGraph*>(graph1)!=nullptr) {
         // 7. data is grouped into 5 numbere groups (1..5), but we also have string
@@ -126,6 +126,8 @@ int main(int argc, char* argv[])
         plotV.getYAxis()->setShowZeroAxis(false);
         plotH.getXAxis()->setShowZeroAxis(false);
         plotH.getYAxis()->setShowZeroAxis(false);
+        plotV.redrawPlot();
+        plotH.redrawPlot();
     });
 
     app.addExportStepFunctor([&](){
@@ -139,6 +141,42 @@ int main(int argc, char* argv[])
         plotV.getYAxis()->setShowZeroAxis(false);
         plotH.getXAxis()->setShowZeroAxis(false);
         plotH.getYAxis()->setShowZeroAxis(false);
+        plotV.redrawPlot();
+        plotH.redrawPlot();
+    });
+
+    app.addExportStepFunctor([&](){
+        for (auto g: gV) {
+            g->setDrawBaseline(false);
+        }
+        for (auto g: gH) {
+            g->setDrawBaseline(false);
+        }
+        gV[0]->autoscaleBarWidthAndShift(1,0.9);
+        gH[0]->autoscaleBarWidthAndShift(1,0.9);
+        plotV.getXAxis()->setShowZeroAxis(false);
+        plotV.getYAxis()->setShowZeroAxis(false);
+        plotH.getXAxis()->setShowZeroAxis(false);
+        plotH.getYAxis()->setShowZeroAxis(false);
+        plotV.redrawPlot();
+        plotH.redrawPlot();
+    });
+
+    app.addExportStepFunctor([&](){
+        for (auto g: gV) {
+            g->setDrawBaseline(false);
+        }
+        for (auto g: gH) {
+            g->setDrawBaseline(false);
+        }
+        gV[0]->autoscaleBarWidthAndShift(0.75,1);
+        gH[0]->autoscaleBarWidthAndShift(0.75,1);
+        plotV.getXAxis()->setShowZeroAxis(false);
+        plotV.getYAxis()->setShowZeroAxis(false);
+        plotH.getXAxis()->setShowZeroAxis(false);
+        plotH.getYAxis()->setShowZeroAxis(false);
+        plotV.redrawPlot();
+        plotH.redrawPlot();
     });
     return app.exec();
 }

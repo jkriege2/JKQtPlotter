@@ -40,7 +40,8 @@ JKQTPBarGraphBase::JKQTPBarGraphBase(JKQTBasePlotter* parent):
     shift(0),
     rectRadiusAtValue(0),
     rectRadiusAtBaseline(0),
-    m_drawBaseline(parent->getCurrentPlotterStyle().graphsStyle.barchartStyle.drawBaseline),
+    m_drawBaseline(false),
+    m_stackSeparation(1),
     m_fillMode(FillMode::SingleFilling),
     m_lineColorDerivationModeForSpecialFill(parent->getCurrentPlotterStyle().graphsStyle.barchartStyle.graphColorDerivationMode),
     m_useCustomDrawFunctor(false)
@@ -48,11 +49,15 @@ JKQTPBarGraphBase::JKQTPBarGraphBase(JKQTBasePlotter* parent):
     initFillStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Barchart);
     initLineStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Barchart);
     m_fillStyleBelow.initFillStyleInvertedColor(this);
-    m_baselineStyle.setLineColor(parent->getCurrentPlotterStyle().xAxisStyle.colorZeroAxis);
     m_baselineStyle.setLineStyle(Qt::SolidLine);
-    m_baselineStyle.setLineWidth(parent->getCurrentPlotterStyle().xAxisStyle.lineWidthZeroAxis);
-    rectRadiusAtBaseline= parent->getCurrentPlotterStyle().graphsStyle.barchartStyle.defaultRectRadiusAtBaseline;
-    rectRadiusAtValue= parent->getCurrentPlotterStyle().graphsStyle.barchartStyle.defaultRectRadiusAtValue;
+    if (parent) {
+        m_baselineStyle.setLineColor(parent->getCurrentPlotterStyle().xAxisStyle.colorZeroAxis);
+        m_baselineStyle.setLineWidth(parent->getCurrentPlotterStyle().xAxisStyle.lineWidthZeroAxis);
+        rectRadiusAtBaseline= parent->getCurrentPlotterStyle().graphsStyle.barchartStyle.defaultRectRadiusAtBaseline;
+        rectRadiusAtValue= parent->getCurrentPlotterStyle().graphsStyle.barchartStyle.defaultRectRadiusAtValue;
+        m_drawBaseline=parent->getCurrentPlotterStyle().graphsStyle.barchartStyle.drawBaseline;
+        m_stackSeparation=parent->getCurrentPlotterStyle().graphsStyle.barchartStyle.stackSeparation;
+    }
 }
 
 
@@ -86,11 +91,18 @@ QColor JKQTPBarGraphBase::getKeyLabelColor() const {
 void JKQTPBarGraphBase::autoscaleBarWidthAndShift(double maxWidth, double shrinkFactor)
 {
     if (parent) {
+        auto isStackBase=[](JKQTPBarGraphBase* other) {
+            const auto vg=dynamic_cast<JKQTPBarGraphStackInternalInterface*>(other);
+            return (vg && !other->hasStackParent());
+        };
+        auto isStackable=[](JKQTPBarGraphBase* other) {
+            return dynamic_cast<JKQTPBarGraphStackInternalInterface*>(other);
+        };
         double cntH=0;
         for (size_t i=0; i<parent->getGraphCount(); i++) {
             JKQTPPlotElement* g=parent->getGraph(i);
             JKQTPBarGraphBase* gb=qobject_cast<JKQTPBarGraphBase*>(g);
-            if (gb && considerForAutoscaling(gb)) {
+            if (gb && considerForAutoscaling(gb) && (isStackBase(gb) || !isStackable(gb))) {
                 cntH++;
             }
 
@@ -102,14 +114,28 @@ void JKQTPBarGraphBase::autoscaleBarWidthAndShift(double maxWidth, double shrink
         for (size_t i=0; i<parent->getGraphCount(); i++) {
             JKQTPPlotElement* g=parent->getGraph(i);
             JKQTPBarGraphBase* gb=qobject_cast<JKQTPBarGraphBase*>(g);
-            if (gb && considerForAutoscaling(gb)) {
+            if (gb && considerForAutoscaling(gb) && (isStackBase(gb) || !isStackable(gb))) {
                 if (cntH>1) {
                     gb->width=widthH;
                     gb->shift=h-0.5;
                     h=h+dH;
                 } else {
+
                     gb->width=maxWidth;
                     gb->shift=0.0;
+                }
+            }
+
+        }
+        for (size_t i=0; i<parent->getGraphCount(); i++) {
+            JKQTPPlotElement* g=parent->getGraph(i);
+            JKQTPBarGraphStackInternalInterface* gbo=dynamic_cast<JKQTPBarGraphStackInternalInterface*>(g);
+            JKQTPBarGraphBase* gb=qobject_cast<JKQTPBarGraphBase*>(g);
+            if (gbo && gb) {
+                auto stackBottom=gbo->getBottomOfStack();
+                if (g!=stackBottom && stackBottom) {
+                    gb->width=stackBottom->width;
+                    gb->shift=stackBottom->shift;
                 }
             }
 
@@ -118,7 +144,7 @@ void JKQTPBarGraphBase::autoscaleBarWidthAndShift(double maxWidth, double shrink
 }
 
 void JKQTPBarGraphBase::autoscaleBarWidthAndShiftSeparatedGroups(double groupWidth) {
-    autoscaleBarWidthAndShift(groupWidth, 1);
+    autoscaleBarWidthAndShift(groupWidth);
 }
 
 
@@ -184,9 +210,19 @@ void JKQTPBarGraphBase::setDrawBaseline(bool __value)
     m_drawBaseline=__value;
 }
 
+void JKQTPBarGraphBase::setStackSeparation(double __value)
+{
+    m_stackSeparation=__value;
+}
+
 bool JKQTPBarGraphBase::getDrawBaseline() const
 {
     return this->m_drawBaseline;
+}
+
+double JKQTPBarGraphBase::getStackSeparation() const
+{
+    return m_stackSeparation;
 }
 
 JKQTPGraphLineStyleMixin &JKQTPBarGraphBase::baselineStyle()

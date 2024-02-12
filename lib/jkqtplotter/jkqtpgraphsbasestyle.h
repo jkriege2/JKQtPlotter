@@ -273,6 +273,8 @@ public:
     double defaultRectRadiusAtBaseline;
     /** \brief indicates whether to draw a baseline (style is derived from axis style) */
     bool drawBaseline;
+    /** \brief separation between consecutive pars in a stack of bars [in pt] */
+    double stackSeparation;
 
 
 };
@@ -286,7 +288,7 @@ public:
 */
 class JKQTPLOTTER_LIB_EXPORT JKQTImpulseSpecificStyleProperties: public JKQTGraphsSpecificStyleProperties {
 #ifndef JKQTPLOTTER_WORKAROUND_QGADGET_BUG
-     Q_GADGET
+    Q_GADGET
 #endif
 public:
     explicit JKQTImpulseSpecificStyleProperties(const JKQTBasePlotterStyle& parent);
@@ -315,6 +317,61 @@ public:
 
     /** \brief indicates whether to draw a baseline (style is derived from axis style) */
     bool drawBaseline;
+
+
+};
+
+
+
+/** \brief Support Class for JKQTBasePlotter, which summarizes all properties that define the visual styling of impulse/stick graph elements
+*  \ingroup jkqtpplotter_styling_classes
+*
+*  \see JKQTBasePlotter, \ref jkqtpplotter_styling
+*/
+class JKQTPLOTTER_LIB_EXPORT JKQTFinancialSpecificStyleProperties: public JKQTGraphsSpecificStyleProperties {
+#ifndef JKQTPLOTTER_WORKAROUND_QGADGET_BUG
+    Q_GADGET
+#endif
+public:
+    explicit JKQTFinancialSpecificStyleProperties(const JKQTBasePlotterStyle& parent);
+    JKQTFinancialSpecificStyleProperties(const JKQTBasePlotterStyle& parent, const JKQTGraphsSpecificStyleProperties& other);
+    JKQTFinancialSpecificStyleProperties(const JKQTFinancialSpecificStyleProperties& other)=default;
+    JKQTFinancialSpecificStyleProperties(JKQTFinancialSpecificStyleProperties&& other)=default;
+    JKQTFinancialSpecificStyleProperties& operator=(const JKQTFinancialSpecificStyleProperties& other)=default;
+    JKQTFinancialSpecificStyleProperties& operator=(JKQTFinancialSpecificStyleProperties&& other)=default;
+
+
+    /** \brief loads the plot properties from a <a href="http://doc.qt.io/qt-5/qsettings.html")">QSettings</a> object
+        *
+        *  \param settings QSettings-object to read from
+        *  \param group Group in the QSettings-object to read from
+        *  \param defaultStyle If a setting cannot be found in \a settings, default values are taken from this object
+        *                      By default, this is a default-constructed object
+        */
+    void loadSettings(const QSettings &settings, const QString& group, const JKQTFinancialSpecificStyleProperties &defaultStyle);
+
+    /** \brief saves the plot properties into a <a href="http://doc.qt.io/qt-5/qsettings.html")">QSettings</a> object.
+        *
+        *  \param settings QSettings-object to save to
+        *  \param group Group in the QSettings-object to save to
+        */
+    void saveSettings(QSettings& settings, const QString& group) const;
+
+    /** \brief default color to use for the (first) financial graph, positive elements */
+    QColor positiveDefaultColor;
+    /** \brief default color to use for the (first) financial graph, negative elements */
+    QColor negativeDefaultColor;
+    /** \brief defines how to derive the basic graph color for negative elements in a new graph from the color selected from JKQTGraphsBaseStyle::defaultGraphColors
+         *
+         *  This property is usually JKQTPFFCMSameColor, but can be changed to allow to e.g. fill
+         *  barcharts always with a lighter color than the full color ...
+         */
+    JKQTPColorDerivationMode negativeGraphColorDerivationMode;
+    /** \brief graph fill style used for positive element */
+    JKQTFillStyleSummmary positiveFillStyle;
+    /** \brief graph fill style used for negative element */
+    JKQTFillStyleSummmary negativeFillStyle;
+
 
 
 };
@@ -374,6 +431,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTGraphsBaseStyle {
         JKQTGeometricSpecificStyleProperties geometricStyle;
 		/** \brief styling options for annotation elements */
 		JKQTAnnotationsSpecificStyleProperties annotationStyle;
+        /** \brief styling options for financial elements */
+        JKQTFinancialSpecificStyleProperties financialStyle;
 
         /** \brief returns defaultGraphStyle, barchartStyle, ..., depending on the value of \a type */
         const JKQTGraphsSpecificStyleProperties& getGraphStyleByType(JKQTPPlotStyleType type) const;

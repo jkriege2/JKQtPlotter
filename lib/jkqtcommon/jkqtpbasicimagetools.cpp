@@ -68,9 +68,9 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
         lst<<jkqtp_qRgbOpaque(0xBB0000);
         lst<<jkqtp_qRgbOpaque(0x00C11D);
         lst<<jkqtp_qRgbOpaque(0x0039D6);
-        lst<<jkqtp_qRgbOpaque(0xFFDD00);
-        lst<<jkqtp_qRgbOpaque(0xC05FFF);
         lst<<jkqtp_qRgbOpaque(0xDE7704);
+        lst<<jkqtp_qRgbOpaque(0xC05FFF);
+        lst<<jkqtp_qRgbOpaque(0xFFDD00);
         lst<<jkqtp_qRgbOpaque(0x03039A);
 
 

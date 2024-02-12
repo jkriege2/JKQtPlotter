@@ -265,7 +265,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarHorizontalErrorGraph: public JKQTPBarHorizo
  *
  * \see JKQTPBarVerticalGraph, \ref JKQTPlotterStackedBarChart
  */
-class JKQTPLOTTER_LIB_EXPORT JKQTPBarVerticalStackableGraph: public JKQTPBarVerticalGraph {
+class JKQTPLOTTER_LIB_EXPORT JKQTPBarVerticalStackableGraph: public JKQTPBarVerticalGraph, public JKQTPBarGraphStackInternalInterface {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -293,10 +293,13 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarVerticalStackableGraph: public JKQTPBarVert
         double getParentStackedMax(int index) const ;
 
 
-        /** \brief returns \c true, if a stack parent is set (if available) */
-        bool hasStackParent() const ;
+        /** \copydoc JKQTPBarGraphBase::hasStackParent() */
+        virtual bool hasStackParent() const override;
         /** \brief used to generate stacked plots: returns the upper boundary of this plot in a stack, for the index-th datapoint */
         double getStackedMax(int index) const;
+        /** \copydoc JKQTPBarGraphStackInternalInterface::getBottomOfStack() */
+        virtual JKQTPBarGraphBase* getBottomOfStack()  override;
+
 };
 
 
@@ -315,7 +318,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarVerticalStackableGraph: public JKQTPBarVert
  *
  * \see JKQTPBarHorizontalGraph, \ref JKQTPlotterStackedBarChart
  */
-class JKQTPLOTTER_LIB_EXPORT JKQTPBarHorizontalStackableGraph: public JKQTPBarHorizontalGraph {
+class JKQTPLOTTER_LIB_EXPORT JKQTPBarHorizontalStackableGraph: public JKQTPBarHorizontalGraph, public JKQTPBarGraphStackInternalInterface {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -342,10 +345,12 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarHorizontalStackableGraph: public JKQTPBarHo
         /** \brief used to generate stacked plots: returns the upper boundary of the parent plot in a stack, for the index-th datapoint */
         virtual double getParentStackedMax(int index) const override;
 
-        /** \brief returns \c true, if a stack parent is set (if available) */
+        /** \copydoc JKQTPBarGraphBase::hasStackParent() */
         virtual bool hasStackParent() const override;
         /** \brief used to generate stacked plots: returns the upper boundary of this plot in a stack, for the index-th datapoint */
         double getStackedMax(int index) const;
+        /** \copydoc JKQTPBarGraphStackInternalInterface::getBottomOfStack() */
+        virtual JKQTPBarGraphBase* getBottomOfStack()  override;
 };
 
 

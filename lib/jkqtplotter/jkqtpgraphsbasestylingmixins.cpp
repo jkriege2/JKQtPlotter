@@ -43,6 +43,22 @@ void JKQTPGraphLineStyleMixin::initLineStyle(JKQTBasePlotter* parent, int &paren
             m_lineWidth=m_linePen.widthF();
             m_highlightingLineColor=getLineColor();
             m_highlightingLineColor.setAlphaF(0.5);
+        } else if (styletype==JKQTPPlotStyleType::FinancialPositive) {
+            if (parentPlotStyle<0) parentPlotStyle=parent->getNextStyle();
+            const JKQTBasePlotter::JKQTPPen pen=parent->getPlotStyle(parentPlotStyle, styletype);
+            m_linePen.setColor(pen.color());
+            m_linePen.setStyle(Qt::SolidLine);
+            m_lineWidth=pen.widthF();
+            m_highlightingLineColor=getLineColor();
+            m_highlightingLineColor.setAlphaF(0.5);
+        } else if (styletype==JKQTPPlotStyleType::FinancialNegative) {
+            if (parentPlotStyle<0) parentPlotStyle=parent->getNextStyle();
+            const JKQTBasePlotter::JKQTPPen pen=parent->getPlotStyle(parentPlotStyle, styletype);
+            m_linePen.setColor(JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphsStyle.financialStyle.negativeGraphColorDerivationMode, pen.color()));
+            m_linePen.setStyle(Qt::SolidLine);
+            m_lineWidth=pen.widthF();
+            m_highlightingLineColor=getLineColor();
+            m_highlightingLineColor.setAlphaF(0.5);
         } else {
             if (parentPlotStyle<0) parentPlotStyle=parent->getNextStyle();
             const JKQTBasePlotter::JKQTPPen pen=parent->getPlotStyle(parentPlotStyle, styletype);
@@ -428,6 +444,16 @@ void JKQTPGraphFillStyleMixin::initFillStyle(JKQTBasePlotter *parent, int &paren
         if (styletype==JKQTPPlotStyleType::Annotation) {
             m_fillColor=JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphsStyle.annotationStyle.fillColorDerivationMode, parent->getCurrentPlotterStyle().graphsStyle.annotationStyle.defaultColor);
             m_fillBrush=parent->getCurrentPlotterStyle().graphsStyle.annotationStyle.defaultFillStyle.brush(m_fillColor);
+        } else if (styletype==JKQTPPlotStyleType::FinancialPositive) {
+            if (parentPlotStyle<0) parentPlotStyle=parent->getNextStyle();
+            const JKQTBasePlotter::JKQTPPen pen=parent->getPlotStyle(parentPlotStyle, styletype);
+            m_fillColor=pen.color();
+            m_fillBrush=parent->getCurrentPlotterStyle().graphsStyle.financialStyle.positiveFillStyle.brush(m_fillColor);
+        } else if (styletype==JKQTPPlotStyleType::FinancialNegative) {
+            if (parentPlotStyle<0) parentPlotStyle=parent->getNextStyle();
+            const JKQTBasePlotter::JKQTPPen pen=parent->getPlotStyle(parentPlotStyle, styletype);
+            m_fillColor=JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphsStyle.financialStyle.negativeGraphColorDerivationMode, pen.color());
+            m_fillBrush=parent->getCurrentPlotterStyle().graphsStyle.financialStyle.negativeFillStyle.brush(m_fillColor);
         } else {
             if (parentPlotStyle<0) parentPlotStyle=parent->getNextStyle();
             const JKQTBasePlotter::JKQTPPen pen=parent->getPlotStyle(parentPlotStyle, styletype);

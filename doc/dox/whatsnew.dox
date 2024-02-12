@@ -64,6 +64,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>FIXED/REWORKED issue <a href="https://github.com/jkriege2/JKQtPlotter/issues/111">#111: Can't write to PDF files with JKQTPlotter::saveImage() when passing a filename ending in ".pdf"</a> (thanks to <a href="https://github.com/fpalazzolo">user:fpalazzolo</a> for reporting):<br/>While fixing this issue, the functions JKQTBasePlotter::saveImage() etc. gained a bool return value to indicate whether sacing was successful.</li>
     <li>IMPROVED/FIXED outside space requirements for color bars. Text was sometime too close to the plot border.</li>
     <li>REWORKED JKQTBasePlotter::saveData() with a more consistent interface and a bool return value to indicate success or failure + improved documentation, added methods to JKQTPSaveDataAdapter that allow to specify file extensions and an ID for the plugin.</li>
+    <li>REWORKED: separation and gruping factor for barcharts on autoscaling</li>
     <li>REORGANIZED: separated line-graphs from jkqtpscatter.h/.cpp into jkqtplines.h/.cpp</li>
     <li>IMPROVED: QT6-compatibility by removing deprecated warnings</li>
     <li>IMPROVED: added missing override declarations</li>
@@ -132,6 +133,8 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: JKQTPVectorFieldGraph for drawing "simple" vector fields/quiver plots (+example \ref JKQTPlotterVectorFieldExample)</li>
     <li>NEW: JKQTPParametrizedVectorFieldGraph for drawing color-coded vector fields/quiver plots (+example \ref JKQTPParametrizedVectorFieldGraphExample)</li>
     <li>NEW: JKQTPFinancialGraph for drawing candlestick or OHLC graphs of financial data, such as stock amrket prices (+example \ref JKQTPlotterFinancialChartExample)</li>
+    <li>NEW: stacked barcharts may have a small separation (default 1pt)</li>
+    <li>NEW: autoscaling for barcharts works now, also when stacked and unstacked charts are combined in one plot</li>
   </ul></li>
   
   <li>JKQTMathText:<ul>

@@ -25,6 +25,7 @@
 #include <QDebug>
 #include <iostream>
 #include "jkqtplotter/jkqtptools.h"
+#include "jkqtcommon/jkqtpstringtools.h"
 #include "jkqtplotter/jkqtplotter.h"
 
 #define SmallestGreaterZeroCompare_xvsgz() if ((xvsgz>10.0*DBL_MIN)&&((smallestGreaterZero<10.0*DBL_MIN) || (xvsgz<smallestGreaterZero))) smallestGreaterZero=xvsgz;
@@ -58,6 +59,8 @@ void JKQTPBarVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
 
     const QPen p=getLinePenForRects(painter, parent);
     const auto fillFunctor=std::bind(constructFillBrushFunctor(), std::placeholders::_1, std::placeholders::_2, std::ref(painter), this);
+    const double stackSep=parent->pt2px(painter, getStackSeparation());
+    const double lw=parent->pt2px(painter, getLineWidth());
 
     int imax=0;
     int imin=0;
@@ -88,7 +91,7 @@ void JKQTPBarVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
             if (hasStackPar) {
                 double stackLastY=getParentStackedMax(i);
                 const double yvold=yv;
-                yv0=transformY(stackLastY)-(getLineWidth());
+                yv0=transformY(stackLastY)-stackSep;
                 yv=stackLastY+yvold;
             }
             if (sr<0 && lr<0) { // only one x-value
@@ -239,6 +242,9 @@ void JKQTPBarHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
 
     const QPen p=getLinePenForRects(painter, parent);
     const auto fillFunctor=std::bind(constructFillBrushFunctor(), std::placeholders::_1, std::placeholders::_2, std::ref(painter), this);
+    const double stackSep=parent->pt2px(painter, getStackSeparation());
+    const double lw=parent->pt2px(painter, getLineWidth());
+
 
     int imax=0;
     int imin=0;
@@ -270,7 +276,7 @@ void JKQTPBarHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
                 if (hasStackPar) {
                     double stackLastX=getParentStackedMax(i);
                     const double xvold=xv;
-                    xv0=transformX(stackLastX)+(getLineWidth());
+                    xv0=transformX(stackLastX)+stackSep;
                     xv=stackLastX+xvold;
                 }
 
@@ -600,6 +606,13 @@ double JKQTPBarVerticalStackableGraph::getStackedMax(int index) const
     }
 }
 
+
+JKQTPBarGraphBase *JKQTPBarVerticalStackableGraph::getBottomOfStack()
+{
+    if (stackParent) return stackParent->getBottomOfStack();
+    else return this;
+}
+
 JKQTPBarHorizontalStackableGraph::JKQTPBarHorizontalStackableGraph(JKQTBasePlotter *parent):
     JKQTPBarHorizontalGraph(parent), stackParent(nullptr)
 {
@@ -645,6 +658,13 @@ double JKQTPBarHorizontalStackableGraph::getStackedMax(int index) const
     } else {
         return stackParent->getStackedMax(index)+height;
     }
+}
+
+JKQTPBarGraphBase *JKQTPBarHorizontalStackableGraph::getBottomOfStack()
+{
+    if (stackParent) return stackParent->getBottomOfStack();
+    else return this;
+
 }
 
 double JKQTPBarHorizontalStackableGraph::getParentStackedMax(int index) const

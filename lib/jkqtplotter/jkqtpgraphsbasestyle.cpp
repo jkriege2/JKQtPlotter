@@ -35,6 +35,14 @@ void JKQTGraphsSpecificStyleProperties::modifyForDefaultStyle(JKQTPPlotStyleType
     switch(type) {
     case JKQTPPlotStyleType::Default:
         break;
+    case JKQTPPlotStyleType::FinancialNegative:
+        defaultLineWidth=1;
+        fillColorDerivationMode=JKQTPColorDerivationMode::JKQTPFFCMSameColor;
+        break;
+    case JKQTPPlotStyleType::FinancialPositive:
+        defaultLineWidth=1;
+        fillColorDerivationMode=JKQTPColorDerivationMode::JKQTPFFCMSameColor;
+        break;
     case JKQTPPlotStyleType::Filled:
         fillColorDerivationMode=JKQTPColorDerivationMode::JKQTPFFCMLighterAndTransparentColor;
         break;
@@ -95,6 +103,7 @@ void JKQTGraphsSpecificStyleProperties::saveSettings(QSettings &settings, const 
     settings.setValue(group+"error_color_mode", JKQTPColorDerivationMode2String(errorColorDerivationMode));
     settings.setValue(group+"error_fill_color_mode", JKQTPColorDerivationMode2String(errorFillColorDerivationMode));
     settings.setValue(group+"symbol_fill_color_mode", JKQTPColorDerivationMode2String(symbolFillColorDerivationMode));
+
 }
 
 
@@ -204,6 +213,7 @@ JKQTGraphsBaseStyle::JKQTGraphsBaseStyle(const JKQTBasePlotterStyle& parent):
     impulseStyle(parent),
     geometricStyle(parent),
     annotationStyle(parent),
+    financialStyle(parent),
     defaultPalette(JKQTPMathImageColorPalette::JKQTPMathImageMATLAB),
     defaultGraphColors(getDefaultGraphColors()),
     defaultGraphPenStyles(getDefaultGraphPenStyles()),
@@ -334,6 +344,7 @@ void JKQTGraphsBaseStyle::loadSettings(const QSettings &settings, const QString 
     impulseStyle.loadSettings(settings, group+"graphs_impulses/", JKQTImpulseSpecificStyleProperties(parent,  defaultGraphStyle));
     geometricStyle.loadSettings(settings, group+"graphs_geometric/", JKQTGeometricSpecificStyleProperties(parent, defaultGraphStyle));
     annotationStyle.loadSettings(settings, group+"graphs_annotation/", JKQTAnnotationsSpecificStyleProperties(parent, defaultGraphStyle));
+    financialStyle.loadSettings(settings, group+"graphs_financial/", JKQTFinancialSpecificStyleProperties(parent, defaultGraphStyle));
 
 }
 
@@ -410,6 +421,7 @@ void JKQTGraphsBaseStyle::saveSettings(QSettings &settings, const QString &group
     impulseStyle.saveSettings(settings, group+"graphs_impulses/");
     geometricStyle.saveSettings(settings, group+"graphs_geometric/");
     annotationStyle.saveSettings(settings, group+"graphs_annotation/");
+    financialStyle.saveSettings(settings, group+"graphs_financial/");
 }
 
 const JKQTGraphsSpecificStyleProperties &JKQTGraphsBaseStyle::getGraphStyleByType(JKQTPPlotStyleType type) const
@@ -429,6 +441,9 @@ const JKQTGraphsSpecificStyleProperties &JKQTGraphsBaseStyle::getGraphStyleByTyp
         return geometricStyle;
     case JKQTPPlotStyleType::Annotation:
         return annotationStyle;
+    case JKQTPPlotStyleType::FinancialNegative:
+    case JKQTPPlotStyleType::FinancialPositive:
+        return financialStyle;
     }
     return defaultGraphStyle;
 }
@@ -439,7 +454,8 @@ JKQTBarchartSpecificStyleProperties::JKQTBarchartSpecificStyleProperties(const J
     JKQTGraphsSpecificStyleProperties(JKQTPPlotStyleType::Barchart, parent),
     defaultRectRadiusAtValue(0),
     defaultRectRadiusAtBaseline(0),
-    drawBaseline(false)
+    drawBaseline(false),
+    stackSeparation(1)
 {
 
 }
@@ -448,7 +464,8 @@ JKQTBarchartSpecificStyleProperties::JKQTBarchartSpecificStyleProperties(const J
     JKQTGraphsSpecificStyleProperties(JKQTPPlotStyleType::Barchart, other),
     defaultRectRadiusAtValue(0),
     defaultRectRadiusAtBaseline(0),
-    drawBaseline(false)
+    drawBaseline(false),
+    stackSeparation(1)
 {
 
 }
@@ -459,6 +476,7 @@ void JKQTBarchartSpecificStyleProperties::loadSettings(const QSettings &settings
     defaultRectRadiusAtValue=settings.value(group+"radius_at_value", defaultStyle.defaultRectRadiusAtValue).toDouble();
     defaultRectRadiusAtBaseline=settings.value(group+"radius_at_baseline", defaultStyle.defaultRectRadiusAtBaseline).toDouble();
     drawBaseline=settings.value(group+"draw_baseline", defaultStyle.drawBaseline).toBool();
+    stackSeparation=settings.value(group+"stack_separation", defaultStyle.stackSeparation).toDouble();
 }
 
 void JKQTBarchartSpecificStyleProperties::saveSettings(QSettings &settings, const QString &group) const
@@ -467,7 +485,7 @@ void JKQTBarchartSpecificStyleProperties::saveSettings(QSettings &settings, cons
     settings.setValue(group+"radius_at_value", defaultRectRadiusAtValue);
     settings.setValue(group+"radius_at_baseline", defaultRectRadiusAtBaseline);
     settings.setValue(group+"draw_baseline", drawBaseline);
-
+    settings.setValue(group+"stack_separation", stackSeparation);
 }
 
 
@@ -498,6 +516,48 @@ void JKQTImpulseSpecificStyleProperties::saveSettings(QSettings &settings, const
 
 }
 
+
+JKQTFinancialSpecificStyleProperties::JKQTFinancialSpecificStyleProperties(const JKQTBasePlotterStyle &parent):
+    JKQTGraphsSpecificStyleProperties(JKQTPPlotStyleType::Default, parent),
+    positiveDefaultColor("darkgreen"),
+    negativeDefaultColor("maroon"),
+    negativeGraphColorDerivationMode(JKQTPColorDerivationMode::JKQTPFFCMInvertedColor),
+    positiveFillStyle(Qt::SolidPattern),
+    negativeFillStyle(Qt::SolidPattern)
+{
+    defaultLineWidth=1;
+}
+
+JKQTFinancialSpecificStyleProperties::JKQTFinancialSpecificStyleProperties(const JKQTBasePlotterStyle &parent, const JKQTGraphsSpecificStyleProperties &other):
+    JKQTGraphsSpecificStyleProperties(JKQTPPlotStyleType::Default, parent),
+    positiveDefaultColor("darkgreen"),
+    negativeDefaultColor("maroon"),
+    negativeGraphColorDerivationMode(JKQTPColorDerivationMode::JKQTPFFCMInvertedColor),
+    positiveFillStyle(Qt::SolidPattern),
+    negativeFillStyle(Qt::SolidPattern)
+{
+    defaultLineWidth=1;
+}
+
+void JKQTFinancialSpecificStyleProperties::loadSettings(const QSettings &settings, const QString &group, const JKQTFinancialSpecificStyleProperties &defaultStyle)
+{
+    JKQTGraphsSpecificStyleProperties::loadSettings(settings, group, defaultStyle);
+    positiveDefaultColor=jkqtp_String2QColor(settings.value(group+"default_positive_color", jkqtp_QColor2String(positiveDefaultColor)).toString());
+    negativeDefaultColor=jkqtp_String2QColor(settings.value(group+"default_negative_color", jkqtp_QColor2String(negativeDefaultColor)).toString());
+    positiveFillStyle=JKQTFillStyleSummmary::fromString(settings.value(group+"positive_fill_style", positiveFillStyle.toCSSString()).toString());
+    negativeFillStyle=JKQTFillStyleSummmary::fromString(settings.value(group+"negative_fill_style", negativeFillStyle.toCSSString()).toString());
+    negativeGraphColorDerivationMode=String2JKQTPColorDerivationMode(settings.value(group+"negative_graph_color_mode", JKQTPColorDerivationMode2String(defaultStyle.negativeGraphColorDerivationMode)).toString());
+}
+
+void JKQTFinancialSpecificStyleProperties::saveSettings(QSettings &settings, const QString &group) const
+{
+    JKQTGraphsSpecificStyleProperties::saveSettings(settings, group);
+    settings.setValue(group+"default_positive_color", jkqtp_QColor2String(positiveDefaultColor));
+    settings.setValue(group+"default_negative_color", jkqtp_QColor2String(negativeDefaultColor));
+    settings.setValue(group+"positive_fill_style", positiveFillStyle.toCSSString());
+    settings.setValue(group+"negative_fill_style", negativeFillStyle.toCSSString());
+    settings.setValue(group+"negative_graph_color_mode", JKQTPColorDerivationMode2String(negativeGraphColorDerivationMode));
+}
 
 
 JKQTFillStyleSummmary::JKQTFillStyleSummmary(Qt::BrushStyle style, const QGradient& grad):
@@ -532,3 +592,4 @@ QString JKQTFillStyleSummmary::toCSSString() const
 {
     return jkqtp_QBrushStyle2String(brushStyle);
 }
+
