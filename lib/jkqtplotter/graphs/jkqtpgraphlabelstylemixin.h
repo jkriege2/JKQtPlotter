@@ -384,14 +384,14 @@ public:
 
 
 
-    /** \copydoc m_xDateTimeFormmat */
-    QString getXDateTimeFormmat() const;
-    /** \copydoc m_xDateTimeFormmat */
-    void setXDateTimeFormmat(const QString& v);
-    /** \copydoc m_yDateTimeFormmat */
-    QString getYDateTimeFormmat() const;
-    /** \copydoc m_yDateTimeFormmat */
-    void setYDateTimeFormmat(const QString& v);
+    /** \copydoc m_xDateTimeFormat */
+    QString getXDateTimeFormat() const;
+    /** \copydoc m_xDateTimeFormat */
+    void setXDateTimeFormat(const QString& v);
+    /** \copydoc m_yDateTimeFormat */
+    QString getYDateTimeFormat() const;
+    /** \copydoc m_yDateTimeFormat */
+    void setYDateTimeFormat(const QString& v);
 
 
 protected:
@@ -405,7 +405,7 @@ protected:
     QString xValToString(double x) const;
     /** \brief converts \a y to a string, using several of the formatting properties set in this class for y-values */
     QString yValToString(double y) const;
-    /** \rief converts \a x to a QString, using the provided options */
+    /** \brief converts \a x to a QString, using the provided options */
     static QString valToString(double x, JKQTPGraphLabelConverterType m_xDefaultConverter, int m_xDefaultPrecision, double m_xBelowIsZero, double m_xMinNoExponent, double m_xMaxNoExponent, const QString& m_xDateTimeFormat);
 private:
     /** \brief format string for the x-label, use \c %1 as placeholder for the numeric value */

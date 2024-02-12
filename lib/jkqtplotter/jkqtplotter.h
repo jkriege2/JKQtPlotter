@@ -922,8 +922,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
         /** \copydoc JKQTBasePlotter::zoom()
          *  \deprecated The function JKQTPlotter::zoom() is deprecated and will be removed in future version, use JKQTPlotter::setXY() instead!
          */
-        inline void zoom(double nxmin, double nxmax, double nymin, double nymax, bool affectsSecondaryAxes=false) {
-            plotter->zoom(nxmin, nxmax, nymin, nymax, affectsSecondaryAxes);
+        inline void zoom(double xminn, double xmaxn, double yminn, double ymaxn, bool affectsSecondaryAxes=false) {
+            plotter->zoom(xminn, xmaxn, yminn, ymaxn, affectsSecondaryAxes);
         }
 
         /** \copydoc JKQTBasePlotter::setGrid()   */

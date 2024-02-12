@@ -43,7 +43,7 @@
 <gradientstop>        -> <color> (<number><b>%</b>)?
 <color>               -> NAME
                        | <b>#</b><hexnumber>
-                       | (<b>rgb</b> | <b>rgba</a> | <b>hsl</a> | <b>hsv</a> | <b>gray</a> | <b>grey</a> | <b>red</a> | <b>green</a> | <b>blue</a>) <b>(</b> (<numberwithunit> [<b>,/</b>]? ){1-4} <b>)</b>
+                       | (<b>rgb</b> | <b>rgba</b> | <b>hsl</b> | <b>hsv</b> | <b>gray</b> | <b>grey</b> | <b>red</b> | <b>green</b> | <b>blue</b>) <b>(</b> (<numberwithunit> [<b>,/</b>]? ){1-4} <b>)</b>
 
 <number>              -> floating-point-number, i.e.  "[+-]?\d+\.?\d*"
 <hexnumber>           -> RGB | RRGGBB | RGBA | RRGGBBAA

@@ -53,8 +53,8 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>FIXED: fixes strange rendering with distortions (especially in text!), by correcting size calculation of internal image buffer</li>
     <li>FIXED: exporting gridPrinting plots when using only a JKQTBasePlotter</li>
     <li>FIXED: fixed impleentations of JKQTPlotter::beginGraphs(), which actually returned the end-iterator (COPY-PASTE-ERROR!!!)</li>
-    <li>FIXED issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/99">#99: Clipping of Tick Labels</a>: for horizontal axes, additional space at the left  and/or right of the plot is allowed so labels are no longer clipped (thanks to <a href="https://github.com/allenbarnett5">user:allenbarnett5/a> for reporting)</li>
-    <li>FIXED issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/99">#99: Height of one-column key/legend was too large</a> (thanks to <a href="https://github.com/allenbarnett5">user:allenbarnett5/a> for reporting)</li>
+    <li>FIXED issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/99">#99: Clipping of Tick Labels</a>: for horizontal axes, additional space at the left  and/or right of the plot is allowed so labels are no longer clipped (thanks to <a href="https://github.com/allenbarnett5">user:allenbarnett5</a> for reporting)</li>
+    <li>FIXED issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/99">#99: Height of one-column key/legend was too large</a> (thanks to <a href="https://github.com/allenbarnett5">user:allenbarnett5</a> for reporting)</li>
     <li>FIXED issue mentioned in <a href="https://github.com/jkriege2/JKQtPlotter/pull/110">#110: Lock the panning action to certain values: View zooms in, when panning close to AbosluteXY</a> (thanks to <a href="https://github.com/sim186">user:sim186</a> for reporting)</li>
     <li>FIXED: jkqtpstatSum() and jkqtpstatSumSqr() did not work, as a non-existing function is called internally</li>
     <li>FIXED removed unnecessary operators (<,>,<=,>=) from JKQTPColumnIterator and JKQTPColumnConstIterator, which lead to exceptions on some compilers (MSVC)</li>
@@ -72,7 +72,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>IMPROVED/REWORKED: reworked JKQTPCADrawMode and coordinate axis drawing so the draw mide can be specified as ORed combination of flags from JKQTPCADrawModeElements, added flags to draw arrows at the end of the axis line</li>
     <li>IMPROVED/REWORKED: coordinate axis code was refactored</li>
     <li>IMPROVED/REWORKED: zomm/pan by mouse-wheel: now there are modes that support zoomin AND panning by trakpad and mouse-wheel simultaneously! This can only be implemented using heuristics, due to the way that Qt handles track-pad events, but the current solution should at least improve the behaviour seen before. Mainly <code>jkqtpmwaZoomByWheelAndTrackpadPan</code> was introduced into <code>JKQTPMouseWheelActions</code> und is set as default mode: Here JKQTPlotter tries to distinguish the QWheelEvent s sent by an actual mouse wheel and a trackpad.</li>
-    <li>IMPROVED/REWORKED: better example graphs in \link JKQTPlotterStyling.</li>
+    <li>IMPROVED/REWORKED: better example graphs in \ref JKQTPlotterStyling  .</li>
     <li>IMPROVED/REWORKED: legend/key positioning as combination of 3 values, e.g. \c JKQTPKeyOutsideTop|JKQTPKeyTop|JKQTPKeyRight or \c JKQTPKeyInside|JKQTPKeyTopJKQTPKeyRight</li>
     <li>IMPROVED/REWORKED: The functions JKQTBasePlotter::saveImage(), JKQTBasePlotter::saveAsPixelImage(), JKQTBasePlotter::saveAsPDF(), JKQTBasePlotter::saveSVG(), ... gained a bool return value to indicate whether sacing was successful.</li>
     <li>IMPROVED/REWORKED: More <code>save...()</code> functions will appear in the API of JKQTPlotter, so you don't have to go via JKQTPlotter::getPlotter(). These are merely forwarding the call to the internel JKQTBasePlotter instance.</li>

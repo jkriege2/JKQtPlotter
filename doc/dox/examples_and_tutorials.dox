@@ -100,7 +100,7 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 <tr><td> \image html paramvectorfield_small.png
     <td> \subpage JKQTPParametrizedVectorFieldGraphExample
     <td> `JKQTPParametrizedVectorFieldGraph`
-<tr><td> \image html financialgraph_small.png
+<tr><td> \image html financialgraphs_small.png
     <td> \subpage JKQTPlotterFinancialChartExample
     <td> `JKQTPFinancialGraph` (Candlestick/OHLC graphs), date-axis, rotated labels
 </table>

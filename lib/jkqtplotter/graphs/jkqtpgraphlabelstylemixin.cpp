@@ -466,22 +466,22 @@ void JKQTPXYLabelsGeneratorMixin::setYMaxNoExponent(double v)
     m_yMaxNoExponent=v;
 }
 
-QString JKQTPXYLabelsGeneratorMixin::getXDateTimeFormmat() const
+QString JKQTPXYLabelsGeneratorMixin::getXDateTimeFormat() const
 {
     return m_xDateTimeFormat;
 }
 
-void JKQTPXYLabelsGeneratorMixin::setXDateTimeFormmat(const QString &v)
+void JKQTPXYLabelsGeneratorMixin::setXDateTimeFormat(const QString &v)
 {
     m_xDateTimeFormat=v;
 }
 
-QString JKQTPXYLabelsGeneratorMixin::getYDateTimeFormmat() const
+QString JKQTPXYLabelsGeneratorMixin::getYDateTimeFormat() const
 {
     return m_yDateTimeFormat;
 }
 
-void JKQTPXYLabelsGeneratorMixin::setYDateTimeFormmat(const QString &v)
+void JKQTPXYLabelsGeneratorMixin::setYDateTimeFormat(const QString &v)
 {
     m_yDateTimeFormat=v;
 }

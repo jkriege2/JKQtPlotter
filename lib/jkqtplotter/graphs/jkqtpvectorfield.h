@@ -317,15 +317,15 @@ public:
     virtual bool usesColumn(int c) const override;
 
 
-    /** \copydoc colorColumn */
+    /** \copydoc m_colorColumn */
     void setColorColumn(int __value);
-    /** \copydoc colorColumn */
+    /** \copydoc m_colorColumn */
     int getColorColumn() const;
-    /** \copydoc colorColumn */
+    /** \copydoc m_colorColumn */
     void setColorColumn (size_t __value);
-    /** \copydoc colorColumnContainsRGB */
+    /** \copydoc m_colorColumnContainsRGB */
     void setColorColumnContainsRGB(bool __value);
-    /** \copydoc colorColumnContainsRGB */
+    /** \copydoc m_colorColumnContainsRGB */
     bool getColorColumnContainsRGB() const;
     /** \copydoc m_vectorColorMode */
     void setVectorColorMode(VectorColorMode __value);

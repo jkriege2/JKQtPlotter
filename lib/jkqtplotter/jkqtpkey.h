@@ -217,7 +217,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBaseKey: public QObject {
         inline Qt::PenStyle getFrameLineStyle() const { return keyStyle().frameLineStyle; }
         /** \copydoc JKQTPKeyStyle::textColor */
         inline QColor getTextColor() const { return keyStyle().textColor; }
-        /** \copydoc JKQTPKeyStyle::backgroundColor */
+        /** \copydoc JKQTPKeyStyle::backgroundBrush */
         inline QColor getBackgroundColor() const { return keyStyle().backgroundBrush.color(); }
         /** \copydoc JKQTPKeyStyle::backgroundBrush */
         inline const QBrush& getBackgroundBrush() const { return keyStyle().backgroundBrush; }
@@ -266,9 +266,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBaseKey: public QObject {
         inline void setFrameLineStyle(Qt::PenStyle __value) { keyStyle().frameLineStyle = __value; redrawPlot(); }
         /** \copydoc JKQTPKeyStyle::textColor */
         inline void setTextColor(QColor __value) { keyStyle().textColor = __value; redrawPlot(); }
-        /** \copydoc JKQTPKeyStyle::backgroundColor */
+        /** \copydoc JKQTPKeyStyle::backgroundBrush */
         inline void setBackgroundColor(QColor __value) { keyStyle().backgroundBrush = __value; redrawPlot(); }
-        /** \copydoc JKQTPKeyStyle::backgroundColor */
+        /** \copydoc JKQTPKeyStyle::backgroundBrush */
         inline void setBackgroundColor(QColor __value, Qt::BrushStyle __style) { keyStyle().backgroundBrush = QBrush(__value, __style); redrawPlot(); }
         /** \copydoc JKQTPKeyStyle::backgroundBrush */
         inline void setBackgroundBrush(const QBrush& __value) { keyStyle().backgroundBrush = __value; redrawPlot(); }

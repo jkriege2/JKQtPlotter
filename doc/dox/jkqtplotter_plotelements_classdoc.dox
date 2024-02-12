@@ -40,21 +40,98 @@ These classes are used by JKQTPlotterBase to output the plot.
 \ingroup jkqtplotter_elements
 
 
+
+
+<table>
+    <tr>
+      <th>Icon
+      <th>
+      <th>Topic/Chapter
+    <tr>
+      <td>\link jkqtplotter_linesymbolgraphs &nbsp; \image{inline} html symbols_and_styles_small.png "" \endlink
+      <td>\link jkqtplotter_linesymbolgraphs &nbsp; \image{inline} html stepplots_small.png ""     \endlink
+      <td>\ref jkqtplotter_linesymbolgraphs
+    <tr>
+      <td>\link jkqtplotter_filledgraphs &nbsp; \image{inline} html JKQTPFilledCurveXGraph_small.png "" \endlink
+      <td>\link jkqtplotter_filledgraphs &nbsp; \image{inline} html JKQTPfilledVerticalRangeGraph_WithLines_small.png "" \endlink
+      <td>\ref jkqtplotter_filledgraphs
+    <tr>
+      <td>&nbsp;
+      <td>\link jkqtplotter_sticks &nbsp; \image{inline} html JKQTPImpulsesVerticalGraph_Symbols_small.png "" \endlink
+      <td>\ref jkqtplotter_sticks
+    <tr>
+      <td>\link jkqtplotter_barcharts &nbsp; \image{inline} html JKQTPBarVerticalGraph_small.png "" \endlink
+      <td>\link jkqtplotter_barcharts &nbsp; \image{inline} html JKQTPbarVerticalGraphStacked_small.png "" \endlink
+      <td>\ref jkqtplotter_barcharts
+    <tr>
+      <td>\link jkqtplotter_statgraphs &nbsp; \image{inline} html boxplot_small.png "" \endlink
+      <td>\link jkqtplotter_statgraphs &nbsp; \image{inline} html JKQTPViolinplotVerticalElement_small.png "" \endlink
+      <td>\ref jkqtplotter_statgraphs
+    <tr>
+      <td>&nbsp;
+      <td>\link jkqtplotter_eventgraphs &nbsp; \image{inline} html JKQTPPeakStreamGraphY_small.png "" \endlink
+      <td>\ref jkqtplotter_eventgraphs
+    <tr>
+      <td>\link jkqtplotter_imagelots &nbsp; \image{inline} html JKQTPMathImageBaseModifyNone_small.png "" \endlink
+      <td>\link jkqtplotter_imagelots &nbsp; \image{inline} html overlayimageenhanced_small.png "" \endlink
+      <td>\ref jkqtplotter_imagelots
+    <tr>
+      <td>&nbsp;
+      <td>\link jkqtplotter_imagelots_contour &nbsp; \image{inline} html JKQTPColumnContourPlot_small.png "" \endlink
+      <td>\ref jkqtplotter_imagelots_contour
+    <tr>
+      <td>&nbsp;
+      <td>\link jkqtplotter_vectorfieldgraphs &nbsp; \image{inline} html paramvectorfield_small.png "" \endlink
+      <td>\ref jkqtplotter_vectorfieldgraphs
+    <tr>
+      <td>&nbsp;
+      <td>\link jkqtplotter_financialgraphs &nbsp; \image{inline} html financialgraphs_small.png "" \endlink
+      <td>\ref jkqtplotter_financialgraphs
+    <tr>
+      <td>\link jkqtplotter_geoplots &nbsp; \image{inline} html geo_coordinateaxis0_small.png "" \endlink
+      <td>\link jkqtplotter_geoplots &nbsp; \image{inline} html geo_text_small.png "" \endlink
+      <td>\ref jkqtplotter_geoplots
+    <tr>
+      <td>&nbsp;
+      <td>\link jkqtplotter_annotations &nbsp; \image{inline} html JKQTPHorizontalRange_small.png "" \endlink
+      <td>\ref jkqtplotter_annotations
+    <tr>
+      <td>&nbsp;
+      <td>\link jkqtplotter_graphlabels &nbsp; \image{inline} html JKQTPGLSimpleBoxAndLineONLYLABELS_small.png "" \endlink
+      <td>\ref jkqtplotter_graphlabels
+</table>
+
+ 
+ 
+ 
+  
+
+
+
+
 \defgroup jkqtplotter_linesymbolgraphs Line/Symbol Graphs
 \ingroup jkqtplotter_concretegraphs
 
 This group assembles graphs that show their data with symbols and optionally with connecting lines in diferent styles:
 <table>
     <tr>
-      <th> Screenshot
-      <th> Classes
+      <td>\link jkqtplotter_linesymbolgraphs_scatter &nbsp; \image{inline} html JKQTPXYScatterGraph_small.png "" \endlink
+      <td>\link jkqtplotter_linesymbolgraphs_scatter &nbsp; \image{inline} html beeswarmplot_small.png "" \endlink
+      <td>\ref jkqtplotter_linesymbolgraphs_scatter
     <tr>
-      <td>\image html symbols_and_styles_small.png
-      <td> JKQTPXYLineGraph, JKQTPXYLineErrorGraph
+      <td>\link jkqtplotter_linesymbolgraphs_line &nbsp; \image{inline} html symbols_and_styles_small.png "" \endlink
+      <td>\link jkqtplotter_linesymbolgraphs_line &nbsp; \image{inline} html stepplots_small.png "" \endlink
+      <td>\ref jkqtplotter_linesymbolgraphs_line
     <tr>
-      <td>\image html stepplots_small.png
-      <td> JKQTPSpecialLineHorizontalGraph, JKQTPSpecialLineVerticalGraph
+      <td>&nbsp;
+      <td>\link jkqtplotter_linesymbolgraphs_param &nbsp; \image{inline} html paramscatterplot_small.png "" \endlink\endlink
+      <td>\ref jkqtplotter_linesymbolgraphs_param
+    <tr>
+      <td>\link jkqtplotter_functiongraphs &nbsp; \image{inline} html functionplot_small.png "" \endlink
+      <td>\link jkqtplotter_functiongraphs &nbsp; \image{inline} html evalcurve_small.png "" \endlink
+      <td>\ref jkqtplotter_functiongraphs
 </table>
+
 
 \defgroup jkqtplotter_linesymbolgraphs_scatter Scatter Graphs
 \ingroup jkqtplotter_linesymbolgraphs
@@ -170,6 +247,7 @@ This group assembles graphs that add (textual) labels to the datapoints in a plo
       <td> JKQTPBarVerticalStackableGraph, JKQTPBarHorizontalStackableGraph
 </table>
 
+
 \defgroup jkqtplotter_sticks Impulse-Charts
 \ingroup jkqtplotter_concretegraphs
 
@@ -201,7 +279,7 @@ This group assembles graphs that add (textual) labels to the datapoints in a plo
     <tr>
       <td>\image html JKQTPViolinplotVerticalElement_small.png
       <td> JKQTPViolinplotVerticalElement, JKQTPViolinplotHorizontalElement
- /table>
+</table>
 
 \see \ref jkqtptools_math_statistics_adaptors for shortcuts to calculate statistical properties of data and then adding a plot with the results.
 
@@ -273,6 +351,7 @@ Examples:
   - \ref JKQTPlotterGeometricGraphs
 .
 
+
 \defgroup jkqtplotter_eventgraphs Event Graphs
 \ingroup jkqtplotter_concretegraphs
 
@@ -317,28 +396,32 @@ This group assembles graphs that represent financial data (such as price mmoveme
       <td> JKQTPFinancialGraph
 </table>
 
+
+
 \defgroup jkqtplotter_imagelots Matrix/Image Plotting
 \ingroup jkqtplotter_concretegraphs
 
 <table>
     <tr>
-      <th> Screenshot
-      <th> Classes
+      <td>\link jkqtplotter_imagelots_elements &nbsp; \image{inline} html rgbimageplot_qt_small.png "" \endlink
+      <td>\link jkqtplotter_imagelots_elements &nbsp; \image{inline} html JKQTPMathImageBaseModifyNone_small.png "" \endlink
+      <td>\ref jkqtplotter_imagelots_elements
     <tr>
-      <td>\image html rgbimageplot_qt_small.png
-      <td> JKQTPImage
+      <td>&nbsp;
+      <td>\link jkqtplotter_imagelots_overlays &nbsp; \image{inline} html overlayimageenhanced_small.png "" \endlink\endlink
+      <td>\ref jkqtplotter_imagelots_overlays
     <tr>
-      <td>\image html JKQTPMathImageBaseModifyNone_small.png
-      <td> JKQTPMathImage, JKQTPColumnMathImage
+      <td>&nbsp;
+      <td>\link jkqtplotter_imagelots_contour &nbsp; \image{inline} html JKQTPColumnContourPlot_small.png "" \endlink\endlink
+      <td>\ref jkqtplotter_imagelots_contour
     <tr>
-      <td>\image html rgbimageplots_small.png
-      <td> JKQTPRGBMathImage, JKQTPColumnRGBMathImage
+      <td>&nbsp;
+      <td>\link jkqtplotter_vectorfieldgraphs &nbsp; \image{inline} html paramvectorfield_small.png "" \endlink\endlink
+      <td>\ref jkqtplotter_vectorfieldgraphs
     <tr>
-      <td>\image html overlayimage_small.png
-      <td> JKQTPOverlayImage
-    <tr>
-      <td>\image html overlayimageenhanced_small.png
-      <td>  JKQTPOverlayImageEnhanced, JKQTPColumnOverlayImageEnhanced
+      <td>&nbsp;
+      <td>\link jkqtplotter_imagelots_tools_LUTS &nbsp; \image{inline} html logo_palette_luts.png "" \endlink\endlink
+      <td>\ref jkqtplotter_imagelots_tools_LUTS
 </table>
 
 \defgroup jkqtplotter_imagelots_elements Image Graphs

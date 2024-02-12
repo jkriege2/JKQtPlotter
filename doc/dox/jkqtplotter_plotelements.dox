@@ -62,6 +62,10 @@
         noteJKQTPXYGraph [shape="note", color="lightyellow",style=filled,fontsize=8,label="base class for all\ngraphs based on\n (x,y) data pairs"];
         JKQTPXYGraph -> noteJKQTPXYGraph [style=dashed,arrowhead=none];
       
+        JKQTPXGraph [URL="\ref JKQTPXGraph"]
+        noteJKQTPXGraph [shape="note", color="lightyellow",style=filled,fontsize=8,label="base class for all\ngraphs based on\n (x,....) data e.g. JKQTPFinancialGraph"];
+        JKQTPXGraph -> noteJKQTPXGraph [style=dashed,arrowhead=none];
+      
         JKQTPSingleColumnGraph [URL="\ref JKQTPSingleColumnGraph"]
         noteJKQTPSingleColumnGraph [shape="note", color="lightyellow",style=filled,fontsize=8,label="base class for all\ngraphs based on only\n a single column of data"];
         JKQTPSingleColumnGraph -> noteJKQTPSingleColumnGraph [style=dashed,arrowhead=none];
@@ -75,12 +79,16 @@
         rank=same;
 
         JKQTPXYYGraph [URL="\ref JKQTPXYYGraph"]
-        noteJKQTPXYYGraph [shape="note", color="lightyellow",style=filled,fontsize=8,label="base class for all\ngraphs based on\n (x, y1, y2) data tripels"];
+        noteJKQTPXYYGraph [shape="note", color="lightyellow",style=filled,fontsize=8,label="base class for all\ngraphs based on\n (x, y1, y2) data triples"];
         JKQTPXYYGraph -> noteJKQTPXYYGraph [style=dashed,arrowhead=none];
 
         JKQTPXXYGraph [URL="\ref JKQTPXXYGraph"]
-        noteJKQTPXXYGraph [shape="note", color="lightyellow",style=filled,fontsize=8,label="base class for all\ngraphs based on\n (x1, x2, y) data tripels"];
+        noteJKQTPXXYGraph [shape="note", color="lightyellow",style=filled,fontsize=8,label="base class for all\ngraphs based on\n (x1, x2, y) data triples"];
         JKQTPXXYGraph -> noteJKQTPXXYGraph [style=dashed,arrowhead=none];
+
+        JKQTPXYAndVectorGraph [URL="\ref JKQTPXYAndVectorGraph"]
+        noteJJKQTPXYAndVectorGraph [shape="note", color="lightyellow",style=filled,fontsize=8,label="base class for all\nvector field graphs based on\n (x, y, dx, dy) data quadruples"];
+        JKQTPXYAndVectorGraph -> noteJJKQTPXYAndVectorGraph [style=dashed,arrowhead=none];
 
         JKQTPXYBaselineGraph [URL="\ref JKQTPXYBaselineGraph"]
         noteJJKQTPXYBaselineGraph [shape="note", color="lightyellow",style=filled,fontsize=8,label="base class for all\ngraphs based on\n (x,y) data pairs and a baseline"];
@@ -139,6 +147,7 @@
       JKQTPPlotElement -> JKQTPViolinplotElementBase
 
       JKQTPGraph -> JKQTPXYGraph
+      JKQTPGraph -> JKQTPXGraph
       JKQTPGraph -> JKQTPSingleColumnGraph
       JKQTPGraph -> JKQTPImageBase -> JKQTPMathImageBase
       JKQTPGraph -> JKQTPEvaluatedFunctionGraphBase
@@ -147,6 +156,7 @@
       JKQTPXYGraph -> JKQTPXYYGraph
       JKQTPXYGraph -> JKQTPXXYGraph
       JKQTPXYGraph -> JKQTPXYBaselineGraph
+      JKQTPXYGraph -> JKQTPXYAndVectorGraph
       
       JKQTPXYBaselineGraph -> JKQTPBarGraphBase
       JKQTPXYBaselineGraph -> JKQTPFilledCurveGraphBase

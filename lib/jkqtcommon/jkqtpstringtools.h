@@ -58,7 +58,6 @@ JKQTCOMMON_LIB_EXPORT Qt::BrushStyle jkqtp_String2QBrushStyle(const QString& sty
  * \param style the string to be parsed
  * \param[out] gradient output parameter for a parsed gradient
  * \param[out] image output parameter for a parsed image
- * \param[out] rotationAngleDeg output parameter for a parsed rotation angle of the pattern in degrees, where the direction equals the direction of a clock hand, i.e. 0=12o'clock, 180=6o'clock, ...
  *
  * \see jkqtp_String2QBrushStyle()
  */
@@ -234,7 +233,7 @@ JKQTCOMMON_LIB_EXPORT QString jkqtp_QColor2String(QColor color, bool useSpecialT
  *
  * \param color the color name to convert
  * \param namesOnly if \c true , the function only compares against the list of CSS colors; otherwise it passes the string also on to QColor()-constructor, which interprets e.g. \c #AABBCC
- * \param nameFound[out] optional return value that signifies whether a name was found
+ * \param[out] nameFound optional return value that signifies whether a name was found
  */
 JKQTCOMMON_LIB_EXPORT QColor jkqtp_lookupQColorName(const QString& color, bool namesOnly=false, bool* nameFound=nullptr);
 

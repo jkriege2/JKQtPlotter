@@ -31,10 +31,10 @@
   - C++ standard iterator interface
   - \ref jkqtptools_math_statistics (basic statistics, boxplots, histograms, kernel density estimates, regression analysis, polynomial fitting)
 - <b>\ref jkqtplotter_elements "large variety of graphs that can be added to a plot", e.g.:</b>
-  - \ref jkqtplotter_linesymbolgraphs_simple "scatter-plots" (also \ref jkqtplotter_linesymbolgraphs_param "parametrized color/size/symbol by a third data-column")
-  - \ref jkqtplotter_linesymbolgraphs "line graphs, step graphs", \ref jkqtplotter_barssticks "impulses"
+  - \ref jkqtplotter_linesymbolgraphs_scatter "scatter-plots" (also \ref jkqtplotter_linesymbolgraphs_param "parametrized color/size/symbol by a third data-column")
+  - \ref jkqtplotter_linesymbolgraphs "line graphs, step graphs", \ref jkqtplotter_sticks "impulses"
   - \ref jkqtplotter_filledgraphs "filled curves"
-  - \ref jkqtplotter_barssticks "barcharts (also stacked)"
+  - \ref jkqtplotter_barcharts "barcharts (also stacked)"
   - extensive support for different styles of error indicators
   - \ref jkqtptools_math_parser "integrated mathematical function parser for function plots (with intelligent rendering algorithm)"
   - \ref jkqtplotter_functiongraphs "line/scatter graphs can also be based on C/C++ functions instead of data series (C++11 support!)"
@@ -75,6 +75,6 @@
 
 
 
-\image html screenshotsbanner.png
+\link exampleTutorialProjects &nbsp; \image html examplesbanner.png "" \endlink
 
 */

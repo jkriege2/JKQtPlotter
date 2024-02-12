@@ -1206,7 +1206,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
 
         /** \brief adds a secondary x-axis
          *
-         *  \params axis the JKQTPHorizontalAxisBase object to add
+         *  \param axis the JKQTPHorizontalAxisBase object to add
          *  \returns a reference to this axis
          *
          *  Usage is simple:
@@ -1231,7 +1231,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         JKQTPCoordinateAxisRef addSecondaryXAxis(JKQTPHorizontalAxisBase* axis);
         /** \brief adds a secondary y-axis
          *
-         *  \params axis the JKQTPVerticalAxisBase object to add
+         *  \param axis the JKQTPVerticalAxisBase object to add
          *  \returns a reference to this axis
          *
          *  Usage is simple:
@@ -1663,8 +1663,8 @@ public Q_SLOTS:
          *
          *  \param filename name of the stored file, if no \a outputFormat is given, the file format is deduced by the file extension in \a filename
          *  \param displayPreview if \c true a dialog is shown that allows to modify the generated output (zoo, scaling, ...)
-         *  \param outputFormmat specify the file format for the generated file
-         *  \param  outputSizeIncrease if given, the size of the generated pixel image is increased by this number of pixels in addition to the required space
+         *  \param outputFormat specify the file format for the generated file
+         *  \param outputSizeIncrease if given, the size of the generated pixel image is increased by this number of pixels in addition to the required space
          *  \return returns \c true on success
          *
          *  This function may generate any pixel-graphics format, supported by Qt and listed in <a href="https://doc.qt.io/qt-6/qimagewriter.html"><code>QImageWriter::supportedImageFormats()</code></a>.
@@ -1686,7 +1686,7 @@ public Q_SLOTS:
         /** \brief save the current plot as a SVG file, with the current widget aspect ratio, if filename is empty a file selection dialog is displayed
          *
          *   \param filename the filename to save to, if empty a file save dialog is displayed
-         *   \param displayPreview if \C true, a save/print-preview dialog is displayed that allows to make some modifications to the generated image, otherwise the image is saved with default settings.
+         *   \param displayPreview if \c true, a save/print-preview dialog is displayed that allows to make some modifications to the generated image, otherwise the image is saved with default settings.
          *   \return Returns \c true if the file was save successfully
          *
          *  \note Exporting to SVG requires QPrinter-support, if it is not available on your platform, this function will not be available either!
@@ -1696,7 +1696,7 @@ public Q_SLOTS:
         /** \brief save the current plot as a PDF file, with the current widget aspect ratio, if filename is empty a file selection dialog is displayed
          *
          *   \param filename the filename to save to, if empty a file save dialog is displayed
-         *   \param displayPreview if \C true, a save/print-preview dialog is displayed that allows to make some modifications to the generated image, otherwise the image is saved with default settings.
+         *   \param displayPreview if \c true, a save/print-preview dialog is displayed that allows to make some modifications to the generated image, otherwise the image is saved with default settings.
          *   \return Returns \c true if the file was save successfully
          *
          *  \note Exporting to PDF requires QPrinter-support, if it is not available on your platform, this function will not be available either!
@@ -1708,7 +1708,7 @@ public Q_SLOTS:
         *          The image format is extracted from the file extension (jpeg, tiff, png, pdf, ...)
         *
         *   \param filename the filename to save to, if empty a file save dialog is displayed
-        *   \param displayPreview if \C true, a save/print-preview dialog is displayed that allows to make some modifications to the generated image, otherwise the image is saved with default settings.
+        *   \param displayPreview if \c true, a save/print-preview dialog is displayed that allows to make some modifications to the generated image, otherwise the image is saved with default settings.
         *   \return Returns \c true if the file was save successfully
         *
         *   This function is comparable to saveAsPixelImage(), but it allows to save into any graphics format, including SVG and PF (if printer-support is compiled into the library).

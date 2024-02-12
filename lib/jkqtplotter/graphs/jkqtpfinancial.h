@@ -66,21 +66,19 @@
  *  \image html financialgraphs_width.png
  *
  *
- *  \section JKQTPFinancialGraphSideBySide Severyl Financial Graphs side-by-side
+ *  \section JKQTPFinancialGraphSideBySide Several Financial Graphs side-by-side
  *  In case you want to display several of these graphs in the same plot, you can make them appear side-by-side, even
  *  if they all cover the same x-values and would thus be draw atop each other. We apply the same principles that
  *  were used for barcharts in JKQTPBarGraphBase and add a shift-parameter (setShift() ) that shifts each element
  *  in the available space:
  *
- *  \image html financialgraphs_basics.png
+ *  \image html financialgraphs_shiftwidth.png
  *
  *  For example for two financial graph elements per x-value one would set:
  *  \verbatim
  *        width=0.4
  *        shift=-0.5 / +0.5
  *  \endverbatim
- *
- *  \image html financialgraphs_shiftwidth.png
  *
  *  Two functions are provided (JKQTPFinancialGraph::autoscaleBoxWidthAndShift(), JKQTPFinancialGraph::autoscaleBoxWidthAndShiftSeparatedGroups() )
  *  that can be applied to any JKQTPFinancialGraph in the plot and will calculate all JKQTPFinancialGraphs' shift and width parameter
