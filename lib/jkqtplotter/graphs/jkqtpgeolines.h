@@ -456,7 +456,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoPolyLines: public JKQTPGeoBaseDecoratedLine
 /** \brief This JKQTPGeometricPlotElement is used to draw a bezier curve
  *  \ingroup jkqtplotter_geoplots
  *
- *  \image html JKQTPlotterGeometricBezierGraphic.png "drawn with JKQTPGeometricPlotElement::DrawMode::DrawAsGraphicElement"
+ *  \image html JKQTPGeoBezierCurveGraphic.png "drawn with JKQTPGeometricPlotElement::DrawMode::DrawAsGraphicElement"
  *
  *  \see \ref JKQTPlotterGeometricBezier, JKQTPGeoBaseDecoratedLine
  *
@@ -466,8 +466,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoPolyLines: public JKQTPGeoBaseDecoratedLine
  *
  *  On logarithmic axes (x&y) the two modes draw very different shapes:
  *
- *  \image html JKQTPlotterGeometricBezierLogMath.png "drawn with JKQTPGeometricPlotElement::DrawMode::DrawAsMathematicalCurve"
- *  \image html JKQTPlotterGeometricBezierLogGraphic.png "drawn with JKQTPGeometricPlotElement::DrawMode::DrawAsGraphicElement"
+ *  \image html JKQTPGeoBezierCurveLogMath.png "drawn with JKQTPGeometricPlotElement::DrawMode::DrawAsMathematicalCurve"
+ *  \image html JKQTPGeoBezierCurveLogGraphic.png "drawn with JKQTPGeometricPlotElement::DrawMode::DrawAsGraphicElement"
  *
  *  For DrawAsGraphicElement only the control points are converted to screen-coordinates, but drawing takes place in the (linear) screen-system.
  *  For DrawAsMathematicalCurve drawing is done in the log-coordinate system.
@@ -489,25 +489,35 @@ public:
     /** \brief class constructor with start, end and one control point (i.e. a quadratic bezier curve)
          *
          *  \param parent the parent plotter object
-         *  \param points points on the polygon
+         *  \param start start point
+         *  \param control1 control-point in between start and end
+         *  \param end end point
          */
     JKQTPGeoBezierCurve(JKQTBasePlotter* parent, const QPointF& start, const QPointF& control1, const QPointF& end);
     /** \brief class constructor with start, end and one control point (i.e. a quadratic bezier curve)
          *
          *  \param parent the parent plotter object
-         *  \param points points on the polygon
+         *  \param start start point
+         *  \param control1 control-point in between start and end
+         *  \param end end point
          */
     JKQTPGeoBezierCurve(JKQTPlotter* parent, const QPointF& start, const QPointF& control1, const QPointF& end);
     /** \brief class constructor with start, end and two control points (i.e. a cubic bezier curve)
          *
          *  \param parent the parent plotter object
-         *  \param points points on the polygon
+         *  \param start start point
+         *  \param control1 1st control-point in between start and end
+         *  \param control2 2nd control-point in between start and end
+         *  \param end end point
          */
     JKQTPGeoBezierCurve(JKQTBasePlotter* parent, const QPointF& start, const QPointF& control1, const QPointF& control2, const QPointF& end);
     /** \brief class constructor with start, end and two control points (i.e. a cubic bezier curve)
          *
          *  \param parent the parent plotter object
-         *  \param points points on the polygon
+         *  \param start start point
+         *  \param control1 1st control-point in between start and end
+         *  \param control2 2nd control-point in between start and end
+         *  \param end end point
          */
     JKQTPGeoBezierCurve(JKQTPlotter* parent, const QPointF& start, const QPointF& control1, const QPointF& control2, const QPointF& end);
     /** \brief class constructor

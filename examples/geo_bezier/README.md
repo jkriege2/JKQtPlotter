@@ -30,5 +30,5 @@ Finally we also add symbols for each control point and a poly-line connecting th
 
 Here is the resulting plot:
 
-![geo_bezier](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/doc/images/geo_bezier.png)
+![geo_bezier](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/geo_bezier.png)
 
