@@ -248,6 +248,7 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         vectorfield
         paramvectorfield
         financialgraphs
+        geo_bezier
     )
 
 
@@ -279,8 +280,8 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         vectorfield/JKQTPVectorFieldGraph,JKQTPVectorFieldGraphAnchorBottom,JKQTPVectorFieldGraphAnchorMid,JKQTPVectorFieldGraphAnchorTip,JKQTPVectorFieldGraphAutoscaleLength,JKQTPVectorFieldGraphLengthFromData,JKQTPVectorFieldGraphIgnoreLength,JKQTPVectorFieldGraphIgnoreLengthAutoscaleLineWidthFromLength,JKQTPVectorFieldGraphAutoscaleLengthAutoscaleLineWidthFromLength/--iteratefunctorsteps
         paramvectorfield/JKQTPParametrizedVectorFieldGraph,JKQTPParametrizedVectorFieldGraphColorFromMagnitude,JKQTPParametrizedVectorFieldGraphColorFromAngle,JKQTPParametrizedVectorFieldGraphDefaultColor/--iteratefunctorsteps
         financialgraphs/JKQTPFinancialGraph,JKQTPFinancialGraphCandleStick,JKQTPFinancialGraphSetCandlestickTwoColor,JKQTPFinancialGraphSetCandlestickTwoColor2,JKQTPFinancialGraphSetCandlestickOneColor,JKQTPFinancialGraphOHLC,JKQTPFinancialGraphSetOHLCTwoColor,JKQTPFinancialGraphSidyBySide/--iteratefunctorsteps
+        geo_bezier/JKQTPGeoBezierCurveGraphic,JKQTPGeoBezierCurveMath,JKQTPGeoBezierCurveLogMath,JKQTPGeoBezierCurveLogGraphic/--iteratefunctorsteps
     )
-
 
 
 

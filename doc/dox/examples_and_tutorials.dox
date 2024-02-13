@@ -119,6 +119,9 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 <tr><td> \image html geo_arrows_small.png
     <td> \subpage JKQTPlotterGeometricArrows
     <td> `JKQTPGeoArrow`, ...
+<tr><td> \image html geo_bezier_small.png
+    <td> \subpage JKQTPlotterGeometricBezier
+    <td> `JKQTPGeoBezierCurve`, ...
 <tr><td> \image html geo_coordinateaxis0_small.png
     <td> \subpage JKQTPlotterGeometricCoordinateAxis0
     <td> `JKQTPCoordinateAxisStyle::drawMode0`, `JKQTPGeoPolygon`, `JKQTPGeoEllipse`

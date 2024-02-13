@@ -333,8 +333,8 @@ inline T jkqtp_sqr(const T& v) {
     \ingroup jkqtptools_math_basic
 
 */
-    template <class T>
-    inline T jkqtp_pow4(T x) {
+template <class T>
+inline T jkqtp_pow4(T x) {
     const T xx=x*x;
     return xx*xx;
 }
@@ -529,6 +529,7 @@ inline double jkqtp_polyEval(double x, PolyItP firstP, PolyItP lastP) {
     return v;
 }
 
+
 /*! \brief a C++-functor, which evaluates a polynomial
     \ingroup jkqtptools_math_basic
 */
@@ -578,11 +579,78 @@ QString jkqtp_polynomialModel2Latex(PolyItP firstP, PolyItP lastP) {
     return str;
 }
 
+
+
+/*! \brief Calculates a factorial \f$ n!=n\cdot(n-1)\cdot(n-2)\cdot...\cdot2\cdot1 \f$
+    \ingroup jkqtptools_math_basic
+
+    */
+template <class T=int>
+#ifdef __cpp_consteval
+consteval
+#else
+constexpr
+#endif
+    T jkqtp_factorial(T n) {
+    T result = 1;
+    for (T i =1; i <= n; i++){
+        result = result*i;
+    }
+    return result;
+}
+
+
+/*! \brief Calculates a combination \f$ \left(\stackrel{n}{k}\right)=\frac{n!}{k!\cdot(n-k)!} \f$
+    \ingroup jkqtptools_math_basic
+
+    */
+template <class T=int>
+#ifdef __cpp_consteval
+consteval
+#else
+constexpr
+#endif
+    T jkqtp_combination(T n, T k) {
+    if (n==k) return 1;
+    if (k==0) return 1;
+    if (k>n) return 0;
+    return jkqtp_factorial(n)/(jkqtp_factorial(k)*jkqtp_factorial(n-k));
+}
+
+
+
+/*! \brief creates a functor that evaluates the Bernstein polynomial \f$ B_i^n(t):=\left(\stackrel{n}{i}\right)\cdot t^i\cdot(1-t)^{n-1},\ \ \ \ 0\leq i\leq n \f$
+    \ingroup jkqtptools_math_basic
+
+    */
+template <class T>
+std::function<T(T)> jkqtp_makeBernstein(int n, int i){
+    if (n==0 && i==0) return [=](T t) { return 1; };
+    if (n==1 && i==0) return [=](T t) { return (1.0-t); };
+    if (n==1 && i==1) return [=](T t) { return t; };
+    if (n==2 && i==0) return [=](T t) { return jkqtp_sqr(1.0-t); };
+    if (n==2 && i==1) return [=](T t) { return T(2.0)*t*(1.0-t); };
+    if (n==2 && i==2) return [=](T t) { return jkqtp_sqr(t); };
+    if (n==3 && i==0) return [=](T t) { return T(1)*jkqtp_cube(1.0-t); };
+    if (n==3 && i==1) return [=](T t) { return T(3)*t*jkqtp_sqr(1.0-t); };
+    if (n==3 && i==2) return [=](T t) { return T(3)*jkqtp_sqr(t)*(1.0-t); };
+    if (n==3 && i==3) return [=](T t) { return T(1)*jkqtp_cube(t); };
+    if (n==4 && i==0) return [=](T t) { return T(1)*jkqtp_pow4(1.0-t); };
+    if (n==4 && i==1) return [=](T t) { return T(4)*t*jkqtp_cube(1.0-t); };
+    if (n==4 && i==2) return [=](T t) { return T(6)*jkqtp_sqr(t)*jkqtp_sqr(1.0-t); };
+    if (n==4 && i==3) return [=](T t) { return T(4)*jkqtp_cube(t)*(1.0-t); };
+    if (n==4 && i==4) return [=](T t) { return T(1)*jkqtp_pow4(t); };
+    const T fac=jkqtp_combination<int64_t>(n,i);
+    return [=](T t) { return fac*pow(t,i)*pow(1.0-t,n-i); };
+}
+
+
 /*! \brief calculate the grwates common divisor (GCD) of \a a and \a b
     \ingroup jkqtptools_math_basic
 
     */
 JKQTCOMMON_LIB_EXPORT uint64_t jkqtp_gcd(uint64_t a, uint64_t b);
+
 
 /*! \brief calculates numeratur integer part \a intpart , \a num and denominator \a denom of a fraction, representing a given floating-point number \a input
     \ingroup jkqtptools_math_basic

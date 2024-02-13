@@ -303,6 +303,9 @@ This group assembles graphs that add (textual) labels to the datapoints in a plo
       <td>\image html geo_arrows_small.png
       <td> JKQTPGeoArrow
     <tr>
+      <td>\image html geo_bezier_small.png
+      <td> JKQTPGeoBezierCurve
+    <tr>
       <td>\image html geo_rect_small.png
       <td> JKQTPGeoRectangle
     <tr>

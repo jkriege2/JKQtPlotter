@@ -824,6 +824,25 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPDatastore{
 
 
 
+        /** \brief add two columns to the datastore. They will be filled with the values from \a points (first column: x-value, second column: y-value)
+         *
+         *  \param points list of datapoints to add
+         *  \param namex name for the column with the x-values
+         *  \param namey name for the column with the y-values
+         *  \return the IDs of the newly created column
+         *
+         */
+        std::pair<size_t,size_t> addCopiedPoints(const QList<QPointF>& points, const QString& namex=QString(""), const QString &namey=QString(""));
+        std::pair<size_t,size_t> addCopiedPoints(const QList<QPoint>& points, const QString& namex=QString(""), const QString &namey=QString(""));
+#if QT_VERSION<QT_VERSION_CHECK(6,0,0)
+        std::pair<size_t,size_t> addCopiedPoints(const QVector<QPointF>& points, const QString& namex=QString(""), const QString &namey=QString(""));
+        std::pair<size_t,size_t> addCopiedPoints(const QVector<QPoint>& points, const QString& namex=QString(""), const QString &namey=QString(""));
+#endif
+        std::pair<size_t,size_t> addCopiedPoints(const std::vector<QPointF>& points, const QString& namex=QString(""), const QString &namey=QString(""));
+        std::pair<size_t,size_t> addCopiedPoints(const std::vector<QPoint>& points, const QString& namex=QString(""), const QString &namey=QString(""));
+        std::pair<size_t,size_t> addCopiedPoints(const std::list<QPointF>& points, const QString& namex=QString(""), const QString &namey=QString(""));
+        std::pair<size_t,size_t> addCopiedPoints(const std::list<QPoint>& points, const QString& namex=QString(""), const QString &namey=QString(""));
+
         /** \brief add one column to the datastore. It will be filled with the values from \a first ... \a last
          *
          *  \tparam TIterator a standard C++ iterator

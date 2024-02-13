@@ -714,6 +714,119 @@ void JKQTPDatastore::copyColumnData(size_t toColumn, size_t fromColumn)
     setColumnImageWidth(toColumn, getColumnImageWidth(static_cast<int>(fromColumn)));
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////
+std::pair<size_t, size_t> JKQTPDatastore::addCopiedPoints(const std::list<QPoint> &points, const QString &namex, const QString &namey)
+{
+    const auto cx=addColumn(points.size(),namex);
+    const auto cy=addColumn(points.size(),namey);
+    int i=0;
+    for (const auto& p: points) {
+        set(cx, i, p.x());
+        set(cy, i, p.y());
+        i++;
+    }
+    return {cx,cy};
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+std::pair<size_t, size_t> JKQTPDatastore::addCopiedPoints(const std::list<QPointF> &points, const QString &namex, const QString &namey)
+{
+    const auto cx=addColumn(points.size(),namex);
+    const auto cy=addColumn(points.size(),namey);
+    int i=0;
+    for (const auto& p: points) {
+        set(cx, i, p.x());
+        set(cy, i, p.y());
+        i++;
+    }
+    return {cx,cy};
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+std::pair<size_t, size_t> JKQTPDatastore::addCopiedPoints(const std::vector<QPoint> &points, const QString &namex, const QString &namey)
+{
+    const auto cx=addColumn(points.size(),namex);
+    const auto cy=addColumn(points.size(),namey);
+    int i=0;
+    for (const auto& p: points) {
+        set(cx, i, p.x());
+        set(cy, i, p.y());
+        i++;
+    }
+    return {cx,cy};
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+std::pair<size_t, size_t> JKQTPDatastore::addCopiedPoints(const std::vector<QPointF> &points, const QString &namex, const QString &namey)
+{
+    const auto cx=addColumn(points.size(),namex);
+    const auto cy=addColumn(points.size(),namey);
+    int i=0;
+    for (const auto& p: points) {
+        set(cx, i, p.x());
+        set(cy, i, p.y());
+        i++;
+    }
+    return {cx,cy};
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+std::pair<size_t, size_t> JKQTPDatastore::addCopiedPoints(const QList<QPoint> &points, const QString &namex, const QString &namey)
+{
+    const auto cx=addColumn(points.size(),namex);
+    const auto cy=addColumn(points.size(),namey);
+    int i=0;
+    for (const auto& p: points) {
+        set(cx, i, p.x());
+        set(cy, i, p.y());
+        i++;
+    }
+    return {cx,cy};
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+std::pair<size_t, size_t> JKQTPDatastore::addCopiedPoints(const QList<QPointF> &points, const QString &namex, const QString &namey)
+{
+    const auto cx=addColumn(points.size(),namex);
+    const auto cy=addColumn(points.size(),namey);
+    int i=0;
+    for (const auto& p: points) {
+        set(cx, i, p.x());
+        set(cy, i, p.y());
+        i++;
+    }
+    return {cx,cy};
+}
+
+#if QT_VERSION<QT_VERSION_CHECK(6,0,0)
+////////////////////////////////////////////////////////////////////////////////////////////////
+std::pair<size_t, size_t> JKQTPDatastore::addCopiedPoints(const QVector<QPoint> &points, const QString &namex, const QString &namey)
+{
+    const auto cx=addColumn(points.size(),namex);
+    const auto cy=addColumn(points.size(),namey);
+    int i=0;
+    for (const auto& p: points) {
+        set(cx, i, p.x());
+        set(cy, i, p.y());
+        i++;
+    }
+    return {cx,cy};
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+std::pair<size_t, size_t> JKQTPDatastore::addCopiedPoints(const QVector<QPointF> &points, const QString &namex, const QString &namey)
+{
+    const auto cx=addColumn(points.size(),namex);
+    const auto cy=addColumn(points.size(),namey);
+    int i=0;
+    for (const auto& p: points) {
+        set(cx, i, p.x());
+        set(cy, i, p.y());
+        i++;
+    }
+    return {cx,cy};
+}
+#endif
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 size_t JKQTPDatastore::addLinearColumn(size_t rows, double start, double end, const QString& name) {

@@ -521,6 +521,8 @@ JKQTPGeoPolyLines::JKQTPGeoPolyLines(JKQTBasePlotter* parent, const QVector<QPoi
     JKQTPGeoBaseDecoratedLine(parent)
 {
     this->points=points;
+    setHeadDecoratorStyle(JKQTPNoDecorator);
+    setTailDecoratorStyle(JKQTPNoDecorator);
 }
 
 JKQTPGeoPolyLines::JKQTPGeoPolyLines(JKQTPlotter* parent, const QVector<QPointF>& points):
@@ -845,3 +847,226 @@ bool JKQTPGeoArc::getYMinMax(double& miny, double& maxy, double& smallestGreater
 
 
 
+
+JKQTPGeoBezierCurve::JKQTPGeoBezierCurve(JKQTBasePlotter *parent, const QPointF &start, const QPointF &control1, const QPointF &end):
+    JKQTPGeoBaseDecoratedLine(parent)
+{
+    setQuad(start,control1,end);
+    setHeadDecoratorStyle(JKQTPNoDecorator);
+    setTailDecoratorStyle(JKQTPNoDecorator);
+}
+
+JKQTPGeoBezierCurve::JKQTPGeoBezierCurve(JKQTPlotter *parent, const QPointF &start, const QPointF &control1, const QPointF &end):
+    JKQTPGeoBezierCurve(parent->getPlotter(),start,control1,end)
+{
+
+}
+
+JKQTPGeoBezierCurve::JKQTPGeoBezierCurve(JKQTBasePlotter *parent, const QPointF &start, const QPointF &control1, const QPointF &control2, const QPointF &end):
+    JKQTPGeoBaseDecoratedLine(parent)
+{
+    setCubic(start,control1,control2,end);
+    setHeadDecoratorStyle(JKQTPNoDecorator);
+    setTailDecoratorStyle(JKQTPNoDecorator);
+}
+
+JKQTPGeoBezierCurve::JKQTPGeoBezierCurve(JKQTPlotter *parent, const QPointF &start, const QPointF &control1, const QPointF &control2, const QPointF &end):
+    JKQTPGeoBezierCurve(parent->getPlotter(),start,control1,control2,end)
+{
+
+}
+
+JKQTPGeoBezierCurve::JKQTPGeoBezierCurve(JKQTBasePlotter *parent):
+    JKQTPGeoBaseDecoratedLine(parent)
+{
+    setHeadDecoratorStyle(JKQTPNoDecorator);
+    setTailDecoratorStyle(JKQTPNoDecorator);
+}
+
+JKQTPGeoBezierCurve::JKQTPGeoBezierCurve(JKQTPlotter *parent):
+    JKQTPGeoBezierCurve(parent->getPlotter())
+{
+
+}
+
+bool JKQTPGeoBezierCurve::getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) {
+    minx=0;
+    maxx=0;
+    smallestGreaterZero=0;
+    if (points.size()>0) {
+        minx=points[0].x();
+        maxx=points[0].x();
+        for (int i=1; i<points.size(); i++) {
+            double x=points[i].x();
+            if (x>maxx) maxx=x;
+            if (x<minx) minx=x;
+            double xvsgz;
+            xvsgz=x; SmallestGreaterZeroCompare_xvsgz();
+        }
+        return true;
+    }
+    return false;
+    //qDebug()<<"getXMinMax"<<minx<<maxx;
+}
+
+bool JKQTPGeoBezierCurve::getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) {
+    miny=0;
+    maxy=0;
+    smallestGreaterZero=0;
+    if (points.size()>0) {
+        miny=points[0].y();
+        maxy=points[0].y();
+        for (int i=1; i<points.size(); i++) {
+            double y=points[i].y();
+            if (y>maxy) maxy=y;
+            if (y<miny) miny=y;
+            double xvsgz;
+            xvsgz=y; SmallestGreaterZeroCompare_xvsgz();
+        }
+        return true;
+    }
+    return false;
+    //qDebug()<<"getYMinMax"<<miny<<maxy;
+}
+
+void JKQTPGeoBezierCurve::draw(JKQTPEnhancedPainter& painter) {
+    clearHitTestData();
+    if (points.size()>=2) {
+        reserveHitTestData(points.size());
+
+        double angle1, angle2;
+        QPointF xx1, xx2;
+        bool doDrawDecorator=false;
+        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+        painter.setPen(getLinePen(painter, parent));
+        painter.setBrush(Qt::NoBrush);
+        if ((points.size()<=4) && ((getDrawMode()==DrawAsGraphicElement) || (getXAxis()->isLinearAxis() && getYAxis()->isLinearAxis()))) {
+            const QVector<QPointF> path=transform(points);
+            angle1=atan2(path[1].y()-path[0].y(), path[1].x()-path[0].x());
+            angle2=atan2(path[path.size()-2].y()-path[path.size()-1].y(), path[path.size()-2].x()-path[path.size()-1].x());
+            xx1=path[0];
+            xx2=path[path.size()-1];
+            QPainterPath ppath;
+            if (path.size()>0) ppath.moveTo(path[0]);
+            if (path.size()==2) ppath.lineTo(path[1]);
+            else if (path.size()==3) ppath.quadTo(path[1], path[2]);
+            else if (path.size()==4) ppath.cubicTo(path[1], path[2], path[3]);
+
+            // draw corrected line
+            if (path.size()>0) {
+                painter.drawPath(ppath);
+                doDrawDecorator=true;
+            }
+        } else {
+            if (points.size()>1) {
+                std::function<QPointF(double)> plotfunc;
+                const auto B2_0=jkqtp_makeBernstein<double>(2,0);
+                const auto B2_1=jkqtp_makeBernstein<double>(2,1);
+                const auto B2_2=jkqtp_makeBernstein<double>(2,2);
+                const auto B3_0=jkqtp_makeBernstein<double>(3,0);
+                const auto B3_1=jkqtp_makeBernstein<double>(3,1);
+                const auto B3_2=jkqtp_makeBernstein<double>(3,2);
+                const auto B3_3=jkqtp_makeBernstein<double>(3,3);
+                const auto B4_0=jkqtp_makeBernstein<double>(4,0);
+                const auto B4_1=jkqtp_makeBernstein<double>(4,1);
+                const auto B4_2=jkqtp_makeBernstein<double>(4,2);
+                const auto B4_3=jkqtp_makeBernstein<double>(4,3);
+                const auto B4_4=jkqtp_makeBernstein<double>(4,4);
+                if (points.size()==2) plotfunc=[&](double t) -> QPointF { return points[0]+t*(points[1]-points[0]); };
+                else if (points.size()==3) plotfunc=[&](double t) -> QPointF { return points[0]*B2_0(t)+points[1]*B2_1(t)+points[2]*B2_2(t); };
+                else if (points.size()==4) plotfunc=[&](double t) -> QPointF { return points[0]*B3_0(t)+points[1]*B3_1(t)+points[2]*B3_2(t)+points[3]*B3_3(t); };
+                else if (points.size()==5) plotfunc=[&](double t) -> QPointF { return points[0]*B4_0(t)+points[1]*B4_1(t)+points[2]*B4_2(t)+points[3]*B4_3(t)+points[4]*B4_4(t); };
+
+                if (plotfunc) {
+                    std::function<QPointF(double)> fTransformedFunc= std::bind([plotfunc](const JKQTPPlotElement* plot, double t) -> QPointF { return plot->transform(plotfunc(t)); }, this, std::placeholders::_1);
+                    const int minSamples=10;
+                    const int maxRefinementDegree=5;
+                    const double slopeTolerance=0.005;
+                    const int minPixelPerSample=32;
+                    const double maxConsecutiveAngleDegree=0.2;
+                    JKQTPAdaptiveFunctionGraphEvaluator evaluator(fTransformedFunc, minSamples, maxRefinementDegree, slopeTolerance, minPixelPerSample);
+                    QVector<QPointF> data=evaluator.evaluate(0,1);
+                    data=JKQTPSimplyfyLineSegemnts(data, maxConsecutiveAngleDegree);
+
+                    painter.drawPolylineFast(data.data(), data.size());
+                    doDrawDecorator=true;
+                }
+            }
+        }
+
+
+        // potentially draw line-end decorators/arrows
+        if (doDrawDecorator) {
+            painter.setBrush(getLineColor());
+            JKQTPPlotLineDecorator(painter, xx1.x(), xx1.y(), angle1, getTailDecoratorStyle(), calcTailDecoratorSize(getLinePen(painter, getParent()).widthF()));
+            JKQTPPlotLineDecorator(painter, xx2.x(), xx2.y(), angle2, getHeadDecoratorStyle(), calcHeadDecoratorSize(getLinePen(painter, getParent()).widthF()));
+        }
+
+
+        for (const auto& p:points) {
+            addHitTestData(p.x(), p.y());
+        }
+
+    }
+}
+void JKQTPGeoBezierCurve::setPoints(const QVector<QPointF> &__value)
+{
+    const int maxPoints=5;
+    if (points.size()<2 || points.size()>maxPoints) throw std::runtime_error("JKQTPGeoBezierCurve only supports 2, 3 ... or "+std::to_string(maxPoints)+" points, but you supplied "+std::to_string(__value.size())+"!");
+    points=__value;
+}
+
+QVector<QPointF> JKQTPGeoBezierCurve::getPoints() const
+{
+    return points;
+}
+
+QPointF JKQTPGeoBezierCurve::getStart() const
+{
+    return points[0];
+}
+
+QPointF JKQTPGeoBezierCurve::getEnd() const
+{
+    return points.last();
+}
+
+QPointF JKQTPGeoBezierCurve::getControl1() const
+{
+    return points[1];
+}
+
+QPointF JKQTPGeoBezierCurve::getControl2() const
+{
+    return points[2];
+}
+
+void JKQTPGeoBezierCurve::setLine(const QPointF &start, const QPointF &end)
+{
+    points={start,end};
+}
+
+void JKQTPGeoBezierCurve::setQuad(const QPointF &start, const QPointF &control1, const QPointF &end)
+{
+    points={start,control1,end};
+}
+
+void JKQTPGeoBezierCurve::setCubic(const QPointF &start, const QPointF &control1, const QPointF &control2, const QPointF &end)
+{
+    points={start,control1,control2,end};
+}
+
+void JKQTPGeoBezierCurve::setQuartic(const QPointF &start, const QPointF &control1, const QPointF &control2, const QPointF &control3, const QPointF &end)
+{
+    points={start,control1,control2,control3,end};
+}
+
+int JKQTPGeoBezierCurve::getDegree() const
+{
+    return points.size()-1;
+}
+
+int JKQTPGeoBezierCurve::getNumberOfCOntrolPoints() const
+{
+    return points.size();
+}

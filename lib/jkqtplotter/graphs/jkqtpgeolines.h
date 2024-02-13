@@ -452,6 +452,127 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoPolyLines: public JKQTPGeoBaseDecoratedLine
 };
 
 
+
+/** \brief This JKQTPGeometricPlotElement is used to draw a bezier curve
+ *  \ingroup jkqtplotter_geoplots
+ *
+ *  \image html JKQTPlotterGeometricBezierGraphic.png "drawn with JKQTPGeometricPlotElement::DrawMode::DrawAsGraphicElement"
+ *
+ *  \see \ref JKQTPlotterGeometricBezier, JKQTPGeoBaseDecoratedLine
+ *
+ *  \section JKQTPGeoBezierCurveDrawMode DrawMode for JKQTPGeoBezierCurve
+ *  This class support JKQTPGeometricPlotElement::DrawMode::DrawAsMathematicalCurve , which will only have a significant effect with logarithmic axes.
+ *  THe image above is the default JKQTPGeometricPlotElement::DrawMode::DrawAsGraphicElement on a linear axis.
+ *
+ *  On logarithmic axes (x&y) the two modes draw very different shapes:
+ *
+ *  \image html JKQTPlotterGeometricBezierLogMath.png "drawn with JKQTPGeometricPlotElement::DrawMode::DrawAsMathematicalCurve"
+ *  \image html JKQTPlotterGeometricBezierLogGraphic.png "drawn with JKQTPGeometricPlotElement::DrawMode::DrawAsGraphicElement"
+ *
+ *  For DrawAsGraphicElement only the control points are converted to screen-coordinates, but drawing takes place in the (linear) screen-system.
+ *  For DrawAsMathematicalCurve drawing is done in the log-coordinate system.
+ *
+ *  \section JKQTPGeoBezierCurveDecorators Line-End Decorators for JKQTPGeoBezierCurve
+ *
+ *  You can also activate line-end decorators (aka arrows) for this poly-line, by using code like this:
+ *  \code
+ *      bezier->setHeadDecoratorStyle(JKQTPFilledDoubleArrow);
+ *      bezier->setTailDecoratorStyle(JKQTPCircleDecorator);
+ *  \endcode
+ *
+ *  \see \ref JKQTPlotterGeometricBezier
+ *
+ */
+class JKQTPLOTTER_LIB_EXPORT JKQTPGeoBezierCurve: public JKQTPGeoBaseDecoratedLine {
+    Q_OBJECT
+public:
+    /** \brief class constructor with start, end and one control point (i.e. a quadratic bezier curve)
+         *
+         *  \param parent the parent plotter object
+         *  \param points points on the polygon
+         */
+    JKQTPGeoBezierCurve(JKQTBasePlotter* parent, const QPointF& start, const QPointF& control1, const QPointF& end);
+    /** \brief class constructor with start, end and one control point (i.e. a quadratic bezier curve)
+         *
+         *  \param parent the parent plotter object
+         *  \param points points on the polygon
+         */
+    JKQTPGeoBezierCurve(JKQTPlotter* parent, const QPointF& start, const QPointF& control1, const QPointF& end);
+    /** \brief class constructor with start, end and two control points (i.e. a cubic bezier curve)
+         *
+         *  \param parent the parent plotter object
+         *  \param points points on the polygon
+         */
+    JKQTPGeoBezierCurve(JKQTBasePlotter* parent, const QPointF& start, const QPointF& control1, const QPointF& control2, const QPointF& end);
+    /** \brief class constructor with start, end and two control points (i.e. a cubic bezier curve)
+         *
+         *  \param parent the parent plotter object
+         *  \param points points on the polygon
+         */
+    JKQTPGeoBezierCurve(JKQTPlotter* parent, const QPointF& start, const QPointF& control1, const QPointF& control2, const QPointF& end);
+    /** \brief class constructor
+         *
+         *  \param parent the parent plotter object
+         */
+    JKQTPGeoBezierCurve(JKQTBasePlotter* parent);
+    /** \brief class constructor
+         *
+         *  \param parent the parent plotter object
+         */
+    JKQTPGeoBezierCurve(JKQTPlotter* parent);
+
+
+
+    /** \copydoc JKQTPPlotElement::getXMinMax() */
+    virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
+    /** \copydoc JKQTPPlotElement::getYMinMax() */
+    virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
+
+    /** \brief plots the graph to the plotter object specified as parent
+         *
+         * \note This function support JKQTPGeometricPlotElement::DrawMode::DrawAsMathematicalCurve. If set,
+         *       and non-linear axes are chosen, the points of the poly-line will be possibly
+         *       connected by curves, instead of straight lines. In the mode
+         *       JKQTPGeometricPlotElement::DrawMode::DrawAsGraphicElement the points are connected by straight
+         *       lines, independent of the linearity or non-linearity of the coordinate axes.
+         */
+    virtual void draw(JKQTPEnhancedPainter& painter) override;
+
+    /** \copydoc points */
+    void setPoints(const QVector<QPointF> & __value);
+    /** \copydoc points */
+    QVector<QPointF> getPoints() const;
+
+    /** \brief get the start point of the curve */
+    QPointF getStart()const;
+    /** \brief get the end point of the curve */
+    QPointF getEnd()const;
+    /** \brief get the control point 1 of the curve */
+    QPointF getControl1()const;
+    /** \brief get the control point 2 of the curve */
+    QPointF getControl2()const;
+    /** \brief set a linear bezier curve (2 control points) */
+    void setLine(const QPointF& start, const QPointF& end);
+    /** \brief set a quadratic bezier curve (3 control points) */
+    void setQuad(const QPointF& start, const QPointF& control1, const QPointF& end);
+    /** \brief set a cubic bezier curve (4 control points) */
+    void setCubic(const QPointF& start, const QPointF& control1, const QPointF& control2, const QPointF& end);
+    /** \brief set a cubic bezier curve (5 control points) */
+    void setQuartic(const QPointF& start, const QPointF& control1, const QPointF& control2, const QPointF& control3, const QPointF& end);
+    /** \brief get the degree of the curve (number of points -1) */
+    int getDegree() const;
+    /** \brief get the number of control points (including start and end) */
+    int getNumberOfCOntrolPoints() const;
+
+protected:
+    /** \brief list with all control points of the bezier curve
+     *
+     *  \note This class supports at most 4 points are alllowed
+     */
+    QVector<QPointF> points;
+};
+
+
 /** \brief This JKQTPGeometricPlotElement is used to draw an arc
  *  \ingroup jkqtplotter_geoplots
  *

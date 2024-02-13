@@ -12,7 +12,6 @@ This page lists several todos and wishes for future version of JKQTPlotter
     <li>data management: allow for other datatypes than double, would be good to have, double, float, ints, bool, string ... as for images</li>
     <li>data management: binding  for the <a href="https://eigen.tuxfamily.org/index.php?title=Main_Page">Eigen library</a></li>
     <li>graphic elements: annotation graphic element with text positionable like legend, or with (0..1),(0..1)-coordinates within plot</li>
-    <li>graphic elements: cubic/bezier curves for graphic elements</li>
     <li>graphic elements: make coordinate systems selectable for all: x/y-axis, 0..1/0..1, topleft/topright... </li>
     <li>graphs: barchart/ranges chart with (x,y1,y2) or (x1,x2,y)</li>
     <li>graphs: gant-chart as simplified vector field with (x,y1,y2) or (x1,x2,y), or (x,y,dx), (x,y,dy) ... different head/tail style</li>

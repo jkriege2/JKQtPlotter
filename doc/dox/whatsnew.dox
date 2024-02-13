@@ -135,6 +135,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: JKQTPFinancialGraph for drawing candlestick or OHLC graphs of financial data, such as stock amrket prices (+example \ref JKQTPlotterFinancialChartExample)</li>
     <li>NEW: stacked barcharts may have a small separation (default 1pt)</li>
     <li>NEW: autoscaling for barcharts works now, also when stacked and unstacked charts are combined in one plot</li>
+    <li>NEW: JKQTPGeoBezierCurve for drawing bezier curves of degree 1-4 (+example \ref JKQTPlotterGeometricBezier)</li>
   </ul></li>
   
   <li>JKQTMathText:<ul>
