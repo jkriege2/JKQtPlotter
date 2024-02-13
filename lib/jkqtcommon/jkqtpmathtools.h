@@ -586,12 +586,7 @@ QString jkqtp_polynomialModel2Latex(PolyItP firstP, PolyItP lastP) {
 
     */
 template <class T=int>
-#ifdef __cpp_consteval
-consteval
-#else
-constexpr
-#endif
-    T jkqtp_factorial(T n) {
+inline T jkqtp_factorial(T n) {
     T result = 1;
     for (T i =1; i <= n; i++){
         result = result*i;
@@ -605,12 +600,7 @@ constexpr
 
     */
 template <class T=int>
-#ifdef __cpp_consteval
-consteval
-#else
-constexpr
-#endif
-    T jkqtp_combination(T n, T k) {
+inline T jkqtp_combination(T n, T k) {
     if (n==k) return 1;
     if (k==0) return 1;
     if (k>n) return 0;
