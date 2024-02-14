@@ -5,6 +5,9 @@ $\mat{M}_1=\begin{matrix}a&b&...\\ c&d&...\end{matrix}\ \ \ \ \ \ \mat{M}_2=\lef
 jkqtmathtext_bmatrix.png
 $\begin{bmatrix}a&b&...\\ c&d&...\end{bmatrix}$
 ---
+jkqtmathtext_bmatrix_1col.png
+$\begin{bmatrix}a\\b\\...\end{bmatrix}$
+---
 jkqtmathtext_bbmatrix.png
 $\begin{Bmatrix}a&b&...\\ c&d&...\end{Bmatrix}$
 ---
@@ -45,3 +48,6 @@ $\mat{M}_\cdot=\begin{array}{l:ll}
   \beta & b & \ldots \\
   \vdots & \vdots & \ddots \\
 \end{array}\right)$
+---
+jkqtmathtext_array_1col.png
+$\vec{c}=\left(\begin{array}{l} \alpha \\ b \\ ... \end{array}\right)$

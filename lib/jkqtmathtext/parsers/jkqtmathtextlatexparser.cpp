@@ -885,10 +885,17 @@ JKQTMathTextNode* JKQTMathTextLatexParser::parseLatexString(bool get, JKQTMathTe
                 bool firstLine=true;
                 QVector<JKQTMathTextNode*> line;
                 qsizetype colCount=0;
-                //std::cout<<"found \\begin{matrix}\n";
+                //qDebug()<<"start "<<envname;
                 while (first || currentToken==MTTampersand || currentToken==MTTinstructionNewline) {
-                    while (getToken()==MTTwhitespace) ; // eat whitespace
-                    JKQTMathTextNode* it=simplifyAndTrimJKQTMathTextNode(parseLatexString(false, MTBTAny, envname));
+                    //qDebug()<<"  - START: "<<tokenType2String(currentToken)<<" first="<<first;
+                    while (getToken()==MTTwhitespace) ; // eat one token + whitespace
+                    //qDebug()<<"  - eatWS: "<<tokenType2String(currentToken)<<" first="<<first;
+                    JKQTMathTextNode* it=nullptr;
+                    if (currentToken==MTTampersand || currentToken==MTTinstructionNewline) {
+                        it=new JKQTMathTextNoopNode(parentMathText);
+                    } else {
+                        it=simplifyAndTrimJKQTMathTextNode(parseLatexString(false, MTBTAny, envname));
+                    }
                     if (firstLine) {
                         if (lastMatrixLineCommandCount.value("hline",0)==1) {
                             matrixNode->setTopLine(JKQTMathTextMatrixNode::LTline);
@@ -914,26 +921,21 @@ JKQTMathTextNode* JKQTMathTextLatexParser::parseLatexString(bool get, JKQTMathTe
                             matrixNode->setRowBottomLine(items.size()-1, JKQTMathTextMatrixNode::LTdoubleDashed);
                         }
                     }
+                    //qDebug()<<"  - before append CurrenTinstruction="<<tokenType2String(currentToken)<<", currentTokenName="<<currentTokenName;
                     if (currentToken==MTTampersand) {
-                        //std::cout<<"  appending item\n";
+                        //qDebug()<<"  - appending item "<<it->getTypeName();
                         line.append(it);
                     } else {
-                        //std::cout<<"  appending item and line with "<<line.size()<<" items.\n";
-                        if (currentToken==MTTinstructionEnd) {
-                            JKQTMathTextMultiChildNode* mnc=dynamic_cast<JKQTMathTextMultiChildNode*>(it);
-                            if (mnc && mnc->childCount()>0) {
-                                line.append(it);
-                            } else {
-                                line.append(it);
-                            }
-                        } else {
-                            line.append(it);
-                        }
-                        if (currentToken==MTTinstructionNewline || line.size()>0) {
+                        //qDebug()<<"  - appending item "<<it->getTypeName()<<" to line with "<<line.size()<<" items.";
+                        line.append(it);
+
+                        if (currentToken==MTTinstructionNewline || (currentToken==MTTinstructionEnd && currentTokenName==envname) || line.size()>0) {
                             colCount=qMax(colCount, static_cast<qsizetype>(line.size()));
-                            if (line.size()==0 || (line.size()>1 && static_cast<qsizetype>(line.size())==colCount)) {
+                            //qDebug()<<"  - colCount="<<colCount;
+                            if (line.size()==0 || (line.size()>=1 && static_cast<qsizetype>(line.size())==colCount)) {
                                 items.append(line);
-                            } else if (line.size()>1 && static_cast<qsizetype>(line.size())!=colCount) {
+                                //qDebug()<<"  - appending line with "<<line.size()<<" items. items.size now "<<items.size();
+                            } else if (line.size()>=1 && static_cast<qsizetype>(line.size())!=colCount) {
                                 addToErrorList(tr("error @ ch. %1: wrong number of entries widthin '\\begin{%2}...\\end{%2}'").arg(currentTokenID).arg(envname));
                             }
                         }
@@ -942,7 +944,8 @@ JKQTMathTextNode* JKQTMathTextLatexParser::parseLatexString(bool get, JKQTMathTe
                     }
                     first=false;
                 }
-                //std::cout<<"  creating matrix-node with "<<items.size()<<" items.\n";
+                //qDebug()<<"  - creating matrix-node with "<<items.size()<<" items.\n";
+                //for (int i=0; i<items.size(); i++) qDebug()<<"      items["<<i<<"].size="<<items[i].size();
                 matrixNode->setChildren(items);
                 if (envname=="pmatrix") nl->addChild(new JKQTMathTextBraceNode(parentMathText, MTBTParenthesis, MTBTParenthesis, matrixNode));
                 else if (envname=="cases") nl->addChild(new JKQTMathTextBraceNode(parentMathText, MTBTCurlyBracket, MTBTNone, matrixNode));
