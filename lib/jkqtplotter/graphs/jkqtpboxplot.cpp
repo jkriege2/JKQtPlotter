@@ -124,19 +124,19 @@ void JKQTPBoxplotVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
                 QStringList labelValues, labelNames;
                 int labMedian=-1, labMean=-1, labMin=-1, labMax=-1, labQ25=-1, labQ75=-1;
                 labelNames<<"pos";
-                labelValues<<jkqtp_floattolatexqstr(xv, 3);
-                if (minColumn>=0 && JKQTPIsOKFloat(minv)) { labelNames<<"\\min"; labelValues<<jkqtp_floattolatexqstr(minv, 3); labMin=labelValues.size()-1; }
-                if (percentile25Column>=0 && JKQTPIsOKFloat(p25v)) { labelNames<<"q_{25}"; labelValues<<jkqtp_floattolatexqstr(p25v, 3); labQ25=labelValues.size()-1; }
+                labelValues<<xFloatToString(xv);
+                if (minColumn>=0 && JKQTPIsOKFloat(minv)) { labelNames<<"\\min"; labelValues<<yFloatToString(minv); labMin=labelValues.size()-1; }
+                if (percentile25Column>=0 && JKQTPIsOKFloat(p25v)) { labelNames<<"q_{25}"; labelValues<<yFloatToString(p25v); labQ25=labelValues.size()-1; }
                 if (medianColumn>=0 && JKQTPIsOKFloat(medianv)) {
                     if (medianConfidenceColumn>=0 && JKQTPIsOKFloat(medConf)) {
-                        labelNames<<"\\median"; labelValues<<(jkqtp_floattolatexqstr(medianv, 3)+"\\:{\\pm}\\:"+jkqtp_floattolatexqstr(medConf, 3)); labMedian=labelValues.size()-1;
+                        labelNames<<"\\median"; labelValues<<(yFloatToString(medianv)+"\\:{\\pm}\\:"+yFloatToString(medConf)); labMedian=labelValues.size()-1;
                     } else {
-                        labelNames<<"\\median"; labelValues<<jkqtp_floattolatexqstr(medianv, 3); labMedian=labelValues.size()-1;
+                        labelNames<<"\\median"; labelValues<<yFloatToString(medianv); labMedian=labelValues.size()-1;
                     }
                 }
-                if (meanColumn>=0 && JKQTPIsOKFloat(meanv)) { labelNames<<"\\mu"; labelValues<<jkqtp_floattolatexqstr(meanv, 3); labMean=labelValues.size()-1; }
-                if (percentile75Column>=0 && JKQTPIsOKFloat(p75v)) { labelNames<<"q_{75}"; labelValues<<jkqtp_floattolatexqstr(p75v, 3); labQ75=labelValues.size()-1; }
-                if (maxColumn>=0 && JKQTPIsOKFloat(maxv)) { labelNames<<"\\max"; labelValues<<jkqtp_floattolatexqstr(maxv, 3); labMax=labelValues.size()-1; }
+                if (meanColumn>=0 && JKQTPIsOKFloat(meanv)) { labelNames<<"\\mu"; labelValues<<yFloatToString(meanv); labMean=labelValues.size()-1; }
+                if (percentile75Column>=0 && JKQTPIsOKFloat(p75v)) { labelNames<<"q_{75}"; labelValues<<yFloatToString(p75v); labQ75=labelValues.size()-1; }
+                if (maxColumn>=0 && JKQTPIsOKFloat(maxv)) { labelNames<<"\\max"; labelValues<<yFloatToString(maxv); labMax=labelValues.size()-1; }
 
                 const double x=transformX(xv);
                 const double p25=transformY(p25v);
@@ -470,19 +470,19 @@ void JKQTPBoxplotHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
                 QStringList labelValues, labelNames;
                 int labMedian=-1, labMean=-1, labMin=-1, labMax=-1, labQ25=-1, labQ75=-1;
                 labelNames<<"pos";
-                labelValues<<jkqtp_floattolatexqstr(yv, 3);
-                if (minColumn>=0 && JKQTPIsOKFloat(minv)) { labelNames<<"\\min"; labelValues<<jkqtp_floattolatexqstr(minv, 3); labMin=labelValues.size()-1; }
-                if (percentile25Column>=0 && JKQTPIsOKFloat(p25v)) { labelNames<<"q_{25}"; labelValues<<jkqtp_floattolatexqstr(p25v, 3); labQ25=labelValues.size()-1; }
+                labelValues<<yFloatToString(yv);
+                if (minColumn>=0 && JKQTPIsOKFloat(minv)) { labelNames<<"\\min"; labelValues<<xFloatToString(minv); labMin=labelValues.size()-1; }
+                if (percentile25Column>=0 && JKQTPIsOKFloat(p25v)) { labelNames<<"q_{25}"; labelValues<<xFloatToString(p25v); labQ25=labelValues.size()-1; }
                 if (medianColumn>=0 && JKQTPIsOKFloat(medianv)) {
                     if (medianConfidenceColumn>=0 && JKQTPIsOKFloat(medConf)) {
-                        labelNames<<"\\median"; labelValues<<(jkqtp_floattolatexqstr(medianv, 3)+"\\:{\\pm}\\:"+jkqtp_floattolatexqstr(medConf, 3)); labMedian=labelValues.size()-1;
+                        labelNames<<"\\median"; labelValues<<(xFloatToString(medianv)+"\\:{\\pm}\\:"+xFloatToString(medConf)); labMedian=labelValues.size()-1;
                     } else {
-                        labelNames<<"\\median"; labelValues<<jkqtp_floattolatexqstr(medianv, 3); labMedian=labelValues.size()-1;
+                        labelNames<<"\\median"; labelValues<<xFloatToString(medianv); labMedian=labelValues.size()-1;
                     }
                 }
-                if (meanColumn>=0 && JKQTPIsOKFloat(meanv)) { labelNames<<"\\mu"; labelValues<<jkqtp_floattolatexqstr(meanv, 3); labMean=labelValues.size()-1; }
-                if (percentile75Column>=0 && JKQTPIsOKFloat(p75v)) { labelNames<<"q_{75}"; labelValues<<jkqtp_floattolatexqstr(p75v, 3); labQ75=labelValues.size()-1; }
-                if (maxColumn>=0 && JKQTPIsOKFloat(maxv)) { labelNames<<"\\max"; labelValues<<jkqtp_floattolatexqstr(maxv, 3); labMax=labelValues.size()-1; }
+                if (meanColumn>=0 && JKQTPIsOKFloat(meanv)) { labelNames<<"\\mu"; labelValues<<xFloatToString(meanv); labMean=labelValues.size()-1; }
+                if (percentile75Column>=0 && JKQTPIsOKFloat(p75v)) { labelNames<<"q_{75}"; labelValues<<xFloatToString(p75v); labQ75=labelValues.size()-1; }
+                if (maxColumn>=0 && JKQTPIsOKFloat(maxv)) { labelNames<<"\\max"; labelValues<<xFloatToString(maxv); labMax=labelValues.size()-1; }
 
 
 
@@ -633,19 +633,19 @@ void JKQTPBoxplotVerticalElement::draw(JKQTPEnhancedPainter& painter) {
             QStringList labelValues, labelNames;
             int labMedian=-1, labMean=-1, labMin=-1, labMax=-1, labQ25=-1, labQ75=-1;
             labelNames<<"pos";
-            labelValues<<jkqtp_floattolatexqstr(xv, 3);
-            if (JKQTPIsOKFloat(minv)) { labelNames<<"\\min"; labelValues<<jkqtp_floattolatexqstr(minv, 3); labMin=labelValues.size()-1; }
-            if (JKQTPIsOKFloat(p25v)) { labelNames<<"q_{25}"; labelValues<<jkqtp_floattolatexqstr(p25v, 3); labQ25=labelValues.size()-1; }
+            labelValues<<xFloatToString(xv);
+            if (JKQTPIsOKFloat(minv)) { labelNames<<"\\min"; labelValues<<yFloatToString(minv); labMin=labelValues.size()-1; }
+            if (JKQTPIsOKFloat(p25v)) { labelNames<<"q_{25}"; labelValues<<yFloatToString(p25v); labQ25=labelValues.size()-1; }
             if (JKQTPIsOKFloat(medianv)) {
                 if (JKQTPIsOKFloat(medConf)) {
-                    labelNames<<"\\median"; labelValues<<(jkqtp_floattolatexqstr(medianv, 3)+"\\:{\\pm}\\:"+jkqtp_floattolatexqstr(medConf, 3)); labMedian=labelValues.size()-1;
+                    labelNames<<"\\median"; labelValues<<(yFloatToString(medianv)+"\\:{\\pm}\\:"+yFloatToString(medConf)); labMedian=labelValues.size()-1;
                 } else {
-                    labelNames<<"\\median"; labelValues<<jkqtp_floattolatexqstr(medianv, 3); labMedian=labelValues.size()-1;
+                    labelNames<<"\\median"; labelValues<<yFloatToString(medianv); labMedian=labelValues.size()-1;
                 }
             }
-            if (JKQTPIsOKFloat(meanv)) { labelNames<<"\\mu"; labelValues<<jkqtp_floattolatexqstr(meanv, 3); labMean=labelValues.size()-1; }
-            if (JKQTPIsOKFloat(p75v)) { labelNames<<"q_{75}"; labelValues<<jkqtp_floattolatexqstr(p75v, 3); labQ75=labelValues.size()-1; }
-            if (JKQTPIsOKFloat(maxv)) { labelNames<<"\\max"; labelValues<<jkqtp_floattolatexqstr(maxv, 3); labMax=labelValues.size()-1; }
+            if (JKQTPIsOKFloat(meanv)) { labelNames<<"\\mu"; labelValues<<yFloatToString(meanv); labMean=labelValues.size()-1; }
+            if (JKQTPIsOKFloat(p75v)) { labelNames<<"q_{75}"; labelValues<<yFloatToString(p75v); labQ75=labelValues.size()-1; }
+            if (JKQTPIsOKFloat(maxv)) { labelNames<<"\\max"; labelValues<<yFloatToString(maxv); labMax=labelValues.size()-1; }
 
             double w=parent->pt2px(painter,getBoxWidthAbsolute());
             double xma=x+w/2.0;
@@ -877,19 +877,19 @@ void JKQTPBoxplotHorizontalElement::draw(JKQTPEnhancedPainter& painter) {
             QStringList labelValues, labelNames;
             int labMedian=-1, labMean=-1, labMin=-1, labMax=-1, labQ25=-1, labQ75=-1;
             labelNames<<"pos";
-            labelValues<<jkqtp_floattolatexqstr(yv, 3);
-            if (JKQTPIsOKFloat(minv)) { labelNames<<"\\min"; labelValues<<jkqtp_floattolatexqstr(minv, 3); labMin=labelValues.size()-1; }
-            if (JKQTPIsOKFloat(p25v)) { labelNames<<"q_{25}"; labelValues<<jkqtp_floattolatexqstr(p25v, 3); labQ25=labelValues.size()-1; }
+            labelValues<<yFloatToString(yv);
+            if (JKQTPIsOKFloat(minv)) { labelNames<<"\\min"; labelValues<<xFloatToString(minv); labMin=labelValues.size()-1; }
+            if (JKQTPIsOKFloat(p25v)) { labelNames<<"q_{25}"; labelValues<<xFloatToString(p25v); labQ25=labelValues.size()-1; }
             if (JKQTPIsOKFloat(medianv)) {
                 if (JKQTPIsOKFloat(medConf)) {
-                    labelNames<<"\\median"; labelValues<<(jkqtp_floattolatexqstr(medianv, 3)+"\\:{\\pm}\\:"+jkqtp_floattolatexqstr(medConf, 3)); labMedian=labelValues.size()-1;
+                    labelNames<<"\\median"; labelValues<<(xFloatToString(medianv)+"\\:{\\pm}\\:"+xFloatToString(medConf)); labMedian=labelValues.size()-1;
                 } else {
-                    labelNames<<"\\median"; labelValues<<jkqtp_floattolatexqstr(medianv, 3); labMedian=labelValues.size()-1;
+                    labelNames<<"\\median"; labelValues<<xFloatToString(medianv); labMedian=labelValues.size()-1;
                 }
             }
-            if (JKQTPIsOKFloat(meanv)) { labelNames<<"\\mu"; labelValues<<jkqtp_floattolatexqstr(meanv, 3); labMean=labelValues.size()-1; }
-            if (JKQTPIsOKFloat(p75v)) { labelNames<<"q_{75}"; labelValues<<jkqtp_floattolatexqstr(p75v, 3); labQ75=labelValues.size()-1; }
-            if (JKQTPIsOKFloat(maxv)) { labelNames<<"\\max"; labelValues<<jkqtp_floattolatexqstr(maxv, 3); labMax=labelValues.size()-1; }
+            if (JKQTPIsOKFloat(meanv)) { labelNames<<"\\mu"; labelValues<<xFloatToString(meanv); labMean=labelValues.size()-1; }
+            if (JKQTPIsOKFloat(p75v)) { labelNames<<"q_{75}"; labelValues<<xFloatToString(p75v); labQ75=labelValues.size()-1; }
+            if (JKQTPIsOKFloat(maxv)) { labelNames<<"\\max"; labelValues<<xFloatToString(maxv); labMax=labelValues.size()-1; }
 
             double w=parent->pt2px(painter,getBoxWidthAbsolute());
             double yma=y+w/2.0;

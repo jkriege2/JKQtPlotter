@@ -127,6 +127,7 @@ void JKQTPFinancialGraph::draw(JKQTPEnhancedPainter &painter)
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot("JKQTPFinancialGraph::draw");
 #endif
+    clearHitTestData();
     if (parent==nullptr) return;
     const JKQTPDatastore* datastore=parent->getDatastore();
     if (datastore==nullptr) return;
@@ -144,6 +145,7 @@ void JKQTPFinancialGraph::draw(JKQTPEnhancedPainter &painter)
     double right=1e6;
     bool firstXY=true;
     if (getIndexRange(imin, imax)) {
+        reserveHitTestData(imax-imin);
         painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
 
         double delta=1;
@@ -212,6 +214,25 @@ void JKQTPFinancialGraph::draw(JKQTPEnhancedPainter &painter)
                         }
                         break;
                     }
+
+                    auto addUlAt=[](QStringList sl, int i) { sl[i]="\\ul{"+sl[i]+"}"; return sl; };
+                    auto addVerbAll=[](QStringList sl) { for (int i=0; i<sl.size();i++) { sl[i]="\\mbox{"+sl[i]+"}"; }; return sl; };
+                    QStringList labelValues, labelNames;
+                    labelNames<<"pos";
+                    labelValues<<xFloatToString(xv);
+                    labelNames<<"open";
+                    labelValues<<yFloatToString(vO);
+                    labelNames<<"high";
+                    labelValues<<yFloatToString(vH);
+                    labelNames<<"low";
+                    labelValues<<yFloatToString(vL);
+                    labelNames<<"close";
+                    labelValues<<yFloatToString(vC);
+                    labelNames=addVerbAll(labelNames);
+                    addHitTestData(xv, vO, i, "\\ensuremath{\\begin{bmatrix}"+addUlAt(labelNames,1).join(" \\\\ ")+"\\end{bmatrix}\\;=\\;\\begin{bmatrix}"+addUlAt(labelValues,1).join("\\\\")+"\\end{bmatrix}}");
+                    addHitTestData(xv, vH, i, "\\ensuremath{\\begin{bmatrix}"+addUlAt(labelNames,2).join("\\\\")+"\\end{bmatrix}\\;=\\;\\begin{bmatrix}"+addUlAt(labelValues,2).join("\\\\")+"\\end{bmatrix}}");
+                    addHitTestData(xv, vL, i, "\\ensuremath{\\begin{bmatrix}"+addUlAt(labelNames,3).join("\\\\")+"\\end{bmatrix}\\;=\\;\\begin{bmatrix}"+addUlAt(labelValues,3).join("\\\\")+"\\end{bmatrix}}");
+                    addHitTestData(xv, vC, i, "\\ensuremath{\\begin{bmatrix}"+addUlAt(labelNames,4).join("\\\\")+"\\end{bmatrix}\\;=\\;\\begin{bmatrix}"+addUlAt(labelValues,4).join("\\\\")+"\\end{bmatrix}}");
                 }
             }
         }
