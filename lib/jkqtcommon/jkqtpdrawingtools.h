@@ -675,8 +675,8 @@ inline void JKQTPPlotSymbol(TPainter& painter, double x, double y, JKQTPGraphSym
 
     static std::vector<JKQTPSymbolPathsInternnal> all_paths = []() {
         // this functor is called the the static variable symbolData is initialized, but only once per runtimme (guaranteed by C++)
-        std::vector<JKQTPSymbolPathsInternnal> all_paths;
-        all_paths.resize(JKQTPSymbolCount);
+        std::vector<JKQTPSymbolPathsInternnal> paths;
+        paths.resize(JKQTPSymbolCount);
 
         // calculate star cordinates as static values
         const double s45=fabs(cos(45.0/180.0*JKQTPSTATISTICS_PI));
@@ -684,180 +684,180 @@ inline void JKQTPPlotSymbol(TPainter& painter, double x, double y, JKQTPGraphSym
         const auto star6cords=JKQTPGetStarCoordinates<6>(0.5);
         const auto star8cords=JKQTPGetStarCoordinates<8>(0.5);
 
-        all_paths[JKQTPCross].paths.moveTo(-0.5,-0.5);
-        all_paths[JKQTPCross].paths.lineTo(0.5,0.5);
-        all_paths[JKQTPCross].paths.moveTo(-0.5,+0.5);
-        all_paths[JKQTPCross].paths.lineTo(+0.5,-0.5);
-        all_paths[JKQTPPlus].paths.moveTo(-0.5,0);
-        all_paths[JKQTPPlus].paths.lineTo(0.5,0);
-        all_paths[JKQTPPlus].paths.moveTo(0,+0.5);
-        all_paths[JKQTPPlus].paths.lineTo(0,-0.5);
-        all_paths[JKQTPCircle].paths.addEllipse(QPointF(0,0), 0.5, 0.5);
-        all_paths[JKQTPFilledCircle].filledpaths=all_paths[JKQTPCircle].paths;
-        all_paths[JKQTPCircleCross].paths.addEllipse(QPointF(0,0), 0.5, 0.5);
-        all_paths[JKQTPCircleCross].paths.moveTo(-0.5*s45,-0.5*s45);
-        all_paths[JKQTPCircleCross].paths.lineTo(0.5*s45,0.5*s45);
-        all_paths[JKQTPCircleCross].paths.moveTo(-0.5*s45,+0.5*s45);
-        all_paths[JKQTPCircleCross].paths.lineTo(+0.5*s45,-0.5*s45);
-        all_paths[JKQTPCirclePlus].paths.addEllipse(QPointF(0,0), 0.5, 0.5);
-        all_paths[JKQTPCirclePlus].paths.moveTo(-0.5,0);
-        all_paths[JKQTPCirclePlus].paths.lineTo(0.5,0);
-        all_paths[JKQTPCirclePlus].paths.moveTo(0,+0.5);
-        all_paths[JKQTPCirclePlus].paths.lineTo(0,-0.5);
-        all_paths[JKQTPCirclePeace].paths.addEllipse(QPointF(0,0), 0.5, 0.5);
-        all_paths[JKQTPCirclePeace].paths.moveTo(0,-0.5);
-        all_paths[JKQTPCirclePeace].paths.lineTo(0, 0.5);
-        all_paths[JKQTPCirclePeace].paths.moveTo(0,0);
-        all_paths[JKQTPCirclePeace].paths.lineTo(0.5*s45,0.5*s45);
-        all_paths[JKQTPCirclePeace].paths.moveTo(0,0);
-        all_paths[JKQTPCirclePeace].paths.lineTo(-0.5*s45,0.5*s45);
-        all_paths[JKQTPPeace].paths.moveTo(0,-0.5);
-        all_paths[JKQTPPeace].paths.lineTo(0, 0.5);
-        all_paths[JKQTPPeace].paths.moveTo(0,0);
-        all_paths[JKQTPPeace].paths.lineTo(0.5*s45,0.5*s45);
-        all_paths[JKQTPPeace].paths.moveTo(0,0);
-        all_paths[JKQTPPeace].paths.lineTo(-0.5*s45,0.5*s45);
-        all_paths[JKQTPTarget].paths.addEllipse(QPointF(0,0), 0.33333, 0.33333);
-        all_paths[JKQTPTarget].paths.moveTo(QPointF(0,-0.5));
-        all_paths[JKQTPTarget].paths.lineTo(QPointF(0,0.5));
-        all_paths[JKQTPTarget].paths.moveTo(QPointF(-0.5,0));
-        all_paths[JKQTPTarget].paths.lineTo(QPointF(0.5,0));
-        all_paths[JKQTPFemale].paths.addEllipse(-0.25,-0.5,0.5,0.5);
-        all_paths[JKQTPFemale].paths.moveTo(0,0);
-        all_paths[JKQTPFemale].paths.lineTo(0,0.5);
-        all_paths[JKQTPFemale].paths.moveTo(-0.5/3.0,0.5/2.0);
-        all_paths[JKQTPFemale].paths.lineTo(0.5/3.0,0.5/2.0);
-        all_paths[JKQTPMale].paths.addEllipse(QRectF(-0.5/2.0, -0.5/2.0, 0.5, 0.5));
-        all_paths[JKQTPMale].paths.moveTo(QPointF(+0.5/2.0*cos(45.0/180.0*JKQTPSTATISTICS_PI),-0.5/2.0*cos(45.0/180.0*JKQTPSTATISTICS_PI)));
-        all_paths[JKQTPMale].paths.lineTo(QPointF(+0.5,-0.5));
-        all_paths[JKQTPMale].paths.moveTo(QPointF(+0.5-0.5/2.0,-0.5));
-        all_paths[JKQTPMale].paths.lineTo(QPointF(+0.5,-0.5));
-        all_paths[JKQTPMale].paths.lineTo(QPointF(+0.5,-0.5+0.5/2.0));
-        all_paths[JKQTPRect].paths.addRect(-0.5,-0.5, 1,1);
-        all_paths[JKQTPFilledRect].filledpaths=all_paths[JKQTPRect].paths;
-        all_paths[JKQTPRectCross].paths.addRect(-0.5,-0.5, 1,1);
-        all_paths[JKQTPRectCross].paths.moveTo(-0.5,-0.5);
-        all_paths[JKQTPRectCross].paths.lineTo(0.5,0.5);
-        all_paths[JKQTPRectCross].paths.moveTo(-0.5,+0.5);
-        all_paths[JKQTPRectCross].paths.lineTo(+0.5,-0.5);
-        all_paths[JKQTPRectPlus].paths.addRect(-0.5,-0.5, 1,1);
-        all_paths[JKQTPRectPlus].paths.moveTo(-0.5,0);
-        all_paths[JKQTPRectPlus].paths.lineTo(0.5,0);
-        all_paths[JKQTPRectPlus].paths.moveTo(0,+0.5);
-        all_paths[JKQTPRectPlus].paths.lineTo(0,-0.5);
-        all_paths[JKQTPCurvedTriangle].paths.moveTo(0,0-0.5);
-        all_paths[JKQTPCurvedTriangle].paths.quadTo(0-1.0/10.0,0+1.0/4.0, 0-0.5,0+0.5);
-        all_paths[JKQTPCurvedTriangle].paths.quadTo(0,0+1.0/4.0, 0+0.5,0+0.5);
-        all_paths[JKQTPCurvedTriangle].paths.quadTo(0+1.0/10.0,0+1.0/4.0, 0,0-0.5);
-        all_paths[JKQTPFilledCurvedTriangle].filledpaths=all_paths[JKQTPCurvedTriangle].paths;
+        paths[JKQTPCross].paths.moveTo(-0.5,-0.5);
+        paths[JKQTPCross].paths.lineTo(0.5,0.5);
+        paths[JKQTPCross].paths.moveTo(-0.5,+0.5);
+        paths[JKQTPCross].paths.lineTo(+0.5,-0.5);
+        paths[JKQTPPlus].paths.moveTo(-0.5,0);
+        paths[JKQTPPlus].paths.lineTo(0.5,0);
+        paths[JKQTPPlus].paths.moveTo(0,+0.5);
+        paths[JKQTPPlus].paths.lineTo(0,-0.5);
+        paths[JKQTPCircle].paths.addEllipse(QPointF(0,0), 0.5, 0.5);
+        paths[JKQTPFilledCircle].filledpaths=paths[JKQTPCircle].paths;
+        paths[JKQTPCircleCross].paths.addEllipse(QPointF(0,0), 0.5, 0.5);
+        paths[JKQTPCircleCross].paths.moveTo(-0.5*s45,-0.5*s45);
+        paths[JKQTPCircleCross].paths.lineTo(0.5*s45,0.5*s45);
+        paths[JKQTPCircleCross].paths.moveTo(-0.5*s45,+0.5*s45);
+        paths[JKQTPCircleCross].paths.lineTo(+0.5*s45,-0.5*s45);
+        paths[JKQTPCirclePlus].paths.addEllipse(QPointF(0,0), 0.5, 0.5);
+        paths[JKQTPCirclePlus].paths.moveTo(-0.5,0);
+        paths[JKQTPCirclePlus].paths.lineTo(0.5,0);
+        paths[JKQTPCirclePlus].paths.moveTo(0,+0.5);
+        paths[JKQTPCirclePlus].paths.lineTo(0,-0.5);
+        paths[JKQTPCirclePeace].paths.addEllipse(QPointF(0,0), 0.5, 0.5);
+        paths[JKQTPCirclePeace].paths.moveTo(0,-0.5);
+        paths[JKQTPCirclePeace].paths.lineTo(0, 0.5);
+        paths[JKQTPCirclePeace].paths.moveTo(0,0);
+        paths[JKQTPCirclePeace].paths.lineTo(0.5*s45,0.5*s45);
+        paths[JKQTPCirclePeace].paths.moveTo(0,0);
+        paths[JKQTPCirclePeace].paths.lineTo(-0.5*s45,0.5*s45);
+        paths[JKQTPPeace].paths.moveTo(0,-0.5);
+        paths[JKQTPPeace].paths.lineTo(0, 0.5);
+        paths[JKQTPPeace].paths.moveTo(0,0);
+        paths[JKQTPPeace].paths.lineTo(0.5*s45,0.5*s45);
+        paths[JKQTPPeace].paths.moveTo(0,0);
+        paths[JKQTPPeace].paths.lineTo(-0.5*s45,0.5*s45);
+        paths[JKQTPTarget].paths.addEllipse(QPointF(0,0), 0.33333, 0.33333);
+        paths[JKQTPTarget].paths.moveTo(QPointF(0,-0.5));
+        paths[JKQTPTarget].paths.lineTo(QPointF(0,0.5));
+        paths[JKQTPTarget].paths.moveTo(QPointF(-0.5,0));
+        paths[JKQTPTarget].paths.lineTo(QPointF(0.5,0));
+        paths[JKQTPFemale].paths.addEllipse(-0.25,-0.5,0.5,0.5);
+        paths[JKQTPFemale].paths.moveTo(0,0);
+        paths[JKQTPFemale].paths.lineTo(0,0.5);
+        paths[JKQTPFemale].paths.moveTo(-0.5/3.0,0.5/2.0);
+        paths[JKQTPFemale].paths.lineTo(0.5/3.0,0.5/2.0);
+        paths[JKQTPMale].paths.addEllipse(QRectF(-0.5/2.0, -0.5/2.0, 0.5, 0.5));
+        paths[JKQTPMale].paths.moveTo(QPointF(+0.5/2.0*cos(45.0/180.0*JKQTPSTATISTICS_PI),-0.5/2.0*cos(45.0/180.0*JKQTPSTATISTICS_PI)));
+        paths[JKQTPMale].paths.lineTo(QPointF(+0.5,-0.5));
+        paths[JKQTPMale].paths.moveTo(QPointF(+0.5-0.5/2.0,-0.5));
+        paths[JKQTPMale].paths.lineTo(QPointF(+0.5,-0.5));
+        paths[JKQTPMale].paths.lineTo(QPointF(+0.5,-0.5+0.5/2.0));
+        paths[JKQTPRect].paths.addRect(-0.5,-0.5, 1,1);
+        paths[JKQTPFilledRect].filledpaths=paths[JKQTPRect].paths;
+        paths[JKQTPRectCross].paths.addRect(-0.5,-0.5, 1,1);
+        paths[JKQTPRectCross].paths.moveTo(-0.5,-0.5);
+        paths[JKQTPRectCross].paths.lineTo(0.5,0.5);
+        paths[JKQTPRectCross].paths.moveTo(-0.5,+0.5);
+        paths[JKQTPRectCross].paths.lineTo(+0.5,-0.5);
+        paths[JKQTPRectPlus].paths.addRect(-0.5,-0.5, 1,1);
+        paths[JKQTPRectPlus].paths.moveTo(-0.5,0);
+        paths[JKQTPRectPlus].paths.lineTo(0.5,0);
+        paths[JKQTPRectPlus].paths.moveTo(0,+0.5);
+        paths[JKQTPRectPlus].paths.lineTo(0,-0.5);
+        paths[JKQTPCurvedTriangle].paths.moveTo(0,0-0.5);
+        paths[JKQTPCurvedTriangle].paths.quadTo(0-1.0/10.0,0+1.0/4.0, 0-0.5,0+0.5);
+        paths[JKQTPCurvedTriangle].paths.quadTo(0,0+1.0/4.0, 0+0.5,0+0.5);
+        paths[JKQTPCurvedTriangle].paths.quadTo(0+1.0/10.0,0+1.0/4.0, 0,0-0.5);
+        paths[JKQTPFilledCurvedTriangle].filledpaths=paths[JKQTPCurvedTriangle].paths;
 
-        all_paths[JKQTPDownCurvedTriangle].paths=all_paths[JKQTPCurvedTriangle].paths;
-        all_paths[JKQTPDownCurvedTriangle].pathsrotation=180.0;
-        all_paths[JKQTPFilledDownCurvedTriangle].filledpaths=all_paths[JKQTPDownCurvedTriangle].paths;
-        all_paths[JKQTPFilledDownCurvedTriangle].pathsrotation=180.0;
+        paths[JKQTPDownCurvedTriangle].paths=paths[JKQTPCurvedTriangle].paths;
+        paths[JKQTPDownCurvedTriangle].pathsrotation=180.0;
+        paths[JKQTPFilledDownCurvedTriangle].filledpaths=paths[JKQTPDownCurvedTriangle].paths;
+        paths[JKQTPFilledDownCurvedTriangle].pathsrotation=180.0;
 
-        all_paths[JKQTPLeftCurvedTriangle].paths=all_paths[JKQTPCurvedTriangle].paths;
-        all_paths[JKQTPLeftCurvedTriangle].pathsrotation=-90.0;
-        all_paths[JKQTPFilledLeftCurvedTriangle].filledpaths=all_paths[JKQTPLeftCurvedTriangle].paths;
-        all_paths[JKQTPFilledLeftCurvedTriangle].pathsrotation=-90.0;
+        paths[JKQTPLeftCurvedTriangle].paths=paths[JKQTPCurvedTriangle].paths;
+        paths[JKQTPLeftCurvedTriangle].pathsrotation=-90.0;
+        paths[JKQTPFilledLeftCurvedTriangle].filledpaths=paths[JKQTPLeftCurvedTriangle].paths;
+        paths[JKQTPFilledLeftCurvedTriangle].pathsrotation=-90.0;
 
-        all_paths[JKQTPRightCurvedTriangle].paths=all_paths[JKQTPCurvedTriangle].paths;
-        all_paths[JKQTPRightCurvedTriangle].pathsrotation=90.0;
-        all_paths[JKQTPFilledRightCurvedTriangle].filledpaths=all_paths[JKQTPRightCurvedTriangle].paths;
-        all_paths[JKQTPFilledRightCurvedTriangle].pathsrotation=90.0;
+        paths[JKQTPRightCurvedTriangle].paths=paths[JKQTPCurvedTriangle].paths;
+        paths[JKQTPRightCurvedTriangle].pathsrotation=90.0;
+        paths[JKQTPFilledRightCurvedTriangle].filledpaths=paths[JKQTPRightCurvedTriangle].paths;
+        paths[JKQTPFilledRightCurvedTriangle].pathsrotation=90.0;
 
         {
             QPolygonF poly;
             poly<<QPointF(0.0, 0.0-0.5)<<QPointF(0.0+0.5, 0.0)<<QPointF(0.0, 0.0+0.5)<<QPointF(0.0-0.5, 0.0);
             poly<<poly[0];
-            all_paths[JKQTPDiamondPlus].paths.addPolygon(poly);
-            all_paths[JKQTPDiamondPlus].paths.moveTo(poly[0]);
-            all_paths[JKQTPDiamondPlus].paths.lineTo(poly[2]);
-            all_paths[JKQTPDiamondPlus].paths.moveTo(poly[1]);
-            all_paths[JKQTPDiamondPlus].paths.lineTo(poly[3]);
+            paths[JKQTPDiamondPlus].paths.addPolygon(poly);
+            paths[JKQTPDiamondPlus].paths.moveTo(poly[0]);
+            paths[JKQTPDiamondPlus].paths.lineTo(poly[2]);
+            paths[JKQTPDiamondPlus].paths.moveTo(poly[1]);
+            paths[JKQTPDiamondPlus].paths.lineTo(poly[3]);
         }
         {
             QPolygonF poly;
             poly<<QPointF(0.0, 0.0-0.5)<<QPointF(0.0+0.5, 0.0)<<QPointF(0.0, 0.0+0.5)<<QPointF(0.0-0.5, 0.0);
             poly<<poly[0];
-            all_paths[JKQTPDiamondCross].paths.addPolygon(poly);
-            all_paths[JKQTPDiamondCross].paths.moveTo((poly[0]+poly[1])/2.0);
-            all_paths[JKQTPDiamondCross].paths.lineTo((poly[2]+poly[3])/2.0);
-            all_paths[JKQTPDiamondCross].paths.moveTo((poly[1]+poly[2])/2.0);
-            all_paths[JKQTPDiamondCross].paths.lineTo((poly[3]+poly[0])/2.0);
+            paths[JKQTPDiamondCross].paths.addPolygon(poly);
+            paths[JKQTPDiamondCross].paths.moveTo((poly[0]+poly[1])/2.0);
+            paths[JKQTPDiamondCross].paths.lineTo((poly[2]+poly[3])/2.0);
+            paths[JKQTPDiamondCross].paths.moveTo((poly[1]+poly[2])/2.0);
+            paths[JKQTPDiamondCross].paths.lineTo((poly[3]+poly[0])/2.0);
         }
 
 
         for (size_t i=0; i<star8cords.size(); i+=2) {
-            all_paths[JKQTPAsterisc8].paths.moveTo(star8cords[i].x()*0.5, star8cords[i].y()*0.5);
-            all_paths[JKQTPAsterisc8].paths.lineTo(0,0);
+            paths[JKQTPAsterisc8].paths.moveTo(star8cords[i].x()*0.5, star8cords[i].y()*0.5);
+            paths[JKQTPAsterisc8].paths.lineTo(0,0);
         }
         for (size_t i=0; i<star6cords.size(); i+=2) {
-            all_paths[JKQTPAsterisc6].paths.moveTo(star6cords[i].x()*0.5, star6cords[i].y()*0.5);
-            all_paths[JKQTPAsterisc6].paths.lineTo(0,0);
+            paths[JKQTPAsterisc6].paths.moveTo(star6cords[i].x()*0.5, star6cords[i].y()*0.5);
+            paths[JKQTPAsterisc6].paths.lineTo(0,0);
         }
         for (size_t i=0; i<star5cords.size(); i+=2) {
-            all_paths[JKQTPAsterisc].paths.moveTo(star5cords[i].x()*0.5, star5cords[i].y()*0.5);
-            all_paths[JKQTPAsterisc].paths.lineTo(0,0);
+            paths[JKQTPAsterisc].paths.moveTo(star5cords[i].x()*0.5, star5cords[i].y()*0.5);
+            paths[JKQTPAsterisc].paths.lineTo(0,0);
         }
 
-        all_paths[JKQTPRectTriangle].polygons<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0, 0.0-0.5)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0+0.5, 0.0-0.5)<<QPointF(0.0+0.5, 0.0+0.5);
-        all_paths[JKQTPRectDownTriangle].polygons<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0, 0.0+0.5)<<QPointF(0.0+0.5, 0.0-0.5)<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0-0.5);
-        all_paths[JKQTPRectLeftTriangle].polygons<<QPointF(0.0+0.5, 0.0-0.5)<<QPointF(0.0-0.5, 0.0)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0+0.5, 0.0-0.5)<<QPointF(0.0+0.5, 0.0+0.5);
-        all_paths[JKQTPRectRightTriangle].polygons<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0+0.5, 0.0)<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0-0.5)<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0-0.5, 0.0+0.5);
-        all_paths[JKQTPTriangle].polygons<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0, 0.0-0.5);
-        all_paths[JKQTPFilledTriangle].filledpolygons=all_paths[JKQTPTriangle].polygons;
-        all_paths[JKQTPDownTriangle].polygons<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0+0.5, 0.0-0.5)<<QPointF(0.0, 0.0+0.5);
-        all_paths[JKQTPFilledDownTriangle].filledpolygons=all_paths[JKQTPDownTriangle].polygons;
-        all_paths[JKQTPLeftTriangle].polygons<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0-0.5, 0.0)<<QPointF(0.0+0.5, 0.0-0.5);
-        all_paths[JKQTPFilledLeftTriangle].filledpolygons=all_paths[JKQTPLeftTriangle].polygons;
-        all_paths[JKQTPRightTriangle].polygons<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0)<<QPointF(0.0-0.5, 0.0-0.5);
-        all_paths[JKQTPFilledRightTriangle].filledpolygons=all_paths[JKQTPRightTriangle].polygons;
+        paths[JKQTPRectTriangle].polygons<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0, 0.0-0.5)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0+0.5, 0.0-0.5)<<QPointF(0.0+0.5, 0.0+0.5);
+        paths[JKQTPRectDownTriangle].polygons<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0, 0.0+0.5)<<QPointF(0.0+0.5, 0.0-0.5)<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0-0.5);
+        paths[JKQTPRectLeftTriangle].polygons<<QPointF(0.0+0.5, 0.0-0.5)<<QPointF(0.0-0.5, 0.0)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0+0.5, 0.0-0.5)<<QPointF(0.0+0.5, 0.0+0.5);
+        paths[JKQTPRectRightTriangle].polygons<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0+0.5, 0.0)<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0-0.5)<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0-0.5, 0.0+0.5);
+        paths[JKQTPTriangle].polygons<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0, 0.0-0.5);
+        paths[JKQTPFilledTriangle].filledpolygons=paths[JKQTPTriangle].polygons;
+        paths[JKQTPDownTriangle].polygons<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0+0.5, 0.0-0.5)<<QPointF(0.0, 0.0+0.5);
+        paths[JKQTPFilledDownTriangle].filledpolygons=paths[JKQTPDownTriangle].polygons;
+        paths[JKQTPLeftTriangle].polygons<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0-0.5, 0.0)<<QPointF(0.0+0.5, 0.0-0.5);
+        paths[JKQTPFilledLeftTriangle].filledpolygons=paths[JKQTPLeftTriangle].polygons;
+        paths[JKQTPRightTriangle].polygons<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0)<<QPointF(0.0-0.5, 0.0-0.5);
+        paths[JKQTPFilledRightTriangle].filledpolygons=paths[JKQTPRightTriangle].polygons;
         for (size_t i=0; i<star5cords.size(); i++) {
-            all_paths[JKQTPstar].polygons<<QPointF(0.0+star5cords[i].x()*0.5, 0.0+star5cords[i].y()*0.5);
-            all_paths[JKQTPFilledStar].filledpolygons<<QPointF(0.0+star5cords[i].x()*0.5, 0.0+star5cords[i].y()*0.5);
+            paths[JKQTPstar].polygons<<QPointF(0.0+star5cords[i].x()*0.5, 0.0+star5cords[i].y()*0.5);
+            paths[JKQTPFilledStar].filledpolygons<<QPointF(0.0+star5cords[i].x()*0.5, 0.0+star5cords[i].y()*0.5);
             if (i%2==0) {
-                all_paths[JKQTPPentagon].polygons<<QPointF(0.0+star5cords[i].x()*0.5, 0.0+star5cords[i].y()*0.5);
-                all_paths[JKQTPFilledPentagon].filledpolygons<<QPointF(0.0+star5cords[i].x()*0.5, 0.0+star5cords[i].y()*0.5);
+                paths[JKQTPPentagon].polygons<<QPointF(0.0+star5cords[i].x()*0.5, 0.0+star5cords[i].y()*0.5);
+                paths[JKQTPFilledPentagon].filledpolygons<<QPointF(0.0+star5cords[i].x()*0.5, 0.0+star5cords[i].y()*0.5);
             }
         }
         for (size_t i=0; i<star6cords.size(); i+=2) {
-            all_paths[JKQTPHexagon].polygons<<QPointF(0.0+star6cords[i].x()*0.5, 0.0+star6cords[i].y()*0.5);
-            all_paths[JKQTPFilledHexagon].filledpolygons<<QPointF(0.0+star6cords[i].x()*0.5, 0.0+star6cords[i].y()*0.5);
+            paths[JKQTPHexagon].polygons<<QPointF(0.0+star6cords[i].x()*0.5, 0.0+star6cords[i].y()*0.5);
+            paths[JKQTPFilledHexagon].filledpolygons<<QPointF(0.0+star6cords[i].x()*0.5, 0.0+star6cords[i].y()*0.5);
         }
         for (size_t i=0; i<star8cords.size(); i+=2) {
-            all_paths[JKQTPOctagon].polygons<<QPointF(0.0+star8cords[i].x()*0.5, 0.0+star8cords[i].y()*0.5);
-            all_paths[JKQTPFilledOctagon].filledpolygons<<QPointF(0.0+star8cords[i].x()*0.5, 0.0+star8cords[i].y()*0.5);
+            paths[JKQTPOctagon].polygons<<QPointF(0.0+star8cords[i].x()*0.5, 0.0+star8cords[i].y()*0.5);
+            paths[JKQTPFilledOctagon].filledpolygons<<QPointF(0.0+star8cords[i].x()*0.5, 0.0+star8cords[i].y()*0.5);
         }
-        all_paths[JKQTPDiamond].polygons<<QPointF(0.0, 0.0-0.5)<<QPointF(0.0+0.5, 0.0)<<QPointF(0.0, 0.0+0.5)<<QPointF(0.0-0.5, 0.0);
-        all_paths[JKQTPFilledDiamond].filledpolygons=all_paths[JKQTPDiamond].polygons;
-        all_paths[JKQTPHourglass].polygons<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0+0.5, 0.0-0.5);
-        all_paths[JKQTPFilledHourglass].filledpolygons=all_paths[JKQTPHourglass].polygons;
-        all_paths[JKQTPHorizontalHourglass].polygons<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0-0.5);
-        all_paths[JKQTPFilledHorizontalHourglass].filledpolygons=all_paths[JKQTPHorizontalHourglass].polygons;
-        all_paths[JKQTPSantaClauseHouse].polygons<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0-1.0/6.0)<<QPointF(0.0-0.5, 0.0-1.0/6.0)<<QPointF(0.0, 0.0-0.5)<<QPointF(0.0+0.5, 0.0-1.0/6.0)<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0-0.5, 0.0-1.0/6.0)<<QPointF(0.0+0.5, 0.0+0.5);
-        all_paths[JKQTPFilledSantaClauseHouse].filledpolygons=all_paths[JKQTPSantaClauseHouse].polygons;
-        all_paths[JKQTPUpDownTriangle].polygons<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0, 0.0+0.5)<<QPointF(0.0+0.5, 0.0-0.5)<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0, 0.0+0.5)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0, 0.0-0.5)<<QPointF(0.0-0.5, 0.0+0.5);
-        all_paths[JKQTPFilledUpDownTriangle].filledpolygons=all_paths[JKQTPUpDownTriangle].polygons;
+        paths[JKQTPDiamond].polygons<<QPointF(0.0, 0.0-0.5)<<QPointF(0.0+0.5, 0.0)<<QPointF(0.0, 0.0+0.5)<<QPointF(0.0-0.5, 0.0);
+        paths[JKQTPFilledDiamond].filledpolygons=paths[JKQTPDiamond].polygons;
+        paths[JKQTPHourglass].polygons<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0+0.5, 0.0-0.5);
+        paths[JKQTPFilledHourglass].filledpolygons=paths[JKQTPHourglass].polygons;
+        paths[JKQTPHorizontalHourglass].polygons<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0-0.5);
+        paths[JKQTPFilledHorizontalHourglass].filledpolygons=paths[JKQTPHorizontalHourglass].polygons;
+        paths[JKQTPSantaClauseHouse].polygons<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0+0.5, 0.0-1.0/6.0)<<QPointF(0.0-0.5, 0.0-1.0/6.0)<<QPointF(0.0, 0.0-0.5)<<QPointF(0.0+0.5, 0.0-1.0/6.0)<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0-0.5, 0.0-1.0/6.0)<<QPointF(0.0+0.5, 0.0+0.5);
+        paths[JKQTPFilledSantaClauseHouse].filledpolygons=paths[JKQTPSantaClauseHouse].polygons;
+        paths[JKQTPUpDownTriangle].polygons<<QPointF(0.0-0.5, 0.0+0.5)<<QPointF(0.0, 0.0+0.5)<<QPointF(0.0+0.5, 0.0-0.5)<<QPointF(0.0-0.5, 0.0-0.5)<<QPointF(0.0, 0.0+0.5)<<QPointF(0.0+0.5, 0.0+0.5)<<QPointF(0.0, 0.0-0.5)<<QPointF(0.0-0.5, 0.0+0.5);
+        paths[JKQTPFilledUpDownTriangle].filledpolygons=paths[JKQTPUpDownTriangle].polygons;
 
 
-        all_paths[JKQTPTripod].lines<<QLineF(0.0, 0.0-0.5, 0.0, 0.0)
+        paths[JKQTPTripod].lines<<QLineF(0.0, 0.0-0.5, 0.0, 0.0)
             <<QLineF(0.0, 0.0, 0.0-s45, 0.0+s45)
             <<QLineF(0.0, 0.0, 0.0+s45, 0.0+s45);
 
-        all_paths[JKQTPDownTripod].lines<<QLineF(0.0, 0.0+0.5, 0.0, 0.0)
+        paths[JKQTPDownTripod].lines<<QLineF(0.0, 0.0+0.5, 0.0, 0.0)
             <<QLineF(0.0, 0.0, 0.0-s45, 0.0-s45)
             <<QLineF(0.0, 0.0, 0.0+s45, 0.0-s45);
 
-        all_paths[JKQTPLeftTripod].lines<<QLineF(0.0-0.5, 0.0, 0.0, 0.0)
+        paths[JKQTPLeftTripod].lines<<QLineF(0.0-0.5, 0.0, 0.0, 0.0)
             <<QLineF(0.0, 0.0, 0.0+s45, 0.0-s45)
             <<QLineF(0.0, 0.0, 0.0+s45, 0.0+s45);
 
-        all_paths[JKQTPRightTripod].lines<<QLineF(0.0+0.5, 0.0, 0.0, 0.0)
+        paths[JKQTPRightTripod].lines<<QLineF(0.0+0.5, 0.0, 0.0, 0.0)
             <<QLineF(0.0, 0.0, 0.0-s45, 0.0-s45)
             <<QLineF(0.0, 0.0, 0.0-s45, 0.0+s45);
 
-        return all_paths;
+        return paths;
     }();
 
     painter.setBrush(QColor(Qt::transparent));
