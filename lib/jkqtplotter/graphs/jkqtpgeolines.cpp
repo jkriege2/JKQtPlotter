@@ -444,7 +444,7 @@ void JKQTPGeoInfiniteLine::draw(JKQTPEnhancedPainter& painter) {
 
 
             addHitTestData(x, y, formatHitTestDefaultLabel(x,y)+
-                                     QString(", \\ensuremath{\\mathrm{\\mathbf{d}}y/\\mathrm{\\mathbf{d}}x\\;=\\;%1/%2\\;=\\;%3\\;=\\;%4\\degree}").arg(jkqtp_floattolatexqstr(dy, 3)).arg(jkqtp_floattolatexqstr(dx, 3)).arg(jkqtp_floattolatexqstr(dy/dx, 3)).arg(jkqtp_floattolatexqstr(atan2(dy,dx), 1)));
+                                     QString(", \\ensuremath{\\mathrm{\\mathbf{d}}y/\\mathrm{\\mathbf{d}}x\\;=\\;%1/%2\\;=\\;%3\\;=\\;%4\\degree}").arg(yFloatToString(dy)).arg(xFloatToString(dx)).arg(jkqtp_floattolatexqstr(dy/dx, 3)).arg(jkqtp_floattolatexqstr(atan2(dy,dx), 1)));
             addHitTestData(x1, y1);
             addHitTestData(x2, y2);
         }
@@ -587,7 +587,7 @@ void JKQTPGeoPolyLines::draw(JKQTPEnhancedPainter& painter) {
     if (points.size()>=2) {
         reserveHitTestData(points.size());
 
-        double angle1, angle2;
+        double angle1=0, angle2=0;
         QPointF xx1, xx2;
         bool doDrawDecorator=false;
         painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
@@ -934,7 +934,7 @@ void JKQTPGeoBezierCurve::draw(JKQTPEnhancedPainter& painter) {
     if (points.size()>=2) {
         reserveHitTestData(points.size());
 
-        double angle1, angle2;
+        double angle1=0, angle2=0;
         QPointF xx1, xx2;
         bool doDrawDecorator=false;
         painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
@@ -972,18 +972,29 @@ void JKQTPGeoBezierCurve::draw(JKQTPEnhancedPainter& painter) {
                 const auto B4_2=jkqtp_makeBernstein<double>(4,2);
                 const auto B4_3=jkqtp_makeBernstein<double>(4,3);
                 const auto B4_4=jkqtp_makeBernstein<double>(4,4);
-                if (points.size()==2) plotfunc=[&](double t) -> QPointF { return points[0]+t*(points[1]-points[0]); };
-                else if (points.size()==3) plotfunc=[&](double t) -> QPointF { return points[0]*B2_0(t)+points[1]*B2_1(t)+points[2]*B2_2(t); };
-                else if (points.size()==4) plotfunc=[&](double t) -> QPointF { return points[0]*B3_0(t)+points[1]*B3_1(t)+points[2]*B3_2(t)+points[3]*B3_3(t); };
-                else if (points.size()==5) plotfunc=[&](double t) -> QPointF { return points[0]*B4_0(t)+points[1]*B4_1(t)+points[2]*B4_2(t)+points[3]*B4_3(t)+points[4]*B4_4(t); };
+                QVector<QPointF> pointsT=points;
+                if (getDrawMode()==DrawAsMathematicalCurve) {
+                    if (points.size()==2) plotfunc=[&](double t) -> QPointF { return points[0]+t*(points[1]-points[0]); };
+                    else if (points.size()==3) plotfunc=[&](double t) -> QPointF { return points[0]*B2_0(t)+points[1]*B2_1(t)+points[2]*B2_2(t); };
+                    else if (points.size()==4) plotfunc=[&](double t) -> QPointF { return points[0]*B3_0(t)+points[1]*B3_1(t)+points[2]*B3_2(t)+points[3]*B3_3(t); };
+                    else if (points.size()==5) plotfunc=[&](double t) -> QPointF { return points[0]*B4_0(t)+points[1]*B4_1(t)+points[2]*B4_2(t)+points[3]*B4_3(t)+points[4]*B4_4(t); };
+                } else {
+                    for (auto& p: pointsT) p=transform(p);
+                    if (pointsT.size()==2) plotfunc=[&](double t) -> QPointF { return pointsT[0]+t*(pointsT[1]-pointsT[0]); };
+                    else if (pointsT.size()==3) plotfunc=[&](double t) -> QPointF { return pointsT[0]*B2_0(t)+pointsT[1]*B2_1(t)+pointsT[2]*B2_2(t); };
+                    else if (pointsT.size()==4) plotfunc=[&](double t) -> QPointF { return pointsT[0]*B3_0(t)+pointsT[1]*B3_1(t)+pointsT[2]*B3_2(t)+pointsT[3]*B3_3(t); };
+                    else if (pointsT.size()==5) plotfunc=[&](double t) -> QPointF { return pointsT[0]*B4_0(t)+pointsT[1]*B4_1(t)+pointsT[2]*B4_2(t)+pointsT[3]*B4_3(t)+pointsT[4]*B4_4(t); };
+                }
 
                 if (plotfunc) {
-                    std::function<QPointF(double)> fTransformedFunc= std::bind([plotfunc](const JKQTPPlotElement* plot, double t) -> QPointF { return plot->transform(plotfunc(t)); }, this, std::placeholders::_1);
+                    std::function<QPointF(double)> fTransformedFunc;
                     const int minSamples=10;
                     const int maxRefinementDegree=5;
                     const double slopeTolerance=0.005;
                     const int minPixelPerSample=32;
                     const double maxConsecutiveAngleDegree=0.2;
+                    if (getDrawMode()==DrawAsMathematicalCurve) fTransformedFunc = std::bind([plotfunc](const JKQTPPlotElement* plot, double t) -> QPointF { return plot->transform(plotfunc(t)); }, this, std::placeholders::_1);
+                    else fTransformedFunc = plotfunc;
                     JKQTPAdaptiveFunctionGraphEvaluator evaluator(fTransformedFunc, minSamples, maxRefinementDegree, slopeTolerance, minPixelPerSample);
                     QVector<QPointF> data=evaluator.evaluate(0,1);
                     data=JKQTPSimplyfyLineSegemnts(data, maxConsecutiveAngleDegree);
