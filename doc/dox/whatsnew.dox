@@ -69,6 +69,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>IMPROVED: QT6-compatibility by removing deprecated warnings</li>
     <li>IMPROVED: added missing override declarations</li>
     <li>IMPROVED: JKQTPlotter::jkqtp_RESIZE_DELAY is thread-safe now (atomic)</li>
+    <li>IMPROVED: Using axis's tick label formating properties to format values in data-tooltips (e.g. dates will appear formated as such)</li>
     <li>IMPROVED/REWORKED: reworked JKQTPErrorPlotstyle and error indicator plotting so error-inidcators can be specified as ORed combination of flags from JKQTPErrorPlotstyleElements, added additional error indicator styles (half-bars, arrows...)</li>
     <li>IMPROVED/REWORKED: reworked JKQTPCADrawMode and coordinate axis drawing so the draw mide can be specified as ORed combination of flags from JKQTPCADrawModeElements, added flags to draw arrows at the end of the axis line</li>
     <li>IMPROVED/REWORKED: coordinate axis code was refactored</li>
@@ -155,7 +156,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>IMPROVED: rendering of sqrt</li>
     <li>IMPROVED: rendering and size calculation of decorations</li>
     <li>IMPROVED: tokenizing and parsing of text in text-mode: now a lot of accents with commands like \c \\\"a, \c \\'e and variants (e.g. \c {\\\"a}, \c \\\"{a}, ...) are supported now</li>
-    <li>IMPROVED: all fucntions in JKQTMathText are re-entrant + diverse speed improvements for parallel use-cases (via caches)</li>
+    <li>IMPROVED: all functions in JKQTMathText are re-entrant + diverse speed improvements for parallel use-cases (via caches)</li>
     <li>IMPROVED/BREAKING: refactored symbol node JKQTMathTextSymbolNode and changed font-lookup!</li>
     <li>IMPROVED/NEW/BREAKING: refactored whitespace-processing node JKQTMathTextWhitespaceNode, now all major LaTeX whitespace commands are supported properly</li>
     <li>IMPROVED/NEW/BREAKING: refactored LaTeX parser in JKQTMathText</li>

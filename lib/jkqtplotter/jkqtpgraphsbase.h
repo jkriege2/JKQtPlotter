@@ -337,7 +337,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPPlotElement: public QObject {
          *
          *  \see hitTest(), clearHitTestData(), m_hitTestData, HitTestLocation, reserveHitTestData()
          */
-        inline void addHitTestData(double x_, double y_, int index_=-1, JKQTPDatastore* datastore=nullptr) { addHitTestData(HitTestLocation(x_,y_,formatHitTestDefaultLabel(x_,y_, index_, datastore))); }
+        inline void addHitTestData(double x_, double y_, int index_=-1, const JKQTPDatastore* datastore=nullptr) { addHitTestData(HitTestLocation(x_,y_,formatHitTestDefaultLabel(x_,y_, index_, datastore))); }
         /** \brief clear the internal datastore for hitTest(),
          *         this variant uses formatHitTestDefaultLabel() to auto-generate the label
          *
@@ -347,7 +347,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPPlotElement: public QObject {
          *
          *  \see hitTest(), clearHitTestData(), m_hitTestData, HitTestLocation, reserveHitTestData()
          */
-        inline void addHitTestData(const QPointF& pos_, int index_=-1, JKQTPDatastore* datastore=nullptr) { addHitTestData(HitTestLocation(pos_,formatHitTestDefaultLabel(pos_.x(), pos_.y(), index_, datastore))); }
+        inline void addHitTestData(const QPointF& pos_, int index_=-1, const JKQTPDatastore* datastore=nullptr) { addHitTestData(HitTestLocation(pos_,formatHitTestDefaultLabel(pos_.x(), pos_.y(), index_, datastore))); }
         /** \brief clear the internal datastore for hitTest()
          *
          *  \param x_ x-position of the graph point in system coordinates
@@ -377,8 +377,11 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPPlotElement: public QObject {
          * \param datastore The datastore to read error data from (optional!)
          * \returns a LaTeX formatted label
          */
-        virtual QString formatHitTestDefaultLabel(double x, double y, int index=-1, JKQTPDatastore *datastore=nullptr) const;
-
+        virtual QString formatHitTestDefaultLabel(double x, double y, int index=-1, const JKQTPDatastore *datastore=nullptr) const;
+        /** \brief converts a x-value \a v into a string, taking into account the type of x-axis */
+        QString xFloatToString(double v, int past_comma=-1) const;
+        /** \brief converts a x-value \a v into a string, taking into account the type of x-axis */
+        QString yFloatToString(double v, int past_comma=-1) const;
         /** \brief the plotter object this object belongs to */
         JKQTBasePlotter* parent;
 
@@ -999,6 +1002,8 @@ public:
 
     /** \copydoc JKQTPXYGraph::hitTest() */
     virtual double hitTest(const QPointF &posSystem, QPointF* closestSpotSystem=nullptr, QString* label=nullptr, HitTestMode mode=HitTestXY) const override;
+    /** \copydoc JKQTPXYGraph::formatHitTestDefaultLabel() */
+    virtual QString formatHitTestDefaultLabel(double x, double y, int index=-1, const JKQTPDatastore *datastore=nullptr) const override;
 
     Q_PROPERTY(VectorDataLayout vectorDataLayout READ getVectorDataLayout)
     Q_PROPERTY(int dxColumn READ getDxColumn WRITE setDxColumn)

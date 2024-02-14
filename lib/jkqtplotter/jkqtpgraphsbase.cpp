@@ -152,7 +152,7 @@ void JKQTPPlotElement::drawOutside(JKQTPEnhancedPainter& /*painter*/, QRect /*le
 }
 
 
-QString JKQTPPlotElement::formatHitTestDefaultLabel(double x, double y, int index, JKQTPDatastore* datastore) const {
+QString JKQTPPlotElement::formatHitTestDefaultLabel(double x, double y, int index, const JKQTPDatastore* datastore) const {
     const JKQTPXGraphErrorData* errgx=dynamic_cast<const JKQTPXGraphErrorData*>(this);
     QString xerrstr;
     // retrieve x-error data
@@ -160,11 +160,11 @@ QString JKQTPPlotElement::formatHitTestDefaultLabel(double x, double y, int inde
         if (errgx->getXErrorColumn()>=0) {
             if (errgx->getXErrorColumnLower()>=0) {
                 xerrstr=QString("\\:+%1\\:-%2")
-                            .arg(jkqtp_floattolatexqstr(datastore->get(errgx->getXErrorColumn(),static_cast<size_t>(index)), 3))
-                            .arg(jkqtp_floattolatexqstr(datastore->get(errgx->getXErrorColumnLower(),static_cast<size_t>(index)), 3));
+                            .arg(xFloatToString(datastore->get(errgx->getXErrorColumn(),static_cast<size_t>(index))))
+                            .arg(xFloatToString(datastore->get(errgx->getXErrorColumnLower(),static_cast<size_t>(index))));
             } else {
                 xerrstr=QString("{\\:}{\\pm}%1")
-                            .arg(jkqtp_floattolatexqstr(datastore->get(errgx->getXErrorColumn(),static_cast<size_t>(index)), 3));
+                            .arg(xFloatToString(datastore->get(errgx->getXErrorColumn(),static_cast<size_t>(index))));
             }
         }
     }
@@ -176,16 +176,28 @@ QString JKQTPPlotElement::formatHitTestDefaultLabel(double x, double y, int inde
         if (errgy->getYErrorColumn()>=0) {
             if (errgy->getYErrorColumnLower()>=0) {
                 yerrstr=QString("\\:+%1\\:-%2")
-                            .arg(jkqtp_floattolatexqstr(datastore->get(errgy->getYErrorColumn(),static_cast<size_t>(index)), 3))
-                            .arg(jkqtp_floattolatexqstr(datastore->get(errgy->getYErrorColumnLower(),static_cast<size_t>(index)), 3));
+                            .arg(yFloatToString(datastore->get(errgy->getYErrorColumn(),static_cast<size_t>(index))))
+                            .arg(yFloatToString(datastore->get(errgy->getYErrorColumnLower(),static_cast<size_t>(index))));
             } else {
                 yerrstr=QString("{\\:}{\\pm}%1")
-                            .arg(jkqtp_floattolatexqstr(datastore->get(errgy->getYErrorColumn(),static_cast<size_t>(index)), 3));
+                            .arg(yFloatToString(datastore->get(errgy->getYErrorColumn(),static_cast<size_t>(index))));
             }
         }
     }
-    return QString("\\ensuremath{\\left[{\\:}%1%3{\\;},{\\;}%2%4{\\:}\\right]}").arg(jkqtp_floattolatexqstr(x, 3)).arg(jkqtp_floattolatexqstr(y, 3)).arg(xerrstr).arg(yerrstr);
+    return QString("\\ensuremath{\\left[{\\:}%1%3{\\;},{\\;}%2%4{\\:}\\right]}").arg(xFloatToString(x)).arg(yFloatToString(y)).arg(xerrstr).arg(yerrstr);
 
+}
+
+QString JKQTPPlotElement::xFloatToString(double v, int past_comma) const
+{
+    if (past_comma<0) return getXAxis()->floattolabel(v);
+    else return getXAxis()->floattolabel(v, past_comma);
+}
+
+QString JKQTPPlotElement::yFloatToString(double v, int past_comma) const
+{
+    if (past_comma<0) return getYAxis()->floattolabel(v);
+    else return getYAxis()->floattolabel(v, past_comma);
 }
 
 double JKQTPPlotElement::hitTest(const QPointF & posSystem, QPointF* closestSpotSystem, QString* label, HitTestMode mode) const
@@ -522,7 +534,7 @@ double JKQTPXYGraph::hitTest(const QPointF &posSystem, QPointF *closestSpotSyste
         }
     }
     if (closest>=0) {
-        if (label) *label=formatHitTestDefaultLabel(closestPos.x(), closestPos.y(), closest);
+        if (label) *label=formatHitTestDefaultLabel(closestPos.x(), closestPos.y(), closest, datastore);
         if (closestSpotSystem) *closestSpotSystem=closestPos;
         return closedist;
     } else {
@@ -831,7 +843,7 @@ double JKQTPXYYGraph::hitTest(const QPointF &posSystem, QPointF *closestSpotSyst
         }
     }
     if (closest>=0) {
-        if (label) *label=formatHitTestDefaultLabel(closestPos.x(), closestPos.y(), closest);
+        if (label) *label=formatHitTestDefaultLabel(closestPos.x(), closestPos.y(), closest, datastore);
         if (closestSpotSystem) *closestSpotSystem=closestPos;
         return closedist;
     } else {
@@ -994,7 +1006,7 @@ double JKQTPXXYGraph::hitTest(const QPointF &posSystem, QPointF *closestSpotSyst
         }
     }
     if (closest>=0) {
-        if (label) *label=formatHitTestDefaultLabel(closestPos.x(), closestPos.y(), closest);
+        if (label) *label=formatHitTestDefaultLabel(closestPos.x(), closestPos.y(), closest, datastore);
         if (closestSpotSystem) *closestSpotSystem=closestPos;
         return closedist;
     } else {
@@ -1221,6 +1233,26 @@ JKQTPXYAndVectorGraph::VectorDataLayout JKQTPXYAndVectorGraph::getVectorDataLayo
 double JKQTPXYAndVectorGraph::hitTest(const QPointF &posSystem, QPointF *closestSpotSystem, QString *label, HitTestMode mode) const
 {
     return JKQTPXYGraph::hitTest(posSystem, closestSpotSystem, label, mode);
+}
+
+QString JKQTPXYAndVectorGraph::formatHitTestDefaultLabel(double x, double y, int i, const JKQTPDatastore *datastore) const
+{
+    QString vec="\\mbox{no vector data}";
+    if (datastore) {
+        switch(vectorDataLayout) {
+        case DeltaXDeltaYLayout: {
+            const double dx=datastore->get(static_cast<size_t>(dxColumn),static_cast<size_t>(i));
+            const double dy=datastore->get(static_cast<size_t>(dyColumn),static_cast<size_t>(i));
+            vec="\\vec{\\mbox{\\delta}}=("+jkqtp_floattolatexqstr(dx, 3)+"{\\;},{\\;}"+jkqtp_floattolatexqstr(dy, 3)+")";
+        } break;
+        case AngleAndLengthLayout: {
+            const double a=datastore->get(static_cast<size_t>(angleColumn),static_cast<size_t>(i));
+            const double l=(lengthColumn<0) ? 1.0 : datastore->get(static_cast<size_t>(lengthColumn),static_cast<size_t>(i));
+            vec= "\\angle="+jkqtp_floattolatexqstr(a/M_PI*180.0, 1)+"\\degree{\\;},{\\;}l="+jkqtp_floattolatexqstr(l, 3);
+        } break;
+        }
+    }
+    return QString("\\ensuremath{\\left|\\stackrel{x=({\\:}%1{\\;},{\\;}%2{\\:}),}{ %3 }\\right.").arg(jkqtp_floattolatexqstr(x, 3)).arg(jkqtp_floattolatexqstr(y, 3)).arg(vec);
 }
 
 void JKQTPXYAndVectorGraph::setDxColumn(int col)
