@@ -89,9 +89,11 @@ void JKQTPXYGraphLabels::draw(JKQTPEnhancedPainter& painter) {
                 const double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
                 const double x=transformX(xv);
                 const double y=transformY(yv);
+                const double blXv=(0.0>=parent->getXMin() && 0.0<=parent->getXMax()) ? 0.0 : parent->getXMin();
+                const double blYv=(0.0>=parent->getYMin() && 0.0<=parent->getYMax()) ? 0.0 : parent->getYMin();
                 if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)  &&  JKQTPIsOKFloat(x) && JKQTPIsOKFloat(y)) {
                     const QString label=generateLabel(xv,yv,iii);
-                    drawLabel(painter, QPointF(x,y), QPointF(xv,yv), label, parent);
+                    drawLabel(painter, QPointF(x,y), QPointF(xv,yv), label, parent, blXv, blYv);
                 }
             }
 

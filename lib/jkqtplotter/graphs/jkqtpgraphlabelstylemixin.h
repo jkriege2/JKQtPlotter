@@ -53,6 +53,8 @@ enum JKQTPGraphLabelPosition {
     JKQTPGLabelTowardsYAxis, /*!< \brief all labels between the datapoint and the y-axis the datapoint \image html JKQTPGLabelTowardsYAxis.png */
     JKQTPGLabelAwayFromYAxis, /*!< \brief all labels pointing away from the y-axis \image html JKQTPGLabelAwayFromYAxis.png */
     JKQTPGLabelCenteredOnData, /*!< \brief graph label is drawn centered arond the data point \c (x,y) \image html JKQTPGLabelCenteredOnData.png */
+    JKQTPGLabelHalfwaysToXAxis, /*!< \brief all labels half-ways between the datapoint and the x-axis the datapoint \image html JKQTPGLabelHalfwaysToXAxis.png */
+    JKQTPGLabelHalfwaysToYAxis, /*!< \brief all labels half-ways between the datapoint and the y-axis the datapoint \image html JKQTPGLabelHalfwaysToYAxis.png */
 
 
     JKQTPGraphLabelDefault=JKQTPGLabelAwayFromXAxis,
@@ -182,9 +184,11 @@ public:
      *  \brief xData x- and y-coordinate of the datapoint (needed for some JKQTPGraphLabelPosition)
      *  \brief contents the text to be rendered
      *  \brief parent the JKQTPBasePlotter in whos context we are drawing (e.g. needed to render \a contents )
+     *  \brief baselineX baseline (in graph coordinate system, not pixels) of the graph in x-direction (typically 0), needed for JKQTPGLabelHalfwaysToYAxis
+     *  \brief baselineY baseline (in graph coordinate system, not pixels) of the graph in y-direction (typically 0), needed for JKQTPGLabelHalfwaysToXAxis
      *
      */
-    void drawLabel(JKQTPEnhancedPainter& painter, const QPointF& xDataPixel, const QPointF& xData, const QString& contents, JKQTBasePlotter *parent) const;
+    void drawLabel(JKQTPEnhancedPainter& painter, const QPointF& xDataPixel, const QPointF& xData, const QString& contents, JKQTBasePlotter *parent, double baselineX, double baselineY) const;
 
 
 
@@ -238,9 +242,11 @@ protected:
      *  \brief xData x- and y-coordinate of the datapoint (needed for some JKQTPGraphLabelPosition)
      *  \brief contents the text to be rendered
      *  \brief parent the JKQTPBasePlotter in whos context we are drawing (e.g. needed to render \a contents )
+     *  \brief baselineX baseline (in graph coordinate system, not pixels) of the graph in x-direction (typically 0), needed for JKQTPGLabelHalfwaysToYAxis
+     *  \brief baselineY baseline (in graph coordinate system, not pixels) of the graph in y-direction (typically 0), needed for JKQTPGLabelHalfwaysToXAxis
      *
      */
-    LabelGeometry calcLabelGeometry(JKQTPEnhancedPainter& painter, const QPointF& xDataPixel, const QPointF& xData, const QString& contents, JKQTBasePlotter *parent) const;
+    LabelGeometry calcLabelGeometry(JKQTPEnhancedPainter& painter, const QPointF& xDataPixel, const QPointF& xData, const QString& contents, JKQTBasePlotter *parent, double baselineX, double baselineY) const;
 
 private:
     /** \brief offset of the box rectangle to the actual data point location [pt], this is used for simple boxes and is a rather close distance (e.g. JKQTPGLSimpleBox)

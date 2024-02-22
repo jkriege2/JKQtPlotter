@@ -36,6 +36,8 @@ QString JKQTPGraphLabelPosition2String(JKQTPGraphLabelPosition pos)
     case JKQTPGLabelTowardsXAxis: return "label_towards_xaxis";
     case JKQTPGLabelTowardsYAxis: return "label_towards_xaxis";
     case JKQTPGLabelCenteredOnData: return "label_centered";
+    case JKQTPGLabelHalfwaysToXAxis: return "label_halfways_to_xaxis";
+    case JKQTPGLabelHalfwaysToYAxis: return "label_halfways_to_yaxis";
     }
     return "label_away_from_xaxis";
 }
@@ -49,8 +51,10 @@ JKQTPGraphLabelPosition String2JKQTPGraphLabelPosition(const QString &pos)
     if (m=="label_right_hand_side" || m=="right_hand_side" || m=="right_hand" || m=="right" || m=="rhs") return JKQTPGLabelRightHandSide;
     if (m=="label_away_from_xaxis" || m=="away_from_xaxis") return JKQTPGLabelAwayFromXAxis;
     if (m=="label_away_from_yaxis" || m=="away_from_yaxis") return JKQTPGLabelAwayFromYAxis;
-    if (m=="label_towars_xaxis" || m=="towars_xaxis") return JKQTPGLabelTowardsXAxis;
-    if (m=="label_towars_yaxis" || m=="towars_yaxis") return JKQTPGLabelTowardsYAxis;
+    if (m=="label_towards_xaxis" || m=="towardds_xaxis") return JKQTPGLabelTowardsXAxis;
+    if (m=="label_towards_yaxis" || m=="towars_yaxis") return JKQTPGLabelTowardsYAxis;
+    if (m=="label_halfways_to_xaxis" || m=="halfways_to_xaxis") return JKQTPGLabelHalfwaysToXAxis;
+    if (m=="label_halfways_to_yaxis" || m=="halfways_to_yaxis") return JKQTPGLabelHalfwaysToYAxis;
     if (m=="label_centered" || m=="centered" || m=="label_centered_on_data" || m=="centered_on_data") return JKQTPGLabelCenteredOnData;
     return JKQTPGraphLabelDefault;
 }
@@ -188,6 +192,8 @@ bool JKQTPGraphValueLabelStyleMixin::isLabelPositioningGrowingInX() const
     case JKQTPGLabelTowardsXAxis:
     case JKQTPGLabelTowardsYAxis:
     case JKQTPGLabelCenteredOnData:
+    case JKQTPGLabelHalfwaysToXAxis:
+    case JKQTPGLabelHalfwaysToYAxis:
         return false;
     }
     return false;
@@ -206,6 +212,8 @@ bool JKQTPGraphValueLabelStyleMixin::isLabelPositioningGrowingInY() const
     case JKQTPGLabelLeftHandSide:
     case JKQTPGLabelRightHandSide:
     case JKQTPGLabelCenteredOnData:
+    case JKQTPGLabelHalfwaysToXAxis:
+    case JKQTPGLabelHalfwaysToYAxis:
         return false;
     }
     return false;
@@ -231,12 +239,12 @@ JKQTPGraphLabelBoxType JKQTPGraphValueLabelStyleMixin::getLabelBoxType() const
     return m_labelBoxType;
 }
 
-void JKQTPGraphValueLabelStyleMixin::drawLabel(JKQTPEnhancedPainter &painter, const QPointF &xDataPixel, const QPointF &xData, const QString &contents, JKQTBasePlotter *parent) const
+void JKQTPGraphValueLabelStyleMixin::drawLabel(JKQTPEnhancedPainter &painter, const QPointF &xDataPixel, const QPointF &xData, const QString &contents, JKQTBasePlotter *parent, double baselineX, double baselineY) const
 {
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
 
     // calculate geometry
-    const LabelGeometry g=calcLabelGeometry(painter, xDataPixel, xData, contents, parent);
+    const LabelGeometry g=calcLabelGeometry(painter, xDataPixel, xData, contents, parent, baselineX, baselineY);
 
     // draw Box
     if (m_drawLabelBoxFrame) painter.setPen(getLinePenForRects(painter, parent));
@@ -275,7 +283,7 @@ void JKQTPGraphValueLabelStyleMixin::drawLabel(JKQTPEnhancedPainter &painter, co
     parent->getMathText()->draw(painter, Qt::AlignVCenter|Qt::AlignHCenter, g.textRect, parent->getCurrentPlotterStyle().debugShowTextBoxes);
 }
 
-JKQTPGraphValueLabelStyleMixin::LabelGeometry JKQTPGraphValueLabelStyleMixin::calcLabelGeometry(JKQTPEnhancedPainter &painter, const QPointF &xDataPixel, const QPointF &xData, const QString &contents, JKQTBasePlotter *parent) const
+JKQTPGraphValueLabelStyleMixin::LabelGeometry JKQTPGraphValueLabelStyleMixin::calcLabelGeometry(JKQTPEnhancedPainter &painter, const QPointF &xDataPixel, const QPointF &xData, const QString &contents, JKQTBasePlotter *parent, double baselineX, double baselineY) const
 {
     LabelGeometry res;
     res.label=contents;
@@ -303,6 +311,12 @@ JKQTPGraphValueLabelStyleMixin::LabelGeometry JKQTPGraphValueLabelStyleMixin::ca
         res.boxpos=LabelGeometry::BoxRight;
     } else if (m_labelPosition==JKQTPGLabelCenteredOnData) {
         res.textRect=QRectF(xDataPixel.x()-res.textSize.width/2.0, xDataPixel.y()-res.textSize.overallHeight/2.0, res.textSize.width, res.textSize.overallHeight);
+        res.boxpos=LabelGeometry::BoxCentered;
+    } else if (m_labelPosition==JKQTPGLabelHalfwaysToXAxis) {
+        res.textRect=QRectF(xDataPixel.x()-res.textSize.width/2.0, (xDataPixel.y()+parent->getYAxis()->x2p(baselineY))/2.0-res.textSize.overallHeight/2.0, res.textSize.width, res.textSize.overallHeight);
+        res.boxpos=LabelGeometry::BoxCentered;
+    } else if (m_labelPosition==JKQTPGLabelHalfwaysToYAxis) {
+        res.textRect=QRectF((xDataPixel.x()+parent->getXAxis()->x2p(baselineX))/2.0-res.textSize.width/2.0, xDataPixel.y()-res.textSize.overallHeight/2.0, res.textSize.width, res.textSize.overallHeight);
         res.boxpos=LabelGeometry::BoxCentered;
     }
 

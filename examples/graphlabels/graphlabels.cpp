@@ -151,6 +151,18 @@ int main(int argc, char* argv[])
         plotV.redrawPlot();
         plotH.redrawPlot();
     });
+    app.addExportStepFunctor([&](){
+        gV.first->setVisible(true);
+        gH.first->setVisible(true);
+        gV.second->setLabelPosition(JKQTPGLabelHalfwaysToXAxis);
+        gV.second->setLabelBoxType(JKQTPGLSimpleBox);
+        gV.second->setDrawLabelBoxFrame(false);
+        gH.second->setLabelPosition(JKQTPGLabelHalfwaysToYAxis);
+        gH.second->setLabelBoxType(JKQTPGLSimpleBox);
+        gH.second->setDrawLabelBoxFrame(false);
+        plotV.redrawPlot();
+        plotH.redrawPlot();
+    });
 
     return app.exec();
 }
