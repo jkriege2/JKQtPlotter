@@ -391,77 +391,87 @@ inline T jkqtp_inversePropSaveDefault(const T& v) {
     return jkqtp_inversePropSave<T>(v, std::numeric_limits<T>::epsilon()*100.0);
 }
 
-/*! \brief j0() function (without compiler issues)
-    \ingroup jkqtptools_math_basic
+#if defined(JKQtPlotter_HAS_j0) || defined(JKQtPlotter_HAS__j0) || defined(DOXYGEN)
 
-*/
-inline double jkqtp_j0(double x) {
-#if Q_CC_MSVC
-    return _j0(x);
-#else
-    return j0(x);
+    /*! \brief j0() function (without compiler issues)
+        \ingroup jkqtptools_math_basic
+
+    */
+    inline double jkqtp_j0(double x) {
+    #ifdef JKQtPlotter_HAS__j0
+        return _j0(x);
+    #elif defined(JKQtPlotter_HAS_j0)
+        return j0(x);
+    #endif
+    }
+
+    /*! \brief j1() function (without compiler issues)
+        \ingroup jkqtptools_math_basic
+
+    */
+    inline double jkqtp_j1(double x) {
+    #ifdef JKQtPlotter_HAS__j0
+        return _j1(x);
+    #elif defined(JKQtPlotter_HAS_j0)
+        return j1(x);
+    #endif
+    }
 #endif
-}
 
-/*! \brief j1() function (without compiler issues)
-    \ingroup jkqtptools_math_basic
+#if defined(JKQtPlotter_HAS_jn) || defined(JKQtPlotter_HAS__jn) || defined(DOXYGEN)
+    /*! \brief jn() function (without compiler issues)
+        \ingroup jkqtptools_math_basic
 
-*/
-inline double jkqtp_j1(double x) {
-#if Q_CC_MSVC
-    return _j1(x);
-#else
-    return j1(x);
+    */
+    inline double jkqtp_jn(int n, double x) {
+    #ifdef JKQtPlotter_HAS__jn
+        return _jn(n,x);
+    #elif defined(JKQtPlotter_HAS_jn)
+        return jn(n,x);
+    #endif
+    }
 #endif
-}
 
-/*! \brief y0() function (without compiler issues)
-    \ingroup jkqtptools_math_basic
 
-*/
-inline double jkqtp_y0(double x) {
-#if Q_CC_MSVC
-    return _y0(x);
-#else
-    return y0(x);
+#if defined(JKQtPlotter_HAS_y0) || defined(JKQtPlotter_HAS__y0) || defined(DOXYGEN)
+    /*! \brief y0() function (without compiler issues)
+        \ingroup jkqtptools_math_basic
+
+    */
+    inline double jkqtp_y0(double x) {
+    #ifdef JKQtPlotter_HAS__y0
+        return _y0(x);
+    #elif defined(JKQtPlotter_HAS_y0)
+        return y0(x);
+    #endif
+    }
+
+    /*! \brief y1() function (without compiler issues)
+        \ingroup jkqtptools_math_basic
+
+    */
+    inline double jkqtp_y1(double x) {
+    #ifdef JKQtPlotter_HAS__y0
+        return _y1(x);
+    #elif defined(JKQtPlotter_HAS_y0)
+        return y1(x);
+    #endif
+    }
 #endif
-}
+#if defined(JKQtPlotter_HAS_yn) || defined(JKQtPlotter_HAS__yn) || defined(DOXYGEN)
+    /*! \brief yn() function (without compiler issues)
+        \ingroup jkqtptools_math_basic
 
-/*! \brief y1() function (without compiler issues)
-    \ingroup jkqtptools_math_basic
-
-*/
-inline double jkqtp_y1(double x) {
-#if Q_CC_MSVC
-    return _y1(x);
-#else
-    return y1(x);
+    */
+    inline double jkqtp_yn(int n, double x) {
+    #ifdef JKQtPlotter_HAS__yn
+        return _yn(n,x);
+    #elif defined(JKQtPlotter_HAS_yn)
+        return yn(n,x);
+    #endif
+    }
 #endif
-}
 
-/*! \brief jn() function (without compiler issues)
-    \ingroup jkqtptools_math_basic
-
-*/
-inline double jkqtp_jn(int n, double x) {
-#if Q_CC_MSVC
-    return _jn(n,x);
-#else
-    return jn(n,x);
-#endif
-}
-
-/*! \brief yn() function (without compiler issues)
-    \ingroup jkqtptools_math_basic
-
-*/
-inline double jkqtp_yn(int n, double x) {
-#if Q_CC_MSVC
-    return _yn(n,x);
-#else
-    return yn(n,x);
-#endif
-}
 
 /** \brief calculate the distance between two QPointF points
  *  \ingroup jkqtptools_math_basic

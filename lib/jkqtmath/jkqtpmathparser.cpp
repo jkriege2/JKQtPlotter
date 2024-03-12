@@ -25,6 +25,7 @@
 #endif
 #include <cmath>
 #include "jkqtmath/jkqtpmathparser.h" // class's header file
+#include "jkqtcommon/jkqtpmathtools.h"
 #include <iostream>
 #include <float.h>
 #include <ctime>
@@ -324,16 +325,13 @@ namespace { // anonymous namespace to limit availability to this module (CPP-fil
       return r;
     }
 
+#if defined(JKQtPlotter_HAS_j0) || defined(JKQtPlotter_HAS__j0)
     JKQTPMathParser::jkmpResult fJ0(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
       JKQTPMathParser::jkmpResult r;
       r.type=JKQTPMathParser::jkmpDouble;
       if (n!=1) p->jkmpError("j0 accepts 1 argument");
       if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("j0 needs double argument");
-#if Q_CC_MSVC
-	  r.num = _j0(params[0].num);
-#else
-	  r.num = j0(params[0].num);
-#endif
+      r.num = jkqtp_j0(params[0].num);
       return r;
     }
 
@@ -342,24 +340,32 @@ namespace { // anonymous namespace to limit availability to this module (CPP-fil
       r.type=JKQTPMathParser::jkmpDouble;
       if (n!=1) p->jkmpError("j1 accepts 1 argument");
       if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("j1 needs double argument");
-#if Q_CC_MSVC
-	  r.num=_j1(params[0].num);
-#else
-	  r.num=j1(params[0].num);
-#endif
+      r.num = jkqtp_j1(params[0].num);
       return r;
     }
+#endif
 
+#if defined(JKQtPlotter_HAS_jn) || defined(JKQtPlotter_HAS__jn)
+    JKQTPMathParser::jkmpResult fJn(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+        JKQTPMathParser::jkmpResult r;
+        r.type=JKQTPMathParser::jkmpDouble;
+        if (n!=2) p->jkmpError("jn accepts 2 argument");
+        if ((params[0].type!=JKQTPMathParser::jkmpDouble)||(params[1].type!=JKQTPMathParser::jkmpDouble)) p->jkmpError("jn needs double argument");
+        r.num=jkqtp_jn(static_cast<int>(params[0].num), params[1].num);
+        return r;
+    }
+
+#endif
+
+
+
+#if defined(JKQtPlotter_HAS_y0) || defined(JKQtPlotter_HAS__y0)
     JKQTPMathParser::jkmpResult fY0(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
       JKQTPMathParser::jkmpResult r;
       r.type=JKQTPMathParser::jkmpDouble;
       if (n!=1) p->jkmpError("y0 accepts 1 argument");
       if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("y0 needs double argument");
-#if Q_CC_MSVC
-	  r.num=_y0(params[0].num);
-#else
-	  r.num=y0(params[0].num);
-#endif
+      r.num = jkqtp_y0(params[0].num);
       return r;
     }
 
@@ -368,39 +374,20 @@ namespace { // anonymous namespace to limit availability to this module (CPP-fil
       r.type=JKQTPMathParser::jkmpDouble;
       if (n!=1) p->jkmpError("y1 accepts 1 argument");
       if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("y1 needs double argument");
-#if Q_CC_MSVC
-	  r.num=_y1(params[0].num);
-#else
-	  r.num=y1(params[0].num);
-#endif
+      r.num = jkqtp_y1(params[0].num);
       return r;
     }
-
+#endif
+#if defined(JKQtPlotter_HAS_yn) || defined(JKQtPlotter_HAS__yn)
     JKQTPMathParser::jkmpResult fYn(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
       JKQTPMathParser::jkmpResult r;
       r.type=JKQTPMathParser::jkmpDouble;
       if (n!=2) p->jkmpError("yn accepts 2 argument");
       if ((params[0].type!=JKQTPMathParser::jkmpDouble)||(params[1].type!=JKQTPMathParser::jkmpDouble)) p->jkmpError("yn needs double argument");
-#if Q_CC_MSVC
-	  r.num=_yn(static_cast<int>(params[0].num), params[1].num);
-#else
-	  r.num=yn(static_cast<int>(params[0].num), params[1].num);
-#endif
+      r.num=jkqtp_yn(static_cast<int>(params[0].num), params[1].num);
       return r;
     }
-
-    JKQTPMathParser::jkmpResult fJn(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-      JKQTPMathParser::jkmpResult r;
-      r.type=JKQTPMathParser::jkmpDouble;
-      if (n!=2) p->jkmpError("jn accepts 2 argument");
-      if ((params[0].type!=JKQTPMathParser::jkmpDouble)||(params[1].type!=JKQTPMathParser::jkmpDouble)) p->jkmpError("jn needs double argument");
-#if Q_CC_MSVC
-      r.num=_jn(static_cast<int>(params[0].num), params[1].num);
-#else
-	  r.num=jn(static_cast<int>(params[0].num), params[1].num);
 #endif
-      return r;
-    }
 
     JKQTPMathParser::jkmpResult fSRand(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
       JKQTPMathParser::jkmpResult r;
@@ -700,12 +687,20 @@ void JKQTPMathParser::addStandardFunctions(){
     addFunction("erfc", fErfc);
     addFunction("lgamma", flGamma);
     addFunction("tgamma", ftGamma);
+#if defined(JKQtPlotter_HAS_j0) || defined(JKQtPlotter_HAS__j0)
     addFunction("j0", fJ0);
     addFunction("j1", fJ1);
+#endif
+#if defined(JKQtPlotter_HAS_jn) || defined(JKQtPlotter_HAS__jn)
     addFunction("jn", fJn);
+#endif
+#if defined(JKQtPlotter_HAS_y0) || defined(JKQtPlotter_HAS__y0)
     addFunction("y0", fY0);
     addFunction("y1", fY1);
+#endif
+#if defined(JKQtPlotter_HAS_yn) || defined(JKQtPlotter_HAS__yn)
     addFunction("yn", fYn);
+#endif
     addFunction("rand", fRand);
     addFunction("srand", fSRand);
     addFunction("ceil", fCeil);
