@@ -214,7 +214,7 @@ JKQTPExpected<QGradient, JKQTPCSSParser::GeneralError> JKQTPCSSParser::parseGrad
 
     static QMap<QString,QGradient::Preset> s_GradientPresets = []() {
         QMap<QString,QGradient::Preset> m;
-        for (int i=1; i<QGradient::Preset::NumPresets; i++) {
+        for (int i=1; i<QMetaEnum::fromType<QGradient::Preset>().keyCount(); i++) {
             const QString id=QString(QMetaEnum::fromType<QGradient::Preset>().valueToKey(static_cast<QGradient::Preset>(i))).toLower().trimmed().simplified();
             if (id.size()>0) m[id]=static_cast<QGradient::Preset>(i);
         }
