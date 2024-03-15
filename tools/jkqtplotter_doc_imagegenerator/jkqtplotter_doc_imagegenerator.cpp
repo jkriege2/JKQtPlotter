@@ -534,7 +534,7 @@ void doListStyles(const QDir& outputDir, const QStringList& doctomodify, int ico
         shtml<<"<table>\n  <tr>\n    <th>Style-file\n    <th>Screenshot\n    <th>Symbols\n";
         auto files=dir.entryList();
         if (files.indexOf("default.ini")>=0) {
-            files.swapItemsAt(0,files.indexOf("default.ini"));
+            qSwap(files[0], files[files.indexOf("default.ini")]);
         }
         for (auto& f: files) {
             qDebug()<<"plotting example for style "<<f;
