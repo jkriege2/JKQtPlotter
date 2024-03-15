@@ -41,6 +41,7 @@ protected:
         std::function<void(void)> f;
         std::function<JKQTPlotter*(void)> plotf;
         JKQTPlotter* p;
+        inline Data() {};
         inline Data(const std::function<void(void)>& f_):
             type(FunctorType), f(f_), plotf(), p(nullptr)
         {}
