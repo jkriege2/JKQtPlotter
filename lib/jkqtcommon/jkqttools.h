@@ -95,5 +95,12 @@ JKQTCOMMON_LIB_EXPORT void jkloadSplitter(QSettings& settings, QSplitter* splitt
  */
 JKQTCOMMON_LIB_EXPORT quint16 jkqtp_checksum(const void* data, size_t len);
 
+/** \brief Checks whether a given iterator is an input iterator (std::input_iterator_tag)
+ *  \ingroup jkqtptools_general
+ *
+ **/
+template <typename Iterator>
+using JKQTPIsInputIteratorTrait = typename std::enable_if<std::is_convertible<typename std::iterator_traits<Iterator>::iterator_category, std::input_iterator_tag>::value, bool>::type;
+
 
 #endif // JKQTTOOLS_H

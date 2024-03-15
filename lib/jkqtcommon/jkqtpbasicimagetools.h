@@ -33,6 +33,7 @@
 #include <limits>
 #include "jkqtcommon/jkqtcommon_imexport.h"
 #include "jkqtcommon/jkqtpmathtools.h"
+#include "jkqtcommon/jkqttools.h"
 
 /** \brief possible datatypes of the data array, plotted by this class.
     \ingroup jkqtplotter_imagelots_tools
@@ -1203,7 +1204,7 @@ public:
             push_back(v.first, v.second);
         }
     }
-    template <typename InputIterator, QtPrivate::IfIsInputIterator<InputIterator> = true>
+    template <typename InputIterator, JKQTPIsInputIteratorTrait<InputIterator> = true>
     inline JKQTPPaletteList(InputIterator first, InputIterator last): ListType(first, last) {}
     inline JKQTPPaletteList(ListType &&other):ListType(std::forward<ListType>(other)) {}
     inline JKQTPPaletteList(const ListType &other):ListType(other) {}
