@@ -664,7 +664,10 @@ JKQTCOMMON_LIB_EXPORT void jkqtp_estimateFraction(double input, int &sign, uint6
     */
 template <class T>
 inline T jkqtp_reversed(const T& l) {
-    return T(l.rbegin(), l.rend());
+    T reversed_l;
+    reversed_l.reserve(l.size());
+    std::reverse_copy(l.begin(), l.end(), std::back_inserter(reversed_l));
+    return reversed_l;
 }
 
 /*! \brief can be used to build a hash-values from several hash-values
