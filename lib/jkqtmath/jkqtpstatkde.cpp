@@ -22,64 +22,10 @@
 #include "jkqtmath/jkqtpstatkde.h"
 
 
-double jkqtpstatKernel1DGaussian(double t) {
-    return exp(-0.5*t*t)/JKQTPSTATISTICS_SQRT_2PI;
-}
-
-
-double jkqtpstatKernel1DCauchy(double t) {
-    return 1.0/(JKQTPSTATISTICS_PI*(1.0+t*t));
-}
 
 
 
-double jkqtpstatKernel1DPicard(double t) {
-    return exp(-0.5*fabs(t))/2.0;
-}
-
-
-double jkqtpstatKernel1DEpanechnikov(double t) {
-    return (fabs(t)<1.0)?(0.75*(1.0-t*t)):0.0;
-}
-
-
-double jkqtpstatKernel1DUniform(double t) {
-    return (fabs(t)<=1.0)?0.5:0.0;
-}
-
-
-double jkqtpstatKernel1DTriangle(double t) {
-    return (fabs(t)<=1.0)?(1.0-fabs(t)):0.0;
-}
 
 
 
-double jkqtpstatKernel1DQuartic(double t) {
-    return (fabs(t)<=1.0)?(15.0/16.0*jkqtp_sqr(1.0-t*t)):0.0;
-}
 
-
-double jkqtpstatKernel1DTriweight(double t) {
-    return (fabs(t)<1.0)?(35.0/32.0*jkqtp_cube(1.0-t*t)):0.0;
-}
-
-
-
-double jkqtpstatKernel1DTricube(double t) {
-    return (fabs(t)<1.0)?(70.0/81.0*jkqtp_cube(1.0-jkqtp_cube(fabs(t)))):0.0;
-}
-
-
-double jkqtpstatKernel1DCosine(double t) {
-    return (fabs(t)<1.0)?(JKQTPSTATISTICS_PI/4.0*cos(t*JKQTPSTATISTICS_PI/2.0)):0.0;
-}
-
-
-double jkqtpstatKernel2DGaussian(double tx, double ty)
-{
-    return exp(-0.5*(tx*tx+ty*ty))/(2.0*JKQTPSTATISTICS_PI);
-}
-
-double jkqtpstatKernel2DUniform(double tx, double ty) {
-    return (fabs(tx)<1.0 && fabs(ty)<=1.0)?0.25:0.0;
-}

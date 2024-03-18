@@ -49,64 +49,84 @@
 
     \f[ k(t):=\frac{1}{\sqrt{2\pi}}\exp \left(-\frac{1}{2}t^2\right) \f]
 */
-jkqtmath_LIB_EXPORT double jkqtpstatKernel1DGaussian(double t);
+inline double jkqtpstatKernel1DGaussian(double t) {
+    return exp(-0.5*t*t)/JKQTPSTATISTICS_SQRT_2PI;
+}
 /*! \brief a 1D Cauchy kernel function, e.g. for Kernel Density Estimation
     \ingroup jkqtptools_math_statistics_1dkde_kernels
 
     \f[ k(t):=\frac{1}{\pi(1+t^2)} \f]
 */
-jkqtmath_LIB_EXPORT double jkqtpstatKernel1DCauchy(double t);
+inline double jkqtpstatKernel1DCauchy(double t) {
+    return 1.0/(JKQTPSTATISTICS_PI*(1.0+t*t));
+}
 
 /*! \brief a 1D Picard kernel function, e.g. for Kernel Density Estimation
     \ingroup jkqtptools_math_statistics_1dkde_kernels
 
     \f[ k(t):=\frac{1}{2}\exp(-|t|) \f]
 */
-jkqtmath_LIB_EXPORT double jkqtpstatKernel1DPicard(double t);
+inline double jkqtpstatKernel1DPicard(double t) {
+    return exp(-0.5*fabs(t))/2.0;
+}
 /*! \brief a 1D Epanechnikov kernel function, e.g. for Kernel Density Estimation
     \ingroup jkqtptools_math_statistics_1dkde_kernels
 
     \f[ k(t) :=\begin{cases}\frac{3}{4} ( 1- t^2 ),  & \text{if }t\in [-1;1]\\0, & \text{else}\end{cases} \f]
 */
-jkqtmath_LIB_EXPORT double jkqtpstatKernel1DEpanechnikov(double t);
+inline double jkqtpstatKernel1DEpanechnikov(double t) {
+    return (fabs(t)<1.0)?(0.75*(1.0-t*t)):0.0;
+}
 /*! \brief a 1D uniform kernel function, e.g. for Kernel Density Estimation
     \ingroup jkqtptools_math_statistics_1dkde_kernels
 
     \f[ k(t) :=\begin{cases}0.5,  & \text{if }t\in [-1;1]\\0, & \text{else}\end{cases} \f]
 */
-jkqtmath_LIB_EXPORT double jkqtpstatKernel1DUniform(double t);
+inline double jkqtpstatKernel1DUniform(double t) {
+    return (fabs(t)<=1.0)?0.5:0.0;
+}
 /*! \brief a 1D Epanechnikov kernel function, e.g. for Kernel Density Estimation
     \ingroup jkqtptools_math_statistics_1dkde_kernels
 
     \f[ k(t) :=\begin{cases}1-|t|,  & \text{if }t\in [-1;1]\\0, & \text{else}\end{cases} \f]
 */
-jkqtmath_LIB_EXPORT double jkqtpstatKernel1DTriangle(double t);
+inline double jkqtpstatKernel1DTriangle(double t) {
+    return (fabs(t)<=1.0)?(1.0-fabs(t)):0.0;
+}
 
 /*! \brief a 1D quartic kernel function, e.g. for Kernel Density Estimation
     \ingroup jkqtptools_math_statistics_1dkde_kernels
 
     \f[ k(t) :=\begin{cases}\frac{15}{16}(1-t^2)^2,  & \text{if }t\in [-1;1]\\0, & \text{else}\end{cases} \f]
 */
-jkqtmath_LIB_EXPORT double jkqtpstatKernel1DQuartic(double t);
+inline double jkqtpstatKernel1DQuartic(double t) {
+    return (fabs(t)<=1.0)?(15.0/16.0*jkqtp_sqr(1.0-t*t)):0.0;
+}
 /*! \brief a 1D triweight kernel function, e.g. for Kernel Density Estimation
     \ingroup jkqtptools_math_statistics_1dkde_kernels
 
     \f[ k(t) :=\begin{cases}\frac{35}{32}(1-t^2)^3,  & \text{if }t\in [-1;1]\\0, & \text{else}\end{cases} \f]
 */
-jkqtmath_LIB_EXPORT double jkqtpstatKernel1DTriweight(double t);
+inline double jkqtpstatKernel1DTriweight(double t) {
+    return (fabs(t)<1.0)?(35.0/32.0*jkqtp_cube(1.0-t*t)):0.0;
+}
 
 /*! \brief a 1D tricube kernel function, e.g. for Kernel Density Estimation
     \ingroup jkqtptools_math_statistics_1dkde_kernels
 
     \f[ k(t) :=\begin{cases}\frac{70}{81}(1-|t|^3)^3,  & \text{if }t\in [-1;1]\\0, & \text{else}\end{cases} \f]
 */
-jkqtmath_LIB_EXPORT double jkqtpstatKernel1DTricube(double t);
+inline double jkqtpstatKernel1DTricube(double t) {
+    return (fabs(t)<1.0)?(70.0/81.0*jkqtp_cube(1.0-jkqtp_cube(fabs(t)))):0.0;
+}
 /*! \brief a 1D cosine kernel function, e.g. for Kernel Density Estimation
     \ingroup jkqtptools_math_statistics_1dkde_kernels
 
     \f[ k(t) :=\begin{cases}\frac{\pi}{4}\cos\left(\frac{\pi}{2}t\right),  & \text{if }t\in [-1;1]\\0, & \text{else}\end{cases} \f]
 */
-jkqtmath_LIB_EXPORT double jkqtpstatKernel1DCosine(double t);
+inline double jkqtpstatKernel1DCosine(double t) {
+    return (fabs(t)<1.0)?(JKQTPSTATISTICS_PI/4.0*cos(t*JKQTPSTATISTICS_PI/2.0)):0.0;
+}
 
 
 
@@ -125,14 +145,19 @@ jkqtmath_LIB_EXPORT double jkqtpstatKernel1DCosine(double t);
 
     \f[ k(t_x, t_y):=\frac{1}{2\pi}\exp \left(-\frac{t_x^2+t_y^2}{2}\right) \f]
 */
-jkqtmath_LIB_EXPORT double jkqtpstatKernel2DGaussian(double tx, double ty);
+inline double jkqtpstatKernel2DGaussian(double tx, double ty)
+{
+    return exp(-0.5*(tx*tx+ty*ty))/(2.0*JKQTPSTATISTICS_PI);
+}
 
 /*! \brief a 2D Uniform kernel function, e.g. for Kernel Density Estimation
     \ingroup jkqtptools_math_statistics_2dkde_kernels
 
     \f[ k(t_x, t_y):=\begin{cases}\frac{1}{4},  & \text{if }t_x,t_y\in [-1;1]\\0, & \text{else}\end{cases} \f]
 */
-jkqtmath_LIB_EXPORT double jkqtpstatKernel2DUniform(double tx, double ty);
+inline double jkqtpstatKernel2DUniform(double tx, double ty) {
+    return (fabs(tx)<1.0 && fabs(ty)<=1.0)?0.25:0.0;
+}
 
 
 
@@ -473,6 +498,45 @@ inline double jkqtpstatEvaluateKernelSum2D(double x, double y, InputItX firstX, 
 
 
 
+/*! \brief stores a part-result of the Kernel Density Estimator (KDE) at a given position
+    \ingroup jkqtptools_math_statistics_2dkde
+    \internal
+
+    Iterates over all datapoints in firstX..lastX and firstY..lastY, for each one determines whether the floating-point values are valid
+    and the calls fStore, which is a functor that is supposed to iterate over the KDE 2D array and over calls sum up the KDE.
+
+    This is internally used by jkqtpstatKDE2D(). The construction is not as straight-forward, as iterating over all positions in the 2D-KJDE
+    and the calling jkqtpstatEvaluateKernelSum2D(), bt by reordering the loops it is significatyl faster (~20%)
+
+    \tparam InputItX standard iterator type of \a firstX and \a lastX.
+    \tparam InputItY standard iterator type of \a firstY and \a lastY.
+    \tparam FF functor
+    \param x where to evaluate the kernel sum, x-coordinate
+    \param y where to evaluate the kernel sum, y-coordinate
+    \param firstX iterator pointing to the first x-position item in the dataset to use \f$ X_1 \f$
+    \param lastX iterator pointing behind the last x-position item in the dataset to use \f$ X_N \f$
+    \param firstY iterator pointing to the first y-position item in the dataset to use \f$ Y_1 \f$
+    \param lastY iterator pointing behind the last y-position item in the dataset to use \f$ Y_N \f$
+    \param kernel the kernel function to use (e.g. jkqtpstatKernel1DGaussian() )
+    \param bandwidthX x-bandwidth used for the KDE
+    \param bandwidthY y-bandwidth used for the KDE
+
+*/
+template <class InputItX, class InputItY, class FF>
+inline int jkqtpstatStoreKernelSum2D(FF&& fStore, InputItX firstX, InputItX lastX, InputItY firstY, InputItY lastY, const std::function<double(double,double)>& kernel, double bandwidthX, double bandwidthY) {
+    auto itX=firstX;
+    auto itY=firstY;
+    int cnt=0;
+    for (; (itX!=lastX)&&(itY!=lastY); ++itX, ++itY)  {
+        const double vx=jkqtp_todouble(*itX);
+        const double vy=jkqtp_todouble(*itY);
+        if (JKQTPIsOKFloat(vx) && JKQTPIsOKFloat(vy)) {
+            fStore(vx,vy, kernel,bandwidthX, bandwidthY);
+            cnt++;
+        }
+    }
+    return cnt;
+}
 
 /*! \brief calculate an autoranged 2-dimensional Kernel Density Estimation (KDE) from the given data range \a firstX / \a firstY ... \a lastY / \a lastY
     \ingroup jkqtptools_math_statistics_2dkde
@@ -504,18 +568,44 @@ inline void jkqtpstatKDE2D(InputItX firstX, InputItX lastX, InputItY firstY, Inp
     const double binwx=fabs(xmax-xmin)/static_cast<double>(xbins);
     const double binwy=fabs(ymax-ymin)/static_cast<double>(ybins);
 
-    double y=ymin;
-    auto itOut=histogramImgOut;
-    for (size_t by=0; by<ybins; by++) {
-        double x=xmin;
-        for (size_t bx=0; bx<xbins; bx++) {
-            const double vv=jkqtpstatEvaluateKernelSum2D(x,y, firstX, lastX,firstY,lastY, kernel, bandwidthX,bandwidthY);
-            *itOut=vv;
-            //std::cout<<x<<","<<y<<","<<vv<<*itOut<<std::endl;
-            x+=binwx;
-            ++itOut;
+    {
+        auto itOut=histogramImgOut;
+        for (size_t by=0; by<ybins; by++) {
+            for (size_t bx=0; bx<xbins; bx++) {
+                *itOut=0;
+                ++itOut;
+            }
         }
-        y+=binwy;
+    }
+
+    const double cnt=jkqtpstatStoreKernelSum2D([&](double vx, double vy, const std::function<double(double,double)>& kernel, double bandwidthX, double bandwidthY){
+        double y=ymin;
+        auto itOut=histogramImgOut;
+
+
+        for (size_t by=0; by<ybins; by++) {
+            double x=xmin;
+            for (size_t bx=0; bx<xbins; bx++) {
+                const double vvx=(x-vx)/bandwidthX;
+                const double vvy=(y-vy)/bandwidthY;
+                *itOut+=kernel(vvx,vvy)/sqrt(bandwidthX*bandwidthY);
+                //std::cout<<x<<","<<y<<","<<vv<<*itOut<<std::endl;
+                x+=binwx;
+                ++itOut;
+            }
+            y+=binwy;
+        }
+    }, firstX, lastX, firstY, lastY, kernel, bandwidthX, bandwidthY);
+
+
+    {
+        auto itOut=histogramImgOut;
+        for (size_t by=0; by<ybins; by++) {
+            for (size_t bx=0; bx<xbins; bx++) {
+                *itOut/=cnt;
+                ++itOut;
+            }
+        }
     }
 }
 
