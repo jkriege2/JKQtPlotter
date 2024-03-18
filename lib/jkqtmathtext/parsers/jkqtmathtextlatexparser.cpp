@@ -884,7 +884,7 @@ JKQTMathTextNode* JKQTMathTextLatexParser::parseLatexString(bool get, JKQTMathTe
                 bool first=true;
                 bool firstLine=true;
                 QVector<JKQTMathTextNode*> line;
-                qsizetype colCount=0;
+                size_t colCount=0;
                 //qDebug()<<"start "<<envname;
                 while (first || currentToken==MTTampersand || currentToken==MTTinstructionNewline) {
                     //qDebug()<<"  - START: "<<tokenType2String(currentToken)<<" first="<<first;
@@ -930,12 +930,12 @@ JKQTMathTextNode* JKQTMathTextLatexParser::parseLatexString(bool get, JKQTMathTe
                         line.append(it);
 
                         if (currentToken==MTTinstructionNewline || (currentToken==MTTinstructionEnd && currentTokenName==envname) || line.size()>0) {
-                            colCount=qMax(colCount, static_cast<qsizetype>(line.size()));
+                            colCount=qMax(colCount, static_cast<size_t>(line.size()));
                             //qDebug()<<"  - colCount="<<colCount;
-                            if (line.size()==0 || (line.size()>=1 && static_cast<qsizetype>(line.size())==colCount)) {
+                            if (line.size()==0 || (line.size()>=1 && static_cast<size_t>(line.size())==colCount)) {
                                 items.append(line);
                                 //qDebug()<<"  - appending line with "<<line.size()<<" items. items.size now "<<items.size();
-                            } else if (line.size()>=1 && static_cast<qsizetype>(line.size())!=colCount) {
+                            } else if (line.size()>=1 && static_cast<size_t>(line.size())!=colCount) {
                                 addToErrorList(tr("error @ ch. %1: wrong number of entries widthin '\\begin{%2}...\\end{%2}'").arg(currentTokenID).arg(envname));
                             }
                         }

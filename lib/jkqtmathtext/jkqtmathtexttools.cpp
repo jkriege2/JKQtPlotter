@@ -997,35 +997,36 @@ namespace {
 
 }
 
-template<>
-struct std::hash<JKQTMathTextCacheKeyBase>
-{
-    std::size_t operator()(const JKQTMathTextCacheKeyBase& data) const noexcept
+namespace std {
+    template<>
+    struct hash<JKQTMathTextCacheKeyBase>
     {
-        return qHash(data.f)+std::hash<int>()(data.ldpiX)+std::hash<int>()(data.ldpiY)+std::hash<int>()(data.pdpiX)+std::hash<int>()(data.pdpiY);
-    }
-};
+        size_t operator()(const JKQTMathTextCacheKeyBase& data) const noexcept
+        {
+            return qHash(data.f)+hash<int>()(data.ldpiX)+hash<int>()(data.ldpiY)+hash<int>()(data.pdpiX)+hash<int>()(data.pdpiY);
+        }
+    };
 
 
 
-template<>
-struct std::hash<JKQTMathTextTBRDataH<QString>>
-{
-    std::size_t operator()(const JKQTMathTextTBRDataH<QString>& data) const noexcept
+    template<>
+    struct hash<JKQTMathTextTBRDataH<QString>>
     {
-        return qHash(data.f)+qHash(data.text)+std::hash<int>()(data.ldpiX)+std::hash<int>()(data.ldpiY)+std::hash<int>()(data.pdpiX)+std::hash<int>()(data.pdpiY);
-    }
-};
+        size_t operator()(const JKQTMathTextTBRDataH<QString>& data) const noexcept
+        {
+            return qHash(data.f)+qHash(data.text)+hash<int>()(data.ldpiX)+hash<int>()(data.ldpiY)+hash<int>()(data.pdpiX)+hash<int>()(data.pdpiY);
+        }
+    };
 
-template<>
-struct std::hash<JKQTMathTextTBRDataH<QChar>>
-{
-    std::size_t operator()(const JKQTMathTextTBRDataH<QChar>& data) const noexcept
+    template<>
+    struct hash<JKQTMathTextTBRDataH<QChar>>
     {
-        return qHash(data.f)+qHash(data.text)+std::hash<int>()(data.ldpiX)+std::hash<int>()(data.ldpiY)+std::hash<int>()(data.pdpiX)+std::hash<int>()(data.pdpiY);
-    }
-};
-
+        size_t operator()(const JKQTMathTextTBRDataH<QChar>& data) const noexcept
+        {
+            return qHash(data.f)+qHash(data.text)+hash<int>()(data.ldpiX)+hash<int>()(data.ldpiY)+hash<int>()(data.pdpiX)+hash<int>()(data.pdpiY);
+        }
+    };
+}
 
 
 QRectF JKQTMathTextGetTightBoundingRect(const QFont &f, const QString &text, QPaintDevice *pd)

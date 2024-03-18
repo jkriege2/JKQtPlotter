@@ -120,11 +120,12 @@ private slots:
 
         QVERIFY_THROWS_EXCEPTION(std::exception, n=JKQTPCSSParser::readGradient("wa__flame"));
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 12, 0))
         QVERIFY_THROWS_NO_EXCEPTION(n=JKQTPCSSParser::readGradient("warmflame"));
         g = QGradient(QGradient::WarmFlame);
         g.setCoordinateMode(QGradient::ObjectBoundingMode);
         QCOMPARE_EQ(n, g);
-
+#endif
 
         QVERIFY_THROWS_NO_EXCEPTION(n=JKQTPCSSParser::readGradient("linear-gradient(to left, red, blue)"));
         lg = QLinearGradient(1,0.5,0,0.5);
@@ -171,11 +172,13 @@ private slots:
         QLinearGradient lg;
 
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 12, 0))
         QVERIFY_THROWS_NO_EXCEPTION(bs=jkqtp_String2QBrushStyleExt("warmflame", &n, nullptr));
         g = QGradient(QGradient::WarmFlame);
         g.setCoordinateMode(QGradient::ObjectBoundingMode);
         QCOMPARE_EQ(n, g);
         QCOMPARE_EQ(bs, Qt::LinearGradientPattern);
+#endif
 
         QVERIFY_THROWS_NO_EXCEPTION(bs=jkqtp_String2QBrushStyleExt("d1", &n, nullptr));
         QCOMPARE_EQ(bs, Qt::Dense1Pattern);

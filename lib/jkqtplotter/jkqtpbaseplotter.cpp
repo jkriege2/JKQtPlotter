@@ -3741,7 +3741,7 @@ bool JKQTBasePlotter::saveImage(const QString& filename, bool displayPreview) {
             QSharedPointer<QPaintDevice> paintDevice=QSharedPointer<QPaintDevice>(jkqtpPaintDeviceAdapters.get()[adapterID]->createPaintdevice(fn, jkqtp_roundTo<int>(gridPrintingSize.width()), jkqtp_roundTo<int>(gridPrintingSize.height())));
 
 #ifndef JKQTPLOTTER_COMPILE_WITHOUT_PRINTSUPPORT
-            if (!printpreviewNew(paintDevice.get(), jkqtpPaintDeviceAdapters.get()[adapterID]->getSetAbsolutePaperSize(), jkqtpPaintDeviceAdapters.get()[adapterID]->getPrintSizeXInMM(), jkqtpPaintDeviceAdapters.get()[adapterID]->getPrintSizeYInMM(), displayPreview)) {
+            if (!printpreviewNew(paintDevice.data(), jkqtpPaintDeviceAdapters.get()[adapterID]->getSetAbsolutePaperSize(), jkqtpPaintDeviceAdapters.get()[adapterID]->getPrintSizeXInMM(), jkqtpPaintDeviceAdapters.get()[adapterID]->getPrintSizeYInMM(), displayPreview)) {
                 if (QFile::exists(tempFM)) {
                     QFile::copy(tempFM, fn);
                     QFile::remove(tempFM);
@@ -3751,7 +3751,7 @@ bool JKQTBasePlotter::saveImage(const QString& filename, bool displayPreview) {
 #endif
             {
                 paintDevice.reset(jkqtpPaintDeviceAdapters.get()[adapterID]->createPaintdeviceMM(fn,printSizeX_Millimeter,printSizeY_Millimeter));
-                printpreviewPaintRequestedNewPaintDevice(paintDevice.get());
+                printpreviewPaintRequestedNewPaintDevice(paintDevice.data());
                 return true;
             }
 

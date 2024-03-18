@@ -34,11 +34,13 @@ private slots:
         QLinearGradient lg;
 
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 12, 0))
         QVERIFY_THROWS_NO_EXCEPTION(bs=jkqtp_String2QBrushStyleExt("warmflame", &n, nullptr));
         g = QGradient(QGradient::WarmFlame);
         g.setCoordinateMode(QGradient::ObjectBoundingMode);
         QCOMPARE_EQ(n, g);
         QCOMPARE_EQ(bs, Qt::LinearGradientPattern);
+#endif
 
         QVERIFY_THROWS_NO_EXCEPTION(bs=jkqtp_String2QBrushStyleExt("d1", &n, nullptr));
         QCOMPARE_EQ(bs, Qt::Dense1Pattern);

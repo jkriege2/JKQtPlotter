@@ -390,7 +390,7 @@ namespace {
         m["diagcross"]=Qt::DiagCrossPattern;
         return m;
     }();
-
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 12, 0))
     static QMap<QString,QGradient::Preset> s_GradientPresets = []() {
         QMap<QString,QGradient::Preset> m;
         for (int i=1; i<QMetaEnum::fromType<QGradient::Preset>().keyCount(); i++) {
@@ -399,6 +399,7 @@ namespace {
         }
         return m;
     }();
+#endif
 
 }
 
@@ -422,6 +423,7 @@ Qt::BrushStyle jkqtp_String2QBrushStyleExt(const QString &style, QGradient *grad
             qWarning()<<"error converting '"<<style<<"' into a QGradient: "<<E.what();
             return Qt::SolidPattern;
        }
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 12, 0))
     } else if (s_GradientPresets.contains(s)) {
         QGradient g(s_GradientPresets[s]);
         g.setCoordinateMode(QGradient::ObjectBoundingMode);
@@ -429,6 +431,7 @@ Qt::BrushStyle jkqtp_String2QBrushStyleExt(const QString &style, QGradient *grad
         if (g.type()==QGradient::Type::RadialGradient) return Qt::RadialGradientPattern;
         else if (g.type()==QGradient::Type::ConicalGradient) return Qt::ConicalGradientPattern;
         else return Qt::LinearGradientPattern;
+#endif
     } else if (jkqtp_rxExactlyMatches(s, "\\s*image\\s*\\(\\s*[\\\"\\\']?(.*)[\\\"\\\']?\\s*\\)\\s*", &caps)) {
         if (image) *image=QPixmap(caps[1]);
         return Qt::TexturePattern;
@@ -1097,7 +1100,7 @@ namespace JKQTCommon_private {
 #endif
 }
 
-bool jkqtp_rxContains(const QString& text, const QString &regex, qsizetype offset, QStringList* caps)
+bool jkqtp_rxContains(const QString& text, const QString &regex, size_t offset, QStringList* caps)
 {
 #if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
     if (!JKQTCommon_private::rxCache.contains(regex)) JKQTCommon_private::rxCache.insert(regex, new QRegularExpression(regex));
@@ -1125,7 +1128,7 @@ bool jkqtp_rxContains(const QString& text, const QString &regex, qsizetype offse
 }
 
 
-qsizetype jkqtp_rxIndexIn(const QString& text, const QString &regex, qsizetype offset, QStringList* caps)
+size_t jkqtp_rxIndexIn(const QString& text, const QString &regex, size_t offset, QStringList* caps)
 {
 #if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
     if (!JKQTCommon_private::rxCache.contains(regex)) JKQTCommon_private::rxCache.insert(regex, new QRegularExpression(regex));
@@ -1147,14 +1150,14 @@ qsizetype jkqtp_rxIndexIn(const QString& text, const QString &regex, qsizetype o
         tempRX.reset(new QRegExp(regex));
         rx=tempRX.data();
     }
-    const qsizetype idx = rx->indexIn(text, offset);
+    const size_t idx = rx->indexIn(text, offset);
     if (caps) *caps=rx->capturedTexts();
     return idx;
 #endif
 }
 
 
-bool jkqtp_rxPartiallyMatchesAt(const QString& text, const QString &regex, qsizetype offset, QStringList* caps)
+bool jkqtp_rxPartiallyMatchesAt(const QString& text, const QString &regex, size_t offset, QStringList* caps)
 {
 #if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
     if (!JKQTCommon_private::rxCache.contains(regex)) JKQTCommon_private::rxCache.insert(regex, new QRegularExpression(regex));

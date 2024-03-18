@@ -360,7 +360,7 @@ JKQTCOMMON_LIB_EXPORT Qt::MouseButton jkqtp_String2MouseButton(const QString &bu
  *
  *  \see jkqtp_rxExactlyMatches(), jkqtp_rxIndexIn(), jkqtp_rxContains(), jkqtp_rxPartiallyMatchesAt()
  */
-JKQTCOMMON_LIB_EXPORT bool jkqtp_rxContains(const QString& text, const QString &regex, qsizetype offset=0, QStringList* caps=nullptr);
+JKQTCOMMON_LIB_EXPORT bool jkqtp_rxContains(const QString& text, const QString &regex, size_t offset=0, QStringList* caps=nullptr);
 
 /** \brief returns the next match (i.e. its index) of the given regular expression \a regex within \a text,
  *         starts from \a offset and optionally returns the match in \a caps \c =[fullmatch, cap1,cap2,...]
@@ -371,7 +371,7 @@ JKQTCOMMON_LIB_EXPORT bool jkqtp_rxContains(const QString& text, const QString &
  *
  *  \see jkqtp_rxExactlyMatches(), jkqtp_rxIndexIn(), jkqtp_rxContains(), jkqtp_rxPartiallyMatchesAt()
  */
-JKQTCOMMON_LIB_EXPORT qsizetype jkqtp_rxIndexIn(const QString& text, const QString &regex, qsizetype offset=0, QStringList* caps=nullptr);
+JKQTCOMMON_LIB_EXPORT size_t jkqtp_rxIndexIn(const QString& text, const QString &regex, size_t offset=0, QStringList* caps=nullptr);
 
 /** \brief returns \c true, if \a text exactly matches the given regular expression \a regex,
  *         starts from \a offset and optionally returns the match in \a caps \c =[fullmatch, cap1,cap2,...]
@@ -395,7 +395,7 @@ JKQTCOMMON_LIB_EXPORT bool jkqtp_rxExactlyMatches(const QString& text, const QSt
  *
  *  \see jkqtp_rxExactlyMatches(), jkqtp_rxIndexIn(), jkqtp_rxContains(), jkqtp_rxPartiallyMatchesAt()
  */
-JKQTCOMMON_LIB_EXPORT bool jkqtp_rxPartiallyMatchesAt(const QString& text, const QString &regex, qsizetype offset=0, QStringList* caps=nullptr);
+JKQTCOMMON_LIB_EXPORT bool jkqtp_rxPartiallyMatchesAt(const QString& text, const QString &regex, size_t offset=0, QStringList* caps=nullptr);
 
 
 #endif // JKQTPSTRINGTOOLS_H_INCLUDED

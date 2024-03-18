@@ -207,14 +207,17 @@ int main(int argc, char* argv[])
             fileList<<"   <table>\n";
             fileList<<"     <tr>\n";
             i=1;
+
+            auto myIsLower=[](const QString& s) { for (size_t i=0; i<s.size(); i++) if (!s[i].isLower()) return false; return true; };
+            auto myIsUpper=[](const QString& s) { for (size_t i=0; i<s.size(); i++) if (!s[i].isUpper()) return false; return true; };
 #if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
             std::sort
 #else
             qSort
 #endif
-            (symbolsAll.begin(), symbolsAll.end(), [](const QString& a, const QString& b) {  if (a.contains("harpoon") && !b.contains("harpoon")) return false;
-                                                                                                else if (a.isLower() && b.isUpper()) return true;
-                                                                                                else if (a.isUpper() && b.isLower()) return false;
+            (symbolsAll.begin(), symbolsAll.end(), [myIsLower,myIsUpper](const QString& a, const QString& b) {  if (a.contains("harpoon") && !b.contains("harpoon")) return false;
+                                                                                                else if (myIsLower(a) && myIsUpper(b)) return true;
+                                                                                                else if (myIsUpper(a) && myIsLower(b)) return false;
                                                                                                 else return a<b;
                                                                                              });
             for (const QString& arrow: arrowNames) {

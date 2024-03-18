@@ -573,7 +573,11 @@ QBrush JKQTFillStyleSummmary::brush(const QColor &color) const
     if (brushStyle==Qt::LinearGradientPattern || brushStyle==Qt::RadialGradientPattern || brushStyle==Qt::ConicalGradientPattern) {
         QGradient g=gradient;
         JKQTPReplaceCurrentColor(g, color);
+#if QT_VERSION >= QT_VERSION_CHECK(5,12,0)
         g.setCoordinateMode(QGradient::ObjectMode);
+#else
+        g.setCoordinateMode(QGradient::ObjectBoundingMode);
+#endif
         b=QBrush(g);
     } else {
         b.setStyle(brushStyle);
