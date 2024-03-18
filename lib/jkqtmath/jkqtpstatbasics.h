@@ -811,7 +811,75 @@ inline double jkqtpstatMedianOfSortedVector(const TVector& data, size_t* Noutput
 
 
 
+/*! \brief calculates the median of a given data range \a first ... \a last, this version partially sorts the range (i.e. no internal copy and checking for NAN-values is performed!)
+    \ingroup jkqtptools_math_statistics_basic
 
+    \tparam InputIt standard iterator type of \a first and \a last.
+    \param first iterator pointing to the first item in the dataset to use \f$ X_1 \f$
+    \param last iterator pointing behind the last item in the dataset to use \f$ X_N \f$
+    \return the median of the data returned between \a first and \a last (excluding invalid doubles).
+            If the given range \a first ... \a last is empty, NAN is returned
+
+    \note This operation implies uses std::nth_element() to calculate the median in linear time O(N)!
+          The given range is partially sorted after the call!
+
+*/
+template <class InputIt>
+inline double jkqtpstatMedianAndPartialSort(InputIt first, InputIt last) {
+    // filter out any NAN-values:
+    const size_t n=std::distance(first,last);
+
+    // handle empty range
+    if (n<=0) {
+        return JKQTP_DOUBLE_NAN;
+    }
+
+    // calculate median using nth_element() in linear timme!
+    const auto middleItr = first + n / 2;
+    std::nth_element(first, middleItr, last);
+    if (n % 2 == 0) {
+        // since nth_element() performs partial sorting,
+        //   "All of the elements before this new nth element are less than or equal to the elements after the new nth element." (from cppreference.com)
+        const auto leftMiddleItr = std::max_element(first, middleItr);
+        // the second elemnt to average is the maximum on the left of middleItr!
+        return (*leftMiddleItr + *middleItr) / 2.0;
+    } else {
+        return *middleItr;
+    }
+}
+
+/*! \brief calculates the median of a given data range \a first ... \a last
+    \ingroup jkqtptools_math_statistics_basic
+
+    \tparam InputIt standard iterator type of \a first and \a last.
+    \param first iterator pointing to the first item in the dataset to use \f$ X_1 \f$
+    \param last iterator pointing behind the last item in the dataset to use \f$ X_N \f$
+    \param[out] Noutput optionally returns the number of accumulated valid values in this variable
+    \return the median of the data returned between \a first and \a last (excluding invalid doubles).
+            If the given range \a first ... \a last is empty, NAN is returned
+
+    \note This operation implies an internal copy of the data, and then uses std::nth_element() to calculate the median in linear time O(N)!
+
+    \note Each value is the specified range is converted to a double using jkqtp_todouble().
+          Entries in the range that are invalid double (using JKQTPIsOKFloat() )
+          are ignored when calculating.
+*/
+template <class InputIt>
+inline double jkqtpstatMedian(InputIt first, InputIt last, size_t* Noutput=nullptr) {
+    // filter out any NAN-values:
+    std::vector<double> dataFiltered;
+    jkqtpstatFilterGoodFloat(first, last, std::back_inserter(dataFiltered));
+    const size_t n=dataFiltered.size();
+
+    // handle empty range
+    if (n<=0) {
+        if (Noutput) *Noutput=0;
+        return JKQTP_DOUBLE_NAN;
+    }
+
+    // calculate median using nth_element() in linear timme!
+    return jkqtpstatMedianAndPartialSort(dataFiltered.begin(), dataFiltered.end());
+}
 
 /*! \brief calculates the Five-Number Statistical Summary (minimum, median, maximum and two user-defined quantiles (as well as derived from these the inter quartile range)) of a sorted vector
     \ingroup jkqtptools_math_statistics_basic
@@ -1079,29 +1147,6 @@ inline JKQTPStat5NumberStatistics jkqtpstat5NumberStatistics(InputIt first, Inpu
 }
 
 
-/*! \brief calculates the median of a given data range \a first ... \a last
-    \ingroup jkqtptools_math_statistics_basic
-
-    \tparam InputIt standard iterator type of \a first and \a last.
-    \param first iterator pointing to the first item in the dataset to use \f$ X_1 \f$
-    \param last iterator pointing behind the last item in the dataset to use \f$ X_N \f$
-    \param[out] Noutput optionally returns the number of accumulated valid values in this variable
-    \return the median of the data returned between \a first and \a last (excluding invalid doubles).
-            If the given range \a first ... \a last is empty, NAN is returned
-
-    \note This operation implies an internal copy of the data, as well as sorting it!
-
-    \note Each value is the specified range is converted to a double using jkqtp_todouble().
-          Entries in the range that are invalid double (using JKQTPIsOKFloat() )
-          are ignored when calculating.
-*/
-template <class InputIt>
-inline double jkqtpstatMedian(InputIt first, InputIt last, size_t* Noutput=nullptr) {
-    std::vector<double> dataFiltered;
-    jkqtpstatFilterGoodFloat(first, last, std::back_inserter(dataFiltered));
-    std::sort(dataFiltered.begin(), dataFiltered.end());
-    return jkqtpstatMedianOfSortedVector(dataFiltered, Noutput);
-}
 
 
 /*! \brief calculates the \a quantile -th quantile of a given data range \a first ... \a last
@@ -1125,13 +1170,14 @@ template <class InputIt>
 inline double jkqtpstatQuantile(InputIt first, InputIt last, double quantile, size_t* Noutput=nullptr) {
     std::vector<double> dataFiltered;
     jkqtpstatFilterGoodFloat(first, last, std::back_inserter(dataFiltered));
-    std::sort(dataFiltered.begin(), dataFiltered.end());
     if (dataFiltered.size()<=0) {
         if (Noutput) *Noutput=0;
         return JKQTP_DOUBLE_NAN;
     } else {
         if (Noutput) *Noutput=dataFiltered.size();
-        return dataFiltered[jkqtp_bounded<size_t>(0, static_cast<size_t>(quantile*static_cast<double>(dataFiltered.size()-1)), dataFiltered.size()-1)];
+        auto qelement=dataFiltered.begin()+jkqtp_bounded<size_t>(0, static_cast<size_t>(quantile*static_cast<double>(dataFiltered.size()-1)), dataFiltered.size()-1);
+        std::nth_element(dataFiltered.begin(), qelement, dataFiltered.end());
+        return *qelement;
     }
 }
 
@@ -1164,20 +1210,18 @@ template <class InputIt>
 inline double jkqtpstatMAD(InputIt first, InputIt last, double* median=nullptr, size_t* Noutput=nullptr) {
     std::vector<double> dataFiltered;
     jkqtpstatFilterGoodFloat(first, last, std::back_inserter(dataFiltered));
-    std::sort(dataFiltered.begin(), dataFiltered.end());
     if (dataFiltered.size()<=0) {
         if (Noutput) *Noutput=0;
         if (median) *median=JKQTP_DOUBLE_NAN;
         return JKQTP_DOUBLE_NAN;
     } else {
         if (Noutput) *Noutput=dataFiltered.size();
-        double med=jkqtpstatMedianOfSortedVector(dataFiltered);
+        const double med=jkqtpstatMedianAndPartialSort(dataFiltered.begin(), dataFiltered.end());
         if (median) *median=med;
         for(double& v: dataFiltered) {
             v=fabs(v-med);
         }
-        std::sort(dataFiltered.begin(), dataFiltered.end());
-        return jkqtpstatMedianOfSortedVector(dataFiltered);
+        return jkqtpstatMedianAndPartialSort(dataFiltered.begin(), dataFiltered.end());
     }
 }
 

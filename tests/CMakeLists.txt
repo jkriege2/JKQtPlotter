@@ -16,4 +16,5 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Test REQUIRED)
 
 message( STATUS ".. BUILDING UNIT TESTS FOR JKQTCommon:" )
 add_subdirectory(jkqtcommmon)
+add_subdirectory(jkqtmath)
 
