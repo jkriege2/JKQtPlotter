@@ -44,7 +44,7 @@ protected:
         inline Data(const std::function<void(void)>& f_):
             type(FunctorType), f(f_), plotf(), p(nullptr)
         {}
-        inline Data(JKQTPlotter* p_):
+        inline Data(JKQTPlotter* p_=nullptr):
             type(PlotterType), f(), plotf(), p(p_)
         {}
         inline Data(std::function<JKQTPlotter*(void)> p_):
