@@ -711,7 +711,8 @@ QFont JKQTMathTextEnvironment::getFont(const JKQTMathText* parent) const {
     f.setCapitalization(capitalization);
     if (fontSizeUnit==POINTS) f.setPointSizeF(fontSize);
     else if (fontSizeUnit==PIXELS) f.setPixelSize(static_cast<int>(fontSize));
-    f.setStyleStrategy(QFont::NoFontMerging);
+    const QFont::StyleStrategy strat=static_cast<QFont::StyleStrategy>(QFont::NoFontMerging|QFont::PreferAntialias);
+    f.setStyleStrategy(strat);
     return f;
 }
 

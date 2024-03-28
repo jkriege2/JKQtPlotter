@@ -89,7 +89,7 @@ double JKQTMathTextVerbatimNode::draw(QPainter &painter, double x, double y, JKQ
     const LayoutInfo l=calcLayout(painter, currentEv);
     doDrawBoxes(painter, x, y, l);
     QFont f=currentEv.getFont(parentMathText);
-    f.setStyleStrategy(QFont::PreferDefault);
+    f.setStyleStrategy(static_cast<QFont::StyleStrategy>(f.styleStrategy()&(~QFont::StyleStrategy::NoFontMerging)));
     f.setFixedPitch(true);
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     painter.setFont(f);
@@ -136,7 +136,7 @@ JKQTMathTextVerbatimNode::LayoutInfo JKQTMathTextVerbatimNode::calcLayout(QPaint
 {
     LayoutInfo l;
     QFont f=currentEv.getFont(parentMathText);
-    f.setStyleStrategy(QFont::PreferDefault);
+    f.setStyleStrategy(static_cast<QFont::StyleStrategy>(f.styleStrategy()&(~QFont::StyleStrategy::NoFontMerging)));
     f.setFixedPitch(true);
     const qreal fascent=JKQTMathTextGetFontAscent(f, painter.device());
     const double linespacing=JKQTMathTextGetFontLineSpacing(f, painter.device())*lineSpacingFactor;

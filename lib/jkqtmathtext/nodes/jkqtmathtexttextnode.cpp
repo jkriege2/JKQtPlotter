@@ -138,10 +138,10 @@ JKQTMathTextTextNode::LayoutInfo JKQTMathTextTextNode::calcLayout(QPainter &pain
     const QString txt=textTransform(text, currentEv);
     splitTextForLayout(painter, currentEv, txt, l.textpart, l.fontMode);
 
-    const QFont f=currentEv.getFont(parentMathText);
-    const QFont fUpright=JKQTMathTextGetNonItalic(f);
-    const QFont fFallbackSym=currentEv.exchangedFontFor(MTEFallbackSymbols).getFont(parentMathText);
-    const QFont fRoman=currentEv.exchangedFontForRoman().getFont(parentMathText);
+    const QFont f=[&](){ auto ff=currentEv.getFont(parentMathText); ff.setStyleStrategy(static_cast<QFont::StyleStrategy>(ff.styleStrategy()&(~QFont::StyleStrategy::NoFontMerging))); return ff; }();
+    const QFont fUpright=[&](){ auto ff=JKQTMathTextGetNonItalic(f); ff.setStyleStrategy(static_cast<QFont::StyleStrategy>(ff.styleStrategy()&(~QFont::StyleStrategy::NoFontMerging))); return ff; }();
+    const QFont fFallbackSym=[&](){ auto ff=currentEv.exchangedFontFor(MTEFallbackSymbols).getFont(parentMathText); ff.setStyleStrategy(static_cast<QFont::StyleStrategy>(ff.styleStrategy()&(~QFont::StyleStrategy::NoFontMerging))); return ff; }();
+    const QFont fRoman=[&](){ auto f=currentEv.exchangedFontForRoman().getFont(parentMathText); f.setStyleStrategy(static_cast<QFont::StyleStrategy>(f.styleStrategy()&(~QFont::StyleStrategy::NoFontMerging))); return f; }();
     //const double sp=JKQTMathTextGetHorAdvance(f, " ", painter.device());
     l.width=0;
     double ascent=0;
@@ -206,8 +206,8 @@ void JKQTMathTextTextNode::splitTextForLayout(QPainter &painter, JKQTMathTextEnv
 
     //const QFont f=currentEv.getFont(parentMathText);
     //const QFont fUpright=JKQTMathTextGetNonItalic(f);
-    const QFont fFallbackSym=currentEv.exchangedFontFor(MTEFallbackSymbols).getFont(parentMathText);
-    const QFont fRoman=currentEv.exchangedFontForRoman().getFont(parentMathText);
+    const QFont fFallbackSym=[&](){ auto ff=currentEv.exchangedFontFor(MTEFallbackSymbols).getFont(parentMathText); ff.setStyleStrategy(static_cast<QFont::StyleStrategy>(ff.styleStrategy()&(~QFont::StyleStrategy::NoFontMerging))); return ff; }();
+    const QFont fRoman=[&](){ auto f=currentEv.exchangedFontForRoman().getFont(parentMathText); f.setStyleStrategy(static_cast<QFont::StyleStrategy>(f.styleStrategy()&(~QFont::StyleStrategy::NoFontMerging))); return f; }();
     //const QFontMetricsF fm(f, painter.device());
     //const QFontMetricsF fmUpright(fUpright, painter.device());
     const QFontMetricsF fmFallbackSym(fFallbackSym, painter.device());
@@ -291,10 +291,10 @@ double JKQTMathTextTextNode::draw(QPainter& painter, double x, double y, JKQTMat
     doDrawBoxes(painter, x, y, l);
 
 
-    const QFont f=currentEv.getFont(parentMathText);
-    const QFont fUpright=JKQTMathTextGetNonItalic(f);
-    const QFont fFallbackSym=currentEv.exchangedFontFor(MTEFallbackSymbols).getFont(parentMathText);
-    const QFont fRoman=currentEv.exchangedFontForRoman().getFont(parentMathText);
+    const QFont f=[&](){ auto ff=currentEv.getFont(parentMathText); ff.setStyleStrategy(static_cast<QFont::StyleStrategy>(ff.styleStrategy()&(~QFont::StyleStrategy::NoFontMerging))); return ff; }();
+    const QFont fUpright=[&](){ auto ff=JKQTMathTextGetNonItalic(f); ff.setStyleStrategy(static_cast<QFont::StyleStrategy>(ff.styleStrategy()&(~QFont::StyleStrategy::NoFontMerging))); return ff; }();
+    const QFont fFallbackSym=[&](){ auto ff=currentEv.exchangedFontFor(MTEFallbackSymbols).getFont(parentMathText); ff.setStyleStrategy(static_cast<QFont::StyleStrategy>(ff.styleStrategy()&(~QFont::StyleStrategy::NoFontMerging))); return ff; }();
+    const QFont fRoman=[&](){ auto f=currentEv.exchangedFontForRoman().getFont(parentMathText); f.setStyleStrategy(static_cast<QFont::StyleStrategy>(f.styleStrategy()&(~QFont::StyleStrategy::NoFontMerging))); return f; }();
     //const QFontMetricsF fm(f, painter.device());
     //const QFontMetricsF fmUpright(fUpright, painter.device());
     //const QFontMetricsF fmFallbackSym(fFallbackSym, painter.device());

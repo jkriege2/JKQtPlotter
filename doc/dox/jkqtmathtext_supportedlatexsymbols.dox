@@ -137,6 +137,39 @@
    The following table lists all arrow-typed symbols available in JKQTMathParser. They are defined in the node-class JKQTMathTextSymbolNode:
    <table>
      <tr>
+       <td><code>\\Downarrow</code>:
+       <td>\image html jkqtmathtext/symbols/jkqtmathtext_greek_ddownarrow_XITS_MATHANDTEXT.png
+            \image html jkqtmathtext/symbols/jkqtmathtext_greek_ddownarrow_FIRA_MATHANDTEXT.png
+       <td><code>\\Leftarrow</code>:
+       <td>\image html jkqtmathtext/symbols/jkqtmathtext_greek_lleftarrow_XITS_MATHANDTEXT.png
+            \image html jkqtmathtext/symbols/jkqtmathtext_greek_lleftarrow_FIRA_MATHANDTEXT.png
+       <td><code>\\Leftrightarrow</code>:
+       <td>\image html jkqtmathtext/symbols/jkqtmathtext_greek_lleftrightarrow_XITS_MATHANDTEXT.png
+            \image html jkqtmathtext/symbols/jkqtmathtext_greek_lleftrightarrow_FIRA_MATHANDTEXT.png
+     </tr>
+     <tr>
+       <td><code>\\Longleftarrow</code>:
+       <td>\image html jkqtmathtext/symbols/jkqtmathtext_greek_llongleftarrow_XITS_MATHANDTEXT.png
+            \image html jkqtmathtext/symbols/jkqtmathtext_greek_llongleftarrow_FIRA_MATHANDTEXT.png
+       <td><code>\\Longleftrightarrow</code>:
+       <td>\image html jkqtmathtext/symbols/jkqtmathtext_greek_llongleftrightarrow_XITS_MATHANDTEXT.png
+            \image html jkqtmathtext/symbols/jkqtmathtext_greek_llongleftrightarrow_FIRA_MATHANDTEXT.png
+       <td><code>\\Longrightarrow</code>:
+       <td>\image html jkqtmathtext/symbols/jkqtmathtext_greek_llongrightarrow_XITS_MATHANDTEXT.png
+            \image html jkqtmathtext/symbols/jkqtmathtext_greek_llongrightarrow_FIRA_MATHANDTEXT.png
+     </tr>
+     <tr>
+       <td><code>\\Rightarrow</code>:
+       <td>\image html jkqtmathtext/symbols/jkqtmathtext_greek_rrightarrow_XITS_MATHANDTEXT.png
+            \image html jkqtmathtext/symbols/jkqtmathtext_greek_rrightarrow_FIRA_MATHANDTEXT.png
+       <td><code>\\Uparrow</code>:
+       <td>\image html jkqtmathtext/symbols/jkqtmathtext_greek_uuparrow_XITS_MATHANDTEXT.png
+            \image html jkqtmathtext/symbols/jkqtmathtext_greek_uuparrow_FIRA_MATHANDTEXT.png
+       <td><code>\\Updownarrow</code>:
+       <td>\image html jkqtmathtext/symbols/jkqtmathtext_greek_uupdownarrow_XITS_MATHANDTEXT.png
+            \image html jkqtmathtext/symbols/jkqtmathtext_greek_uupdownarrow_FIRA_MATHANDTEXT.png
+     </tr>
+     <tr>
        <td><code>\\downarrow</code>:
        <td>\image html jkqtmathtext/symbols/jkqtmathtext_greek_downarrow_XITS_MATHANDTEXT.png
             \image html jkqtmathtext/symbols/jkqtmathtext_greek_downarrow_FIRA_MATHANDTEXT.png
@@ -184,75 +217,42 @@
        <td><code>\\updownarrow</code>:
        <td>\image html jkqtmathtext/symbols/jkqtmathtext_greek_updownarrow_XITS_MATHANDTEXT.png
             \image html jkqtmathtext/symbols/jkqtmathtext_greek_updownarrow_FIRA_MATHANDTEXT.png
-       <td><code>\\Downarrow</code>:
-       <td>\image html jkqtmathtext/symbols/jkqtmathtext_greek_ddownarrow_XITS_MATHANDTEXT.png
-            \image html jkqtmathtext/symbols/jkqtmathtext_greek_ddownarrow_FIRA_MATHANDTEXT.png
-       <td><code>\\Leftarrow</code>:
-       <td>\image html jkqtmathtext/symbols/jkqtmathtext_greek_lleftarrow_XITS_MATHANDTEXT.png
-            \image html jkqtmathtext/symbols/jkqtmathtext_greek_lleftarrow_FIRA_MATHANDTEXT.png
+       <td><code>\\downharpoonleft</code>:
+       <td>\image html jkqtmathtext/symbols/jkqtmathtext_greek_downharpoonleft_XITS_MATHANDTEXT.png
+            \image html jkqtmathtext/symbols/jkqtmathtext_greek_downharpoonleft_FIRA_MATHANDTEXT.png
+       <td><code>\\downharpoonright</code>:
+       <td>\image html jkqtmathtext/symbols/jkqtmathtext_greek_downharpoonright_XITS_MATHANDTEXT.png
+            \image html jkqtmathtext/symbols/jkqtmathtext_greek_downharpoonright_FIRA_MATHANDTEXT.png
      </tr>
      <tr>
-       <td><code>\\Leftrightarrow</code>:
-       <td>\image html jkqtmathtext/symbols/jkqtmathtext_greek_lleftrightarrow_XITS_MATHANDTEXT.png
-            \image html jkqtmathtext/symbols/jkqtmathtext_greek_lleftrightarrow_FIRA_MATHANDTEXT.png
-       <td><code>\\Longleftarrow</code>:
-       <td>\image html jkqtmathtext/symbols/jkqtmathtext_greek_llongleftarrow_XITS_MATHANDTEXT.png
-            \image html jkqtmathtext/symbols/jkqtmathtext_greek_llongleftarrow_FIRA_MATHANDTEXT.png
-       <td><code>\\Longleftrightarrow</code>:
-       <td>\image html jkqtmathtext/symbols/jkqtmathtext_greek_llongleftrightarrow_XITS_MATHANDTEXT.png
-            \image html jkqtmathtext/symbols/jkqtmathtext_greek_llongleftrightarrow_FIRA_MATHANDTEXT.png
+       <td><code>\\rightleftharpoon</code>:
+       <td>\image html jkqtmathtext/symbols/jkqtmathtext_greek_rightleftharpoon_XITS_MATHANDTEXT.png
+            \image html jkqtmathtext/symbols/jkqtmathtext_greek_rightleftharpoon_FIRA_MATHANDTEXT.png
+       <td><code>\\leftharpoondown</code>:
+       <td>\image html jkqtmathtext/symbols/jkqtmathtext_greek_leftharpoondown_XITS_MATHANDTEXT.png
+            \image html jkqtmathtext/symbols/jkqtmathtext_greek_leftharpoondown_FIRA_MATHANDTEXT.png
+       <td><code>\\rightharpoondown</code>:
+       <td>\image html jkqtmathtext/symbols/jkqtmathtext_greek_rightharpoondown_XITS_MATHANDTEXT.png
+            \image html jkqtmathtext/symbols/jkqtmathtext_greek_rightharpoondown_FIRA_MATHANDTEXT.png
      </tr>
      <tr>
-       <td><code>\\Longrightarrow</code>:
-       <td>\image html jkqtmathtext/symbols/jkqtmathtext_greek_llongrightarrow_XITS_MATHANDTEXT.png
-            \image html jkqtmathtext/symbols/jkqtmathtext_greek_llongrightarrow_FIRA_MATHANDTEXT.png
-       <td><code>\\Rightarrow</code>:
-       <td>\image html jkqtmathtext/symbols/jkqtmathtext_greek_rrightarrow_XITS_MATHANDTEXT.png
-            \image html jkqtmathtext/symbols/jkqtmathtext_greek_rrightarrow_FIRA_MATHANDTEXT.png
-       <td><code>\\Uparrow</code>:
-       <td>\image html jkqtmathtext/symbols/jkqtmathtext_greek_uuparrow_XITS_MATHANDTEXT.png
-            \image html jkqtmathtext/symbols/jkqtmathtext_greek_uuparrow_FIRA_MATHANDTEXT.png
+       <td><code>\\rightharpoonup</code>:
+       <td>\image html jkqtmathtext/symbols/jkqtmathtext_greek_rightharpoonup_XITS_MATHANDTEXT.png
+            \image html jkqtmathtext/symbols/jkqtmathtext_greek_rightharpoonup_FIRA_MATHANDTEXT.png
+       <td><code>\\leftharpoonup</code>:
+       <td>\image html jkqtmathtext/symbols/jkqtmathtext_greek_leftharpoonup_XITS_MATHANDTEXT.png
+            \image html jkqtmathtext/symbols/jkqtmathtext_greek_leftharpoonup_FIRA_MATHANDTEXT.png
+       <td><code>\\leftrightharpoon</code>:
+       <td>\image html jkqtmathtext/symbols/jkqtmathtext_greek_leftrightharpoon_XITS_MATHANDTEXT.png
+            \image html jkqtmathtext/symbols/jkqtmathtext_greek_leftrightharpoon_FIRA_MATHANDTEXT.png
      </tr>
      <tr>
-       <td><code>\\Updownarrow</code>:
-       <td>\image html jkqtmathtext/symbols/jkqtmathtext_greek_uupdownarrow_XITS_MATHANDTEXT.png
-            \image html jkqtmathtext/symbols/jkqtmathtext_greek_uupdownarrow_FIRA_MATHANDTEXT.png
        <td><code>\\upharpoonleft</code>:
        <td>\image html jkqtmathtext/symbols/jkqtmathtext_greek_upharpoonleft_XITS_MATHANDTEXT.png
             \image html jkqtmathtext/symbols/jkqtmathtext_greek_upharpoonleft_FIRA_MATHANDTEXT.png
        <td><code>\\upharpoonright</code>:
        <td>\image html jkqtmathtext/symbols/jkqtmathtext_greek_upharpoonright_XITS_MATHANDTEXT.png
             \image html jkqtmathtext/symbols/jkqtmathtext_greek_upharpoonright_FIRA_MATHANDTEXT.png
-     </tr>
-     <tr>
-       <td><code>\\downharpoonleft</code>:
-       <td>\image html jkqtmathtext/symbols/jkqtmathtext_greek_downharpoonleft_XITS_MATHANDTEXT.png
-            \image html jkqtmathtext/symbols/jkqtmathtext_greek_downharpoonleft_FIRA_MATHANDTEXT.png
-       <td><code>\\leftharpoondown</code>:
-       <td>\image html jkqtmathtext/symbols/jkqtmathtext_greek_leftharpoondown_XITS_MATHANDTEXT.png
-            \image html jkqtmathtext/symbols/jkqtmathtext_greek_leftharpoondown_FIRA_MATHANDTEXT.png
-       <td><code>\\leftharpoonup</code>:
-       <td>\image html jkqtmathtext/symbols/jkqtmathtext_greek_leftharpoonup_XITS_MATHANDTEXT.png
-            \image html jkqtmathtext/symbols/jkqtmathtext_greek_leftharpoonup_FIRA_MATHANDTEXT.png
-     </tr>
-     <tr>
-       <td><code>\\leftrightharpoon</code>:
-       <td>\image html jkqtmathtext/symbols/jkqtmathtext_greek_leftrightharpoon_XITS_MATHANDTEXT.png
-            \image html jkqtmathtext/symbols/jkqtmathtext_greek_leftrightharpoon_FIRA_MATHANDTEXT.png
-       <td><code>\\rightharpoondown</code>:
-       <td>\image html jkqtmathtext/symbols/jkqtmathtext_greek_rightharpoondown_XITS_MATHANDTEXT.png
-            \image html jkqtmathtext/symbols/jkqtmathtext_greek_rightharpoondown_FIRA_MATHANDTEXT.png
-       <td><code>\\rightharpoonup</code>:
-       <td>\image html jkqtmathtext/symbols/jkqtmathtext_greek_rightharpoonup_XITS_MATHANDTEXT.png
-            \image html jkqtmathtext/symbols/jkqtmathtext_greek_rightharpoonup_FIRA_MATHANDTEXT.png
-     </tr>
-     <tr>
-       <td><code>\\rightleftharpoon</code>:
-       <td>\image html jkqtmathtext/symbols/jkqtmathtext_greek_rightleftharpoon_XITS_MATHANDTEXT.png
-            \image html jkqtmathtext/symbols/jkqtmathtext_greek_rightleftharpoon_FIRA_MATHANDTEXT.png
-       <td><code>\\downharpoonright</code>:
-       <td>\image html jkqtmathtext/symbols/jkqtmathtext_greek_downharpoonright_XITS_MATHANDTEXT.png
-            \image html jkqtmathtext/symbols/jkqtmathtext_greek_downharpoonright_FIRA_MATHANDTEXT.png
        <td><code>\\mapsto</code>:
        <td>\image html jkqtmathtext/symbols/jkqtmathtext_greek_mapsto_XITS_MATHANDTEXT.png
             \image html jkqtmathtext/symbols/jkqtmathtext_greek_mapsto_FIRA_MATHANDTEXT.png
