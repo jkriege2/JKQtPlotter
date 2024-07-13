@@ -16,7 +16,11 @@ project(JKQTPlotter
           HOMEPAGE_URL https://github.com/jkriege2/JKQtPlotter
           DESCRIPTION "an extensive Qt5 & Qt6 Plotter framework (including a feature-richt plotter widget, a speed-optimized, but limited variant and a LaTeX equation renderer!), written fully in C/C++ and without external dependencies"
       )
-
+if (WIN32)
+    # Needed because windows.h otherwise defines a macro for min
+    # See https://stackoverflow.com/a/5004874/12585571
+    add_compile_definitions(NOMINMAX)
+endif (WIN32)
 
 # set search path for CMake files
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake)
