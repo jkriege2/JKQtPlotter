@@ -24,7 +24,7 @@ jobs:
 
 
       - name: Install Qt
-        uses: jurplel/install-qt-action@v3
+        uses: jurplel/install-qt-action@v4
         with:
           version: '6.5.0'
           host: 'windows'
@@ -50,13 +50,13 @@ jobs:
 
       # Upload SARIF file to GitHub Code Scanning Alerts
       - name: Upload SARIF to GitHub
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: ${{ steps.run-analysis.outputs.sarif }}
 
       # Upload SARIF file as an Artifact to download and view
       - name: Upload SARIF as an Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: sarif-file
           path: ${{ steps.run-analysis.outputs.sarif }}
