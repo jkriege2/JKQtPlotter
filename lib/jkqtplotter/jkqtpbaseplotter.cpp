@@ -821,10 +821,12 @@ void JKQTBasePlotter::setXY(double xminn, double xmaxx, double yminn, double yma
     yAxis->setRange(yminn, ymaxx);
 
     if (affectsSecondaryAxes) {
-        for (auto ax: getXAxes(false)) {
+        const auto xaxes=getXAxes(false);
+        for (auto ax: xaxes) {
             ax->setRange(ax->p2x(xminpix), ax->p2x(xmaxpix));
         }
-        for (auto ax: getYAxes(false)) {
+        const auto yaxes=getYAxes(false);
+        for (auto ax: yaxes) {
             ax->setRange(ax->p2x(yminpix), ax->p2x(ymaxpix));
         }
     }

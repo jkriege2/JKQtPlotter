@@ -1248,7 +1248,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
         void contextMenuOpened(double x, double y, QMenu* contextMenu);
 
 
-        /** \brief signal: emitted whenever the user selects a new x-y zoom range (by mouse)
+        /** \brief signal: emitted whenever the user selects a new x-y zoom range (in the major axes, e.g. by mouse, setX(), setY(), setXY(), zoomToFit()... )
          *
          * \param newxmin start of the selected x-range (in plot coordinates)
          * \param newxmax end of the selected x-range (in plot coordinates)
@@ -1257,6 +1257,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
          * \param sender JKQTPlotter sending this event
          *
          * This signal is designed to be connected to these Q_SLOTS: synchronizeXAxis(), synchronizeYAxis(), synchronizeXYAxis()
+         *
+         * \see JKQTBasePlotter::zoomChangedLocally()
          */
         void zoomChangedLocally(double newxmin, double newxmax, double newymin, double newymax, JKQTPlotter* sender);
 

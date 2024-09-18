@@ -1771,7 +1771,15 @@ public Q_SLOTS:
 /**@}*/
 
     Q_SIGNALS:
-        /** \brief signal: emitted whenever the user selects a new x-y zoom range (by mouse) */
+        /** \brief signal: emitted whenever the user selects a new x-y zoom range (in the major axes, e.g. setX(), setY(), setXY(), zoomToFit()... )
+         *
+         * \param newxmin start of the selected x-range (in plot coordinates)
+         * \param newxmax end of the selected x-range (in plot coordinates)
+         * \param newymin start of the selected x-range (in plot coordinates)
+         * \param newymax end of the selected x-range (in plot coordinates)
+         * \param sender JKQTPlotter sending this event
+         *
+         */
         void zoomChangedLocally(double newxmin, double newxmax, double newymin, double newymax, JKQTBasePlotter* sender);
 
         /** \brief emitted when the plot has to be updated */
