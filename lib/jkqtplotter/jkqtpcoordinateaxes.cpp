@@ -45,6 +45,7 @@ JKQTPCoordinateAxis::JKQTPCoordinateAxis(JKQTBasePlotter* _parent):
     parent(_parent),
     axismin(-10),
     axismax(10),
+    axisRangeFixed(false),
     axisabsoultemin(-DBL_MAX/100.),
     axisabsoultemax(DBL_MAX/100.0),
     axisStyle(),
@@ -671,6 +672,7 @@ void JKQTPCoordinateAxis::saveCurrentAxisStyle(QSettings &settings, const QStrin
 }
 
 void JKQTPCoordinateAxis::setRange(double aamin, double aamax) {
+    if (axisRangeFixed) return;
     const double oldamin=axismin;
     const double oldamax=axismax;
     double amin=std::min(aamin, aamax);
@@ -706,6 +708,21 @@ void JKQTPCoordinateAxis::setRange(double aamin, double aamax) {
         calcPlotScaling();
         redrawPlot();
     }
+}
+
+void JKQTPCoordinateAxis::setMin(double amin)
+{
+    setRange(amin, axismax);
+}
+
+void JKQTPCoordinateAxis::setMax(double amax)
+{
+    setRange(axismin, amax);
+}
+
+void JKQTPCoordinateAxis::setRangeFixed(bool fixed)
+{
+    axisRangeFixed=fixed;
 }
 
 void JKQTPCoordinateAxis::setNoAbsoluteRange() {

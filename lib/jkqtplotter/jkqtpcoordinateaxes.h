@@ -431,6 +431,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         /** \brief returns the current max */
         inline double getMax() const {return axismax; }
 
+        /** \brief returns whether the axis range is fixed, i.e. may not change! */
+        inline bool isAxisRangeFixed() const {return axisRangeFixed; }
+
         /** \brief returns the current absolute min */
         inline double getAbsoluteMin() const {return axisabsoultemin; }
 
@@ -498,8 +501,36 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         QString floattolabel(double data, int past_comma) const;
 
     public Q_SLOTS:
-        /** \brief set range of plot axis */
+        /** \brief set range of plot axis
+         *
+         *  \param amin new minimum
+         *  \param amax new maximum
+         *
+         *  \note the actually set range may differ from [amin...amax] in order to fullfill requirements e.g. for logarithmic axes or an absolute axis range (see setAbsoluteRange() )
+         *  \note if setRangeFixed(true) was called before this call, the axis range is fixed and this function has NO EFFECT!
+         */
         void setRange(double amin, double amax);
+        /** \brief set axis minimum range of plot axis
+         *
+         *  \param amin new minimum
+         *
+         *  \note the actually set range may differ from [amin...getMax()] in order to fullfill requirements e.g. for logarithmic axes or an absolute axis range (see setAbsoluteRange() )
+         *  \note if setRangeFixed(true) was called before this call, the axis range is fixed and this function has NO EFFECT!
+         */
+        void setMin(double amin);
+        /** \brief set axis minimum range of plot axis
+         *
+         *  \param amax new maximum
+         *
+         *  \note the actually set range may differ from [getMin()...amax] in order to fullfill requirements e.g. for logarithmic axes or an absolute axis range (see setAbsoluteRange() )
+         *  \note if setRangeFixed(true) was called before this call, the axis range is fixed and this function has NO EFFECT!
+         */
+        void setMax(double amax);
+        /** \brief fixes/ufixes the axis
+         *
+         *  a fixed axis's range (minimum/maximum) may not be changed by the user!)
+         */
+        void setRangeFixed(bool fixed);
         /** \brief sets absolutely limiting range of the plot
          *
          * The user (or programmer) cannot zoom to a viewport that is larger than the range given to this function.
@@ -753,6 +784,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         double axismin;
         /** \brief current view: maximum of axis */
         double axismax;
+        /** \brief indicates whether this axis is fixed, i.e. axismin and axismax are frozen to their current values */
+        bool axisRangeFixed;
 
         /** \brief absoulte minimum of axis (axismin/axismax xan not be set below this) */
         double axisabsoultemin;
@@ -904,7 +937,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         /** \brief calculate the position of the zero-axis (and whether to draw  it or not) */
         double getZeroAxisPos(bool*  drawZeroAxis=nullptr);
 
-        /** \brief figures out (possibly by probing the parent JKQTBasePloter), whether this axis is a secondary axis */
+        /** \brief figures out (possibly by probing the parent JKQTBasePlotter), whether this axis is a secondary axis */
         virtual bool isSecondaryAxis() const;
 
 

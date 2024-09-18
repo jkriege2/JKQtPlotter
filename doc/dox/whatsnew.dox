@@ -137,6 +137,8 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: stacked barcharts may have a small separation (default 1pt)</li>
     <li>NEW: autoscaling for barcharts works now, also when stacked and unstacked charts are combined in one plot</li>
     <li>NEW: JKQTPGeoBezierCurve for drawing bezier curves of degree 1-4 (+example \ref JKQTPlotterGeometricBezier)</li>
+    <li>NEW: added JKQTPCoordinateAxis::setRangeFixed() which disables changing the axis range (and thus the zoom)</li>
+    <li>NEW: add JKQTPCoordinateAxis::getMin() and JKQTPCoordinateAxis::getMax() getters</li>
   </ul></li>
   
   <li>JKQTMathText:<ul>
