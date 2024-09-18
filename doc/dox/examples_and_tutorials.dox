@@ -207,6 +207,9 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 <tr><td> \image html jkqtplotter_test_user_interaction_small.gif
     <td> \subpage JKQTPlotterUserInteraction
     <td> different possibilities of user-interaction in JKQtPlotter
+<tr><td> \image html ui_bind_scrollbar_small.png
+    <td> \subpage JKQTPlotterUIScrollbar
+    <td> using <a href="https://doc.qt.io/qt-6/qscrollbar.html">QScrollBar</a> together with JKQtPlotter
 </table>
 
 

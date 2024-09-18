@@ -249,6 +249,7 @@ if(JKQtPlotter_BUILD_EXAMPLES)
         paramvectorfield
         financialgraphs
         geo_bezier
+        ui_bind_scrollbar
     )
 
 
