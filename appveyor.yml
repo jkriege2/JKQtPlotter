@@ -73,7 +73,7 @@ environment:
     - NAME: "Ubuntu2004: CMake, Qt6"
       QTABI: gcc_64
       COMPILER: GCC
-      QTVER: 6.6
+      QTVER: 6.7
       APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
       CMAKE_GENERATOR: "Unix Makefiles"
       INSTALL_QMAKE5: true
@@ -82,7 +82,7 @@ environment:
     - NAME: "Ubuntu2004: CMake-FetchContent, Qt6"
       QTABI: gcc_64
       COMPILER: GCC
-      QTVER: 6.6
+      QTVER: 6.7
       APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
       CMAKE_GENERATOR: "Unix Makefiles"
       TEST_FETCHCONTENT: true
