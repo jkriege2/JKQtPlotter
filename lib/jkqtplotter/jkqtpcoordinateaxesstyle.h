@@ -187,7 +187,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxisStyle {
 
         /** \brief minimum number of axis ticks */
         unsigned int minTicks;
-        /** \brief number of minor grid lines per axis tick interval
+        /** \brief number of minor grid lines per (major) axis tick interval
          *
          *  \image html docu_logaxis_set_minorticks.png
          **/

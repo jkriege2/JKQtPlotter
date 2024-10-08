@@ -546,9 +546,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         /** \brief do not use an absolute range of plot axis */
         void setNoAbsoluteRange();
 
-        /** \copydoc tickSpacing */
-        void setTickSpacing(double __value);
-
         /** \copydoc axisMinWidth */
         void setAxisMinWidth(double __value);
 

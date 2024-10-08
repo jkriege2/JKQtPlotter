@@ -731,11 +731,6 @@ void JKQTPCoordinateAxis::setNoAbsoluteRange() {
     setRange(axismin, axismax);
 }
 
-void JKQTPCoordinateAxis::setTickSpacing(double __value) {
-    this->tickSpacing = __value;
-    this->paramsChanged=true;
-    redrawPlot();
-}
 
 void JKQTPCoordinateAxis::setAxisMinWidth(double __value) {
     this->axisMinWidth = __value;
