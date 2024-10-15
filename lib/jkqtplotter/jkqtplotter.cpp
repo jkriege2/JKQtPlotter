@@ -888,6 +888,7 @@ void JKQTPlotter::mouseMoveEvent ( QMouseEvent * event ) {
 
 
 void JKQTPlotter::mousePressEvent ( QMouseEvent * event ){
+    MouseDragAction prevAction = currentMouseDragAction;
     currentMouseDragAction.clear();
     mouseDragMarkers.clear();
 
@@ -906,11 +907,18 @@ void JKQTPlotter::mousePressEvent ( QMouseEvent * event ){
         oldImage=image;
         if (currentMouseDragAction.mode==jkqtpmdaScribbleForEvents) emit userScribbleClick(mouseDragRectXStart, mouseDragRectYStart, event->modifiers(), true, false);
         event->accept();
-    } else if (event->button()==Qt::RightButton && event->modifiers()==Qt::NoModifier && contextMenuMode!=jkqtpcmmNoContextMenu) {
-        mouseLastClickX=event->pos().x();
-        mouseLastClickY=event->pos().y();
-        openContextMenu(event->pos().x(), event->pos().y());
-        event->accept();
+    } else if (event->button()==Qt::RightButton) {        
+        if (prevAction.mode==jkqtpmdaScribbleForEvents){
+          mouseDragRectXStart=plotter->p2x(event->pos().x()/magnification);
+          mouseDragRectYStart=plotter->p2y((event->pos().y()-getPlotYOffset())/magnification);
+          emit userScribbleClick(mouseDragRectXStart, mouseDragRectYStart, event->modifiers(), false, true);
+        }
+        if(event->modifiers()==Qt::NoModifier && contextMenuMode!=jkqtpcmmNoContextMenu){
+            mouseLastClickX=event->pos().x();
+            mouseLastClickY=event->pos().y();
+            openContextMenu(event->pos().x(), event->pos().y());
+            event->accept();
+        }
     }
 
     // emit clicked signal, if event occured inside plot only
