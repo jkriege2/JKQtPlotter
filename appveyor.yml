@@ -29,9 +29,44 @@ environment:
     USE_CMAKE: true
     INSTALL_QMAKE5: false
     BUILD_CONFIG: Debug
+    USE_CXX20: OFF
  
   matrix:
+    - NAME: "Ubuntu2004: CMake, Qt6"
+      QTABI: gcc_64
+      COMPILER: GCC
+      QTVER: 6.7
+      APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
+      CMAKE_GENERATOR: "Unix Makefiles"
+      INSTALL_QMAKE5: true
+      TEST_FETCHCONTENT: false
+
+    - NAME: "Ubuntu2004: CMake, Qt6, C++20"
+      QTABI: gcc_64
+      COMPILER: GCC
+      QTVER: 6.7
+      APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
+      CMAKE_GENERATOR: "Unix Makefiles"
+      INSTALL_QMAKE5: true
+      TEST_FETCHCONTENT: false
+      USE_CXX20: ON
+
+    - NAME: "Ubuntu2004: CMake-FetchContent, Qt6"
+      QTABI: gcc_64
+      COMPILER: GCC
+      QTVER: 6.7
+      APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
+      CMAKE_GENERATOR: "Unix Makefiles"
+      TEST_FETCHCONTENT: true
       
+    - NAME: "Ubuntu2004: CMake, Qt5"
+      QTABI: gcc_64
+      COMPILER: GCC
+      QTVER: 5.15
+      APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
+      CMAKE_GENERATOR: "Unix Makefiles"
+      INSTALL_QMAKE5: true
+      TEST_FETCHCONTENT: false
 
     - NAME: "Ubuntu2004: QMake, Qt6"
       QTABI: gcc_64
@@ -42,7 +77,7 @@ environment:
       CMAKE_GENERATOR: "Unix Makefiles"
       INSTALL_QMAKE5: true
       TEST_FETCHCONTENT: false
-           
+
     - NAME: "MSVC64: CMake, Qt5"
       QTABI: msvc2019_64
       COMPILER: MSVC
@@ -61,32 +96,6 @@ environment:
       CMAKE_BUILDFLAGS: /verbosity:minimal /maxcpucount
       TEST_FETCHCONTENT: false
       
-    - NAME: "Ubuntu2004: CMake, Qt5"
-      QTABI: gcc_64
-      COMPILER: GCC
-      QTVER: 5.15
-      APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
-      CMAKE_GENERATOR: "Unix Makefiles"
-      INSTALL_QMAKE5: true
-      TEST_FETCHCONTENT: false
-
-    - NAME: "Ubuntu2004: CMake, Qt6"
-      QTABI: gcc_64
-      COMPILER: GCC
-      QTVER: 6.7
-      APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
-      CMAKE_GENERATOR: "Unix Makefiles"
-      INSTALL_QMAKE5: true
-      TEST_FETCHCONTENT: false
-
-    - NAME: "Ubuntu2004: CMake-FetchContent, Qt6"
-      QTABI: gcc_64
-      COMPILER: GCC
-      QTVER: 6.7
-      APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
-      CMAKE_GENERATOR: "Unix Makefiles"
-      TEST_FETCHCONTENT: true
-
     - NAME: "MacOS: CMake, Qt6"
       QTABI: macos
       COMPILER: CLANG
@@ -94,7 +103,7 @@ environment:
       APPVEYOR_BUILD_WORKER_IMAGE: macos-monterey
       CMAKE_GENERATOR: "Unix Makefiles"
       TEST_FETCHCONTENT: false
-  
+
 
 for:
   # Windows (MinGW 8.1 & MSVC2019)
@@ -148,7 +157,7 @@ for:
       - cmd: mkdir install
       - cmd: cd build
       - cmd: if %USE_CMAKE%==true cmake --version 
-      - cmd: if %USE_CMAKE%==true cmake -G "%CMAKE_GENERATOR%" "-DCMAKE_PREFIX_PATH=%QTDIR%;%CIMG_INCLUDE_DIR%" "-DCMAKE_INSTALL_PREFIX=%APPVEYOR_BUILD_FOLDER%\install" .. 
+      - cmd: if %USE_CMAKE%==true cmake -G "%CMAKE_GENERATOR%" "-DCMAKE_PREFIX_PATH=%QTDIR%;%CIMG_INCLUDE_DIR%" "-DCMAKE_INSTALL_PREFIX=%APPVEYOR_BUILD_FOLDER%\install" "-DJKQtPlotter_ENABLED_CXX20=$USE_CXX20" .. 
       - cmd: if %USE_CMAKE%==true cmake --build . --config "%BUILD_CONFIG%" -j%NUMBER_OF_PROCESSORS% -- %CMAKE_BUILDFLAGS%
       - cmd: if %USE_CMAKE%==false qmake.exe -v 
       - cmd: if %USE_CMAKE%==false qmake.exe CONFIG+=%BUILD_CONFIG% ..\JKQtPlotterBuildAllExamples.pro 
@@ -249,7 +258,7 @@ for:
               cd build
               echo --- Run CMake Configure ----------------------------------------------------------------------------- 
               cmake --version 
-              cmake -G "$CMAKE_GENERATOR" "-DCMAKE_PREFIX_PATH=$QTDIR;$CIMG_INCLUDE_DIR"  "-DCMAKE_INSTALL_PREFIX=$APPVEYOR_BUILD_FOLDER/install" "-DCMAKE_BUILD_TYPE=$BUILD_CONFIG" .. 
+              cmake -G "$CMAKE_GENERATOR" "-DCMAKE_PREFIX_PATH=$QTDIR;$CIMG_INCLUDE_DIR"  "-DCMAKE_INSTALL_PREFIX=$APPVEYOR_BUILD_FOLDER/install" "-DCMAKE_BUILD_TYPE=$BUILD_CONFIG" "-DJKQtPlotter_ENABLED_CXX20=$USE_CXX20" .. 
               echo --- Build using CMake ------------------------------------------------------------------------------- 
               cmake --build . --config "$BUILD_CONFIG" -j$(getconf _NPROCESSORS_ONLN)  -- $CMAKE_BUILDFLAGS
               
@@ -260,7 +269,7 @@ for:
               cd build
               echo --- Run CMake Configure with FetchCOntent ----------------------------------------------------------- 
               cmake --version 
-              cmake -G "$CMAKE_GENERATOR" "-DCMAKE_PREFIX_PATH=$QTDIR;$CIMG_INCLUDE_DIR" "-DCMAKE_BUILD_TYPE=$BUILD_CONFIG"  "-DCMAKE_INSTALL_PREFIX=$APPVEYOR_BUILD_FOLDER/install" .. 
+              cmake -G "$CMAKE_GENERATOR" "-DCMAKE_PREFIX_PATH=$QTDIR;$CIMG_INCLUDE_DIR" "-DCMAKE_BUILD_TYPE=$BUILD_CONFIG"  "-DCMAKE_INSTALL_PREFIX=$APPVEYOR_BUILD_FOLDER/install" "-DJKQtPlotter_ENABLED_CXX20=$USE_CXX20" .. 
               echo --- Build using CMake with FetchCOntent ------------------------------------------------------------- 
               cmake --build . --config "$BUILD_CONFIG" -j$(getconf _NPROCESSORS_ONLN)  -- $CMAKE_BUILDFLAGS
             fi
@@ -342,7 +351,7 @@ for:
       - sh: cd build
       - sh: echo --- Run CMake Configure ----------------------------------------------------------------------------- 
       - sh: cmake --version 
-      - sh: cmake -G "$CMAKE_GENERATOR" "-DCMAKE_PREFIX_PATH=$QTDIR" "-DCMAKE_BUILD_TYPE=$BUILD_CONFIG"  "-DCMAKE_INSTALL_PREFIX=$APPVEYOR_BUILD_FOLDER/install" ..  .. 
+      - sh: cmake -G "$CMAKE_GENERATOR" "-DCMAKE_PREFIX_PATH=$QTDIR" "-DCMAKE_BUILD_TYPE=$BUILD_CONFIG" "-DJKQtPlotter_ENABLED_CXX20=$USE_CXX20"  "-DCMAKE_INSTALL_PREFIX=$APPVEYOR_BUILD_FOLDER/install" ..  .. 
       - sh: echo --- Build using CMake ------------------------------------------------------------------------------- 
       - sh: cmake --build . --config "$BUILD_CONFIG" -j$(getconf _NPROCESSORS_ONLN)  -- $CMAKE_BUILDFLAGS
       - sh: |
