@@ -370,8 +370,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         inline QString getTickPrintfFormat() const { return this->axisStyle.tickPrintfFormat; }
         /** \copydoc JKQTPCoordinateAxisStyle::tickMode */
         inline JKQTPLabelTickMode getTickMode() const { return this->axisStyle.tickMode; }
-#if __cplusplus >= 202002L
-# ifdef __cpp_lib_format
+#if __cplusplus >= 202002L || DOXYGEN
+# if defined(__cpp_lib_format) || DOXYGEN
         /** \copydoc JKQTPCoordinateAxisStyle::tickFormatFormat */
         inline QString getTickFormatfFormat() const { return this->axisStyle.tickFormatFormat; }
 # endif
@@ -618,8 +618,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
 
         /** \copydoc JKQTPCoordinateAxisStyle::tickPrintfFormat */
         void setTickPrintfFormat(const QString& __value);
-#if __cplusplus >= 202002L
-# ifdef __cpp_lib_format
+#if __cplusplus >= 202002L || DOXYGEN
+# if defined(__cpp_lib_format) || DOXYGEN
         /** \copydoc JKQTPCoordinateAxisStyle::tickFormatFormat */
         void setTickFormatFormat(const QString& __value);
 # endif
