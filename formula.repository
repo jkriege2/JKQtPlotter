@@ -84,38 +84,38 @@
 \_form#83=15x16:$ Y_i $
 \_form#84=429x94:\[ \rho_{x,y}=\text{CorCoeff}_{\text{Pearson}}(x,y)=\frac{\sum\limits_{i=0}^{N-1}(x_i-\overline{x})(y_i-\overline{y})}{\sqrt{\sum\limits_{i=0}^{N-1}(x_i-\overline{x})^2\cdot\sum\limits_{i=0}^{N-1}(y_i-\overline{y})^2}} \]
 \_form#85=93x39:\[ 2\cdot\frac{1.58\cdot \mbox{IQR}}{\sqrt{N}} \]
-\_form#86=223x18:\[ \mbox{MAD}(\vec{x})=\mbox{Med}\left\{|\vec{x}-\mbox{Med}(\vec{x})|\right\} \]
-\_form#87=325x37:\[ \mbox{NMAD}(\vec{x})=\frac{\mbox{MAD}(\vec{x})}{0.6745}=\frac{\mbox{Med}\left\{|\vec{x}-\mbox{Med}(\vec{x})|\right\}}{0.6745} \]
-\_form#88=94x18:$ f(x): \mathbb{R}\rightarrow\mathbb{R} $
-\_form#89=10x8:$ x $
-\_form#90=31x18:$ f(x) $
-\_form#91=115x18:$ f(x)=\mbox{round}(x) $
-\_form#92=122x16:$ \mbox{firstGroupCenter} $
-\_form#93=244x18:$ \mbox{firstGroupCenter}\pm\mbox{groupWidth}/2$
-\_form#94=263x18:$ \mbox{firstGroupCenter}\pm2\cdot\mbox{groupWidth}/2 $
-\_form#95=263x18:$ \mbox{firstGroupCenter}\pm3\cdot\mbox{groupWidth}/2 $
-\_form#96=205x33:$ \mbox{round}\left(\frac{x-\mbox{firstGroupCenter}}{\mbox{groupWidth}/2}\right) $
-\_form#97=44x18:$ (c_i,v_i) $
-\_form#98=11x11:$ c_i $
-\_form#99=13x11:$ v_i $
-\_form#100=141x18:$ V_j=\{v_{i}|c_i\equiv c_{\text{out},j}\} $
-\_form#101=68x13:$ c_i\equiv c_{\text{out},j} $
-\_form#102=34x13:$ c_{\text{out},j} $
-\_form#103=13x11:$ c_1 $
-\_form#104=18x11:$ c_N $
-\_form#105=15x11:$ v_1 $
-\_form#106=21x11:$ v_N $
+\_form#86=94x18:$ f(x): \mathbb{R}\rightarrow\mathbb{R} $
+\_form#87=10x8:$ x $
+\_form#88=31x18:$ f(x) $
+\_form#89=115x18:$ f(x)=\mbox{round}(x) $
+\_form#90=122x16:$ \mbox{firstGroupCenter} $
+\_form#91=244x18:$ \mbox{firstGroupCenter}\pm\mbox{groupWidth}/2$
+\_form#92=263x18:$ \mbox{firstGroupCenter}\pm2\cdot\mbox{groupWidth}/2 $
+\_form#93=263x18:$ \mbox{firstGroupCenter}\pm3\cdot\mbox{groupWidth}/2 $
+\_form#94=205x33:$ \mbox{round}\left(\frac{x-\mbox{firstGroupCenter}}{\mbox{groupWidth}/2}\right) $
+\_form#95=44x18:$ (c_i,v_i) $
+\_form#96=11x11:$ c_i $
+\_form#97=13x11:$ v_i $
+\_form#98=141x18:$ V_j=\{v_{i}|c_i\equiv c_{\text{out},j}\} $
+\_form#99=68x13:$ c_i\equiv c_{\text{out},j} $
+\_form#100=34x13:$ c_{\text{out},j} $
+\_form#101=13x11:$ c_1 $
+\_form#102=18x11:$ c_N $
+\_form#103=15x11:$ v_1 $
+\_form#104=21x11:$ v_N $
+\_form#105=223x18:\[ \mbox{MAD}(\vec{x})=\mbox{Med}\left\{|\vec{x}-\mbox{Med}(\vec{x})|\right\} \]
+\_form#106=325x37:\[ \mbox{NMAD}(\vec{x})=\frac{\mbox{MAD}(\vec{x})}{0.6745}=\frac{\mbox{Med}\left\{|\vec{x}-\mbox{Med}(\vec{x})|\right\}}{0.6745} \]
 \_form#107=23x16:$ Y_N $
-\_form#108=47x18:$ (x_i,y_i) $
-\_form#109=16x11:$ x_1 $
-\_form#110=21x11:$ x_N $
-\_form#111=15x11:$ y_1 $
-\_form#112=21x11:$ y_N $
-\_form#113=177x41:\[ k(t):=\frac{1}{\sqrt{2\pi}}\exp \left(-\frac{1}{2}t^2\right) \]
-\_form#114=267x109:\[ \begin{bmatrix} y_1\\ y_2\\ y_3 \\ \vdots \\ y_n \end{bmatrix}= \begin{bmatrix} 1 & x_1 & x_1^2 & \dots & x_1^P \\ 1 & x_2 & x_2^2 & \dots & x_2^P\\ 1 & x_3 & x_3^2 & \dots & x_3^P \\ \vdots & \vdots & \vdots & & \vdots \\ 1 & x_n & x_n^2 & \dots & x_n^P \end{bmatrix} \begin{bmatrix} p_0\\ p_1\\ p_2\\ \vdots \\ p_P \end{bmatrix}  \]
-\_form#115=260x21:\[ \vec{y}=V\vec{p}\ \ \ \ \ \Rightarrow\ \ \ \ \ \vec{p}=(V^TV)^{-1}V^T\vec{y} \]
-\_form#116=120x39:\[ k(t):=\frac{1}{\pi(1+t^2)} \]
-\_form#117=132x34:\[ k(t):=\frac{1}{2}\exp(-|t|) \]
+\_form#108=177x41:\[ k(t):=\frac{1}{\sqrt{2\pi}}\exp \left(-\frac{1}{2}t^2\right) \]
+\_form#109=120x39:\[ k(t):=\frac{1}{\pi(1+t^2)} \]
+\_form#110=47x18:$ (x_i,y_i) $
+\_form#111=16x11:$ x_1 $
+\_form#112=132x34:\[ k(t):=\frac{1}{2}\exp(-|t|) \]
+\_form#113=21x11:$ x_N $
+\_form#114=15x11:$ y_1 $
+\_form#115=21x11:$ y_N $
+\_form#116=267x109:\[ \begin{bmatrix} y_1\\ y_2\\ y_3 \\ \vdots \\ y_n \end{bmatrix}= \begin{bmatrix} 1 & x_1 & x_1^2 & \dots & x_1^P \\ 1 & x_2 & x_2^2 & \dots & x_2^P\\ 1 & x_3 & x_3^2 & \dots & x_3^P \\ \vdots & \vdots & \vdots & & \vdots \\ 1 & x_n & x_n^2 & \dots & x_n^P \end{bmatrix} \begin{bmatrix} p_0\\ p_1\\ p_2\\ \vdots \\ p_P \end{bmatrix}  \]
+\_form#117=260x21:\[ \vec{y}=V\vec{p}\ \ \ \ \ \Rightarrow\ \ \ \ \ \vec{p}=(V^TV)^{-1}V^T\vec{y} \]
 \_form#118=236x50:\[ k(t) :=\begin{cases}\frac{3}{4} ( 1- t^2 ),  & \text{if }t\in [-1;1]\\0, & \text{else}\end{cases} \]
 \_form#119=192x50:\[ k(t) :=\begin{cases}0.5,  & \text{if }t\in [-1;1]\\0, & \text{else}\end{cases} \]
 \_form#120=215x50:\[ k(t) :=\begin{cases}1-|t|,  & \text{if }t\in [-1;1]\\0, & \text{else}\end{cases} \]

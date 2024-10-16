@@ -1,5 +1,7 @@
 var NAVTREEINDEX35 =
 {
+"struct_j_k_q_t_p_polynomial_functor.html#a73e1042ddf065577ad15a26d1874d123":[10,1,7,0,2],
+"struct_j_k_q_t_p_stat5_number_statistics.html":[10,2,5,4,0],
 "struct_j_k_q_t_p_stat5_number_statistics.html#a1dd9611f5b4cfcdd9122f2fadb487d66":[10,2,5,4,0,7],
 "struct_j_k_q_t_p_stat5_number_statistics.html#a3044c7a4422a2599c3e05a71ba2a92da":[10,2,5,4,0,10],
 "struct_j_k_q_t_p_stat5_number_statistics.html#a4a7d9f917d013f8202cb5abc9aca31c8":[10,2,5,4,0,12],

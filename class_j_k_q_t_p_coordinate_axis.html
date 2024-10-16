@@ -310,6 +310,9 @@ Public Slots</h2></td></tr>
 <tr class="memitem:a7491576f680f6a3e09330512fdc3c0b8" id="r_a7491576f680f6a3e09330512fdc3c0b8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_j_k_q_t_p_coordinate_axis.html#a7491576f680f6a3e09330512fdc3c0b8">setTickDateTimeFormat</a> (const QString &amp;__value)</td></tr>
 <tr class="memdesc:a7491576f680f6a3e09330512fdc3c0b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">format string for datetime tick labels, see QDateTime::toString() documentation for details on format strings    <br /></td></tr>
 <tr class="separator:a7491576f680f6a3e09330512fdc3c0b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac08629edc108244ccbf141c3b8a339e4" id="r_ac08629edc108244ccbf141c3b8a339e4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_j_k_q_t_p_coordinate_axis.html#ac08629edc108244ccbf141c3b8a339e4">setTickFormatFormat</a> (const QString &amp;__value)</td></tr>
+<tr class="memdesc:ac08629edc108244ccbf141c3b8a339e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">format string for std::format tick labels, (see e.g. <a href="https://en.cppreference.com/w/cpp/utility/format/formatter#Standard_format_specification">https://en.cppreference.com/w/cpp/utility/format/formatter#Standard_format_specification</a> ). The first data parameter is the tick value as <code>double</code> an the second is tickUnitName as string. The following image shows an example for <code>"\\texttt{{ y={:*^+8.1f}}}"</code>:    <br /></td></tr>
+<tr class="separator:ac08629edc108244ccbf141c3b8a339e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3cb66520f19eb1c29eec6ce5ffcb65d9" id="r_a3cb66520f19eb1c29eec6ce5ffcb65d9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_j_k_q_t_p_coordinate_axis.html#a3cb66520f19eb1c29eec6ce5ffcb65d9">setTickInsideLength</a> (double __value)</td></tr>
 <tr class="memdesc:a3cb66520f19eb1c29eec6ce5ffcb65d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">length of an axis tick inside the plot border in pt    <br /></td></tr>
 <tr class="separator:a3cb66520f19eb1c29eec6ce5ffcb65d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -569,6 +572,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a4014d33b076263d63788bfdd7b7f1f73" id="r_a4014d33b076263d63788bfdd7b7f1f73"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_j_k_q_t_p_coordinate_axis.html#a4014d33b076263d63788bfdd7b7f1f73">getTickDateTimeFormat</a> () const</td></tr>
 <tr class="memdesc:a4014d33b076263d63788bfdd7b7f1f73"><td class="mdescLeft">&#160;</td><td class="mdescRight">format string for datetime tick labels, see QDateTime::toString() documentation for details on format strings    <br /></td></tr>
 <tr class="separator:a4014d33b076263d63788bfdd7b7f1f73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9289952f1aafbc3b912a1f40d0accc4d" id="r_a9289952f1aafbc3b912a1f40d0accc4d"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_j_k_q_t_p_coordinate_axis.html#a9289952f1aafbc3b912a1f40d0accc4d">getTickFormatfFormat</a> () const</td></tr>
+<tr class="memdesc:a9289952f1aafbc3b912a1f40d0accc4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">format string for std::format tick labels, (see e.g. <a href="https://en.cppreference.com/w/cpp/utility/format/formatter#Standard_format_specification">https://en.cppreference.com/w/cpp/utility/format/formatter#Standard_format_specification</a> ). The first data parameter is the tick value as <code>double</code> an the second is tickUnitName as string. The following image shows an example for <code>"\\texttt{{ y={:*^+8.1f}}}"</code>:    <br /></td></tr>
+<tr class="separator:a9289952f1aafbc3b912a1f40d0accc4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aea086906f67695318a38412d517cdd29" id="r_aea086906f67695318a38412d517cdd29"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_j_k_q_t_p_coordinate_axis.html#aea086906f67695318a38412d517cdd29">getTickLabelAngle</a> () const</td></tr>
 <tr class="memdesc:aea086906f67695318a38412d517cdd29"><td class="mdescLeft">&#160;</td><td class="mdescRight">rotation angle of tick labels [-180..180], i.e. given in degrees, default is 0 (horizontal)    <br /></td></tr>
 <tr class="separator:aea086906f67695318a38412d517cdd29"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -835,7 +841,7 @@ Coordinate Systems and Transformations</h1>
  <p class="formulaDsp">
 <picture><source srcset="form_229_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaDsp" alt="\[ \mbox{yscale}=\frac{\mbox{plotHeight}}{\mbox{ywidth}},\ \ \ \ \ \ \mbox{yoffset}=\mbox{yPlotOffset}+\mbox{ymax}\cdot\mbox{yscale} \]" src="form_229.png" width="442" height="39"/></picture>
 </p>
-<p>If you have a <b>logarithmic axis</b> (i.e. we plot <picture><source srcset="form_230_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ \log_b(x) $" src="form_230.png" width="49" height="18"/></picture> insetad of <picture><source srcset="form_89_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ x $" src="form_89.png" width="10" height="8"/></picture> for a given base <picture><source srcset="form_134_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ b $" src="form_134.png" width="7" height="13"/></picture> ) we get the same formulas, but with <picture><source srcset="form_89_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ x $" src="form_89.png" width="10" height="8"/></picture> exchanged by <picture><source srcset="form_230_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ \log_b(x) $" src="form_230.png" width="49" height="18"/></picture>. If we use the equation <picture><source srcset="form_231_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ \log_b(x)=\log(x)/\log(b) $" src="form_231.png" width="166" height="18"/></picture> we finally get the scaling laws: </p><p class="formulaDsp">
+<p>If you have a <b>logarithmic axis</b> (i.e. we plot <picture><source srcset="form_230_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ \log_b(x) $" src="form_230.png" width="49" height="18"/></picture> insetad of <picture><source srcset="form_87_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ x $" src="form_87.png" width="10" height="8"/></picture> for a given base <picture><source srcset="form_134_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ b $" src="form_134.png" width="7" height="13"/></picture> ) we get the same formulas, but with <picture><source srcset="form_87_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ x $" src="form_87.png" width="10" height="8"/></picture> exchanged by <picture><source srcset="form_230_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ \log_b(x) $" src="form_230.png" width="49" height="18"/></picture>. If we use the equation <picture><source srcset="form_231_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ \log_b(x)=\log(x)/\log(b) $" src="form_231.png" width="166" height="18"/></picture> we finally get the scaling laws: </p><p class="formulaDsp">
 <picture><source srcset="form_232_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaDsp" alt="\[ x_p(x)=\mbox{xoffset}+\frac{\log(x)}{\log(\mbox{logXAxisBase})}\cdot\mbox{xscale} \ \ \ \ \ \ \ \ \ y_p(y)=\mbox{yoffset}-\frac{\log(y)}{\log(\mbox{logYAxisBase})}\cdot\mbox{yscale} \]" src="form_232.png" width="629" height="41"/></picture>
 </p>
 <p> From these we can calculate their parameters with the same defining equations as above: </p><p class="formulaDsp">
@@ -3110,6 +3116,37 @@ pi-axis scaling</div></div>
 </div><div class="memdoc">
 
 <p>format string for datetime tick labels, see QDateTime::toString() documentation for details on format strings   </p>
+
+</div>
+</div>
+<a id="a9289952f1aafbc3b912a1f40d0accc4d" name="a9289952f1aafbc3b912a1f40d0accc4d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9289952f1aafbc3b912a1f40d0accc4d">&#9670;&#160;</a></span>getTickFormatfFormat()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QString JKQTPCoordinateAxis::getTickFormatfFormat </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>format string for std::format tick labels, (see e.g. <a href="https://en.cppreference.com/w/cpp/utility/format/formatter#Standard_format_specification">https://en.cppreference.com/w/cpp/utility/format/formatter#Standard_format_specification</a> ). The first data parameter is the tick value as <code>double</code> an the second is tickUnitName as string. The following image shows an example for <code>"\\texttt{{ y={:*^+8.1f}}}"</code>:   </p>
+<div class="image">
+<img src="JKQTPCALTformat.png" alt=""/>
+</div>
+ <dl class="section note"><dt>Note</dt><dd>This option is only available for C++20 and above, use the CMake option <code>JKQtPlotter_ENABLED_CXX20=ON</code> if your compiler supports this.   </dd></dl>
 
 </div>
 </div>
@@ -5527,6 +5564,38 @@ if setRangeFixed(true) was called before this call, the axis range is fixed and 
 
 </div>
 </div>
+<a id="ac08629edc108244ccbf141c3b8a339e4" name="ac08629edc108244ccbf141c3b8a339e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac08629edc108244ccbf141c3b8a339e4">&#9670;&#160;</a></span>setTickFormatFormat</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void JKQTPCoordinateAxis::setTickFormatFormat </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>__value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>format string for std::format tick labels, (see e.g. <a href="https://en.cppreference.com/w/cpp/utility/format/formatter#Standard_format_specification">https://en.cppreference.com/w/cpp/utility/format/formatter#Standard_format_specification</a> ). The first data parameter is the tick value as <code>double</code> an the second is tickUnitName as string. The following image shows an example for <code>"\\texttt{{ y={:*^+8.1f}}}"</code>:   </p>
+<div class="image">
+<img src="JKQTPCALTformat.png" alt=""/>
+</div>
+ <dl class="section note"><dt>Note</dt><dd>This option is only available for C++20 and above, use the CMake option <code>JKQtPlotter_ENABLED_CXX20=ON</code> if your compiler supports this.   </dd></dl>
+
+</div>
+</div>
 <a id="a3cb66520f19eb1c29eec6ce5ffcb65d9" name="a3cb66520f19eb1c29eec6ce5ffcb65d9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3cb66520f19eb1c29eec6ce5ffcb65d9">&#9670;&#160;</a></span>setTickInsideLength</h2>
 
@@ -6795,7 +6864,7 @@ if setRangeFixed(true) was called before this call, the axis range is fixed and 
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="class_j_k_q_t_p_coordinate_axis.html">JKQTPCoordinateAxis</a></li>
-    <li class="footer">Generated on Tue Oct 15 2024 19:56:37 for JKQTPlotter by <a href="https://www.doxygen.org/index.html">doxygen</a> 1.9.8 </li>
+    <li class="footer">Generated on Wed Oct 16 2024 11:08:34 for JKQTPlotter by <a href="https://www.doxygen.org/index.html">doxygen</a> 1.9.8 </li>
   </ul>
 </div>
 </body>
