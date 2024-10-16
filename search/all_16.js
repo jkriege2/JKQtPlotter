@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['random_20numbers_0',['random numbers',['../_j_k_q_t_plotter_basic_j_k_q_t_p_datastore_statistics.html#autotoc_md48',1,'Generating different sets of random numbers'],['../_j_k_q_t_plotter_basic_j_k_q_t_p_datastore_statistics2_d.html#autotoc_md57',1,'Generating different sets of random numbers']]],
+  ['random_20numbers_0',['random numbers',['../_j_k_q_t_plotter_basic_j_k_q_t_p_datastore_statistics2_d.html#autotoc_md48',1,'Generating different sets of random numbers'],['../_j_k_q_t_plotter_basic_j_k_q_t_p_datastore_statistics.html#autotoc_md53',1,'Generating different sets of random numbers']]],
   ['randomscatter_1',['RandomScatter',['../class_j_k_q_t_p_single_column_symbols_graph.html#a3631b52ee32dceb1418183aefe7f7ce4a7ce488ba270f450ea4879f7d6f53d6ad',1,'JKQTPSingleColumnSymbolsGraph']]],
   ['range_20plot_20width_2',['Synchronizing Axis Range &amp; Plot Width',['../class_j_k_q_t_base_plotter.html#JKQTBASEPLOTTER_SYNCMULTIPLOT_SYNC',1,'']]],
   ['range_5fend_3',['range_end',['../struct_j_k_q_t_p_evaluated_function_graph_base_1_1_plot_functor_spec.html#aa82a3c373d7364ed975f0d20a121f412',1,'JKQTPEvaluatedFunctionGraphBase::PlotFunctorSpec']]],
@@ -28,7 +28,7 @@ var searchData=
   ['rectangles_25',['rectangles',['../group__jkqtplotter__geoplots.html',1,'Geometric Elements (Lines, Rectangles, ...)'],['../_j_k_q_t_plotter_user_interaction.html#autotoc_md110',1,'Rectangles']]],
   ['rectradiusatbaseline_26',['rectRadiusAtBaseline',['../class_j_k_q_t_p_bar_graph_base.html#a0e14df1397f355b9b6d700766fa6bf99',1,'JKQTPBarGraphBase']]],
   ['rectradiusatvalue_27',['rectRadiusAtValue',['../class_j_k_q_t_p_bar_graph_base.html#a80913f23b5a8a8a25febb77783364fae',1,'JKQTPBarGraphBase']]],
-  ['red_20blue_20wiggle_20plot_20using_20tt_20jkqtpfilledcurvexgraph_20tt_28',['Plot red/blue wiggle plot using &lt;tt&gt;JKQTPFilledCurveXGraph&lt;/tt&gt;',['../_j_k_q_t_plotter_wiggle_plots.html#autotoc_md119',1,'']]],
+  ['red_20blue_20wiggle_20plot_20using_20tt_20jkqtpfilledcurvexgraph_20tt_28',['Plot red/blue wiggle plot using &lt;tt&gt;JKQTPFilledCurveXGraph&lt;/tt&gt;',['../_j_k_q_t_plotter_wiggle_plots.html#autotoc_md116',1,'']]],
   ['redistributeintoonecolumn_29',['redistributeIntoOneColumn',['../struct_j_k_q_t_p_base_key_1_1_key_layout_description.html#a8de3c1bf0a2ece1e57d2595195894d1b',1,'JKQTPBaseKey::KeyLayoutDescription']]],
   ['redistributeovercolumns_30',['redistributeOverColumns',['../struct_j_k_q_t_p_base_key_1_1_key_layout_description.html#a1bae7b2a78197cc0951ae48306d56a87',1,'JKQTPBaseKey::KeyLayoutDescription']]],
   ['redistributeoverrows_31',['redistributeOverRows',['../struct_j_k_q_t_p_base_key_1_1_key_layout_description.html#a33e6e75bf167f3475707e3a556595218',1,'JKQTPBaseKey::KeyLayoutDescription']]],
@@ -122,7 +122,7 @@ var searchData=
   ['rowcount_119',['rowcount',['../class_j_k_q_t_p_datastore_model.html#adbb191f9cc0b04563f2586b214d4f782',1,'JKQTPDatastoreModel::rowCount()'],['../class_j_k_q_t_p_graphs_model.html#add5384cc40ef78eab722797e319ec6de',1,'JKQTPGraphsModel::rowCount()']]],
   ['rowheight_120',['rowheight',['../struct_j_k_q_t_math_text_matrix_node_1_1_layout_info.html#ab2e89ede5533489da53801a92ceaba5b',1,'JKQTMathTextMatrixNode::LayoutInfo']]],
   ['rows_121',['rows',['../_j_k_q_t_plotter_basic_j_k_q_t_p_datastore_iterators.html#autotoc_md38',1,'Iterator-based Column Data Access To Existing Rows'],['../struct_j_k_q_t_p_base_key_1_1_key_column_description.html#a4059fbf5ff4bf0100275e10f08f0cf0e',1,'JKQTPBaseKey::KeyColumnDescription::rows'],['../class_j_k_q_t_p_datastore_item.html#abb8afa0743093d0cb661dd1ae8deb92a',1,'JKQTPDatastoreItem::rows']]],
-  ['rug_20plot_122',['Visualizing data as a Rug Plot',['../_j_k_q_t_plotter_violinplot_graphs.html#autotoc_md117',1,'']]],
+  ['rug_20plot_122',['Visualizing data as a Rug Plot',['../_j_k_q_t_plotter_violinplot_graphs.html#autotoc_md119',1,'']]],
   ['rugplot_123',['RugPlot',['../class_j_k_q_t_p_single_column_symbols_graph.html#a3631b52ee32dceb1418183aefe7f7ce4a60c61271a6e7cdee0c8c8f78e4e55a17',1,'JKQTPSingleColumnSymbolsGraph']]],
   ['ruler_20measurement_20tool_124',['Ruler/Measurement Tool',['../_j_k_q_t_plotter_user_interaction.html#autotoc_md106',1,'']]],
   ['rulerdisplayed_125',['rulerDisplayed',['../class_j_k_q_t_plotter.html#ad539ba834dae8a1dea629afc085ad977',1,'JKQTPlotter']]],
