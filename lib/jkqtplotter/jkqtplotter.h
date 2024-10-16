@@ -781,7 +781,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
         inline void clearGraphs(bool deleteGraphs=true) { plotter->clearGraphs(deleteGraphs); }
 
         /** \copydoc JKQTBasePlotter::addGraph()   */
-        inline void addGraph(JKQTPPlotElement* gr) { plotter->addGraph(gr); }
+        inline size_t addGraph(JKQTPPlotElement* gr) { return plotter->addGraph(gr); }
         /** \copydoc JKQTBasePlotter::addGraphOnTop()   */
         inline void addGraphOnTop(JKQTPPlotElement* gr) { plotter->addGraphOnTop(gr); }
         /** \copydoc JKQTBasePlotter::addGraphAtBottom()   */
