@@ -133,7 +133,7 @@ $(document).ready(function(){initNavTree('_j_k_q_t_plotter_barcharts_two_color_f
 <div class="line">graph-&gt;<a class="code hl_slot" href="class_j_k_q_t_p_bar_graph_base.html#a4bbbb0f64430f5c8d66701d1a1dbfa29">setFillMode</a>(<a class="code hl_enumvalue" href="class_j_k_q_t_p_bar_graph_base.html#afdfa782b7be06a3bb1eb2e3d57c6138cafbd17c32ed2bbb077928309e1ef1a6d2">JKQTPBarGraphBase::FillMode::TwoColorFilling</a>);</div>
 <div class="line">graph-&gt;<a class="code hl_function" href="class_j_k_q_t_p_graph_fill_style_mixin.html#a3281a7fad05f07acc4f2fe80a93b29bf">setFillColor</a>(QColor(<span class="stringliteral">&quot;green&quot;</span>));</div>
 <div class="line">graph-&gt;<a class="code hl_function" href="class_j_k_q_t_p_bar_graph_base.html#a31a91f661e59b99893a6a16cc3905d30">fillStyleBelow</a>().<a class="code hl_function" href="class_j_k_q_t_p_graph_fill_style_mixin.html#a3281a7fad05f07acc4f2fe80a93b29bf">setFillColor</a>(QColor(<span class="stringliteral">&quot;red&quot;</span>));</div>
-<div class="line">plot.<a class="code hl_function" href="class_j_k_q_t_plotter.html#aa1d2773779ae50769de29eacc68d3bea">addGraph</a>(graph);</div>
+<div class="line">plot.<a class="code hl_function" href="class_j_k_q_t_plotter.html#a63a54c5342d664c35ffb3d532ba26b99">addGraph</a>(graph);</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// 4 autoscale the plot so the graph is contained</span></div>
 <div class="line">plot.<a class="code hl_slot" href="class_j_k_q_t_plotter.html#a0ed800587c1f3f5ab36dd5422c101e28">zoomToFit</a>();</div>
@@ -155,7 +155,7 @@ $(document).ready(function(){initNavTree('_j_k_q_t_plotter_barcharts_two_color_f
 <div class="ttc" id="aclass_j_k_q_t_p_x_y_graph_html_ae12daea658313e0e688c76f1adfc1355"><div class="ttname"><a href="class_j_k_q_t_p_x_y_graph.html#ae12daea658313e0e688c76f1adfc1355">JKQTPXYGraph::setKeyColumn</a></div><div class="ttdeci">virtual void setKeyColumn(int __value)</div><div class="ttdoc">sets the column used as &quot;key&quot; for the current graph (typically this call setXColumn(),...</div></div>
 <div class="ttc" id="aclass_j_k_q_t_plotter_html"><div class="ttname"><a href="class_j_k_q_t_plotter.html">JKQTPlotter</a></div><div class="ttdoc">plotter widget for scientific plots (uses JKQTBasePlotter to do the actual drawing)</div><div class="ttdef"><b>Definition</b> jkqtplotter.h:364</div></div>
 <div class="ttc" id="aclass_j_k_q_t_plotter_html_a0ed800587c1f3f5ab36dd5422c101e28"><div class="ttname"><a href="class_j_k_q_t_plotter.html#a0ed800587c1f3f5ab36dd5422c101e28">JKQTPlotter::zoomToFit</a></div><div class="ttdeci">void zoomToFit(bool zoomX=true, bool zoomY=true, bool includeX0=false, bool includeY0=false, double scaleX=1.05, double scaleY=1.05)</div><div class="ttdoc">this method zooms the graph so that all plotted datapoints are visible.</div><div class="ttdef"><b>Definition</b> jkqtplotter.h:1039</div></div>
-<div class="ttc" id="aclass_j_k_q_t_plotter_html_aa1d2773779ae50769de29eacc68d3bea"><div class="ttname"><a href="class_j_k_q_t_plotter.html#aa1d2773779ae50769de29eacc68d3bea">JKQTPlotter::addGraph</a></div><div class="ttdeci">void addGraph(JKQTPPlotElement *gr)</div><div class="ttdef"><b>Definition</b> jkqtplotter.h:784</div></div>
+<div class="ttc" id="aclass_j_k_q_t_plotter_html_a63a54c5342d664c35ffb3d532ba26b99"><div class="ttname"><a href="class_j_k_q_t_plotter.html#a63a54c5342d664c35ffb3d532ba26b99">JKQTPlotter::addGraph</a></div><div class="ttdeci">size_t addGraph(JKQTPPlotElement *gr)</div><div class="ttdef"><b>Definition</b> jkqtplotter.h:784</div></div>
 <div class="ttc" id="aclass_j_k_q_t_plotter_html_ae31c276a93cbf7aa8f9c153327aa5b74"><div class="ttname"><a href="class_j_k_q_t_plotter.html#ae31c276a93cbf7aa8f9c153327aa5b74">JKQTPlotter::getDatastore</a></div><div class="ttdeci">JKQTPDatastore * getDatastore()</div><div class="ttdoc">returns a pointer to the datastore used by this object</div><div class="ttdef"><b>Definition</b> jkqtplotter.h:611</div></div>
 <div class="ttc" id="agroup__jkqtptools__math__basic_html_gae96ac530dff57dae111b641b0c7f4eb4"><div class="ttname"><a href="group__jkqtptools__math__basic.html#gae96ac530dff57dae111b641b0c7f4eb4">JKQTPSTATISTICS_PI</a></div><div class="ttdeci">#define JKQTPSTATISTICS_PI</div><div class="ttdef"><b>Definition</b> jkqtpmathtools.h:52</div></div>
 </div><!-- fragment --><p>The result looks like this:</p>
@@ -170,7 +170,7 @@ $(document).ready(function(){initNavTree('_j_k_q_t_plotter_barcharts_two_color_f
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="example_tutorial_projects.html">Example &amp; Tutorial Projects</a></li>
-    <li class="footer">Generated on Wed Oct 16 2024 11:08:33 for JKQTPlotter by <a href="https://www.doxygen.org/index.html">doxygen</a> 1.9.8 </li>
+    <li class="footer">Generated on Wed Oct 16 2024 11:24:41 for JKQTPlotter by <a href="https://www.doxygen.org/index.html">doxygen</a> 1.9.8 </li>
   </ul>
 </div>
 </body>

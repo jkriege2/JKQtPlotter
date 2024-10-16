@@ -208,8 +208,8 @@ $(document).ready(function(){initNavTree('_j_k_q_t_plotter_financial_chart_examp
 <div class="line">graphOHLC-&gt;<a class="code hl_slot" href="class_j_k_q_t_p_financial_graph.html#a64af3abc6cdaa0bfd7c923e4a10aa82d">setOHLCTwoColor</a>(QColor(<span class="stringliteral">&quot;darkgreen&quot;</span>), QColor(<span class="stringliteral">&quot;maroon&quot;</span>));</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// 4. add the graphs to the plot, so it is actually displayed</span></div>
-<div class="line">plot.<a class="code hl_function" href="class_j_k_q_t_plotter.html#aa1d2773779ae50769de29eacc68d3bea">addGraph</a>(graphCandleStick);</div>
-<div class="line">plot.<a class="code hl_function" href="class_j_k_q_t_plotter.html#aa1d2773779ae50769de29eacc68d3bea">addGraph</a>(graphOHLC);</div>
+<div class="line">plot.<a class="code hl_function" href="class_j_k_q_t_plotter.html#a63a54c5342d664c35ffb3d532ba26b99">addGraph</a>(graphCandleStick);</div>
+<div class="line">plot.<a class="code hl_function" href="class_j_k_q_t_plotter.html#a63a54c5342d664c35ffb3d532ba26b99">addGraph</a>(graphOHLC);</div>
 <div class="ttc" id="aclass_j_k_q_t_p_financial_graph_html"><div class="ttname"><a href="class_j_k_q_t_p_financial_graph.html">JKQTPFinancialGraph</a></div><div class="ttdoc">This class draws an Open-High-Low-Close (OHLC) or candle-stick graph typically representing financial...</div><div class="ttdef"><b>Definition</b> jkqtpfinancial.h:92</div></div>
 <div class="ttc" id="aclass_j_k_q_t_p_financial_graph_html_a14c58fb70e3943814dac9b8dd58f396d"><div class="ttname"><a href="class_j_k_q_t_p_financial_graph.html#a14c58fb70e3943814dac9b8dd58f396d">JKQTPFinancialGraph::setGraphType</a></div><div class="ttdeci">void setGraphType(FinancialGraphType __value)</div><div class="ttdoc">type of the financial graph (OHLC or candle-stick)</div></div>
 <div class="ttc" id="aclass_j_k_q_t_p_financial_graph_html_a515ea4fe498563efb131ad9c8e59e1ad"><div class="ttname"><a href="class_j_k_q_t_p_financial_graph.html#a515ea4fe498563efb131ad9c8e59e1ad">JKQTPFinancialGraph::setOpenColumn</a></div><div class="ttdeci">void setOpenColumn(int __value)</div><div class="ttdoc">column for the &quot;Open&quot; value of the financial graph</div></div>
@@ -222,7 +222,7 @@ $(document).ready(function(){initNavTree('_j_k_q_t_plotter_financial_chart_examp
 <div class="ttc" id="aclass_j_k_q_t_p_financial_graph_html_acb21f5354fd06701b1ac2d9ca59efda6"><div class="ttname"><a href="class_j_k_q_t_p_financial_graph.html#acb21f5354fd06701b1ac2d9ca59efda6">JKQTPFinancialGraph::setCloseColumn</a></div><div class="ttdeci">void setCloseColumn(int __value)</div><div class="ttdoc">column for the &quot;Close&quot; value of the financial graph</div></div>
 <div class="ttc" id="aclass_j_k_q_t_p_plot_element_html_a02a8d7c24cde7768f0134cee1aa1159d"><div class="ttname"><a href="class_j_k_q_t_p_plot_element.html#a02a8d7c24cde7768f0134cee1aa1159d">JKQTPPlotElement::setTitle</a></div><div class="ttdeci">virtual void setTitle(const QString &amp;__value)</div><div class="ttdoc">sets the title of the plot (for display in key!).</div></div>
 <div class="ttc" id="aclass_j_k_q_t_p_x_graph_html_a8fa8b849be321018d74951a12f428ebe"><div class="ttname"><a href="class_j_k_q_t_p_x_graph.html#a8fa8b849be321018d74951a12f428ebe">JKQTPXGraph::setXColumn</a></div><div class="ttdeci">void setXColumn(int __value)</div><div class="ttdoc">the column that contains the x-component of the datapoints</div></div>
-<div class="ttc" id="aclass_j_k_q_t_plotter_html_aa1d2773779ae50769de29eacc68d3bea"><div class="ttname"><a href="class_j_k_q_t_plotter.html#aa1d2773779ae50769de29eacc68d3bea">JKQTPlotter::addGraph</a></div><div class="ttdeci">void addGraph(JKQTPPlotElement *gr)</div><div class="ttdef"><b>Definition</b> jkqtplotter.h:784</div></div>
+<div class="ttc" id="aclass_j_k_q_t_plotter_html_a63a54c5342d664c35ffb3d532ba26b99"><div class="ttname"><a href="class_j_k_q_t_plotter.html#a63a54c5342d664c35ffb3d532ba26b99">JKQTPlotter::addGraph</a></div><div class="ttdeci">size_t addGraph(JKQTPPlotElement *gr)</div><div class="ttdef"><b>Definition</b> jkqtplotter.h:784</div></div>
 </div><!-- fragment --><p>Finally we only have to format the plot and coordinate axes slightly to produce a nicer and better readable plot:</p>
 <div class="fragment"><div class="line"><span class="comment">// 5. scale the plot so the graph is contained and make x-axis a date-axis</span></div>
 <div class="line">plot.<a class="code hl_function" href="class_j_k_q_t_plotter.html#af0b876017115828f4d14581621808323">getXAxis</a>()-&gt;<a class="code hl_slot" href="class_j_k_q_t_p_coordinate_axis.html#a94e9a4a63d7a4498e8320b2e8a5c3dc5">setTickLabelType</a>(<a class="code hl_enumvalue" href="group__jkqtpplottersupprt.html#ggad58b8a9812defae065b13b76154c8d2ea8343a082a4a5fefc22d3471a5bab6adb">JKQTPCALTdate</a>);</div>
@@ -251,7 +251,7 @@ $(document).ready(function(){initNavTree('_j_k_q_t_plotter_financial_chart_examp
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="example_tutorial_projects.html">Example &amp; Tutorial Projects</a></li>
-    <li class="footer">Generated on Wed Oct 16 2024 11:08:33 for JKQTPlotter by <a href="https://www.doxygen.org/index.html">doxygen</a> 1.9.8 </li>
+    <li class="footer">Generated on Wed Oct 16 2024 11:24:41 for JKQTPlotter by <a href="https://www.doxygen.org/index.html">doxygen</a> 1.9.8 </li>
   </ul>
 </div>
 </body>

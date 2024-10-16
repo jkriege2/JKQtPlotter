@@ -512,7 +512,7 @@ var group__jkqtpplotterclasses =
       [ "JKQTPlotter", "class_j_k_q_t_plotter.html#a38c195e8b2e0f07ee72dfb831bc5fe94", null ],
       [ "JKQTPlotter", "class_j_k_q_t_plotter.html#af0bece69703f98fe9f11a1ddcb3c0630", null ],
       [ "~JKQTPlotter", "class_j_k_q_t_plotter.html#a1226e8a8590f599c1b51a2125242cbfd", null ],
-      [ "addGraph", "class_j_k_q_t_plotter.html#aa1d2773779ae50769de29eacc68d3bea", null ],
+      [ "addGraph", "class_j_k_q_t_plotter.html#a63a54c5342d664c35ffb3d532ba26b99", null ],
       [ "addGraphAtBottom", "class_j_k_q_t_plotter.html#ae29b87ec525294b3a2623adcc09175a5", null ],
       [ "addGraphOnTop", "class_j_k_q_t_plotter.html#a9a0cf018e7a4e1d1378ca177342e3edf", null ],
       [ "addGraphs", "class_j_k_q_t_plotter.html#a1a14a278c830edccf5264cc2ad02db9e", null ],

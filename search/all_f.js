@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['kde_0',['kde',['../_j_k_q_t_plotter_basic_j_k_q_t_p_datastore_statistics2_d.html#autotoc_md60',1,'Kernel Density Estimates (KDE)'],['../_j_k_q_t_plotter_basic_j_k_q_t_p_datastore_statistics.html#autotoc_md48',1,'Kernel Density Estimates (KDE)']]],
-  ['kdes_1',['Cummulative Histograms and KDEs',['../_j_k_q_t_plotter_basic_j_k_q_t_p_datastore_statistics.html#autotoc_md49',1,'']]],
+  ['kde_0',['kde',['../_j_k_q_t_plotter_basic_j_k_q_t_p_datastore_statistics2_d.html#autotoc_md60',1,'Kernel Density Estimates (KDE)'],['../_j_k_q_t_plotter_basic_j_k_q_t_p_datastore_statistics.html#autotoc_md54',1,'Kernel Density Estimates (KDE)']]],
+  ['kdes_1',['Cummulative Histograms and KDEs',['../_j_k_q_t_plotter_basic_j_k_q_t_p_datastore_statistics.html#autotoc_md55',1,'']]],
   ['kernel_20density_20estimates_2',['kernel density estimates',['../group__jkqtptools__math__statistics__1dkde.html',1,'1-dimensional Kernel Density Estimates'],['../group__jkqtptools__math__statistics__2dkde.html',1,'2-dimensional Kernel Density Estimates']]],
-  ['kernel_20density_20estimates_20kde_3',['kernel density estimates kde',['../_j_k_q_t_plotter_basic_j_k_q_t_p_datastore_statistics2_d.html#autotoc_md60',1,'Kernel Density Estimates (KDE)'],['../_j_k_q_t_plotter_basic_j_k_q_t_p_datastore_statistics.html#autotoc_md48',1,'Kernel Density Estimates (KDE)']]],
+  ['kernel_20density_20estimates_20kde_3',['kernel density estimates kde',['../_j_k_q_t_plotter_basic_j_k_q_t_p_datastore_statistics2_d.html#autotoc_md60',1,'Kernel Density Estimates (KDE)'],['../_j_k_q_t_plotter_basic_j_k_q_t_p_datastore_statistics.html#autotoc_md54',1,'Kernel Density Estimates (KDE)']]],
   ['kernels_20for_201_20dimensional_20histograms_4',['Kernels for 1-dimensional Histograms',['../group__jkqtptools__math__statistics__1dkde__kernels.html',1,'']]],
   ['kernels_20for_202_20dimensional_20histograms_5',['Kernels for 2-dimensional Histograms',['../group__jkqtptools__math__statistics__2dkde__kernels.html',1,'']]],
   ['key_20legend_6',['Plot Key/Legend',['../group__jkqtplotter__general__basicplotelements__key.html',1,'']]],

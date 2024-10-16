@@ -199,8 +199,8 @@ template&lt;class InputIt &gt; </div>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">first</td><td>iterator pointing to the first item in the dataset to use <picture><source srcset="form_52_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ X_1 $" src="form_52.png" width="21" height="16"/></picture> </td></tr>
-    <tr><td class="paramname">last</td><td>iterator pointing behind the last item in the dataset to use <picture><source srcset="form_53_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ X_N $" src="form_53.png" width="26" height="16"/></picture> </td></tr>
+    <tr><td class="paramname">first</td><td>iterator pointing to the first item in the dataset to use <picture><source srcset="form_71_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ X_1 $" src="form_71.png" width="21" height="16"/></picture> </td></tr>
+    <tr><td class="paramname">last</td><td>iterator pointing behind the last item in the dataset to use <picture><source srcset="form_72_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ X_N $" src="form_72.png" width="26" height="16"/></picture> </td></tr>
   </table>
   </dd>
 </dl>
@@ -289,7 +289,7 @@ template&lt;class InputItX , class InputItY &gt; </div>
 
 <p>evaluates the Kernel Density Estimator (KDE) at a given position </p>
 <p>evaluates </p><p class="formulaDsp">
-<picture><source srcset="form_129_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaDsp" alt="\[ \tilde{f}(x,y):=\frac{1}{N\cdot\sqrt{\text{bandwidthx}}\cdot\sqrt{\text{bandwidthy}}}\cdot\sum\limits_{i=0}^{N-1}K\left(\frac{x-x_i}{\text{bandwidthx}},\frac{y-y_i}{\text{bandwidthy}}\right) \]" src="form_129.png" width="567" height="49"/></picture>
+<picture><source srcset="form_126_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaDsp" alt="\[ \tilde{f}(x,y):=\frac{1}{N\cdot\sqrt{\text{bandwidthx}}\cdot\sqrt{\text{bandwidthy}}}\cdot\sum\limits_{i=0}^{N-1}K\left(\frac{x-x_i}{\text{bandwidthx}},\frac{y-y_i}{\text{bandwidthy}}\right) \]" src="form_126.png" width="567" height="49"/></picture>
 </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
@@ -302,10 +302,10 @@ template&lt;class InputItX , class InputItY &gt; </div>
   <table class="params">
     <tr><td class="paramname">x</td><td>where to evaluate the kernel sum, x-coordinate </td></tr>
     <tr><td class="paramname">y</td><td>where to evaluate the kernel sum, y-coordinate </td></tr>
-    <tr><td class="paramname">firstX</td><td>iterator pointing to the first x-position item in the dataset to use <picture><source srcset="form_52_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ X_1 $" src="form_52.png" width="21" height="16"/></picture> </td></tr>
-    <tr><td class="paramname">lastX</td><td>iterator pointing behind the last x-position item in the dataset to use <picture><source srcset="form_53_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ X_N $" src="form_53.png" width="26" height="16"/></picture> </td></tr>
-    <tr><td class="paramname">firstY</td><td>iterator pointing to the first y-position item in the dataset to use <picture><source srcset="form_81_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ Y_1 $" src="form_81.png" width="16" height="16"/></picture> </td></tr>
-    <tr><td class="paramname">lastY</td><td>iterator pointing behind the last y-position item in the dataset to use <picture><source srcset="form_107_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ Y_N $" src="form_107.png" width="23" height="16"/></picture> </td></tr>
+    <tr><td class="paramname">firstX</td><td>iterator pointing to the first x-position item in the dataset to use <picture><source srcset="form_71_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ X_1 $" src="form_71.png" width="21" height="16"/></picture> </td></tr>
+    <tr><td class="paramname">lastX</td><td>iterator pointing behind the last x-position item in the dataset to use <picture><source srcset="form_72_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ X_N $" src="form_72.png" width="26" height="16"/></picture> </td></tr>
+    <tr><td class="paramname">firstY</td><td>iterator pointing to the first y-position item in the dataset to use <picture><source srcset="form_86_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ Y_1 $" src="form_86.png" width="16" height="16"/></picture> </td></tr>
+    <tr><td class="paramname">lastY</td><td>iterator pointing behind the last y-position item in the dataset to use <picture><source srcset="form_87_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ Y_N $" src="form_87.png" width="23" height="16"/></picture> </td></tr>
     <tr><td class="paramname">kernel</td><td>the kernel function to use (e.g. <a class="el" href="group__jkqtptools__math__statistics__1dkde__kernels.html#gadc261fe2e23128426ab9903e26a02885" title="a 1D Gaussian kernel function, e.g. for Kernel Density Estimation">jkqtpstatKernel1DGaussian()</a> ) </td></tr>
     <tr><td class="paramname">bandwidthX</td><td>x-bandwidth used for the KDE </td></tr>
     <tr><td class="paramname">bandwidthY</td><td>y-bandwidth used for the KDE </td></tr>
@@ -434,10 +434,10 @@ template&lt;class InputItX , class InputItY , class OutputIt &gt; </div>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">firstX</td><td>iterator pointing to the first x-position item in the dataset to use <picture><source srcset="form_52_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ X_1 $" src="form_52.png" width="21" height="16"/></picture> </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">lastX</td><td>iterator pointing behind the last x-position item in the dataset to use <picture><source srcset="form_53_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ X_N $" src="form_53.png" width="26" height="16"/></picture> </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">firstY</td><td>iterator pointing to the first y-position item in the dataset to use <picture><source srcset="form_81_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ Y_1 $" src="form_81.png" width="16" height="16"/></picture> </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">lastY</td><td>iterator pointing behind the last y-position item in the dataset to use <picture><source srcset="form_107_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ Y_N $" src="form_107.png" width="23" height="16"/></picture> </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">firstX</td><td>iterator pointing to the first x-position item in the dataset to use <picture><source srcset="form_71_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ X_1 $" src="form_71.png" width="21" height="16"/></picture> </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">lastX</td><td>iterator pointing behind the last x-position item in the dataset to use <picture><source srcset="form_72_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ X_N $" src="form_72.png" width="26" height="16"/></picture> </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">firstY</td><td>iterator pointing to the first y-position item in the dataset to use <picture><source srcset="form_86_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ Y_1 $" src="form_86.png" width="16" height="16"/></picture> </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">lastY</td><td>iterator pointing behind the last y-position item in the dataset to use <picture><source srcset="form_87_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ Y_N $" src="form_87.png" width="23" height="16"/></picture> </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">histogramImgOut</td><td>output iterator that receives counts of the histogram bins in row-major ordering </td></tr>
     <tr><td class="paramdir"></td><td class="paramname">xmin</td><td>position of the first histogram bin in x-direction </td></tr>
     <tr><td class="paramdir"></td><td class="paramname">xmax</td><td>position of the last histogram bin in x-direction </td></tr>
@@ -542,10 +542,10 @@ template&lt;class InputItX , class InputItY , class FF &gt; </div>
   <table class="params">
     <tr><td class="paramname">x</td><td>where to evaluate the kernel sum, x-coordinate </td></tr>
     <tr><td class="paramname">y</td><td>where to evaluate the kernel sum, y-coordinate </td></tr>
-    <tr><td class="paramname">firstX</td><td>iterator pointing to the first x-position item in the dataset to use <picture><source srcset="form_52_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ X_1 $" src="form_52.png" width="21" height="16"/></picture> </td></tr>
-    <tr><td class="paramname">lastX</td><td>iterator pointing behind the last x-position item in the dataset to use <picture><source srcset="form_53_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ X_N $" src="form_53.png" width="26" height="16"/></picture> </td></tr>
-    <tr><td class="paramname">firstY</td><td>iterator pointing to the first y-position item in the dataset to use <picture><source srcset="form_81_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ Y_1 $" src="form_81.png" width="16" height="16"/></picture> </td></tr>
-    <tr><td class="paramname">lastY</td><td>iterator pointing behind the last y-position item in the dataset to use <picture><source srcset="form_107_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ Y_N $" src="form_107.png" width="23" height="16"/></picture> </td></tr>
+    <tr><td class="paramname">firstX</td><td>iterator pointing to the first x-position item in the dataset to use <picture><source srcset="form_71_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ X_1 $" src="form_71.png" width="21" height="16"/></picture> </td></tr>
+    <tr><td class="paramname">lastX</td><td>iterator pointing behind the last x-position item in the dataset to use <picture><source srcset="form_72_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ X_N $" src="form_72.png" width="26" height="16"/></picture> </td></tr>
+    <tr><td class="paramname">firstY</td><td>iterator pointing to the first y-position item in the dataset to use <picture><source srcset="form_86_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ Y_1 $" src="form_86.png" width="16" height="16"/></picture> </td></tr>
+    <tr><td class="paramname">lastY</td><td>iterator pointing behind the last y-position item in the dataset to use <picture><source srcset="form_87_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ Y_N $" src="form_87.png" width="23" height="16"/></picture> </td></tr>
     <tr><td class="paramname">kernel</td><td>the kernel function to use (e.g. <a class="el" href="group__jkqtptools__math__statistics__1dkde__kernels.html#gadc261fe2e23128426ab9903e26a02885" title="a 1D Gaussian kernel function, e.g. for Kernel Density Estimation">jkqtpstatKernel1DGaussian()</a> ) </td></tr>
     <tr><td class="paramname">bandwidthX</td><td>x-bandwidth used for the KDE </td></tr>
     <tr><td class="paramname">bandwidthY</td><td>y-bandwidth used for the KDE </td></tr>
@@ -561,7 +561,7 @@ template&lt;class InputItX , class InputItY , class FF &gt; </div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Oct 16 2024 11:08:33 for JKQTPlotter by <a href="https://www.doxygen.org/index.html">doxygen</a> 1.9.8 </li>
+    <li class="footer">Generated on Wed Oct 16 2024 11:24:41 for JKQTPlotter by <a href="https://www.doxygen.org/index.html">doxygen</a> 1.9.8 </li>
   </ul>
 </div>
 </body>

@@ -289,7 +289,7 @@ Marginal Statistics</h1>
 <div class="line">                     Nx, Ny, <span class="keyword">true</span>);</div>
 <div class="ttc" id="agroup__jkqtptools__math__statistics__2dhist_html_gad8ab0d1e867375485e2c64743e12ab44"><div class="ttname"><a href="group__jkqtptools__math__statistics__2dhist.html#gad8ab0d1e867375485e2c64743e12ab44">jkqtpstatHistogram2D</a></div><div class="ttdeci">void jkqtpstatHistogram2D(InputItX firstX, InputItX lastX, InputItY firstY, InputItY lastY, OutputIt histogramImgOut, double xmin, double xmax, double ymin, double ymax, size_t xbins=10, size_t ybins=10, bool normalized=true)</div><div class="ttdoc">calculate a 2-dimensional histogram from the given data range firstX / firstY ... lastY / lastY</div><div class="ttdef"><b>Definition</b> jkqtpstathistogram.h:287</div></div>
 </div><!-- fragment --><p>Finally the histogram is drawn using a <code><a class="el" href="class_j_k_q_t_p_column_math_image.html" title="class to plot an image from an 2-dimensional array of values stored in a column of the datastore">JKQTPColumnMathImage</a></code>: </p><div class="fragment"><div class="line"><a class="code hl_class" href="class_j_k_q_t_p_column_math_image.html">JKQTPColumnMathImage</a>* gHist;</div>
-<div class="line">plothist-&gt;<a class="code hl_function" href="class_j_k_q_t_plotter.html#aa1d2773779ae50769de29eacc68d3bea">addGraph</a>(gHist=<span class="keyword">new</span> <a class="code hl_class" href="class_j_k_q_t_p_column_math_image.html">JKQTPColumnMathImage</a>(plothist));</div>
+<div class="line">plothist-&gt;<a class="code hl_function" href="class_j_k_q_t_plotter.html#a63a54c5342d664c35ffb3d532ba26b99">addGraph</a>(gHist=<span class="keyword">new</span> <a class="code hl_class" href="class_j_k_q_t_p_column_math_image.html">JKQTPColumnMathImage</a>(plothist));</div>
 <div class="line">gHist-&gt;<a class="code hl_function" href="class_j_k_q_t_p_column_math_image.html#a64d8443502002fe626cbe55799f3c198">setImageColumn</a>(<span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(histcol));</div>
 <div class="line">gHist-&gt;<a class="code hl_slot" href="class_j_k_q_t_p_image_base.html#a6f40e47f3d54070c6040406932b793da">setX</a>(xmin);</div>
 <div class="line">gHist-&gt;<a class="code hl_slot" href="class_j_k_q_t_p_image_base.html#acd02ce7527c76be7c9184073b76c31a6">setY</a>(ymin);</div>
@@ -303,7 +303,7 @@ Marginal Statistics</h1>
 <div class="ttc" id="aclass_j_k_q_t_p_image_base_html_ab7dafad9c0f645769850e6285b1d2ad6"><div class="ttname"><a href="class_j_k_q_t_p_image_base.html#ab7dafad9c0f645769850e6285b1d2ad6">JKQTPImageBase::setWidth</a></div><div class="ttdeci">void setWidth(double __value)</div><div class="ttdoc">width of image</div></div>
 <div class="ttc" id="aclass_j_k_q_t_p_image_base_html_acd02ce7527c76be7c9184073b76c31a6"><div class="ttname"><a href="class_j_k_q_t_p_image_base.html#acd02ce7527c76be7c9184073b76c31a6">JKQTPImageBase::setY</a></div><div class="ttdeci">void setY(double __value)</div><div class="ttdoc">y coordinate of lower left corner</div></div>
 <div class="ttc" id="aclass_j_k_q_t_p_math_image_html_a12c1ea21eed55cd34899742f15b17362"><div class="ttname"><a href="class_j_k_q_t_p_math_image.html#a12c1ea21eed55cd34899742f15b17362">JKQTPMathImage::setTitle</a></div><div class="ttdeci">virtual void setTitle(const QString &amp;title) override</div><div class="ttdoc">sets the title of the plot (for display in key!).</div></div>
-<div class="ttc" id="aclass_j_k_q_t_plotter_html_aa1d2773779ae50769de29eacc68d3bea"><div class="ttname"><a href="class_j_k_q_t_plotter.html#aa1d2773779ae50769de29eacc68d3bea">JKQTPlotter::addGraph</a></div><div class="ttdeci">void addGraph(JKQTPPlotElement *gr)</div><div class="ttdef"><b>Definition</b> jkqtplotter.h:784</div></div>
+<div class="ttc" id="aclass_j_k_q_t_plotter_html_a63a54c5342d664c35ffb3d532ba26b99"><div class="ttname"><a href="class_j_k_q_t_plotter.html#a63a54c5342d664c35ffb3d532ba26b99">JKQTPlotter::addGraph</a></div><div class="ttdeci">size_t addGraph(JKQTPPlotElement *gr)</div><div class="ttdef"><b>Definition</b> jkqtplotter.h:784</div></div>
 </div><!-- fragment --><p>The resulting image plot looks like this:</p>
 <p><img src="https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/datastore_statistics_2d_hist.png" alt="datastore_statistics_2d_hist" class="inline"/></p>
 <p>There is also an "adaptor" which significanty reduce the amount of coude you have to type (i.e. it replaces all the code above):</p>
@@ -364,7 +364,7 @@ Screenshot of the full Program</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="example_tutorial_projects.html">Example &amp; Tutorial Projects</a></li>
-    <li class="footer">Generated on Wed Oct 16 2024 11:08:33 for JKQTPlotter by <a href="https://www.doxygen.org/index.html">doxygen</a> 1.9.8 </li>
+    <li class="footer">Generated on Wed Oct 16 2024 11:24:41 for JKQTPlotter by <a href="https://www.doxygen.org/index.html">doxygen</a> 1.9.8 </li>
   </ul>
 </div>
 </body>

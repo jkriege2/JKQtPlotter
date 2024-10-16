@@ -434,10 +434,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a1226e8a8590f599c1b51a2125242cbfd" id="r_a1226e8a8590f599c1b51a2125242cbfd"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_j_k_q_t_plotter.html#a1226e8a8590f599c1b51a2125242cbfd">~JKQTPlotter</a> ()</td></tr>
 <tr class="memdesc:a1226e8a8590f599c1b51a2125242cbfd"><td class="mdescLeft">&#160;</td><td class="mdescRight">class destructor  <br /></td></tr>
 <tr class="separator:a1226e8a8590f599c1b51a2125242cbfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa1d2773779ae50769de29eacc68d3bea" id="r_aa1d2773779ae50769de29eacc68d3bea"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_j_k_q_t_plotter.html#aa1d2773779ae50769de29eacc68d3bea">addGraph</a> (<a class="el" href="class_j_k_q_t_p_plot_element.html">JKQTPPlotElement</a> *gr)</td></tr>
-<tr class="memdesc:aa1d2773779ae50769de29eacc68d3bea"><td class="mdescLeft">&#160;</td><td class="mdescRight"><br  />
+<tr class="memitem:a63a54c5342d664c35ffb3d532ba26b99" id="r_a63a54c5342d664c35ffb3d532ba26b99"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_j_k_q_t_plotter.html#a63a54c5342d664c35ffb3d532ba26b99">addGraph</a> (<a class="el" href="class_j_k_q_t_p_plot_element.html">JKQTPPlotElement</a> *gr)</td></tr>
+<tr class="memdesc:a63a54c5342d664c35ffb3d532ba26b99"><td class="mdescLeft">&#160;</td><td class="mdescRight"><br  />
   <br /></td></tr>
-<tr class="separator:aa1d2773779ae50769de29eacc68d3bea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a63a54c5342d664c35ffb3d532ba26b99"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae29b87ec525294b3a2623adcc09175a5" id="r_ae29b87ec525294b3a2623adcc09175a5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_j_k_q_t_plotter.html#ae29b87ec525294b3a2623adcc09175a5">addGraphAtBottom</a> (<a class="el" href="class_j_k_q_t_p_plot_element.html">JKQTPPlotElement</a> *gr)</td></tr>
 <tr class="memdesc:ae29b87ec525294b3a2623adcc09175a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">add a new graph before all other graphs (i.e. at the top of the list of graphs), if the graph is already in the plot, it is moved to the top   <br  />
   <br /></td></tr>
@@ -1177,7 +1177,7 @@ Basic Usage of JKQTPlotter</h1>
 <div class="line">graph1-&gt;<a class="code hl_slot" href="class_j_k_q_t_p_x_y_graph.html#a48809679e6f1ba587132608b8dfb903d">setXColumn</a>(columnX);</div>
 <div class="line">graph1-&gt;<a class="code hl_slot" href="class_j_k_q_t_p_x_y_graph.html#a462e07fa2a17157b7346d2d993ff2721">setYColumn</a>(columnY);</div>
 <div class="line">graph1-&gt;<a class="code hl_slot" href="class_j_k_q_t_p_plot_element.html#a02a8d7c24cde7768f0134cee1aa1159d">setTitle</a>(QObject::tr(<span class="stringliteral">&quot;graph title&quot;</span>));</div>
-<div class="line">plot-&gt;<a class="code hl_function" href="class_j_k_q_t_plotter.html#aa1d2773779ae50769de29eacc68d3bea">addGraph</a>(graph1);</div>
+<div class="line">plot-&gt;<a class="code hl_function" href="class_j_k_q_t_plotter.html#a63a54c5342d664c35ffb3d532ba26b99">addGraph</a>(graph1);</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// autoscale the plot</span></div>
 <div class="line">plot-&gt;<a class="code hl_slot" href="class_j_k_q_t_plotter.html#a0ed800587c1f3f5ab36dd5422c101e28">zoomToFit</a>();</div>
@@ -1190,8 +1190,8 @@ Basic Usage of JKQTPlotter</h1>
 <div class="ttc" id="aclass_j_k_q_t_p_x_y_line_graph_html"><div class="ttname"><a href="class_j_k_q_t_p_x_y_line_graph.html">JKQTPXYLineGraph</a></div><div class="ttdoc">This implements xy line plots. This also alows to draw symbols at the data points.</div><div class="ttdef"><b>Definition</b> jkqtplines.h:61</div></div>
 <div class="ttc" id="aclass_j_k_q_t_plotter_html"><div class="ttname"><a href="class_j_k_q_t_plotter.html">JKQTPlotter</a></div><div class="ttdoc">plotter widget for scientific plots (uses JKQTBasePlotter to do the actual drawing)</div><div class="ttdef"><b>Definition</b> jkqtplotter.h:364</div></div>
 <div class="ttc" id="aclass_j_k_q_t_plotter_html_a0ed800587c1f3f5ab36dd5422c101e28"><div class="ttname"><a href="class_j_k_q_t_plotter.html#a0ed800587c1f3f5ab36dd5422c101e28">JKQTPlotter::zoomToFit</a></div><div class="ttdeci">void zoomToFit(bool zoomX=true, bool zoomY=true, bool includeX0=false, bool includeY0=false, double scaleX=1.05, double scaleY=1.05)</div><div class="ttdoc">this method zooms the graph so that all plotted datapoints are visible.</div><div class="ttdef"><b>Definition</b> jkqtplotter.h:1039</div></div>
+<div class="ttc" id="aclass_j_k_q_t_plotter_html_a63a54c5342d664c35ffb3d532ba26b99"><div class="ttname"><a href="class_j_k_q_t_plotter.html#a63a54c5342d664c35ffb3d532ba26b99">JKQTPlotter::addGraph</a></div><div class="ttdeci">size_t addGraph(JKQTPPlotElement *gr)</div><div class="ttdef"><b>Definition</b> jkqtplotter.h:784</div></div>
 <div class="ttc" id="aclass_j_k_q_t_plotter_html_a7cb1174da67d7d37dabc30c2ca25ed30"><div class="ttname"><a href="class_j_k_q_t_plotter.html#a7cb1174da67d7d37dabc30c2ca25ed30">JKQTPlotter::setXY</a></div><div class="ttdeci">void setXY(double xminn, double xmaxx, double yminn, double ymaxx, bool affectsSecondaryAxes=false)</div><div class="ttdoc">sets the x- and y-range of the plot (minimum and maximum values on the x-/y-axis)</div><div class="ttdef"><b>Definition</b> jkqtplotter.h:1167</div></div>
-<div class="ttc" id="aclass_j_k_q_t_plotter_html_aa1d2773779ae50769de29eacc68d3bea"><div class="ttname"><a href="class_j_k_q_t_plotter.html#aa1d2773779ae50769de29eacc68d3bea">JKQTPlotter::addGraph</a></div><div class="ttdeci">void addGraph(JKQTPPlotElement *gr)</div><div class="ttdef"><b>Definition</b> jkqtplotter.h:784</div></div>
 <div class="ttc" id="aclass_j_k_q_t_plotter_html_ae31c276a93cbf7aa8f9c153327aa5b74"><div class="ttname"><a href="class_j_k_q_t_plotter.html#ae31c276a93cbf7aa8f9c153327aa5b74">JKQTPlotter::getDatastore</a></div><div class="ttdeci">JKQTPDatastore * getDatastore()</div><div class="ttdoc">returns a pointer to the datastore used by this object</div><div class="ttdef"><b>Definition</b> jkqtplotter.h:611</div></div>
 </div><!-- fragment --><p>The result should look something like this:</p>
 <div class="image">
@@ -1217,7 +1217,7 @@ Naming conventions (excerpt from <a class="el" href="group__jkqtplotter__naming.
 </ul>
 </li>
 <li>
-Each graph is represented by a class derived from <a class="el" href="class_j_k_q_t_p_plot_element.html" title="this virtual base class of every element, which is part of a JKQTPlotter plot and may appear in its k...">JKQTPPlotElement</a> (in the example we instanciated a <a class="el" href="class_j_k_q_t_p_x_y_line_graph.html" title="This implements xy line plots. This also alows to draw symbols at the data points.">JKQTPXYLineGraph</a>, which shows data as a scatter of symbols that may (or may not) be connected by a line). Creating the graph class does not yet add it to the plotter. To add it, call <a class="el" href="class_j_k_q_t_plotter.html#aa1d2773779ae50769de29eacc68d3bea">JKQTPlotter::addGraph()</a>. Only after this sep, the graph is displayed. You can modify the apperance of the graph (e.g. colors, name in the key ...) by setting properties in the graph class instance. </li>
+Each graph is represented by a class derived from <a class="el" href="class_j_k_q_t_p_plot_element.html" title="this virtual base class of every element, which is part of a JKQTPlotter plot and may appear in its k...">JKQTPPlotElement</a> (in the example we instanciated a <a class="el" href="class_j_k_q_t_p_x_y_line_graph.html" title="This implements xy line plots. This also alows to draw symbols at the data points.">JKQTPXYLineGraph</a>, which shows data as a scatter of symbols that may (or may not) be connected by a line). Creating the graph class does not yet add it to the plotter. To add it, call <a class="el" href="class_j_k_q_t_plotter.html#a63a54c5342d664c35ffb3d532ba26b99">JKQTPlotter::addGraph()</a>. Only after this sep, the graph is displayed. You can modify the apperance of the graph (e.g. colors, name in the key ...) by setting properties in the graph class instance. </li>
 <li>
 You can auto-zoom the axis ranges of the plot by calling <a class="el" href="class_j_k_q_t_plotter.html#a0ed800587c1f3f5ab36dd5422c101e28" title="this method zooms the graph so that all plotted datapoints are visible.">JKQTPlotter::zoomToFit()</a>, or set them exlicitly by calling <a class="el" href="class_j_k_q_t_plotter.html#a7cb1174da67d7d37dabc30c2ca25ed30" title="sets the x- and y-range of the plot (minimum and maximum values on the x-/y-axis)">JKQTPlotter::setXY()</a>. The user can later zoom in/out by the mouse (and other means). You can limit this zoom range by setting an absolute axis range, calling e.g. <a class="el" href="class_j_k_q_t_plotter.html#a90b33a1e53ec8cbd864a672fb5fcaccc" title="sets absolutely limiting x- and y-range of the plot">JKQTPlotter::setAbsoluteXY()</a>. The the user cannot zoom farther out than the given range(s). </li>
 <li>
@@ -1676,8 +1676,8 @@ How to use JKQTPlotter in the Qt Form Designer</h1>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="aa1d2773779ae50769de29eacc68d3bea" name="aa1d2773779ae50769de29eacc68d3bea"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa1d2773779ae50769de29eacc68d3bea">&#9670;&#160;</a></span>addGraph()</h2>
+<a id="a63a54c5342d664c35ffb3d532ba26b99" name="a63a54c5342d664c35ffb3d532ba26b99"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a63a54c5342d664c35ffb3d532ba26b99">&#9670;&#160;</a></span>addGraph()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1686,7 +1686,7 @@ How to use JKQTPlotter in the Qt Form Designer</h1>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void JKQTPlotter::addGraph </td>
+          <td class="memname">size_t JKQTPlotter::addGraph </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_j_k_q_t_p_plot_element.html">JKQTPPlotElement</a> *&#160;</td>
           <td class="paramname"><em>gr</em></td><td>)</td>
@@ -11049,7 +11049,7 @@ This is a short-cut to <a class="el" href="class_j_k_q_t_plotter.html#a5fad7365a
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="class_j_k_q_t_plotter.html">JKQTPlotter</a></li>
-    <li class="footer">Generated on Wed Oct 16 2024 11:08:34 for JKQTPlotter by <a href="https://www.doxygen.org/index.html">doxygen</a> 1.9.8 </li>
+    <li class="footer">Generated on Wed Oct 16 2024 11:24:42 for JKQTPlotter by <a href="https://www.doxygen.org/index.html">doxygen</a> 1.9.8 </li>
   </ul>
 </div>
 </body>

@@ -174,10 +174,10 @@ $(document).ready(function(){initNavTree('_j_k_q_t_plotterparamscatter_custom_sy
 <div class="line">graph1-&gt;<a class="code hl_function" href="class_j_k_q_t_p_x_y_parametrized_scatter_graph.html#a9fa4e5b9de235e5c6f2b1f32394a8c2a">setSymbolColumnFunctor</a>(std::bind([](<span class="keywordtype">double</span> <span class="comment">/*x*/</span>, <span class="keywordtype">double</span> <span class="comment">/*y*/</span>, <span class="keywordtype">double</span> symbolcolumn)-&gt;<a class="code hl_enumeration" href="group__jkqtptools__drawing.html#gacdaaac6baeadbfd3677d4d53ea594b5b">JKQTPGraphSymbols</a> {</div>
 <div class="line">    <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><a class="code hl_enumeration" href="group__jkqtptools__drawing.html#gacdaaac6baeadbfd3677d4d53ea594b5b">JKQTPGraphSymbols</a><span class="keyword">&gt;</span>(floor(symbolcolumn));</div>
 <div class="line">}, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));</div>
-<div class="line">plot.<a class="code hl_function" href="class_j_k_q_t_plotter.html#aa1d2773779ae50769de29eacc68d3bea">addGraph</a>(graph1);</div>
+<div class="line">plot.<a class="code hl_function" href="class_j_k_q_t_plotter.html#a63a54c5342d664c35ffb3d532ba26b99">addGraph</a>(graph1);</div>
 <div class="ttc" id="aclass_j_k_q_t_p_x_y_parametrized_scatter_graph_html_a59ab512d8b152551916f199ee7c008eb"><div class="ttname"><a href="class_j_k_q_t_p_x_y_parametrized_scatter_graph.html#a59ab512d8b152551916f199ee7c008eb">JKQTPXYParametrizedScatterGraph::setSymbolColumn</a></div><div class="ttdeci">void setSymbolColumn(int __value)</div><div class="ttdoc">this column contains the symbol type</div></div>
 <div class="ttc" id="aclass_j_k_q_t_p_x_y_parametrized_scatter_graph_html_a9fa4e5b9de235e5c6f2b1f32394a8c2a"><div class="ttname"><a href="class_j_k_q_t_p_x_y_parametrized_scatter_graph.html#a9fa4e5b9de235e5c6f2b1f32394a8c2a">JKQTPXYParametrizedScatterGraph::setSymbolColumnFunctor</a></div><div class="ttdeci">void setSymbolColumnFunctor(FunctorToSymbol ff)</div><div class="ttdoc">defines a functor, which converts a value from the symbolColumn into an actual symbol type</div></div>
-<div class="ttc" id="aclass_j_k_q_t_plotter_html_aa1d2773779ae50769de29eacc68d3bea"><div class="ttname"><a href="class_j_k_q_t_plotter.html#aa1d2773779ae50769de29eacc68d3bea">JKQTPlotter::addGraph</a></div><div class="ttdeci">void addGraph(JKQTPPlotElement *gr)</div><div class="ttdef"><b>Definition</b> jkqtplotter.h:784</div></div>
+<div class="ttc" id="aclass_j_k_q_t_plotter_html_a63a54c5342d664c35ffb3d532ba26b99"><div class="ttname"><a href="class_j_k_q_t_plotter.html#a63a54c5342d664c35ffb3d532ba26b99">JKQTPlotter::addGraph</a></div><div class="ttdeci">size_t addGraph(JKQTPPlotElement *gr)</div><div class="ttdef"><b>Definition</b> jkqtplotter.h:784</div></div>
 <div class="ttc" id="agroup__jkqtptools__drawing_html_gacdaaac6baeadbfd3677d4d53ea594b5b"><div class="ttname"><a href="group__jkqtptools__drawing.html#gacdaaac6baeadbfd3677d4d53ea594b5b">JKQTPGraphSymbols</a></div><div class="ttdeci">JKQTPGraphSymbols</div><div class="ttdoc">symbols that can be used to plot a datapoint for a graph</div><div class="ttdef"><b>Definition</b> jkqtpdrawingtools.h:143</div></div>
 </div><!-- fragment --><p> The result looks like this:</p>
 <p><img src="https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/paramscatterplot_customsymbol.png" alt="paramscatterplot_customsymbol" class="inline"/> </p>
@@ -189,7 +189,7 @@ $(document).ready(function(){initNavTree('_j_k_q_t_plotterparamscatter_custom_sy
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="example_tutorial_projects.html">Example &amp; Tutorial Projects</a></li>
-    <li class="footer">Generated on Wed Oct 16 2024 11:08:33 for JKQTPlotter by <a href="https://www.doxygen.org/index.html">doxygen</a> 1.9.8 </li>
+    <li class="footer">Generated on Wed Oct 16 2024 11:24:41 for JKQTPlotter by <a href="https://www.doxygen.org/index.html">doxygen</a> 1.9.8 </li>
   </ul>
 </div>
 </body>

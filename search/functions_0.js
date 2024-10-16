@@ -22,7 +22,7 @@ var searchData=
   ['adddrawmode_19',['addDrawMode',['../class_j_k_q_t_p_c_a_draw_mode_combo_box.html#adf56d63ed055f455ff4fb1784984536e',1,'JKQTPCADrawModeComboBox']]],
   ['addfunction_20',['addFunction',['../class_j_k_q_t_p_math_parser.html#a9924ad4086cf5f7b7d3cd2d6181c5564',1,'JKQTPMathParser']]],
   ['addglobalflags_21',['addGlobalFlags',['../struct_j_k_q_t_math_text_symbol_node_1_1_symbol_full_props.html#ad38bcc377606509609799c8553db3b3a',1,'JKQTMathTextSymbolNode::SymbolFullProps']]],
-  ['addgraph_22',['addgraph',['../class_j_k_q_t_base_plotter.html#a2a509d94fcd0dafb901d84bc9f8b6e44',1,'JKQTBasePlotter::addGraph()'],['../class_j_k_q_t_plotter.html#aa1d2773779ae50769de29eacc68d3bea',1,'JKQTPlotter::addGraph()']]],
+  ['addgraph_22',['addgraph',['../class_j_k_q_t_base_plotter.html#a2a509d94fcd0dafb901d84bc9f8b6e44',1,'JKQTBasePlotter::addGraph()'],['../class_j_k_q_t_plotter.html#a63a54c5342d664c35ffb3d532ba26b99',1,'JKQTPlotter::addGraph()']]],
   ['addgraphatbottom_23',['addgraphatbottom',['../class_j_k_q_t_base_plotter.html#a84f5987b26c50218aa611968d03bca41',1,'JKQTBasePlotter::addGraphAtBottom()'],['../class_j_k_q_t_plotter.html#ae29b87ec525294b3a2623adcc09175a5',1,'JKQTPlotter::addGraphAtBottom()']]],
   ['addgraphontop_24',['addgraphontop',['../class_j_k_q_t_base_plotter.html#ad227b1c78ed88b42be4874e84e29a03b',1,'JKQTBasePlotter::addGraphOnTop()'],['../class_j_k_q_t_plotter.html#a9a0cf018e7a4e1d1378ca177342e3edf',1,'JKQTPlotter::addGraphOnTop(JKQTPPlotElement *gr)']]],
   ['addgraphs_25',['addgraphs',['../class_j_k_q_t_plotter.html#a1a14a278c830edccf5264cc2ad02db9e',1,'JKQTPlotter::addGraphs()'],['../class_j_k_q_t_base_plotter.html#a876c9ec70fdf103cbbacdd2236b6ab0e',1,'JKQTBasePlotter::addGraphs()']]],

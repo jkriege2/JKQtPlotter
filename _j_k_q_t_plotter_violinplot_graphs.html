@@ -120,8 +120,8 @@ $(document).ready(function(){initNavTree('_j_k_q_t_plotter_violinplot_graphs.htm
 <ul><li class="level1"><a href="#autotoc_md116">Generating a test Dataset</a></li>
 <li class="level1"><a href="#autotoc_md117">Visualizing data as a Rug Plot</a></li>
 <li class="level1"><a href="#autotoc_md118">Drawing the (vertical) Violin Plot</a></li>
-<li class="level1"><a href="#autotoc_md119">Drawing a horizontal Violin Plot</a></li>
-<li class="level1"><a href="#autotoc_md120">Adapters as shortcuts to drawing Violin Plots</a></li>
+<li class="level1"><a href="#autotoc_md120">Drawing a horizontal Violin Plot</a></li>
+<li class="level1"><a href="#autotoc_md122">Adapters as shortcuts to drawing Violin Plots</a></li>
 </ul>
 </div>
 <div class="textblock"><p>This project (see <a href="https://github.com/jkriege2/JKQtPlotter/tree/master/examples/violinplot"><code>violinplot</code></a> demonstrates how to use <a class="el" href="class_j_k_q_t_plotter.html" title="plotter widget for scientific plots (uses JKQTBasePlotter to do the actual drawing)">JKQTPlotter</a> to draw <a href="https://en.wikipedia.org/wiki/Violin_plot">violin plots</a> using the classes <code><a class="el" href="class_j_k_q_t_p_violinplot_vertical_element.html" title="This implements a single vertical Violin Plot as a &quot;geometric element&quot;.">JKQTPViolinplotVerticalElement</a></code> and <code><a class="el" href="class_j_k_q_t_p_violinplot_horizontal_element.html" title="This implements a single horizontal Violin Plot as a &quot;geometric element&quot;.">JKQTPViolinplotHorizontalElement</a></code>. Violin plots can be thought of as an extension to box plots, as they are also used to represent the distribution of a random variable, but contain more info than the "simple" 5-number statistics used for boxplots: Violin Plots show an estimate of the desnsity distribution of the random vriable, e.g. calculated as a kernel density estimate, or as a simple histogram. The Plotting classes themselves do not calculate these estimates, but only draw them into the plot. The density estimates are calculated by functions from the <a class="el" href="group__jkqtptools__math__statistics.html">JKQTPlotter Statistics Library</a>.</p>
@@ -221,11 +221,11 @@ Drawing the (vertical) Violin Plot</h1>
 <div class="line">                         21, <span class="keyword">true</span>, <span class="keyword">false</span>, <a class="code hl_enumvalue" href="group__jkqtptools__math__statistics__1dhist.html#ggab6b155ded164a7ae39a7024792251373ac271d359b3a61c63c913c77625757c7c">JKQTPStatHistogramBinXMode::XIsMid</a>);</div>
 <div class="ttc" id="agroup__jkqtptools__math__statistics__1dhist_html_gaa83dbe625d4507f55629eaaf96a09cf8"><div class="ttname"><a href="group__jkqtptools__math__statistics__1dhist.html#gaa83dbe625d4507f55629eaaf96a09cf8">jkqtpstatHistogram1DAutoranged</a></div><div class="ttdeci">void jkqtpstatHistogram1DAutoranged(InputIt first, InputIt last, OutputIt histogramXOut, OutputIt histogramYOut, int bins=11, bool normalized=true, bool cummulative=false, JKQTPStatHistogramBinXMode binXMode=JKQTPStatHistogramBinXMode::XIsLeft)</div><div class="ttdoc">calculate an autoranged 1-dimensional histogram from the given data range first .....</div><div class="ttdef"><b>Definition</b> jkqtpstathistogram.h:73</div></div>
 <div class="ttc" id="agroup__jkqtptools__math__statistics__1dhist_html_ggab6b155ded164a7ae39a7024792251373ac271d359b3a61c63c913c77625757c7c"><div class="ttname"><a href="group__jkqtptools__math__statistics__1dhist.html#ggab6b155ded164a7ae39a7024792251373ac271d359b3a61c63c913c77625757c7c">JKQTPStatHistogramBinXMode::XIsMid</a></div><div class="ttdeci">@ XIsMid</div><div class="ttdoc">x-location is the middle of the bin</div></div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md119"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md120"></a>
 Drawing a horizontal Violin Plot</h1>
 <p>Finally note that if you use <code><a class="el" href="class_j_k_q_t_p_violinplot_horizontal_element.html" title="This implements a single horizontal Violin Plot as a &quot;geometric element&quot;.">JKQTPViolinplotHorizontalElement</a></code> instead of the <code><a class="el" href="class_j_k_q_t_p_violinplot_vertical_element.html" title="This implements a single vertical Violin Plot as a &quot;geometric element&quot;.">JKQTPViolinplotVerticalElement</a></code> used above, you can also draw horizontal violin plots:</p>
 <p><img src="https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/violinplot_hor.png" alt="violinplot_hor" class="inline"/></p>
-<h1><a class="anchor" id="autotoc_md120"></a>
+<h1><a class="anchor" id="autotoc_md122"></a>
 Adapters as shortcuts to drawing Violin Plots</h1>
 <p>Note that there also exist "adapters" that allow to draw violin plots in one line of code: </p><div class="fragment"><div class="line"><a class="code hl_function" href="group__jkqtptools__math__statistics__adaptors.html#ga09d561a779b7bb36c3190f37b82cb297">jkqtpstatAddVViolinplotHistogramAndOutliers</a>(plot-&gt;getPlotter(), datastore1-&gt;begin(randomdatacol1), datastore1-&gt;end(randomdatacol1), -5);</div>
 <div class="line"><a class="code hl_function" href="group__jkqtptools__math__statistics__adaptors.html#ga8ae3a2a1aee7bcb00787b53624dee15a">jkqtpstatAddHViolinplotHistogramAndOutliers</a>(plot-&gt;getPlotter(), datastore1-&gt;begin(randomdatacol1), datastore1-&gt;end(randomdatacol1), -5);</div>
@@ -251,7 +251,7 @@ Adapters as shortcuts to drawing Violin Plots</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="example_tutorial_projects.html">Example &amp; Tutorial Projects</a></li>
-    <li class="footer">Generated on Wed Oct 16 2024 11:08:33 for JKQTPlotter by <a href="https://www.doxygen.org/index.html">doxygen</a> 1.9.8 </li>
+    <li class="footer">Generated on Wed Oct 16 2024 11:24:41 for JKQTPlotter by <a href="https://www.doxygen.org/index.html">doxygen</a> 1.9.8 </li>
   </ul>
 </div>
 </body>
