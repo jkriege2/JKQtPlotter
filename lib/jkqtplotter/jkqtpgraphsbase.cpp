@@ -209,7 +209,7 @@ double JKQTPPlotElement::hitTest(const QPointF & posSystem, QPointF* closestSpot
     double closedistsec=JKQTP_NAN;
     QPointF closestPos;
     QPointF posF=transform(posSystem);
-    for (int i=0; i<m_hitTestData.count(); i++) {
+    for (int i=0; i<m_hitTestData.size(); i++) {
         const QPointF x=m_hitTestData[i].pos;
         const QPointF xpix = transform(x);
         if (JKQTPIsOKFloat(xpix.x())&&JKQTPIsOKFloat(xpix.y())) {

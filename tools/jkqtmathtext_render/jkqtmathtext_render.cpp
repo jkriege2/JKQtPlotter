@@ -208,8 +208,8 @@ int main(int argc, char* argv[])
             fileList<<"     <tr>\n";
             i=1;
 
-            auto myIsLower=[](const QString& s) { for (int i=0; i<s.count(); i++) if (!s[i].isLower()) return false; return true; };
-            auto myIsUpper=[](const QString& s) { for (int i=0; i<s.count(); i++) if (!s[i].isUpper()) return false; return true; };
+            auto myIsLower=[](const QString& s) { for (int i=0; i<s.size(); i++) if (!s[i].isLower()) return false; return true; };
+            auto myIsUpper=[](const QString& s) { for (int i=0; i<s.size(); i++) if (!s[i].isUpper()) return false; return true; };
 #if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
             std::sort
 #else

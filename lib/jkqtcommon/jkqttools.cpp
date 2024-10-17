@@ -77,7 +77,7 @@ void jkloadSplitter(QSettings& settings, QSplitter* splitter, const QString& pre
         sizes.append(sl[i].toInt());
     }
     s1=splitter->sizes();
-    for (int i=0; i<s1.count(); i++) {
+    for (int i=0; i<s1.size(); i++) {
         if (i<sizes.size()) s1[i]=sizes[i];
     }*/
     splitter->restoreState(settings.value(prefix+"splitter_sizes").toByteArray());

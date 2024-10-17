@@ -95,12 +95,12 @@ This test results in the following numbers (on my AMD Ryzen5 8/16-core laptop):
 [comment]:RESULTS
 
 <b>VERSION:</b> 5.0.0
-<b>BUILD MODE:</b> Release
+<b>BUILD MODE:</b> Debug
 
-<u><b>SERIAL RESULTS:</b></u><br/>runtime, overall = 11182.4ms<br/>single runtimes = (465.8 +/- 1648.1) ms<br/>speedup = 1.00x<br/>threads / available = 1 / 16<br/><br/><br/>  
+<u><b>SERIAL RESULTS:</b></u><br/>runtime, overall = 7262.1ms<br/>single runtimes = (302.5 +/- 573.2) ms<br/>speedup = 1.00x<br/>threads / available = 1 / 16<br/><br/><br/>  
 
 <u><b>PARALLEL RESULTS:</b></u><br/>
-runtime, overall = 5378.2ms<br/>single runtimes = (1639.8 +/- 416.7) ms<br/>speedup = 7.32x<br/>threads / available = 8 / 16<br/>batch runs = 3<br/><br/><b>speedup vs. serial = 2.1x</b>
+runtime, overall = 896.4ms<br/>single runtimes = (259.4 +/- 55.2) ms<br/>speedup = 6.95x<br/>threads / available = 8 / 16<br/>batch runs = 3<br/><br/><b>speedup vs. serial = 8.1x</b>
 
 [comment]:RESULTS_END
 
