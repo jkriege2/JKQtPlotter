@@ -34,7 +34,7 @@ var searchData=
   ['hittestxonly_31',['HitTestXOnly',['../class_j_k_q_t_p_plot_element.html#ada033e8fe68bbb9d24a28602ea969332a02f3b108acc2407a1d179f5bcfc7526e',1,'JKQTPPlotElement']]],
   ['hittestxy_32',['HitTestXY',['../class_j_k_q_t_p_plot_element.html#ada033e8fe68bbb9d24a28602ea969332a78e85d1b53b16a44de8244d5cf8235a5',1,'JKQTPPlotElement']]],
   ['hittestyonly_33',['HitTestYOnly',['../class_j_k_q_t_p_plot_element.html#ada033e8fe68bbb9d24a28602ea969332abfa7a1fc942a6c8fb4857eef430e54cd',1,'JKQTPPlotElement']]],
-  ['horizontal_20violin_20plot_34',['Drawing a horizontal Violin Plot',['../_j_k_q_t_plotter_violinplot_graphs.html#autotoc_md120',1,'']]],
+  ['horizontal_20violin_20plot_34',['Drawing a horizontal Violin Plot',['../_j_k_q_t_plotter_violinplot_graphs.html#autotoc_md119',1,'']]],
   ['horizontallinebottomrow_35',['horizontalLineBottomRow',['../class_j_k_q_t_math_text_matrix_node.html#abdc918ca7eb040ecc115960557944096',1,'JKQTMathTextMatrixNode']]],
   ['horizontallinetop_36',['horizontalLineTop',['../class_j_k_q_t_math_text_matrix_node.html#a20ac9bc031184edc3a333ed55ef8d200',1,'JKQTMathTextMatrixNode']]],
   ['how_20it_20works_37',['How it works',['../_j_k_q_t_plotter_mandelbrot.html#autotoc_md84',1,'']]],

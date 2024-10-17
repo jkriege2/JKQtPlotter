@@ -204,10 +204,10 @@ $(document).ready(function(){initNavTree('_j_k_q_t_plotter_multi_threaded.html',
 <div class="line">threads.clear();</div>
 </div><!-- fragment --><p>This test results in the following numbers (on my AMD Ryzen5 8/16-core laptop):</p>
 <hr  />
-<p><b>VERSION:</b> 5.0.0 <b>BUILD MODE:</b> Release</p>
+<p><b>VERSION:</b> 5.0.0 <b>BUILD MODE:</b> Debug</p>
 <p><u><b>SERIAL RESULTS:</b></u><br  />
-runtime, overall = 11182.4ms<br  />
-single runtimes = (465.8 +/- 1648.1) ms<br  />
+runtime, overall = 7262.1ms<br  />
+single runtimes = (302.5 +/- 573.2) ms<br  />
 speedup = 1.00x<br  />
 threads / available = 1 / 16<br  />
 <br  />
@@ -215,13 +215,13 @@ threads / available = 1 / 16<br  />
  <br  />
 </p>
 <p><u><b>PARALLEL RESULTS:</b></u><br  />
- runtime, overall = 5378.2ms<br  />
-single runtimes = (1639.8 +/- 416.7) ms<br  />
-speedup = 7.32x<br  />
+ runtime, overall = 896.4ms<br  />
+single runtimes = (259.4 +/- 55.2) ms<br  />
+speedup = 6.95x<br  />
 threads / available = 8 / 16<br  />
 batch runs = 3<br  />
 <br  />
-<b>speedup vs. serial = 2.1x</b></p>
+<b>speedup vs. serial = 8.1x</b></p>
 <hr  />
 <p>From this data you can observe:</p><ul>
 <li>The plotting parallelizes nicely, i.e. the speedup ist &gt;7x on a 8-core-machine. This is the speedup calculated as sum of runtimes of each thread, divided by the runtime of all threads in parallel.</li>
@@ -239,7 +239,7 @@ batch runs = 3<br  />
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="example_tutorial_projects.html">Example &amp; Tutorial Projects</a></li>
-    <li class="footer">Generated on Thu Oct 17 2024 10:44:22 for JKQTPlotter by <a href="https://www.doxygen.org/index.html">doxygen</a> 1.9.8 </li>
+    <li class="footer">Generated on Thu Oct 17 2024 11:52:12 for JKQTPlotter by <a href="https://www.doxygen.org/index.html">doxygen</a> 1.9.8 </li>
   </ul>
 </div>
 </body>
