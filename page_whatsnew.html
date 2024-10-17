@@ -239,8 +239,9 @@ FIXED: <a class="el" href="group__jkqtptools__math__statistics__basic.html#gafba
 <li>
 FIXED removed unnecessary operators (&lt;,&gt;,&lt;=,&gt;=) from <a class="el" href="class_j_k_q_t_p_column_iterator.html" title="iterator over the data in the column of a JKQTPDatastore">JKQTPColumnIterator</a> and <a class="el" href="class_j_k_q_t_p_column_const_iterator.html" title="iterator over the data in the column of a JKQTPDatastore">JKQTPColumnConstIterator</a>, which lead to exceptions on some compilers (MSVC) </li>
 <li>
-FIXED/IMPROVED issue <a href="https://github.com/jkriege2/JKQtPlotter/issu
-    &lt;li&gt;FIXED symmetry when zooming with JKQTBasePlotter::zoomIn() or JKQTBasePlotter::zoomOut() &lt;/li&gt;--es/100">#100: Add option to disable resize delay feature by setting the delay to zero</a> (thanks to <a href="https://github.com/fpalazzolo">user:fpalazzolo</a> for reporting) </li>
+FIXED/IMPROVED issue <a href="https://github.com/jkriege2/JKQtPlotter/issues/100">#100: Add option to disable resize delay feature by setting the delay to zero</a> (thanks to <a href="https://github.com/fpalazzolo">user:fpalazzolo</a> for reporting) </li>
+<li>
+FIXED symmetry when zooming with <a class="el" href="class_j_k_q_t_base_plotter.html#a0ecb24037b53ce304e50004ab400f133" title="zooms into the graph (the same as turning the mouse wheel) by the given factor">JKQTBasePlotter::zoomIn()</a> or <a class="el" href="class_j_k_q_t_base_plotter.html#adeb00c55e6548ea73f98b3da8fec23ba" title="zooms out of the graph (the same as turning the mouse wheel) by the given factor">JKQTBasePlotter::zoomOut()</a>  </li>
 <li>
 FIXED/NEW: placement of plot-title (was not centerd in its box, but glued to the bottom) by adding a plotstyle parameter <a class="el" href="class_j_k_q_t_base_plotter_style.html#a1d8f0a02d156d5d50778b799ab20eb05" title="offset of the plot label from the next element of the graph, i.e. below the label [pt].">JKQTBasePlotterStyle::plotLabelOffset</a> </li>
 <li>
@@ -248,6 +249,8 @@ FIXED/REWORKED issue <a href="https://github.com/jkriege2/JKQtPlotter/issues/111
 While fixing this issue, the functions <a class="el" href="class_j_k_q_t_base_plotter.html#a6ef41a91747b9ea11f05cab328c0030f" title="save the current plot as an image file, with the current widget aspect ratio, if filename is empty a ...">JKQTBasePlotter::saveImage()</a> etc. gained a bool return value to indicate whether sacing was successful. </li>
 <li>
 IMPROVED/FIXED outside space requirements for color bars. Text was sometime too close to the plot border. </li>
+<li>
+FIXED issue <a href="https://github.com/jkriege2/JKQtPlotter/issues/140">#140: addGraph function return value</a> by adding return values to all addGraph()-Variants in <a class="el" href="class_j_k_q_t_plotter.html" title="plotter widget for scientific plots (uses JKQTBasePlotter to do the actual drawing)">JKQTPlotter</a> (to mirror the interface of <a class="el" href="class_j_k_q_t_base_plotter.html" title="base class for 2D plotter classes (used by the plotter widget JKQTPlotter)">JKQTBasePlotter</a>), (thanks to <a href="https://github.com/sajadblog">user:sajadblog</a> </li>
 <li>
 REWORKED <a class="el" href="class_j_k_q_t_base_plotter.html#a315af21f554552524f5a478039b72786" title="save the data used for the current plot. The file format is extracted from the file extension (csv,...">JKQTBasePlotter::saveData()</a> with a more consistent interface and a bool return value to indicate success or failure + improved documentation, added methods to <a class="el" href="class_j_k_q_t_p_save_data_adapter.html" title="virtual base-class for exporter classes that can be used to save data inot a file">JKQTPSaveDataAdapter</a> that allow to specify file extensions and an ID for the plugin. </li>
 <li>
@@ -826,7 +829,7 @@ Latest Release/Tag: <a href="https://github.com/jkriege2/JKQtPlotter/releases/ta
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Oct 16 2024 11:27:24 for JKQTPlotter by <a href="https://www.doxygen.org/index.html">doxygen</a> 1.9.8 </li>
+    <li class="footer">Generated on Thu Oct 17 2024 10:44:22 for JKQTPlotter by <a href="https://www.doxygen.org/index.html">doxygen</a> 1.9.8 </li>
   </ul>
 </div>
 </body>

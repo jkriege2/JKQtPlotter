@@ -1160,7 +1160,7 @@ template&lt;class InputIt1 , class InputIt2 &gt; </div>
   <table class="params">
     <tr><td class="paramdir"></td><td class="paramname">first1</td><td>iterator pointing to the first item in the first dataset to use <picture><source srcset="form_71_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ X_1 $" src="form_71.png" width="21" height="16"/></picture> </td></tr>
     <tr><td class="paramdir"></td><td class="paramname">last1</td><td>iterator pointing behind the last item in the first dataset to use <picture><source srcset="form_72_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ X_N $" src="form_72.png" width="26" height="16"/></picture> </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">first2</td><td>iterator pointing to the second item in the first dataset to use <picture><source srcset="form_86_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ Y_1 $" src="form_86.png" width="16" height="16"/></picture> </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">first2</td><td>iterator pointing to the second item in the first dataset to use <picture><source srcset="form_85_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ Y_1 $" src="form_85.png" width="16" height="16"/></picture> </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">averageOut1</td><td>returns (optionally) the average of the first dataset <picture><source srcset="form_102_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ X_i $" src="form_102.png" width="20" height="16"/></picture> </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">averageOut2</td><td>returns (optionally) the average of the second dataset <picture><source srcset="form_103_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ Y_i $" src="form_103.png" width="15" height="16"/></picture> </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">Noutput</td><td>optionally returns the number of accumulated valid values in this variable </td></tr>
@@ -1425,7 +1425,7 @@ template&lt;class InputIt &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the median absolute deviation about the median (MAD) of the data returned between <em>first</em> and <em>last</em> (excluding invalid doubles). If the given range <em>first</em> ... <em>last</em> is empty, NAN is returned</dd></dl>
 <p>This function calculates </p><p class="formulaDsp">
-<picture><source srcset="form_109_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaDsp" alt="\[ \mbox{MAD}(\vec{x})=\mbox{Med}\left\{|\vec{x}-\mbox{Med}(\vec{x})|\right\} \]" src="form_109.png" width="223" height="18"/></picture>
+<picture><source srcset="form_113_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaDsp" alt="\[ \mbox{MAD}(\vec{x})=\mbox{Med}\left\{|\vec{x}-\mbox{Med}(\vec{x})|\right\} \]" src="form_113.png" width="223" height="18"/></picture>
 </p>
 <dl class="section note"><dt>Note</dt><dd>This operation implies an internal copy of the data, as well as sorting it!</dd>
 <dd>
@@ -2049,7 +2049,7 @@ template&lt;class InputIt &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the normalized median absolute deviation about the median (NMAD) of the data returned between <em>first</em> and <em>last</em> (excluding invalid doubles). If the given range <em>first</em> ... <em>last</em> is empty, NAN is returned</dd></dl>
 <p>This function calculates </p><p class="formulaDsp">
-<picture><source srcset="form_115_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaDsp" alt="\[ \mbox{NMAD}(\vec{x})=\frac{\mbox{MAD}(\vec{x})}{0.6745}=\frac{\mbox{Med}\left\{|\vec{x}-\mbox{Med}(\vec{x})|\right\}}{0.6745} \]" src="form_115.png" width="325" height="37"/></picture>
+<picture><source srcset="form_119_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaDsp" alt="\[ \mbox{NMAD}(\vec{x})=\frac{\mbox{MAD}(\vec{x})}{0.6745}=\frac{\mbox{Med}\left\{|\vec{x}-\mbox{Med}(\vec{x})|\right\}}{0.6745} \]" src="form_119.png" width="325" height="37"/></picture>
 </p>
 <dl class="section note"><dt>Note</dt><dd>This operation implies an internal copy of the data, as well as sorting it!</dd>
 <dd>
@@ -2624,7 +2624,7 @@ template&lt;class InputIt , class InputWeightIt &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>weighted standard deviation of the data returned between <em>first</em> and <em>last</em> (excluding invalid doubles). If the given range <em>first</em> ... <em>last</em> is empty, 0 is returned</dd></dl>
 <p>This function implements: </p><p class="formulaDsp">
-<picture><source srcset="form_85_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaDsp" alt="\[ \sigma_v=\sqrt{\frac{\sum\limits_{i=1}^{N}w_i\cdot (v_i-\overline{v})^2}{\sum\limits_{i=1}^{N}w_i}} \]" src="form_85.png" width="174" height="98"/></picture>
+<picture><source srcset="form_87_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaDsp" alt="\[ \sigma_v=\sqrt{\frac{\sum\limits_{i=1}^{N}w_i\cdot (v_i-\overline{v})^2}{\sum\limits_{i=1}^{N}w_i}} \]" src="form_87.png" width="174" height="98"/></picture>
 </p>
 <dl class="section note"><dt>Note</dt><dd>Each value is the specified range is converted to a double using <a class="el" href="group__jkqtptools__math__basic.html#ga966c1a713f60bd026db4f35f7007eb7e" title="converts a boolean to a double, is used to convert boolean to double by JKQTPDatastore">jkqtp_todouble()</a>. Entries in the range that are invalid double (using <a class="el" href="group__jkqtptools__math__basic.html#gaf0ace9f4ac87719798dea6ef64068ff4" title="check whether the dlotaing point number is OK (i.e. non-inf, non-NAN)">JKQTPIsOKFloat()</a> ) are ignored when calculating. </dd></dl>
 
@@ -2716,7 +2716,7 @@ template&lt;class InputIt , class InputWeightIt &gt; </div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Oct 16 2024 11:27:24 for JKQTPlotter by <a href="https://www.doxygen.org/index.html">doxygen</a> 1.9.8 </li>
+    <li class="footer">Generated on Thu Oct 17 2024 10:44:22 for JKQTPlotter by <a href="https://www.doxygen.org/index.html">doxygen</a> 1.9.8 </li>
   </ul>
 </div>
 </body>

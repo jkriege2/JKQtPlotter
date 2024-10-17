@@ -62,7 +62,7 @@ var searchData=
   ['licenses_20of_203rd_20party_20products_20contained_20in_20jkqtplotter_59',['Licenses of 3rd Party Products Contained in JKQTPlotter',['../licensepage.html#extlicense_sec',1,'']]],
   ['licensing_20terms_20for_20jkqtplotter_60',['Licensing Terms for JKQTPlotter',['../licensepage.html',1,'']]],
   ['lightercolor_61',['LighterColor',['../struct_j_k_q_t_p_color_derivation_mode.html#a4a8889bb9c209ab75c8bb87310431e22a1cc174343a5a0d91fd12fe9626298d9b',1,'JKQTPColorDerivationMode']]],
-  ['line_62',['line',['../struct_j_k_q_t_p_line_plot_style_with_symbol_size_combo_box_1_1style_data.html#a117e241c52e4d6ff1fe5142a82c61109',1,'JKQTPLinePlotStyleWithSymbolSizeComboBox::styleData::line'],['../class_j_k_q_t_p_functor_line_graph_base.html#a6529405e546569ee0c5cd640759f6efaa344a7c0bdddf73005f775d706519ee79',1,'JKQTPFunctorLineGraphBase::Line']]],
+  ['line_62',['line',['../class_j_k_q_t_p_functor_line_graph_base.html#a6529405e546569ee0c5cd640759f6efaa344a7c0bdddf73005f775d706519ee79',1,'JKQTPFunctorLineGraphBase::Line'],['../struct_j_k_q_t_p_line_plot_style_with_symbol_size_combo_box_1_1style_data.html#a117e241c52e4d6ff1fe5142a82c61109',1,'JKQTPLinePlotStyleWithSymbolSizeComboBox::styleData::line']]],
   ['line_20and_20fill_20styling_63',['Example (JKQTPlotter): Advanced Line and Fill Styling',['../_j_k_q_t_plotter_advanced_line_and_fill_styling.html',1,'exampleTutorialProjects']]],
   ['line_20end_20decorators_20for_20jkqtpgeobeziercurve_64',['Line-End Decorators for JKQTPGeoBezierCurve',['../class_j_k_q_t_p_geo_bezier_curve.html#JKQTPGeoBezierCurveDecorators',1,'']]],
   ['line_20graph_65',['Example (JKQTPlotter): Very simple line-graph',['../_j_k_q_t_plotter_simple_test.html',1,'exampleTutorialProjects']]],
