@@ -783,9 +783,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
         /** \copydoc JKQTBasePlotter::addGraph()   */
         inline size_t addGraph(JKQTPPlotElement* gr) { return plotter->addGraph(gr); }
         /** \copydoc JKQTBasePlotter::addGraphOnTop()   */
-        inline void addGraphOnTop(JKQTPPlotElement* gr) { plotter->addGraphOnTop(gr); }
+        inline size_t addGraphOnTop(JKQTPPlotElement* gr) { return plotter->addGraphOnTop(gr); }
         /** \copydoc JKQTBasePlotter::addGraphAtBottom()   */
-        inline void addGraphAtBottom(JKQTPPlotElement* gr) { plotter->addGraphAtBottom(gr); }
+        inline size_t addGraphAtBottom(JKQTPPlotElement* gr) { return plotter->addGraphAtBottom(gr); }
 
         /** \copydoc JKQTBasePlotter::moveGraphTop()   */
         inline void moveGraphTop(JKQTPPlotElement* gr) {  plotter->moveGraphTop(gr); }
