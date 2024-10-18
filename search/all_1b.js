@@ -53,7 +53,7 @@ var searchData=
   ['with_20transfer_20of_20ownership_50',['Referencing with Transfer of Ownership',['../_j_k_q_t_plotter_basic_j_k_q_t_p_datastore.html#autotoc_md22',1,'']]],
   ['with_20two_20color_20fill_20mode_51',['Example (JKQTPlotter): Barchart With Two-Color Fill-Mode',['../_j_k_q_t_plotter_barcharts_two_color_filling.html',1,'exampleTutorialProjects']]],
   ['with_20visual_20studio_20msvc_52',['Configuring&amp;Building with Visual Studio/MSVC',['../page_buildinstructions__c_m_a_k_e.html#page_buildinstructions_CMAKE_VSTUDIO',1,'']]],
-  ['with_20x_20y_20errors_20from_20categorized_20data_53',['(Scatter-)Graphs with X/Y-errors from Categorized Data',['../_j_k_q_t_plotter_basic_j_k_q_t_p_datastore_statistics_grouped_stat.html#autotoc_md38',1,'']]],
+  ['with_20x_20y_20errors_20from_20categorized_20data_53',['(Scatter-)Graphs with X/Y-errors from Categorized Data',['../_j_k_q_t_plotter_basic_j_k_q_t_p_datastore_statistics_grouped_stat.html#autotoc_md34',1,'']]],
   ['within_20a_20qlabel_20class_20jkqtmathtextlabel_54',['Usage within a QLabel class JKQTMathTextLabel',['../class_j_k_q_t_math_text.html#JKQTMathTextUsageQLabel',1,'']]],
   ['without_20transfer_20of_20ownership_55',['Referencing without transfer of ownership',['../_j_k_q_t_plotter_basic_j_k_q_t_p_datastore.html#autotoc_md21',1,'']]],
   ['without_20use_20of_20central_20jkqtdatastore_56',['Example (JKQTPlotter): Simple math image plot without use of central JKQTdatastore',['../_j_k_q_t_plotter_image_plot_no_datastore.html',1,'exampleTutorialProjects']]],

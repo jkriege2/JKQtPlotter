@@ -244,7 +244,7 @@ var NAVTREEINDEX9 =
 "class_j_k_q_t_p_bar_vertical_stackable_graph.html#a296619fb32e4bac900739480d5d3a7d3":[10,4,1,1,1,0,7,2],
 "class_j_k_q_t_p_bar_vertical_stackable_graph.html#a3f854f54c6e636da3cc5ba3907f5a9cf":[10,4,1,1,1,0,7,1],
 "class_j_k_q_t_p_bar_vertical_stackable_graph.html#a4ca7dd704a4ee0450ba35f5eca89c557":[10,4,1,1,1,0,7,6],
-"class_j_k_q_t_p_bar_vertical_stackable_graph.html#a553738b95c814c658f40cdd59a266b5e":[10,4,1,1,1,0,7,4],
+"class_j_k_q_t_p_bar_vertical_stackable_graph.html#a58d8aa0d8c75e4f0b64d3c32176cd3f0":[10,4,1,1,1,0,7,4],
 "class_j_k_q_t_p_bar_vertical_stackable_graph.html#a782f5756425477f71f46350ad0dcbf88":[10,4,1,1,1,0,7,0],
 "class_j_k_q_t_p_bar_vertical_stackable_graph.html#a8f27d36c757cc07d661708f9129c5118":[10,4,1,1,1,0,7,8],
 "class_j_k_q_t_p_bar_vertical_stackable_graph.html#a9dbdd2ddaa3571aeac46d728fa088308":[10,4,1,1,1,0,7,3],

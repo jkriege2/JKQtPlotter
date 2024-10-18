@@ -346,8 +346,8 @@ var group__jkqtpbaseplotter__elements =
       [ "getPlotElement", "class_j_k_q_t_p_main_key.html#a783d33f4a451d19570e4c009ade98fd3", null ],
       [ "getPlotElement", "class_j_k_q_t_p_main_key.html#afd3a817c1f782a865c906ea756ee1c9c", null ],
       [ "getPlotElements", "class_j_k_q_t_p_main_key.html#a082be3112598450d8a1f0e157b7dfd4c", null ],
-      [ "keyStyle", "class_j_k_q_t_p_main_key.html#a997da228043e942fcfbb16ce95683c6e", null ],
-      [ "keyStyle", "class_j_k_q_t_p_main_key.html#a8db5642d2efc4e6e464206c3b3ce902b", null ]
+      [ "keyStyle", "class_j_k_q_t_p_main_key.html#afa0328400a2d7275fc16ae1930c7e873", null ],
+      [ "keyStyle", "class_j_k_q_t_p_main_key.html#adce8e6b0ce808787856d6da92e2045ee", null ]
     ] ],
     [ "JKQTPVerticalAxis", "class_j_k_q_t_p_vertical_axis.html", [
       [ "JKQTPVerticalAxis", "class_j_k_q_t_p_vertical_axis.html#a02f79a83fc3a325a91592de0011b3a80", null ],
