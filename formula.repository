@@ -1,8 +1,8 @@
 \_form#0=10x13:$ \lambda $
 \_form#1=33x18:$ f_x(t) $
 \_form#2=33x18:$ f_y(t) $
-\_form#3=310x39:\[ \Delta t=\frac{N_{\mbox{now}}-N_{\mbox{start}}}{\mbox{\texttt{QueryPerformanceFrequency()}}}\cdot 10^{6} \]
-\_form#4=102x18:$ t\in\left[t_\text{min}..t_\text{max}\right] $
+\_form#3=102x18:$ t\in\left[t_\text{min}..t_\text{max}\right] $
+\_form#4=310x39:\[ \Delta t=\frac{N_{\mbox{now}}-N_{\mbox{start}}}{\mbox{\texttt{QueryPerformanceFrequency()}}}\cdot 10^{6} \]
 \_form#5=31x18:$ [a, b] $
 \_form#6=265x23:\[ \mbox{minSamples} \cdot 2^{\mbox{maxRefinementDegree}} \]
 \_form#7=96x18:$ [x,y]=f_{xy}(t) $
@@ -219,42 +219,42 @@
 \_form#218=59x18:$ \left(x, f(x) \right) $
 \_form#219=59x18:$ \left(f(y), y \right) $
 \_form#220=8x15:$ j $
-\_form#221=182x39:\[ \mbox{aspectRatio}=\frac{\mbox{plotWidth}}{\mbox{plotHeight}} \]
-\_form#222=234x41:\[ \mbox{axisAspectRatio}=\frac{\left|x_\text{max}-x_\text{min}\right|}{\left|y_\text{max}-y_\text{min}\right|} \]
-\_form#223=94x18:$ (x_p(x), y_p(y)) $
-\_form#224=465x18:\[ x_p(\mbox{xmin})=\mbox{xPlotOffset},\ \ \ \ \ x_p(\mbox{xmax})=\mbox{xPlotOffset}+\mbox{plotWidth} \]
-\_form#225=463x18:\[ y_p(\mbox{ymax})=\mbox{yPlotOffset},\ \ \ \ \ y_p(\mbox{ymin})=\mbox{yPlotOffset}+\mbox{plotHeight} \]
-\_form#226=50x18:$ (x_p, y_p) $
-\_form#227=424x18:\[ x_p(x)=\mbox{xoffset}+x\cdot\mbox{xscale} \ \ \ \ \ \ \ \ \ y_p(y)=\mbox{yoffset}-y\cdot\mbox{yscale} \]
-\_form#228=437x36:\[ \mbox{xscale}=\frac{\mbox{plotWidth}}{\mbox{xwidth}},\ \ \ \ \  \ \mbox{xoffset}=\mbox{xPlotOffset}-\mbox{xmin}\cdot\mbox{xscale} \]
-\_form#229=442x39:\[ \mbox{yscale}=\frac{\mbox{plotHeight}}{\mbox{ywidth}},\ \ \ \ \ \ \mbox{yoffset}=\mbox{yPlotOffset}+\mbox{ymax}\cdot\mbox{yscale} \]
-\_form#230=49x18:$ \log_b(x) $
-\_form#231=166x18:$ \log_b(x)=\log(x)/\log(b) $
-\_form#232=629x41:\[ x_p(x)=\mbox{xoffset}+\frac{\log(x)}{\log(\mbox{logXAxisBase})}\cdot\mbox{xscale} \ \ \ \ \ \ \ \ \ y_p(y)=\mbox{yoffset}-\frac{\log(y)}{\log(\mbox{logYAxisBase})}\cdot\mbox{yscale} \]
-\_form#233=657x41:\[ \mbox{xscale}=\frac{\mbox{plotWidth}\cdot\log(\mbox{logXAxisBase})}{\log(\mbox{xmax})-\log(\mbox{xmin})},\ \ \ \ \  \ \mbox{xoffset}=\mbox{xPlotOffset}-\frac{\log(\mbox{xmin})}{\log(\mbox{logXAxisBase})}\cdot\mbox{xscale} \]
-\_form#234=653x41:\[ \mbox{yscale}=\frac{\mbox{plotHeight}\cdot\log(\mbox{logYAxisBase})}{\log(\mbox{ymax})-\log(\mbox{ymin})},\ \ \ \ \  \ \mbox{yoffset}=\mbox{yPlotOffset}+\frac{\log(\mbox{ymax})}{\log(\mbox{logYAxisBase})}\cdot\mbox{yscale} \]
-\_form#235=226x37:\[ \Delta\mbox{MinorTicks}=\frac{\Delta\mbox{ticks}}{\mbox{minorTicks}+1} \]
-\_form#236=18x11:$ 1\pi $
-\_form#237=18x11:$ 2\pi $
-\_form#238=20x11:$ 3\pi $
-\_form#239=15x15:$ pi $
-\_form#240=41x11:$ x=0 $
-\_form#241=39x15:$ y=0 $
-\_form#242=81x13:$ \mbox{Xscale}\cdot\Delta x $
-\_form#243=23x13:$ \Delta x $
-\_form#244=88x15:$ \mbox{Yscale}\cdot\Delta < $
-\_form#245=29x15:$ \Delta < $
-\_form#246=39x13:$ \Delta\mbox{tick} $
-\_form#247=10x11:$ \rho $
-\_form#248=252x18:\[ \Delta\mbox{tick}=f\cdot 10^\rho,\ \ \ \ \ f\in\{1, 2, 2.5, 5\} \]
-\_form#249=176x18:$ \rho_s=\left\lfloor\log_{10}(\mbox{awidth})\right\rfloor+3 $
-\_form#250=46x11:$ \rho=\rho_0 $
-\_form#251=47x16:$ f=10 $
-\_form#252=135x18:$ f\in\{1, 2, 2.5, 5, 10\} $
-\_form#253=106x16:$ \Delta\mbox{tick}=f\cdot 10^\rho $
-\_form#254=202x31:$ \mbox{tickcount}=\mbox{round}\left(\frac{\mbox{awidth}}{\Delta\mbox{tick}}\right) $
-\_form#255=39x16:$ f=1 $
-\_form#256=70x15:$ \rho \leftarrow \rho-1 $
+\_form#221=94x18:$ (x_p(x), y_p(y)) $
+\_form#222=465x18:\[ x_p(\mbox{xmin})=\mbox{xPlotOffset},\ \ \ \ \ x_p(\mbox{xmax})=\mbox{xPlotOffset}+\mbox{plotWidth} \]
+\_form#223=463x18:\[ y_p(\mbox{ymax})=\mbox{yPlotOffset},\ \ \ \ \ y_p(\mbox{ymin})=\mbox{yPlotOffset}+\mbox{plotHeight} \]
+\_form#224=50x18:$ (x_p, y_p) $
+\_form#225=424x18:\[ x_p(x)=\mbox{xoffset}+x\cdot\mbox{xscale} \ \ \ \ \ \ \ \ \ y_p(y)=\mbox{yoffset}-y\cdot\mbox{yscale} \]
+\_form#226=437x36:\[ \mbox{xscale}=\frac{\mbox{plotWidth}}{\mbox{xwidth}},\ \ \ \ \  \ \mbox{xoffset}=\mbox{xPlotOffset}-\mbox{xmin}\cdot\mbox{xscale} \]
+\_form#227=442x39:\[ \mbox{yscale}=\frac{\mbox{plotHeight}}{\mbox{ywidth}},\ \ \ \ \ \ \mbox{yoffset}=\mbox{yPlotOffset}+\mbox{ymax}\cdot\mbox{yscale} \]
+\_form#228=49x18:$ \log_b(x) $
+\_form#229=166x18:$ \log_b(x)=\log(x)/\log(b) $
+\_form#230=629x41:\[ x_p(x)=\mbox{xoffset}+\frac{\log(x)}{\log(\mbox{logXAxisBase})}\cdot\mbox{xscale} \ \ \ \ \ \ \ \ \ y_p(y)=\mbox{yoffset}-\frac{\log(y)}{\log(\mbox{logYAxisBase})}\cdot\mbox{yscale} \]
+\_form#231=657x41:\[ \mbox{xscale}=\frac{\mbox{plotWidth}\cdot\log(\mbox{logXAxisBase})}{\log(\mbox{xmax})-\log(\mbox{xmin})},\ \ \ \ \  \ \mbox{xoffset}=\mbox{xPlotOffset}-\frac{\log(\mbox{xmin})}{\log(\mbox{logXAxisBase})}\cdot\mbox{xscale} \]
+\_form#232=653x41:\[ \mbox{yscale}=\frac{\mbox{plotHeight}\cdot\log(\mbox{logYAxisBase})}{\log(\mbox{ymax})-\log(\mbox{ymin})},\ \ \ \ \  \ \mbox{yoffset}=\mbox{yPlotOffset}+\frac{\log(\mbox{ymax})}{\log(\mbox{logYAxisBase})}\cdot\mbox{yscale} \]
+\_form#233=226x37:\[ \Delta\mbox{MinorTicks}=\frac{\Delta\mbox{ticks}}{\mbox{minorTicks}+1} \]
+\_form#234=18x11:$ 1\pi $
+\_form#235=18x11:$ 2\pi $
+\_form#236=20x11:$ 3\pi $
+\_form#237=15x15:$ pi $
+\_form#238=182x39:\[ \mbox{aspectRatio}=\frac{\mbox{plotWidth}}{\mbox{plotHeight}} \]
+\_form#239=234x41:\[ \mbox{axisAspectRatio}=\frac{\left|x_\text{max}-x_\text{min}\right|}{\left|y_\text{max}-y_\text{min}\right|} \]
+\_form#240=39x13:$ \Delta\mbox{tick} $
+\_form#241=10x11:$ \rho $
+\_form#242=252x18:\[ \Delta\mbox{tick}=f\cdot 10^\rho,\ \ \ \ \ f\in\{1, 2, 2.5, 5\} \]
+\_form#243=176x18:$ \rho_s=\left\lfloor\log_{10}(\mbox{awidth})\right\rfloor+3 $
+\_form#244=46x11:$ \rho=\rho_0 $
+\_form#245=47x16:$ f=10 $
+\_form#246=135x18:$ f\in\{1, 2, 2.5, 5, 10\} $
+\_form#247=106x16:$ \Delta\mbox{tick}=f\cdot 10^\rho $
+\_form#248=202x31:$ \mbox{tickcount}=\mbox{round}\left(\frac{\mbox{awidth}}{\Delta\mbox{tick}}\right) $
+\_form#249=39x16:$ f=1 $
+\_form#250=70x15:$ \rho \leftarrow \rho-1 $
+\_form#251=41x11:$ x=0 $
+\_form#252=39x15:$ y=0 $
+\_form#253=81x13:$ \mbox{Xscale}\cdot\Delta x $
+\_form#254=23x13:$ \Delta x $
+\_form#255=88x15:$ \mbox{Yscale}\cdot\Delta < $
+\_form#256=29x15:$ \Delta < $
 \_form#257=52x16:$ \Delta x, \Delta y $
 \_form#258=10x8:$ \alpha $
 \_form#259=5x13:$ \l $
