@@ -484,7 +484,8 @@ QString JKQTPCoordinateAxis::floattolabel(double data, int past_comma) const {
 #if __cplusplus >= 202002L
 # ifdef __cpp_lib_format
     case JKQTPCALTformat: {
-            return QString::fromStdString(std::vformat(axisStyle.tickFormatFormat.toStdString(), std::make_format_args(data, tickUnitName.toStdString())));
+            const std::string tickUName=tickUnitName.toStdString();
+            return QString::fromStdString(std::vformat(axisStyle.tickFormatFormat.toStdString(), std::make_format_args(data, tickUName)));
         }; break;
         /** \copydoc JKQTPCoordinateAxisStyle::tickFormatFormat */
         void setTickFormatFormat(const QString& __value);
