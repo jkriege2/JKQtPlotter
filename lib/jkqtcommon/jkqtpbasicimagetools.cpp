@@ -60,7 +60,7 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
 
 
     {
-        const auto palette=JKQTPMathImageDefault_STEP;
+        static const auto palette=JKQTPMathImageDefault_STEP;
         const QString palN="jkqtplotterdefault_step";
         const QString palNT=QObject::tr("steps: JKQTPlotter Default");
         lutstore[palette]=JKQTPImageTools::LUTData(palN, palNT);
@@ -232,7 +232,7 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
     }
 
     {
-        JKQTPPaletteList lst {  jkqtp_qRgbOpaque(0xB2182B),
+        static const JKQTPPaletteList lst {  jkqtp_qRgbOpaque(0xB2182B),
                                 jkqtp_qRgbOpaque(0xD6604D),
                                 jkqtp_qRgbOpaque(0xF4A582),
                                 jkqtp_qRgbOpaque(0xFDDBC7),
@@ -248,7 +248,7 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
     }
 
     {
-        JKQTPPaletteList lst {  QColor(165,0,38),
+        static const JKQTPPaletteList lst {  QColor(165,0,38),
                                 QColor(253,254,194),
                                 QColor(49,54,149)
                              };
@@ -259,7 +259,7 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
     }
 
     {
-        JKQTPPaletteList lst {  QColor(49,54,149),
+        static const JKQTPPaletteList lst {  QColor(49,54,149),
                                 QColor(253,254,194),
                                 QColor(0,104,55)
                              };
@@ -270,7 +270,7 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
     }
 
     {
-        const JKQTPPaletteList lst=  {
+        static const JKQTPPaletteList lst=  {
             jkqtp_qRgbOpaque(0x8C510A),
             jkqtp_qRgbOpaque(0xBF812D),
             jkqtp_qRgbOpaque(0xDFC27D),
@@ -289,7 +289,7 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
     }
 
     {
-        const JKQTPPaletteList lst=  {
+        static const JKQTPPaletteList lst=  {
             jkqtp_qRgbOpaque(0xB35806),
             jkqtp_qRgbOpaque(0xE08214),
             jkqtp_qRgbOpaque(0xFDB863),
@@ -307,7 +307,7 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
     }
 
     {
-        const JKQTPPaletteList lst=  {
+        static const JKQTPPaletteList lst=  {
             jkqtp_qRgbOpaque(0xFFFFD9),
             jkqtp_qRgbOpaque(0xEDF8B1),
             jkqtp_qRgbOpaque(0xC7E9B4),
@@ -326,7 +326,7 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
 
 
     {
-        const JKQTPPaletteList lst=  {
+        static const JKQTPPaletteList lst=  {
             jkqtp_qRgbOpaque(0xF7FCF0),
             jkqtp_qRgbOpaque(0xE0F3DB),
             jkqtp_qRgbOpaque(0xCCEBC5),
@@ -344,7 +344,7 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
     }
 
     {
-        const JKQTPPaletteList lst=  {
+        static const JKQTPPaletteList lst=  {
             QColor("blue"),
             QColor("green"),
             QColor("red")
@@ -356,7 +356,7 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
     }
 
     {
-        const JKQTPPaletteList lst=  {
+        static const JKQTPPaletteList lst=  {
             QColor("magenta"),
             QColor("yellow")
         };
@@ -365,7 +365,7 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
     }
 
     {
-        const JKQTPPaletteList lst=  {
+        static const JKQTPPaletteList lst=  {
             QColor("red"),
             QColor("blue")
         };
@@ -374,7 +374,7 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
     }
 
     {
-        const JKQTPPaletteList lst=  {
+        static const JKQTPPaletteList lst=  {
             QColor(142,1,82),
             QColor(246,246,246),
             QColor(39,100,25)
@@ -387,7 +387,7 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
 
 
     {
-        const JKQTPPaletteList lst=  {
+        static const JKQTPPaletteList lst=  {
             QColor(103,0,31),
             QColor(254,254,254),
             QColor(26,26,26)
@@ -399,7 +399,7 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
     }
 
     {
-        const JKQTPPaletteList lst=  {
+        static const JKQTPPaletteList lst=  {
             QColor(58,76,192),
             QColor(220,220,220),
             QColor(179,3,38)
@@ -411,7 +411,7 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
     }
 
     {
-        const JKQTPPaletteList lst=  {
+        static const JKQTPPaletteList lst=  {
             QColor::fromRgbF(0.0f, 0.0f, 0.3f),
             QColor::fromRgbF(0.0f, 0.0f, 1.0f),
             QColor::fromRgbF(1.0f, 1.0f, 1.0f),

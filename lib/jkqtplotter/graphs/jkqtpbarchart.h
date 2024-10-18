@@ -290,7 +290,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarVerticalStackableGraph: public JKQTPBarVert
         JKQTPBarVerticalStackableGraph* stackParent;
 
         /** \brief used to generate stacked plots: returns the upper boundary of the parent plot in a stack, for the index-th datapoint */
-        double getParentStackedMax(int index) const ;
+        double getParentStackedMax(int index) const override;
 
 
         /** \copydoc JKQTPBarGraphBase::hasStackParent() */

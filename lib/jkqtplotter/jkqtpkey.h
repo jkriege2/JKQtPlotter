@@ -384,8 +384,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPMainKey: public JKQTPBaseKey {
         /** \brief returns all graph classes from parent JKQTBasePlotter for the  key */
         QList<const JKQTPPlotElement*> getPlotElements() const;
         /** \brief provides the keyStyle to use for sizing/drawing this object (extracted from the parent JKQTBasePlotters's  */
-        virtual const JKQTPKeyStyle& keyStyle() const;
+        virtual const JKQTPKeyStyle& keyStyle() const override;
         /** \brief provides the keyStyle to use for sizing/drawing this object */
-        virtual JKQTPKeyStyle& keyStyle();
+        virtual JKQTPKeyStyle& keyStyle() override;
 };
 #endif // JKQTPKEY_H
