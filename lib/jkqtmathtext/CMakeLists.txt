@@ -32,7 +32,24 @@ target_sources(${lib_name} PUBLIC FILE_SET HEADERS TYPE HEADERS
 
 add_subdirectory(nodes)
 add_subdirectory(parsers)
-add_subdirectory(resources)
+
+# add XITS as a ressource
+if(JKQtPlotter_BUILD_INCLUDE_XITS_FONTS)
+  qt_add_resources(QRCSOURCES resources/xits.qrc)
+  target_sources(${lib_name} PRIVATE ${QRCSOURCES})
+  target_compile_definitions(${lib_name} PUBLIC JKQTMATHTEXT_COMPILED_WITH_XITS)
+  install(FILES "${CMAKE_CURRENT_LIST_DIR}/resources/xits/OFL.txt" DESTINATION ${CMAKE_INSTALL_DOCDIR} RENAME "${lib_name}_XITS_LICENSE.txt" )
+  install(FILES "${CMAKE_CURRENT_LIST_DIR}/resources/xits/README.md" DESTINATION ${CMAKE_INSTALL_DOCDIR} RENAME "${lib_name}_XITS_README.md" )
+endif(JKQtPlotter_BUILD_INCLUDE_XITS_FONTS)
+
+# add FIRAMATH as a ressource
+if(JKQtPlotter_BUILD_INCLUDE_FIRAMATH_FONTS)
+  qt_add_resources(QRCSOURCES resources/firamath.qrc)
+  target_sources(${lib_name} PRIVATE ${QRCSOURCES})
+  target_compile_definitions(${lib_name} PUBLIC JKQTMATHTEXT_COMPILED_WITH_FIRAMATH)
+  install(FILES "${CMAKE_CURRENT_LIST_DIR}/resources/firaMath/LICENSE" DESTINATION ${CMAKE_INSTALL_DOCDIR} RENAME "${lib_name}_FIRAMATH_LICENSE" )
+  install(FILES "${CMAKE_CURRENT_LIST_DIR}/resources/firaMath/README.md" DESTINATION ${CMAKE_INSTALL_DOCDIR} RENAME "${lib_name}_FIRAMATH_README.md" )
+endif(JKQtPlotter_BUILD_INCLUDE_FIRAMATH_FONTS)
 
 # Installation
 jkqtplotter_installlibrary_new(${lib_name} ${libBaseName} ${CMAKE_CURRENT_LIST_DIR})
