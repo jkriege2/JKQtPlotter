@@ -916,20 +916,20 @@ void JKQTBasePlotter::calcPlotScaling(JKQTPEnhancedPainter& painter){
         auto s=xAxis->getSize1(painter);
         internalPlotMargins[PlotMarginUse::muAxesOutside].bottom+=s.requiredSize;
         if (s.elongateMin>0) elongateLeft=qMax(elongateLeft,s.elongateMin);
-        if (s.elongateMax>0) elongateRight=qMax(elongateRight,s.elongateMax);
+        if (s.elongateMax>0) elongateRight=qMin(elongateRight,s.elongateMax);
         s=xAxis->getSize2(painter);
         if (s.elongateMin>0) elongateLeft=qMax(elongateLeft,s.elongateMin);
-        if (s.elongateMax>0) elongateRight=qMax(elongateRight,s.elongateMax);
+        if (s.elongateMax>0) elongateRight=qMin(elongateRight,s.elongateMax);
         internalPlotMargins[PlotMarginUse::muAxesOutside].top+=s.requiredSize;
 
         double elongateBottom=0,elongateTop=0;
         s=yAxis->getSize1(painter);
         if (s.elongateMin>0) elongateBottom=qMax(elongateBottom,s.elongateMin);
-        if (s.elongateMax>0) elongateTop=qMax(elongateTop,s.elongateMax);
+        if (s.elongateMax>0) elongateTop=qMin(elongateTop,s.elongateMax);
         internalPlotMargins[PlotMarginUse::muAxesOutside].left+=s.requiredSize;
         s=yAxis->getSize2(painter);
         if (s.elongateMin>0) elongateBottom=qMax(elongateBottom,s.elongateMin);
-        if (s.elongateMax>0) elongateTop=qMax(elongateTop,s.elongateMax);
+        if (s.elongateMax>0) elongateTop=qMin(elongateTop,s.elongateMax);
         internalPlotMargins[PlotMarginUse::muAxesOutside].right+=s.requiredSize;
 
 

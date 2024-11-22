@@ -1140,6 +1140,9 @@ void JKQTPlotter::wheelEvent ( QWheelEvent * event ) {
             if (d.y()>=1 && d.y()<10) d.setY(10);
             if (d.y()<=-1 && d.y()>-10) d.setY(-10);
         }
+    }else{
+        event->ignore();
+        return;
     }
 
 
@@ -1413,8 +1416,10 @@ void JKQTPlotter::resizeEvent(QResizeEvent *event) {
              // Do this now
              delayedResizeEvent();
          } else {
-             resizeTimer.setSingleShot(true);
-             resizeTimer.start(jkqtp_RESIZE_DELAY);
+             if(!resizeTimer.isActive()){
+                resizeTimer.setSingleShot(true);
+                resizeTimer.start(jkqtp_RESIZE_DELAY);
+             }
          }
      }
 
