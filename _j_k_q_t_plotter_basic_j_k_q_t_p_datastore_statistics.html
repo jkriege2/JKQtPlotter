@@ -117,8 +117,8 @@ $(document).ready(function(){initNavTree('_j_k_q_t_plotter_basic_j_k_q_t_p_datas
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md47">Generating different sets of random numbers</a></li>
-<li class="level1"><a href="#autotoc_md49">Basic Statistics</a></li>
+<ul><li class="level1"><a href="#autotoc_md46">Generating different sets of random numbers</a></li>
+<li class="level1"><a href="#autotoc_md48">Basic Statistics</a></li>
 <li class="level1"><a href="#autotoc_md50">Boxplots</a><ul><li class="level2"><a href="#autotoc_md51">Standard Boxplots</a></li>
 <li class="level2"><a href="#autotoc_md52">Boxplots with Outliers</a></li>
 </ul>
@@ -139,7 +139,7 @@ $(document).ready(function(){initNavTree('_j_k_q_t_plotter_basic_j_k_q_t_p_datas
 <li><a class="el" href="_j_k_q_t_plotter_basic_j_k_q_t_p_datastore_statistics2_d.html">Advanced 2-Dimensional Statistics with JKQTPDatastore</a></li>
 </ul>
 <p>The source code of the main application can be found in <a href="https://github.com/jkriege2/JKQtPlotter/tree/master/examples/datastore_statistics/datastore_statistics.cpp"><code>datastore_statistics.cpp</code></a>. This tutorial cites only parts of this code to demonstrate different ways of working with data for the graphs.</p>
-<h1><a class="anchor" id="autotoc_md47"></a>
+<h1><a class="anchor" id="autotoc_md46"></a>
 Generating different sets of random numbers</h1>
 <p>The code segments below will fill four instances of <a class="el" href="class_j_k_q_t_plotter.html" title="plotter widget for scientific plots (uses JKQTBasePlotter to do the actual drawing)">JKQTPlotter</a> with different statistical plots. All these plots are based on three sets of random numbers generated as shown here: </p><div class="fragment"><div class="line"><span class="keywordtype">size_t</span> randomdatacol1=datastore1-&gt;addColumn(<span class="stringliteral">&quot;random data 1&quot;</span>);</div>
 <div class="line"><span class="keywordtype">size_t</span> randomdatacol2=datastore1-&gt;addColumn(<span class="stringliteral">&quot;random data 2&quot;</span>);</div>
@@ -159,7 +159,7 @@ Generating different sets of random numbers</h1>
 <div class="line">    <span class="keywordflow">else</span> datastore1-&gt;appendToColumn(randomdatacol3, v);</div>
 <div class="line">}</div>
 </div><!-- fragment --><p>The column <code>randomdatacol1</code> will contain 150 random numbers. Each one is drawn either from a normal dirstribution N(0,1) (<code>d1</code>) or N(6,1.2) (<code>d2</code>). the decision, which of the two to use is based on the result of a third random distribution ddecide, which only returns 0 or 1. The two columns <code>randomdatacol2</code> and <code>randomdatacol3</code> only collect the random numbers drawn from <code>d1</code> or <code>d2</code> respectively. The three columns are generated empyt by calling <code><a class="el" href="class_j_k_q_t_p_datastore.html#ae057eda96c7b754cd42f4380b429a589" title="add a new column to the datastore and return its ID">JKQTPDatastore::addColumn()</a></code> with only a name. Then the actual values are added by calling <code><a class="el" href="class_j_k_q_t_p_datastore.html#a3a992ac63957ce0c521e48944f704d91" title="adds a value value to the column column. This changes the column length (number of rows).">JKQTPDatastore::appendToColumn()</a></code>.</p>
-<h1><a class="anchor" id="autotoc_md49"></a>
+<h1><a class="anchor" id="autotoc_md48"></a>
 Basic Statistics</h1>
 <p>The three sets of random numbers from above can be visualized e.g. by a <code><a class="el" href="class_j_k_q_t_p_peak_stream_graph.html" title="interprets data as a stream of x- or y-positions  (depending in yPeaks ) ans plots a line on the heig...">JKQTPPeakStreamGraph</a></code> graph with code as follows: </p><div class="fragment"><div class="line"><a class="code hl_class" href="class_j_k_q_t_p_peak_stream_graph.html">JKQTPPeakStreamGraph</a>* gData1;</div>
 <div class="line">plot1box-&gt;addGraph(gData1=<span class="keyword">new</span> <a class="code hl_class" href="class_j_k_q_t_p_peak_stream_graph.html">JKQTPPeakStreamGraph</a>(plot1box));</div>
@@ -343,7 +343,7 @@ Screenshot of the full Program</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="example_tutorial_projects.html">Example &amp; Tutorial Projects</a></li>
-    <li class="footer">Generated on Wed Jan 15 2025 21:27:05 for JKQTPlotter by <a href="https://www.doxygen.org/index.html">doxygen</a> 1.9.8 </li>
+    <li class="footer">Generated on Wed Jan 15 2025 21:37:34 for JKQTPlotter by <a href="https://www.doxygen.org/index.html">doxygen</a> 1.9.8 </li>
   </ul>
 </div>
 </body>

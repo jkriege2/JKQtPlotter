@@ -38,7 +38,7 @@ var searchData=
   ['baselinexcorrection_35',['baselineXCorrection',['../struct_j_k_q_t_math_text_node_size.html#a24b45ebafca557850654ab759d1121f8',1,'JKQTMathTextNodeSize']]],
   ['basic_20bargraph_20styling_36',['Basic Bargraph Styling',['../class_j_k_q_t_p_bar_graph_base.html#JKQTPBarGraphBaseStyling',1,'']]],
   ['basic_20description_37',['basic description',['../_j_k_q_t_plotter_user_interaction.html#autotoc_md98',1,'Basic Description'],['../_j_k_q_t_plotter_styling.html#autotoc_md91',1,'Basic Description']]],
-  ['basic_20statistics_38',['basic statistics',['../_j_k_q_t_plotter_basic_j_k_q_t_p_datastore_statistics.html#autotoc_md49',1,'Basic Statistics'],['../group__jkqtptools__math__statistics__basic.html',1,'Basic statistics']]],
+  ['basic_20statistics_38',['basic statistics',['../_j_k_q_t_plotter_basic_j_k_q_t_p_datastore_statistics.html#autotoc_md48',1,'Basic Statistics'],['../group__jkqtptools__math__statistics__basic.html',1,'Basic statistics']]],
   ['basic_20usage_20of_20jkqtpdatastore_39',['Tutorial (JKQTPDatastore): Basic Usage of JKQTPDatastore',['../_j_k_q_t_plotter_basic_j_k_q_t_p_datastore.html',1,'exampleTutorialProjects']]],
   ['basic_20usage_20of_20jkqtplotter_40',['Basic Usage of JKQTPlotter',['../class_j_k_q_t_plotter.html#JKQTPLOTTER_BASICUSAGE',1,'']]],
   ['basic_20utilities_41',['JKQTCommon: Diverse Basic Utilities',['../group__jkqtptools__jkqtcommon.html',1,'']]],

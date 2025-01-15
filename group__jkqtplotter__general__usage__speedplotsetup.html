@@ -113,9 +113,14 @@ $(document).ready(function(){initNavTree('group__jkqtplotter__general__usage__sp
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">Performance Considerations when Setting up Plots</div></div>
+  <div class="headertitle"><div class="title">Performance Considerations when Setting up Plots<div class="ingroups"><a class="el" href="group__jkqtplotter.html">JKQTPlotter: Qt based Scientific Plotter Class</a> &raquo; <a class="el" href="group__jkqtplotter__general.html">General Information</a> &raquo; <a class="el" href="group__jkqtplotter__general__usage.html">Usage of JKQTPlotter</a></div></div></div>
 </div><!--header-->
 <div class="contents">
+<div class="dynheader">
+Collaboration diagram for Performance Considerations when Setting up Plots:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="group__jkqtplotter__general__usage__speedplotsetup.svg" width="496" height="56"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
 <p>Many of the function in <a class="el" href="class_j_k_q_t_plotter.html" title="plotter widget for scientific plots (uses JKQTBasePlotter to do the actual drawing)">JKQTPlotter</a> case an immediate redraw of the widget. Examples are JKQTPlott::setX(), <a class="el" href="class_j_k_q_t_plotter.html#a0fd546d1ba10a292ce8890744101fe3e" title="sets the y-range of the plot (minimum and maximum y-value on the y-axis)">JKQTPlotter::setY()</a>, <a class="el" href="class_j_k_q_t_plotter.html#a48c261d683b78d962286027fb2d258c2" title="sets absolutely limiting x-range of the plot">JKQTPlotter::setAbsoluteX()</a>, <a class="el" href="class_j_k_q_t_plotter.html#acde92b94d19a03cd7020a95965c339a5" title="sets absolute minimum and maximum y-value to plot">JKQTPlotter::setAbsoluteY()</a>, <a class="el" href="class_j_k_q_t_plotter.html#a63a54c5342d664c35ffb3d532ba26b99">JKQTPlotter::addGraph()</a> ... so if you use a combination of these while setting up your plot, it is possible to cause several (rather expensive) redraws of the plot widget. Therefore you can disable this redrawing, using <a class="el" href="class_j_k_q_t_plotter.html#a89dc002781638d80fd69fe07ab9c60f1" title="sets whether automatic redrawing the plot is currently activated (e.g. you can sett his to false whil...">JKQTPlotter::setPlotUpdateEnabled()</a> and you can explicitly cause a redraw with <a class="el" href="class_j_k_q_t_plotter.html#aebce042360ddc51b50472760ed272f7d" title="update the plot and the overlays">JKQTPlotter::redrawPlot()</a>. To make this process even easier to use, there is a guard helper class for this: <a class="el" href="class_j_k_q_t_plotter_update_guard.html" title="Guard Class (RAII construct) for JKQTPlotter that disables replotting on construction and reenables i...">JKQTPlotterUpdateGuard</a>.</p>
 <p>Here is a code example:</p>
 <div class="fragment"><div class="line">{</div>
@@ -144,7 +149,7 @@ $(document).ready(function(){initNavTree('group__jkqtplotter__general__usage__sp
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Jan 15 2025 21:27:05 for JKQTPlotter by <a href="https://www.doxygen.org/index.html">doxygen</a> 1.9.8 </li>
+    <li class="footer">Generated on Wed Jan 15 2025 21:37:34 for JKQTPlotter by <a href="https://www.doxygen.org/index.html">doxygen</a> 1.9.8 </li>
   </ul>
 </div>
 </body>

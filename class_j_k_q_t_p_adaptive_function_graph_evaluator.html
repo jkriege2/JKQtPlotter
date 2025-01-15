@@ -168,7 +168,7 @@ Protected Attributes</h2></td></tr>
 <tr class="memdesc:a3b709ee1905ddc10715a5af7bab13126"><td class="mdescLeft">&#160;</td><td class="mdescRight">function <picture><source srcset="form_1_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ f_x(t) $" src="form_1.png" width="33" height="18"/></picture>  <br /></td></tr>
 <tr class="separator:a3b709ee1905ddc10715a5af7bab13126"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a88734b71ff0de923025a07f62b2e4a48" id="r_a88734b71ff0de923025a07f62b2e4a48"><td class="memItemLeft" align="right" valign="top">std::function&lt; QPointF(double)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_j_k_q_t_p_adaptive_function_graph_evaluator.html#a88734b71ff0de923025a07f62b2e4a48">fxy</a></td></tr>
-<tr class="memdesc:a88734b71ff0de923025a07f62b2e4a48"><td class="mdescLeft">&#160;</td><td class="mdescRight">function <picture><source srcset="form_6_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ [x,y]=f_{xy}(t) $" src="form_6.png" width="96" height="18"/></picture>  <br /></td></tr>
+<tr class="memdesc:a88734b71ff0de923025a07f62b2e4a48"><td class="mdescLeft">&#160;</td><td class="mdescRight">function <picture><source srcset="form_7_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ [x,y]=f_{xy}(t) $" src="form_7.png" width="96" height="18"/></picture>  <br /></td></tr>
 <tr class="separator:a88734b71ff0de923025a07f62b2e4a48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a05c929d794b814cbae74f17dfe0fada3" id="r_a05c929d794b814cbae74f17dfe0fada3"><td class="memItemLeft" align="right" valign="top">std::function&lt; double(double)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_j_k_q_t_p_adaptive_function_graph_evaluator.html#a05c929d794b814cbae74f17dfe0fada3">fy</a></td></tr>
 <tr class="memdesc:a05c929d794b814cbae74f17dfe0fada3"><td class="mdescLeft">&#160;</td><td class="mdescRight">function <picture><source srcset="form_2_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ f_y(t) $" src="form_2.png" width="33" height="18"/></picture>  <br /></td></tr>
@@ -274,8 +274,8 @@ Protected Attributes</h2></td></tr>
     <tr><td class="paramname">fx_</td><td>function <picture><source srcset="form_1_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ f_x(t) $" src="form_1.png" width="33" height="18"/></picture> </td></tr>
     <tr><td class="paramname">fy_</td><td>function <picture><source srcset="form_2_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ f_y(t) $" src="form_2.png" width="33" height="18"/></picture> </td></tr>
     <tr><td class="paramname">minSamples_</td><td>the minimum number of points to evaluate the function at </td></tr>
-    <tr><td class="paramname">maxRefinementDegree_</td><td>the maximum number of recursive refinement steps each step bisects the interval <picture><source srcset="form_4_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ [a, b] $" src="form_4.png" width="31" height="18"/></picture> into two halfes. So the maximum number of points plotted at all are thus: <p class="formulaDsp">
-<picture><source srcset="form_5_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaDsp" alt="\[ \mbox{minSamples} \cdot 2^{\mbox{maxRefinementDegree}} \]" src="form_5.png" width="265" height="23"/></picture>
+    <tr><td class="paramname">maxRefinementDegree_</td><td>the maximum number of recursive refinement steps each step bisects the interval <picture><source srcset="form_5_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ [a, b] $" src="form_5.png" width="31" height="18"/></picture> into two halfes. So the maximum number of points plotted at all are thus: <p class="formulaDsp">
+<picture><source srcset="form_6_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaDsp" alt="\[ \mbox{minSamples} \cdot 2^{\mbox{maxRefinementDegree}} \]" src="form_6.png" width="265" height="23"/></picture>
 </p>
  </td></tr>
     <tr><td class="paramname">slopeTolerance_</td><td>the tolerance for the difference of two subsequent slopes </td></tr>
@@ -333,10 +333,10 @@ Protected Attributes</h2></td></tr>
 <p>class constructor </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">fxy_</td><td>function <picture><source srcset="form_6_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ [x,y]=f_{xy}(t) $" src="form_6.png" width="96" height="18"/></picture> </td></tr>
+    <tr><td class="paramname">fxy_</td><td>function <picture><source srcset="form_7_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ [x,y]=f_{xy}(t) $" src="form_7.png" width="96" height="18"/></picture> </td></tr>
     <tr><td class="paramname">minSamples_</td><td>the minimum number of points to evaluate the function at </td></tr>
-    <tr><td class="paramname">maxRefinementDegree_</td><td>the maximum number of recursive refinement steps each step bisects the interval <picture><source srcset="form_4_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ [a, b] $" src="form_4.png" width="31" height="18"/></picture> into two halfes. So the maximum number of points plotted at all are thus: <p class="formulaDsp">
-<picture><source srcset="form_5_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaDsp" alt="\[ \mbox{minSamples} \cdot 2^{\mbox{maxRefinementDegree}} \]" src="form_5.png" width="265" height="23"/></picture>
+    <tr><td class="paramname">maxRefinementDegree_</td><td>the maximum number of recursive refinement steps each step bisects the interval <picture><source srcset="form_5_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ [a, b] $" src="form_5.png" width="31" height="18"/></picture> into two halfes. So the maximum number of points plotted at all are thus: <p class="formulaDsp">
+<picture><source srcset="form_6_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaDsp" alt="\[ \mbox{minSamples} \cdot 2^{\mbox{maxRefinementDegree}} \]" src="form_6.png" width="265" height="23"/></picture>
 </p>
  </td></tr>
     <tr><td class="paramname">slopeTolerance_</td><td>the tolerance for the difference of two subsequent slopes </td></tr>
@@ -504,7 +504,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>function <picture><source srcset="form_6_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ [x,y]=f_{xy}(t) $" src="form_6.png" width="96" height="18"/></picture> </p>
+<p>function <picture><source srcset="form_7_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ [x,y]=f_{xy}(t) $" src="form_7.png" width="96" height="18"/></picture> </p>
 
 </div>
 </div>
@@ -577,8 +577,8 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>the maximum number of recursive refinement steps </p>
-<p>each step bisects the interval <picture><source srcset="form_4_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ [a, b] $" src="form_4.png" width="31" height="18"/></picture> into two halfes. So the maximum number of points plotted at all are thus: </p><p class="formulaDsp">
-<picture><source srcset="form_5_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaDsp" alt="\[ \mbox{minSamples} \cdot 2^{\mbox{maxRefinementDegree}} \]" src="form_5.png" width="265" height="23"/></picture>
+<p>each step bisects the interval <picture><source srcset="form_5_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ [a, b] $" src="form_5.png" width="31" height="18"/></picture> into two halfes. So the maximum number of points plotted at all are thus: </p><p class="formulaDsp">
+<picture><source srcset="form_6_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaDsp" alt="\[ \mbox{minSamples} \cdot 2^{\mbox{maxRefinementDegree}} \]" src="form_6.png" width="265" height="23"/></picture>
 </p>
  
 </div>
@@ -689,7 +689,7 @@ Protected Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="class_j_k_q_t_p_adaptive_function_graph_evaluator.html">JKQTPAdaptiveFunctionGraphEvaluator</a></li>
-    <li class="footer">Generated on Wed Jan 15 2025 21:27:06 for JKQTPlotter by <a href="https://www.doxygen.org/index.html">doxygen</a> 1.9.8 </li>
+    <li class="footer">Generated on Wed Jan 15 2025 21:37:34 for JKQTPlotter by <a href="https://www.doxygen.org/index.html">doxygen</a> 1.9.8 </li>
   </ul>
 </div>
 </body>
