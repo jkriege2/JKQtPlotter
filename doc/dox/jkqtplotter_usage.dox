@@ -128,7 +128,8 @@
 
   
   \defgroup jkqtplotter_general_usage_speedplotsetup Performance Considerations when Setting up Plots
-  
+  \ingroup jkqtplotter_general_usage
+
   Many of the function in JKQTPlotter case an immediate redraw of the widget. Examples are JKQTPlott::setX(), 
   JKQTPlotter::setY(), JKQTPlotter::setAbsoluteX(), JKQTPlotter::setAbsoluteY(), JKQTPlotter::addGraph() ... 
   so if you use a combination of these while setting up your plot,  it is possible to
