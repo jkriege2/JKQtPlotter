@@ -22,10 +22,11 @@ var searchData=
   ['computations_19',['Statistical Computations',['../group__jkqtptools__math__statistics.html',1,'']]],
   ['concrete_20graph_20classes_20',['Concrete Graph Classes',['../group__jkqtplotter__concretegraphs.html',1,'']]],
   ['concurrency_21',['Tools, Templates and Classes for Concurrency',['../group__jkqtptools__concurrency.html',1,'']]],
-  ['construction_22',['Conventions: Naming and Plot Construction',['../group__jkqtplotter__naming.html',1,'']]],
-  ['contour_20graphs_20based_20on_20image_20data_23',['Contour Graphs (based on Image Data)',['../group__jkqtplotter__imagelots__contour.html',1,'']]],
-  ['conventions_3a_20naming_20and_20plot_20construction_24',['Conventions: Naming and Plot Construction',['../group__jkqtplotter__naming.html',1,'']]],
-  ['conversion_20functions_25',['String(-Conversion) Functions',['../group__jkqtptools__string.html',1,'']]],
-  ['coordinate_20axes_26',['Coordinate Axes',['../group__jkqtplotter__general__basicplotelements__coordinateaxes.html',1,'']]],
-  ['css_20parsing_20tools_27',['CSS Parsing Tools',['../group__jkqtptools__css.html',1,'']]]
+  ['considerations_20when_20setting_20up_20plots_22',['Performance Considerations when Setting up Plots',['../group__jkqtplotter__general__usage__speedplotsetup.html',1,'']]],
+  ['construction_23',['Conventions: Naming and Plot Construction',['../group__jkqtplotter__naming.html',1,'']]],
+  ['contour_20graphs_20based_20on_20image_20data_24',['Contour Graphs (based on Image Data)',['../group__jkqtplotter__imagelots__contour.html',1,'']]],
+  ['conventions_3a_20naming_20and_20plot_20construction_25',['Conventions: Naming and Plot Construction',['../group__jkqtplotter__naming.html',1,'']]],
+  ['conversion_20functions_26',['String(-Conversion) Functions',['../group__jkqtptools__string.html',1,'']]],
+  ['coordinate_20axes_27',['Coordinate Axes',['../group__jkqtplotter__general__basicplotelements__coordinateaxes.html',1,'']]],
+  ['css_20parsing_20tools_28',['CSS Parsing Tools',['../group__jkqtptools__css.html',1,'']]]
 ];

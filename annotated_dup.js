@@ -180,6 +180,7 @@ var annotated_dup =
     [ "JKQTPlotter", "class_j_k_q_t_plotter.html", "class_j_k_q_t_plotter" ],
     [ "JKQTPlotterDrawingTools", "struct_j_k_q_t_plotter_drawing_tools.html", "struct_j_k_q_t_plotter_drawing_tools" ],
     [ "JKQTPlotterStyle", "class_j_k_q_t_plotter_style.html", "class_j_k_q_t_plotter_style" ],
+    [ "JKQTPlotterUpdateGuard", "class_j_k_q_t_plotter_update_guard.html", "class_j_k_q_t_plotter_update_guard" ],
     [ "JKQTPMainKey", "class_j_k_q_t_p_main_key.html", "class_j_k_q_t_p_main_key" ],
     [ "JKQTPMathImage", "class_j_k_q_t_p_math_image.html", "class_j_k_q_t_p_math_image" ],
     [ "JKQTPMathImageBase", "class_j_k_q_t_p_math_image_base.html", "class_j_k_q_t_p_math_image_base" ],

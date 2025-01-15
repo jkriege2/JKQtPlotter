@@ -11,10 +11,10 @@
 <!-- Node0 -->
 <g id="Node000000" class="node">
 <title>Node0</title>
-<g id="a_Node000000"><a xlink:href="class_j_k_q_t_p_synchronized_1_1_read_locker.html" target="_top" xlink:title="type of a lock_guard for a JKQTPSynchronized&lt;T&gt; for reading">
+<g id="a_Node000000"><a xlink:href="struct_j_k_q_t_p_synchronized_1_1_adopt_lock_type.html" target="_top" xlink:title="type of AdoptLock tag, which is used in ReadLocker and WriteLocker to adopt a pre&#45;locked JKQTPSynchro...">
 <polygon fill="white" stroke="#666666" points="142,-34 0,-34 0,0 142,0 142,-34"/>
 <text text-anchor="start" x="8" y="-20.4" font-family="Helvetica,sans-Serif" font-size="12.00">JKQTPSynchronized&lt;</text>
-<text text-anchor="middle" x="71" y="-7.4" font-family="Helvetica,sans-Serif" font-size="12.00"> T &gt;::ReadLocker</text>
+<text text-anchor="middle" x="71" y="-7.4" font-family="Helvetica,sans-Serif" font-size="12.00"> T &gt;::AdoptLockType</text>
 </a>
 </g>
 </g>

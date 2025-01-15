@@ -295,6 +295,7 @@ var hierarchy =
     [ "JKQTPKeyStyle", "class_j_k_q_t_p_key_style.html", null ],
     [ "JKQTPlotterDrawingTools", "struct_j_k_q_t_plotter_drawing_tools.html", null ],
     [ "JKQTPlotterStyle", "class_j_k_q_t_plotter_style.html", null ],
+    [ "JKQTPlotterUpdateGuard", "class_j_k_q_t_plotter_update_guard.html", null ],
     [ "JKQTPMathParser", "class_j_k_q_t_p_math_parser.html", null ],
     [ "JKQTPPaintDeviceAdapter", "class_j_k_q_t_p_paint_device_adapter.html", null ],
     [ "JKQTBasePlotter::JKQTPPen", "class_j_k_q_t_base_plotter_1_1_j_k_q_t_p_pen.html", null ],

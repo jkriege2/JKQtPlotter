@@ -1,5 +1,16 @@
 var NAVTREEINDEX28 =
 {
+"group__jkqtmathtext__render.html":[10,3,2],
+"group__jkqtmathtext__renderingmodel.html":[10,3,0,1],
+"group__jkqtmathtext__supportedlatex.html":[10,3,0,2,0,0],
+"group__jkqtmathtext__supportedlatexsymbols.html":[10,3,0,2,0,1],
+"group__jkqtmathtext__tools.html":[10,3,1,3],
+"group__jkqtmathtext__tools.html#ga1463950676f064ad0a8feb24fd41db1f":[10,3,1,3,9],
+"group__jkqtmathtext__tools.html#ga14f42e4772246c0844db3a444b22cc9a":[10,3,1,3,38],
+"group__jkqtmathtext__tools.html#ga1de2fa773e11ef058b440aa18bb8c6a5":[10,3,1,3,36],
+"group__jkqtmathtext__tools.html#ga200360caa998840a7ab9359212b99c6b":[10,3,1,3,30],
+"group__jkqtmathtext__tools.html#ga24edc7e7400050069c2e66f177321fe2":[10,3,1,3,15],
+"group__jkqtmathtext__tools.html#ga283b2bbfea70f11427563f632c2969f1":[10,3,1,3,33],
 "group__jkqtmathtext__tools.html#ga286e3e9afdcb54e615269d175a6c8fab":[10,3,1,3,35],
 "group__jkqtmathtext__tools.html#ga2945436624a52b6b35b3eec07280efbd":[10,3,1,3,29],
 "group__jkqtmathtext__tools.html#ga2fab98d9916942d8ee0f29841ed82448":[10,3,1,3,8],
@@ -149,6 +160,7 @@ var NAVTREEINDEX28 =
 "group__jkqtplotter__general__usage__jkqtbaseplotter.html":[10,4,0,5,1],
 "group__jkqtplotter__general__usage__jkqtplotter.html":[10,4,0,5,2],
 "group__jkqtplotter__general__usage__qtcreator.html":[10,4,0,5,0],
+"group__jkqtplotter__general__usage__speedplotsetup.html":[10,5],
 "group__jkqtplotter__geoplots.html":[10,4,1,1,1,5],
 "group__jkqtplotter__graphlabels.html":[10,4,1,1,1,8],
 "group__jkqtplotter__graphsgroup__classstructure.html":[10,4,0,2],
@@ -237,17 +249,5 @@ var NAVTREEINDEX28 =
 "group__jkqtplotter__imagelots__tools.html#ggaae2f1de8b42bb1734243b4201f4aa72da3766d65df2ef216b748ec2fd444ca4b8":[10,4,1,1,1,10,2,5,16],
 "group__jkqtplotter__imagelots__tools.html#ggaae2f1de8b42bb1734243b4201f4aa72da389afd446e4e1c8349c54faf3bc42f55":[10,4,1,1,1,10,2,5,71],
 "group__jkqtplotter__imagelots__tools.html#ggaae2f1de8b42bb1734243b4201f4aa72da3a22309aa67e29fac43371e6bdd0df75":[10,4,1,1,1,10,2,5,170],
-"group__jkqtplotter__imagelots__tools.html#ggaae2f1de8b42bb1734243b4201f4aa72da3a56649a592444ab68ae9a4643337c4a":[10,4,1,1,1,10,2,5,166],
-"group__jkqtplotter__imagelots__tools.html#ggaae2f1de8b42bb1734243b4201f4aa72da3b5f1c6b2ef0450cb319f507b8e5b151":[10,4,1,1,1,10,2,5,173],
-"group__jkqtplotter__imagelots__tools.html#ggaae2f1de8b42bb1734243b4201f4aa72da3b8b90dd3315bb047108b8f24811d9fd":[10,4,1,1,1,10,2,5,109],
-"group__jkqtplotter__imagelots__tools.html#ggaae2f1de8b42bb1734243b4201f4aa72da405eaf07c06018889366407a19627bd2":[10,4,1,1,1,10,2,5,45],
-"group__jkqtplotter__imagelots__tools.html#ggaae2f1de8b42bb1734243b4201f4aa72da43a25d58b35e4390dd594d1da53d968a":[10,4,1,1,1,10,2,5,74],
-"group__jkqtplotter__imagelots__tools.html#ggaae2f1de8b42bb1734243b4201f4aa72da43be0485d16e1ec637a17fedd3da567a":[10,4,1,1,1,10,2,5,167],
-"group__jkqtplotter__imagelots__tools.html#ggaae2f1de8b42bb1734243b4201f4aa72da448e89ae52b1b925b5e20a401b1011ca":[10,4,1,1,1,10,2,5,115],
-"group__jkqtplotter__imagelots__tools.html#ggaae2f1de8b42bb1734243b4201f4aa72da4494623aa0e8911cf1f04044a7cab4c7":[10,4,1,1,1,10,2,5,57],
-"group__jkqtplotter__imagelots__tools.html#ggaae2f1de8b42bb1734243b4201f4aa72da45e70ba244c7afe33dc4d9a153af2666":[10,4,1,1,1,10,2,5,189],
-"group__jkqtplotter__imagelots__tools.html#ggaae2f1de8b42bb1734243b4201f4aa72da48be694132034bcba61fbe3a1a172602":[10,4,1,1,1,10,2,5,176],
-"group__jkqtplotter__imagelots__tools.html#ggaae2f1de8b42bb1734243b4201f4aa72da4ae0479c760125cbb40d5964c80046a7":[10,4,1,1,1,10,2,5,151],
-"group__jkqtplotter__imagelots__tools.html#ggaae2f1de8b42bb1734243b4201f4aa72da4e33e64bc4b59505adfe21572dab01d8":[10,4,1,1,1,10,2,5,134],
-"group__jkqtplotter__imagelots__tools.html#ggaae2f1de8b42bb1734243b4201f4aa72da4eeb32c4bd493a274edc46af9e12fc9d":[10,4,1,1,1,10,2,5,20]
+"group__jkqtplotter__imagelots__tools.html#ggaae2f1de8b42bb1734243b4201f4aa72da3a56649a592444ab68ae9a4643337c4a":[10,4,1,1,1,10,2,5,166]
 };
