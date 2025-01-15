@@ -2004,3 +2004,40 @@ void JKQTPlotter::MouseDragAction::clear()
     modifier=Qt::NoModifier;
     mouseButton=Qt::LeftButton;
 }
+
+JKQTPlotterUpdateGuard::JKQTPlotterUpdateGuard(JKQTPlotter *plot, bool forceRedraw):
+    m_plot(plot), m_oldEnabled(true), m_forceRedraw(forceRedraw)
+{
+    if (m_plot) {
+        m_oldEnabled=m_plot->isPlotUpdateEnabled();
+        m_plot->setPlotUpdateEnabled(false);
+    }
+}
+
+JKQTPlotterUpdateGuard::~JKQTPlotterUpdateGuard() {
+    release(m_forceRedraw);
+}
+
+JKQTPlotterUpdateGuard::JKQTPlotterUpdateGuard(JKQTPlotterUpdateGuard &&other):
+    m_plot(other.m_plot), m_oldEnabled(other.m_oldEnabled), m_forceRedraw(other.m_forceRedraw)
+{
+    other.m_plot=nullptr;
+}
+
+JKQTPlotterUpdateGuard &JKQTPlotterUpdateGuard::operator=(JKQTPlotterUpdateGuard &&other) {
+    m_plot=other.m_plot;
+    m_oldEnabled=other.m_oldEnabled;
+    m_forceRedraw=other.m_forceRedraw;
+    other.m_plot=nullptr;
+    return *this;
+}
+
+void JKQTPlotterUpdateGuard::release(bool forceRedraw) {
+    if (m_plot) {
+        m_plot->setPlotUpdateEnabled(m_oldEnabled);
+        if (m_oldEnabled || forceRedraw) {
+            m_plot->redrawPlot();
+        }
+    }
+    m_plot=nullptr;
+}

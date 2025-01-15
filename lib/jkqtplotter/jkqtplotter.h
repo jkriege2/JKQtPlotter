@@ -72,9 +72,19 @@ JKQTPLOTTER_LIB_EXPORT void initJKQTPlotterResources();
  * \tableofcontents
  *
  *
+ *
+ *
  * \section  JKQTPLOTTER_BASICUSAGE Basic Usage of JKQTPlotter
  *
  * \copydetails jkqtplotter_general_usage_jkqtplotter
+ *
+ *
+ *
+ *
+ * \section JKQTPLOTTER_PERFORMACEWHILESETUP Performance Considerations when Setting up Plots
+ *
+ * \copydetails jkqtplotter_general_usage_speedplotsetup
+ *
  *
  *
  * \section  JKQTPLOTTER_SYNCMULTIPLOT Synchronizing Several Plots
@@ -637,7 +647,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
         bool isPlotUpdateEnabled() const;
         /** \brief sets whether automatic redrawing the plot is currently activated (e.g. you can sett his to \c false while performing major updates on the plot)
          *
-         * \see isPlotUpdateEnabled()
+         * \see JKQTPlotterUpdateGuard for a guard class coupling calls to setPlotUpdateEnabled() and redrawPlot() with the lifetime of a code block.
+         *      See \ref jkqtplotter_general_usage_speedplotsetup for a detailed description.
+         *      Also see isPlotUpdateEnabled().
          */
         void setPlotUpdateEnabled(bool enable);
 
@@ -1397,7 +1409,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
 
         /** \brief indicates whether the plot is updated automatically at the moment
          *
-         * \see setPlotUpdateEnabled(), isPlotUpdateEnabled()
+         * \see setPlotUpdateEnabled(), isPlotUpdateEnabled(),
+         *      JKQTPlotterUpdateGuard for a guard class coupling calls to setPlotUpdateEnabled() and redrawPlot() with the lifetime of a code block.
+         *      See \ref jkqtplotter_general_usage_speedplotsetup for a detailed description.
          */
         bool doDrawing;
 
@@ -1710,6 +1724,52 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
         void setMouseMoveActionAsToolTip(bool enabled);
 
 };
+
+
+/** \brief Guard Class (RAII construct) for JKQTPlotter that disables replotting on construction and reenables it on destruction
+ * \ingroup jkqtpplotterclasses
+ *
+ * This class can be used to forbid replotting (to improve performance) while setting up a plot.
+ * The redraw is called on destruction of the guard,i.e. typically when leaving the block that
+ * encapsulates the plot construction.
+ *
+ * \code
+ *   {
+ *     JKQTPlotterUpdateGuard guard(plotter);
+ *
+ *     // set up plot here, e.g.
+ *     plotter->setX();
+ *     plotter->setY(); ...
+ *   } // Block ends and immediate plot updates are reenabled. Also JKQTPlotter::redrawPlot() is called.
+ * \endcode
+ *
+ * \see JKQTPlotter::setPlotUpdateEnabled(), JKQTPlotter::redrawPlot()
+ * \see JKQTPlotterUpdateGuard for a guard class coupling calls to setPlotUpdateEnabled() and redrawPlot() with the lifetime of a code block.
+ *      See \ref jkqtplotter_general_usage_speedplotsetup for a detailed description.
+ */
+class JKQTPLOTTER_LIB_EXPORT JKQTPlotterUpdateGuard {
+public:
+    JKQTPlotterUpdateGuard(JKQTPlotter* plot, bool forceRedraw=false);
+
+    ~JKQTPlotterUpdateGuard();
+
+    JKQTPlotterUpdateGuard(const JKQTPlotterUpdateGuard&)=delete;
+    JKQTPlotterUpdateGuard& operator=(const JKQTPlotterUpdateGuard&)=delete;
+    JKQTPlotterUpdateGuard(JKQTPlotterUpdateGuard&& other);
+    JKQTPlotterUpdateGuard& operator=(JKQTPlotterUpdateGuard&& other);
+
+    /** \brief release the lock, if \a forceRedraw equals \c true JKQTPlotter::redrawPlot() is called in any case,
+     *         if it is \c false, JKQTPlotter::redrawPlot() is called only if JKQTPlotter::isPlotUpdateEnabled() was \c true
+     *         on construction of the guard */
+    void release(bool forceRedraw=false);
+private:
+    JKQTPlotter* m_plot;
+    bool m_oldEnabled;
+    bool m_forceRedraw;
+};
+
+
+
 
 QT_BEGIN_NAMESPACE
 

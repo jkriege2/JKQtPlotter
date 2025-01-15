@@ -141,6 +141,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: added JKQTPCoordinateAxis::setRangeFixed() which disables changing the axis range (and thus the zoom)</li>
     <li>NEW: added JKQTPCoordinateAxis::getMin() and JKQTPCoordinateAxis::getMax() getters</li>
     <li>NEW: added example \ref JKQTPlotterUIScrollbar </li>
+    <li>NEW: added JKQTPlotterUpdateGuard guard class that prevents redrawing of a JKQTPlotter during the lifetime of a code block, improved documentation of speed during plot setup</li>
   </ul></li>
   
   <li>JKQTMathText:<ul>

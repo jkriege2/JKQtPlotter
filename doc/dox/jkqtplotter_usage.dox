@@ -124,11 +124,46 @@
       representing objects by caling JKQTPlotter::getXAxis() or JKQTPlotter::getYAxis().
   </ol>
  
-  \see \ref JKQTPlotterSimpleTest and \see JKQTPlotterQtCreator
+  \see \ref JKQTPlotterSimpleTest and \see \ref JKQTPlotterQtCreator
 
   
+  \defgroup jkqtplotter_general_usage_speedplotsetup Performance Considerations when Setting up Plots
   
+  Many of the function in JKQTPlotter case an immediate redraw of the widget. Examples are JKQTPlott::setX(), 
+  JKQTPlotter::setY(), JKQTPlotter::setAbsoluteX(), JKQTPlotter::setAbsoluteY(), JKQTPlotter::addGraph() ... 
+  so if you use a combination of these while setting up your plot,  it is possible to
+  cause several (rather expensive) redraws of the plot widget. Therefore you can disable this redrawing, using
+  JKQTPlotter::setPlotUpdateEnabled() and you can explicitly cause a redraw with JKQTPlotter::redrawPlot().
+  To make this process even easier to use, there is a guard helper class for this: JKQTPlotterUpdateGuard.
+  
+  Here is a code example:
+
+  \code
+    {
+      JKQTPlotterUpdateGuard guard(plotter);
  
+      // set up plot here, e.g.
+      plotter->setX();
+      plotter->setY(); ...
+    } // Block ends and immediate plot updates are reenabled. Also JKQTPlotter::redrawPlot() is called.
+  \endcode
+  
+  This code has the same effect as the long version without the guard class shown below:
+
+  \code
+    const bool wasReplotEnabled=plotter->isPlotUpdateEnabled();
+    plotter->setPlotUpdateEnabled(false);
+
+      // set up plot here, e.g.
+      plotter->setX();
+      plotter->setY(); ...
+
+    // Setup ends and immediate plot updates are reenabled. Also JKQTPlotter::redrawPlot() is called.        
+    plotter->setPlotUpdateEnabled(false);
+    if (wasReplotEnabled) plotter->redrawPlot();
+  \endcode
+
+  \see JKQTPlotter::setPlotUpdateEnabled(), JKQTPlotter::redrawPlot(),  JKQTPlotterUpdateGuard
 
 
   \defgroup jkqtplotter_general_usage_qtcreator How to use JKQTPlotter in the Qt Form Designer
