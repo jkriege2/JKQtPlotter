@@ -119,10 +119,10 @@ $(document).ready(function(){initNavTree('_j_k_q_t_plotter_basic_j_k_q_t_p_datas
 <div class="toc"><h3>Table of Contents</h3>
 <ul><li class="level1"><a href="#autotoc_md42">Simple Linear Regression</a></li>
 <li class="level1"><a href="#autotoc_md43">Robust Linear Regression</a></li>
-<li class="level1"><a href="#autotoc_md45">Weighted Linear Regression</a></li>
-<li class="level1"><a href="#autotoc_md47">Linearizable Regression Models</a></li>
-<li class="level1"><a href="#autotoc_md52">Polynom Fitting</a></li>
-<li class="level1"><a href="#autotoc_md54">Screenshot of the full Program</a></li>
+<li class="level1"><a href="#autotoc_md44">Weighted Linear Regression</a></li>
+<li class="level1"><a href="#autotoc_md45">Linearizable Regression Models</a></li>
+<li class="level1"><a href="#autotoc_md46">Polynom Fitting</a></li>
+<li class="level1"><a href="#autotoc_md47">Screenshot of the full Program</a></li>
 </ul>
 </div>
 <div class="textblock"><p>This tutorial project (see <code>./examples/datastore_statistics/</code>) explains several advanced functions of <a class="el" href="class_j_k_q_t_p_datastore.html" title="This class manages data columns (with entries of type double ), used by JKQTPlotter/JKQTBasePlotter t...">JKQTPDatastore</a> in combination with the [<a class="el" href="group__jkqtptools__math__statistics.html">JKQTPlotter Statistics Library</a>] conatined in <a class="el" href="class_j_k_q_t_plotter.html" title="plotter widget for scientific plots (uses JKQTBasePlotter to do the actual drawing)">JKQTPlotter</a>.</p>
@@ -213,7 +213,7 @@ Robust Linear Regression</h1>
 <li>the closer <code>p</code> is to 2, the closer the fit is to the least squares solution (i.e. the normal regression obtained with the L2 norm)</li>
 </ul>
 <p><img src="https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/datastore_regression_linrobust_p.png" alt="datastore_regression_linrobust_p" class="inline"/></p>
-<h1><a class="anchor" id="autotoc_md45"></a>
+<h1><a class="anchor" id="autotoc_md44"></a>
 Weighted Linear Regression</h1>
 <p>Another option to react to measurement errors is to take these into account when calculating the regression. To do so, you can use weighted regression that uses the measurement errors as inverse weights. This algorithm is implemented in the function <code><a class="el" href="group__jkqtptools__math__statistics__regression.html#gab5c23e5d003ffde1fbf9a089ea454659" title="calculate the weighted linear regression coefficients for a given for a given data range firstX / fir...">jkqtpstatLinearWeightedRegression()</a></code>.</p>
 <p>First we generate again a set of datapoints (x,y), which scatter randomly around a linear function. In addition we calculate an "error" <code>err</code> for each datapoint: </p><div class="fragment"><div class="line">std::random_device rd; <span class="comment">// random number generators:</span></div>
@@ -267,7 +267,7 @@ Weighted Linear Regression</h1>
 <p><img src="https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/datastore_regression_linweight.png" alt="datastore_regression_linweight" class="inline"/></p>
 <p>For this plot we also added a call to </p><div class="fragment"><div class="line"><a class="code hl_function" href="group__jkqtptools__math__statistics__adaptors.html#ga8bfe5be6f07bc5e05b989cbe8d5906f5">jkqtpstatAddLinearRegression</a>(graphE);</div>
 </div><!-- fragment --><p> which performs a simple non-weighted regression. The difference between the two resulting linear functions (blue: simple regression, green: weighted regression) demonstrates the influence of the weighting.</p>
-<h1><a class="anchor" id="autotoc_md47"></a>
+<h1><a class="anchor" id="autotoc_md45"></a>
 Linearizable Regression Models</h1>
 <p>In addition to the simple linear regression model <code>f(x)=a+b*x</code>, it is also possible to fit a few non-linear models by transforming the data:</p><ul>
 <li>power-law function<code>f(x)=a*x^b</code>, which is a linear function in a log(x)-log(y)-plot</li>
@@ -341,7 +341,7 @@ Linearizable Regression Models</h1>
 <li><code><a class="el" href="group__jkqtptools__math__statistics__regression.html#ga3907535ce3b98a3b0a4898d9eee1443f" title="calculate the robust linear regression coefficients for a given data range firstX / firstY ....">jkqtpstatRobustIRLSRegression()</a></code> / <code><a class="el" href="group__jkqtptools__math__statistics__adaptors.html#ga447fe500e98a779bbd5ac634cccc641b" title="calculate the (robust) iteratively reweighted least-squares (IRLS) estimate for the parameters where ...">jkqtpstatAddRobustIRLSRegression()</a></code></li>
 <li><code><a class="el" href="group__jkqtptools__math__statistics__regression.html#gaa6abec21468e0c369200d7fc92589531" title="calculate the robust linear regression coefficients for a given data range firstX / firstY ....">jkqtpstatWeightedRegression()</a></code> / <code><a class="el" href="group__jkqtptools__math__statistics__adaptors.html#gacdcf71efadb7f629a4535dc433af97a5" title="calculate the weighted linear regression coefficients for a given for a given data range firstX / fir...">jkqtpstatAddWeightedRegression()</a></code></li>
 </ul>
-<h1><a class="anchor" id="autotoc_md52"></a>
+<h1><a class="anchor" id="autotoc_md46"></a>
 Polynom Fitting</h1>
 <p>Finally the <a class="el" href="group__jkqtptools__math__statistics.html">JKQTPlotter Statistics Library</a> also supports one option for non-linear model fitting, namely fitting of polynomial models. This is implemented in the function <code><a class="el" href="group__jkqtptools__math__statistics__poly.html#gaccc77ac9938ce987c232f5bee76b753d" title="fits (in a least-squares sense) a polynomial  of order P to a set of N data pairs">jkqtpstatPolyFit()</a></code>.</p>
 <p>To demonstrate this function we first generate data from a poylnomial model (with gaussian noise):</p>
@@ -384,7 +384,7 @@ Polynom Fitting</h1>
 <div class="line">    <a class="code hl_function" href="group__jkqtptools__math__statistics__adaptors.html#ga843050e46d7b53c1ce239751910d13a8">jkqtpstatAddPolyFit</a>(graphP, p);</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__jkqtptools__math__statistics__adaptors_html_ga843050e46d7b53c1ce239751910d13a8"><div class="ttname"><a href="group__jkqtptools__math__statistics__adaptors.html#ga843050e46d7b53c1ce239751910d13a8">jkqtpstatAddPolyFit</a></div><div class="ttdeci">JKQTPXFunctionLineGraph * jkqtpstatAddPolyFit(JKQTBasePlotter *plotter, InputItX firstX, InputItX lastX, InputItY firstY, InputItY lastY, size_t P, OutputItP firstRes)</div><div class="ttdoc">fits (in a least-squares sense) a polynomial  of order P to a set of N data pairs  from a given data ...</div><div class="ttdef"><b>Definition</b> jkqtpstatisticsadaptors.h:2248</div></div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md54"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md47"></a>
 Screenshot of the full Program</h1>
 <p>The output of the full test program <a href="https://github.com/jkriege2/JKQtPlotter/tree/master/examples/datastore_statistics/datastore_regression.cpp"><code>datastore_regression.cpp</code></a> looks like this:</p>
 <p><img src="https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/datastore_regression.png" alt="datastore_regression" class="inline"/> </p>
@@ -396,7 +396,7 @@ Screenshot of the full Program</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="example_tutorial_projects.html">Example &amp; Tutorial Projects</a></li>
-    <li class="footer">Generated on Wed Oct 30 2024 21:02:31 for JKQTPlotter by <a href="https://www.doxygen.org/index.html">doxygen</a> 1.9.8 </li>
+    <li class="footer">Generated on Wed Jan 15 2025 20:23:52 for JKQTPlotter by <a href="https://www.doxygen.org/index.html">doxygen</a> 1.9.8 </li>
   </ul>
 </div>
 </body>

@@ -57,7 +57,7 @@ var searchData=
   ['impulsestyle_54',['impulseStyle',['../class_j_k_q_t_graphs_base_style.html#afefa89de58fb0476304537e845100c1d',1,'JKQTGraphsBaseStyle']]],
   ['in_20a_20column_20of_20the_20jkqtpdatastore_55',['Reference External Data in a column of the JKQTPDatastore',['../_j_k_q_t_plotter_basic_j_k_q_t_p_datastore.html#autotoc_md20',1,'']]],
   ['in_20a_20jkqtbaseplotter_20jkqtplotter_56',['Qt Data Models to Access Graphs in a JKQTBasePlotter/JKQTPlotter',['../group__jkqtpgraphsmodel.html',1,'']]],
-  ['in_20a_20seismographic_20style_57',['Plot black/transparent wiggle plot using &lt;tt&gt;JKQTPFilledCurveYGraph&lt;/tt&gt; in a &quot;seismographic style&quot;',['../_j_k_q_t_plotter_wiggle_plots.html#autotoc_md117',1,'']]],
+  ['in_20a_20seismographic_20style_57',['Plot black/transparent wiggle plot using &lt;tt&gt;JKQTPFilledCurveYGraph&lt;/tt&gt; in a &quot;seismographic style&quot;',['../_j_k_q_t_plotter_wiggle_plots.html#autotoc_md122',1,'']]],
   ['in_20classes_20for_20error_20indicators_58',['Mix-In Classes for Error Indicators',['../group__jkqtplotter__basegraphserrors.html',1,'']]],
   ['in_20classes_20for_20graphs_59',['in classes for graphs',['../group__jkqtplotter__mixins.html',1,'Mix-in classes for Graphs'],['../group__jkqtplotter__graphsgroup__classstructure.html#jkqtplotter_graphsgroup_classstructure_mixins',1,'Mix-In Classes for Graphs']]],
   ['in_20classes_20for_20styling_20general_20graphs_60',['Mix-In Classes for Styling General Graphs',['../group__jkqtplotter__basegraphs__stylemixins.html',1,'']]],

@@ -35,7 +35,7 @@ var searchData=
   ['verbatim_20text_32',['Verbatim Text',['../group__jkqtmathtext__supportedlatex.html#JKQTMathTextSuppoertedLaTeXVerbatim',1,'']]],
   ['version_33',['v2018.08: Minor Modifications (Final QuickFit3-compatible Version)',['../page_whatsnew.html#page_whatsnew_V2018_08',1,'']]],
   ['versions_34',['versions',['../md__s_e_c_u_r_i_t_y.html#autotoc_md124',1,'Supported Versions'],['../page_todo.html',1,'Todo List für Future Releases/Versions'],['../page_whatsnew.html',1,'What&apos;s New (Release Notes/Versions)']]],
-  ['vertical_20violin_20plot_35',['Drawing the (vertical) Violin Plot',['../_j_k_q_t_plotter_violinplot_graphs.html#autotoc_md120',1,'']]],
+  ['vertical_20violin_20plot_35',['Drawing the (vertical) Violin Plot',['../_j_k_q_t_plotter_violinplot_graphs.html#autotoc_md118',1,'']]],
   ['verticallineleft_36',['verticalLineLeft',['../class_j_k_q_t_math_text_matrix_node.html#a5ea379a8e4278cdd4d55bdfbda34912c',1,'JKQTMathTextMatrixNode']]],
   ['verticallinerhscolumn_37',['verticalLineRHSColumn',['../class_j_k_q_t_math_text_matrix_node.html#a6820bf110092398980c9f456b012ef6b',1,'JKQTMathTextMatrixNode']]],
   ['verticalorientation_38',['verticalorientation',['../class_j_k_q_t_math_text_verbatim_node.html#a38cd5e489ac3ca58e4c9a4346ce31d6f',1,'JKQTMathTextVerbatimNode::verticalOrientation'],['../class_j_k_q_t_math_text_vertical_list_node.html#a05659e7a37f1a7cfa4a04ea90421b33b',1,'JKQTMathTextVerticalListNode::verticalOrientation']]],
@@ -43,8 +43,8 @@ var searchData=
   ['very_20simple_20scatter_20graph_40',['Example (JKQTPlotter): Very simple scatter-graph',['../_j_k_q_t_plotterscatter.html',1,'exampleTutorialProjects']]],
   ['via_20context_20menu_41',['Switching Graph Visibility via Context Menu',['../_j_k_q_t_plotter_user_interaction.html#autotoc_md101',1,'']]],
   ['viewport_42',['Drag the Plot Viewport',['../_j_k_q_t_plotter_user_interaction.html#autotoc_md104',1,'']]],
-  ['violin_20plot_43',['violin plot',['../_j_k_q_t_plotter_violinplot_graphs.html#autotoc_md121',1,'Drawing a horizontal Violin Plot'],['../_j_k_q_t_plotter_violinplot_graphs.html#autotoc_md120',1,'Drawing the (vertical) Violin Plot']]],
-  ['violin_20plots_44',['violin plots',['../_j_k_q_t_plotter_violinplot_graphs.html#autotoc_md122',1,'Adapters as shortcuts to drawing Violin Plots'],['../_j_k_q_t_plotter_violinplot_graphs.html',1,'Example (JKQTPlotter): Violin Plots']]],
+  ['violin_20plot_43',['violin plot',['../_j_k_q_t_plotter_violinplot_graphs.html#autotoc_md119',1,'Drawing a horizontal Violin Plot'],['../_j_k_q_t_plotter_violinplot_graphs.html#autotoc_md118',1,'Drawing the (vertical) Violin Plot']]],
+  ['violin_20plots_44',['violin plots',['../_j_k_q_t_plotter_violinplot_graphs.html#autotoc_md120',1,'Adapters as shortcuts to drawing Violin Plots'],['../_j_k_q_t_plotter_violinplot_graphs.html',1,'Example (JKQTPlotter): Violin Plots']]],
   ['violinboth_45',['ViolinBoth',['../class_j_k_q_t_p_graph_violinplot_style_mixin.html#a5db2729e0ed862123eca2120bbd35921a943fc9488854eeccf595b08dee7def0d',1,'JKQTPGraphViolinplotStyleMixin']]],
   ['violinbottom_46',['ViolinBottom',['../class_j_k_q_t_p_graph_violinplot_style_mixin.html#a5db2729e0ed862123eca2120bbd35921a52f003eabee7812ba4fa90c161dd7a60',1,'JKQTPGraphViolinplotStyleMixin']]],
   ['violinfrequencycolumn_47',['violinFrequencyColumn',['../class_j_k_q_t_p_violinplot_element_base.html#a2571a11d74dce9dafb94e62a8840a7da',1,'JKQTPViolinplotElementBase']]],
@@ -60,6 +60,6 @@ var searchData=
   ['visible_20class_57',['visible class',['../class_j_k_q_t_base_plotter.html#jkqtplotter_usage_baseplotter_standalone',1,'JKQTBasePlotter Standalone Usage (non-visible class)'],['../group__jkqtplotter__general__usage__jkqtbaseplotter.html',1,'Usage of JKQTBasePlotter Non-Visible Class']]],
   ['visiblewhitespace_58',['visibleWhitespace',['../class_j_k_q_t_math_text_verbatim_node.html#a62999d57148b8ae72c8fd3ef60a9c0f0',1,'JKQTMathTextVerbatimNode']]],
   ['visual_20studio_20msvc_59',['Configuring&amp;Building with Visual Studio/MSVC',['../page_buildinstructions__c_m_a_k_e.html#page_buildinstructions_CMAKE_VSTUDIO',1,'']]],
-  ['visualizing_20data_20as_20a_20rug_20plot_60',['Visualizing data as a Rug Plot',['../_j_k_q_t_plotter_violinplot_graphs.html#autotoc_md119',1,'']]],
+  ['visualizing_20data_20as_20a_20rug_20plot_60',['Visualizing data as a Rug Plot',['../_j_k_q_t_plotter_violinplot_graphs.html#autotoc_md117',1,'']]],
   ['vulnerability_61',['Reporting a Vulnerability',['../md__s_e_c_u_r_i_t_y.html#autotoc_md125',1,'']]]
 ];
