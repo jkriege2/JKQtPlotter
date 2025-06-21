@@ -65,6 +65,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXYLineGraph: public JKQTPXYGraph, public JKQTP
         explicit JKQTPXYLineGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
         JKQTPXYLineGraph(JKQTPlotter* parent);
+	virtual ~JKQTPXYLineGraph();
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
