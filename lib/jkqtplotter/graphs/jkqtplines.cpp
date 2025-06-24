@@ -48,6 +48,8 @@ JKQTPXYLineGraph::JKQTPXYLineGraph(JKQTPlotter* parent):
 {
 }
 
+JKQTPXYLineGraph::~JKQTPXYLineGraph() = default;
+
 JKQTPXYLineGraph::JKQTPXYLineGraph(JKQTBasePlotter* parent):
     JKQTPXYGraph(parent),
     drawLine(true),
