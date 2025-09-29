@@ -774,12 +774,12 @@ const QHash<QString, JKQTMathTextSymbolNode::SymbolFullProps> &JKQTMathTextSymbo
         addGreekLetterVariants_WinSymbol_Unicode_Html(symbols, "varsigma", "V", QChar(0x3C2),"&varsigma;");
         addGreekLetterVariants_WinSymbol_Unicode_Html(symbols, "tau", "t", QChar(0x3C4),"&tau;");
         addGreekLetterVariants_WinSymbol_Unicode_Html(symbols, "upsilon", "u", QChar(0x3C5),"&upsilon;");
-        addGreekLetterVariants_WinSymbol_Unicode_Html(symbols, "phi", "f", QChar(0x3C5),"&straightphi;");
-        addGreekLetterVariants_WinSymbol_Unicode_Html(symbols, "varphi", "j", QChar(0x3D6),"&phi;");
+        addGreekLetterVariants_WinSymbol_Unicode_Html(symbols, "phi", "f", QChar(0x3D5),"&straightphi;");
+        addGreekLetterVariants_WinSymbol_Unicode_Html(symbols, "varphi", "j", QChar(0x3C6),"&phi;");
         addGreekLetterVariants_WinSymbol_Unicode_Html(symbols, "chi", "c", QChar(0x3C7),"&chi;");
         addGreekLetterVariants_WinSymbol_Unicode_Html(symbols, "psi", "y", QChar(0x3C8),"&psi;");
         addGreekLetterVariants_WinSymbol_Unicode_Html(symbols, "omega", "w", QChar(0x3C9),"&omega;");
-        addGreekLetterVariants_WinSymbol_Unicode_Html(symbols, "Gamma", "G", QChar(0x3A3),"&Gamma;");
+        addGreekLetterVariants_WinSymbol_Unicode_Html(symbols, "Gamma", "G", QChar(0x393),"&Gamma;");
         addGreekLetterVariants_WinSymbol_Unicode_Html(symbols, "Delta", "D", QChar(0x394),"&Delta;");
         addGreekLetterVariants_WinSymbol_Unicode_Html(symbols, "Theta", "Q", QChar(0x398),"&Theta;");
         addGreekLetterVariants_WinSymbol_Unicode_Html(symbols, "Lambda", "L", QChar(0x39B),"&Lambda;");
@@ -787,7 +787,7 @@ const QHash<QString, JKQTMathTextSymbolNode::SymbolFullProps> &JKQTMathTextSymbo
         addGreekLetterVariants_WinSymbol_Unicode_Html(symbols, "Xi", "X", QChar(0x39E),"&Xi;");
         addGreekLetterVariants_WinSymbol_Unicode_Html(symbols, "Pi", "P", QChar(0x3A0),"&Pi;");
         addGreekLetterVariants_WinSymbol_Unicode_Html(symbols, "Sigma", "S", QChar(0x3A3),"&Sigma;");
-        addGreekLetterVariants_WinSymbol_Unicode_Html(symbols, "Upsilon", "U", QChar(0x3C6),"&Upsilon;");
+        addGreekLetterVariants_WinSymbol_Unicode_Html(symbols, "Upsilon", "U", QChar(0x3A5),"&Upsilon;");
         addGreekLetterVariants_WinSymbol_Unicode_Html(symbols, "Phi", "F", QChar(0x3A6),"&Phi;");
         addGreekLetterVariants_WinSymbol_Unicode_Html(symbols, "Psi", "Y", QChar(0x3A8),"&Psi;");
 
