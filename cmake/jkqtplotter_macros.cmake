@@ -19,9 +19,11 @@ function(jkqtplotter_setDefaultLibOptions TARGETNAME libBaseName PRECOMPHEADERFI
     # set library version
     set_property(TARGET ${TARGETNAME} PROPERTY VERSION "${PROJECT_VERSION}")
     # set required Cxx-Standard
-    set_property(TARGET ${TARGETNAME} PROPERTY CXX_STANDARD ${JKQtPlotter_QT_CXX_STANDARD})
-    set_property(TARGET ${TARGETNAME} PROPERTY CXX_STANDARD_REQUIRED ${JKQtPlotter_QT_CXX_STANDARD_REQUIRED})
-    target_compile_features(${TARGETNAME} PUBLIC ${JKQtPlotter_QT_CXX_COMPILE_FEATURE})
+    if(JKQtPlotter_ENABLED_CXX20)
+        set_property(TARGET ${TARGETNAME} PROPERTY CXX_STANDARD ${JKQtPlotter_QT_CXX_STANDARD})
+        set_property(TARGET ${TARGETNAME} PROPERTY CXX_STANDARD_REQUIRED ${JKQtPlotter_QT_CXX_STANDARD_REQUIRED})
+        target_compile_features(${TARGETNAME} PUBLIC ${JKQtPlotter_QT_CXX_COMPILE_FEATURE})
+    endif()
     # set options, specific to shared libraries
     if (BUILD_SHARED_LIBS)
         target_compile_definitions(${TARGETNAME} PUBLIC ${libBasenameUPPER}_LIB_IN_DLL)
