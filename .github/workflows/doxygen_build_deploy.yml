@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Doxygen build&deploy
+name: Doxygen Build & Deploy
 
 # Controls when the workflow will run
 on:
@@ -16,37 +16,47 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
-        with: 
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
           path: JKQtPlotter
             
-      - name: Install dependencies
+      - name: Set up Python (for GH Pages deploy and modern scripting)
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+                                                 
+      - name: Install Doxygen's required Dependencies
         run: |
           sudo apt-get update
           sudo apt-get update --fix-missing
           sudo apt-get install -f
-          sudo apt -y install build-essential doxygen graphviz doxygen-latex libclang-common-10-dev libclang-10-dev	fonts-freefont-ttf
+          sudo apt-get -y install build-essential doxygen graphviz doxygen-latex libclang-dev fonts-freefont-ttf wget tar
           doxygen -v
       
-      - name: Update Doxygen to 1.9.8
+      - name: Update Doxygen to 1.14.0
         run: |
           currDir=`pwd`
           cd $GITHUB_WORKSPACE
-          mkdir doxygen
-          wget -O - https://github.com/doxygen/doxygen/releases/download/Release_1_9_8/doxygen-1.9.8.linux.bin.tar.gz | tar --strip-components=1 -xz -C doxygen
+          mkdir -p ${{ github.workspace }}/doxygen
+          wget -O - https://github.com/doxygen/doxygen/releases/download/Release_1_14_0/doxygen-1.14.0.linux.bin.tar.gz  | tar --strip-components=1 -xz -C "${{ github.workspace }}/doxygen"
+          #wget -O - https://github.com/doxygen/doxygen/releases/download/Release_1_9_8/doxygen-1.9.8.linux.bin.tar.gz | tar --strip-components=1 -xz -C doxygen
           export PATH=$GITHUB_WORKSPACE/doxygen/bin:${PATH}
           echo PATH=$PATH
           cd $currDir
-          $GITHUB_WORKSPACE/doxygen/bin/doxygen --version
+      - name: Add Doxygen to PATH
+        run: echo "${{ github.workspace }}/doxygen/bin" >> $GITHUB_PATH
+
+      - name: Show Doxygen version
+        run: doxygen --version
 
       - name: Run Doxygen
         run: |
-          $GITHUB_WORKSPACE/doxygen/bin/doxygen --version
           cd JKQtPlotter
           pwd
           ls
@@ -56,10 +66,17 @@ jobs:
         run: touch JKQtPlotter/doc/html/.nojekyll
         shell: bash
 
+#      - name: Deploy to GitHub Pages
+#        uses: JamesIves/github-pages-deploy-action@3.7.1
+#        with:
+#          github_token: ${{ secrets.GH_PAGES_PUSH_SECRET }}
+#          branch: gh-pages
+#          folder: JKQtPlotter/doc/html
       - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@3.7.1
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GH_PAGES_PUSH_SECRET }}
-          branch: gh-pages
-          folder: JKQtPlotter/doc/html
+          publish_branch: gh-pages
+          publish_dir: JKQtPlotter/doc/html
+          force_orphan: true
           
