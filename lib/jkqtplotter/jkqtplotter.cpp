@@ -2018,13 +2018,13 @@ JKQTPlotterUpdateGuard::~JKQTPlotterUpdateGuard() {
     release(m_forceRedraw);
 }
 
-JKQTPlotterUpdateGuard::JKQTPlotterUpdateGuard(JKQTPlotterUpdateGuard &&other):
+JKQTPlotterUpdateGuard::JKQTPlotterUpdateGuard(JKQTPlotterUpdateGuard &&other) noexcept:
     m_plot(other.m_plot), m_oldEnabled(other.m_oldEnabled), m_forceRedraw(other.m_forceRedraw)
 {
     other.m_plot=nullptr;
 }
 
-JKQTPlotterUpdateGuard &JKQTPlotterUpdateGuard::operator=(JKQTPlotterUpdateGuard &&other) {
+JKQTPlotterUpdateGuard &JKQTPlotterUpdateGuard::operator=(JKQTPlotterUpdateGuard &&other) noexcept {
     m_plot=other.m_plot;
     m_oldEnabled=other.m_oldEnabled;
     m_forceRedraw=other.m_forceRedraw;

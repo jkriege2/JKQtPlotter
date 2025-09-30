@@ -1755,8 +1755,8 @@ public:
 
     JKQTPlotterUpdateGuard(const JKQTPlotterUpdateGuard&)=delete;
     JKQTPlotterUpdateGuard& operator=(const JKQTPlotterUpdateGuard&)=delete;
-    JKQTPlotterUpdateGuard(JKQTPlotterUpdateGuard&& other);
-    JKQTPlotterUpdateGuard& operator=(JKQTPlotterUpdateGuard&& other);
+    JKQTPlotterUpdateGuard(JKQTPlotterUpdateGuard&& other) noexcept;
+    JKQTPlotterUpdateGuard& operator=(JKQTPlotterUpdateGuard&& other) noexcept;
 
     /** \brief release the lock, if \a forceRedraw equals \c true JKQTPlotter::redrawPlot() is called in any case,
      *         if it is \c false, JKQTPlotter::redrawPlot() is called only if JKQTPlotter::isPlotUpdateEnabled() was \c true
