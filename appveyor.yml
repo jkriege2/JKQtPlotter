@@ -35,7 +35,7 @@ environment:
     - NAME: "Ubuntu2004: CMake, Qt6"
       QTABI: gcc_64
       COMPILER: GCC
-      QTVER: 6.7
+      QTVER: 6.9
       APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
       CMAKE_GENERATOR: "Unix Makefiles"
       INSTALL_QMAKE5: true
@@ -44,7 +44,7 @@ environment:
     - NAME: "Ubuntu2004: CMake, Qt6, C++20"
       QTABI: gcc_64
       COMPILER: GCC
-      QTVER: 6.7
+      QTVER: 6.9
       APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
       CMAKE_GENERATOR: "Unix Makefiles"
       INSTALL_QMAKE5: true
@@ -54,7 +54,7 @@ environment:
     - NAME: "Ubuntu2004: CMake-FetchContent, Qt6"
       QTABI: gcc_64
       COMPILER: GCC
-      QTVER: 6.7
+      QTVER: 6.9
       APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
       CMAKE_GENERATOR: "Unix Makefiles"
       TEST_FETCHCONTENT: true
@@ -79,18 +79,18 @@ environment:
       TEST_FETCHCONTENT: false
 
     - NAME: "MSVC64: CMake, Qt5"
-      QTABI: msvc2019_64
+      QTABI: msvc2017_64
       COMPILER: MSVC
-      QTVER: 5.15
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
-      CMAKE_GENERATOR: "Visual Studio 16 2019"
+      QTVER: 5.13
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+      CMAKE_GENERATOR: "Visual Studio 15 2017"
       CMAKE_BUILDFLAGS: /verbosity:minimal /maxcpucount
       TEST_FETCHCONTENT: false
            
     - NAME: "MSVC64: CMake, Qt6"
       QTABI: msvc2019_64
       COMPILER: MSVC
-      QTVER: 6.5
+      QTVER: 6.9
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
       CMAKE_GENERATOR: "Visual Studio 16 2019"
       CMAKE_BUILDFLAGS: /verbosity:minimal /maxcpucount
