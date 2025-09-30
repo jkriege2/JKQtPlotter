@@ -32,20 +32,20 @@ environment:
     USE_CXX20: OFF
  
   matrix:
-    - NAME: "Ubuntu2004: CMake, Qt6"
+    - NAME: "Ubuntu2204: CMake, Qt6"
       QTABI: gcc_64
       COMPILER: GCC
       QTVER: 6.9
-      APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
+      APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2204
       CMAKE_GENERATOR: "Unix Makefiles"
       INSTALL_QMAKE5: true
       TEST_FETCHCONTENT: false
 
-    - NAME: "Ubuntu2004: CMake, Qt6, C++20"
+    - NAME: "Ubuntu2204: CMake, Qt6, C++20"
       QTABI: gcc_64
       COMPILER: GCC
       QTVER: 6.9
-      APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
+      APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2204
       CMAKE_GENERATOR: "Unix Makefiles"
       INSTALL_QMAKE5: true
       TEST_FETCHCONTENT: false
@@ -55,7 +55,7 @@ environment:
       QTABI: gcc_64
       COMPILER: GCC
       QTVER: 6.9
-      APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
+      APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2204
       CMAKE_GENERATOR: "Unix Makefiles"
       TEST_FETCHCONTENT: true
       
@@ -79,20 +79,20 @@ environment:
       TEST_FETCHCONTENT: false
 
     - NAME: "MSVC64: CMake, Qt5"
-      QTABI: msvc2017_64
+      QTABI: msvc2019_64
       COMPILER: MSVC
       QTVER: 5.13
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-      CMAKE_GENERATOR: "Visual Studio 15 2017"
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      CMAKE_GENERATOR: "Visual Studio 16 2019"
       CMAKE_BUILDFLAGS: /verbosity:minimal /maxcpucount
       TEST_FETCHCONTENT: false
            
     - NAME: "MSVC64: CMake, Qt6"
-      QTABI: msvc2019_64
+      QTABI: msvc2022_64
       COMPILER: MSVC
       QTVER: 6.9
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
-      CMAKE_GENERATOR: "Visual Studio 16 2019"
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
+      CMAKE_GENERATOR: "Visual Studio 17 2022"
       CMAKE_BUILDFLAGS: /verbosity:minimal /maxcpucount
       TEST_FETCHCONTENT: false
       
@@ -110,7 +110,9 @@ for:
   - 
     matrix:
       only:
+        - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
         - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+        - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
      
     init:
       - cmd: echo == INIT SYSTEM ENVIRONMENT ======================================================================
@@ -204,6 +206,7 @@ for:
     matrix:
       only:
         - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
+        - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2204
         
     init:
       - sh: echo == INIT SYSTEM ENVIRONMENT ======================================================================
@@ -216,17 +219,32 @@ for:
     install:
       # Init compiler environment
       - sh: echo == INIT COMPILER ENVIRONMENT ====================================================================
-      - sh: export QTDIR=$HOME/Qt/$QTVER/$QTABI/
-      - sh: export QT_DIR=$HOME/Qt/$QTVER/$QTABI/
+      #- sh: export QTDIR=$HOME/Qt/$QTVER/$QTABI/
+      #- sh: export QT_DIR=$HOME/Qt/$QTVER/$QTABI/
+      - sh: ls -l $HOME/Qt || true
+      - sh: ls -l $HOME/Qt/$QTVER || true
+      - sh: ls -l $HOME/Qt/$QTVER/bin/ || true
+      - sh: ls -l $HOME/Qt/$QTVER/lib/ || true
+      - sh: ls -l $HOME/Qt/$QTVER/lib/cmake/ || true
+      - sh: ls -l $HOME/Qt/$QTVER/$QTABI || true
+      - sh: ls -l $HOME/Qt/$QTVER/$QTABI/bin/ || true
+      - sh: ls -l $HOME/Qt/$QTVER/$QTABI/lib/ || true
+      - sh: ls -l $HOME/Qt/$QTVER/$QTABI/lib/cmake/ || true
+      - sh: ls -l $HOME/Qt/$QTVER/$QTABI/bin/lib/ || true
+      - sh: ls -l $HOME/Qt/$QTVER/$QTABI/bin/lib/cmake/ || true
+      - sh: export QTDIR=$HOME/Qt/$QTVER
+      - sh: export QT_DIR=$QTDIR/lib/cmake/
       - sh: export Qt5_DIR=$QTDIR/lib/cmake
+      - sh: export Qt6_DIR=$QTDIR/lib/cmake
       - sh: sudo ls /etc/apt/sources.list.d/
       #- sh: sudo rm /etc/apt/sources.list.d/github_git-lfs.list
       - sh: sudo apt update -yy --allow-releaseinfo-change
-      - sh: if [ "$INSTALL_QMAKE5" = true ]; then sudo apt install -y build-essential git mesa-common-dev libglu1-mesa-dev qt5-qmake ; fi            
-      - sh: if [ "$INSTALL_QMAKE5" = false ]; then sudo apt install -y build-essential git mesa-common-dev libglu1-mesa-dev ; fi            
+      - sh: sudo apt install -y build-essential git mesa-common-dev libglu1-mesa-dev libicu-dev           
+      - sh: if [ "$INSTALL_QMAKE5" = true ]; then sudo apt install -y qt5-qmake ; fi            
       - sh: echo QTDIR=$QTDIR
       - sh: echo QT_DIR=$QT_DIR
       - sh: echo Qt5_DIR=$Qt5_DIR
+      - sh: echo Qt6_DIR=$Qt6_DIR
       - sh: echo PATH=$PATH
       # Install OpenCV
       - sh: |
@@ -258,7 +276,7 @@ for:
               cd build
               echo --- Run CMake Configure ----------------------------------------------------------------------------- 
               cmake --version 
-              cmake -G "$CMAKE_GENERATOR" "-DCMAKE_PREFIX_PATH=$QTDIR;$CIMG_INCLUDE_DIR"  "-DCMAKE_INSTALL_PREFIX=$APPVEYOR_BUILD_FOLDER/install" "-DCMAKE_BUILD_TYPE=$BUILD_CONFIG" "-DJKQtPlotter_ENABLED_CXX20=$USE_CXX20" .. 
+              cmake -G "$CMAKE_GENERATOR" "-DCMAKE_PREFIX_PATH=$QTDIR;$QT_DIR;$CIMG_INCLUDE_DIR"  "-DCMAKE_INSTALL_PREFIX=$APPVEYOR_BUILD_FOLDER/install" "-DCMAKE_BUILD_TYPE=$BUILD_CONFIG" "-DJKQtPlotter_ENABLED_CXX20=$USE_CXX20" .. 
               echo --- Build using CMake ------------------------------------------------------------------------------- 
               cmake --build . --config "$BUILD_CONFIG" -j$(getconf _NPROCESSORS_ONLN)  -- $CMAKE_BUILDFLAGS
               
@@ -269,7 +287,7 @@ for:
               cd build
               echo --- Run CMake Configure with FetchCOntent ----------------------------------------------------------- 
               cmake --version 
-              cmake -G "$CMAKE_GENERATOR" "-DCMAKE_PREFIX_PATH=$QTDIR;$CIMG_INCLUDE_DIR" "-DCMAKE_BUILD_TYPE=$BUILD_CONFIG"  "-DCMAKE_INSTALL_PREFIX=$APPVEYOR_BUILD_FOLDER/install" "-DJKQtPlotter_ENABLED_CXX20=$USE_CXX20" .. 
+              cmake -G "$CMAKE_GENERATOR" "-DCMAKE_PREFIX_PATH=$QTDIR;$QT_DIR;$CIMG_INCLUDE_DIR" "-DCMAKE_BUILD_TYPE=$BUILD_CONFIG"  "-DCMAKE_INSTALL_PREFIX=$APPVEYOR_BUILD_FOLDER/install" "-DJKQtPlotter_ENABLED_CXX20=$USE_CXX20" .. 
               echo --- Build using CMake with FetchCOntent ------------------------------------------------------------- 
               cmake --build . --config "$BUILD_CONFIG" -j$(getconf _NPROCESSORS_ONLN)  -- $CMAKE_BUILDFLAGS
             fi
@@ -300,7 +318,7 @@ for:
               cd examples/cmake_link_example
               mkdir build
               cd build
-              cmake -G "$CMAKE_GENERATOR" "-DCMAKE_BUILD_TYPE=$BUILD_CONFIG" "-DCMAKE_PREFIX_PATH=$QTDIR;$CIMG_INCLUDE_DIR;$APPVEYOR_BUILD_FOLDER/install" .. 
+              cmake -G "$CMAKE_GENERATOR" "-DCMAKE_BUILD_TYPE=$BUILD_CONFIG" "-DCMAKE_PREFIX_PATH=$QTDIR;$QT_DIR;$CIMG_INCLUDE_DIR;$APPVEYOR_BUILD_FOLDER/install" .. 
               cmake --build . --config "$BUILD_CONFIG" -j$(getconf _NPROCESSORS_ONLN) -- $CMAKE_BUILDFLAGS
               cd ..
             fi
