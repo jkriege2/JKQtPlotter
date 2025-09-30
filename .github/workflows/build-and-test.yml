@@ -1,0 +1,281 @@
+name: Build and Test Matrix
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  cmake-build:
+    name: CMake | ${{ matrix.os }} | Qt ${{ matrix.qt_ver }} | ${{ matrix.compiler }} | ${{ matrix.build_type }} | FETCHCONTENT=${{ matrix.fetch_content }} | CXX20=${{ matrix.cxx20 }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          # Linux Ubuntu 22.04
+          - os: ubuntu-22.04
+            qt_ver: 6.6
+            compiler: gcc
+            build_type: Release
+            cxx20: OFF
+            fetch_content: false
+            generator: Ninja
+            
+          - os: ubuntu-22.04
+            qt_ver: 6.6
+            compiler: gcc
+            build_type: Release
+            cxx20: ON
+            fetch_content: false
+            generator: Ninja
+
+          - os: ubuntu-22.04
+            qt_ver: 6.6
+            compiler: gcc
+            build_type: Release
+            cxx20: OFF
+            fetch_content: true
+            generator: Ninja
+
+          # Linux Ubuntu 20.04
+          - os: ubuntu-22.04
+            qt_ver: 5.15
+            compiler: gcc
+            build_type: Release
+            cxx20: OFF
+            fetch_content: false
+            generator: Ninja
+
+          # Windows MSVC and GCC
+          - os: windows-2022
+            qt_ver: 5.15
+            compiler: msvc
+            build_type: Release
+            cxx20: OFF
+            fetch_content: false
+            generator: Visual Studio 17 2022
+
+          - os: windows-2022
+            qt_ver: 6.7
+            compiler: msvc
+            build_type: Release
+            cxx20: OFF
+            fetch_content: false
+            generator: Visual Studio 17 2022
+
+          # macOS
+          - os: macos-15
+            qt_ver: 6.7
+            compiler: clang
+            build_type: Release
+            cxx20: OFF
+            fetch_content: false
+            generator: Ninja
+
+    env:
+      BUILD_TYPE: ${{ matrix.build_type }}
+      USE_CXX20: ${{ matrix.cxx20 }}
+      FETCHCONTENT: ${{ matrix.fetch_content }}
+      GENERATOR: ${{ matrix.generator }}
+      CMAKE_BUILDFLAGS:  
+      NUM_PROC: 4
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies (Linux)
+        if: startsWith(matrix.os, 'ubuntu')
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential mesa-common-dev libglu1-mesa-dev git cmake libopencv-dev python3
+
+      - name: Install dependencies (macOS)
+        if: startsWith(matrix.os, 'macos')
+        run: brew install opencv
+
+      - name: Install dependencies (Windows)
+        if: startsWith(matrix.os, 'windows')
+        run: choco install opencv cmake -y
+
+      - name: Set up Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: ${{ matrix.qt_ver }}
+          host: ${{ startsWith(matrix.os, 'windows') && 'windows' || (startsWith(matrix.os, 'macos') && 'mac' || 'linux') }}
+          arch: ${{ startsWith(matrix.os, 'windows') && 'win64_msvc2019_64' || 'gcc_64' }}
+          setup-python: false # If not needed
+          cache: true
+          target: desktop
+
+      - name: Set Up MSVC (Windows)
+        if: startsWith(matrix.os, 'windows')
+        shell: cmd
+        run: |
+          if exist "C:\Program Files (x86)\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" (
+            call "C:\Program Files (x86)\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
+          )
+          if exist "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" (
+            call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
+          )             
+          cl.exe /?
+
+          
+      - name: Install CImg (Linux/macOS)
+        if: "!startsWith(matrix.os, 'windows')"
+        run: git clone --depth=1 https://github.com/dtschump/CImg.git $HOME/cimg
+
+      - name: Install CImg (Windows)
+        if: startsWith(matrix.os, 'windows')
+        run: git clone --depth=1 https://github.com/dtschump/CImg.git C:\cimg
+
+      - name: Set CMAKE_PREFIX_PATH
+        if: env.FETCHCONTENT == 'false'
+        run: |
+          if [[ "${{ runner.os }}" == "Windows" ]]; then
+            export CIMG_PATH="C:/cimg"
+          else
+            export CIMG_PATH="$HOME/cimg"
+          fi
+          export CMAKE_PREFIX_PATH="${{ env.Qt5_DIR || env.Qt6_DIR || env.Qt_DIR || env.Qt5_DIR }};$CIMG_PATH;${{ github.workspace }}/install"
+          echo "CMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH" >> $GITHUB_ENV
+        shell: bash        
+
+      # Build main CMake project only if not fetch_content
+      - name: Configure (CMake)
+        if: env.FETCHCONTENT == 'false'
+        run: |
+          mkdir build
+          cd build
+          cmake --version
+          cmake -G "${{ env.GENERATOR }}" "-DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}" "-DCMAKE_PREFIX_PATH=${{ env.CMAKE_PREFIX_PATH }}" "-DCMAKE_INSTALL_PREFIX=../install" "-DJKQtPlotter_ENABLED_CXX20=${{ env.USE_CXX20 }}-DJKQtPlotter_ENABLED_CXX20=${{ env.USE_CXX20 }}" ..
+        shell: bash
+              
+              
+      - name: Build (CMake)
+        if: env.FETCHCONTENT == 'false'
+        run: |
+          cd build
+          cmake --version
+          cmake --build . --config "${{ env.BUILD_TYPE }}" -j${{ env.NUM_PROC }} -- ${{ env.CMAKE_BUILDFLAGS }}
+        shell: bash
+
+      - name: Install (CMake)
+        if: env.FETCHCONTENT == 'false'
+        run: |
+          cd build
+          cmake --install . --config "${{ env.BUILD_TYPE }}"
+        shell: bash
+
+      - name: Run tests (CTest)
+        if: env.FETCHCONTENT == 'false'
+        run: |
+          cd build
+          ctest --output-on-failure --build-config ${{ env.BUILD_TYPE }}
+        shell: bash
+
+      - name: Upload test results
+        if: env.FETCHCONTENT == 'false' && always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-cmake-${{ matrix.os }}-${{ matrix.qt_ver }}-${{ matrix.compiler }}
+          path: build/test-results.xml
+          if-no-files-found: ignore
+
+      # Build CMake example project only if not fetch_content
+      - name: Build CMake example project (cmake_link_example)
+        if: env.FETCHCONTENT == 'false'
+        run: |
+          cd examples/cmake_link_example
+          mkdir -p build
+          cd build
+          cmake --version
+          cmake -G "${{ env.GENERATOR }}" "-DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}" "-DCMAKE_PREFIX_PATH=${{ env.CMAKE_PREFIX_PATH }}" "-DCMAKE_INSTALL_PREFIX=../install" "-DJKQtPlotter_ENABLED_CXX20=${{ env.USE_CXX20 }}-DJKQtPlotter_ENABLED_CXX20=${{ env.USE_CXX20 }}" ..
+          cmake --build . --config ${{ env.BUILD_TYPE }} -j${{ env.NUM_PROC }} -- ${{ env.CMAKE_BUILDFLAGS }}
+        shell: bash
+
+      # Build FetchContent example if fetch_content is true
+      - name: Build FetchContent example project (cmake_fetchcontent_example)
+        if: env.FETCHCONTENT == 'true'
+        run: |
+          cd examples/cmake_fetchcontent_example
+          mkdir -p build
+          cd build
+          cmake --version
+          cmake -G "${{ env.GENERATOR }}" "-DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}" "-DCMAKE_PREFIX_PATH=${{ env.CMAKE_PREFIX_PATH }}" "-DCMAKE_INSTALL_PREFIX=../install" "-DJKQtPlotter_ENABLED_CXX20=${{ env.USE_CXX20 }}-DJKQtPlotter_ENABLED_CXX20=${{ env.USE_CXX20 }}" ..
+          cmake --build . --config ${{ env.BUILD_TYPE }} -j${{ env.NUM_PROC }} -- ${{ env.CMAKE_BUILDFLAGS }}
+        shell: bash
+
+
+
+
+
+
+  qmake-build:
+    name: QMake | ${{ matrix.os }} | Qt ${{ matrix.qt_ver }} | ${{ matrix.build_type }}
+    runs-on: ${{ matrix.os }}
+    # Only run qmake on a select few matrix entries (example: Ubuntu 20.04 Qt5, Windows 2019 Qt5, macOS Qt6)
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-22.04
+            qt_ver: 5.15
+            build_type: Release
+          - os: windows-2022
+            qt_ver: 5.15
+            build_type: Release
+
+
+    env:
+      BUILD_TYPE: ${{ matrix.build_type }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies (Linux)
+        if: startsWith(matrix.os, 'ubuntu')
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential mesa-common-dev libglu1-mesa-dev git qt5-qmake qtbase5-dev qtbase5-dev-tools
+
+      - name: Install dependencies (Windows)
+        if: startsWith(matrix.os, 'windows')
+        run: choco install cmake -y
+
+      - name: Install dependencies (macOS)
+        if: startsWith(matrix.os, 'macos')
+        run: brew install qt
+
+      - name: Set up Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: ${{ matrix.qt_ver }}
+          host: ${{ startsWith(matrix.os, 'windows') && 'windows' || (startsWith(matrix.os, 'macos') && 'mac' || 'linux') }}
+          arch: ${{ startsWith(matrix.os, 'windows') && 'win64_msvc2019_64' || 'gcc_64' }}
+          cache: true
+          
+      - name: QMake build-tests (Linux)
+        if: startsWith(matrix.os, 'ubuntu')
+        run: |
+          qmake -v
+          qmake CONFIG+=${{ env.BUILD_TYPE }} JKQtPlotterBuildAllExamples.pro
+          make -j$(nproc 2>/dev/null || echo 2)
+        shell: bash
+
+      - name: QMake build-tests (Windows)
+        if: startsWith(matrix.os, 'windows')
+        shell: cmd
+        run: |
+          if exist "C:\Program Files (x86)\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" (
+            call "C:\Program Files (x86)\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
+          )
+          if exist "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" (
+            call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
+          )
+          cl.exe /?
+          qmake -v
+          qmake CONFIG+=${{ env.BUILD_TYPE }} JKQtPlotterBuildAllExamples.pro
+          nmake        
+
+      # Optionally run qmake-built test executables here if applicable

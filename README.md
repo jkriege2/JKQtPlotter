@@ -12,7 +12,8 @@ This software is licensed under the term of the [GNU Lesser General Public Licen
 
 [![Documentation](https://img.shields.io/badge/documentation-online-blue)](http://jkriege2.github.io/JKQtPlotter/index.html)
 
-[![Build status](https://ci.appveyor.com/api/projects/status/vq2o9pfi97isxm2a?svg=true)](https://ci.appveyor.com/project/jkriege2/jkqtplotter)
+[![Build and Test: MASTER](https://github.com/jkriege2/JKQtPlotter/actions/workflows/build-and-test.yml/badge.svg?branch=master)](https://github.com/jkriege2/JKQtPlotter/actions/workflows/build-and-test.yml)
+[![Build Documentation: MASTER](https://github.com/jkriege2/JKQtPlotter/actions/workflows/doxygen_build_deploy.yml/badge.svg?branch=master)](https://github.com/jkriege2/JKQtPlotter/actions/workflows/doxygen_build_deploy.yml)
 
 [![Commit Activity](https://img.shields.io/github/commit-activity/m/jkriege2/JKQtPlotter)](https://github.com/jkriege2/JKQtPlotter/pulse)
 [![Last Commit](https://img.shields.io/github/last-commit/jkriege2/JKQtPlotter)](https://github.com/jkriege2/JKQtPlotter/pulse)
