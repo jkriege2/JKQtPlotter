@@ -136,6 +136,19 @@ jobs:
       - name: Install CImg (Windows)
         if: startsWith(matrix.os, 'windows')
         run: git clone --depth=1 https://github.com/dtschump/CImg.git C:\cimg
+        
+#      - name: Enable GCC problem matcher
+#        if: startsWith(matrix.compiler, 'gcc')
+#        run: echo "::add-matcher::${{ runner.tool_cache }}/gcc.json"
+        
+#      - name: Enable CLANG problem matcher
+#        if: startsWith(matrix.compiler, 'clang')
+#        run: echo "::add-matcher::${{ runner.tool_cache }}/clang.json"
+        
+#      - name: Enable MSVC problem matcher
+#        if: startsWith(matrix.compiler, 'msvc')
+#        run: echo "::add-matcher::${{ runner.tool_cache }}/msvc.json"
+
 
       - name: Set CMAKE_PREFIX_PATH
         if: env.FETCHCONTENT == 'false'
@@ -156,7 +169,7 @@ jobs:
           mkdir build
           cd build
           cmake --version
-          cmake -G "${{ env.GENERATOR }}" "-DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}" "-DCMAKE_PREFIX_PATH=${{ env.CMAKE_PREFIX_PATH }}" "-DCMAKE_INSTALL_PREFIX=../install" "-DJKQtPlotter_ENABLED_CXX20=${{ env.USE_CXX20 }}-DJKQtPlotter_ENABLED_CXX20=${{ env.USE_CXX20 }}" ..
+          cmake -G "${{ env.GENERATOR }}" "-DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}" "-DCMAKE_PREFIX_PATH=${{ env.CMAKE_PREFIX_PATH }}" "-DCMAKE_INSTALL_PREFIX=../install" "-DJKQtPlotter_ENABLED_CXX20=${{ env.USE_CXX20 }}" ..
         shell: bash
               
               
@@ -179,7 +192,7 @@ jobs:
         if: env.FETCHCONTENT == 'false'
         run: |
           cd build
-          ctest --output-on-failure --build-config ${{ env.BUILD_TYPE }} --output-junit ./test-results-${{ env.TEST_RESULTS_FILE }}.xml
+          ctest --output-on-failure --build-config ${{ env.BUILD_TYPE }} --output-junit ./test-results-${{ env.UNIQUE_RESULTS_ID }}.xml
           ls -lR *.xml
         shell: bash
 
@@ -187,16 +200,17 @@ jobs:
         if: env.FETCHCONTENT == 'false' && always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-results-cmake-${{ env.TEST_RESULTS_FILE }}
-          path: build/test-results.xml
+          name: test-results-cmake-${{ env.UNIQUE_RESULTS_ID }}
+          path: build/**/test-results-*.xml
           if-no-files-found: ignore
 
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
-        if: env.FETCHCONTENT == 'false'
+        if: env.FETCHCONTENT == 'false' && startsWith(matrix.os, 'ubuntu')
         with:
           files: build/**/test-results-*.xml
-          check_name: 'CTest Results (${{ env.TEST_RESULTS_FILE }})'          
+          check_name: 'CTest Results (${{ env.UNIQUE_RESULTS_ID }})'          
+
 
       # Build CMake example project only if not fetch_content
       - name: Build CMake example project (cmake_link_example)

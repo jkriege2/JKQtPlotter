@@ -1,0 +1,28 @@
+name: "CPPCheck Analysis"
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [ master ]
+
+jobs:
+  cppcheck:
+    runs-on: ubuntu-latest
+
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+
+    - name: Install cppcheck
+      run: sudo apt-get update && sudo apt-get install -y cppcheck
+
+
+    - name: Run cppcheck
+      run: cppcheck --enable=all \
+             --define=Q_SLOTS= --define=Q_PROPERTY= --define=slots= \
+             --std=c++20 --force .
+#--error-exitcode=1

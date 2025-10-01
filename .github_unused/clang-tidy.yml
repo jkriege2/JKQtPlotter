@@ -1,0 +1,50 @@
+name: "Clang-Tidy"
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [ master ]
+
+jobs:
+  clang_tidy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install Clang-Tidy
+      run: sudo apt-get update && sudo apt-get install -y clang-tidy cmake g++ qt6-base-dev libopencv-dev
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential cmake mesa-common-dev libglu1-mesa-dev libfontconfig1
+
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v3
+      with:
+        version: '6.7.1'
+        host: 'linux'
+        target: 'desktop'
+
+    - name: Install CImg (Linux/macOS)
+      if: "!startsWith(matrix.os, 'windows')"
+      run: git clone --depth=1 https://github.com/dtschump/CImg.git $HOME/cimg
+
+    - name: Set CMAKE_PREFIX_PATH
+      if: env.FETCHCONTENT == 'false'
+      run: |
+        export CMAKE_PREFIX_PATH="${{ env.Qt5_DIR || env.Qt6_DIR || env.Qt_DIR || env.Qt5_DIR }};$CIMG_PATH;${{ github.workspace }}/install"
+        echo "CMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH" >> $GITHUB_ENV
+      shell: bash        
+
+    - name: Configure JKQtPlotter
+      run: |
+        ls -l *.txt
+        cmake --version
+        cmake -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON "-DCMAKE_PREFIX_PATH=${{ env.CMAKE_PREFIX_PATH }}"
+
+    - name: Run clang-tidy
+      run: clang-tidy -p build $(find . -name '*.cpp')        
