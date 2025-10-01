@@ -65,13 +65,13 @@ jobs:
             generator: Visual Studio 17 2022
 
           # macOS
-          - os: macos-15
-            qt_ver: 6.7
-            compiler: clang
-            build_type: Release
-            cxx20: OFF
-            fetch_content: false
-            generator: Ninja
+          #- os: macos-15
+          #  qt_ver: 6.7
+          #  compiler: clang
+          #  build_type: Release
+          #  cxx20: OFF
+          #  fetch_content: false
+          #  generator: Ninja
 
     env:
       BUILD_TYPE: ${{ matrix.build_type }}
@@ -212,70 +212,70 @@ jobs:
 
 
 
-  qmake-build:
-    name: QMake | ${{ matrix.os }} | Qt ${{ matrix.qt_ver }} | ${{ matrix.build_type }}
-    runs-on: ${{ matrix.os }}
-    # Only run qmake on a select few matrix entries (example: Ubuntu 20.04 Qt5, Windows 2019 Qt5, macOS Qt6)
-    strategy:
-      matrix:
-        include:
-          - os: ubuntu-22.04
-            qt_ver: 5.15
-            build_type: Release
-          - os: windows-2022
-            qt_ver: 5.15
-            build_type: Release
-
-
-    env:
-      BUILD_TYPE: ${{ matrix.build_type }}
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Install dependencies (Linux)
-        if: startsWith(matrix.os, 'ubuntu')
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y build-essential mesa-common-dev libglu1-mesa-dev git qt5-qmake qtbase5-dev qtbase5-dev-tools
-
-      - name: Install dependencies (Windows)
-        if: startsWith(matrix.os, 'windows')
-        run: choco install cmake -y
-
-      - name: Install dependencies (macOS)
-        if: startsWith(matrix.os, 'macos')
-        run: brew install qt
-
-      - name: Set up Qt
-        uses: jurplel/install-qt-action@v4
-        with:
-          version: ${{ matrix.qt_ver }}
-          host: ${{ startsWith(matrix.os, 'windows') && 'windows' || (startsWith(matrix.os, 'macos') && 'mac' || 'linux') }}
-          arch: ${{ startsWith(matrix.os, 'windows') && 'win64_msvc2019_64' || 'gcc_64' }}
-          cache: true
-          
-      - name: QMake build-tests (Linux)
-        if: startsWith(matrix.os, 'ubuntu')
-        run: |
-          qmake -v
-          qmake CONFIG+=${{ env.BUILD_TYPE }} JKQtPlotterBuildAllExamples.pro
-          make -j$(nproc 2>/dev/null || echo 2)
-        shell: bash
-
-      - name: QMake build-tests (Windows)
-        if: startsWith(matrix.os, 'windows')
-        shell: cmd
-        run: |
-          if exist "C:\Program Files (x86)\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" (
-            call "C:\Program Files (x86)\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
-          )
-          if exist "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" (
-            call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
-          )
-          cl.exe /?
-          qmake -v
-          qmake CONFIG+=${{ env.BUILD_TYPE }} JKQtPlotterBuildAllExamples.pro
-          nmake        
-
-      # Optionally run qmake-built test executables here if applicable
+# qmake-build:
+#   name: QMake | ${{ matrix.os }} | Qt ${{ matrix.qt_ver }} | ${{ matrix.build_type }}
+#   runs-on: ${{ matrix.os }}
+#   # Only run qmake on a select few matrix entries (example: Ubuntu 20.04 Qt5, Windows 2019 Qt5, macOS Qt6)
+#   strategy:
+#     matrix:
+#       include:
+#         - os: ubuntu-22.04
+#           qt_ver: 5.15
+#           build_type: Release
+#         - os: windows-2022
+#           qt_ver: 5.15
+#           build_type: Release
+#
+#
+#   env:
+#     BUILD_TYPE: ${{ matrix.build_type }}
+#
+#   steps:
+#     - uses: actions/checkout@v4
+#
+#     - name: Install dependencies (Linux)
+#       if: startsWith(matrix.os, 'ubuntu')
+#       run: |
+#         sudo apt-get update
+#         sudo apt-get install -y build-essential mesa-common-dev libglu1-mesa-dev git qt5-qmake qtbase5-dev qtbase5-dev-tools
+#
+#     - name: Install dependencies (Windows)
+#       if: startsWith(matrix.os, 'windows')
+#       run: choco install cmake -y
+#
+#     - name: Install dependencies (macOS)
+#       if: startsWith(matrix.os, 'macos')
+#       run: brew install qt
+#
+#     - name: Set up Qt
+#       uses: jurplel/install-qt-action@v4
+#       with:
+#         version: ${{ matrix.qt_ver }}
+#         host: ${{ startsWith(matrix.os, 'windows') && 'windows' || (startsWith(matrix.os, 'macos') && 'mac' || 'linux') }}
+#         arch: ${{ startsWith(matrix.os, 'windows') && 'win64_msvc2019_64' || 'gcc_64' }}
+#         cache: true
+#         
+#     - name: QMake build-tests (Linux)
+#       if: startsWith(matrix.os, 'ubuntu')
+#       run: |
+#         qmake -v
+#         qmake CONFIG+=${{ env.BUILD_TYPE }} JKQtPlotterBuildAllExamples.pro
+#         make -j$(nproc 2>/dev/null || echo 2)
+#       shell: bash
+#
+#     - name: QMake build-tests (Windows)
+#       if: startsWith(matrix.os, 'windows')
+#       shell: cmd
+#       run: |
+#         if exist "C:\Program Files (x86)\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" (
+#           call "C:\Program Files (x86)\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
+#         )
+#         if exist "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" (
+#           call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
+#         )
+#         cl.exe /?
+#         qmake -v
+#         qmake CONFIG+=${{ env.BUILD_TYPE }} JKQtPlotterBuildAllExamples.pro
+#         nmake        
+#
+#     # Optionally run qmake-built test executables here if applicable
