@@ -12,9 +12,6 @@ This software is licensed under the term of the [GNU Lesser General Public Licen
 
 [![Documentation](https://img.shields.io/badge/documentation-online-blue)](http://jkriege2.github.io/JKQtPlotter/index.html)
 
-[![Build and Test: MASTER](https://github.com/jkriege2/JKQtPlotter/actions/workflows/build-and-test.yml/badge.svg?branch=master)](https://github.com/jkriege2/JKQtPlotter/actions/workflows/build-and-test.yml)
-[![Build Documentation: MASTER](https://github.com/jkriege2/JKQtPlotter/actions/workflows/doxygen_build_deploy.yml/badge.svg?branch=master)](https://github.com/jkriege2/JKQtPlotter/actions/workflows/doxygen_build_deploy.yml)
-
 [![Commit Activity](https://img.shields.io/github/commit-activity/m/jkriege2/JKQtPlotter)](https://github.com/jkriege2/JKQtPlotter/pulse)
 [![Last Commit](https://img.shields.io/github/last-commit/jkriege2/JKQtPlotter)](https://github.com/jkriege2/JKQtPlotter/pulse)
 [![Contributors](https://img.shields.io/github/contributors/jkriege2/JKQtPlotter)](https://github.com/jkriege2/JKQtPlotter/graphs/contributors)
@@ -27,6 +24,8 @@ This software is licensed under the term of the [GNU Lesser General Public Licen
 
 [![CodeQL](https://github.com/jkriege2/JKQtPlotter/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/jkriege2/JKQtPlotter/actions/workflows/codeql-analysis.yml)
 [![MSVC-CodeAnalysis](https://github.com/jkriege2/JKQtPlotter/actions/workflows/msvc-codeanalysis.yml/badge.svg)](https://github.com/jkriege2/JKQtPlotter/actions/workflows/msvc-codeanalysis.yml)
+[![Build and Test: MASTER](https://github.com/jkriege2/JKQtPlotter/actions/workflows/build-and-test.yml/badge.svg?branch=master)](https://github.com/jkriege2/JKQtPlotter/actions/workflows/build-and-test.yml)
+[![Build Documentation: MASTER](https://github.com/jkriege2/JKQtPlotter/actions/workflows/doxygen_build_deploy.yml/badge.svg?branch=master)](https://github.com/jkriege2/JKQtPlotter/actions/workflows/doxygen_build_deploy.yml)
 
 [![EXAMPLES-Page](./doc/images/socialmediabanner.png)](http://jkriege2.github.io/JKQtPlotter/index.html)
 
@@ -137,3 +136,4 @@ target_link_libraries(${PROJECT_NAME} JKQTPlotter${QT_VERSION_MAJOR}::JKQTPlotte
 ## Stargazers over time
 
 [![Stargazers over time](https://starchart.cc/jkriege2/JKQtPlotter.svg)](https://starchart.cc/jkriege2/JKQtPlotter)
+
