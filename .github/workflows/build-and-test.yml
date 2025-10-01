@@ -80,8 +80,15 @@ jobs:
       GENERATOR: ${{ matrix.generator }}
       CMAKE_BUILDFLAGS:  
       NUM_PROC: 4
+      UNIQUE_RESULTS_ID: ${{ matrix.os }}-${{ matrix.qt_ver }}-${{ matrix.compiler }}-${{ matrix.build_type }}-fc${{ matrix.fetch_content }}-cxx20${{ matrix.cxx20 }}
+
 
     steps:
+      - name: Sanitize test results filename
+        run: |
+          export UNIQUE_RESULTS_ID_SAFE=$(echo "${UNIQUE_RESULTS_ID}" | tr ' ' '_' | tr '.' '_' | tr '/' '_' | tr '\\' '_' | tr -cd '[:alnum:]._-')
+          echo "UNIQUE_RESULTS_ID=${UNIQUE_RESULTS_ID_SAFE}" >> $GITHUB_ENV
+        shell: bash
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -172,16 +179,24 @@ jobs:
         if: env.FETCHCONTENT == 'false'
         run: |
           cd build
-          ctest --output-on-failure --build-config ${{ env.BUILD_TYPE }}
+          ctest --output-on-failure --build-config ${{ env.BUILD_TYPE }} --output-junit ./test-results-${{ env.TEST_RESULTS_FILE }}.xml
+          ls -lR *.xml
         shell: bash
 
-      - name: Upload test results
+      - name: Upload artifacts/test results
         if: env.FETCHCONTENT == 'false' && always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-results-cmake-${{ matrix.os }}-${{ matrix.qt_ver }}-${{ matrix.compiler }}
+          name: test-results-cmake-${{ env.TEST_RESULTS_FILE }}
           path: build/test-results.xml
           if-no-files-found: ignore
+
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: env.FETCHCONTENT == 'false'
+        with:
+          files: build/**/test-results-*.xml
+          check_name: 'CTest Results (${{ env.TEST_RESULTS_FILE }})'          
 
       # Build CMake example project only if not fetch_content
       - name: Build CMake example project (cmake_link_example)
