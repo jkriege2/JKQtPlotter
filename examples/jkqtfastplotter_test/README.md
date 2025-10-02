@@ -1,4 +1,6 @@
-# Example (JKQTFastPlotter)             {#JKQTFastPlotterTest}
+# Example (JKQTFastPlotter)                                                  {#JKQTFastPlotterTest}
+
+
 The project (see `./examples/jkqtfastplotter_test/`) demonstrates how to use the JKQTFastPlotter, a speed-optimized plotter alternative to JKQTPlotter, but with less features.
 
 

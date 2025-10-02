@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Plotting Mathematical Functions as Line Graphs {#JKQTPlotterFunctionPlots}
+# Example (JKQTPlotter): Plotting Mathematical Functions as Line Graphs                                      {#JKQTPlotterFunctionPlots}
+
+
 ## Basics
 This project (see `./examples/functionplot/`) demonstrates how to plot mathematical functions as line graphs. The functions may be defined as static C functions, C++ functors or c++ inline functions. See [examples/parsedfunctionplot](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/parsedfunctionplot) for an example of how to use an internal equation parser provided with JKQTPlotter instead of directly defining functions.
 

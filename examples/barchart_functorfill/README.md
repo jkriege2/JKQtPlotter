@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Barchart With Functor Fill-Mode {#JKQTPlotterBarchartsFunctorFilling}
+# Example (JKQTPlotter): Barchart With Functor Fill-Mode                                      {#JKQTPlotterBarchartsFunctorFilling}
+
+
 This project (see [`barchart_functorfill`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/barchart_functorfill) shows how to draw barcharts, where the bars are filled differently, as defined by a custom functor.
 
 The source code of the main application is (see [`barchart_functorfill.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/barchart_functorfill/barchart_functorfill.cpp):

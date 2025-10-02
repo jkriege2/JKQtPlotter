@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Image Plots with Custom Palettes {#JKQTPlotterImagePlotUserPalette}
+# Example (JKQTPlotter): Image Plots with Custom Palettes                                      {#JKQTPlotterImagePlotUserPalette}
+
+
 
 This project (see `./examples/imageplot_userpal/`) demonstrates how to use user-defined color-palettes for image plots.
 The source code of the main application is (see [`imageplot_userpal.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/imageplot_userpal/imageplot_userpal.cpp)).

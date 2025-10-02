@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Plotting Geometric Objects {#JKQTPlotterGeometricGraphs}
+# Example (JKQTPlotter): Plotting Geometric Objects                                      {#JKQTPlotterGeometricGraphs}
+
+
 
 This project shows the capabilities of JKQTPlotter `plot` to also draw geometric elements, like circles, ellipses, rectangles etc.
 

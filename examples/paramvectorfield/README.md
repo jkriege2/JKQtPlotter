@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Vector Field Plot Example {#JKQTPParametrizedVectorFieldGraphExample}
+# Example (JKQTPlotter): Vector Field Plot Example                                      {#JKQTPParametrizedVectorFieldGraphExample}
+
+
 This project (see [`paramvectorfield`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/paramvectorfield) demonstrates the use of JKQTPParametrizedVectorFieldGraph to visualize a vector field with additional information encoded in the color of the vectors. 
 
 The source code of the main application is (see [`paramvectorfield.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/paramvectorfield/paramvectorfield.cpp).

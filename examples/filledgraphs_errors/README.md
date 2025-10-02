@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Filled Graphs with Error Indicators {#JKQTPlotterFilledGraphsErrorBars}
+# Example (JKQTPlotter): Filled Graphs with Error Indicators                                      {#JKQTPlotterFilledGraphsErrorBars}
+
+
 This project (see [`filledgraphs_errors`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/filledgraphs_errors) shows how to draw filled graphs with different styles of error indicators.
 
 The source code of the main application is (see [`filledgraphs_errors.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/filledgraphs_errors/filledgraphs_errors.cpp):

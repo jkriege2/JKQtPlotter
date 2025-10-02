@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Simple barchart {#JKQTPlotterBarcharts}
+# Example (JKQTPlotter): Simple barchart                                      {#JKQTPlotterBarcharts}
+
+
 This project (see [`barchart`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/barchart) simply creates a JKQTPlotter widget (as a new window) and adds several barcharts. They are ordered in groups.
 
 The source code of the main application is (see [`barchart.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/barchart/barchart.cpp):

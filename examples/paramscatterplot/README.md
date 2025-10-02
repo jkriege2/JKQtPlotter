@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Scatter Graph with Parametrized Symbols/Colors {#JKQTPlotterParamScatter}
+# Example (JKQTPlotter): Scatter Graph with Parametrized Symbols/Colors                                      {#JKQTPlotterParamScatter}
+
+
 This project (see `./examples/paramscatterplot/`) demonstrates the capabilities of `JKQTPXYParametrizedScatterGraph`. This graph class plots symbol&line-graphs, juts like [`JKQTPXYLineGraph`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/symbols_and_styles/) and in addition modifies several properties of each plot point by data from an additional column. These properties can be modified:
 - symbol size
 - symbol type

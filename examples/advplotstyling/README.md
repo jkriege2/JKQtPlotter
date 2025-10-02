@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Advanced Line and Fill Styling {#JKQTPlotterAdvancedLineAndFillStyling}
+# Example (JKQTPlotter): Advanced Line and Fill Styling                                      {#JKQTPlotterAdvancedLineAndFillStyling}
+
+
 This project (see `./examples/advplotstyling/`) demonstrates how to use advanced line styling and filling options (e.g. custom dash-styles, gradient, image fills, transparencies, ...) with JKQtPlotter.
 
 The source code of the main application can be found in  [`advplotstyling.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/advplotstyling/advplotstyling.cpp). 

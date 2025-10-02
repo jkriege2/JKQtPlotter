@@ -1,4 +1,6 @@
-# Tutorial (JKQTPlotter): Using a JKQTPlotter inside a Qt User Interface Designer (UI) File {#JKQTPlotterQtCreator}
+# Tutorial (JKQTPlotter): Using a JKQTPlotter inside a Qt User Interface Designer (UI) File                                      {#JKQTPlotterQtCreator}
+
+
 This project (see `./examples/ui/`) demonstrates how to create add a `JKQTPlotter` inside the Qt Form Editor (e.g. called from of Qt Creator) into a widget. 
 
 # Instructions on how to use JKQTPlotter in the Qt Form Designer

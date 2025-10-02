@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Contour Plots {#JKQTPlotterContourPlot}
+# Example (JKQTPlotter): Contour Plots                                      {#JKQTPlotterContourPlot}
+
+
 This project (see `./examples/contourplot/`) shows how to draw contour plots with JKQTPlotter.
 
 [TOC]

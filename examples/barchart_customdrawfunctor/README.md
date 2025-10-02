@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Barchart With Custom Draw Functor {#JKQTPlotterBarchartsCustomDrawFunctor}
+# Example (JKQTPlotter): Barchart With Custom Draw Functor                                      {#JKQTPlotterBarchartsCustomDrawFunctor}
+
+
 This project (see [`barchart_customdrawfunctor`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/barchart_customdrawfunctor) shows how to draw customized barcharts, with a custom draw functor.
 
 The source code of the main application is (see [`barchart_customdrawfunctor.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/barchart_customdrawfunctor/barchart_customdrawfunctor.cpp):

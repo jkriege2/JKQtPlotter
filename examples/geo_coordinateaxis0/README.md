@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Plot With Axes through Origin {#JKQTPlotterGeometricCoordinateAxis0}
+# Example (JKQTPlotter): Plot With Axes through Origin                                      {#JKQTPlotterGeometricCoordinateAxis0}
+
+
 
 This example draws a coordinate system with several geomtric shapes, where the coordinate axes pass through the origin of the plot, not at the borders. Note that if you move the displayed coordinate ranges, so 0 is not in them, the axes still stick to the borders.
 

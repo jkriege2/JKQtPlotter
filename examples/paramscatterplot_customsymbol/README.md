@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Parametrized Scatter-graph with custom symbols             {#JKQTPlotterparamscatterCustomSymbol}
+# Example (JKQTPlotter): Parametrized Scatter-graph with custom symbols                                                  {#JKQTPlotterparamscatterCustomSymbol}
+
+
 
 This project (see `./examples/paramscatterplot_customsymbol/`) demonstrates using JKQTPlotter to draw a parametrized scatter graph (JKQTPXYParametrizedScatterGraph) with custom symbols. To demonstrate this, we create a plot with several symbols, connected by a line, where each symbol shows a pie-chart with varying fractions.
 

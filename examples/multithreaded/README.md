@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Multi-Threaded (Parallel) Plotting             {#JKQTPlotterMultiThreaded}
+# Example (JKQTPlotter): Multi-Threaded (Parallel) Plotting                                                  {#JKQTPlotterMultiThreaded}
+
+
 This project (see `./examples/multithreaded/`) shows how to use JKQTBasePlotter in multiple threads in parallel.
 
 The source code of the main application can be found in [`multithreaded.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/multithreaded/multithreaded.cpp) and [`multithreaded_thread.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/multithreaded/multithreaded_thread.cpp).

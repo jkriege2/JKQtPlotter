@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Different Types of Errorindicators {#JKQTPlotterErrorBarStyles}
+# Example (JKQTPlotter): Different Types of Errorindicators                                      {#JKQTPlotterErrorBarStyles}
+
+
 This project (see `./examples/errorbarstyles/`) simply creates a JKQTPlotter widget (as a new window) and adds several curves show-casing different styles of error indicators. Data is initialized from two QVector<double> objects.
 
 [JKQTPlotterBasicJKQTPDatastoreStatisticsGroupedStat]: @ref JKQTPlotterBasicJKQTPDatastoreStatisticsGroupedStat "1-Dimensional Group Statistics with JKQTPDatastore"

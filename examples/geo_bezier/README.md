@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Plotting Bezier Curves {#JKQTPlotterGeometricBezier}
+# Example (JKQTPlotter): Plotting Bezier Curves                                      {#JKQTPlotterGeometricBezier}
+
+
 
 This project shows the capabilities of JKQTPlotter to also draw arrows as geometric elements, using JKQTPGeoBezierCurve. 
 

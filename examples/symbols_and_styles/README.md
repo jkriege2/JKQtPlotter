@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Line Graph with Different Symbols and Line Styles {#JKQTPlotterSymbolsAndStyles}
+# Example (JKQTPlotter): Line Graph with Different Symbols and Line Styles                                      {#JKQTPlotterSymbolsAndStyles}
+
+
 This project (see `./examples/symbols_and_styles/`) simply creates a JKQTPlotter widget (as a new window) and adds a single line-graph (a sine-wave). Data is initialized from two QVector<double> objects.
 
 The source code of the main application can be found in  [`symbols_and_styles.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/symbols_and_styles/symbols_and_styles.cpp). Mainly several graphs are generated in a loop and then different symbol and line styles are applied to the graph (set by `graph->setSymbolType()` for the symbol and `graph->setLineStyle()` for the line style). The colors are set automtically from an internal default palette. The main loop looks like this:

@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Financial Chart (Candlestick/OHLC) Example {#JKQTPlotterFinancialChartExample}
+# Example (JKQTPlotter): Financial Chart (Candlestick/OHLC) Example                                      {#JKQTPlotterFinancialChartExample}
+
+
 This project (see [`financialgraphs`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/financialgraphs) demonstrates the use of JKQTPFinancialGraph to visualize financial data (i.e. market price development of stocks, derivatives, ...). 
 
 The source code of the main application is (see [`financialgraphs.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/financialgraphs/financialgraphs.cpp).

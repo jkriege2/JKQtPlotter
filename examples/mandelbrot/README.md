@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Mandelbrot Set Explorer {#JKQTPlotterMandelbrot}
+# Example (JKQTPlotter): Mandelbrot Set Explorer                                      {#JKQTPlotterMandelbrot}
+
+
 
 ## Introduction and Usage
 

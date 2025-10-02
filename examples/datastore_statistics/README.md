@@ -1,4 +1,6 @@
-# Tutorial (JKQTPDatastore): Advanced 1-Dimensional Statistics with JKQTPDatastore             {#JKQTPlotterBasicJKQTPDatastoreStatistics}
+# Tutorial (JKQTPDatastore): Advanced 1-Dimensional Statistics with JKQTPDatastore                                                  {#JKQTPlotterBasicJKQTPDatastoreStatistics}
+
+
 
 [JKQTPlotterBasicJKQTPDatastore]: @ref JKQTPlotterBasicJKQTPDatastore "Basic Usage of JKQTPDatastore"
 [JKQTPlotterBasicJKQTPDatastoreIterators]: @ref JKQTPlotterBasicJKQTPDatastoreIterators "Iterator-Based usage of JKQTPDatastore"

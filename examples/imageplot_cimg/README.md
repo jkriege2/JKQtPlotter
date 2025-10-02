@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Simple math image plot, showin a 1-channel CImg image {#JKQTPlotterImagePlotCImg}
+# Example (JKQTPlotter): Simple math image plot, showin a 1-channel CImg image                                      {#JKQTPlotterImagePlotCImg}
+
+
 
 This project (see `./examples/imageplot_cimg/`) simply creates a JKQTPlotter widget (as a new window) and adds a color-coded image plot of a mathematical function (here the Airy disk). The image is generated as a [CImg](https://cimg.org/) [`cimg_library::CImg<double>`](http://cimg.eu/reference/structcimg__library_1_1CImg.html) image and then copied into a single column of the internal datastore (JKQTPMathImage could be directly used without the internal datastore). 
 

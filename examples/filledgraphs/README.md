@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Filled Curve Plots {#JKQTPlotterFilledGraphs}
+# Example (JKQTPlotter): Filled Curve Plots                                      {#JKQTPlotterFilledGraphs}
+
+
 This project (see `./examples/filledgraphs/`) simply creates a JKQTPlotter widget (as a new window) and adds several filled curve graphs (Histograms). Data is initialized from QVector<int> objects.
 
 The source code of the main application can be found in  [`filledgraphs.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/filledgraphs/filledgraphs.cpp). 

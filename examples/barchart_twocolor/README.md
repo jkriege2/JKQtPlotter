@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Barchart With Two-Color Fill-Mode {#JKQTPlotterBarchartsTwoColorFilling}
+# Example (JKQTPlotter): Barchart With Two-Color Fill-Mode                                      {#JKQTPlotterBarchartsTwoColorFilling}
+
+
 This project (see [`barchart_twocolor`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/barchart_twocolor) shows how to draw barcharts, where the bars are filled differently if their value is above or below the baseline.
 
 The source code of the main application is (see [`barchart_twocolor.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/barchart_twocolor/barchart_twocolor.cpp):

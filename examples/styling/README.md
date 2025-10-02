@@ -1,4 +1,6 @@
-# Tutorial (JKQTPlotter): Styling a JKQtPlotter {#JKQTPlotterStyling}
+# Tutorial (JKQTPlotter): Styling a JKQtPlotter                                      {#JKQTPlotterStyling}
+
+
  
 [TOC]
  

@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Plotting Arrows {#JKQTPlotterGeometricArrows}
+# Example (JKQTPlotter): Plotting Arrows                                      {#JKQTPlotterGeometricArrows}
+
+
 
 This project shows the capabilities of JKQTPlotter to also draw arrows as geometric elements, using JKQTPGeoArrow. The arrow head/tail are defined by the enum values in JKQTPLineDecoratorStyle.
 

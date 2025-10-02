@@ -1,4 +1,6 @@
-# Tutorial (JKQTPDatastore): Basic Usage of JKQTPDatastore             {#JKQTPlotterBasicJKQTPDatastore}
+# Tutorial (JKQTPDatastore): Basic Usage of JKQTPDatastore                                                  {#JKQTPlotterBasicJKQTPDatastore}
+
+
 
 [JKQTPlotterBasicJKQTPDatastore]: @ref JKQTPlotterBasicJKQTPDatastore "Basic Usage of JKQTPDatastore"
 [JKQTPlotterBasicJKQTPDatastoreIterators]: @ref JKQTPlotterBasicJKQTPDatastoreIterators "Iterator-Based usage of JKQTPDatastore"

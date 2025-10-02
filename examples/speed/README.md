@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Simple line-graph with live-data (speed test) {#JKQTPlotterSpeedTest}
+# Example (JKQTPlotter): Simple line-graph with live-data (speed test)                                      {#JKQTPlotterSpeedTest}
+
+
 This project (see `./examples/speed/`) creates a JKQTPlotter widget (as a new window) withs two line-graph (a sine and a cosine wave with a random disturbance). It constantly changes the  data (a bit) and redraws the plot. The redraw-rate is measured and displayed at the top of the window. Also the example offers several context-menu entries to alter the plot and thus experiment with different factors that affect the actuak plot speed.
 
 Here follows a basic description of the eample's code.  Note however that the actual code is more involved and this description is mostly to give you a first clue, what is going on.

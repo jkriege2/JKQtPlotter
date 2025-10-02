@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Date/Time Axes {#JKQTPlotterDateTimeAxes}
+# Example (JKQTPlotter): Date/Time Axes                                      {#JKQTPlotterDateTimeAxes}
+
+
 
 [TOC]
 

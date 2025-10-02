@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Simple math image plot, showing a 3-channel CImg image {#JKQTPlotterImagePlotRGBCImg}
+# Example (JKQTPlotter): Simple math image plot, showing a 3-channel CImg image                                      {#JKQTPlotterImagePlotRGBCImg}
+
+
 
 This project (see `./examples/rgbimageplot_cimg/`) simply creates a JKQTPlotter widget (as a new window) and shows an RGB image read from a BMP-file. The image is generated as an [cimg](https://cimg.org/) [`cimg_library::CImg<uint8_t>`](http://cimg.eu/reference/structcimg__library_1_1CImg.html) image and then copied into a single column of the internal datastore (JKQTPMathImage could be directly used without the internal datastore). 
 To copy the data a special cimg Interface function `JKQTPCopyCImgToColumn()` is used, that copies the data from a [CImg](https://cimg.eu/) [`cimg_library::CImg<uint8_t>`](http://cimg.eu/reference/structcimg__library_1_1CImg.html) directly into a column. 

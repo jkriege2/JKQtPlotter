@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Line Graph with Logarithmic y-axis {#JKQTPlotterLogAxes}
+# Example (JKQTPlotter): Line Graph with Logarithmic y-axis                                      {#JKQTPlotterLogAxes}
+
+
 This project (see `./examples/logaxes/`) simply creates a JKQTPlotter widget (as a new window) and several line-graphs of different resonance curves. 
 
 The source code of the main application can be found in  [`logaxes.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/logaxes/logaxes.cpp). Mainly several graphs are generated in a loop and then different line styles are applied to the graphs (set by ``graph->setLineStyle()`). The colors are set automtically from an internal default palette. The main loop looks like this:

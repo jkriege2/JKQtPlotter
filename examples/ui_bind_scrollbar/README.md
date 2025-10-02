@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Using a QScrollbar together with JKQtPlotter             {#JKQTPlotterUIScrollbar}
+# Example (JKQTPlotter): Using a QScrollbar together with JKQtPlotter                                                  {#JKQTPlotterUIScrollbar}
+
+
 This project (see `./examples/ui_bind_scrollbar/`) shows how to use JKQTPlotter together with a <a href="https://doc.qt.io/qt-6/qscrollbar.html">QScrollBar</a> for panning.
 
 The source code of the main application can be found in [`ui_bind_scrollbar.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/ui_bind_scrollbar/ui_bind_scrollbar.cpp).

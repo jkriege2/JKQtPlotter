@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Simple stacked barchart {#JKQTPlotterStackedBarChart}
+# Example (JKQTPlotter): Simple stacked barchart                                      {#JKQTPlotterStackedBarChart}
+
+
 This project (see `./examples/stackedbars/`) simply creates a JKQTPlotter widget (as a new window) and adds several stacked barcharts.
 
 The source code of the main application is (see [`stackedbars.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/stackedbars/stackedbars.cpp):

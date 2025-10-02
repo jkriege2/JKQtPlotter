@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Generating Demo-Plots of Geometric Objects for Documentation {#JKQTPlotterGeometricGraphsSimple}
+# Example (JKQTPlotter): Generating Demo-Plots of Geometric Objects for Documentation                                      {#JKQTPlotterGeometricGraphsSimple}
+
+
 
 This project contains code that is used to generate the example graphs for geometric objects from teh documentation.
 

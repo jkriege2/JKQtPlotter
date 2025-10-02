@@ -1,4 +1,6 @@
-# Example (JKQTMathText): A test application            {#JKQTMathTextTestApp}
+# Example (JKQTMathText): A test application                                                 {#JKQTMathTextTestApp}
+
+
 JKQTMathText is a hand-written LaTeX-renderer for Qt (implemented in native C++, using Qt). It supports a large set of standard LaTeX markup and can render it to a QPainter.
 
 This test program demonstrates its capabilites. There are several pre-formulated LaTeX expressions that can be drawn, or you can enter a user-defined expression.

@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Step Line Plots in Different Styles {#JKQTPlotterSpecialStepLinePlot}
+# Example (JKQTPlotter): Step Line Plots in Different Styles                                      {#JKQTPlotterSpecialStepLinePlot}
+
+
 This project (see `./examples/stepplots/`) simply creates a JKQTPlotter widget (as a new window) and adds a single line-graph (a sine-wave). Data is initialized from two QVector<double> objects.
 
 The source code of the main application can be found in  [`stepplots.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/stepplots/stepplots.cpp). For the most part, several datasets of cosine-curves are generated. Then graphs of type `JKQTPSpecialLineHorizontalGraph` are added to the plot:

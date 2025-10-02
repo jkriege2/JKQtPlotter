@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Secondary Axes {#JKQTPlotterSecondaryAxes}
+# Example (JKQTPlotter): Secondary Axes                                      {#JKQTPlotterSecondaryAxes}
+
+
 
 This project (see [`second_axis`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/second_axis) shows how to plot with multiple axes.
 

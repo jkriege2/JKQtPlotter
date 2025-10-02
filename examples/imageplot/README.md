@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Simple math image plot {#JKQTPlotterImagePlot}
+# Example (JKQTPlotter): Simple math image plot                                      {#JKQTPlotterImagePlot}
+
+
 This project (see `./examples/imageplot/`) simply creates a JKQTPlotter widget (as a new window) and adds a color-coded image plot of a mathematical function (here the Airy disk). The image is stored as a simple C-array in row-major ordering and then copied into a single column of the internal datastore (JKQTPMathImage could be directly used without the internal datastore). This very simple interface can also be used to interface with many common image processing libraries, like CImg or OpenCV.
 
 The source code of the main application is (see [`imageplot.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/imageplot/imageplot.cpp):

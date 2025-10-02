@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): CMake FetchContent Example  {#JKQTCMakeFetchContentExample}
+# Example (JKQTPlotter): CMake FetchContent Example                                       {#JKQTCMakeFetchContentExample}
+
+
 
 This project (see [`cmake_fetchcontent_example`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/cmake_fetchcontent_example) demonstrates how to link against JKQTPlotter using CMake's [FetchContent-API](https://cmake.org/cmake/help/latest/module/FetchContent.html). Also have a look at [this blog post](https://www.foonathan.net/2022/06/cmake-fetchcontent/) for a detailed explanation. See https://jkriege2.github.io/JKQtPlotter/page_buildinstructions__c_m_a_k_e.html for details on how to build JKQTPlotter with CMake
 

@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Simple impulse plots {#JKQTPlotterImpulsePlots}
+# Example (JKQTPlotter): Simple impulse plots                                      {#JKQTPlotterImpulsePlots}
+
+
 This project (see `./examples/impulsesplot/`) simply creates a JKQTPlotter widget (as a new window) and adds a single impulse graph. 
 The source code of the main application is (see [`impulsesplot.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/impulsesplot/impulsesplot.cpp).
 

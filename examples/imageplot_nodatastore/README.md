@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Simple math image plot without use of central JKQTdatastore {#JKQTPlotterImagePlotNoDatastore}
+# Example (JKQTPlotter): Simple math image plot without use of central JKQTdatastore                                      {#JKQTPlotterImagePlotNoDatastore}
+
+
 This project (see `./examples/imageplot_nodatastore/`) simply creates a JKQTPlotter widget (as a new window) and adds a color-coded image plot of a mathematical function (here the Airy disk). The image is stored as a simple C-array in row-major ordering and then given to a JKQTPMathImage to visualize it. The data is stored as a pointer directly in the JKQTPMathImage object. There is also a variant JKQTPColumnMathImage of JKQTPMathImage, which references a column in the internal JKQTdatastore and uses the data there for plotting. In both cases data has to be organized as a row-major matrix of values. JKQTPMathImage supports different dataytpes ([u]nit8/16/32/64,float,double see `JKQTPMathImageBase::DataType`) that can be configured e.g. by `setData()`.
 
 The source code of the main application is (see [`imageplot_nodatastore.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/imageplot_nodatastore/imageplot_nodatastore.cpp):

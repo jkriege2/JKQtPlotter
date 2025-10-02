@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Scatter-graph with custom symbols             {#JKQTPlotterscatterCustomSymbol}
+# Example (JKQTPlotter): Scatter-graph with custom symbols                                                  {#JKQTPlotterscatterCustomSymbol}
+
+
 
 This project (see `./examples/scatter_customsymbol/`) demonstrates using JKQTPlotter to draw a scatter graph (JKQTPXYScatterGraph) with custom symbols. 
 

@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Boxplots {#JKQTPlotterBoxplotsGraphs}
+# Example (JKQTPlotter): Boxplots                                      {#JKQTPlotterBoxplotsGraphs}
+
+
 
 This project (see [`boxplot`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/boxplot) demonstrates how to use JKQTPlotter to draw <a href="https://en.wikipedia.org/wiki/Box_plot">box plots</a> using the classes `JKQTPBoxplotVerticalGraph` and `JKQTPBoxplotHorizontalGraph`.
 

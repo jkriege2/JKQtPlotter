@@ -1,4 +1,6 @@
-# Tutorial (JKQTPDatastore): Regression Analysis (with the Statistics Library)             {#JKQTPlotterBasicJKQTPDatastoreRegression}
+# Tutorial (JKQTPDatastore): Regression Analysis (with the Statistics Library)                                                  {#JKQTPlotterBasicJKQTPDatastoreRegression}
+
+
 
 [JKQTPlotterBasicJKQTPDatastore]: @ref JKQTPlotterBasicJKQTPDatastore "Basic Usage of JKQTPDatastore"
 [JKQTPlotterBasicJKQTPDatastoreIterators]: @ref JKQTPlotterBasicJKQTPDatastoreIterators "Iterator-Based usage of JKQTPDatastore"

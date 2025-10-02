@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Violin Plots {#JKQTPlotterViolinplotGraphs}
+# Example (JKQTPlotter): Violin Plots                                      {#JKQTPlotterViolinplotGraphs}
+
+
 
 [TOC]
 [JKQTPlotterBasicJKQTPDatastoreStatistics]: @ref JKQTPlotterBasicJKQTPDatastoreStatistics "Advanced 1-Dimensional Statistics with JKQTPDatastore"

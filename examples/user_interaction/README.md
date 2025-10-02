@@ -1,4 +1,6 @@
-# Tutorial (JKQTPlotter): User-Interactions in JKQtPlotter {#JKQTPlotterUserInteraction}
+# Tutorial (JKQTPlotter): User-Interactions in JKQtPlotter                                      {#JKQTPlotterUserInteraction}
+
+
 
 [TOC]
 

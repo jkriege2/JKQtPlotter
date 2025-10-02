@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Barchart With Error Bars {#JKQTPlotterBarchartsErrorBars}
+# Example (JKQTPlotter): Barchart With Error Bars                                      {#JKQTPlotterBarchartsErrorBars}
+
+
 This project (see [`barchart_errorbars`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/barchart_errorbars) shows how to draw barcharts with different styles of error indicators.
 
 The source code of the main application is (see [`barchart_errorbars.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/barchart_errorbars/barchart_errorbars.cpp):

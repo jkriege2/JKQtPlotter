@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Very simple line-graph             {#JKQTPlotterSimpleTest}
+# Example (JKQTPlotter): Very simple line-graph                                                  {#JKQTPlotterSimpleTest}
+
+
 This project (see `./examples/simpletest/`) simply creates a JKQTPlotter widget (as a new window) and adds a single line-graph (a sine-wave). Data is initialized from two QVector<double> objects.
 
 

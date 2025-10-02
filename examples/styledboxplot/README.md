@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Styling different aspects of boxplots {#JKQTPlotterBoxplotStyling}
+# Example (JKQTPlotter): Styling different aspects of boxplots                                      {#JKQTPlotterBoxplotStyling}
+
+
 This project (see [`test_styledboxplot`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/test_styledboxplot) demonstrates how to style different aspects of boxplots and how to draw different types and styles of boxplots. For a simple introduction into how to use boxplots, see [Plotting Box Plots](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/boxplot) and [Plotting a Statistical Distribution of Data](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/test_distributionplot).
 
 [JKQTPlotterBasicJKQTPDatastore]: @ref JKQTPlotterBasicJKQTPDatastore "Basic Usage of JKQTPDatastore"

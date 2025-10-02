@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Very simple scatter-graph             {#JKQTPlotterscatter}
+# Example (JKQTPlotter): Very simple scatter-graph                                                  {#JKQTPlotterscatter}
+
+
 
 This project (see `./examples/scatter/`) simply creates a JKQTPlotter widget (as a new window) and adds a single scatter graph of type JKQTPXYScatterGraph (a sine-wave with noise). 
 

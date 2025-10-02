@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Wiggle Plots {#JKQTPlotterWigglePlots}
+# Example (JKQTPlotter): Wiggle Plots                                      {#JKQTPlotterWigglePlots}
+
+
 
 This project (see `./examples/wiggleplots/`) demonstrates how to draw "wiggle plots" with JKQtPlotter, using `JKQTPFilledCurveXGraph` or `JKQTPFilledCurveYGraph`. Wiggle plots are plots, where the fill color is different above and below the baseline of the plot. They are e.g. used in seismology.
 

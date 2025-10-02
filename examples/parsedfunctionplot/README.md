@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Plotting Parsed Mathematical Functions as Line Graphs {#JKQTPlotterParsedFunctionPlot}
+# Example (JKQTPlotter): Plotting Parsed Mathematical Functions as Line Graphs                                      {#JKQTPlotterParsedFunctionPlot}
+
+
 
 # Plot Function f(x)
 

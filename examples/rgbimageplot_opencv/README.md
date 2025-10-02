@@ -1,4 +1,6 @@
-# Example (JKQTPlotter): Simple RGB image plot, showing a 3-channel OpenCV cv::Mat {#JKQTPlotterImagePlotRGBOpenCV}
+# Example (JKQTPlotter): Simple RGB image plot, showing a 3-channel OpenCV cv::Mat                                      {#JKQTPlotterImagePlotRGBOpenCV}
+
+
 
 This project (see `./examples/rgbimageplot_opencv/`) simply creates a JKQTPlotter widget (as a new window) and shows an RGB image read from a BMP-file. The image is generated as an [OpenCV](https://opencv.org/) [`cv::Mat`](https://docs.opencv.org/4.0.0/d3/d63/classcv_1_1Mat.html) image and then copied into a single column of the internal datastore (JKQTPMathImage could be directly used without the internal datastore). 
 To copy the data a special OpenCV Interface function `JKQTPCopyCvMatToColumn()` is used, that copies the data from a (https://opencv.org/) [`cv::Mat`](https://docs.opencv.org/4.0.0/d3/d63/classcv_1_1Mat.html) directly into a column. 

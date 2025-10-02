@@ -1,4 +1,6 @@
-# Example (JKQTMathText): A simple usage example            {#JKQTMathTextSimpleExample}
+# Example (JKQTMathText): A simple usage example                                                 {#JKQTMathTextSimpleExample}
+
+
 JKQTMathText is a hand-written LaTeX-renderer for Qt (implemented in native C++, using Qt). It supports a large set of standard LaTeX markup and can render it to a QPainter.
 
 This project (see `./examples/jkqtmathtext_simpletest/`) simply creates a QLabel (as a new window) that displays a rendered LaTeX equation (here the time-dependent Schrödinger equation).
