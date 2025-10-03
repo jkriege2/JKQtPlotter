@@ -1151,17 +1151,15 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPDatastore{
             const size_t N=static_cast<size_t>(data.size());
             double* d=static_cast<double*>(malloc(static_cast<size_t>(N)*sizeof(double)));
             size_t rrs=0;
-            if (data) {
-                auto itmask=mask.begin();
-                auto itdata=data.begin();
-                for (size_t r=0; r<N; r++) {
-                    if (static_cast<bool>(*itmask)==useIfMaskEquals) {
-                        d[rrs]=jkqtp_todouble(*itdata);
-                        rrs++;
-                    }
-                    ++itmask;
-                    ++itdata;
+            auto itmask=mask.begin();
+            auto itdata=data.begin();
+            for (size_t r=0; r<N; r++) {
+                if (static_cast<bool>(*itmask)==useIfMaskEquals) {
+                    d[rrs]=jkqtp_todouble(*itdata);
+                    rrs++;
                 }
+                ++itmask;
+                ++itdata;
             }
             size_t col= addInternalColumn(d, rrs, name);
             return col;
@@ -2363,7 +2361,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPDatastoreItem {
     /** \brief if \c isValid() : erase the row \a row */
     inline void erase(size_t row) {
         JKQTPASSERT(isVector());
-        datavec.erase(datavec.begin()+row, datavec.end());
+        datavec.erase(datavec.begin()+row, datavec.begin()+row);
         rows=static_cast<size_t>(datavec.size());
         data=datavec.data();
     }
@@ -2852,7 +2850,6 @@ size_t JKQTPDatastore::addCopiedImageAsColumnTranspose(const T* data, size_t wid
         for (size_t y=0; y<height; y++) {
             temp[x*height+y]=jkqtp_todouble<T>(data[start+(y*width+x)*stride]);
         }
-
     }
 
     size_t idx=addInternalColumn(temp, width*height, name);
