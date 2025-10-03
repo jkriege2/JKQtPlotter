@@ -1151,17 +1151,15 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPDatastore{
             const size_t N=static_cast<size_t>(data.size());
             double* d=static_cast<double*>(malloc(static_cast<size_t>(N)*sizeof(double)));
             size_t rrs=0;
-            if (data) {
-                auto itmask=mask.begin();
-                auto itdata=data.begin();
-                for (size_t r=0; r<N; r++) {
-                    if (static_cast<bool>(*itmask)==useIfMaskEquals) {
-                        d[rrs]=jkqtp_todouble(*itdata);
-                        rrs++;
-                    }
-                    ++itmask;
-                    ++itdata;
+            auto itmask=mask.begin();
+            auto itdata=data.begin();
+            for (size_t r=0; r<N; r++) {
+                if (static_cast<bool>(*itmask)==useIfMaskEquals) {
+                    d[rrs]=jkqtp_todouble(*itdata);
+                    rrs++;
                 }
+                ++itmask;
+                ++itdata;
             }
             size_t col= addInternalColumn(d, rrs, name);
             return col;
