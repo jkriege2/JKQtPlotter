@@ -1,0 +1,27 @@
+<map id="JKQTPFilledCurveGraphBase" name="JKQTPFilledCurveGraphBase">
+<area shape="rect" id="Node000001" title="a Base class for filled curve graphs like e.g. JKQTPFilledCurveXGraph" alt="" coords="149,403,395,431"/>
+<area shape="rect" id="Node000010" href="$class_j_k_q_t_p_filled_curve_x_graph.html" title="This implements filled curve plots where the area is filled between the plot line and the x&#45;Axis." alt="" coords="43,479,261,507"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="241,440,174,481,172,476,238,436"/>
+<area shape="rect" id="Node000012" href="$class_j_k_q_t_p_filled_curve_y_graph.html" title="This implements filled curve plots where the area is filled between the plot line and y&#45;Axis." alt="" coords="295,479,511,507"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="308,435,381,476,378,481,306,440"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_x_y_baseline_graph.html" title="This virtual JKQTPGraph descendent extends JKQTPXYGraph adds a baseline&#45;property, which is necessary,..." alt="" coords="45,318,251,346"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="180,351,254,400,251,405,177,356"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_x_y_graph.html" title="This virtual JKQTPGraph descendent may be used as base for all graphs that use at least two columns t..." alt="" coords="78,233,218,261"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="151,275,151,318,145,318,145,275"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_p_graph.html" title="this virtual base class of the (data&#45;column based) graphs, which are part of a JKQTPlotter plot and w..." alt="" coords="89,157,207,185"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="151,199,151,233,145,233,145,199"/>
+<area shape="rect" id="Node000005" href="$class_j_k_q_t_p_plot_element.html" title="this virtual base class of every element, which is part of a JKQTPlotter plot and may appear in its k..." alt="" coords="65,81,231,109"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="151,123,151,157,145,157,145,123"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="105,5,191,33"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="151,47,151,81,145,81,145,47"/>
+<area shape="rect" id="Node000007" href="$class_j_k_q_t_p_graph_line_and_fill_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph line and..." alt="" coords="276,309,519,355"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="355,365,293,405,290,400,352,360"/>
+<area shape="rect" id="Node000008" href="$class_j_k_q_t_p_graph_fill_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph filling ..." alt="" coords="265,233,484,261"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="384,274,394,308,389,309,379,275"/>
+<area shape="rect" id="Node000009" href="$class_j_k_q_t_p_graph_line_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph line sty..." alt="" coords="508,233,740,261"/>
+<area shape="poly" id="edge8_Node000007_Node000009" title=" " alt="" coords="577,269,458,312,456,307,575,264"/>
+<area shape="rect" id="Node000011" href="$class_j_k_q_t_p_filled_curve_x_error_graph.html" title="This implements filled curve plots with y errors where the area is filled between the plot line and t..." alt="" coords="5,555,261,583"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="148,520,139,555,134,554,143,519"/>
+<area shape="rect" id="Node000013" href="$class_j_k_q_t_p_filled_curve_y_error_graph.html" title="This implements filled curve plots with y errors where the area is filled between the plot line and t..." alt="" coords="286,555,541,583"/>
+<area shape="poly" id="edge12_Node000012_Node000013" title=" " alt="" coords="409,520,414,554,409,555,404,521"/>
+</map>

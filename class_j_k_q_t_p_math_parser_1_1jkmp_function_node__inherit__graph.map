@@ -1,0 +1,5 @@
+<map id="JKQTPMathParser::jkmpFunctionNode" name="JKQTPMathParser::jkmpFunctionNode">
+<area shape="rect" id="Node000001" title="This class represents an arbitrary function." alt="" coords="5,81,324,109"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_math_parser_1_1jkmp_node.html" title="This class is the abstract base class for nodes. All allowed node types must inherit from jkmpNode." alt="" coords="39,5,290,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="167,47,167,81,162,81,162,47"/>
+</map>

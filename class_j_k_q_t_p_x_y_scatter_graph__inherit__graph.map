@@ -1,0 +1,15 @@
+<map id="JKQTPXYScatterGraph" name="JKQTPXYScatterGraph">
+<area shape="rect" id="Node000001" title="This implements xy scatter plots. This also alows to draw symbols at the data points." alt="" coords="101,309,300,337"/>
+<area shape="rect" id="Node000007" href="$class_j_k_q_t_p_x_y_scatter_error_graph.html" title="This implements xy scatter plots with x and y error indicators." alt="" coords="82,385,319,413"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="203,351,203,385,198,385,198,351"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_x_y_graph.html" title="This virtual JKQTPGraph descendent may be used as base for all graphs that use at least two columns t..." alt="" coords="19,233,159,261"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="121,267,182,307,180,311,118,271"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_graph.html" title="this virtual base class of the (data&#45;column based) graphs, which are part of a JKQTPlotter plot and w..." alt="" coords="29,157,148,185"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="91,199,91,233,86,233,86,199"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_p_plot_element.html" title="this virtual base class of every element, which is part of a JKQTPlotter plot and may appear in its k..." alt="" coords="5,81,172,109"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="91,123,91,157,86,157,86,123"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="45,5,132,33"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="91,47,91,81,86,81,86,47"/>
+<area shape="rect" id="Node000006" href="$class_j_k_q_t_p_graph_symbol_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph symbols ..." alt="" coords="183,233,442,261"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="283,271,222,311,219,307,280,267"/>
+</map>

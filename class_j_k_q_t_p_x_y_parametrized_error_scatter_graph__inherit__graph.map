@@ -1,0 +1,27 @@
+<map id="JKQTPXYParametrizedErrorScatterGraph" name="JKQTPXYParametrizedErrorScatterGraph">
+<area shape="rect" id="Node000001" title="This implements xy scatter plots (like JKQTPXYScatterGraph), but the color and size of the symbols ma..." alt="" coords="1132,187,1369,233"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_x_y_parametrized_scatter_graph.html" title="This implements xy scatter plots (like JKQTPXYScatterGraph), but the color and size of the symbols ma..." alt="" coords="828,101,1084,146"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1048,147,1173,185,1172,190,1046,152"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_x_y_graph.html" title="This virtual JKQTPGraph descendent may be used as base for all graphs that use at least two columns t..." alt="" coords="581,5,721,33"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="735,30,781,42,851,69,913,98,910,103,849,74,779,47,734,35"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_p_graph.html" title="this virtual base class of the (data&#45;column based) graphs, which are part of a JKQTPlotter plot and w..." alt="" coords="355,5,473,33"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="487,17,580,17,580,22,487,22"/>
+<area shape="rect" id="Node000005" href="$class_j_k_q_t_p_plot_element.html" title="this virtual base class of every element, which is part of a JKQTPlotter plot and may appear in its k..." alt="" coords="140,5,307,33"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="321,17,355,17,355,22,321,22"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="5,5,92,33"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="105,17,140,17,140,22,105,22"/>
+<area shape="rect" id="Node000007" href="$class_j_k_q_t_p_graph_line_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph line sty..." alt="" coords="535,57,767,85"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="747,85,828,99,828,104,746,90"/>
+<area shape="rect" id="Node000008" href="$class_j_k_q_t_p_graph_symbol_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph symbols ..." alt="" coords="521,109,780,137"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="794,121,828,121,828,126,794,126"/>
+<area shape="rect" id="Node000009" href="$class_j_k_q_t_p_color_palette_style_and_tools_mixin.html" title="if a class is derived from this class, it may use color bars" alt="" coords="532,162,769,207"/>
+<area shape="poly" id="edge8_Node000002_Node000009" title=" " alt="" coords="777,157,842,143,843,149,778,162"/>
+<area shape="rect" id="Node000010" href="$class_j_k_q_t_p_x_y_graph_errors.html" title="This class is the base class for graphs that only display error indicators in x&#45; and y&#45;direction." alt="" coords="863,257,1049,285"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="1037,252,1140,230,1141,235,1038,257"/>
+<area shape="rect" id="Node000011" href="$class_j_k_q_t_p_x_graph_error_data.html" title="This class adds data fields for error indicators in x direction." alt="" coords="547,232,754,260"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="768,253,862,261,862,266,767,258"/>
+<area shape="rect" id="Node000012" href="$class_j_k_q_t_p_y_graph_error_data.html" title="This class adds data fields for error indicators in y direction." alt="" coords="548,284,753,312"/>
+<area shape="poly" id="edge11_Node000010_Node000012" title=" " alt="" coords="767,285,862,277,863,282,767,291"/>
+<area shape="rect" id="Node000013" href="$class_j_k_q_t_p_graph_error_style_mixin.html" title="This mix&#45;in class assembles all styling properties applicable to error indicators." alt="" coords="531,336,770,364"/>
+<area shape="poly" id="edge12_Node000010_Node000013" title=" " alt="" coords="742,331,779,322,912,283,914,288,781,327,743,336"/>
+</map>

@@ -1,0 +1,15 @@
+<map id="JKQTPGeoBezierCurve" name="JKQTPGeoBezierCurve">
+<area shape="rect" id="Node000001" title="This JKQTPGeometricPlotElement is used to draw a bezier curve." alt="" coords="174,327,373,355"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_geo_base_decorated_line.html" title="This JKQTPGeometricPlotElement is used as base class for geometric drawing elements that consist of l..." alt="" coords="144,251,403,279"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="276,292,276,326,271,326,271,292"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_geometric_plot_element.html" title="this is the virtual base class of all JKQTPPlotElement&#39;s in a JKQTPlotter plot that represent geometr..." alt="" coords="5,166,256,194"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="166,199,253,248,250,253,164,203"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_p_plot_element.html" title="this virtual base class of every element, which is part of a JKQTPlotter plot and may appear in its k..." alt="" coords="47,81,214,109"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="133,123,133,166,128,166,128,123"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="87,5,174,33"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="133,47,133,81,128,81,128,47"/>
+<area shape="rect" id="Node000006" href="$class_j_k_q_t_p_graph_decorated_line_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph line sty..." alt="" coords="280,157,555,203"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="369,212,297,253,294,248,367,207"/>
+<area shape="rect" id="Node000007" href="$class_j_k_q_t_p_graph_line_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph line sty..." alt="" coords="301,81,533,109"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="420,123,420,157,415,157,415,123"/>
+</map>

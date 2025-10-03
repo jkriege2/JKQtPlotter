@@ -1,0 +1,266 @@
+\_form#0=310x39:\[ \Delta t=\frac{N_{\mbox{now}}-N_{\mbox{start}}}{\mbox{\texttt{QueryPerformanceFrequency()}}}\cdot 10^{6} \]
+\_form#1=33x18:$ f_x(t) $
+\_form#2=33x18:$ f_y(t) $
+\_form#3=102x18:$ t\in\left[t_\text{min}..t_\text{max}\right] $
+\_form#4=31x18:$ [a, b] $
+\_form#5=265x23:\[ \mbox{minSamples} \cdot 2^{\mbox{maxRefinementDegree}} \]
+\_form#6=96x18:$ [x,y]=f_{xy}(t) $
+\_form#7=29x15:$ t_\text{min} $
+\_form#8=31x15:$ t_\text{max} $
+\_form#9=99x11:$ \pi=3.14159... $
+\_form#10=156x18:$ \sqrt{2\pi}=2.50662827463 $
+\_form#11=254x18:$ \mbox{ln}(10)=2.30258509299404568402... $
+\_form#12=10x13:$ \lambda $
+\_form#13=102x18:$ |v|\geq \mbox{absMinV} $
+\_form#14=275x42:\[ f(x,\mu, \sigma)=\frac{1}{\sqrt{2\pi\sigma^2}}\cdot\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right) \]
+\_form#15=104x39:$ f(x)=\sum\limits_{i=0}^Pp_ix^i $
+\_form#16=15x11:$ p_i $
+\_form#17=16x11:$ p_1 $
+\_form#18=16x15:$ x^0 $
+\_form#19=20x11:$ p_P $
+\_form#20=234x18:$ n!=n\cdot(n-1)\cdot(n-2)\cdot...\cdot2\cdot1 $
+\_form#21=104x31:$ \left(\stackrel{n}{k}\right)=\frac{n!}{k!\cdot(n-k)!} $
+\_form#22=296x31:$ B_i^n(t):=\left(\stackrel{n}{i}\right)\cdot t^i\cdot(1-t)^{n-1},\ \ \ \ 0\leq i\leq n $
+\_form#23=11x8:$ \pi $
+\_form#24=46x18:$ \exp(1) $
+\_form#25=21x18:$ \sqrt{2} $
+\_form#26=49x18:$ \log_2(e) $
+\_form#27=55x18:$ \log_{10}(e) $
+\_form#28=104x18:$ \ln(2)=\log_{e}(2) $
+\_form#29=120x18:$ \ln(10)=\log_{e}(10) $
+\_form#30=177x15:$ 6.6260689633\cdot 10^{-34}\;\mathrm{J\cdot s} $
+\_form#31=255x23:$ \hbar=\frac{h}{2\pi}= 1.05457162853\cdot 10^{-34}\;\mathrm{J\cdot s} $
+\_form#32=190x21:$ \epsilon_0= 8.854187817\cdot 10^{-12}\;\mathrm{\frac{F}{m}} $
+\_form#33=286x21:$ \mu_0=2\pi\cdot 10^{-7}= 12.566370614\cdot 10^{-7}\;\mathrm{\frac{N}{A^2}} $
+\_form#34=91x20:$ 299792458\;\mathrm{\frac{m}{s}} $
+\_form#35=169x15:$ 1.60217648740\cdot 10^{-19}\;\mathrm{C}$
+\_form#36=205x21:$ \mu_B= 927.40091523\cdot 10^{-26}\;\mathrm{\frac{J}{T}} $
+\_form#37=221x21:$ \mu_B=5.788381755579\cdot 10^{-5}\;\mathrm{\frac{eV}{T}}  $
+\_form#38=206x21:$ \mu_N=5.0507832413\cdot 10^{-27}\;\mathrm{\frac{J}{T}}  $
+\_form#39=223x21:$ \mu_N=3.152451232645\cdot 10^{-8}\;\mathrm{\frac{eV}{T}}  $
+\_form#40=211x18:$ m_e= 9.1093821545\cdot 10^{-31}\;\mathrm{kg} $
+\_form#41=219x20:$ m_p= 1.67262163783\cdot 10^{-27}\;\mathrm{kg} $
+\_form#42=221x18:$ m_n= 1.67492721184\cdot 10^{-27}\;\mathrm{kg} $
+\_form#43=179x18:$ N_A= 6.0221417930\cdot 10^{23} $
+\_form#44=195x21:$ k_B=1.380650424\cdot 10^{-23}\;\mathrm{\frac{J}{K}}  $
+\_form#45=187x21:$ k_B=8.61734315\cdot 10^{-5}\;\mathrm{\frac{eV}{K}}  $
+\_form#46=65x16:\[ A\cdot\vec{x}=\vec{b} \]
+\_form#47=34x31:\[ \left[A | \vec{b}\right] \]
+\_form#48=41x18:\[ \left[A | I_L\right] \]
+\_form#49=18x16:$ I_L $
+\_form#50=68x13:$ A\cdot\vec{x}=B $
+\_form#51=65x16:$ A\cdot\vec{x}=\vec{b} $
+\_form#52=21x16:$ X_1 $
+\_form#53=26x16:$ X_N $
+\_form#54=112x49:\[ \overline{X}=\frac{1}{N}\cdot\sum\limits_{i=1}^{N}X_i \]
+\_form#55=18x11:$ w_i $
+\_form#56=111x85:\[ \overline{X}=\frac{\sum\limits_{i=1}^{N}w_i\cdot X_i}{\sum\limits_{i=1}^{N}w_i} \]
+\_form#57=249x49:\[ \sum(X)=\cdot\sum\limits_{i=1}^{N}\mbox{modifierFunctor}(X_i) \]
+\_form#58=125x49:\[ \sum(X)=\cdot\sum\limits_{i=1}^{N}X_i \]
+\_form#59=127x49:\[ \sum(X)=\cdot\sum\limits_{i=1}^{N}X_i^2 \]
+\_form#60=132x50:\[ \sum(X)_j=\cdot\sum\limits_{i=1}^{j}X_i \]
+\_form#61=94x20:$ \sigma_X^2=\mbox{Var}(X) $
+\_form#62=553x60:\[ \sigma_X^2=\text{Var}(X)=\frac{1}{N-1}\cdot\sum\limits_{i=1}^{N}(X_i-\overline{X})^2=\frac{1}{N-1}\cdot\left(\sum_{i=1}^NX_i^2-\frac{1}{N}\cdot\left(\sum_{i=1}^NX_i\right)^2\right) \]
+\_form#63=112x21:$ \sigma_X=\sqrt{\mbox{Var}(X)} $
+\_form#64=232x60:\[ \sigma_X=\sqrt{\frac{1}{N-1}\cdot\sum\limits_{i=1}^{N}(X_i-\overline{X})^2}= \]
+\_form#65=223x85:\[ \sigma_v^2=\text{Var}(v)=\frac{\sum\limits_{i=1}^{N}w_i\cdot (v_i-\overline{v})^2}{\sum\limits_{i=1}^{N}w_i} \]
+\_form#66=94x18:$ f(x): \mathbb{R}\rightarrow\mathbb{R} $
+\_form#67=10x8:$ x $
+\_form#68=31x18:$ f(x) $
+\_form#69=115x18:$ f(x)=\mbox{round}(x) $
+\_form#70=174x98:\[ \sigma_v=\sqrt{\frac{\sum\limits_{i=1}^{N}w_i\cdot (v_i-\overline{v})^2}{\sum\limits_{i=1}^{N}w_i}} \]
+\_form#71=125x41:$ \gamma_1=\mathbb{E}\left[\left(\frac{X-\mu}{\sigma}\right)^3\right] $
+\_form#72=16x11:$ \gamma_1 $
+\_form#73=387x52:\[ \gamma_1=\mathbb{E}\left[\left(\frac{X-\mu}{\sigma}\right)^3\right]= \frac{m_3}{m_2^{3/2}}  = \frac{\frac{1}{n} \sum_{i=1}^n (x_i-\overline{x})^3}{\left(\frac{1}{n} \sum_{i=1}^n (x_i-\overline{x})^2\right)^{3/2}} \]
+\_form#74=11x11:$\mu$
+\_form#75=10x8:$\sigma$
+\_form#76=16x13:$X$
+\_form#77=11x11:$\overline{x}$
+\_form#78=15x11:$ x_i$
+\_form#79=122x16:$ \mbox{firstGroupCenter} $
+\_form#80=244x18:$ \mbox{firstGroupCenter}\pm\mbox{groupWidth}/2$
+\_form#81=263x18:$ \mbox{firstGroupCenter}\pm2\cdot\mbox{groupWidth}/2 $
+\_form#82=263x18:$ \mbox{firstGroupCenter}\pm3\cdot\mbox{groupWidth}/2 $
+\_form#83=205x33:$ \mbox{round}\left(\frac{x-\mbox{firstGroupCenter}}{\mbox{groupWidth}/2}\right) $
+\_form#84=75x18:$ \langle (X-\mu)^o\rangle $
+\_form#85=8x8:$ o $
+\_form#86=184x20:\[ \langle (X-\mu)^o\rangle= \mathbb{E}\left[\left(X-\mu\right)^o\right] \]
+\_form#87=33x18:$ \langle X^o\rangle $
+\_form#88=44x18:$ (c_i,v_i) $
+\_form#89=11x11:$ c_i $
+\_form#90=13x11:$ v_i $
+\_form#91=141x18:$ V_j=\{v_{i}|c_i\equiv c_{\text{out},j}\} $
+\_form#92=68x13:$ c_i\equiv c_{\text{out},j} $
+\_form#93=34x13:$ c_{\text{out},j} $
+\_form#94=102x18:\[ \langle X^n\rangle= \mathbb{E}\left[X^n\right] \]
+\_form#95=13x11:$ c_1 $
+\_form#96=18x11:$ c_N $
+\_form#97=15x11:$ v_1 $
+\_form#98=21x11:$ v_N $
+\_form#99=28x13:$ \rho_{x,y} $
+\_form#100=16x16:$ Y_1 $
+\_form#101=20x16:$ X_i $
+\_form#102=15x16:$ Y_i $
+\_form#103=429x94:\[ \rho_{x,y}=\text{CorCoeff}_{\text{Pearson}}(x,y)=\frac{\sum\limits_{i=0}^{N-1}(x_i-\overline{x})(y_i-\overline{y})}{\sqrt{\sum\limits_{i=0}^{N-1}(x_i-\overline{x})^2\cdot\sum\limits_{i=0}^{N-1}(y_i-\overline{y})^2}} \]
+\_form#104=93x39:\[ 2\cdot\frac{1.58\cdot \mbox{IQR}}{\sqrt{N}} \]
+\_form#105=23x16:$ Y_N $
+\_form#106=223x18:\[ \mbox{MAD}(\vec{x})=\mbox{Med}\left\{|\vec{x}-\mbox{Med}(\vec{x})|\right\} \]
+\_form#107=325x37:\[ \mbox{NMAD}(\vec{x})=\frac{\mbox{MAD}(\vec{x})}{0.6745}=\frac{\mbox{Med}\left\{|\vec{x}-\mbox{Med}(\vec{x})|\right\}}{0.6745} \]
+\_form#108=47x18:$ (x_i,y_i) $
+\_form#109=16x11:$ x_1 $
+\_form#110=23x11:$ x_N $
+\_form#111=15x11:$ y_1 $
+\_form#112=21x11:$ y_N $
+\_form#113=267x109:\[ \begin{bmatrix} y_1\\ y_2\\ y_3 \\ \vdots \\ y_n \end{bmatrix}= \begin{bmatrix} 1 & x_1 & x_1^2 & \dots & x_1^P \\ 1 & x_2 & x_2^2 & \dots & x_2^P\\ 1 & x_3 & x_3^2 & \dots & x_3^P \\ \vdots & \vdots & \vdots & & \vdots \\ 1 & x_n & x_n^2 & \dots & x_n^P \end{bmatrix} \begin{bmatrix} p_0\\ p_1\\ p_2\\ \vdots \\ p_P \end{bmatrix}  \]
+\_form#114=260x21:\[ \vec{y}=V\vec{p}\ \ \ \ \ \Rightarrow\ \ \ \ \ \vec{p}=(V^TV)^{-1}V^T\vec{y} \]
+\_form#115=179x41:\[ k(t):=\frac{1}{\sqrt{2\pi}}\exp \left(-\frac{1}{2}t^2\right) \]
+\_form#116=120x39:\[ k(t):=\frac{1}{\pi(1+t^2)} \]
+\_form#117=132x34:\[ k(t):=\frac{1}{2}\exp(-|t|) \]
+\_form#118=236x50:\[ k(t) :=\begin{cases}\frac{3}{4} ( 1- t^2 ),  & \text{if }t\in [-1;1]\\0, & \text{else}\end{cases} \]
+\_form#119=192x50:\[ k(t) :=\begin{cases}0.5,  & \text{if }t\in [-1;1]\\0, & \text{else}\end{cases} \]
+\_form#120=215x50:\[ k(t) :=\begin{cases}1-|t|,  & \text{if }t\in [-1;1]\\0, & \text{else}\end{cases} \]
+\_form#121=250x50:\[ k(t) :=\begin{cases}\frac{15}{16}(1-t^2)^2,  & \text{if }t\in [-1;1]\\0, & \text{else}\end{cases} \]
+\_form#122=250x50:\[ k(t) :=\begin{cases}\frac{35}{32}(1-t^2)^3,  & \text{if }t\in [-1;1]\\0, & \text{else}\end{cases} \]
+\_form#123=258x50:\[ k(t) :=\begin{cases}\frac{70}{81}(1-|t|^3)^3,  & \text{if }t\in [-1;1]\\0, & \text{else}\end{cases} \]
+\_form#124=245x50:\[ k(t) :=\begin{cases}\frac{\pi}{4}\cos\left(\frac{\pi}{2}t\right),  & \text{if }t\in [-1;1]\\0, & \text{else}\end{cases} \]
+\_form#125=221x50:\[ k(t_x, t_y):=\frac{1}{2\pi}\exp \left(-\frac{t_x^2+t_y^2}{2}\right) \]
+\_form#126=241x50:\[ k(t_x, t_y):=\begin{cases}\frac{1}{4},  & \text{if }t_x,t_y\in [-1;1]\\0, & \text{else}\end{cases} \]
+\_form#127=193x47:\[ h = \left(\frac{4\hat{\sigma}^5}{3n}\right)^{\frac{1}{5}} \approx 1.06 \hat{\sigma} n^{-1/5} \]
+\_form#128=322x49:\[ \tilde{f}(t):=\frac{1}{N\cdot\text{bandwidth}}\cdot\sum\limits_{i=0}^{N-1}K\left(\frac{t-x_i}{\text{bandwidth}}\right) \]
+\_form#129=567x49:\[ \tilde{f}(x,y):=\frac{1}{N\cdot\sqrt{\text{bandwidthx}}\cdot\sqrt{\text{bandwidthy}}}\cdot\sum\limits_{i=0}^{N-1}K\left(\frac{x-x_i}{\text{bandwidthx}},\frac{y-y_i}{\text{bandwidthy}}\right) \]
+\_form#130=180x20:\[ h =  \hat{\sigma} n^{-1/(d+4)},\ \ \ \ \ d=2 \]
+\_form#131=109x18:$ f(x)=a+b\cdot x $
+\_form#132=281x36:\[ (a^\ast, b^\ast)=\mathop{\mathrm{arg\;min}}\limits_{a,b}\sum\limits_i\left(y_i-(a+b\cdot x_i)\right)^2 \]
+\_form#133=8x8:$ a $
+\_form#134=7x13:$ b $
+\_form#135=88x16:\[ a=\overline{y}-b\cdot\overline{x} \]
+\_form#136=154x41:\[ b=\frac{\sum x_iy_i-N\cdot\overline{x}\cdot\overline{y}}{\sum x_i^2-N\cdot(\overline{x})^2} \]
+\_form#137=310x36:\[ (a^\ast, b^\ast)=\mathop{\mathrm{arg\;min}}\limits_{a,b}\sum\limits_iw_i^2\cdot\left(y_i-(a+b\cdot x_i)\right)^2 \]
+\_form#138=20x11:$ w_1 $
+\_form#139=24x11:$ w_N $
+\_form#140=89x37:\[ a=\frac{\overline{y}-b\cdot\overline{x}}{\overline{w^2}} \]
+\_form#141=141x41:\[ b=\frac{\overline{w^2}\cdot\overline{x\cdot y}-\overline{x}\cdot\overline{y}}{\overline{x^2}\cdot\overline{w^2}-\overline{x}^2} \]
+\_form#142=18x11:$ w_i$
+\_form#143=102x36:\[ \overline{x}=\sum\limits_iw_i^2\cdot x_i \]
+\_form#144=101x36:\[ \overline{y}=\sum\limits_iw_i^2\cdot y_i \]
+\_form#145=148x36:\[ \overline{x\cdot y}=\sum\limits_iw_i^2\cdot x_i\cdot y_i \]
+\_form#146=112x36:\[ \overline{x^2}=\sum\limits_iw_i^2\cdot x_i^2 \]
+\_form#147=86x36:\[ \overline{w^2}=\sum\limits_iw_i^2 \]
+\_form#148=265x36:\[ (a^\ast,b^\ast)=\mathop{\mathrm{arg\;min}}\limits_{a,b}\sum\limits_i|a+b\cdot x_i-y_i|^p \]
+\_form#149=18x18:$ L_p $
+\_form#150=18x18:$ L_p$
+\_form#151=15x13:$ \vec{w} $
+\_form#152=418x36:\[ (a_n,b_n)=\mathop{\mathrm{arg\;min}}\limits_{a,b}\sum\limits_i|a+b\cdot x_i-y_i|^{(p-2)}\cdot|a+b\cdot x_i-y_i|^2 \]
+\_form#153=15x11:$ a_0$
+\_form#154=13x16:$ b_0$
+\_form#155=11x8:$ n$
+\_form#156=10x13:$\vec{e}$
+\_form#157=128x16:\[ e_i = a+b\cdot x_i -y_i \]
+\_form#158=15x13:$\vec{w}$
+\_form#159=107x21:\[ w_i=|e_i|^{(p-2)/2} \]
+\_form#160=16x11:$ a_n$
+\_form#161=15x16:$ b_n$
+\_form#162=11x13:$ \vec{x}$
+\_form#163=11x16:$ \vec{y}$
+\_form#164=15x13:$ \vec{w}$
+\_form#165=297x36:\[ (a^\ast, b^\ast)=\mathop{\mathrm{arg\;min}}\limits_{a,b}\sum\limits_i\left(y_i-f_{\text{type}}(x_i,a,b)\right)^2 \]
+\_form#166=294x36:\[ (a^\ast, b^\ast)=\mathop{\mathrm{arg\;min}}\limits_{a,b}\sum\limits_i|y_i-f_{\text{type}}(x_i,a,b)|^p \]
+\_form#167=320x36:\[ (a^\ast, b^\ast)=\mathop{\mathrm{arg\;min}}\limits_{a,b}\sum\limits_iw_i^2\left(y_i-f_{\text{type}}(x_i,a,b)\right)^2 \]
+\_form#168=18x15:$ R^2 $
+\_form#169=185x52:\[ R^2=1-\frac{\sum_i\bigl[y_i-f(x_i)\bigr]^2}{\sum_i\bigl[y_i-\overline{y}\bigr]^2} \]
+\_form#170=101x42:\[ \overline{y}=\frac{1}{N}\cdot\sum_iy_i \]
+\_form#171=72x18:$ (x_i,y_i,w_i) $
+\_form#172=208x52:\[ R^2=1-\frac{\sum_iw_i^2\bigl[y_i-f(x_i)\bigr]^2}{\sum_iw_i^2\bigl[y_i-\overline{y}\bigr]^2} \]
+\_form#173=117x42:\[ \overline{y}=\frac{1}{N}\cdot\sum_iw_iy_i \]
+\_form#174=73x36:\[ \sum_iw_i=1 \]
+\_form#175=18x18:$ \chi^2 $
+\_form#176=153x37:\[ \chi^2=\sum_i\bigl[y_i-f(x_i)\bigr]^2 \]
+\_form#177=187x37:\[ \chi^2=\sum_iw_i^2\cdot\bigl[y_i-f(x_i)\bigr]^2 \]
+\_form#178=88x20:$ f(x)=a\cdot x^b $
+\_form#179=137x18:$ f(x)=a\cdot \exp(b\cdot x) $
+\_form#180=133x18:$ f(x)=a+b\cdot \ln(x) $
+\_form#181=88x16:$ y=\mbox{baseline} $
+\_form#182=62x18:$ y=f(x) $
+\_form#183=88x13:$ x=\mbox{baseline} $
+\_form#184=62x18:$ x=f(y) $
+\_form#185=83x21:$ [x,y]=\vec{f}(t) $
+\_form#186=7x11:$ t $
+\_form#187=55x18:$ [x, f(x)] $
+\_form#188=29x18:$ f(y) $
+\_form#189=54x18:$ [f(y), y] $
+\_form#190=28x21:$ \vec{f}(t) $
+\_form#191=16x15:$ gt $
+\_form#192=33x15:$ \alpha_{\mbox{left}} $
+\_form#193=44x18:$ \alpha_{\mbox{right}} $
+\_form#194=234x31:\[ \left|\alpha_{\mbox{right}}-\alpha_{\mbox{left}}\right|>\mbox{slopeTolerance} \]
+\_form#195=83x18:$ [x,y]=f(t) $
+\_form#196=101x18:$ t \in \left[t_\text{min}, t_\text{max}\right] $
+\_form#197=46x18:$ f(x,y) $
+\_form#198=143x18:$ \{(x,y)|f(x,y)\equiv L_i\} $
+\_form#199=33x18:$ \{L_i\} $
+\_form#200=98x18:$ [x,y]=f(t, \vec{p}) $
+\_form#201=13x16:$ \vec{p} $
+\_form#202=78x18:$ y=f(x, \vec{p}) $
+\_form#203=190x18:$ [x,y]=f(t), t \in \left[t_\text{min}, t_\text{max}\right] $
+\_form#204=179x18:$ \mbox{transform}\left(x, y=f(x, \vec{p})\right) $
+\_form#205=33x18:$ [x,y] $
+\_form#206=249x20:$ f(x)=p_0+p_1x+p_2x^2+p_3x^3+... $
+\_form#207=59x11:$ p_0, p_1, ... $
+\_form#208=112x18:$ f(x)=p_0+p_1x $
+\_form#209=184x18:$ f(x)=p_0+p_1\cdot\exp(x/p_2) $
+\_form#210=150x18:$ f(x)=p_0\cdot\exp(x/p_1) $
+\_form#211=137x18:$ f(x)=p_0+p_1\cdot x^{p_3} $
+\_form#212=101x18:$ f(x)=p_0\cdot x^{p_1} $
+\_form#213=75x18:$ f(x)= x^{p_0} $
+\_form#214=36x18:$ (x,y) $
+\_form#215=52x15:$ 5\cdot 10^{-6} $
+\_form#216=44x15:$ 3\cdot 10^3 $
+\_form#217=44x15:$ 3\cdot 10^5 $
+\_form#218=59x18:$ \left(x, f(x) \right) $
+\_form#219=59x18:$ \left(f(y), y \right) $
+\_form#220=94x18:$ (x_p(x), y_p(y)) $
+\_form#221=465x18:\[ x_p(\mbox{xmin})=\mbox{xPlotOffset},\ \ \ \ \ x_p(\mbox{xmax})=\mbox{xPlotOffset}+\mbox{plotWidth} \]
+\_form#222=463x18:\[ y_p(\mbox{ymax})=\mbox{yPlotOffset},\ \ \ \ \ y_p(\mbox{ymin})=\mbox{yPlotOffset}+\mbox{plotHeight} \]
+\_form#223=50x18:$ (x_p, y_p) $
+\_form#224=424x18:\[ x_p(x)=\mbox{xoffset}+x\cdot\mbox{xscale} \ \ \ \ \ \ \ \ \ y_p(y)=\mbox{yoffset}-y\cdot\mbox{yscale} \]
+\_form#225=437x36:\[ \mbox{xscale}=\frac{\mbox{plotWidth}}{\mbox{xwidth}},\ \ \ \ \  \ \mbox{xoffset}=\mbox{xPlotOffset}-\mbox{xmin}\cdot\mbox{xscale} \]
+\_form#226=442x39:\[ \mbox{yscale}=\frac{\mbox{plotHeight}}{\mbox{ywidth}},\ \ \ \ \ \ \mbox{yoffset}=\mbox{yPlotOffset}+\mbox{ymax}\cdot\mbox{yscale} \]
+\_form#227=49x18:$ \log_b(x) $
+\_form#228=166x18:$ \log_b(x)=\log(x)/\log(b) $
+\_form#229=629x41:\[ x_p(x)=\mbox{xoffset}+\frac{\log(x)}{\log(\mbox{logXAxisBase})}\cdot\mbox{xscale} \ \ \ \ \ \ \ \ \ y_p(y)=\mbox{yoffset}-\frac{\log(y)}{\log(\mbox{logYAxisBase})}\cdot\mbox{yscale} \]
+\_form#230=657x41:\[ \mbox{xscale}=\frac{\mbox{plotWidth}\cdot\log(\mbox{logXAxisBase})}{\log(\mbox{xmax})-\log(\mbox{xmin})},\ \ \ \ \  \ \mbox{xoffset}=\mbox{xPlotOffset}-\frac{\log(\mbox{xmin})}{\log(\mbox{logXAxisBase})}\cdot\mbox{xscale} \]
+\_form#231=655x41:\[ \mbox{yscale}=\frac{\mbox{plotHeight}\cdot\log(\mbox{logYAxisBase})}{\log(\mbox{ymax})-\log(\mbox{ymin})},\ \ \ \ \  \ \mbox{yoffset}=\mbox{yPlotOffset}+\frac{\log(\mbox{ymax})}{\log(\mbox{logYAxisBase})}\cdot\mbox{yscale} \]
+\_form#232=226x37:\[ \Delta\mbox{MinorTicks}=\frac{\Delta\mbox{ticks}}{\mbox{minorTicks}+1} \]
+\_form#233=18x11:$ 1\pi $
+\_form#234=18x11:$ 2\pi $
+\_form#235=20x11:$ 3\pi $
+\_form#236=15x15:$ pi $
+\_form#237=182x39:\[ \mbox{aspectRatio}=\frac{\mbox{plotWidth}}{\mbox{plotHeight}} \]
+\_form#238=234x41:\[ \mbox{axisAspectRatio}=\frac{\left|x_\text{max}-x_\text{min}\right|}{\left|y_\text{max}-y_\text{min}\right|} \]
+\_form#239=39x13:$ \Delta\mbox{tick} $
+\_form#240=10x11:$ \rho $
+\_form#241=252x18:\[ \Delta\mbox{tick}=f\cdot 10^\rho,\ \ \ \ \ f\in\{1, 2, 2.5, 5\} \]
+\_form#242=176x18:$ \rho_s=\left\lfloor\log_{10}(\mbox{awidth})\right\rfloor+3 $
+\_form#243=46x11:$ \rho=\rho_0 $
+\_form#244=47x16:$ f=10 $
+\_form#245=135x18:$ f\in\{1, 2, 2.5, 5, 10\} $
+\_form#246=106x16:$ \Delta\mbox{tick}=f\cdot 10^\rho $
+\_form#247=202x31:$ \mbox{tickcount}=\mbox{round}\left(\frac{\mbox{awidth}}{\Delta\mbox{tick}}\right) $
+\_form#248=39x16:$ f=1 $
+\_form#249=70x15:$ \rho \leftarrow \rho-1 $
+\_form#250=52x16:$ \Delta x, \Delta y $
+\_form#251=10x8:$ \alpha $
+\_form#252=5x13:$ \l $
+\_form#253=8x15:$ j $
+\_form#254=41x11:$ x=0 $
+\_form#255=39x15:$ y=0 $
+\_form#256=81x13:$ \mbox{Xscale}\cdot\Delta x $
+\_form#257=23x13:$ \Delta x $
+\_form#258=88x15:$ \mbox{Yscale}\cdot\Delta < $
+\_form#259=29x15:$ \Delta < $
+\_form#260=47x18:$ [0...2\pi] $
+\_form#261=5x13:$ l $
+\_form#262=96x13:\[ \Delta x = l\cdot \cos\alpha \]
+\_form#263=93x16:\[ \Delta y = l\cdot \sin\alpha \]
+\_form#264=8x21:$ \frac{1}{2} $
+\_form#265=29x21:$ -3\frac{1}{2} $

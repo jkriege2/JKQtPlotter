@@ -1,0 +1,5 @@
+<map id="JKQTPSynchronized&lt; T &gt;" name="JKQTPSynchronized&lt; T &gt;">
+<area shape="rect" id="Node000001" title="template class that wraps any datatype and combines it with a mutex, exposes the lock()/unlock() inte..." alt="" coords="5,124,228,152"/>
+<area shape="rect" id="Node000002" href="$struct_j_k_q_t_p_synchronized_1_1_adopt_lock_type.html" title="type of AdoptLock tag, which is used in ReadLocker and WriteLocker to adopt a pre&#45;locked JKQTPSynchro..." alt="" coords="22,5,211,51"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="119,65,119,124,114,124,114,65"/>
+</map>

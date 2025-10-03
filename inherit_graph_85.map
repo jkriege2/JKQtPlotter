@@ -1,0 +1,27 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,292,127,320"/>
+<area shape="rect" id="Node000001" href="$class_j_k_q_t_p_c_a_draw_mode_combo_box.html" title="a QComboBox which shows JKQTPCADrawMode" alt="" coords="201,5,465,33"/>
+<area shape="poly" id="edge248_Node000000_Node000001" title=" " alt="" coords="67,278,76,227,94,163,108,129,125,97,147,68,173,43,199,27,202,32,176,47,151,71,130,100,113,132,99,164,81,228,73,279"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_c_a_label_type_combo_box.html" title="a QComboBox which shows JKQTPCALabelType" alt="" coords="204,57,461,85"/>
+<area shape="poly" id="edge249_Node000000_Node000002" title=" " alt="" coords="70,278,82,237,102,186,132,136,151,114,173,94,203,79,205,84,176,99,155,117,136,139,107,189,87,238,76,280"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_error_plotstyle_combo_box.html" title="a QComboBox which shows JKQTPErrorPlotstyle" alt="" coords="201,109,464,137"/>
+<area shape="poly" id="edge250_Node000000_Node000003" title=" " alt="" coords="75,278,90,247,111,211,139,175,173,146,200,133,202,138,176,151,143,179,116,214,95,249,80,280"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_p_image_modifier_mode_combo_box.html" title="a QComboBox which shows JKQTPMathImageModifierMode" alt="" coords="175,161,491,189"/>
+<area shape="poly" id="edge251_Node000000_Node000004" title=" " alt="" coords="83,280,121,237,146,216,173,198,202,187,204,192,176,203,149,220,125,241,87,283"/>
+<area shape="rect" id="Node000005" href="$class_j_k_q_t_p_key_layout_combo_box.html" title="a QComboBox which shows JKQTPKeyPosition" alt="" coords="213,213,452,241"/>
+<area shape="poly" id="edge252_Node000000_Node000005" title=" " alt="" coords="101,283,136,265,174,250,218,239,219,244,175,255,138,270,104,287"/>
+<area shape="rect" id="Node000006" href="$class_j_k_q_t_p_key_position_combo_box.html" title="a QComboBox which shows JKQTPKeyPosition" alt="" coords="209,265,456,293"/>
+<area shape="poly" id="edge253_Node000000_Node000006" title=" " alt="" coords="141,296,209,289,209,294,141,301"/>
+<area shape="rect" id="Node000007" href="$class_j_k_q_t_p_label_position_combo_box.html" title="a QComboBox which shows JKQTPLabelPosition" alt="" coords="203,317,463,345"/>
+<area shape="poly" id="edge254_Node000000_Node000007" title=" " alt="" coords="141,310,202,316,202,322,141,316"/>
+<area shape="rect" id="Node000008" href="$class_j_k_q_t_p_line_plot_style_combo_box.html" title="a QComboBox to select whether a line, symbols or both should be displayed" alt="" coords="203,369,462,397"/>
+<area shape="poly" id="edge255_Node000000_Node000008" title=" " alt="" coords="105,324,176,354,226,367,224,372,174,359,103,329"/>
+<area shape="rect" id="Node000009" href="$class_j_k_q_t_p_line_plot_style_with_symbol_size_combo_box.html" title="a QComboBox to select whether a line, symbols or both should be displayed, in addition to JKQTPLinePl..." alt="" coords="199,422,466,467"/>
+<area shape="poly" id="edge256_Node000000_Node000009" title=" " alt="" coords="88,329,126,369,150,389,176,406,206,419,204,424,173,411,147,394,122,373,84,332"/>
+<area shape="rect" id="Node000010" href="$class_j_k_q_t_p_math_image_color_palette_combo_box.html" title="class to plot an image from an 2&#45;dimensional array of values" alt="" coords="203,491,462,537"/>
+<area shape="poly" id="edge257_Node000000_Node000010" title=" " alt="" coords="79,332,93,366,114,406,141,445,176,477,204,493,202,497,173,481,137,448,109,408,88,368,74,334"/>
+<area shape="rect" id="Node000011" href="$class_j_k_q_t_p_special_line_type_combo_box.html" title="a QComboBox which shows JKQTPSpecialLineType" alt="" coords="191,561,474,589"/>
+<area shape="poly" id="edge258_Node000000_Node000011" title=" " alt="" coords="74,333,84,381,102,439,132,498,152,524,176,547,197,559,194,563,173,551,149,528,128,501,97,441,78,382,68,334"/>
+<area shape="rect" id="Node000012" href="$class_j_k_q_t_p_symbol_combo_box.html" title="a QComboBox which shows JKQTPGraphSymbols" alt="" coords="225,613,440,641"/>
+<area shape="poly" id="edge259_Node000000_Node000012" title=" " alt="" coords="71,333,78,390,95,463,108,500,126,537,149,570,176,599,200,613,226,622,224,627,197,618,173,603,144,573,121,539,103,502,90,464,73,391,66,334"/>
+</map>

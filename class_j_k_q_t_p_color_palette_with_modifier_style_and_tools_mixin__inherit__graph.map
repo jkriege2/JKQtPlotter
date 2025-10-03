@@ -1,0 +1,13 @@
+<map id="JKQTPColorPaletteWithModifierStyleAndToolsMixin" name="JKQTPColorPaletteWithModifierStyleAndToolsMixin">
+<area shape="rect" id="Node000001" title="if a class is derived from this class, it may use color bars that have 2 axes (one &quot;data&quot;/color axis ..." alt="" coords="91,99,358,144"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_math_image.html" title="class to plot an image from an 2&#45;dimensional array of values" alt="" coords="144,192,305,220"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="227,158,227,192,222,192,222,158"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_color_palette_style_and_tools_mixin.html" title="if a class is derived from this class, it may use color bars" alt="" coords="106,5,343,51"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="227,64,227,98,222,98,222,64"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_p_column_math_image.html" title="class to plot an image from an 2&#45;dimensional array of values stored in a column of the datastore" alt="" coords="5,268,228,296"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="196,230,137,270,134,266,193,226"/>
+<area shape="rect" id="Node000005" href="$class_j_k_q_t_p_contour_plot.html" title="class for a contour plot" alt="" coords="252,268,416,296"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="256,225,316,266,313,270,253,230"/>
+<area shape="rect" id="Node000006" href="$class_j_k_q_t_p_column_contour_plot.html" title="class for a contour plots (same as JKQTPContourPlot) of images stored in a JKQTPDatastore column" alt="" coords="221,344,447,372"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="337,310,337,344,331,344,331,310"/>
+</map>

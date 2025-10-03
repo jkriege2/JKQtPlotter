@@ -1,0 +1,29 @@
+<map id="JKQTPBarGraphBase" name="JKQTPBarGraphBase">
+<area shape="rect" id="Node000001" title="This is a base&#45;class for all bar graphs with vertical or horizontal orientation (the orientation is i..." alt="" coords="989,97,1176,125"/>
+<area shape="rect" id="Node000009" href="$class_j_k_q_t_p_bar_horizontal_graph.html" title="This implements a horizontal bar graph with bars between &#160;and ." alt="" coords="1224,67,1452,95"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="1189,96,1224,92,1224,97,1190,101"/>
+<area shape="rect" id="Node000012" href="$class_j_k_q_t_p_bar_vertical_graph.html" title="This implements a vertical bar graph with bars between &#160;and ." alt="" coords="1235,128,1441,156"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="1190,122,1235,127,1234,132,1189,127"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_x_y_baseline_graph.html" title="This virtual JKQTPGraph descendent extends JKQTPXYGraph adds a baseline&#45;property, which is necessary,..." alt="" coords="722,45,929,73"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="909,73,1013,95,1012,100,908,79"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_x_y_graph.html" title="This virtual JKQTPGraph descendent may be used as base for all graphs that use at least two columns t..." alt="" coords="521,45,661,73"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="675,57,722,57,722,62,675,62"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_p_graph.html" title="this virtual base class of the (data&#45;column based) graphs, which are part of a JKQTPlotter plot and w..." alt="" coords="355,45,473,73"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="487,57,521,57,521,62,487,62"/>
+<area shape="rect" id="Node000005" href="$class_j_k_q_t_p_plot_element.html" title="this virtual base class of every element, which is part of a JKQTPlotter plot and may appear in its k..." alt="" coords="140,45,307,73"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="321,57,355,57,355,62,321,62"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="5,45,92,73"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="105,57,140,57,140,62,105,62"/>
+<area shape="rect" id="Node000007" href="$class_j_k_q_t_p_graph_line_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph line sty..." alt="" coords="709,97,941,125"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="955,109,989,109,989,114,955,114"/>
+<area shape="rect" id="Node000008" href="$class_j_k_q_t_p_graph_fill_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph filling ..." alt="" coords="716,149,935,177"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="908,144,1012,123,1013,128,909,149"/>
+<area shape="rect" id="Node000010" href="$class_j_k_q_t_p_bar_horizontal_error_graph.html" title="This implements a horizontal bar graph with bars between &#160;and &#160;and error indicator." alt="" coords="1500,5,1767,33"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="1416,61,1499,43,1561,31,1562,36,1501,49,1417,66"/>
+<area shape="rect" id="Node000011" href="$class_j_k_q_t_p_bar_horizontal_stackable_graph.html" title="This implements a horizontal bar graph with bars between &#160;and &#160;Optionally several graphs of this type..." alt="" coords="1505,58,1762,103"/>
+<area shape="poly" id="edge10_Node000009_Node000011" title=" " alt="" coords="1466,78,1504,78,1504,83,1466,83"/>
+<area shape="rect" id="Node000013" href="$class_j_k_q_t_p_bar_vertical_error_graph.html" title="This implements a vertical bar graph with bars between &#160;and &#160;and error indicator." alt="" coords="1510,128,1757,156"/>
+<area shape="poly" id="edge12_Node000012_Node000013" title=" " alt="" coords="1455,139,1510,139,1510,145,1455,145"/>
+<area shape="rect" id="Node000014" href="$class_j_k_q_t_p_bar_vertical_stackable_graph.html" title="This implements a vertical bar graph with bars between &#160;and &#160;Optionally several graphs of this type m..." alt="" coords="1515,181,1751,226"/>
+<area shape="poly" id="edge13_Node000012_Node000014" title=" " alt="" coords="1420,156,1524,178,1523,183,1419,161"/>
+</map>

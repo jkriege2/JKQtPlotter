@@ -1,0 +1,15 @@
+<map id="JKQTPXYFunctionLineGraph" name="JKQTPXYFunctionLineGraph">
+<area shape="rect" id="Node000001" title="This implements line plots where the data is taken from a user supplied function &#160;The function is eva..." alt="" coords="183,385,423,413"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_x_y_function_line_graph_base.html" title="Base class for line plots where the data is taken from a user supplied function &#160;The function is eval..." alt="" coords="163,309,442,337"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="305,351,305,385,300,385,300,351"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_evaluated_function_graph_base.html" title="Base class for graph classes that evaluate a mathematical function (e.g. defined as a C&#45;function),..." alt="" coords="5,233,309,261"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="196,265,278,307,276,312,193,270"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_p_graph.html" title="this virtual base class of the (data&#45;column based) graphs, which are part of a JKQTPlotter plot and w..." alt="" coords="98,157,217,185"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="160,199,160,233,155,233,155,199"/>
+<area shape="rect" id="Node000005" href="$class_j_k_q_t_p_plot_element.html" title="this virtual base class of every element, which is part of a JKQTPlotter plot and may appear in its k..." alt="" coords="74,81,241,109"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="160,123,160,157,155,157,155,123"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="114,5,201,33"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="160,47,160,81,155,81,155,47"/>
+<area shape="rect" id="Node000007" href="$class_j_k_q_t_p_graph_line_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph line sty..." alt="" coords="333,233,565,261"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="413,270,330,312,327,307,410,265"/>
+</map>

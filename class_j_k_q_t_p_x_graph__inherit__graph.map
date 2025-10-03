@@ -1,0 +1,11 @@
+<map id="JKQTPXGraph" name="JKQTPXGraph">
+<area shape="rect" id="Node000001" title="This virtual JKQTPGraph descendent may be used as base for all graphs that use at least one column th..." alt="" coords="34,233,165,261"/>
+<area shape="rect" id="Node000005" href="$class_j_k_q_t_p_financial_graph.html" title="This class draws an Open&#45;High&#45;Low&#45;Close (OHLC) or candle&#45;stick graph typically representing financial..." alt="" coords="5,309,193,337"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="102,275,102,309,97,309,97,275"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_graph.html" title="this virtual base class of the (data&#45;column based) graphs, which are part of a JKQTPlotter plot and w..." alt="" coords="40,157,159,185"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="102,199,102,233,97,233,97,199"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_plot_element.html" title="this virtual base class of every element, which is part of a JKQTPlotter plot and may appear in its k..." alt="" coords="16,81,183,109"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="102,123,102,157,97,157,97,123"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="56,5,143,33"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="102,47,102,81,97,81,97,47"/>
+</map>

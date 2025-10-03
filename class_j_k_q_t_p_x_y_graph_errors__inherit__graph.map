@@ -1,0 +1,15 @@
+<map id="JKQTPXYGraphErrors" name="JKQTPXYGraphErrors">
+<area shape="rect" id="Node000001" title="This class is the base class for graphs that only display error indicators in x&#45; and y&#45;direction." alt="" coords="292,67,479,95"/>
+<area shape="rect" id="Node000005" href="$class_j_k_q_t_p_x_y_line_error_graph.html" title="This implements xy line plots with x and y error indicators." alt="" coords="539,5,751,33"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="455,61,526,43,581,31,582,36,527,49,456,66"/>
+<area shape="rect" id="Node000006" href="$class_j_k_q_t_p_x_y_parametrized_error_scatter_graph.html" title="This implements xy scatter plots (like JKQTPXYScatterGraph), but the color and size of the symbols ma..." alt="" coords="527,58,764,103"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="492,78,526,78,526,83,492,83"/>
+<area shape="rect" id="Node000007" href="$class_j_k_q_t_p_x_y_scatter_error_graph.html" title="This implements xy scatter plots with x and y error indicators." alt="" coords="527,128,764,156"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="456,95,527,113,582,125,581,131,526,118,455,101"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_x_graph_error_data.html" title="This class adds data fields for error indicators in x direction." alt="" coords="21,15,228,43"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="209,43,315,64,314,69,208,48"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_y_graph_error_data.html" title="This class adds data fields for error indicators in y direction." alt="" coords="22,67,227,95"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="241,78,292,78,292,83,241,83"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_p_graph_error_style_mixin.html" title="This mix&#45;in class assembles all styling properties applicable to error indicators." alt="" coords="5,119,244,147"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="208,113,314,92,315,97,209,119"/>
+</map>

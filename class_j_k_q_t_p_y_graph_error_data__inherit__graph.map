@@ -1,0 +1,19 @@
+<map id="JKQTPYGraphErrorData" name="JKQTPYGraphErrorData">
+<area shape="rect" id="Node000001" title="This class adds data fields for error indicators in y direction." alt="" coords="5,168,211,196"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_x_y_graph_errors.html" title="This class is the base class for graphs that only display error indicators in x&#45; and y&#45;direction." alt="" coords="259,116,445,144"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="187,162,285,141,286,147,188,168"/>
+<area shape="rect" id="Node000006" href="$class_j_k_q_t_p_y_graph_errors.html" title="This class is the base class for graphs that only display error indicators in y&#45;direction." alt="" coords="265,193,439,221"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="225,191,265,196,264,201,224,197"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_x_y_line_error_graph.html" title="This implements xy line plots with x and y error indicators." alt="" coords="515,5,727,33"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="382,106,432,73,492,44,533,31,535,36,494,48,435,78,385,110"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_p_x_y_parametrized_error_scatter_graph.html" title="This implements xy scatter plots (like JKQTPXYScatterGraph), but the color and size of the symbols ma..." alt="" coords="503,58,740,103"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="442,111,502,100,503,105,443,116"/>
+<area shape="rect" id="Node000005" href="$class_j_k_q_t_p_x_y_scatter_error_graph.html" title="This implements xy scatter plots with x and y error indicators." alt="" coords="503,128,740,156"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="459,132,503,134,502,139,459,137"/>
+<area shape="rect" id="Node000007" href="$class_j_k_q_t_p_bar_vertical_error_graph.html" title="This implements a vertical bar graph with bars between &#160;and &#160;and error indicator." alt="" coords="498,180,745,208"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="453,200,498,197,498,203,453,205"/>
+<area shape="rect" id="Node000008" href="$class_j_k_q_t_p_filled_curve_x_error_graph.html" title="This implements filled curve plots with y errors where the area is filled between the plot line and t..." alt="" coords="493,232,749,260"/>
+<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="453,219,523,229,523,235,452,224"/>
+<area shape="rect" id="Node000009" href="$class_j_k_q_t_p_impulses_vertical_error_graph.html" title="This implements an impulse plot with impulses in direction of the X axis (i.e. from x=0 to x=f(y) )" alt="" coords="501,285,741,330"/>
+<area shape="poly" id="edge8_Node000006_Node000009" title=" " alt="" coords="394,225,494,269,534,282,532,287,492,274,392,230"/>
+</map>

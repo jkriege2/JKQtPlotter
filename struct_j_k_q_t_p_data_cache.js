@@ -1,0 +1,25 @@
+var struct_j_k_q_t_p_data_cache =
+[
+    [ "JKQTPDataCache", "struct_j_k_q_t_p_data_cache.html#a36e2c2487a611ef1bd718998b92cefb0", null ],
+    [ "JKQTPDataCache", "struct_j_k_q_t_p_data_cache.html#ae597b4bb82b1ef8595d85aeebf85b55b", null ],
+    [ "JKQTPDataCache", "struct_j_k_q_t_p_data_cache.html#ab5f557d53e15a1b5eb5f0798afa6db26", null ],
+    [ "JKQTPDataCache", "struct_j_k_q_t_p_data_cache.html#a8be904d0c8e07431f63eac17931bf990", null ],
+    [ "cleanCache_notThreadSafe", "struct_j_k_q_t_p_data_cache.html#ab9d9302c4a637668d9316ea1dc5d01fa", null ],
+    [ "contains", "struct_j_k_q_t_p_data_cache.html#ae0909bb5e0bd373b92f1c9d0b2f6cfad", null ],
+    [ "contains", "struct_j_k_q_t_p_data_cache.html#ab0fed28a76c053b7cecb2a33be3021f3", null ],
+    [ "currenTimestamp", "struct_j_k_q_t_p_data_cache.html#aa86e0311371794be04e2b4fc347433c1", null ],
+    [ "get", "struct_j_k_q_t_p_data_cache.html#a61aeec2cb61e3fa9b1e913978f5f68c2", null ],
+    [ "get", "struct_j_k_q_t_p_data_cache.html#ab899e7f9edcdec8cbb8dcadc29056d40", null ],
+    [ "get_inline", "struct_j_k_q_t_p_data_cache.html#ab13a6f7d7b850caddce9a876d7afd6e4", null ],
+    [ "operator=", "struct_j_k_q_t_p_data_cache.html#a1f2d1dff994ddffd7ce09e9259cb8b11", null ],
+    [ "operator=", "struct_j_k_q_t_p_data_cache.html#a8449d55860cd35617ec134fc57b627c8", null ],
+    [ "size", "struct_j_k_q_t_p_data_cache.html#a2eb9ed373c43806cd2d6f07894199474", null ],
+    [ "size_impl", "struct_j_k_q_t_p_data_cache.html#a90ecd340e1dcf0069829e9b8d1bafbd3", null ],
+    [ "size_impl", "struct_j_k_q_t_p_data_cache.html#ac82d40905f058a692fe0e88e7aae48ac", null ],
+    [ "m_cache", "struct_j_k_q_t_p_data_cache.html#ae5c8208a9e6373efff3c1f104c14fa6a", null ],
+    [ "m_cacheLastUseTimestamps", "struct_j_k_q_t_p_data_cache.html#a3ebb25c538e509bab6d1d8c314914ad2", null ],
+    [ "m_generateData", "struct_j_k_q_t_p_data_cache.html#a499fcb451de12dcfb5d427f4695ae99d", null ],
+    [ "m_maxEntries", "struct_j_k_q_t_p_data_cache.html#a68b0b9cafb4f664ab3a9d6955e5a7085", null ],
+    [ "m_mutex", "struct_j_k_q_t_p_data_cache.html#a52805a52329968ce324adc394d0d61cc", null ],
+    [ "m_retainFraction", "struct_j_k_q_t_p_data_cache.html#a682fc55af812d0eba5d2e170c2356793", null ]
+];

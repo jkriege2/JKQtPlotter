@@ -1,0 +1,19 @@
+<map id="JKQTPGraphBoxplotStyleMixin" name="JKQTPGraphBoxplotStyleMixin">
+<area shape="rect" id="Node000001" title="Styling Mix&#45;In for Boxplots." alt="" coords="285,84,544,112"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_p_boxplot_element_base.html" title="Tbaseclass for a single (notched) boxplot as a &quot;geometric element&quot;, where the data is directly given ..." alt="" coords="592,57,827,85"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="557,82,592,79,592,85,558,88"/>
+<area shape="rect" id="Node000007" href="$class_j_k_q_t_p_boxplot_graph_base.html" title="Base class for graphs representing a series of boxplot, elements." alt="" coords="601,109,818,137"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="558,108,601,111,600,117,557,113"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_graph_line_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph line sty..." alt="" coords="5,57,237,85"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="251,80,285,84,285,89,251,86"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_graph_fill_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph filling ..." alt="" coords="12,109,231,137"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="244,110,285,107,285,112,244,115"/>
+<area shape="rect" id="Node000005" href="$class_j_k_q_t_p_boxplot_horizontal_element.html" title="This implements a horizontal (notched) boxplot where the data is directly given to the object and not..." alt="" coords="875,5,1151,33"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="805,52,930,31,931,36,805,58"/>
+<area shape="rect" id="Node000006" href="$class_j_k_q_t_p_boxplot_vertical_element.html" title="This implements a single vertical (notched) boxplot as a &quot;geometric element&quot;, where the data is direc..." alt="" coords="885,57,1140,85"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="840,69,885,69,885,74,840,74"/>
+<area shape="rect" id="Node000008" href="$class_j_k_q_t_p_boxplot_horizontal_graph.html" title="This implements horizontal boxplots, optionally also a notched boxplot." alt="" coords="883,109,1142,137"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="832,121,883,121,883,126,832,126"/>
+<area shape="rect" id="Node000009" href="$class_j_k_q_t_p_boxplot_vertical_graph.html" title="This implements vertical boxplots, optionally also a notched boxplot." alt="" coords="893,161,1132,189"/>
+<area shape="poly" id="edge8_Node000007_Node000009" title=" " alt="" coords="805,137,931,159,930,164,805,142"/>
+</map>

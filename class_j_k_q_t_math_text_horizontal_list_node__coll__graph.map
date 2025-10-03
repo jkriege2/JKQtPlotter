@@ -1,0 +1,17 @@
+<map id="JKQTMathTextHorizontalListNode" name="JKQTMathTextHorizontalListNode">
+<area shape="rect" id="Node000001" title="subclass representing a list of nodes in the syntax tree, layed out horizontally" alt="" coords="213,201,496,229"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_math_text_multi_child_node.html" title="subclass representing a node in the syntax tree, that has two children" alt="" coords="5,115,256,143"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="179,146,321,199,320,204,177,151"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_math_text_node.html" title="subclass representing one node in the syntax tree" alt="" coords="87,5,262,33"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="159,46,152,58,141,89,135,116,130,114,136,87,147,56,154,44"/>
+<area shape="poly" id="edge7_Node000003_Node000003" title=" " alt="" coords="278,10,289,19,281,27,263,31,262,25,278,23,283,19,275,15"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_math_text.html" title="this class parses a mathematical markup string and can then draw the contained text/equation onto a Q..." alt="" coords="281,115,413,143"/>
+<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="168,47,167,65,173,81,193,97,214,101,239,100,269,104,301,113,300,118,267,109,238,106,213,106,190,102,168,84,162,66,163,46"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="324,106,280,59,254,46,227,36,229,31,256,41,283,55,328,102"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="421,5,507,33"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="464,48,458,67,447,84,423,104,396,118,393,113,420,100,443,81,453,65,459,46"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="532,5,639,33"/>
+<area shape="poly" id="edge6_Node000004_Node000006" title=" " alt="" coords="553,43,472,85,387,118,385,113,470,80,551,38"/>
+<area shape="rect" id="Node000007" href="$class_j_k_q_t_math_text_modify_environment_node_mix_in.html" title="mixin extending a node that does not produce any output, but provides a function modifyEnvironment() ..." alt="" coords="437,107,723,152"/>
+<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="510,159,390,204,388,199,508,154"/>
+</map>

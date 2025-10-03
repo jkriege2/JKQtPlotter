@@ -1,0 +1,15 @@
+<map id="JKQTPXYAndVectorGraph" name="JKQTPXYAndVectorGraph">
+<area shape="rect" id="Node000001" title="This virtual JKQTPGraph descendent extends JKQTPXYGraph with two additional columns that encode for a..." alt="" coords="27,309,249,337"/>
+<area shape="rect" id="Node000006" href="$class_j_k_q_t_p_vector_field_graph.html" title="This graph plots a vector field, i.e. a set of vectors (dx,dy) or (angle,length) at positions (x,..." alt="" coords="35,385,241,413"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="141,351,141,385,135,385,135,351"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_x_y_graph.html" title="This virtual JKQTPGraph descendent may be used as base for all graphs that use at least two columns t..." alt="" coords="68,233,208,261"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="141,275,141,309,135,309,135,275"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_graph.html" title="this virtual base class of the (data&#45;column based) graphs, which are part of a JKQTPlotter plot and w..." alt="" coords="79,157,197,185"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="141,199,141,233,135,233,135,199"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_p_plot_element.html" title="this virtual base class of every element, which is part of a JKQTPlotter plot and may appear in its k..." alt="" coords="55,81,221,109"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="141,123,141,157,135,157,135,123"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="95,5,181,33"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="141,47,141,81,135,81,135,47"/>
+<area shape="rect" id="Node000007" href="$class_j_k_q_t_p_parametrized_vector_field_graph.html" title="This graph plots a vector field, i.e. a set of vectors (dx,dy) or (angle,length) at positions (x,..." alt="" coords="5,461,271,507"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="141,427,141,461,135,461,135,427"/>
+</map>

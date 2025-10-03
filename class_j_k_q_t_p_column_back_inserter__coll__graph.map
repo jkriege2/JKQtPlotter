@@ -1,0 +1,14 @@
+<map id="JKQTPColumnBackInserter" name="JKQTPColumnBackInserter">
+<area shape="rect" id="Node000001" title="iterator, which allows to insert into a column of a JKQTPDatastore" alt="" coords="5,107,239,135"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_datastore.html" title="This class manages data columns (with entries of type double ), used by JKQTPlotter/JKQTBasePlotter t..." alt="" coords="255,5,403,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="291,42,150,109,148,104,288,37"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_p_column.html" title="internally stores information about one data column. See JKQTPDatastore for more information." alt="" coords="263,107,394,135"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="331,47,331,106,326,106,326,47"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="299,208,585,236"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="443,194,445,163,443,128,434,91,417,59,403,46,385,36,387,31,406,41,421,56,439,89,448,127,450,163,449,194"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="352,143,393,182,424,206,421,210,390,186,348,147"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="611,107,798,135"/>
+<area shape="poly" id="edge5_Node000003_Node000005" title=" " alt="" coords="659,142,477,210,475,205,657,137"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="685,5,724,33"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="707,47,707,106,702,106,702,47"/>
+</map>

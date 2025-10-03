@@ -1,0 +1,12 @@
+<map id="JKQTFPQScaleBarXPlot" name="JKQTFPQScaleBarXPlot">
+<area shape="rect" id="Node000001" title="plot a horizontal scale bar" alt="" coords="5,281,209,309"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_f_p_plot.html" title="base class for all plots that may be plotted by JKQTFastPlotter" alt="" coords="53,204,162,232"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="110,246,110,281,105,281,105,246"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="19,93,105,121"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="75,132,104,203,100,205,70,134"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_fast_plotter.html" title="a speed optimized plotter class" alt="" coords="129,93,275,121"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="184,133,121,206,117,202,180,130"/>
+<area shape="poly" id="edge5_Node000004_Node000004" title=" " alt="" coords="290,98,301,107,293,115,275,118,274,113,291,110,296,107,287,102"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="126,5,278,33"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="205,47,205,92,199,92,199,47"/>
+</map>

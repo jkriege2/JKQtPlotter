@@ -1,0 +1,9 @@
+<map id="JKQTPVerticalIndependentAxis" name="JKQTPVerticalIndependentAxis">
+<area shape="rect" id="Node000001" title="implements a position&#45;indipendent vertical axis, based on JKQTPCoordinateAxis (for most of documentat..." alt="" coords="5,233,268,261"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_vertical_axis_base.html" title="base class for vertical axes, based on JKQTPCoordinateAxis (for most of documentation: see JKQTPCoord..." alt="" coords="36,157,237,185"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="139,199,139,233,134,233,134,199"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_coordinate_axis.html" title="this virtual class is the base for any type of coordinate axis, to be drawn by JKQTBasePlotter." alt="" coords="42,81,231,109"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="139,123,139,157,134,157,134,123"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="93,5,180,33"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="139,47,139,81,134,81,134,47"/>
+</map>

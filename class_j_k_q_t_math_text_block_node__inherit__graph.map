@@ -1,0 +1,7 @@
+<map id="JKQTMathTextBlockNode" name="JKQTMathTextBlockNode">
+<area shape="rect" id="Node000001" title="subclass representing a {...} block" alt="" coords="27,157,245,185"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_math_text_single_child_node.html" title="subclass representing a node in the syntax tree, that has one child" alt="" coords="5,81,267,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="139,123,139,157,133,157,133,123"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_math_text_node.html" title="subclass representing one node in the syntax tree" alt="" coords="49,5,223,33"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="139,47,139,81,133,81,133,47"/>
+</map>

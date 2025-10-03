@@ -1,0 +1,21 @@
+<map id="JKQTPParametrizedVectorFieldGraph" name="JKQTPParametrizedVectorFieldGraph">
+<area shape="rect" id="Node000001" title="This graph plots a vector field, i.e. a set of vectors (dx,dy) or (angle,length) at positions (x,..." alt="" coords="243,496,508,541"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_vector_field_graph.html" title="This graph plots a vector field, i.e. a set of vectors (dx,dy) or (angle,length) at positions (x,..." alt="" coords="149,411,356,439"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="283,446,348,494,345,498,280,450"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_x_y_and_vector_graph.html" title="This virtual JKQTPGraph descendent extends JKQTPXYGraph with two additional columns that encode for a..." alt="" coords="5,318,228,346"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="149,352,235,409,232,414,146,356"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_p_x_y_graph.html" title="This virtual JKQTPGraph descendent may be used as base for all graphs that use at least two columns t..." alt="" coords="47,233,187,261"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="119,275,119,318,114,318,114,275"/>
+<area shape="rect" id="Node000005" href="$class_j_k_q_t_p_graph.html" title="this virtual base class of the (data&#45;column based) graphs, which are part of a JKQTPlotter plot and w..." alt="" coords="57,157,176,185"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="119,199,119,233,114,233,114,199"/>
+<area shape="rect" id="Node000006" href="$class_j_k_q_t_p_plot_element.html" title="this virtual base class of every element, which is part of a JKQTPlotter plot and may appear in its k..." alt="" coords="33,81,200,109"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="119,123,119,157,114,157,114,123"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="73,5,160,33"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="119,47,119,81,114,81,114,47"/>
+<area shape="rect" id="Node000008" href="$class_j_k_q_t_p_graph_decorated_line_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph line sty..." alt="" coords="253,309,527,355"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="348,365,274,413,271,409,345,360"/>
+<area shape="rect" id="Node000009" href="$class_j_k_q_t_p_graph_line_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph line sty..." alt="" coords="274,233,506,261"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="393,275,393,309,387,309,387,275"/>
+<area shape="rect" id="Node000010" href="$class_j_k_q_t_p_color_palette_style_and_tools_mixin.html" title="if a class is derived from this class, it may use color bars" alt="" coords="381,403,618,448"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="460,458,407,498,403,494,457,454"/>
+</map>
