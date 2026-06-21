@@ -49,289 +49,294 @@
 #endif
 
 std::string jkqtp_tolower(const std::string& s){
-  std::string d;
-  d="";
-  std::locale loc;
-  if (s.length()>0) {
-    for (unsigned long i=0; i<s.length(); i++) {
-        d+=std::tolower(s[i], loc);
+    std::string d;
+    d="";
+    std::locale loc;
+    if (s.length()>0) {
+        for (unsigned long i=0; i<s.length(); i++) {
+            d+=std::tolower(s[i], loc);
+        }
     }
-  }
-  return d;
+    return d;
 };
 
- bool jkqtp_strtobool(const std::string& data){
+bool jkqtp_strtobool(const std::string& data){
     std::string d=jkqtp_tolower(data);
-  if (d=="true") return true;
-  if (d=="t") return true;
-  if (d=="1") return true;
-  if (d=="j") return true;
-  if (d=="y") return true;
-  if (d=="yes") return true;
-  if (d=="ja") return true;
-  return false;
+    if (d=="true") return true;
+    if (d=="t") return true;
+    if (d=="1") return true;
+    if (d=="j") return true;
+    if (d=="y") return true;
+    if (d=="yes") return true;
+    if (d=="ja") return true;
+    return false;
 }
- std::string jkqtp_toupper(const std::string& s){
-  std::string d;
-  d="";
-  std::locale loc;
-  if (s.length()>0) {
-    for (unsigned long i=0; i<s.length(); i++) {
-        d+=std::toupper(s[i], loc);
+std::string jkqtp_toupper(const std::string& s){
+    std::string d;
+    d="";
+    std::locale loc;
+    if (s.length()>0) {
+        for (unsigned long i=0; i<s.length(); i++) {
+            d+=std::toupper(s[i], loc);
+        }
     }
-  }
-  return d;
+    return d;
 };
 
 
 
- std::string jkqtp_bytestostr(double bytes){
-  double data=bytes;
-  std::string form="%.0lf";
-  std::string res=jkqtp_format(form,data);
-  form="%.3lf";
-  if (fabs(data)>=1024.0) res=jkqtp_format(form,data/1024.0)+" k";
-  if (fabs(data)>=1024.0*1024.0) res=jkqtp_format(form,data/(1024.0*1024.0))+" M";
-  if (fabs(data)>=1024.0*1024.0*1024.0) res=jkqtp_format(form,data/(1024.0*1024.0*1024.0))+" ";
-  if (fabs(data)>=1024.0*1024.0*1024.0*1024.0) res=jkqtp_format(form,data/(1024.0*1024.0*1024.0*1024.0))+" G";
-  if (fabs(data)>=1024.0*1024.0*1024.0*1024.0*1024.0) res=jkqtp_format(form,data/(1024.0*1024.0*1024.0*1024.0*1024.0))+" T";
-  if (fabs(data)>=1024.0*1024.0*1024.0*1024.0*1024.0*1024.0) res=jkqtp_format(form,data/(1024.0*1024.0*1024.0*1024.0*1024.0*1024.0))+" E";
-  if (fabs(data)==0) res="0 ";
-  return res+"Bytes";
+std::string jkqtp_bytestostr(double bytes){
+    double data=bytes;
+    std::string form="%.0lf";
+    std::string res=jkqtp_format(form,data);
+    form="%.3lf";
+    if (fabs(data)>=1024.0) res=jkqtp_format(form,data/1024.0)+" k";
+    if (fabs(data)>=1024.0*1024.0) res=jkqtp_format(form,data/(1024.0*1024.0))+" M";
+    if (fabs(data)>=1024.0*1024.0*1024.0) res=jkqtp_format(form,data/(1024.0*1024.0*1024.0))+" ";
+    if (fabs(data)>=1024.0*1024.0*1024.0*1024.0) res=jkqtp_format(form,data/(1024.0*1024.0*1024.0*1024.0))+" G";
+    if (fabs(data)>=1024.0*1024.0*1024.0*1024.0*1024.0) res=jkqtp_format(form,data/(1024.0*1024.0*1024.0*1024.0*1024.0))+" T";
+    if (fabs(data)>=1024.0*1024.0*1024.0*1024.0*1024.0*1024.0) res=jkqtp_format(form,data/(1024.0*1024.0*1024.0*1024.0*1024.0*1024.0))+" E";
+    if (fabs(data)==0) res="0 ";
+    return res+"Bytes";
 }
 
- std::string jkqtp_inttostr(long data){
-  return jkqtp_format("%ld", data);
+std::string jkqtp_inttostr(long data){
+    return jkqtp_format("%ld", data);
 };
 
- std::string jkqtp_inttohex(long data){
-  return jkqtp_format("%lX", data);
+std::string jkqtp_inttohex(long data){
+    return jkqtp_format("%lX", data);
 };
 
- std::string jkqtp_uinttostr(unsigned long data){
-  std::ostringstream ost;
-  ost<<data;
-  return ost.str();
+std::string jkqtp_uinttostr(unsigned long data){
+    std::ostringstream ost;
+    ost<<data;
+    return ost.str();
 };
 
- std::string jkqtp_floattostr(double data, int past_comma, bool remove_trail0, double belowIsZero){
-  if (belowIsZero>0) {
-      if (fabs(data)<belowIsZero) return std::string("0");
-  }
+std::string jkqtp_floattostr(double data, int past_comma, bool remove_trail0, double belowIsZero){
+    if (belowIsZero>0) {
+        if (fabs(data)<belowIsZero) return std::string("0");
+    }
 
-  std::string form="%."+jkqtp_inttostr(past_comma)+"lf";
-  //std::string form="%lf";
-  if (past_comma<=0) form="%lf";
-  std::string r=jkqtp_format(form,data);
-  //std::cout<<r<<std::endl;
-  if (remove_trail0 && (jkqtp_tolower(r).find('e')==std::string::npos)) {
-      if (data==0) return "0";
-      //size_t cp=r.find(".");
-      //if (cp<r.size()) return r;
-      std::string re;
-      size_t dpos=r.find('.');
-      if (dpos==std::string::npos) {
-          return r;
-      } else {
-          long i= static_cast<long>(r.size())-1;
-          bool nonz=false;
-          while (i>=0) {
-              //std::cout<<i<<"\n";
-              if (r[i]!='0') {
-                  nonz=true;
-              }
-              if (nonz || (i<long(dpos))) {
-                  if (re.size()==0 && r[i]=='.') {
-                      // swallow decimal dot, if only 0 folowed
-                  } else {
-                      re=r[i]+re;
-                  }
-              }
-              i--;
-          }
-          return re;
-      }
+    std::string form="%."+jkqtp_inttostr(past_comma)+"lf";
+    //std::string form="%lf";
+    if (past_comma<=0) form="%lf";
+    std::string r=jkqtp_format(form,data);
+    //std::cout<<r<<std::endl;
+    if (remove_trail0 && (jkqtp_tolower(r).find('e')==std::string::npos)) {
+        if (data==0) return "0";
+        //size_t cp=r.find(".");
+        //if (cp<r.size()) return r;
+        std::string re;
+        size_t dpos=r.find('.');
+        if (dpos==std::string::npos) {
+            return r;
+        } else {
+            long i= static_cast<long>(r.size())-1;
+            bool nonz=false;
+            while (i>=0) {
+                //std::cout<<i<<"\n";
+                if (r[i]!='0') {
+                    nonz=true;
+                }
+                if (nonz || (i<long(dpos))) {
+                    if (re.size()==0 && r[i]=='.') {
+                        // swallow decimal dot, if only 0 folowed
+                    } else {
+                        re=r[i]+re;
+                    }
+                }
+                i--;
+            }
+            return re;
+        }
 
-  }
-  return r;
+    }
+    return r;
 }
 
 
- std::string jkqtp_floattounitstr(double data, int past_comma, bool remove_trail0, double belowIsZero){
-   if (fabs(data)<=belowIsZero) return "0";
-   std::string form="%."+jkqtp_inttostr(past_comma)+"lf";
-   std::string res=jkqtp_format(form,data);
-   std::string unit="";
-   static std::map<double, std::string> SIUnits = {
-                                                   {1e3, "k"},
-                                                   {1e6, "M"},
-                                                   {1e9, "G"},
-                                                   {1e12, "T"},
-                                                   {1e15, "P"},
-                                                   {1e18, "E"},
-                                                   {1e21, "Z"},
-                                                   {1e24, "Y"},
-                                                   {1e27, "R"},
-                                                   {1e30, "Q"},
-                                                   };
-   static std::map<double, std::string> SIUnitsBelow1 = {
-                                                         {1e-3, "m"},
-                                                         {1e-6, "\xB5"},
-                                                         {1e-9, "n"},
-                                                         {1e-12, "p"},
-                                                         {1e-15, "f"},
-                                                         {1e-18, "a"},
-                                                         {1e-21, "z"},
-                                                         {1e-24, "y"},
-                                                         {1e-27, "r"},
-                                                         {1e-30, "q"},
-                                                         };
-   const double absData=fabs(data);
-   for (auto it=SIUnits.begin(); it!=SIUnits.end(); it++) {
-       if (absData>=it->first) {
-           res=jkqtp_format(form,data/it->first);
-           unit=it->second;
-       }
-   }
-   for (auto it=SIUnitsBelow1.rbegin(); it!=SIUnitsBelow1.rend(); it++) {
-       if (absData<it->first*1e3) {
-           res=jkqtp_format(form,data/it->first);
-           unit=it->second;
-       }
-   }
-   if (fabs(data)==0) res=jkqtp_format(form,data);
-   if (remove_trail0) {
-       if (fabs(data)<=belowIsZero) return "0";
-       if (res.find('.')==std::string::npos) return res;
-       size_t i=res.size()-1;
-       while (i>0 && res[i]=='0') {
-           i--;
-       }
-       if (res[i]=='.') i--; // remove decimal divider
-       return res.erase(i+1);
-   }
-   return res+unit;
- }
+std::string jkqtp_floattounitstr(double data, int past_comma, bool remove_trail0, double belowIsZero){
+    if (fabs(data)<=belowIsZero) return "0";
+    std::string form="%."+jkqtp_inttostr(past_comma)+"lf";
+    std::string res=jkqtp_format(form,data);
+    std::string unit="";
+    static const std::string SIUnitSymbols[] = {"k", "M", "G", "T", "P", "E", "Z", "Y", "R", "Q"};
+    static const std::string SIUnitSymbolsBelow1[] = {"m", "\xB5", "n", "p", "f", "a", "z", "y", "r", "q"};
+
+    const double absData=fabs(data);
+
+    // Check SI units (positive exponents: 1e3, 1e6, 1e9, ...)
+    int bestExponent = 0;
+    for (int exp = 3; exp <= 30; exp += 3) {
+        double threshold = pow(10.0, static_cast<double>(exp));
+        if (absData >= threshold) {
+            bestExponent = exp;
+        }
+    }
+
+    if (bestExponent > 0) {
+        double divisor = pow(10.0, static_cast<double>(bestExponent));
+        res = jkqtp_format(form, data / divisor);
+        unit = SIUnitSymbols[(bestExponent / 3) - 1];
+    }
+
+    // Check SI units below 1 (negative exponents: 1e-3, 1e-6, 1e-9, ...)
+    // Only if no positive exponent unit was found
+    if (bestExponent <= 0) {
+        int bestNegativeExponent = 0;
+        for (int exp = -3; exp >= -30; exp -= 3) {
+            double threshold = pow(10.0, static_cast<double>(exp)) * 1e3;
+            if (absData < threshold) {
+                bestNegativeExponent = exp;
+            }
+        }
+
+        if (bestNegativeExponent < 0) {
+            double divisor = pow(10.0, static_cast<double>(bestNegativeExponent));
+            res = jkqtp_format(form, data / divisor);
+            unit = SIUnitSymbolsBelow1[(-bestNegativeExponent / 3) - 1];
+        }
+    }
+
+    if (remove_trail0) {
+        if (fabs(data)<=belowIsZero) return "0";
+        if (res.find('.')==std::string::npos) return res;
+        size_t i=res.size()-1;
+        while (i>0 && res[i]=='0') {
+            i--;
+        }
+        if (res[i]=='.') i--; // remove decimal divider
+        res= res.erase(i+1);
+        return res+unit;
+    }
+    if (res+unit=="0.0q") return "0";
+    return res+unit;
+}
 
 
- std::string jkqtp_floattolatexunitstr(double data, int past_comma, bool remove_trail0, double belowIsZero){
-   if (fabs(data)<=belowIsZero) return "0";
-   std::string form="%."+jkqtp_inttostr(past_comma)+"lf";
-   std::string res=jkqtp_format(form,data);
-   std::string unit="";
-   static std::map<double, std::string> SIUnits = {
-                                                   {1e3, "k"},
-                                                   {1e6, "M"},
-                                                   {1e9, "G"},
-                                                   {1e12, "T"},
-                                                   {1e15, "P"},
-                                                   {1e18, "E"},
-                                                   {1e21, "Z"},
-                                                   {1e24, "Y"},
-                                                   {1e27, "R"},
-                                                   {1e30, "Q"},
-                                                   };
-   static std::map<double, std::string> SIUnitsBelow1 = {
-                                                   {1e-3, "m"},
-                                                   {1e-6, "\\mu"},
-                                                   {1e-9, "n"},
-                                                   {1e-12, "p"},
-                                                   {1e-15, "f"},
-                                                   {1e-18, "a"},
-                                                   {1e-21, "z"},
-                                                   {1e-24, "y"},
-                                                   {1e-27, "r"},
-                                                   {1e-30, "q"},
-                                                   };
-   const double absData=fabs(data);
-   for (auto it=SIUnits.begin(); it!=SIUnits.end(); it++) {
-       if (absData>=it->first) {
-           res=jkqtp_format(form,data/it->first);
-           unit="\\;\\mathrm{"+it->second+"}";
-       }
-   }
-   for (auto it=SIUnitsBelow1.rbegin(); it!=SIUnitsBelow1.rend(); it++) {
-       if (absData<it->first*1e3) {
-           res=jkqtp_format(form,data/it->first);
-           unit="\\;\\mathrm{"+it->second+"}";
-       }
-   }
-   if (remove_trail0) {
-       if (fabs(data)<=belowIsZero) return "0";
-       if (res.find('.')==std::string::npos) return res+unit;
-       size_t i=res.size()-1;
-       while (i>0 && res[i]=='0') {
-           i--;
-       }
-       if (res[i]=='.') i--; // remove decimal divider
-       return res.erase(i+1)+unit;
-   }
-   return res+unit;
- }
+std::string jkqtp_floattolatexunitstr(double data, int past_comma, bool remove_trail0, double belowIsZero){
+    if (fabs(data)<=belowIsZero) return "0";
+    std::string form="%."+jkqtp_inttostr(past_comma)+"lf";
+    std::string res=jkqtp_format(form,data);
+    std::string unit="";
+    static const std::string SIUnitSymbols[] = {"k", "M", "G", "T", "P", "E", "Z", "Y", "R", "Q"};
+    static const std::string SIUnitSymbolsBelow1[] = {"m", "\\mu", "n", "p", "f", "a", "z", "y", "r", "q"};
 
- std::string jkqtp_floattolatexstr(double data, int past_comma, bool remove_trail0, double belowIsZero, double minNoExponent, double maxNoExponent, bool ensurePlusMinus, const std::string &multOperator){
-   if ((belowIsZero>0) && (fabs(data)<belowIsZero)) {
-       if (ensurePlusMinus) return "+\\rm{0}";
-       else return "\\rm{0}";
-   }
-   if (fabs(data)<5.0*std::numeric_limits<double>::min()) {
-       if (ensurePlusMinus) return "+\\rm{0}";
-       else return "\\rm{0}";
-   }
+    const double absData=fabs(data);
 
-   double adata=fabs(data);
-   std::string res=jkqtp_floattostr(data, past_comma, remove_trail0);
+    // Check SI units (positive exponents: 1e3, 1e6, 1e9, ...)
+    int bestExponent = 0;
+    for (int exp = 3; exp <= 30; exp += 3) {
+        double threshold = pow(10.0, static_cast<double>(exp));
+        if (absData >= threshold) {
+            bestExponent = exp;
+        }
+    }
 
-   long exp=static_cast<long>(floor(log(adata)/JKQTPSTATISTICS_LN10));
-   if ((minNoExponent>fabs(data)) || (fabs(data)>maxNoExponent)) {
-       const std::string v=jkqtp_floattostr(data/pow(10.0, static_cast<double>(exp)), past_comma, remove_trail0);
-       if (v!="1" && v!="10")  {
-           res=v+std::string("{")+multOperator+std::string("}10^{")+jkqtp_inttostr(exp)+"}";
-       } else {
-           if (v=="10") exp=exp+1;
-           res=std::string("10^{")+jkqtp_inttostr(exp)+"}";
-       }
-   }
-   if (ensurePlusMinus && res.size()>0) {
-       if (res[0]!='-' && res[0]!='+') {
-           if (data<0) res="-"+res;
-           else res="+"+res;
-       }
-   }
-   return res;
- }
+    if (bestExponent > 0) {
+        double divisor = pow(10.0, static_cast<double>(bestExponent));
+        res = jkqtp_format(form, data / divisor);
+        unit = "\\;\\mathrm{" + SIUnitSymbols[(bestExponent / 3) - 1] + "}";
+    }
 
- std::string jkqtp_floattohtmlstr(double data, int past_comma, bool remove_trail0, double belowIsZero, double minNoExponent, double maxNoExponent){
-   std::string result;
-   if ((belowIsZero>0) && (fabs(data)<belowIsZero)) return "0";
-   if (fabs(data)<5.0*std::numeric_limits<double>::min()) return "0";
-   double adata=fabs(data);
-   std::string res=jkqtp_floattostr(data, past_comma, remove_trail0);
+    // Check SI units below 1 (negative exponents: 1e-3, 1e-6, 1e-9, ...)
+    // Only if no positive exponent unit was found
+    if (bestExponent <= 0) {
+        int bestNegativeExponent = 0;
+        for (int exp = -3; exp >= -30; exp -= 3) {
+            double threshold = pow(10.0, static_cast<double>(exp)) * 1e3;
+            if (absData < threshold) {
+                bestNegativeExponent = exp;
+            }
+        }
 
-   long exp=static_cast<long>(floor(log(adata)/JKQTPSTATISTICS_LN10));
-   if ((minNoExponent<=fabs(data)) && (fabs(data)<maxNoExponent)) return res;
-   //if ((-past_comma<exp) && (exp<past_comma)) result= res;
-   else {
-       std::string v=jkqtp_floattostr(data/pow(10.0, static_cast<double>(exp)), past_comma, remove_trail0);
-       if (v!="1") result= v+std::string("&times;10<sup>")+jkqtp_inttostr(exp)+"</sup>";
-       else result=std::string("10<sup>")+jkqtp_inttostr(exp)+"</sup>";
-   }
-   //std::cout<<"floattohtmlstr("<<data<<") = '"<<result<<"'\n";
-   return result;
- }
+        if (bestNegativeExponent < 0) {
+            double divisor = pow(10.0, static_cast<double>(bestNegativeExponent));
+            res = jkqtp_format(form, data / divisor);
+            unit = "\\;\\mathrm{" + SIUnitSymbolsBelow1[(-bestNegativeExponent / 3) - 1] + "}";
+        }
+    }
+
+    if (remove_trail0) {
+        if (fabs(data)<=belowIsZero) return "0";
+        if (res.find('.')==std::string::npos) return res+unit;
+        size_t i=res.size()-1;
+        while (i>0 && res[i]=='0') {
+            i--;
+        }
+        if (res[i]=='.') i--; // remove decimal divider
+        res= res.erase(i+1);
+        return res+unit;
+    }
+    if (res+unit=="0.0\\;\\mathrm{q}") return "0";
+    return res+unit;
+}
+
+std::string jkqtp_floattolatexstr(double data, int past_comma, bool remove_trail0, double belowIsZero, double minNoExponent, double maxNoExponent, bool ensurePlusMinus, const std::string &multOperator){
+    if ((belowIsZero>0) && (fabs(data)<belowIsZero)) {
+        if (ensurePlusMinus) return "+\\rm{0}";
+        else return "\\rm{0}";
+    }
+    if (fabs(data)<5.0*std::numeric_limits<double>::min()) {
+        if (ensurePlusMinus) return "+\\rm{0}";
+        else return "\\rm{0}";
+    }
+
+    double adata=fabs(data);
+    std::string res=jkqtp_floattostr(data, past_comma, remove_trail0);
+
+    long exp=static_cast<long>(floor(log(adata)/JKQTPSTATISTICS_LN10));
+    if ((minNoExponent>fabs(data)) || (fabs(data)>maxNoExponent)) {
+        const std::string v=jkqtp_floattostr(data/pow(10.0, static_cast<double>(exp)), past_comma, remove_trail0);
+        if (v!="1" && v!="10")  {
+            res=v+std::string("{")+multOperator+std::string("}10^{")+jkqtp_inttostr(exp)+"}";
+        } else {
+            if (v=="10") exp=exp+1;
+            res=std::string("10^{")+jkqtp_inttostr(exp)+"}";
+        }
+    }
+    if (ensurePlusMinus && res.size()>0) {
+        if (res[0]!='-' && res[0]!='+') {
+            if (data<0) res="-"+res;
+            else res="+"+res;
+        }
+    }
+    return res;
+}
+
+std::string jkqtp_floattohtmlstr(double data, int past_comma, bool remove_trail0, double belowIsZero, double minNoExponent, double maxNoExponent){
+    std::string result;
+    if ((belowIsZero>0) && (fabs(data)<belowIsZero)) return "0";
+    if (fabs(data)<5.0*std::numeric_limits<double>::min()) return "0";
+    double adata=fabs(data);
+    std::string res=jkqtp_floattostr(data, past_comma, remove_trail0);
+
+    long exp=static_cast<long>(floor(log(adata)/JKQTPSTATISTICS_LN10));
+    if ((minNoExponent<=fabs(data)) && (fabs(data)<maxNoExponent)) return res;
+    //if ((-past_comma<exp) && (exp<past_comma)) result= res;
+    else {
+        std::string v=jkqtp_floattostr(data/pow(10.0, static_cast<double>(exp)), past_comma, remove_trail0);
+        if (v!="1") result= v+std::string("&times;10<sup>")+jkqtp_inttostr(exp)+"</sup>";
+        else result=std::string("10<sup>")+jkqtp_inttostr(exp)+"</sup>";
+    }
+    //std::cout<<"floattohtmlstr("<<data<<") = '"<<result<<"'\n";
+    return result;
+}
 
 
 
 
 QString jkqtp_QPenStyle2String(Qt::PenStyle style) {
     switch(style) {
-        case Qt::DashLine:       return "dash";
-        case Qt::DotLine:        return "dot";
-        case Qt::DashDotLine:    return "dashdot";
-        case Qt::DashDotDotLine: return "dashdotdot";
-        case Qt::NoPen:          return "none";
-        default:
-        case Qt::SolidLine:      return "solid";
+    case Qt::DashLine:       return "dash";
+    case Qt::DotLine:        return "dot";
+    case Qt::DashDotLine:    return "dashdot";
+    case Qt::DashDotDotLine: return "dashdotdot";
+    case Qt::NoPen:          return "none";
+    default:
+    case Qt::SolidLine:      return "solid";
     }
 }
 
@@ -349,25 +354,25 @@ Qt::PenStyle jkqtp_String2QPenStyle(const QString& style) {
 QString jkqtp_QBrushStyle2String(Qt::BrushStyle style) {
 
     switch(style) {
-        case Qt::NoBrush:       return "none";
-        case Qt::Dense1Pattern:        return "d1";
-        case Qt::Dense2Pattern:        return "d2";
-        case Qt::Dense3Pattern:        return "d3";
-        case Qt::Dense4Pattern:        return "d4";
-        case Qt::Dense5Pattern:        return "d5";
-        case Qt::Dense6Pattern:        return "d6";
-        case Qt::Dense7Pattern:        return "d7";
-        case Qt::HorPattern:           return "hor";
-        case Qt::VerPattern:           return "ver";
-        case Qt::CrossPattern:           return "cross";
-        case Qt::BDiagPattern:           return "bdiag";
-        case Qt::FDiagPattern:           return "vdiag";
-        case Qt::DiagCrossPattern:           return "diagcross";
-        /*case Qt::LinearGradientPattern:           return "lingrad";
+    case Qt::NoBrush:       return "none";
+    case Qt::Dense1Pattern:        return "d1";
+    case Qt::Dense2Pattern:        return "d2";
+    case Qt::Dense3Pattern:        return "d3";
+    case Qt::Dense4Pattern:        return "d4";
+    case Qt::Dense5Pattern:        return "d5";
+    case Qt::Dense6Pattern:        return "d6";
+    case Qt::Dense7Pattern:        return "d7";
+    case Qt::HorPattern:           return "hor";
+    case Qt::VerPattern:           return "ver";
+    case Qt::CrossPattern:           return "cross";
+    case Qt::BDiagPattern:           return "bdiag";
+    case Qt::FDiagPattern:           return "vdiag";
+    case Qt::DiagCrossPattern:           return "diagcross";
+    /*case Qt::LinearGradientPattern:           return "lingrad";
         case Qt::RadialGradientPattern:           return "radgrad";
         case Qt::ConicalGradientPattern:           return "congrad";*/
-        default:
-        case Qt::SolidPattern:      return "solid";
+    default:
+    case Qt::SolidPattern:      return "solid";
     }
 }
 
@@ -422,9 +427,9 @@ Qt::BrushStyle jkqtp_String2QBrushStyleExt(const QString &style, QGradient *grad
         } catch(std::exception& E) {
             qWarning()<<"error converting '"<<style<<"' into a QGradient: "<<E.what();
             return Qt::SolidPattern;
-       }
+        }
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 12, 0))
-    } else if (s_GradientPresets.contains(s)) {
+        } else if (s_GradientPresets.contains(s)) {
         QGradient g(s_GradientPresets[s]);
         g.setCoordinateMode(QGradient::ObjectBoundingMode);
         if (gradient) *gradient=g;
@@ -445,8 +450,8 @@ Qt::BrushStyle jkqtp_String2QBrushStyleExt(const QString &style, QGradient *grad
 
 
 std::string jkqtp_booltostr(bool data){
-  if (data) return "true";
-  return "false";
+    if (data) return "true";
+    return "false";
 }
 
 
@@ -658,10 +663,10 @@ QString jkqtp_rgbtostring(unsigned char r, unsigned char g, unsigned char b, uns
 
 QString jkqtp_QColor2String(QColor color, bool useSpecialTransparencySyntax) {
     return jkqtp_rgbtostring(static_cast<unsigned char>((color).red()),
-                                     static_cast<unsigned char>((color).green()),
-                                     static_cast<unsigned char>((color).blue()),
-                                     static_cast<unsigned char>((color).alpha()),
-                                     useSpecialTransparencySyntax);
+                             static_cast<unsigned char>((color).green()),
+                             static_cast<unsigned char>((color).blue()),
+                             static_cast<unsigned char>((color).alpha()),
+                             useSpecialTransparencySyntax);
 }
 
 
@@ -699,7 +704,7 @@ QColor jkqtp_lookupQColorName(const QString &color, bool namesOnly, bool *nameFo
     if (col=="currentcolor90") return JKQTPlotterDrawingTools::CurrentColorPlaceholder_Trans90;
 
     for (int i=0; i<rgbTblSize; i++) {
-       if (col==rgbTbl[i].name) return QColor(rgbTbl[i].value);
+        if (col==rgbTbl[i].name) return QColor(rgbTbl[i].value);
     }
     if (!namesOnly) return QColor(color);
     if (nameFound) *nameFound=false;
@@ -722,11 +727,11 @@ QColor jkqtp_String2QColor(QString color)
         if (nameFound) return col;
     }
 
-    // now we check for diverse special syntaxes
-    //      P: "color,NN%"     NN=TRANSPARENCY in percent
-    //     AP: "color,aNN\%"   NN=ALPHA in percent
-    //     NP: "color,[a]NN"   NN=ALPHA 0..255
-    //   Frac: "grey25"
+// now we check for diverse special syntaxes
+//      P: "color,NN%"     NN=TRANSPARENCY in percent
+//     AP: "color,aNN\%"   NN=ALPHA in percent
+//     NP: "color,[a]NN"   NN=ALPHA 0..255
+//   Frac: "grey25"
 #if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
     static QRegularExpression rxP("([^,\\(\\)]+)\\s*,\\s*t?\\s*(\\d+\\.?\\d*)\\%");
     static QRegularExpression rxFrac("([a-zA-Z]{3,})(\\d{1,3})\\%?");
@@ -818,9 +823,9 @@ std::string jkqtp_to_valid_variable_name(const std::string& input) {
 
 
 std::string jkqtp_chartostr(char data){
-  std::ostringstream ost;
-  ost<<data;
-  return ost.str();
+    std::ostringstream ost;
+    ost<<data;
+    return ost.str();
 }
 
 QString jkqtp_floattounitqstr(double data, int past_comma, bool remove_trail0)
@@ -888,19 +893,19 @@ QString jkVariantListToString(const QList<QVariant>& data, const QString& separa
 #else
         switch (v.type()) {
 
-            case QVariant::Bool: r=r+loc.toString(v.toBool()); break;
-            case QVariant::Char: r=r+loc.toString(v.toInt()); break;
-            case QVariant::Date: r=r+loc.toString(v.toDate()); break;
-            case QVariant::DateTime: r=r+loc.toString(v.toDateTime()); break;
-            case QVariant::Double: r=r+loc.toString(v.toDouble()); break;
-            case QVariant::Int: r=r+loc.toString(v.toInt()); break;
-            case QVariant::LongLong: r=r+loc.toString(v.toLongLong()); break;
-            case QVariant::String: r=r+QString("\"%1\"").arg(v.toString().replace("\"", "_").replace("\t", " ").replace("\r", "").replace("\n", " ").replace(",", " ").replace(";", " ")); break;
-            case QVariant::Time: r=r+loc.toString(v.toTime()); break;
-            case QVariant::UInt: r=r+loc.toString(v.toUInt()); break;
-            case QVariant::ULongLong: r=r+loc.toString(v.toULongLong()); break;
-            //case : r=r+loc.toString(v.); break;
-            default: r=r+v.toString(); break;
+        case QVariant::Bool: r=r+loc.toString(v.toBool()); break;
+        case QVariant::Char: r=r+loc.toString(v.toInt()); break;
+        case QVariant::Date: r=r+loc.toString(v.toDate()); break;
+        case QVariant::DateTime: r=r+loc.toString(v.toDateTime()); break;
+        case QVariant::Double: r=r+loc.toString(v.toDouble()); break;
+        case QVariant::Int: r=r+loc.toString(v.toInt()); break;
+        case QVariant::LongLong: r=r+loc.toString(v.toLongLong()); break;
+        case QVariant::String: r=r+QString("\"%1\"").arg(v.toString().replace("\"", "_").replace("\t", " ").replace("\r", "").replace("\n", " ").replace(",", " ").replace(";", " ")); break;
+        case QVariant::Time: r=r+loc.toString(v.toTime()); break;
+        case QVariant::UInt: r=r+loc.toString(v.toUInt()); break;
+        case QVariant::ULongLong: r=r+loc.toString(v.toULongLong()); break;
+        //case : r=r+loc.toString(v.); break;
+        default: r=r+v.toString(); break;
         }
 #endif
     }
