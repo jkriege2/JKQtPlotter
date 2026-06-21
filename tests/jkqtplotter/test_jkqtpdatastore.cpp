@@ -331,6 +331,110 @@ private slots:
         QCOMPARE(ds.get(col, 1), 1.0);
     }
 
+    // erase last single element (vector-backed)
+    void test_eraseFromColumn_single_last_vector() {
+        JKQTPDatastore ds;
+        std::vector<double> v = { 1.0, 2.0, 3.0 };
+        size_t col = ds.addCopiedColumn(v, QString("last_vec"));
+        QCOMPARE(ds.getRows(col), static_cast<size_t>(3));
+
+        // point to last element and erase it
+        auto it = ds.begin(static_cast<int>(col));
+        it += 2; // last
+        ds.eraseFromColumn(it);
+
+        QCOMPARE(ds.getRows(col), static_cast<size_t>(2));
+        QCOMPARE(ds.get(col, 0), 1.0);
+        QCOMPARE(ds.get(col, 1), 2.0);
+    }
+
+    // erase first single element (vector-backed)
+    void test_eraseFromColumn_single_first_vector() {
+        JKQTPDatastore ds;
+        std::vector<double> v = { 8.0, 9.0, 10.0 };
+        size_t col = ds.addCopiedColumn(v, QString("first_vec"));
+        QCOMPARE(ds.getRows(col), static_cast<size_t>(3));
+
+        // point to first element and erase it
+        auto it = ds.begin(static_cast<int>(col));
+        // it is at begin()
+        ds.eraseFromColumn(it);
+
+        QCOMPARE(ds.getRows(col), static_cast<size_t>(2));
+        QCOMPARE(ds.get(col, 0), 9.0);
+        QCOMPARE(ds.get(col, 1), 10.0);
+    }
+
+    // erase single element at end (internal-backed -> conversion)
+    void test_eraseFromColumn_single_last_internal() {
+        JKQTPDatastore ds;
+        const size_t N = 3;
+        double* data = static_cast<double*>(malloc(sizeof(double) * N));
+        QVERIFY(data != nullptr);
+        for (size_t i = 0; i < N; ++i) data[i] = 20.0 + double(i);
+        size_t col = ds.addInternalColumn(data, N, QString("last_internal"));
+        QCOMPARE(ds.getRows(col), N);
+
+        auto it = ds.begin(static_cast<int>(col));
+        it += 2;
+        ds.eraseFromColumn(it);
+
+        QCOMPARE(ds.getRows(col), static_cast<size_t>(2));
+        QCOMPARE(ds.get(col, 0), 20.0);
+        QCOMPARE(ds.get(col, 1), 21.0);
+    }
+
+    // setColumnCopiedData: shrink then append and ensure no leftover/thrashing data
+    void test_setColumnCopiedData_shrink_and_append() {
+        JKQTPDatastore ds;
+        size_t col = ds.addColumn(5, QString("setter2"));
+        QVector<double> qv; qv << 1.0 << 2.0 << 3.0 << 4.0 << 5.0;
+        ds.setColumnData(col, qv);
+        QCOMPARE(ds.getRows(col), static_cast<size_t>(5));
+
+        // shrink to 2 elements
+        double arr[2] = { 1000.1, 2000.2 };
+        ds.setColumnCopiedData(col, arr, 2);
+        QCOMPARE(ds.getRows(col), static_cast<size_t>(2));
+        QCOMPARE(ds.get(col, 0), 1000.1);
+        QCOMPARE(ds.get(col, 1), 2000.2);
+
+        // append one element and ensure rows update and values okay
+        ds.appendToColumn(col, 3000.3);
+        QCOMPARE(ds.getRows(col), static_cast<size_t>(3));
+        QCOMPARE(ds.get(col, 2), 3000.3);
+
+        // append another, check again
+        ds.appendToColumn(col, 4000.4);
+        QCOMPARE(ds.getRows(col), static_cast<size_t>(4));
+        QCOMPARE(ds.get(col, 3), 4000.4);
+    }
+
+    // calling eraseFromColumn on an empty column must be a no-op (not crash)
+    void test_eraseFromColumn_empty_noop() {
+        JKQTPDatastore ds;
+        size_t col = ds.addColumn(QString("empty"));
+        QCOMPARE(ds.getRows(col), static_cast<size_t>(0));
+        // begin() for empty column yields an iterator that is invalid; this should not crash
+        auto it = ds.begin(static_cast<int>(col));
+        ds.eraseFromColumn(it); // expect no crash, no change
+        QCOMPARE(ds.getRows(col), static_cast<size_t>(0));
+    }
+
+    // erase a range that includes the last element by passing posEnd == end()
+    void test_eraseFromColumn_range_end_variant_explicit_end() {
+        JKQTPDatastore ds;
+        std::vector<double> v = {0,1,2,3,4};
+        size_t col = ds.addCopiedColumn(v, QString("range_end_variant"));
+        auto itstart = ds.begin(static_cast<int>(col));
+        itstart += 2; // point at value 2
+        auto itend = ds.end(static_cast<int>(col)); // explicit end()
+        ds.eraseFromColumn(itstart, itend);
+        QCOMPARE(ds.getRows(col), static_cast<size_t>(2));
+        QCOMPARE(ds.get(col, 0), 0.0);
+        QCOMPARE(ds.get(col, 1), 1.0);
+    }
+
     // getNextLowerIndex / getNextHigherIndex
     void test_getNextLowerIndex_behavior() {
         JKQTPDatastore ds;
