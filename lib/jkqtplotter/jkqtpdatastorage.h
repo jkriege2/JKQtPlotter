@@ -902,16 +902,15 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPDatastore{
         template <typename TIterator>
         size_t addCopiedColumn(TIterator first, TIterator last, const QString& name=QString("")) {
             const size_t N=static_cast<size_t>(std::abs(std::distance(first,last)));
-            double* d=static_cast<double*>(malloc(static_cast<size_t>(N)*sizeof(double)));
+            QVector<double> d; d.reserve(N);
             if (N>0) {
                 size_t r=0;
                 for (auto it=first; it!=last; ++it) {
-                    d[r]=jkqtp_todouble(*it);
+                    d.push_back(jkqtp_todouble(*it));
                     r++;
                 }
             }
-            size_t itemid=addInternalItem(d, N);
-            return addColumnForItem(itemid, 0, name);
+            return addInternalColumn(std::move(d), name);
         }
 
         /** \brief add one external column to the datastore. It will be filled with the contents of vector \a data.
@@ -967,18 +966,15 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPDatastore{
         template <typename TContainer>
         size_t addCopiedColumn(const TContainer& data, const QString& name, size_t stride, size_t start=0) {
             const size_t N=static_cast<size_t>(data.size()-start)/stride;
-            double* d=static_cast<double*>(malloc(static_cast<size_t>(N)*sizeof(double)));
+            QVector<double> d; d.reserve(N);
             if (N>0) {
-                size_t r=0;
                 auto it=data.begin();
                 if (start>0) it+=start;
                 for (; it!=data.end(); it+=stride) {
-                    d[r]=jkqtp_todouble(*it);
-                    r++;
+                    d.push_back(jkqtp_todouble(*it));
                 }
             }
-            size_t itemid=addInternalItem(d, N);
-            return addColumnForItem(itemid, 0, name);
+            return addInternalColumn(std::move(d), name);
         }
 
 
@@ -997,22 +993,17 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPDatastore{
          */
         template<typename T>
         size_t addCopiedColumn(const T* data, size_t rows, const QString& name=QString("")){
-            double* d=static_cast<double*>(malloc(static_cast<size_t>(rows)*sizeof(double)));
-            if (d) {
-                if (data) {
-                    for (size_t r=0; r<rows; r++) {
-                        d[r]=jkqtp_todouble(data[r]);
-                    }
+            QVector<double> d(rows);
+            if (data) {
+                for (size_t r=0; r<rows; r++) {
+                    d[r]=jkqtp_todouble(data[r]);
                 }
-                const size_t itemid=addInternalItem(d, rows);
-                return addColumnForItem(itemid, 0, name);
-            } else {
-                throw std::runtime_error("could not allocate memory in JKQTPDataStore::addCopiedColumn()");
             }
+            return addInternalColumn(std::move(d), name);
         }
 
         /** \brief copy an external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.
+         *         afterwards you can delete the external array. This function returns its logical column ID.
          *
          *   \tparam T datatype of the element in the vector, this has to be convertible to double!
          *   \param data pointer to the data to be copied
@@ -1034,18 +1025,13 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPDatastore{
          */
         template<typename T>
         size_t addCopiedColumn(const T* data, size_t rows, size_t stride, int start, const QString& name) {
-            double* d=static_cast<double*>(malloc(static_cast<size_t>(rows)*sizeof(double)));
-            if (d) {
-                if (data) {
-                    for (size_t r=0; r<rows; r++) {
-                        d[r]=jkqtp_todouble(data[static_cast<size_t>(start+static_cast<int64_t>(r*stride))]);
-                    }
+            QVector<double> d; d.reserve(rows);
+            if (data) {
+                for (size_t r=0; r<rows; r++) {
+                    d.push_back(jkqtp_todouble(data[static_cast<size_t>(start+static_cast<int64_t>(r*stride))]));
                 }
-                size_t itemid=addInternalItem(d, rows);
-                return addColumnForItem(itemid, 0, name);
-            } else {
-                throw std::runtime_error("could not allocate memory in JKQTPDataStore::addCopiedColumn()");
             }
+            return addInternalColumn(std::move(d), name);
         }
 
         /** \brief copy an external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
@@ -1141,19 +1127,17 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPDatastore{
          */
         template <typename T>
         size_t addCopiedColumnMasked(const T* data, const bool* mask, size_t rows, const QString& name=QString(""), bool useIfMaskEquals=false) {
-            double* d=static_cast<double*>(calloc(rows, sizeof(double)));
-            size_t rrs=0;
+            QVector<double> d; d.reserve(rows);
             if (data) {
                 for (size_t r=0; r<rows; r++) {
                     if (!mask || (mask && (mask[r]==useIfMaskEquals))) {
-                        d[rrs]=jkqtp_todouble(data[r]);
-                        rrs++;
+                        d.push_back(jkqtp_todouble(data[r]));
                     }
                 }
             }
 
 
-            size_t col= addInternalColumn(d, rrs, name);
+            size_t col= addInternalColumn(std::move(d), name);
             return col;
         }
 
@@ -1187,11 +1171,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPDatastore{
             const size_t N=std::min<size_t>(std::distance(itmask,itmaskend),std::distance(itdata,itdataend));
             QVector<double> d;
             d.reserve(N);
-            size_t rrs=0;
             for (size_t r=0; r<N; r++) {
                 if (static_cast<bool>(*itmask)==useIfMaskEquals) {
                     d.push_back(jkqtp_todouble(*itdata));
-                    rrs++;
                 }
                 ++itmask;
                 ++itdata;
@@ -1228,12 +1210,12 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPDatastore{
        template <typename TIterator>
         std::pair<size_t, size_t> addCopiedMap(TIterator first, TIterator last, const QString& nameKey=QString("map_key"), const QString& nameValue=QString("map_value")) {
             const size_t N=static_cast<size_t>(std::abs(std::distance(first,last)));
-            QVector<double> xvals(N), yvals(N);
-            size_t i=0;
+            QVector<double> xvals, yvals;
+            xvals.reserve(N);
+            yvals.reserve(N);
             for (auto it=first; it!=last; ++it) {
-                xvals[i]=(jkqtp_todouble(it->first));
-                yvals[i]=(jkqtp_todouble(it->second));
-                i++;
+                xvals<<jkqtp_todouble(it->first);
+                yvals<<jkqtp_todouble(it->second);
             }
             const size_t cx=addInternalColumn(std::move(xvals), nameKey);
             const size_t cy=addInternalColumn(std::move(yvals), nameValue);
@@ -2473,8 +2455,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPDatastoreItem {
         else {
             JKQTPASSERT(isVector());
             JKQTPASSERT(row<datavec.size());
+            JKQTPASSERT(rowEnd<=datavec.size());
             if (rowEnd>=static_cast<size_t>(datavec.size())) datavec.erase(datavec.begin()+row, datavec.end());
-            else datavec.erase(datavec.begin()+row, datavec.begin()+rowEnd);
+            else if (row==rowEnd) datavec.erase(datavec.begin()+row);
+            else datavec.erase(datavec.begin()+row, datavec.begin()+rowEnd+1);
             rows=static_cast<size_t>(datavec.size());
             data=datavec.data();
         }
@@ -2916,7 +2900,7 @@ inline size_t JKQTPDatastore::addCopiedImageAsColumn(const TContainer& data, siz
 ////////////////////////////////////////////////////////////////////////////////////////////////
 template <typename T>
 size_t JKQTPDatastore::addCopiedImageAsColumnTranspose(const T* data, size_t width, size_t height, const QString& name, size_t stride, size_t start){
-    double* temp=static_cast<double*>(malloc(width*height*sizeof(double)));
+    QVector<double> temp(width*height);
 
     for (size_t x=0; x<width; x++) {
         for (size_t y=0; y<height; y++) {
@@ -2924,7 +2908,7 @@ size_t JKQTPDatastore::addCopiedImageAsColumnTranspose(const T* data, size_t wid
         }
     }
 
-    size_t idx=addInternalColumn(temp, width*height, name);
+    size_t idx=addInternalColumn(std::move(temp), name);
     columns[idx].setImageColumns(width);
     return idx;
 }

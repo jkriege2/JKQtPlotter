@@ -11,10 +11,8 @@
 #include <QPoint>
 #include <QPointF>
 #include <cmath>
-#include <map>
 #include <vector>
 #include <list>
-#include <numeric>
 
 #include "jkqtplotter/jkqtpdatastorage.h"
 

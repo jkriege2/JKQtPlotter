@@ -715,17 +715,13 @@ void JKQTPDatastore::setColumnImageHeight(size_t column, size_t imageHeight)
 ////////////////////////////////////////////////////////////////////////////////////////////////
 size_t JKQTPDatastore::copyColumn(size_t old_column, size_t start, size_t stride, const QString& name)
 {
-    JKQTPColumn old=columns[old_column];
+    const JKQTPColumn& old=columns[old_column];
     size_t rows=old.getRows();
-    QVector<double> d(rows, 0.0);
-    double* dd=old.getPointer(0);
-    size_t j=0;
+    QVector<double> d; d.reserve(rows);
     for (size_t i=start; i<rows; i+=stride) {
-        d[j]=dd[i];
-        //qDebug()<<old_column<<name<<": "<<j<<i<<d[j];
-        j++;
+        d.push_back(old.getValue(i));
     }
-    size_t n=addCopiedColumn(d.data(), j, name);
+    size_t n=addInternalColumn(std::move(d), name);
     return n;
 }
 
@@ -1076,47 +1072,83 @@ void JKQTPDatastore::eraseFromColumn(JKQTPColumnConstIterator pos) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 void JKQTPDatastore::eraseFromColumn(JKQTPColumnConstIterator pos, JKQTPColumnConstIterator posEnd) {
-    JKQTPASSERT_M(pos.getColumn()==posEnd.getColumn(), "in eraseFromColumn(pos,posEnd) both iterators have to point to the same column");
-    const auto itc=columns.key(*pos.getColumn());
-    auto& column=columns[itc];
-    if (pos.isValid() && (posEnd.isValid() || posEnd==column.end())) {
-        const size_t NRows=column.getRows();
-        size_t start1=0;
-        size_t end1=NRows-1;
-        size_t start2=NRows;
-        size_t end2=NRows;
+    // both iterators must reference the same column object
+    if (pos.getColumn() != posEnd.getColumn()) {
+        JKQTPASSERT_M(false, "in eraseFromColumn(pos,posEnd) both iterators have to point to the same column");
+        return;
+    }
 
-        if (pos==column.begin()) {
-            if (posEnd==column.end() || (posEnd.getPosition()==NRows-1)) {
-                // erase everything
-                const size_t itemID=addItem(new JKQTPDatastoreItem(1, 0));
-                column.replaceMemory(itemID);
-                return;
-            } else { // posEnd.isValid()==true and at least one row to copy
-                // copy posEnd+1 ... <end>
-                start1=(posEnd+1).getPosition();
-                end1=NRows-1;
-                start2=NRows; // disable copying a second range
-                end2=NRows;
-            }
+    const JKQTPColumn* pcol = pos.getColumn();
+    if (!pcol) return;
+
+    // find the key (index) of this column in the QMap by address comparison
+    size_t itc = std::numeric_limits<size_t>::max();
+    for (auto it = columns.begin(); it != columns.end(); ++it) {
+        if (&(it.value()) == pcol) { itc = it.key(); break; }
+    }
+    if (itc == std::numeric_limits<size_t>::max()) {
+        // column not found in map: nothing to do
+        return;
+    }
+
+    JKQTPColumn& column = columns[itc];
+    const size_t NRows = column.getRows();
+    if (!pos.isValid()) {
+        // nothing to erase if start iterator is invalid
+        return;
+    }
+
+    // prepare ranges to copy: [start1..end1] and [start2..end2] (inclusive)
+    size_t start1 = 0;
+    size_t end1 = (NRows > 0 ? NRows - 1 : 0);
+    size_t start2 = NRows; // disabled by default (start2 > end2)
+    size_t end2 = NRows;
+
+    // compute the two ranges that should be kept (i.e. copy those ranges into a new vector item)
+    if (pos == column.begin()) {
+        // deleting from begin
+        if ( (posEnd == column.end()) ||
+            (posEnd.isValid() && static_cast<size_t>(posEnd.getPosition()) == (NRows > 0 ? (NRows - 1) : 0)) ) {
+            // erase everything -> replace by empty vector item
+            const size_t itemID = addItem(new JKQTPDatastoreItem(1, 0));
+            column.replaceMemory(itemID);
+            return;
+        } else if (posEnd.isValid()) {
+            // keep rows after posEnd
+            start1 = static_cast<size_t>((posEnd + 1).getPosition());
+            end1 = (NRows > 0 ? NRows - 1 : 0);
+            start2 = NRows; // disable second range
+            end2 = NRows;
         } else {
-            if (posEnd==column.end() || (posEnd.getPosition()==NRows-1)) {
-                // copy 0..pos-1 only
-                start1=0;
-                end1=(pos-1).getPosition();
-                start2=NRows; // disable copying a second range
-                end2=NRows;
-            } else {
-                // copy 0..pos-1 and posEnd+1..<end>
-                start1=0;
-                end1=(pos-1).getPosition();
-                start2=(posEnd+1).getPosition(); // disable copying a second range
-                end2=NRows-1;
-            }
+            // posEnd invalid and not equal to end -> nothing sensible to do
+            return;
         }
-        if (!column.convertVectorItemFromRanges(start1,end1,start2,end2)) {
-            if (posEnd.isValid()) column.eraseFromVectorColumn(static_cast<size_t>(pos.getPosition()), static_cast<size_t>(posEnd.getPosition()));
-            else column.eraseFromVectorColumn(static_cast<size_t>(pos.getPosition()), static_cast<size_t>(pos.getPosition())+columns[itc].getRows()+1);
+    } else {
+        // deleting beginning somewhere after 0
+        if (!posEnd.isValid() || posEnd == column.end()) {
+            // keep 0..pos-1 only
+            start1 = 0;
+            end1 = static_cast<size_t>((pos - 1).getPosition());
+            start2 = NRows; // disable second range
+            end2 = NRows;
+        } else {
+            // keep 0..pos-1 and posEnd+1..NRows-1
+            start1 = 0;
+            end1 = static_cast<size_t>((pos - 1).getPosition());
+            start2 = static_cast<size_t>((posEnd + 1).getPosition());
+            end2 = (NRows > 0 ? NRows - 1 : 0);
+        }
+    }
+
+    // try to convert to a vector item from the computed ranges; convertVectorItemFromRanges returns true if a new vector item was created
+    if (!column.convertVectorItemFromRanges(start1, end1, start2, end2)) {
+        // conversion was not performed (column already a vector?) - in that case invoke eraseFromVectorColumn directly
+        if (posEnd.isValid()) {
+            column.eraseFromVectorColumn(static_cast<size_t>(pos.getPosition()), static_cast<size_t>(posEnd.getPosition()));
+        } else {
+            // erase from pos to end (use NRows-1, avoid the erroneous large value)
+            if (NRows == 0) return; // nothing to erase
+            column.eraseFromVectorColumn(static_cast<size_t>(pos.getPosition()), NRows - 1);
         }
     }
 }
