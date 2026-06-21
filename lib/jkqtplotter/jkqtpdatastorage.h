@@ -2469,7 +2469,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPDatastoreItem {
      *  \warning This function only works if isVector() is \c true!!!
      */
     inline void reserveVectorColumn(size_t rows) {
-        if (!isVector()) datavec.reserve(std::max<size_t>(rows, datavec.size()));
+        if (isVector()) datavec.reserve(std::max<size_t>(rows, datavec.size()));
     }
 
     /** \brief returns the data at the position (\a column, \a row ).
@@ -2726,16 +2726,24 @@ void JKQTPColumn::eraseFromVectorColumn(size_t row, size_t rowEnd) {
 ////////////////////////////////////////////////////////////////////////////////////////////////
 inline double JKQTPColumn::getValue(size_t n) const {
     if (!datastore) return JKQTP_NAN;
-    if (!datastore->getItem(datastoreItem)) return JKQTP_NAN;
-    return datastore->getItem(datastoreItem)->get(datastoreOffset, n);
+    const size_t rows = getRows();
+    if (n >= rows) return JKQTP_NAN;
+    // fast path: if the datastore item provides a direct pointer to contiguous memory,
+    // use it for O(1) access instead of going through per-element lookups.
+    const double* p = getPointer(0);
+    if (p) {
+        return p[n];
+    }
+    // fallback: use the datastore item get(...)
+    JKQTPDatastoreItem* it = datastore->getItem(datastoreItem);
+    if (!it) return JKQTP_NAN;
+    return it->get(datastoreOffset, n);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 inline double JKQTPColumn::getValue(int n) const {
-    if (!datastore) return JKQTP_NAN;
-    if (!datastore->getItem(datastoreItem)) return JKQTP_NAN;
     if (n<0) return JKQTP_NAN;
-    return datastore->getItem(datastoreItem)->get(datastoreOffset, static_cast<size_t>(n));
+    return getValue(static_cast<size_t>(n));
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////

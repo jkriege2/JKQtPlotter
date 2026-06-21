@@ -24,6 +24,7 @@
 #include <QtGlobal>
 #include <limits>
 #include <cmath>
+#include <cstring>
 
 /**************************************************************************************************************************
  * JKQTPColumn
@@ -82,10 +83,17 @@ void JKQTPColumn::copyData(QVector<double> &copyTo) const
 {
     const size_t cnt=getRows();
     if (cnt>0) {
-        copyTo.resize(static_cast<int>(cnt));
-        for (size_t i=0; i<cnt; i++) {
-            copyTo[static_cast<int>(i)]=getValue(i);
-        }
+        const double* p = getPointer(0);
+        if (p) {
+            // contiguous memory available: fast memcpy path
+            copyTo.resize(static_cast<int>(cnt));
+            std::memcpy(copyTo.data(), p, cnt * sizeof(double));
+        } else {
+            copyTo.resize(static_cast<int>(cnt));
+            for (size_t i=0; i<cnt; i++) {
+                copyTo[static_cast<int>(i)] = getValue(i);
+            }
+       }
     }
 }
 
@@ -1578,16 +1586,47 @@ void JKQTPDatastore::setColumnCopiedImageData(size_t toColumn, const double *dat
 ////////////////////////////////////////////////////////////////////////////////////////////////
 void JKQTPDatastore::appendToColumn(size_t column, double value)
 {
-    const bool ok=columns[column].getDatastoreItem()->append(columns[column].getDatastoreOffset(), value);
-    if (!ok) {
-        QVector<double> old_data=columns[column].copyData();
-        size_t itemID=addItem(new JKQTPDatastoreItem(1, static_cast<size_t>(old_data.size()+1)));
-        columns[column]=JKQTPColumn(this, columns[column].getName(), itemID, 0);
-        for (int i=0; i<old_data.size(); i++) {
-            columns[column].setValue(static_cast<size_t>(i), old_data[i]);
-        }
-        columns[column].setValue(static_cast<size_t>(old_data.size()), value);
+    // quick guard: column must exist
+    if (columns.find(column) == columns.end()) {
+        qDebug()<<"column "<<column<<" does not exist, so we cannnot add a value";
+        return;
     }
+
+    // Try fast append into the existing item
+    JKQTPDatastoreItem* item = columns[column].getDatastoreItem();
+    if (item && item->append(columns[column].getDatastoreOffset(), value)) {
+        return;
+    }
+
+    // If append failed, try to convert the column to a vector-backed item and reserve capacity
+    size_t usedVectorItem = std::numeric_limits<size_t>::max();
+    const size_t currentRows = columns[column].getRows();
+
+    // Attempt conversion (this will create a vector-backed JKQTPDatastoreItem and make the column point to it)
+    const bool converted = columns[column].convertVectorItem(&usedVectorItem);
+    if (converted) {
+        // compute reserve size (grow at least to current*2, at least 16)
+        size_t reserveSize = std::max<size_t>(currentRows + 1, std::max<size_t>(currentRows * 2, 16));
+        JKQTPDatastoreItem* newItem = getItem(usedVectorItem);
+        if (newItem) {
+            newItem->reserveVectorColumn(reserveSize);
+        }
+
+        // try append again
+        item = columns[column].getDatastoreItem();
+        if (item && item->append(columns[column].getDatastoreOffset(), value)) {
+            return;
+        }
+    }
+
+    // Fallback: create new internal item and copy all data (old behavior)
+    QVector<double> old_data = columns[column].copyData();
+    size_t itemID = addItem(new JKQTPDatastoreItem(1, static_cast<size_t>(old_data.size() + 1)));
+    columns[column] = JKQTPColumn(this, columns[column].getName(), itemID, 0);
+    for (int i = 0; i < old_data.size(); ++i) {
+        columns[column].setValue(static_cast<size_t>(i), old_data[i]);
+    }
+    columns[column].setValue(static_cast<size_t>(old_data.size()), value);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
