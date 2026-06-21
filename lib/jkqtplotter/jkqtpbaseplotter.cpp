@@ -3992,7 +3992,10 @@ bool JKQTBasePlotter::saveAsSVG(const QString& filename, bool displayPreview) {
 #else
                 QSharedPointer<QTemporaryFile> tf=QSharedPointer<QTemporaryFile>(new QTemporaryFile());
 #endif
-            tf->open();
+            if (!tf->open()) {
+                qDebug()<<"Could not create temporary file";
+                return false;
+            }
             tempFM=tf->fileName();
             tf->close();
             tf.reset();
