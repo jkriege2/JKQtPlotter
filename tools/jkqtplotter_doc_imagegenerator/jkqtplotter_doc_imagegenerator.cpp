@@ -30,7 +30,7 @@
 #include <iostream>
 #if __cplusplus >= 202002L
 # include <version>
-# ifdef __cpp_lib_format
+# if defined(__cpp_lib_format) && (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
 #  include <format>
 # endif
 #endif
@@ -291,7 +291,7 @@ void doListAxisStyling(const QDir& outputDir, int iconsize, QColor /*backgroundC
     plot.getYAxis()->setTickPrintfFormat("y=%+.2f");
     plot.grabPixelImage(QSize(plot.getWidth(),plot.getHeight()), false).copy(0,0,iconsize*2.5,plot.getHeight()).save(outputDir.absoluteFilePath("JKQTPCALTprintf.png"), "png");
 #if __cplusplus >= 202002L
-# ifdef __cpp_lib_format
+# if defined(__cpp_lib_format) && (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
     plot.setY(-1,1);
     plot.getYAxis()->setTickLabelType(JKQTPCALTformat);
     plot.getYAxis()->setTickFormatFormat("\\texttt{{ y={:*^+8.1f}}}");
