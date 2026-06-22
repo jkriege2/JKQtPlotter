@@ -20,6 +20,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>BREAKING: The QMake build system is deprecated and will not get the same love and atttention as the recommended CMake system. The QMake scripts might be removed in future versions!</li>
     <li>FIXED/SECURITY not using \c sprintf() any more ... replaced by e.g. \c snprintf() , which is more secure.</li>
     <li>FIXED issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/102">#102: Fix CMake Compile Error: JKQTCommonLib no properly linked in JKQTMath static build</a> (thanks to <a href="https://github.com/Neumann-A">user:Neumann-A</a> for reporting)</li>
+    <li>FIXED issue <a href="https://github.com/jkriege2/JKQtPlotter/issues/165">#165</a> by reworking jkqtp_floattounitstr() and jkqtp_floattolatexunitstr() + additional test cases</li>
     <li>CLEANUP (BREAKING) of library structure</li>
     <li>NEW: Using precompiled headers in CMake-build to speed up build times</li>
     <li>NEW/BREAKING: split jkqtcommon into basic tools and jkqtmath for advanced math tools not used by all libs</li>
@@ -31,6 +32,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: the different sub-libraries JKQTPlotter, JKQTFastPlotter (DEPRECATED), JKQTMath, JKQTMathText can be activated/deactivated with CMake options JKQtPlotter_BUILD_LIB_JKQTPLOTTER, JKQtPlotter_BUILD_LIB_JKQTFASTPLOTTER, JKQtPlotter_BUILD_LIB_JKQTMATHTEXT, JKQtPlotter_BUILD_LIB_JKQTMATH</li>   
     <li>NEW add JKQTPExpected datatype, jkqtp_roundToDigits(), generic RegularExpression functions (jkqtp_rxExactlyMatches(), jkqtp_rxIndexIn(), jkqtp_rxContains(), jkqtp_rxPartiallyMatchesAt() )</li>
     <li>NEW CSS-parser JKQTPCSSParser in order to parse e.g. \c linear-gradient() specifications in jkqtp_String2QBrushStyleExt()</li>
+    <li>NEW: The Qt-version to build against can be set with the CMake Option \c QT_VERSION_MAJOR . If it is not provided externally, the CMakeLists.txt-file tries to either find Qt5 or Qt6 and uses what it finds. (pull request <a href="https://github.com/jkriege2/JKQtPlotter/pull/156">#156</a> thanks to user <a href="https://github.com/PPN-SD">user:PPN-SD</a>)</li>
   </ul></li>
 
   <li>JKQTPlotter:<ul>
@@ -41,6 +43,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>BREAKING/FIXED: graph symbols were not properly applied when reading styles (in fact they were shuffled under some circumstances)</li>
     <li>BREAKING/NEW: rework layouting of keys/legends: new classes JKQTPBaseKey, JKQTPMainKey ... and removed several styling function for the main key from JKQTBasePlotter and JKQTPlotter (these are now accessible via JKQTBasePlotter::getMainKey() </li>
     <li>BREAKING/DEPRECATED: deprecated JKQTBasePlotter::zoom() and JKQTPlotter::zoom(), use JKQTBasePlotter::setXY() and JKQTPlotter::setXY() instead</li>
+    <li>BREAKING/FIXED issue <a href="https://github.com/jkriege2/JKQtPlotter/issues/163">#163</a> by disallowing \c std::format() when building against Qt 5.xx (i.e. full C++20 support is available only for Qt >=6)</li>
     <li>FIXED issue described in <a href="https://github.com/jkriege2/JKQtPlotter/pull/62">#62: Fix custom labels draw, because giving exactly two label-strings did not display all of them</a>, thanks to <a href="https://github.com/FalsinSoft">user:FalsinSoft</a></li>
     <li>FIXED issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/70">#70: Typo in jkqtplotter/CMakeLists.txt</a>, thanks to <a href="https://github.com/tedlinlab">user:tedlinlab</a></li>
     <li>FIXED issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/80">#80: Bug with multiple inheritance with Q_GDAGET with CLANG</a>, thanks to <a href="https://github.com/igormironchik">user:igormironchik</a>, caused by <a href="https://bugreports.qt.io/browse/QTBUG-104874">QTBUG-104874</a></li>
@@ -64,6 +67,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>FIXED/REWORKED issue <a href="https://github.com/jkriege2/JKQtPlotter/issues/111">#111: Can't write to PDF files with JKQTPlotter::saveImage() when passing a filename ending in ".pdf"</a> (thanks to <a href="https://github.com/fpalazzolo">user:fpalazzolo</a> for reporting):<br/>While fixing this issue, the functions JKQTBasePlotter::saveImage() etc. gained a bool return value to indicate whether sacing was successful.</li>
     <li>IMPROVED/FIXED outside space requirements for color bars. Text was sometime too close to the plot border.</li>
     <li>FIXED issue <a href="https://github.com/jkriege2/JKQtPlotter/issues/140">#140: addGraph function return value</a> by adding return values to all addGraph()-Variants in JKQTPlotter (to mirror the interface of JKQTBasePlotter), (thanks to <a href="https://github.com/sajadblog">user:sajadblog</a></li>
+    <li>FIXED issue <a href="https://github.com/jkriege2/JKQtPlotter/issues/164">#164</a> by reworking JKQTPDatastore::eraseFromColumn() + additional test cases</li>
     <li>REWORKED JKQTBasePlotter::saveData() with a more consistent interface and a bool return value to indicate success or failure + improved documentation, added methods to JKQTPSaveDataAdapter that allow to specify file extensions and an ID for the plugin.</li>
     <li>REWORKED: separation and gruping factor for barcharts on autoscaling</li>
     <li>REORGANIZED: separated line-graphs from jkqtpscatter.h/.cpp into jkqtplines.h/.cpp</li>
