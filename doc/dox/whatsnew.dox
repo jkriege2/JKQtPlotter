@@ -20,7 +20,6 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>BREAKING: The QMake build system is deprecated and will not get the same love and atttention as the recommended CMake system. The QMake scripts might be removed in future versions!</li>
     <li>FIXED/SECURITY not using \c sprintf() any more ... replaced by e.g. \c snprintf() , which is more secure.</li>
     <li>FIXED issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/102">#102: Fix CMake Compile Error: JKQTCommonLib no properly linked in JKQTMath static build</a> (thanks to <a href="https://github.com/Neumann-A">user:Neumann-A</a> for reporting)</li>
-    <li>FIXED issue <a href="https://github.com/jkriege2/JKQtPlotter/issues/165">#165</a> by reworking jkqtp_floattounitstr() and jkqtp_floattolatexunitstr() + additional test cases</li>
     <li>CLEANUP (BREAKING) of library structure</li>
     <li>NEW: Using precompiled headers in CMake-build to speed up build times</li>
     <li>NEW/BREAKING: split jkqtcommon into basic tools and jkqtmath for advanced math tools not used by all libs</li>
@@ -30,8 +29,6 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW/BREAKING: refactor CMake-Code, so static/dynamic switch is done via <code>BUILD_SHARED_LIBS</code>, which retires <code>JKQtPlotter_BUILD_STATIC_LIBS</code>, <code>JKQtPlotter_BUILD_SHARED_LIBS</code> and removes the capability to build static and shared libraries in one location (fixes issue #104)</li>    
     <li>NEW: prepareed library for CMake's <a href="https://cmake.org/cmake/help/latest/module/FetchContent.html">FetchContent</a>-API</li>    
     <li>NEW: the different sub-libraries JKQTPlotter, JKQTFastPlotter (DEPRECATED), JKQTMath, JKQTMathText can be activated/deactivated with CMake options JKQtPlotter_BUILD_LIB_JKQTPLOTTER, JKQtPlotter_BUILD_LIB_JKQTFASTPLOTTER, JKQtPlotter_BUILD_LIB_JKQTMATHTEXT, JKQtPlotter_BUILD_LIB_JKQTMATH</li>   
-    <li>NEW add JKQTPExpected datatype, jkqtp_roundToDigits(), generic RegularExpression functions (jkqtp_rxExactlyMatches(), jkqtp_rxIndexIn(), jkqtp_rxContains(), jkqtp_rxPartiallyMatchesAt() )</li>
-    <li>NEW CSS-parser JKQTPCSSParser in order to parse e.g. \c linear-gradient() specifications in jkqtp_String2QBrushStyleExt()</li>
     <li>NEW: The Qt-version to build against can be set with the CMake Option \c QT_VERSION_MAJOR . If it is not provided externally, the CMakeLists.txt-file tries to either find Qt5 or Qt6 and uses what it finds. (pull request <a href="https://github.com/jkriege2/JKQtPlotter/pull/156">#156</a> thanks to user <a href="https://github.com/PPN-SD">user:PPN-SD</a>)</li>
   </ul></li>
 
@@ -224,7 +221,10 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: Added JKQTMathText::setFontOptions(), which allows to make fonts initially e.g. bold, italic, ... and extended JKQTMathText::setFontSpecial() accordingly</li>
   </ul></li>
   <li>JKQTPCommon:<ul>
+    <li>FIXED issue <a href="https://github.com/jkriege2/JKQtPlotter/issues/165">#165</a> by reworking jkqtp_floattounitstr() and jkqtp_floattolatexunitstr() + additional test cases</li>
     <li>NEW: iadded variant of jkqtp_bounded<T>(TIn v), which limits to the limits of a type T and can cope with cases where TIn is signed, but T is unsigned</li>
+    <li>NEW add JKQTPExpected datatype, jkqtp_roundToDigits(), generic RegularExpression functions (jkqtp_rxExactlyMatches(), jkqtp_rxIndexIn(), jkqtp_rxContains(), jkqtp_rxPartiallyMatchesAt() )</li>
+    <li>NEW CSS-parser JKQTPCSSParser in order to parse e.g. \c linear-gradient() specifications in jkqtp_String2QBrushStyleExt()</li>
   </li>
   </ul></li>
   <li>JKQTFastPloter:<ul>
