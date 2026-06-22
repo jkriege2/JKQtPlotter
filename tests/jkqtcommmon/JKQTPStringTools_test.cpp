@@ -108,7 +108,7 @@ private slots:
     // ===== ORIGINAL TEST CASES =====
     inline void test_jkqtp_floattounitstr() {
         QCOMPARE_EQ(jkqtp_floattounitstr(0, 1, true), "0");
-        QCOMPARE_EQ(jkqtp_floattounitstr(0, 1, false), "0");
+        QCOMPARE_EQ(jkqtp_floattounitstr(0, 1, false), "0.0");
         QCOMPARE_EQ(jkqtp_floattounitstr(1.0, 1, true), "1");
         QCOMPARE_EQ(jkqtp_floattounitstr(1.0, 1, false), "1.0");
         QCOMPARE_EQ(jkqtp_floattounitstr(1.2e3, 1, false), "1.2k");
@@ -124,7 +124,7 @@ private slots:
 
     inline void test_jkqtp_floattolatexunitstr() {
         QCOMPARE_EQ(jkqtp_floattolatexunitstr(0, 1, true), "0");
-        QCOMPARE_EQ(jkqtp_floattolatexunitstr(0, 1, false), "0");
+        QCOMPARE_EQ(jkqtp_floattolatexunitstr(0, 1, false), "0.0");
         QCOMPARE_EQ(jkqtp_floattolatexunitstr(1.0, 1, true), "1");
         QCOMPARE_EQ(jkqtp_floattolatexunitstr(1.0, 1, false), "1.0");
         QCOMPARE_EQ(jkqtp_floattolatexunitstr(1.2e3, 1, false), "1.2\\;\\mathrm{k}");
@@ -183,9 +183,25 @@ private slots:
     inline void test_jkqtp_floattounitstr_small_values() {
         // Test values near zero and very small values
         QCOMPARE_EQ(jkqtp_floattounitstr(0.0, 1, true), "0");
-        QCOMPARE_EQ(jkqtp_floattounitstr(0.0, 1, false), "0");
+        QCOMPARE_EQ(jkqtp_floattounitstr(0.0, 1, false), "0.0");
         QCOMPARE_EQ(jkqtp_floattounitstr(1e-30, 1, false), "1.0q");
+        QCOMPARE_EQ(jkqtp_floattounitstr(1e-31, 1, false), "0.1q");
+        QCOMPARE_EQ(jkqtp_floattounitstr(1e-32, 3, false), "0.010q");
+        QCOMPARE_EQ(jkqtp_floattounitstr(1e-33, 3, false), "0.001q");
+        QCOMPARE_EQ(jkqtp_floattounitstr(1e-34, 3, false), "0.000");
         QCOMPARE_EQ(jkqtp_floattounitstr(1e-27, 1, false), "1.0r");
+    }
+
+    inline void test_jkqtp_floattolatexunitstr_small_values() {
+        // Test values near zero and very small values
+        QCOMPARE_EQ(jkqtp_floattolatexunitstr(0.0, 1, true), "0");
+        QCOMPARE_EQ(jkqtp_floattolatexunitstr(0.0, 1, false), "0.0");
+        QCOMPARE_EQ(jkqtp_floattolatexunitstr(1e-30, 1, false), "1.0\\;\\mathrm{q}");
+        QCOMPARE_EQ(jkqtp_floattolatexunitstr(1e-31, 1, false), "0.1\\;\\mathrm{q}");
+        QCOMPARE_EQ(jkqtp_floattolatexunitstr(1e-32, 3, false), "0.010\\;\\mathrm{q}");
+        QCOMPARE_EQ(jkqtp_floattolatexunitstr(1e-33, 3, false), "0.001\\;\\mathrm{q}");
+        QCOMPARE_EQ(jkqtp_floattolatexunitstr(1e-34, 3, false), "0.000");
+        QCOMPARE_EQ(jkqtp_floattolatexunitstr(1e-27, 1, false), "1.0\\;\\mathrm{r}");
     }
 
     inline void test_jkqtp_floattounitstr_large_values() {
@@ -200,6 +216,9 @@ private slots:
         QCOMPARE_EQ(jkqtp_floattounitstr(1e24, 1, false), "1.0Y");
         QCOMPARE_EQ(jkqtp_floattounitstr(1e27, 1, false), "1.0R");
         QCOMPARE_EQ(jkqtp_floattounitstr(1e30, 1, false), "1.0Q");
+        QCOMPARE_EQ(jkqtp_floattounitstr(10e30, 1, false), "10.0Q");
+        QCOMPARE_EQ(jkqtp_floattounitstr(1e33, 1, false), "1000.0Q");
+        QCOMPARE_EQ(jkqtp_floattounitstr(100e33, 1, false), "100000.0Q");
     }
 
     inline void test_jkqtp_floattounitstr_no_unit_range() {
@@ -228,9 +247,18 @@ private slots:
 
     inline void test_jkqtp_floattounitstr_belowIsZero() {
         // Test belowIsZero parameter
-        QCOMPARE_EQ(jkqtp_floattounitstr(1e-100, 1, false, 1e-50), "0");
+        QCOMPARE_EQ(jkqtp_floattounitstr(1e-100, 1, false, 1e-50), "0.0");
+        QCOMPARE_EQ(jkqtp_floattounitstr(1e-100, 1, true, 1e-50), "0");
         QCOMPARE_EQ(jkqtp_floattounitstr(1.0, 1, false, 0.5), "1.0");
-        QCOMPARE_EQ(jkqtp_floattounitstr(0.3, 1, false, 0.5), "0");
+        QCOMPARE_EQ(jkqtp_floattounitstr(0.3, 1, false, 0.5), "0.0");
+    }
+
+    inline void test_jkqtp_floattolatexunitstr_belowIsZero() {
+        // Test belowIsZero parameter
+        QCOMPARE_EQ(jkqtp_floattolatexunitstr(1e-100, 1, false, 1e-50), "0.0");
+        QCOMPARE_EQ(jkqtp_floattolatexunitstr(1e-100, 1, true, 1e-50), "0");
+        QCOMPARE_EQ(jkqtp_floattolatexunitstr(1.0, 1, false, 0.5), "1.0");
+        QCOMPARE_EQ(jkqtp_floattolatexunitstr(0.3, 1, false, 0.5), "0.0");
     }
 
     // ===== LATEX UNIT STRING EDGE CASES =====
@@ -268,6 +296,9 @@ private slots:
         QCOMPARE_EQ(jkqtp_floattolatexunitstr(1e24, 1, false), "1.0\\;\\mathrm{Y}");
         QCOMPARE_EQ(jkqtp_floattolatexunitstr(1e27, 1, false), "1.0\\;\\mathrm{R}");
         QCOMPARE_EQ(jkqtp_floattolatexunitstr(1e30, 1, false), "1.0\\;\\mathrm{Q}");
+        QCOMPARE_EQ(jkqtp_floattolatexunitstr(10e30, 1, false), "10.0\\;\\mathrm{Q}");
+        QCOMPARE_EQ(jkqtp_floattolatexunitstr(1e33, 1, false), "1000.0\\;\\mathrm{Q}");
+        QCOMPARE_EQ(jkqtp_floattolatexunitstr(100e33, 1, false), "100000.0\\;\\mathrm{Q}");
 
         // Negative exponents
         QCOMPARE_EQ(jkqtp_floattolatexunitstr(1e-3, 1, false), "1.0\\;\\mathrm{m}");
@@ -311,7 +342,7 @@ private slots:
         QVERIFY(!result_nan.empty());
 
         // Test very close to zero
-        QCOMPARE_EQ(jkqtp_floattounitstr(1e-100, 1, false, std::numeric_limits<double>::min()*4), "0");
+        QCOMPARE_EQ(jkqtp_floattounitstr(1e-100, 1, false, std::numeric_limits<double>::min()*4), "0.0");
 
         // Test exact zero
         QCOMPARE_EQ(jkqtp_floattounitstr(0.0, 0, true), "0");
@@ -325,7 +356,7 @@ private slots:
         QVERIFY(!result_nan.empty());
 
         // Test very close to zero
-        QCOMPARE_EQ(jkqtp_floattolatexunitstr(1e-100, 1, false, std::numeric_limits<double>::min()*4), "0");
+        QCOMPARE_EQ(jkqtp_floattolatexunitstr(1e-100, 1, false, std::numeric_limits<double>::min()*4), "0.0");
 
         // Test exact zero
         QCOMPARE_EQ(jkqtp_floattolatexunitstr(0.0, 0, true), "0");

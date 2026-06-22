@@ -158,46 +158,45 @@ std::string jkqtp_floattostr(double data, int past_comma, bool remove_trail0, do
 
 
 std::string jkqtp_floattounitstr(double data, int past_comma, bool remove_trail0, double belowIsZero){
-    if (fabs(data)<=belowIsZero) return "0";
     std::string form="%."+jkqtp_inttostr(past_comma)+"lf";
+    if (fabs(data)<=belowIsZero) {
+        if (remove_trail0) return "0";
+        else return jkqtp_format(form,0.0);
+    }
     std::string res=jkqtp_format(form,data);
     std::string unit="";
     static const std::string SIUnitSymbols[] = {"k", "M", "G", "T", "P", "E", "Z", "Y", "R", "Q"};
     static const std::string SIUnitSymbolsBelow1[] = {"m", "\xB5", "n", "p", "f", "a", "z", "y", "r", "q"};
 
-    const double absData=fabs(data);
+    // Robust scaling by powers of 1000 to determine the appropriate SI unit.
+    // This avoids fragile pow()/threshold comparisons that may produce
+    // different results on some architectures due to floating point rounding.
+    const double absData = fabs(data);
+    int exponent = 0; // exponent in steps of 3: 0 -> no unit, +3 -> k, -3 -> m, etc.
+    double scaled = absData;
 
-    // Check SI units (positive exponents: 1e3, 1e6, 1e9, ...)
-    int bestExponent = 0;
-    for (int exp = 3; exp <= 30; exp += 3) {
-        double threshold = pow(10.0, static_cast<double>(exp));
-        if (absData >= threshold) {
-            bestExponent = exp;
-        }
+    // Scale down for large values (k, M, G, ...).
+    while (scaled >= 1000.0 && exponent < 30) {
+        scaled /= 1000.0;
+        exponent += 3;
     }
 
-    if (bestExponent > 0) {
-        double divisor = pow(10.0, static_cast<double>(bestExponent));
+    // Scale up for small values (m, µ, n, ...).
+    while (scaled > 0.0 && scaled < 1.0 && exponent >= -27) {
+        scaled *= 1000.0;
+        exponent -= 3;
+    }
+
+    if (exponent > 0) {
+        const double divisor = pow(10.0, static_cast<double>(exponent));
         res = jkqtp_format(form, data / divisor);
-        unit = SIUnitSymbols[(bestExponent / 3) - 1];
-    }
-
-    // Check SI units below 1 (negative exponents: 1e-3, 1e-6, 1e-9, ...)
-    // Only if no positive exponent unit was found
-    if (bestExponent <= 0) {
-        int bestNegativeExponent = 0;
-        for (int exp = -3; exp >= -30; exp -= 3) {
-            double threshold = pow(10.0, static_cast<double>(exp)) * 1e3;
-            if (absData < threshold) {
-                bestNegativeExponent = exp;
-            }
-        }
-
-        if (bestNegativeExponent < 0) {
-            double divisor = pow(10.0, static_cast<double>(bestNegativeExponent));
-            res = jkqtp_format(form, data / divisor);
-            unit = SIUnitSymbolsBelow1[(-bestNegativeExponent / 3) - 1];
-        }
+        const int idx=(exponent / 3) - 1;
+        unit = SIUnitSymbols[idx];
+    } else if (exponent < 0) {
+        const double divisor = pow(10.0, static_cast<double>(exponent));
+        res = jkqtp_format(form, data / divisor);
+        const int idx=(-exponent / 3) - 1;
+        unit = SIUnitSymbolsBelow1[idx];
     }
 
     if (remove_trail0) {
@@ -211,52 +210,46 @@ std::string jkqtp_floattounitstr(double data, int past_comma, bool remove_trail0
         res= res.erase(i+1);
         return res+unit;
     }
-    if (res+unit=="0.0q") return "0";
+    if (std::count(res.begin(), res.end(), '0')+std::count(res.begin(), res.end(), '.')==res.size()) return res;
     return res+unit;
 }
 
 
 std::string jkqtp_floattolatexunitstr(double data, int past_comma, bool remove_trail0, double belowIsZero){
-    if (fabs(data)<=belowIsZero) return "0";
     std::string form="%."+jkqtp_inttostr(past_comma)+"lf";
+    if (fabs(data)<=belowIsZero) {
+        if (remove_trail0) return "0";
+        else return jkqtp_format(form,0.0);
+    }
     std::string res=jkqtp_format(form,data);
     std::string unit="";
     static const std::string SIUnitSymbols[] = {"k", "M", "G", "T", "P", "E", "Z", "Y", "R", "Q"};
     static const std::string SIUnitSymbolsBelow1[] = {"m", "\\mu", "n", "p", "f", "a", "z", "y", "r", "q"};
 
-    const double absData=fabs(data);
-
-    // Check SI units (positive exponents: 1e3, 1e6, 1e9, ...)
-    int bestExponent = 0;
-    for (int exp = 3; exp <= 30; exp += 3) {
-        double threshold = pow(10.0, static_cast<double>(exp));
-        if (absData >= threshold) {
-            bestExponent = exp;
-        }
+    // Robust scaling by powers of 1000 to determine the appropriate SI unit
+    // (same reasoning as in jkqtp_floattounitstr).
+    const double absData = fabs(data);
+    int exponent = 0;
+    double scaled = absData;
+    while (scaled >= 1000.0 && exponent < 30) {
+        scaled /= 1000.0;
+        exponent += 3;
+    }
+    while (scaled > 0.0 && scaled < 1.0 && exponent >= -27) {
+        scaled *= 1000.0;
+        exponent -= 3;
     }
 
-    if (bestExponent > 0) {
-        double divisor = pow(10.0, static_cast<double>(bestExponent));
+    if (exponent > 0) {
+        double divisor = pow(10.0, static_cast<double>(exponent));
         res = jkqtp_format(form, data / divisor);
-        unit = "\\;\\mathrm{" + SIUnitSymbols[(bestExponent / 3) - 1] + "}";
-    }
-
-    // Check SI units below 1 (negative exponents: 1e-3, 1e-6, 1e-9, ...)
-    // Only if no positive exponent unit was found
-    if (bestExponent <= 0) {
-        int bestNegativeExponent = 0;
-        for (int exp = -3; exp >= -30; exp -= 3) {
-            double threshold = pow(10.0, static_cast<double>(exp)) * 1e3;
-            if (absData < threshold) {
-                bestNegativeExponent = exp;
-            }
-        }
-
-        if (bestNegativeExponent < 0) {
-            double divisor = pow(10.0, static_cast<double>(bestNegativeExponent));
-            res = jkqtp_format(form, data / divisor);
-            unit = "\\;\\mathrm{" + SIUnitSymbolsBelow1[(-bestNegativeExponent / 3) - 1] + "}";
-        }
+        const int idx=(exponent / 3) - 1;
+        unit = "\\;\\mathrm{" + SIUnitSymbols[idx] + "}";
+    } else if (exponent < 0) {
+        double divisor = pow(10.0, static_cast<double>(exponent));
+        res = jkqtp_format(form, data / divisor);
+        const int idx=(-exponent / 3) - 1;
+        unit = "\\;\\mathrm{" + SIUnitSymbolsBelow1[idx] + "}";
     }
 
     if (remove_trail0) {
@@ -270,7 +263,7 @@ std::string jkqtp_floattolatexunitstr(double data, int past_comma, bool remove_t
         res= res.erase(i+1);
         return res+unit;
     }
-    if (res+unit=="0.0\\;\\mathrm{q}") return "0";
+    if (std::count(res.begin(), res.end(), '0')+std::count(res.begin(), res.end(), '.')==res.size()) return res;
     return res+unit;
 }
 
