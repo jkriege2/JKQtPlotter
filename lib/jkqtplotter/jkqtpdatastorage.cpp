@@ -1621,12 +1621,9 @@ void JKQTPDatastore::appendToColumn(size_t column, double value)
 
     // Fallback: create new internal item and copy all data (old behavior)
     QVector<double> old_data = columns[column].copyData();
-    size_t itemID = addItem(new JKQTPDatastoreItem(1, static_cast<size_t>(old_data.size() + 1)));
+    old_data<<value;
+    size_t itemID = addItem(new JKQTPDatastoreItem(std::move(old_data)));
     columns[column] = JKQTPColumn(this, columns[column].getName(), itemID, 0);
-    for (int i = 0; i < old_data.size(); ++i) {
-        columns[column].setValue(static_cast<size_t>(i), old_data[i]);
-    }
-    columns[column].setValue(static_cast<size_t>(old_data.size()), value);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1636,11 +1633,8 @@ void JKQTPDatastore::resizeColumn(size_t column, size_t new_rows)
     const bool ok=columns[column].getDatastoreItem()->isVector();
     if (!ok) {
         QVector<double> old_data=columns[column].copyData();
-        size_t itemID=addItem(new JKQTPDatastoreItem(1, static_cast<size_t>(old_data.size()+1)));
+        size_t itemID=addItem(new JKQTPDatastoreItem(std::move(old_data)));
         columns[column]=JKQTPColumn(this, columns[column].getName(), itemID, 0);
-        for (int i=0; i<old_data.size(); i++) {
-            columns[column].setValue(static_cast<size_t>(i), old_data[i]);
-        }
     }
     columns[column].getDatastoreItem()->resizeVectorItem(new_rows);
 }
