@@ -1,0 +1,97 @@
+<map id="JKQTPGraphFillStyleMixin" name="JKQTPGraphFillStyleMixin">
+<area shape="rect" id="Node000001" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph filling ..." alt="" coords="5,633,224,661"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_bar_graph_base.html" title="This is a base&#45;class for all bar graphs with vertical or horizontal orientation (the orientation is i..." alt="" coords="308,167,495,195"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="119,619,135,550,164,457,184,406,208,355,237,306,270,260,292,238,317,220,365,192,368,197,320,224,295,242,274,264,241,308,213,357,189,408,169,459,140,552,124,620"/>
+<area shape="rect" id="Node000009" href="$class_j_k_q_t_p_geo_base_filled.html" title="This JKQTPGeometricPlotElement is used as base class for geometric drawing elements that only consist..." alt="" coords="311,275,492,303"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="129,620,187,527,227,469,270,414,330,349,382,301,385,305,334,353,274,417,231,472,192,530,133,623"/>
+<area shape="rect" id="Node000015" href="$class_j_k_q_t_p_graph_boxplot_style_mixin.html" title="Styling Mix&#45;In for Boxplots." alt="" coords="272,428,531,456"/>
+<area shape="poly" id="edge14_Node000001_Node000015" title=" " alt="" coords="145,623,379,454,382,458,148,627"/>
+<area shape="rect" id="Node000022" href="$class_j_k_q_t_p_graph_line_and_fill_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph line and..." alt="" coords="280,625,523,670"/>
+<area shape="poly" id="edge21_Node000001_Node000022" title=" " alt="" coords="238,645,280,645,280,650,238,650"/>
+<area shape="rect" id="Node000040" href="$class_j_k_q_t_p_graph_value_label_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for value labels in gr..." alt="" coords="279,715,524,761"/>
+<area shape="poly" id="edge39_Node000001_Node000040" title=" " alt="" coords="174,663,330,713,328,718,172,668"/>
+<area shape="rect" id="Node000042" href="$class_j_k_q_t_p_graph_violinplot_style_mixin.html" title="Styling Mix&#45;In for Violinplots." alt="" coords="286,827,517,873"/>
+<area shape="poly" id="edge41_Node000001_Node000042" title=" " alt="" coords="144,668,202,717,274,770,361,825,358,830,270,775,199,721,141,672"/>
+<area shape="rect" id="Node000046" href="$class_j_k_q_t_p_range_base.html" title="simply marks a range (and possibly a centerline) in a plot. This may be used to display e...." alt="" coords="321,920,481,948"/>
+<area shape="poly" id="edge45_Node000001_Node000046" title=" " alt="" coords="130,673,151,719,182,774,224,832,274,883,307,903,343,918,341,922,305,908,270,887,220,836,178,777,146,721,125,676"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_bar_horizontal_graph.html" title="This implements a horizontal bar graph with bars between &#160;and ." alt="" coords="590,67,818,95"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="457,160,660,92,661,97,459,165"/>
+<area shape="rect" id="Node000006" href="$class_j_k_q_t_p_bar_vertical_graph.html" title="This implements a vertical bar graph with bars between &#160;and ." alt="" coords="601,167,807,195"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="508,178,600,178,600,183,508,183"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_p_bar_horizontal_error_graph.html" title="This implements a horizontal bar graph with bars between &#160;and &#160;and error indicator." alt="" coords="900,5,1167,33"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="785,61,877,43,948,31,949,36,878,49,787,67"/>
+<area shape="rect" id="Node000005" href="$class_j_k_q_t_p_bar_horizontal_stackable_graph.html" title="This implements a horizontal bar graph with bars between &#160;and &#160;Optionally several graphs of this type..." alt="" coords="905,58,1162,103"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="832,78,905,78,905,83,832,83"/>
+<area shape="rect" id="Node000007" href="$class_j_k_q_t_p_bar_vertical_error_graph.html" title="This implements a vertical bar graph with bars between &#160;and &#160;and error indicator." alt="" coords="910,128,1157,156"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="821,164,913,153,914,159,821,170"/>
+<area shape="rect" id="Node000008" href="$class_j_k_q_t_p_bar_vertical_stackable_graph.html" title="This implements a vertical bar graph with bars between &#160;and &#160;Optionally several graphs of this type m..." alt="" coords="915,181,1151,226"/>
+<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="821,186,915,193,915,198,821,191"/>
+<area shape="rect" id="Node000010" href="$class_j_k_q_t_p_geo_polygon.html" title="This JKQTPGeometricPlotElement is used to draw a polygon." alt="" coords="622,223,786,251"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="496,270,621,248,622,253,497,275"/>
+<area shape="rect" id="Node000011" href="$class_j_k_q_t_p_geo_rectangle.html" title="This JKQTPGeometricPlotElement is used to draw a rectangle." alt="" coords="613,275,795,303"/>
+<area shape="poly" id="edge10_Node000009_Node000011" title=" " alt="" coords="506,286,613,286,613,291,506,291"/>
+<area shape="rect" id="Node000012" href="$class_j_k_q_t_p_geo_ellipse.html" title="This JKQTPGeometricPlotElement is used to draw an ellipse." alt="" coords="957,251,1109,279"/>
+<area shape="poly" id="edge11_Node000011_Node000012" title=" " alt="" coords="808,278,957,268,957,273,809,284"/>
+<area shape="rect" id="Node000013" href="$class_j_k_q_t_p_geo_pie.html" title="This JKQTPGeometricPlotElement is used to draw a pie." alt="" coords="1303,251,1428,279"/>
+<area shape="poly" id="edge12_Node000012_Node000013" title=" " alt="" coords="1123,262,1302,262,1302,267,1123,267"/>
+<area shape="rect" id="Node000014" href="$class_j_k_q_t_p_geo_chord.html" title="This JKQTPGeometricPlotElement is used to draw a chord." alt="" coords="1541,251,1691,279"/>
+<area shape="poly" id="edge13_Node000013_Node000014" title=" " alt="" coords="1442,262,1541,262,1541,267,1442,267"/>
+<area shape="rect" id="Node000016" href="$class_j_k_q_t_p_boxplot_element_base.html" title="Tbaseclass for a single (notched) boxplot as a &quot;geometric element&quot;, where the data is directly given ..." alt="" coords="587,355,821,383"/>
+<area shape="poly" id="edge15_Node000015_Node000016" title=" " alt="" coords="473,422,645,380,646,385,474,427"/>
+<area shape="rect" id="Node000019" href="$class_j_k_q_t_p_boxplot_graph_base.html" title="Base class for graphs representing a series of boxplot, elements." alt="" coords="595,428,813,456"/>
+<area shape="poly" id="edge18_Node000015_Node000019" title=" " alt="" coords="544,439,595,439,595,445,544,445"/>
+<area shape="rect" id="Node000017" href="$class_j_k_q_t_p_boxplot_horizontal_element.html" title="This implements a horizontal (notched) boxplot where the data is directly given to the object and not..." alt="" coords="895,303,1171,331"/>
+<area shape="poly" id="edge16_Node000016_Node000017" title=" " alt="" coords="806,350,943,328,944,333,807,355"/>
+<area shape="rect" id="Node000018" href="$class_j_k_q_t_p_boxplot_vertical_element.html" title="This implements a single vertical (notched) boxplot as a &quot;geometric element&quot;, where the data is direc..." alt="" coords="906,355,1161,383"/>
+<area shape="poly" id="edge17_Node000016_Node000018" title=" " alt="" coords="835,366,906,366,906,371,835,371"/>
+<area shape="rect" id="Node000020" href="$class_j_k_q_t_p_boxplot_horizontal_graph.html" title="This implements horizontal boxplots, optionally also a notched boxplot." alt="" coords="904,407,1163,435"/>
+<area shape="poly" id="edge19_Node000019_Node000020" title=" " alt="" coords="826,431,903,426,904,432,826,437"/>
+<area shape="rect" id="Node000021" href="$class_j_k_q_t_p_boxplot_vertical_graph.html" title="This implements vertical boxplots, optionally also a notched boxplot." alt="" coords="914,459,1153,487"/>
+<area shape="poly" id="edge20_Node000019_Node000021" title=" " alt="" coords="826,451,914,459,914,464,826,456"/>
+<area shape="rect" id="Node000023" href="$class_j_k_q_t_p_evaluated_function_with_errors_graph_drawing_base.html" title="This class extends JKQTPEvaluatedFunctionWithErrorsGraphBase with functions to draw the graphs and se..." alt="" coords="579,502,829,547"/>
+<area shape="poly" id="edge22_Node000022_Node000023" title=" " alt="" coords="453,616,512,586,578,557,612,545,614,550,580,562,515,590,456,620"/>
+<area shape="rect" id="Node000030" href="$class_j_k_q_t_p_filled_curve_graph_base.html" title="a Base class for filled curve graphs like e.g. JKQTPFilledCurveXGraph" alt="" coords="581,572,827,600"/>
+<area shape="poly" id="edge29_Node000022_Node000030" title=" " alt="" coords="527,619,633,597,634,603,528,624"/>
+<area shape="rect" id="Node000035" href="$class_j_k_q_t_p_filled_horizontal_range_graph.html" title="This implements filled curve plots where the area is filled between two data columns for each y&#45;value..." alt="" coords="583,625,825,670"/>
+<area shape="poly" id="edge34_Node000022_Node000035" title=" " alt="" coords="536,645,582,645,582,650,536,650"/>
+<area shape="rect" id="Node000036" href="$class_j_k_q_t_p_filled_vertical_range_graph.html" title="This implements filled curve plots where the area is filled between two data columns for each x&#45;value..." alt="" coords="593,694,815,739"/>
+<area shape="poly" id="edge35_Node000022_Node000036" title=" " alt="" coords="514,670,605,691,604,697,513,676"/>
+<area shape="rect" id="Node000037" href="$class_j_k_q_t_p_special_line_graph_base.html" title="a Base class for special line graphs (steps ...) like e.g. JKQTPSpecialLineHorizontalGraph" alt="" coords="580,764,828,792"/>
+<area shape="poly" id="edge36_Node000022_Node000037" title=" " alt="" coords="481,673,532,701,547,714,556,727,565,738,580,749,610,761,607,766,577,754,562,742,552,730,543,718,529,706,479,678"/>
+<area shape="rect" id="Node000024" href="$class_j_k_q_t_p_functor_line_graph_base.html" title="extends JKQTPEvaluatedFunctionWithErrorsGraphDrawingBase with the capabilities to define functions fr..." alt="" coords="908,511,1159,539"/>
+<area shape="poly" id="edge23_Node000023_Node000024" title=" " alt="" coords="844,522,908,522,908,527,844,527"/>
+<area shape="rect" id="Node000027" href="$class_j_k_q_t_p_parsed_function_line_graph_base.html" title="extends JKQTPEvaluatedFunctionWithErrorsGraphDrawingBase with the capabilities to define functions fr..." alt="" coords="877,563,1189,591"/>
+<area shape="poly" id="edge26_Node000023_Node000027" title=" " alt="" coords="844,544,944,560,944,565,843,549"/>
+<area shape="rect" id="Node000025" href="$class_j_k_q_t_p_x_function_line_graph.html" title="This implements line plots where the data is taken from a user supplied function ." alt="" coords="1250,415,1481,443"/>
+<area shape="poly" id="edge24_Node000024_Node000025" title=" " alt="" coords="1168,504,1188,496,1202,486,1211,474,1221,463,1236,452,1264,440,1266,445,1239,456,1224,467,1215,478,1206,490,1191,500,1170,509"/>
+<area shape="rect" id="Node000026" href="$class_j_k_q_t_p_y_function_line_graph.html" title="This implements line plots where the data is taken from a user supplied function ." alt="" coords="1251,467,1479,495"/>
+<area shape="poly" id="edge25_Node000024_Node000026" title=" " alt="" coords="1153,506,1258,492,1259,497,1154,511"/>
+<area shape="rect" id="Node000028" href="$class_j_k_q_t_p_x_parsed_function_line_graph.html" title="This implements line plots where the data is taken from a user supplied function &#160;The function is def..." alt="" coords="1248,519,1483,565"/>
+<area shape="poly" id="edge27_Node000027_Node000028" title=" " alt="" coords="1181,559,1248,552,1248,557,1182,564"/>
+<area shape="rect" id="Node000029" href="$class_j_k_q_t_p_y_parsed_function_line_graph.html" title="This implements line plots where the data is taken from a user supplied function &#160;The function is def..." alt="" coords="1249,589,1482,634"/>
+<area shape="poly" id="edge28_Node000027_Node000029" title=" " alt="" coords="1181,589,1249,597,1248,602,1181,595"/>
+<area shape="rect" id="Node000031" href="$class_j_k_q_t_p_filled_curve_x_graph.html" title="This implements filled curve plots where the area is filled between the plot line and the x&#45;Axis." alt="" coords="925,615,1142,643"/>
+<area shape="poly" id="edge30_Node000030_Node000031" title=" " alt="" coords="827,599,925,612,924,617,826,604"/>
+<area shape="rect" id="Node000033" href="$class_j_k_q_t_p_filled_curve_y_graph.html" title="This implements filled curve plots where the area is filled between the plot line and y&#45;Axis." alt="" coords="925,667,1141,695"/>
+<area shape="poly" id="edge32_Node000030_Node000033" title=" " alt="" coords="811,602,831,610,846,621,855,632,864,642,879,652,926,668,924,673,876,656,861,646,851,635,842,625,828,615,809,607"/>
+<area shape="rect" id="Node000032" href="$class_j_k_q_t_p_filled_curve_x_error_graph.html" title="This implements filled curve plots with y errors where the area is filled between the plot line and t..." alt="" coords="1237,659,1493,687"/>
+<area shape="poly" id="edge31_Node000031_Node000032" title=" " alt="" coords="1154,642,1259,656,1258,661,1153,647"/>
+<area shape="rect" id="Node000034" href="$class_j_k_q_t_p_filled_curve_y_error_graph.html" title="This implements filled curve plots with y errors where the area is filled between the plot line and t..." alt="" coords="1238,711,1493,739"/>
+<area shape="poly" id="edge33_Node000033_Node000034" title=" " alt="" coords="1154,694,1259,708,1258,713,1153,699"/>
+<area shape="rect" id="Node000038" href="$class_j_k_q_t_p_special_line_horizontal_graph.html" title="This implements a step plot with values ." alt="" coords="913,719,1154,765"/>
+<area shape="poly" id="edge37_Node000037_Node000038" title=" " alt="" coords="842,760,912,753,913,758,842,766"/>
+<area shape="rect" id="Node000039" href="$class_j_k_q_t_p_special_line_vertical_graph.html" title="This implements a step plot with values ." alt="" coords="923,789,1143,834"/>
+<area shape="poly" id="edge38_Node000037_Node000039" title=" " alt="" coords="842,789,923,798,923,803,842,795"/>
+<area shape="rect" id="Node000041" href="$class_j_k_q_t_p_x_y_graph_labels.html" title="This graph plots a series of data labels. This can be used to add number&#45;labels to e...." alt="" coords="609,816,799,844"/>
+<area shape="poly" id="edge40_Node000040_Node000041" title=" " alt="" coords="471,763,579,801,629,813,628,819,578,806,469,768"/>
+<area shape="rect" id="Node000043" href="$class_j_k_q_t_p_violinplot_element_base.html" title="This implements a single vertical Violin Plot as a &quot;geometric element&quot;." alt="" coords="580,868,828,896"/>
+<area shape="poly" id="edge42_Node000042_Node000043" title=" " alt="" coords="531,861,580,866,579,872,530,866"/>
+<area shape="rect" id="Node000044" href="$class_j_k_q_t_p_violinplot_horizontal_element.html" title="This implements a single horizontal Violin Plot as a &quot;geometric element&quot;." alt="" coords="921,859,1145,905"/>
+<area shape="poly" id="edge43_Node000043_Node000044" title=" " alt="" coords="842,879,921,879,921,885,842,885"/>
+<area shape="rect" id="Node000045" href="$class_j_k_q_t_p_violinplot_vertical_element.html" title="This implements a single vertical Violin Plot as a &quot;geometric element&quot;." alt="" coords="899,929,1168,957"/>
+<area shape="poly" id="edge44_Node000043_Node000045" title=" " alt="" coords="788,896,878,914,949,927,948,932,877,919,787,901"/>
+<area shape="rect" id="Node000047" href="$class_j_k_q_t_p_horizontal_range.html" title="simply marks a range (and possibly a centerline) in a plot. This may be used to display e...." alt="" coords="603,920,805,948"/>
+<area shape="poly" id="edge46_Node000046_Node000047" title=" " alt="" coords="495,931,602,931,602,937,495,937"/>
+<area shape="rect" id="Node000048" href="$class_j_k_q_t_p_vertical_range.html" title="simply marks a range (and possibly a centerline) in a plot. This may be used to display e...." alt="" coords="613,972,795,1000"/>
+<area shape="poly" id="edge47_Node000046_Node000048" title=" " alt="" coords="495,947,622,969,621,975,495,953"/>
+</map>

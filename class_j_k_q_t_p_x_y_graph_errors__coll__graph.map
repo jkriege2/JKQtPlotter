@@ -1,0 +1,9 @@
+<map id="JKQTPXYGraphErrors" name="JKQTPXYGraphErrors">
+<area shape="rect" id="Node000001" title="This class is the base class for graphs that only display error indicators in x&#45; and y&#45;direction." alt="" coords="246,81,433,109"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_x_graph_error_data.html" title="This class adds data fields for error indicators in x direction." alt="" coords="5,5,212,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="163,35,300,79,298,84,161,40"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_y_graph_error_data.html" title="This class adds data fields for error indicators in y direction." alt="" coords="237,5,442,33"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="342,47,342,81,337,81,337,47"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_p_graph_error_style_mixin.html" title="This mix&#45;in class assembles all styling properties applicable to error indicators." alt="" coords="467,5,705,33"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="530,40,383,84,381,79,529,35"/>
+</map>

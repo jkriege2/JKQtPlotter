@@ -1,0 +1,14 @@
+<map id="JKQTPColumnIterator" name="JKQTPColumnIterator">
+<area shape="rect" id="Node000001" title="iterator over the data in the column of a JKQTPDatastore" alt="" coords="5,208,197,236"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_column.html" title="internally stores information about one data column. See JKQTPDatastore for more information." alt="" coords="180,107,311,135"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="214,144,188,161,120,210,117,206,185,156,211,140"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="355,208,642,236"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="292,137,467,205,465,210,290,142"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_datastore.html" title="This class manages data columns (with entries of type double ), used by JKQTPlotter/JKQTBasePlotter t..." alt="" coords="193,309,341,337"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="261,296,255,236,244,135,249,135,260,236,266,296"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="457,244,298,312,296,307,455,239"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="405,107,592,135"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="501,149,501,207,496,207,496,149"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="479,5,518,33"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="501,47,501,106,496,106,496,47"/>
+</map>

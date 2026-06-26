@@ -1,0 +1,81 @@
+.tabs, .tabs2, .tabs3 {
+    background-color: var(--nav-menu-background-color);
+    width: 100%;
+    z-index: 101;
+    font-size: var(--nav-font-size-level1);
+    font-family: var(--font-family-nav);
+    display: table;
+}
+
+#navrow2, #navrow3, #navrow4 {
+    border-top: 1px solid var(--nav-border-color);
+}
+
+.tabs2 {
+    font-size: var(--nav-font-size-level2);
+}
+.tabs3 {
+    font-size: var(--nav-font-size-level3);
+}
+
+.tablist {
+    margin: 0;
+    padding: 0;
+    display: block;
+}
+
+.tablist li {
+    float: left;
+    display: table-cell;
+    background-color: var(--nav-menu-background-color);
+    line-height: 36px;
+    list-style: none;
+}
+
+.tablist a {
+    display: block;
+    margin: 5px 0;
+    padding: 0px 20px;
+    background-color: var(--nav-menu-background-color);
+    color: var(--nav-text-normal-color);
+    text-decoration: none;
+    outline: none;
+}
+
+.tablist a:focus {
+    outline: auto;
+    z-index: 10;
+    position: relative;
+}
+
+.tabs3 .tablist a {
+    padding: 0 10px;
+}
+
+.tablist a:hover {
+    background-color: var(--nav-menu-active-bg);
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.tablist li.current {
+	position: relative;
+}
+
+.tablist li.current a:after {   
+	content: '';
+	position: absolute;
+	left: 15px;
+	right: 15px;
+	top: 35px;
+	height: 1px;
+	display: block;
+	background-color: var(--nav-menu-active-color);
+	border: 1px solid var(--nav-menu-active-color);
+	border-radius: 2px 2px 0px 0px;
+}
+
+#navrow4 .tablist li.current a:after {
+	left: 5px;
+	right: 5px;
+}

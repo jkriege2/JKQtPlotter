@@ -1,0 +1,24 @@
+<map id="JKQTPDataCache&lt; TData, TKey, ThreadSafe, TKeyInSignature &gt;" name="JKQTPDataCache&lt; TData, TKey, ThreadSafe, TKeyInSignature &gt;">
+<area shape="rect" id="Node000001" title="this class can be used to implement a general cache for values" alt="" coords="1776,56,2103,101"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="1286,5,1469,51"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1483,35,1776,61,1776,67,1482,40"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="817,21,999,67"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="1013,38,1286,28,1286,34,1013,43"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="1268,81,1487,161"/>
+<area shape="poly" id="edge12_Node000006_Node000003" title=" " alt="" coords="950,72,987,96,1030,113,1090,126,1152,132,1212,134,1268,131,1268,137,1212,139,1151,138,1089,131,1029,119,985,100,947,77"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="597,54,636,82"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="650,65,786,57,816,54,817,60,787,63,650,70"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="5,141,44,169"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="51,130,67,122,163,84,247,58,323,42,395,34,548,31,741,32,787,32,816,34,816,39,787,37,741,37,548,36,396,39,324,47,248,63,165,89,69,126,54,135"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="124,199,281,227"/>
+<area shape="poly" id="edge9_Node000009_Node000005" title=" " alt="" coords="41,179,53,195,69,207,96,216,124,220,123,225,94,221,67,212,50,199,37,182"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="305,141,492,169"/>
+<area shape="poly" id="edge11_Node000010_Node000005" title=" " alt="" coords="58,152,305,152,305,157,58,157"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="1500,112,1752,95,1775,93,1776,98,1752,100,1501,117"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="811,155,1005,200"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="1019,185,1128,186,1187,182,1243,173,1292,159,1294,164,1245,179,1187,187,1128,191,1019,190"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="516,203,717,231"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="731,203,786,196,810,192,811,198,787,201,731,209"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="295,212,516,214,516,219,295,217"/>
+<area shape="poly" id="edge10_Node000007_Node000010" title=" " alt="" coords="506,157,811,170,811,176,506,162"/>
+</map>

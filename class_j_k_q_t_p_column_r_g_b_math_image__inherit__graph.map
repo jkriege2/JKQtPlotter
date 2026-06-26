@@ -1,0 +1,15 @@
+<map id="JKQTPColumnRGBMathImage" name="JKQTPColumnRGBMathImage">
+<area shape="rect" id="Node000001" title="like JKQTPRGBMathImage but reads images from columns of the datastore" alt="" coords="5,461,261,489"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_r_g_b_math_image.html" title="class to plot an image from an 2&#45;dimensional array of RGB values" alt="" coords="36,385,231,413"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="136,427,136,461,131,461,131,427"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_math_image_base.html" title="base class to hold an image from an 2&#45;dimensional array of values" alt="" coords="33,309,233,337"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="136,351,136,385,131,385,131,351"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_p_image_base.html" title="base class for plotting an image" alt="" coords="53,233,213,261"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="136,275,136,309,131,309,131,275"/>
+<area shape="rect" id="Node000005" href="$class_j_k_q_t_p_graph.html" title="this virtual base class of the (data&#45;column based) graphs, which are part of a JKQTPlotter plot and w..." alt="" coords="74,157,193,185"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="136,199,136,233,131,233,131,199"/>
+<area shape="rect" id="Node000006" href="$class_j_k_q_t_p_plot_element.html" title="this virtual base class of every element, which is part of a JKQTPlotter plot and may appear in its k..." alt="" coords="50,81,217,109"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="136,123,136,157,131,157,131,123"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="90,5,177,33"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="136,47,136,81,131,81,131,47"/>
+</map>

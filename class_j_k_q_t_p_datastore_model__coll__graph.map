@@ -1,0 +1,16 @@
+<map id="JKQTPDatastoreModel" name="JKQTPDatastoreModel">
+<area shape="rect" id="Node000001" title="QAbstractTableModel descendent that allows to view data in a JKQTPDatastore." alt="" coords="5,107,201,135"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,5,196,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="104,47,106,106,100,106,99,47"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_datastore.html" title="This class manages data columns (with entries of type double ), used by JKQTPlotter/JKQTBasePlotter t..." alt="" coords="220,5,368,33"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="247,41,205,60,123,109,121,104,202,55,245,36"/>
+<area shape="rect" id="Node000005" href="$class_j_k_q_t_p_column.html" title="internally stores information about one data column. See JKQTPDatastore for more information." alt="" coords="227,107,358,135"/>
+<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="296,47,296,106,290,106,291,47"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="263,208,549,236"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="407,194,409,163,408,128,400,91,383,59,368,45,350,36,353,31,371,41,387,56,405,90,413,127,415,163,413,194"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="316,143,357,182,388,206,385,210,354,186,312,147"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="575,107,762,135"/>
+<area shape="poly" id="edge6_Node000004_Node000006" title=" " alt="" coords="623,142,441,210,439,205,621,137"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="649,5,688,33"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="671,47,671,106,666,106,666,47"/>
+</map>

@@ -1,0 +1,11 @@
+<map id="JKQTPBaseKey::KeySizeDescription" name="JKQTPBaseKey::KeySizeDescription">
+<area shape="rect" id="Node000001" title="struct, describing basic layout and size properties of a key/legend, mostly used as return value of g..." alt="" coords="100,349,399,377"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="124,231,375,276"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="252,290,252,349,247,349,247,290"/>
+<area shape="rect" id="Node000003" href="$struct_j_k_q_t_p_base_key_1_1_key_layout_description.html" title="struct, describing basic layout and size properties of a key/legend, mostly used as return value of g..." alt="" coords="5,107,325,135"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="183,145,238,229,233,232,179,148"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="349,107,536,135"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="414,144,283,233,280,228,411,140"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="423,5,462,33"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="445,47,445,106,440,106,440,47"/>
+</map>

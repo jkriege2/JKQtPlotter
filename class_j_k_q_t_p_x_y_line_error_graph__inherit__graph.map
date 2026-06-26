@@ -1,0 +1,27 @@
+<map id="JKQTPXYLineErrorGraph" name="JKQTPXYLineErrorGraph">
+<area shape="rect" id="Node000001" title="This implements xy line plots with x and y error indicators." alt="" coords="1067,196,1279,224"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_x_y_line_graph.html" title="This implements xy line plots. This also alows to draw symbols at the data points." alt="" coords="839,109,1012,137"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="980,140,1132,193,1131,198,979,145"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_x_y_graph.html" title="This virtual JKQTPGraph descendent may be used as base for all graphs that use at least two columns t..." alt="" coords="583,5,723,33"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="737,29,785,42,852,74,905,107,902,111,850,79,783,47,736,34"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_p_graph.html" title="this virtual base class of the (data&#45;column based) graphs, which are part of a JKQTPlotter plot and w..." alt="" coords="355,5,473,33"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="487,17,582,17,582,22,487,22"/>
+<area shape="rect" id="Node000005" href="$class_j_k_q_t_p_plot_element.html" title="this virtual base class of every element, which is part of a JKQTPlotter plot and may appear in its k..." alt="" coords="140,5,307,33"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="321,17,355,17,355,22,321,22"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="5,5,92,33"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="105,17,140,17,140,22,105,22"/>
+<area shape="rect" id="Node000007" href="$class_j_k_q_t_p_graph_line_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph line sty..." alt="" coords="537,57,769,85"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="741,85,852,107,851,112,740,91"/>
+<area shape="rect" id="Node000008" href="$class_j_k_q_t_p_graph_symbol_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph symbols ..." alt="" coords="523,109,782,137"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="796,121,838,121,838,126,796,126"/>
+<area shape="rect" id="Node000009" href="$class_j_k_q_t_p_graph_lines_compression_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for a line&#45;graph compr..." alt="" coords="521,162,784,207"/>
+<area shape="poly" id="edge8_Node000002_Node000009" title=" " alt="" coords="767,156,861,135,863,140,768,162"/>
+<area shape="rect" id="Node000010" href="$class_j_k_q_t_p_x_y_graph_errors.html" title="This class is the base class for graphs that only display error indicators in x&#45; and y&#45;direction." alt="" coords="832,257,1019,285"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="995,251,1115,221,1116,227,996,257"/>
+<area shape="rect" id="Node000011" href="$class_j_k_q_t_p_x_graph_error_data.html" title="This class adds data fields for error indicators in x direction." alt="" coords="549,232,756,260"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="770,254,832,260,832,265,769,260"/>
+<area shape="rect" id="Node000012" href="$class_j_k_q_t_p_y_graph_error_data.html" title="This class adds data fields for error indicators in y direction." alt="" coords="550,284,755,312"/>
+<area shape="poly" id="edge11_Node000010_Node000012" title=" " alt="" coords="769,284,831,278,832,283,770,289"/>
+<area shape="rect" id="Node000013" href="$class_j_k_q_t_p_graph_error_style_mixin.html" title="This mix&#45;in class assembles all styling properties applicable to error indicators." alt="" coords="533,336,772,364"/>
+<area shape="poly" id="edge12_Node000010_Node000013" title=" " alt="" coords="750,331,783,322,841,303,891,283,893,288,842,308,785,327,751,336"/>
+</map>

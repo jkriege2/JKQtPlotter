@@ -1,0 +1,9 @@
+<map id="JKQTMathTextHorizontalListNode" name="JKQTMathTextHorizontalListNode">
+<area shape="rect" id="Node000001" title="subclass representing a list of nodes in the syntax tree, layed out horizontally" alt="" coords="135,175,417,203"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_math_text_multi_child_node.html" title="subclass representing a node in the syntax tree, that has two children" alt="" coords="5,90,256,118"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="166,122,255,172,252,177,164,127"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_math_text_node.html" title="subclass representing one node in the syntax tree" alt="" coords="43,5,218,33"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="133,47,133,90,128,90,128,47"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_math_text_modify_environment_node_mix_in.html" title="mixin extending a node that does not produce any output, but provides a function modifyEnvironment() ..." alt="" coords="280,81,565,127"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="374,136,300,177,297,172,371,131"/>
+</map>

@@ -1,0 +1,27 @@
+<map id="JKQTFPPlot" name="JKQTFPPlot">
+<area shape="rect" id="Node000001" title="base class for all plots that may be plotted by JKQTFastPlotter" alt="" coords="140,239,249,267"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_f_p_line_plot.html" title="a simple line plot for JKQTFastPlotter" alt="" coords="359,31,502,59"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="201,225,213,189,233,146,260,104,296,69,326,53,359,45,360,50,328,58,299,73,264,108,237,149,218,191,206,226"/>
+<area shape="rect" id="Node000006" href="$class_j_k_q_t_f_p_q_image_plot.html" title="a plot of a QImage" alt="" coords="344,83,517,111"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="207,225,242,171,267,144,296,121,319,110,343,102,345,107,321,115,299,126,270,148,246,175,211,228"/>
+<area shape="rect" id="Node000007" href="$class_j_k_q_t_f_p_q_overlay_linear_grid_plot.html" title="plot a horizontal scale bar" alt="" coords="297,135,564,163"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="219,227,254,198,296,173,332,160,334,165,298,178,257,203,222,231"/>
+<area shape="rect" id="Node000008" href="$class_j_k_q_t_f_p_q_scale_bar_x_plot.html" title="plot a horizontal scale bar" alt="" coords="329,187,533,215"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="262,233,297,225,356,212,357,217,298,230,263,238"/>
+<area shape="rect" id="Node000009" href="$class_j_k_q_t_f_p_r_g_b_image_overlay_plot.html" title="plots 1,2 or 3 given grayscale images as an overlay plot, where each channel is drawn as one color ch..." alt="" coords="303,239,559,267"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="263,250,302,250,302,255,263,255"/>
+<area shape="rect" id="Node000010" href="$class_j_k_q_t_f_p_x_range_plot.html" title="plot a range of x values" alt="" coords="345,291,516,319"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="261,268,298,277,352,288,351,293,297,282,259,273"/>
+<area shape="rect" id="Node000011" href="$class_j_k_q_t_f_p_y_range_plot.html" title="plot a range of x values" alt="" coords="346,343,515,371"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="221,274,256,303,298,329,347,344,345,349,296,334,253,308,218,278"/>
+<area shape="rect" id="Node000012" href="$class_j_k_q_t_f_pimage_overlay_plot.html" title="plots an image overlay, i.e. a boolean image where each true pixel is drawn with a given color and th..." alt="" coords="321,395,541,423"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="211,277,246,331,270,359,299,381,322,392,319,397,296,386,267,363,242,335,207,280"/>
+<area shape="rect" id="Node000013" href="$class_j_k_q_t_f_pimage_plot.html" title="plots a given grayscale image with a given color palette" alt="" coords="351,447,510,475"/>
+<area shape="poly" id="edge12_Node000001_Node000013" title=" " alt="" coords="206,279,218,315,237,357,264,399,299,433,324,447,352,455,350,460,322,451,296,437,260,402,232,360,213,317,201,281"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,239,92,267"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="106,250,140,250,140,255,106,255"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_f_p_v_bar_plot.html" title="a simple vertical bar plot for JKQTFastPlotter" alt="" coords="619,5,767,33"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="515,34,619,24,619,29,516,39"/>
+<area shape="rect" id="Node000005" href="$class_j_k_q_t_f_p_v_cross_plot.html" title="a simple plot that draws a cross for every datapoint" alt="" coords="612,57,775,85"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="516,51,612,60,611,66,515,56"/>
+</map>
