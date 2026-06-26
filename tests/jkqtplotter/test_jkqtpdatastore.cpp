@@ -16,6 +16,11 @@
 
 #include "jkqtplotter/jkqtpdatastorage.h"
 
+
+#ifndef QCOMPARE_EQ
+#define QCOMPARE_EQ(A,B) if (!static_cast<bool>((A)==(B))) {qDebug()<<QTest::toString(A)<< "!=" << QTest::toString(B); } QVERIFY((A)==(B))
+#endif
+
 static bool roughlyEqual(double a, double b, double eps=1e-9) {
     return std::fabs(a-b) <= eps;
 }
@@ -526,7 +531,7 @@ private slots:
         QCOMPARE_EQ(ds.isColumnDataExternal(a), true);
         QCOMPARE_EQ(ds.isVectorColumn(a), false);
         ds.resizeColumn(a, 5);
-        QCOMPARE_NE(ds.getColumnPointer(a), data); // resizing results in conversion to an internal column
+        QVERIFY(ds.getColumnPointer(a)!=data); // resizing results in conversion to an internal column
         QCOMPARE(ds.getRows(a), static_cast<size_t>(5));
         QCOMPARE_EQ(ds.isColumnDataExternal(a), false);
         QCOMPARE_EQ(ds.isVectorColumn(a), true);
@@ -569,7 +574,7 @@ private slots:
         QCOMPARE_EQ(ds.isColumnDataExternal(a), true);
         QCOMPARE_EQ(ds.isVectorColumn(a), false);
         ds.convertToVectorColumn(a);
-        QCOMPARE_NE(ds.getColumnPointer(a), data); // converting results in conversion to an internal column
+        QVERIFY(ds.getColumnPointer(a) != data); // converting results in conversion to an internal column
         QCOMPARE(ds.getRows(a), static_cast<size_t>(3));
         QCOMPARE_EQ(ds.isColumnDataExternal(a), false);
         QCOMPARE_EQ(ds.isVectorColumn(a), true);
