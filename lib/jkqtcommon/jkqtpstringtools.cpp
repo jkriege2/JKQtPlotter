@@ -174,9 +174,10 @@ std::string jkqtp_floattounitstr(double data, int past_comma, bool remove_trail0
     const double absData = fabs(data);
     int exponent = 0; // exponent in steps of 3: 0 -> no unit, +3 -> k, -3 -> m, etc.
     double scaled = absData;
+    const double rel_tol = 1e-12;
 
     // Scale down for large values (k, M, G, ...).
-    while (scaled >= 1000.0 && exponent < 30) {
+    while (scaled >= (1000.0-rel_tol) && exponent < 30) {
         scaled /= 1000.0;
         exponent += 3;
     }
@@ -184,7 +185,6 @@ std::string jkqtp_floattounitstr(double data, int past_comma, bool remove_trail0
     // Scale up for small values (m, µ, n, ...).
     // Use a small tolerance to avoid misclassifying exact thresholds (1.0) due to
     // tiny floating-point round-off differences on some architectures (e.g. i386).
-    const double rel_tol = 1e-12;
     while (scaled > 0.0 && scaled < (1.0 - rel_tol) && exponent >= -27) {
         scaled *= 1000.0;
         exponent -= 3;
@@ -233,7 +233,8 @@ std::string jkqtp_floattolatexunitstr(double data, int past_comma, bool remove_t
     const double absData = fabs(data);
     int exponent = 0;
     double scaled = absData;
-    while (scaled >= 1000.0 && exponent < 30) {
+    const double rel_tol = 1e-12;
+    while (scaled >= (1000.0-rel_tol) && exponent < 30) {
         scaled /= 1000.0;
         exponent += 3;
     }
@@ -241,7 +242,6 @@ std::string jkqtp_floattolatexunitstr(double data, int past_comma, bool remove_t
     // Scale up for small values (m, µ, n, ...).
     // Use a small tolerance to avoid misclassifying exact thresholds (1.0) due to
     // tiny floating-point round-off differences on some architectures (e.g. i386).
-    const double rel_tol = 1e-12;
     while (scaled > 0.0 && scaled < (1.0 - rel_tol) && exponent >= -27) {
         scaled *= 1000.0;
         exponent -= 3;
