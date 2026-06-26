@@ -464,8 +464,24 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPDatastore{
         void setColumnImageHeight(size_t column, size_t imageHeight);
         /** \brief sets the width of the image, represented by \a column (in row-major ordering) to \a imageWidth */
         void setColumnImageWidth(size_t column, size_t imageWidth);
+        /** \brief returns \c true, if the data in the column \a column is internally managed */
+        bool isColumnDataExternal(size_t column) const;
+        /** \brief returns \c true, if the data in the column \a column is internally managed */
+        bool isColumnDataExternal(int column) const;
+        /** \brief returns \c true, if the data in the column \a column is internally managed as a vector (with vector coulmns, resizing operations, such as appending are relatively cheap) */
+        bool isVectorColumn(size_t column) const;
+        /** \brief returns \c true, if the data in the column \a column is internally managed as a vector (with vector coulmns, resizing operations, such as appending are relatively cheap) */
+        bool isVectorColumn(int column) const;
+        /** \brief returns \c true, if the data in the column \a column is internally managed */
+        inline bool isColumnDataInternal(size_t column) const {
+            return !isColumnDataExternal(column);
+        }
+        /** \brief returns \c true, if the data in the column \a column is internally managed */
+        inline bool isColumnDataInternal(int column) const {
+            return !isColumnDataExternal(column);
+        };
 
-        /** \brief returns the data checksum of the given column */
+        /** \brief returns the data checksum of the given column \a column */
         quint16 getColumnChecksum(int column) const;
 
         /** \brief returns the value at position (\c column, \c row). \c column is the logical column and will be mapped to the according memory block internally!)  */
@@ -1634,6 +1650,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPColumn {
      *
      * This copies \a N elements from \a data into the column where the first overwritten column
      * line is \a offset, so you can shift the location where the copy process starts.
+     *
+     * \warning Note that the column needs to have enough space to fit the data.
+     *          This function does not resize the column!
      */
     void copy(const double* data, size_t N, size_t offset=0);
 
@@ -2368,13 +2387,14 @@ class JKQTPColumnConstIterator {
  * \see JKQTPDatastore
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPDatastoreItem {
-  private:
+  public:
     /** \brief how data is represented in this JKQTPDatastoreItem */
     enum class StorageType {
         Internal, /*!< \brief data is stored in an internally managed (=owned, i.e. freed in the destructor) C-array */
         External, /*!< \brief data is stored in an externally managed (=not owned) C-array */
         Vector    /*!< \brief data is stored in the internal \a QVector<double> datavec */
     };
+  private:
     /** \brief a pointer to the actual data */
     double* data;
     /** \brief as data may also point to a matrix, this specifies the number of columns in this element (default: 1) */
@@ -2394,21 +2414,42 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPDatastoreItem {
     JKQTPDatastoreItem();
 
   public:
-    /** \brief class constructor: initializes the object for internal data storage */
+    /** \brief class constructor: initializes the object for internal data storage with \a columns columns and \a rows rows */
     JKQTPDatastoreItem(size_t columns, size_t rows);
-    /** \brief class constructor: initializes the object for internal data storage with the given data */
+    /** \brief class constructor: initializes the object for internal data storage with the given \a data */
     JKQTPDatastoreItem(const QVector<double> &data);
-    /** \brief class constructor: initializes the object for internal data storage with the given data */
+    /** \brief class constructor: initializes the object for internal data storage with the given \a data */
     JKQTPDatastoreItem(QVector<double> &&data);
-    /** \brief class constructor: initializes the object for external data storage */
+    /** \brief class constructor: initializes the object for external data storage
+     *
+     *  \param dataformat organization of the data
+     *  \param data points to the data, ownership remains with the caller and is not transfered to the JKQTPDataStore
+     *              organization is in column-major format, i.e. column after column in continuous memory
+     *  \param columns number of columns, contained in \a data
+     *  \param rows number of rows, contained in \a data
+     */
     JKQTPDatastoreItem(JKQTPDatastoreItemFormat dataformat, double* data, size_t columns, size_t rows);
-    /** \brief class constructor: initializes the object for external data storage */
-    JKQTPDatastoreItem(JKQTPDatastoreItemFormat dataformat, double* data, size_t columns, size_t rows, bool storageType);
+    /** \brief class constructor: initializes the object for external or internal data storage
+     *
+     *  \param dataformat organization of the data
+     *  \param data points to the data, ownership remains with the caller and is not transfered to the JKQTPDataStore
+     *              organization is in column-major format, i.e. column after column in continuous memory
+     *  \param columns number of columns, contained in \a data
+     *  \param rows number of rows, contained in \a data
+     *  \param storageTypeinternalStorage indicates whether data is managed internally (\c true, i.e. JKQTPDatastore takes over ownership)
+     *                                    or externally (\c false )
+     */
+    JKQTPDatastoreItem(JKQTPDatastoreItemFormat dataformat, double* data, size_t columns, size_t rows, bool internalStorage);
     /** \brief class destructor: frees unfreed internal memory */
     ~JKQTPDatastoreItem();
 
     /** \brief change the size of all columns to the givne number of rows. Returns \c true if the old data could be retained/saved and \c false if the old data was lost (which happens in most of the cases!) */
     bool resizeColumns(size_t rows);
+
+    /** \brief returns whether the datastore manages the memory externally, internally or internally as vector .*/
+    StorageType getStorageType() const {
+        return storageType;
+    }
 
     /** \copydoc JKQTPDatastoreItem::rows */
     inline size_t getRows() const

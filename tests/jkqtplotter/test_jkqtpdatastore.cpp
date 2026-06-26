@@ -493,6 +493,48 @@ private slots:
         QCOMPARE(ds.getRows(b), static_cast<size_t>(2));
     }
 
+    //  resizeColumn
+    void test_append_resize_vectorcolumn() {
+        JKQTPDatastore ds;
+        const QVector<double> data {1.1,2.2,3.3};
+        size_t a = ds.addColumn(QVector<double>(data), QString("a"));
+        for (int i=0; i<data.size(); i++) {
+            QCOMPARE(ds.get(a,i), data[i]);
+        }
+        QCOMPARE(ds.getRows(a), static_cast<size_t>(3));
+        QCOMPARE_EQ(ds.isColumnDataExternal(a), false);
+        QCOMPARE_EQ(ds.isVectorColumn(a), true);
+        ds.resizeColumn(a, 5);
+        QCOMPARE_EQ(ds.isColumnDataExternal(a), false);
+        QCOMPARE_EQ(ds.isVectorColumn(a), true);
+        QCOMPARE(ds.getRows(a), static_cast<size_t>(5));
+        for (int i=0; i<data.size(); i++) {
+            QCOMPARE(ds.get(a,i), data[i]);
+        }
+    }
+
+    //  resizeColumn
+    void test_append_resize_externalcolumn() {
+        JKQTPDatastore ds;
+        double data[3] = {1.1,2.2,3.3};
+        size_t a = ds.addColumn(data, 3, QString("a"));
+        for (int i=0; i<3; i++) {
+            QCOMPARE(ds.get(a,i), data[i]);
+        }
+        QCOMPARE(ds.getRows(a), static_cast<size_t>(3));
+        QCOMPARE_EQ(ds.getColumnPointer(a), data);
+        QCOMPARE_EQ(ds.isColumnDataExternal(a), true);
+        QCOMPARE_EQ(ds.isVectorColumn(a), false);
+        ds.resizeColumn(a, 5);
+        QCOMPARE_NE(ds.getColumnPointer(a), data); // resizing results in conversion to an internal column
+        QCOMPARE(ds.getRows(a), static_cast<size_t>(5));
+        QCOMPARE_EQ(ds.isColumnDataExternal(a), false);
+        QCOMPARE_EQ(ds.isVectorColumn(a), true);
+        for (int i=0; i<3; i++) {
+            QCOMPARE(ds.get(a,i), data[i]);
+        }
+    }
+
     // appendFromContainerToColumn (vector/list)
     void test_appendFromContainerToColumn_variants() {
         JKQTPDatastore ds;
@@ -672,13 +714,13 @@ private slots:
         buf2.close();
         QVERIFY(!ba2.isEmpty());
 
-        QTemporaryFile f1; f1.open(); QString fn1 = f1.fileName(); f1.close();
+        QTemporaryFile f1; QVERIFY(f1.open()); QString fn1 = f1.fileName(); f1.close();
         ds.saveSYLK(fn1);
         QFile c1(fn1);
         QVERIFY(c1.exists());
         QVERIFY(c1.size() > 0);
 
-        QTemporaryFile f2; f2.open(); QString fn2 = f2.fileName(); f2.close();
+        QTemporaryFile f2; QVERIFY(f2.open()); QString fn2 = f2.fileName(); f2.close();
         ds.saveDIF(fn2);
         QFile c2(fn2);
         QVERIFY(c2.exists());

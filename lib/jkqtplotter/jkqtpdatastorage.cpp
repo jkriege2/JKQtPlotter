@@ -708,6 +708,30 @@ void JKQTPDatastore::setColumnImageWidth(size_t column, size_t imageWidth)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
+bool JKQTPDatastore::isColumnDataExternal(size_t column) const
+{
+    return columns[column].getDatastoreItem()->getStorageType()==JKQTPDatastoreItem::StorageType::External;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+bool JKQTPDatastore::isColumnDataExternal(int column) const
+{
+    return columns[column].getDatastoreItem()->getStorageType()==JKQTPDatastoreItem::StorageType::External;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+bool JKQTPDatastore::isVectorColumn(int column) const
+{
+    return columns[column].getDatastoreItem()->isVector();
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+bool JKQTPDatastore::isVectorColumn(size_t column) const
+{
+    return columns[column].getDatastoreItem()->isVector();
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
 void JKQTPDatastore::setColumnImageHeight(size_t column, size_t imageHeight)
 {
     columns[column].setImageColumns(columns[column].getRows()/imageHeight);

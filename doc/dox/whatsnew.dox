@@ -143,6 +143,7 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: added JKQTPCoordinateAxis::getMin() and JKQTPCoordinateAxis::getMax() getters</li>
     <li>NEW: added example \ref JKQTPlotterUIScrollbar </li>
     <li>NEW: added JKQTPlotterUpdateGuard guard class that prevents redrawing of a JKQTPlotter during the lifetime of a code block, improved documentation of speed during plot setup</li>
+    <li>NEW: add getters to JKQTPDatastore which return information on the datamanegement of single columns (internal/external/vector): JKQTPDatastore::isVectorColumn(), JKQTPDatastore::isColumnDataExternal(), JKQTPDatastore::isColumnDataInternal</li>
   </ul></li>
   
   <li>JKQTMathText:<ul>
