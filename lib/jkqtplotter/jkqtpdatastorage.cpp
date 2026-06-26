@@ -726,6 +726,26 @@ bool JKQTPDatastore::isVectorColumn(int column) const
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
+void JKQTPDatastore::convertToVectorColumn(size_t column)
+{
+    auto it=columns[column].getDatastoreItem();
+    if (it->isVector()) return; // for vector columns we do not have to do anything
+
+    QVector<double> old_data=columns[column].copyData();
+    const auto old_imagecolumns=columns[column].getImageColumns();
+    const auto old_name=columns[column].getName();
+    size_t itemID=addItem(new JKQTPDatastoreItem(std::move(old_data)));
+    columns[column]=JKQTPColumn(this, old_name, itemID, 0, old_imagecolumns );
+
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+void JKQTPDatastore::convertToVectorColumn(int column)
+{
+    convertToVectorColumn(static_cast<size_t>(column));
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
 bool JKQTPDatastore::isVectorColumn(size_t column) const
 {
     return columns[column].getDatastoreItem()->isVector();
@@ -1654,12 +1674,7 @@ void JKQTPDatastore::appendToColumn(size_t column, double value)
 void JKQTPDatastore::resizeColumn(size_t column, size_t new_rows)
 {
     if (columns[column].getRows()==new_rows) return;
-    const bool ok=columns[column].getDatastoreItem()->isVector();
-    if (!ok) {
-        QVector<double> old_data=columns[column].copyData();
-        size_t itemID=addItem(new JKQTPDatastoreItem(std::move(old_data)));
-        columns[column]=JKQTPColumn(this, columns[column].getName(), itemID, 0);
-    }
+    convertToVectorColumn(column);
     columns[column].getDatastoreItem()->resizeVectorItem(new_rows);
 }
 

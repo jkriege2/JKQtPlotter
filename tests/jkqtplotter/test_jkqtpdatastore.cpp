@@ -494,7 +494,7 @@ private slots:
     }
 
     //  resizeColumn
-    void test_append_resize_vectorcolumn() {
+    void test_resize_vectorcolumn() {
         JKQTPDatastore ds;
         const QVector<double> data {1.1,2.2,3.3};
         size_t a = ds.addColumn(QVector<double>(data), QString("a"));
@@ -514,7 +514,7 @@ private slots:
     }
 
     //  resizeColumn
-    void test_append_resize_externalcolumn() {
+    void test_resize_externalcolumn() {
         JKQTPDatastore ds;
         double data[3] = {1.1,2.2,3.3};
         size_t a = ds.addColumn(data, 3, QString("a"));
@@ -535,6 +535,48 @@ private slots:
         }
     }
 
+
+    //  resizeColumn
+    void test_converttovector_vectorcolumn() {
+        JKQTPDatastore ds;
+        const QVector<double> data {1.1,2.2,3.3};
+        size_t a = ds.addColumn(QVector<double>(data), QString("a"));
+        for (int i=0; i<data.size(); i++) {
+            QCOMPARE(ds.get(a,i), data[i]);
+        }
+        QCOMPARE(ds.getRows(a), static_cast<size_t>(3));
+        QCOMPARE_EQ(ds.isColumnDataExternal(a), false);
+        QCOMPARE_EQ(ds.isVectorColumn(a), true);
+        ds.convertToVectorColumn(a);
+        QCOMPARE_EQ(ds.isColumnDataExternal(a), false);
+        QCOMPARE_EQ(ds.isVectorColumn(a), true);
+        QCOMPARE(ds.getRows(a), static_cast<size_t>(3));
+        for (int i=0; i<data.size(); i++) {
+            QCOMPARE(ds.get(a,i), data[i]);
+        }
+    }
+
+    //  resizeColumn
+    void test_converttovector_externalcolumn() {
+        JKQTPDatastore ds;
+        double data[3] = {1.1,2.2,3.3};
+        size_t a = ds.addColumn(data, 3, QString("a"));
+        for (int i=0; i<3; i++) {
+            QCOMPARE(ds.get(a,i), data[i]);
+        }
+        QCOMPARE(ds.getRows(a), static_cast<size_t>(3));
+        QCOMPARE_EQ(ds.getColumnPointer(a), data);
+        QCOMPARE_EQ(ds.isColumnDataExternal(a), true);
+        QCOMPARE_EQ(ds.isVectorColumn(a), false);
+        ds.convertToVectorColumn(a);
+        QCOMPARE_NE(ds.getColumnPointer(a), data); // converting results in conversion to an internal column
+        QCOMPARE(ds.getRows(a), static_cast<size_t>(3));
+        QCOMPARE_EQ(ds.isColumnDataExternal(a), false);
+        QCOMPARE_EQ(ds.isVectorColumn(a), true);
+        for (int i=0; i<3; i++) {
+            QCOMPARE(ds.get(a,i), data[i]);
+        }
+    }
     // appendFromContainerToColumn (vector/list)
     void test_appendFromContainerToColumn_variants() {
         JKQTPDatastore ds;

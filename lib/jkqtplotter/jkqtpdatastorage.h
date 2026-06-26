@@ -481,6 +481,11 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPDatastore{
             return !isColumnDataExternal(column);
         };
 
+        /** \brief converts datastoreage of column \a column to an internally managed vector (with vector coulmns, resizing operations, such as appending are relatively cheap). This function does nothing if the column already is a vector column. */
+        void convertToVectorColumn(size_t column);
+        /** \brief converts datastoreage of column \a column to an internally managed vector (with vector coulmns, resizing operations, such as appending are relatively cheap). This function does nothing if the column already is a vector column. */
+        void convertToVectorColumn(int column);
+
         /** \brief returns the data checksum of the given column \a column */
         quint16 getColumnChecksum(int column) const;
 
@@ -1452,14 +1457,14 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPDatastore{
         /** \brief return contents of datastore as QList<QVector<double> >, i.e. a list of column-vectors
          *
          * \param columnNames if \c !=nullptr this will afterwards conatin the column titles
-         * \param userColumns a list of all columns to export, an empty list means: export all, the indexes in the list refer to getColumnsNames()
+         * \param[out] userColumns a list of all columns to export, an empty list means: export all, the indexes in the list refer to getColumnsNames()
          */
         QList<QVector<double> > getData(QStringList* columnNames=nullptr, const QSet<int>& userColumns=QSet<int>()) const;
 
         /** \brief return contents of a given column as QVector<double>
          *
          * \param column column to copy
-         * \param columnName if \c !=nullptr this will afterwards conatin the column title
+         * \param[out] columnName if \c !=nullptr this will afterwards conatin the column title
          */
         QVector<double> getData(size_t column, QString* columnName=nullptr) const;
 
