@@ -1467,8 +1467,8 @@ QString JKQTCOMMON_LIB_EXPORT ModifierModeToString(const JKQTPMathImageModifierM
  */
 void JKQTCOMMON_LIB_EXPORT JKQTPModifyImage(QImage& img, JKQTPMathImageModifierMode modifierMode, const void* dataModifier, JKQTPMathImageDataType datatypeModifier, int Nx, int Ny, double internalModifierMin, double internalModifierMax);
 
-
-
+/** \brief returns the QImage mirrord in x and/or y direction as specified */
+QImage JKQTCOMMON_LIB_EXPORT jkqtp_mirrored(const QImage& image, bool mirrx, bool mirry);
 
 
 #endif // JKQTPBASICIMAGETOOLS_H

@@ -389,7 +389,7 @@ void JKQTPRGBMathImage::drawOutside(JKQTPEnhancedPainter& painter, QRect /*leftS
 
 
                 QRectF cb(rX, rY, parent->pt2px(painter, colorBarWidth), gbarHeight);
-                painter.drawImage(cb, l[li].paletteImage.mirrored(true, false));
+                painter.drawImage(cb, jkqtp_mirrored(l[li].paletteImage, true, false));
                 QPen p=painter.pen();
                 p.setColor(l[li].colorBarRightAxis->getAxisColor());
                 p.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, l[li].colorBarRightAxis->getLineWidth()*parent->getLineWidthMultiplier())));

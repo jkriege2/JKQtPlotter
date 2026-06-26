@@ -175,7 +175,7 @@ void JKQTPImageBase::plotImage(JKQTPEnhancedPainter& painter, QImage& image, dou
         // or not ...
         if (pix_imagerect.width()<2.0*pix_plotrectangle.width() && pix_imagerect.height()<2.0*pix_plotrectangle.height()) {
             //painter.drawImage(QRectF(p1.x(), p2.y(), fabs(p2.x()-p1.x()), fabs(p2.y()-p1.y())), image);
-            painter.drawImage(QPointF(pix_topelft.x(), pix_topelft.y()), image.mirrored(mirrx, mirry).scaled(QSize(fabs(pix_bottomright.x()-pix_topelft.x()), fabs(pix_bottomright.y()-pix_topelft.y())), Qt::IgnoreAspectRatio, Qt::FastTransformation));
+            painter.drawImage(QPointF(pix_topelft.x(), pix_topelft.y()), jkqtp_mirrored(image, mirrx, mirry).scaled(QSize(fabs(pix_bottomright.x()-pix_topelft.x()), fabs(pix_bottomright.y()-pix_topelft.y())), Qt::IgnoreAspectRatio, Qt::FastTransformation));
             //qDebug()<<"\nimage.size  = "<<image.size() <<" SIMPLE!";
         } else {
             // ... if the image is much larger than the plot rectangle, we cut a potion from the image, before plotting
@@ -196,7 +196,7 @@ void JKQTPImageBase::plotImage(JKQTPEnhancedPainter& painter, QImage& image, dou
             const QRectF target(pix_topelft.x()+ps1.x()*pixwidth, pix_topelft.y()+ps1.y()*pixheight, source.width()*pixwidth, source.height()*pixheight);
             //qDebug()<<"source = "<<source;
             //qDebug()<<"target = "<<target;
-            painter.drawImage(target, image.mirrored(mirrx, mirry), source);
+            painter.drawImage(target, jkqtp_mirrored(image, mirrx, mirry), source);
         }
     }
 
@@ -272,7 +272,7 @@ void JKQTPImage::drawKeyMarker(JKQTPEnhancedPainter &painter, const QRectF &rect
 void JKQTPImage::setImage(const QImage &image)
 {
     clear_image();
-    this->image=new QImage(image.mirrored(false, true));
+    this->image=new QImage(jkqtp_mirrored(image, false, true));
     image_owned=true;
     createImageActions();
 }

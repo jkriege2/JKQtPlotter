@@ -134,7 +134,7 @@ void JKQTPColorPaletteStyleAndToolsMixin::cbDrawOutside(JKQTPEnhancedPainter& pa
          //qDebug()<<"r: "<<imageName<<rightSpace;
 
          QRectF cb(static_cast<int>(rightSpace.x()+cbParent->pt2px(painter, colorBarOffset)), rightSpace.top()+(rightSpace.height()-barHeight)/2, static_cast<int>(cbParent->pt2px(painter, colorBarWidth)), barHeight);
-         painter.drawImage(cb, b.mirrored(true, false));
+         painter.drawImage(cb, jkqtp_mirrored(b, true, false));
          QPen p=painter.pen();
          p.setColor(colorBarRightAxis->getAxisColor());
          p.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, cbParent->pt2px(painter, colorBarRightAxis->getLineWidth()*cbParent->getLineWidthMultiplier())));
@@ -638,7 +638,7 @@ void JKQTPColorPaletteWithModifierStyleAndToolsMixin::cbDrawOutside(JKQTPEnhance
             //qDebug()<<"r: "<<imageName<<rightSpace;
 
             QRectF cb(static_cast<int>(rightSpace.x()+cbParent->pt2px(painter, colorBarOffset)), rightSpace.top()+(rightSpace.height()-barHeight)/2, static_cast<int>(cbParent->pt2px(painter, (modifierMode==JKQTPMathImageModifierMode::ModifyNone)?colorBarWidth:colorBarModifiedWidth)), barHeight);
-            painter.drawImage(cb, b.mirrored(true, false));
+            painter.drawImage(cb, jkqtp_mirrored(b, true, false));
             QPen p=painter.pen();
             p.setColor(colorBarRightAxis->getAxisColor());
             p.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, cbParent->pt2px(painter, colorBarRightAxis->getLineWidth()*cbParent->getLineWidthMultiplier())));

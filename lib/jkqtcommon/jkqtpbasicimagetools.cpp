@@ -2574,3 +2574,16 @@ JKQTPImageTools::LUTType JKQTPBuildColorPaletteLUT(const std::function<float (fl
 {
     return JKQTPBuildColorPaletteLUT([&rFunc, &gFunc, &bFunc, &aFunc](float v) { return QColor::fromRgbF(jkqtp_bounded<float>(0.0, rFunc(v), 1.0), jkqtp_bounded<float>(0.0, gFunc(v), 1.0), jkqtp_bounded<float>(0.0, bFunc(v), 1.0), jkqtp_bounded<float>(0.0, aFunc(v), 1.0)).rgba(); }, lut_size, vMin, vMax);
 }
+
+QImage jkqtp_mirrored(const QImage &image, bool mirrx, bool mirry)
+{
+#if QT_VERSION >= QT_VERSION_CHECK(6,9,0)
+    if (!mirrx&&!mirry) return image;
+    if (mirrx&&mirry) return image.flipped(Qt::Vertical|Qt::Horizontal);
+    if (mirrx) return image.flipped(Qt::Horizontal);
+    if (mirry) return image.flipped(Qt::Vertical);
+    return image;
+#else
+    return image.mirrored(mirrx, mirry);
+#endif
+}
