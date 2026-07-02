@@ -40,6 +40,8 @@
 #include <QAbstractTableModel>
 #include <QObject>
 #include <stdexcept>
+#include <QtGlobal>
+#include <QDebug>
 
 class JKQTPColumn; // forward declaration
 class JKQTPColumnIterator; // forward declaration
