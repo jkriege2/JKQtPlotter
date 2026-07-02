@@ -1430,10 +1430,11 @@ void JKQTPDatastore::saveSYLK(const QString& filename, const QSet<int>& userColu
 
     for (size_t rr=0; rr<getMaxRows(); rr++) {
         QMapIterator<size_t, JKQTPColumn> it(columns);
-        c=1;
+        size_t c=1;
+        int i=0;
         while (it.hasNext()) {
             it.next();
-            if (userColumns.isEmpty() || userColumns.contains(static_cast<int>(rr))) {
+            if (userColumns.isEmpty() || userColumns.contains(static_cast<int>(i))) {
                 if (it.value().getRows()>rr) {
                     txt<<QString("C;X%1;Y%2;N;K%3\n").arg(c).arg(rr+2).arg(get(it.key(), rr));
                 }
@@ -1519,7 +1520,7 @@ void JKQTPDatastore::saveDIF(const QString& filename, const QSet<int>& userColum
     while (it.hasNext()) {
         it.next();
         if (userColumns.isEmpty() || userColumns.contains(i)) {
-            txt<<QString("1,0\n\"%1\"\n").arg(columns[c].getName());
+            txt<<QString("1,0\n\"%1\"\n").arg(it.value().getName());
             c++;
         }
         i++;
@@ -1793,10 +1794,10 @@ bool JKQTPColumn::convertVectorItemFromRanges(size_t start1, size_t end1, size_t
         const bool copyRange2=start2<=end2 && start2<NRowsOld && end2<NRowsOld;
         const size_t NRowsRange2=end2-start2+1;
         const bool copyAll=(start1==NRowsOld && end1==NRowsOld && start2==NRowsOld && end2==NRowsOld);
-        const size_t NToCopy=copyAll?NRowsOld:(copyRange1?NRowsRange1:0)+(copyRange2?NRowsRange2:0)+10;
+        const size_t NToReserve=copyAll?NRowsOld:(copyRange1?NRowsRange1:0)+(copyRange2?NRowsRange2:0)+10;
 
         // copy all data into old_data, as specified by start1,end1,start2,end2
-        old_data.reserve(NToCopy);
+        old_data.reserve(NToReserve);
         if (copyAll) {
             for (size_t it=0; it<NRowsOld; ++it) old_data.push_back(getValue(it));
         } else {
