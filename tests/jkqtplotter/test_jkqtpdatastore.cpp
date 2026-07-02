@@ -773,6 +773,110 @@ private slots:
         QVERIFY(c2.exists());
         QVERIFY(c2.size() > 0);
     }
+
+    // Test: Add and use a vector column with setAll operation
+    void test_vector_column_setAll() {
+        JKQTPDatastore ds;
+        std::vector<double> v = {1.0, 2.0, 3.0};
+        size_t col = ds.addCopiedColumn(v, QString("vec"));
+        QCOMPARE(ds.getRows(col), static_cast<size_t>(3));
+
+        // Set all values to 5.0
+        ds.setAll(col, 5.0);
+        QCOMPARE(ds.get(col, 0), 5.0);
+        QCOMPARE(ds.get(col, 1), 5.0);
+        QCOMPARE(ds.get(col, 2), 5.0);
+    }
+
+    // Test: Add and use a vector column with scaleColumnValues operation
+    void test_vector_column_scaleColumnValues() {
+        JKQTPDatastore ds;
+        std::vector<double> v = {2.0, 4.0, 6.0};
+        size_t col = ds.addCopiedColumn(v, QString("vec"));
+        QCOMPARE(ds.getRows(col), static_cast<size_t>(3));
+
+        // Scale by 2.5
+        ds.scaleColumnValues(col, 2.5);
+        QCOMPARE(ds.get(col, 0), 5.0);
+        QCOMPARE(ds.get(col, 1), 10.0);
+        QCOMPARE(ds.get(col, 2), 15.0);
+    }
+
+    // Test: Add vector column and use getData operation
+    void test_vector_column_getData() {
+        JKQTPDatastore ds;
+        std::vector<double> v = {1.5, 2.5, 3.5};
+        size_t col = ds.addCopiedColumn(v, QString("vec_data"));
+        QCOMPARE(ds.getRows(col), static_cast<size_t>(3));
+
+        QString name;
+        QVector<double> retrieved = ds.getData(col, &name);
+        QCOMPARE(name, QString("vec_data"));
+        QCOMPARE(retrieved.size(), static_cast<int>(3));
+        QCOMPARE(retrieved[0], 1.5);
+        QCOMPARE(retrieved[1], 2.5);
+        QCOMPARE(retrieved[2], 3.5);
+    }
+
+    // Test: setColumnData on a vector column
+    void test_vector_column_setColumnData() {
+        JKQTPDatastore ds;
+        std::vector<double> v = {1.0, 2.0, 3.0};
+        size_t col = ds.addCopiedColumn(v, QString("vec"));
+        QCOMPARE(ds.getRows(col), static_cast<size_t>(3));
+
+        QVector<double> newData;
+        newData << 10.0 << 11.0 << 12.0 << 13.0;
+        ds.setColumnData(col, newData);
+        QCOMPARE(ds.getRows(col), static_cast<size_t>(4));
+        QCOMPARE(ds.get(col, 0), 10.0);
+        QCOMPARE(ds.get(col, 1), 11.0);
+        QCOMPARE(ds.get(col, 2), 12.0);
+        QCOMPARE(ds.get(col, 3), 13.0);
+    }
+
+
+    // Test: Combined operations - setAll followed by scaleColumnValues
+    void test_combined_operations_setAll_then_scale() {
+        JKQTPDatastore ds;
+        std::vector<double> v = {1.0, 2.0, 3.0};
+        size_t col = ds.addCopiedColumn(v, QString("vec"));
+
+        // First, set all to 10.0
+        ds.setAll(col, 10.0);
+        QCOMPARE(ds.get(col, 0), 10.0);
+        QCOMPARE(ds.get(col, 1), 10.0);
+        QCOMPARE(ds.get(col, 2), 10.0);
+
+        // Then scale by 2.0
+        ds.scaleColumnValues(col, 2.0);
+        QCOMPARE(ds.get(col, 0), 20.0);
+        QCOMPARE(ds.get(col, 1), 20.0);
+        QCOMPARE(ds.get(col, 2), 20.0);
+    }
+
+
+    // Test: Issue reproduction - setColumnCopiedData should properly shrink column
+    void test_setColumnCopiedData_shrink_issue() {
+        JKQTPDatastore ds;
+
+        // Create a column with 5 rows
+        size_t col = ds.addColumn(5, QString("test"));
+        for (size_t i = 0; i < 5; ++i) {
+            ds.set(col, i, double(i) * 10.0);
+        }
+        QCOMPARE(ds.getRows(col), static_cast<size_t>(5));
+
+        // Now set it to have only 3 rows with new data
+        double newData[3] = {100.0, 200.0, 300.0};
+        ds.setColumnCopiedData(col, newData, 3);
+
+        // Column should now have exactly 3 rows
+        QCOMPARE(ds.getRows(col), static_cast<size_t>(3));
+        QCOMPARE(ds.get(col, 0), 100.0);
+        QCOMPARE(ds.get(col, 1), 200.0);
+        QCOMPARE(ds.get(col, 2), 300.0);
+    }
 };
 
 QTEST_MAIN(TestJKQTPDatastoreCombined)

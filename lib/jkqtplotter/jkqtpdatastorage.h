@@ -82,7 +82,7 @@ class JKQTPColumnBackInserter; // forward declaration
 enum class JKQTPDatastoreItemFormat {
     SingleColumn,                /*!< \brief a 1D C-array of doubles. (default option) */
     MatrixColumn,                /*!< \brief a 1D C-array of doubles that represents a number of columns. The data is store column after column (=column-major). */
-    MatrixRow,                   /*!< \brief a 1D C-array of doubles that represents a number of rows (C standard representation of matrices). The data is stored row after row (=row-major).*/
+    MatrixRow,                   /*!< \brief a 1D C-array of doubles that represents a number of rows (C standard representation of matrices). The data is stored row after row (=row-major). If you often access all data from one column in one go, this may lead to performance deficits! */
 };
 
 /** \brief This class manages data columns (with entries of type \c double ), used by JKQTPlotter/JKQTBasePlotter to represent data for plots
@@ -252,12 +252,12 @@ enum class JKQTPDatastoreItemFormat {
 |                                      |                   +- JKQTPColumn ----------------+
 |    +- JKQTPDatastoreItem --------+   |                 0 |   datastore                  |
 |  0 |     JKQTPSingleColumn       |<--|-------------------|---datastoreItem = 0          |
-|    |   0 # # # # # # # # # # #<--|---|-------------------|---datastoreOffset = 0        |
+|    |   0 # # # # # # # # # # #<--|---|-------------------|---columnInDatastoreItem = 0  |
 |    |                             |   |                   |                              |
 |    +- JKQTPDatastoreItem --------+   |                   +- JKQTPColumn ----------------+
 |  1 |     JKQTPSingleColumn       |<--|---\             1 |   datastore                  |
 |    |   0 # # # # # # # # # # #<--|---|-\  \--------------|---datastoreItem = 1          |
-|    |                             |   |  \----------------|---datastoreOffset = 0        |
+|    |                             |   |  \----------------|---columnInDatastoreItem = 0  |
 |    +- JKQTPDatastoreItem --------+   |                   |                              |
 |    :                             :   |                   +------------------------------+
 |    :                             :   |                   :                              :
@@ -267,7 +267,7 @@ enum class JKQTPDatastoreItemFormat {
 |    |   0 # # # # # # # # # # #   |   |    \              +- JKQTPColumn ----------------+
 |    |   1 # # # # # # # # # # #   |   |     \         M-1 |   datastore                  |
 |    |   2 # # # # # # # # # # #<--|---|--\   \------------|---datastoreItem = N-1        |
-|    |                             |   |   \---------------|---datastoreOffset = 2        |
+|    |                             |   |   \---------------|---columnInDatastoreItem = 2  |
 |    +-----------------------------+   |                   |                              |
 |                                      |                   +------------------------------+
 +--------------------------------------+
@@ -1514,8 +1514,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPColumn {
   private:
     /** \brief index of the item in the datastore that contains the data for this column */
     size_t datastoreItem;
-    /** \brief offset, if the datastore item contains more than one column */
-    size_t datastoreOffset;
+    /** \brief the column within the datastoreItem adressed by this JKQTPColumn, if the datastore item contains more than one column (i.e. a matrix JKQTPDatastoreItem) */
+    size_t columnInDatastoreItem;
     /** \brief number of columns, if interpreted as a row-major image */
     size_t imageColumns;
     /** \brief pointer to the datastore object used to manage the data of the plot */
@@ -1535,16 +1535,22 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPColumn {
      * The use of this constructor is mandatory. The default constructor (no arguments) is hidden. Also note
      * that you cannot change the binding of a column to a datastore object after creation of the column.
      */
-    JKQTPColumn(JKQTPDatastore* datastore, const QString& name=QString(""), size_t datastoreItem=0, size_t datastoreOffset=0, size_t imageColumns=1);
+    JKQTPColumn(JKQTPDatastore* datastore, const QString& name=QString(""), size_t datastoreItem=0, size_t columnInDatastoreItem=0, size_t imageColumns=1);
+
+    inline JKQTPColumn(const JKQTPColumn&)=default;
+    inline JKQTPColumn(JKQTPColumn&&)=default;
+    inline JKQTPColumn& operator=(const JKQTPColumn&)=default;
+    inline JKQTPColumn& operator=(JKQTPColumn&&)=default;
 
     inline bool isValid() const { return valid; }
 
     /** \brief two columns are equal, if the same memory in the same datastore is referenced */
     inline bool operator==(const JKQTPColumn& other) const {
-        return (datastoreItem==other.datastoreItem)
-                && (datastoreOffset==other.datastoreOffset)
-                && (datastore==other.datastore)
-                && (valid==other.valid);
+        return (!valid && !other.valid)
+               ||((datastoreItem==other.datastoreItem)
+                    && (columnInDatastoreItem==other.columnInDatastoreItem)
+                    && (datastore==other.datastore)
+                    && (valid==other.valid));
     }
 
     /** \copydoc name */
@@ -1678,9 +1684,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPColumn {
     /** \copydoc datastoreItem */ \
     inline size_t getDatastoreItemNum() const  \
     {   return this->datastoreItem;   }
-    /** \copydoc datastoreOffset */ \
-    inline size_t getDatastoreOffset() const  \
-    {   return this->datastoreOffset;   }
+    /** \copydoc columnInDatastoreItem */ \
+    inline size_t getColumnInDatastoreItem() const  \
+    {   return this->columnInDatastoreItem;   }
 
     /** \brief returns an iterator to the internal data
      * \see JKQTPColumnIterator */
@@ -1705,10 +1711,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPColumn {
       inline JKQTPDatastore* getDatastore() { return datastore; }
       inline const JKQTPDatastore* getDatastore() const { return datastore; }
       /** \brief lets the column point to another datastore item with id \a datastoreItem_ (of type JKQTPDatastoreItem) in the owning JKQTPDataStore.
-       *         The column points to the \a datastoreOffset_ -th column within that JKQTPDatastoreItem . */
-      inline void replaceMemory(size_t datastoreItem_=0, size_t datastoreOffset_=0) {
+       *         The column points to the \a columnInDatastoreItem_ -th column within that JKQTPDatastoreItem . */
+      inline void replaceMemory(size_t datastoreItem_=0, size_t columnInDatastoreItem_=0) {
           datastoreItem=datastoreItem_;
-          datastoreOffset=datastoreOffset_;
+          columnInDatastoreItem=columnInDatastoreItem_;
       }
       /** \brief removes the entry \a row
        *
@@ -2469,6 +2475,12 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPDatastoreItem {
         return dataformat==JKQTPDatastoreItemFormat::SingleColumn && storageType==StorageType::Vector;
     }
 
+    /** \brief checks whether the data of one column is stored consecutively (dataformat==JKQTPDatastoreItemFormat::SingleColumn or JKQTPDatastoreItemFormat::MatrixColumn), i.e. we can iterate it using a pointer to the first element and an increment of 1. */
+    inline bool areColumnsConsecutive() const {
+        return dataformat==JKQTPDatastoreItemFormat::SingleColumn
+               || (dataformat == JKQTPDatastoreItemFormat::MatrixColumn);
+    }
+
     /** \brief if \c isValid() : resizeVectorItem the row to have \a rows_new rows */
     inline void resizeVectorItem(size_t rows_new) {
         JKQTPASSERT(isVector());
@@ -2571,41 +2583,58 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPDatastoreItem {
 
     /** \brief returns the data at the position (\a column, \a row ). The column index specifies the column inside THIS item, not the global column number. */
     inline double* getPointer(size_t column, size_t row) {
-        if (data!=nullptr) switch(dataformat) {
-            case JKQTPDatastoreItemFormat::SingleColumn:
-              return &(data[row]);
-            case JKQTPDatastoreItemFormat::MatrixColumn:
-              return &(data[column*rows+row]);
-            case JKQTPDatastoreItemFormat::MatrixRow:
-              return &(data[row*columns+column]);
+        if (data!=nullptr) {
+            switch(dataformat) {
+                case JKQTPDatastoreItemFormat::SingleColumn:
+                  return &(data[row]);
+                case JKQTPDatastoreItemFormat::MatrixColumn:
+                  return &(data[column*rows+row]);
+                case JKQTPDatastoreItemFormat::MatrixRow:
+                  return &(data[row*columns+column]);
+            }
         }
         return nullptr;
     }
 
     /** \brief returns the data at the position (\a column, \a row ). The column index specifies the column inside THIS item, not the global column number. */
     inline const double* getPointer(size_t column, size_t row) const {
-        if (data!=nullptr) switch(dataformat) {
-            case JKQTPDatastoreItemFormat::SingleColumn:
-              return &(data[row]);
-            case JKQTPDatastoreItemFormat::MatrixColumn:
-              return &(data[column*rows+row]);
-            case JKQTPDatastoreItemFormat::MatrixRow:
-              return &(data[row*columns+column]);
+        if (data!=nullptr) {
+            switch(dataformat) {
+                case JKQTPDatastoreItemFormat::SingleColumn:
+                  return &(data[row]);
+                case JKQTPDatastoreItemFormat::MatrixColumn:
+                  return &(data[column*rows+row]);
+                case JKQTPDatastoreItemFormat::MatrixRow:
+                  return &(data[row*columns+column]);
+            }
         }
         return nullptr;
     }
+    /** \brief returns the increment with which to iterate within a pointer to the data from one row to the next */
+    inline const size_t getColumnIterationIncrement() const {
+        switch(dataformat) {
+            case JKQTPDatastoreItemFormat::SingleColumn:
+            case JKQTPDatastoreItemFormat::MatrixColumn:
+                return 1;
+            case JKQTPDatastoreItemFormat::MatrixRow:
+                return columns;
+        }
+        return 1;
+    }
     /** \brief set the data at the position (\a column, \a row ) to \a value. The column index specifies the column inside THIS item, not the global column number. */
     inline void set(size_t column, size_t row, double value) {
-        if (data!=nullptr) switch(dataformat) {
-            case JKQTPDatastoreItemFormat::SingleColumn:
-              data[row]=value;
-              return;
-            case JKQTPDatastoreItemFormat::MatrixColumn:
-              data[column*rows+row]=value;
-              return;
-            case JKQTPDatastoreItemFormat::MatrixRow:
-              data[row*columns+column]=value;
-              return;
+        if (data!=nullptr) {
+            switch(dataformat) {
+                case JKQTPDatastoreItemFormat::SingleColumn:
+                  data[row]=value;
+                  return;
+                case JKQTPDatastoreItemFormat::MatrixColumn:
+                  data[column*rows+row]=value;
+                  return;
+                case JKQTPDatastoreItemFormat::MatrixRow:
+                  data[row*columns+column]=value;
+                  return;
+            }
         }
     }
 
@@ -2626,6 +2655,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPDatastoreItem {
             data=datavec.data();
             return true;
         }
+        qDebug()<<"cannot push to a non-vector column!";
         return false;
     }
 
@@ -2660,6 +2690,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPDatastoreItem {
             rows=static_cast<size_t>(datavec.size());
             return true;
         }
+        qDebug()<<"cannot append to a non-vector column!";
         return false;
     }
     /** \brief adds new rows to the given column. Returns \c true on success and \c false else
@@ -2680,6 +2711,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPDatastoreItem {
             rows=static_cast<size_t>(datavec.size());
             return true;
         }
+        qDebug()<<"cannot append to a non-vector column!";
         return false;
     }
 };
@@ -2720,14 +2752,14 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPDatastoreModel: public QAbstractTableModel {
 inline void JKQTPColumn::setValue(size_t n, double val){
     if (!datastore) return ;
     if (!datastore->getItem(datastoreItem)) return ;
-    datastore->getItem(datastoreItem)->set(datastoreOffset, n, val);
+    datastore->getItem(datastoreItem)->set(columnInDatastoreItem, n, val);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 inline void JKQTPColumn::incValue(size_t n, double increment){
     if (!datastore) return ;
     if (!datastore->getItem(datastoreItem)) return ;
-    datastore->getItem(datastoreItem)->set(datastoreOffset, n, datastore->getItem(datastoreItem)->get(datastoreOffset, n)+increment);
+    datastore->getItem(datastoreItem)->set(columnInDatastoreItem, n, datastore->getItem(datastoreItem)->get(columnInDatastoreItem, n)+increment);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2783,7 +2815,7 @@ inline double JKQTPColumn::getValue(size_t n) const {
     // fallback: use the datastore item get(...)
     JKQTPDatastoreItem* it = datastore->getItem(datastoreItem);
     if (!it) return JKQTP_NAN;
-    return it->get(datastoreOffset, n);
+    return it->get(columnInDatastoreItem, n);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2797,7 +2829,7 @@ inline const double& JKQTPColumn::at(int n) const {
     JKQTPASSERT(datastore );
     JKQTPASSERT( datastore->getItem(datastoreItem));
     JKQTPASSERT(n>=0);
-    return datastore->getItem(datastoreItem)->at(datastoreOffset, static_cast<size_t>(n));
+    return datastore->getItem(datastoreItem)->at(columnInDatastoreItem, static_cast<size_t>(n));
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2805,7 +2837,7 @@ inline double& JKQTPColumn::at(int n) {
     JKQTPASSERT(datastore );
     JKQTPASSERT( datastore->getItem(datastoreItem));
     JKQTPASSERT(n>=0);
-    return datastore->getItem(datastoreItem)->at(datastoreOffset, static_cast<size_t>(n));
+    return datastore->getItem(datastoreItem)->at(columnInDatastoreItem, static_cast<size_t>(n));
 }
 
 

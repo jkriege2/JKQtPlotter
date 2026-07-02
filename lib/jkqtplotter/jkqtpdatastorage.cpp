@@ -30,25 +30,26 @@
  * JKQTPColumn
  **************************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////
-JKQTPColumn::JKQTPColumn()
+JKQTPColumn::JKQTPColumn():
+    datastore(nullptr),
+    name(""),
+    datastoreItem(0),
+    columnInDatastoreItem(0),
+    imageColumns(1),
+    valid(false)
 {
-    datastore=nullptr;
-    name="";
-    datastoreItem=0;
-    datastoreOffset=0;
-    imageColumns=1;
-    valid=false;
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-JKQTPColumn::JKQTPColumn(JKQTPDatastore *datastore, const QString &name, size_t datastoreItem, size_t datastoreOffset, size_t imageColumns)
+JKQTPColumn::JKQTPColumn(JKQTPDatastore *_datastore, const QString &_name, size_t _datastoreItem, size_t _columnInDatastoreItem, size_t _imageColumns):
+    datastore(_datastore),
+    name(_name),
+    datastoreItem(_datastoreItem),
+    columnInDatastoreItem(_columnInDatastoreItem),
+    imageColumns(_imageColumns),
+    valid(true)
 {
-    this->datastore=datastore;
-    this->datastoreItem=datastoreItem;
-    this->datastoreOffset=datastoreOffset;
-    this->imageColumns=imageColumns;
-    this->name=name;
-    valid=true;
 
 }
 
@@ -81,19 +82,27 @@ size_t JKQTPColumn::getRows() const {
 ////////////////////////////////////////////////////////////////////////////////////////////////
 void JKQTPColumn::copyData(QVector<double> &copyTo) const
 {
+    if (!datastore) return ;
+    JKQTPDatastoreItem* it=datastore->getItem(datastoreItem);
+    if (!it) return;
     const size_t cnt=getRows();
     if (cnt>0) {
+        copyTo.resize(static_cast<int>(cnt));
         const double* p = getPointer(0);
         if (p) {
-            // contiguous memory available: fast memcpy path
-            copyTo.resize(static_cast<int>(cnt));
-            std::memcpy(copyTo.data(), p, cnt * sizeof(double));
-        } else {
-            copyTo.resize(static_cast<int>(cnt));
-            for (size_t i=0; i<cnt; i++) {
-                copyTo[static_cast<int>(i)] = getValue(i);
+            if (it->areColumnsConsecutive()) {
+                // contiguous memory available: fast memcpy path
+                std::memcpy(copyTo.data(), p, cnt * sizeof(double));
+            } else {
+                const size_t inc=it->getColumnIterationIncrement();
+                for (size_t i=0; i<cnt; i++) {
+                    copyTo[static_cast<int>(i)] = *p;
+                    p+=inc;
+                }
             }
-       }
+        }
+    } else {
+        copyTo.clear();
     }
 }
 
@@ -111,7 +120,7 @@ const double *JKQTPColumn::getPointer(size_t n) const
 {
     if (!datastore) return nullptr;
     if (!datastore->getItem(datastoreItem)) return nullptr;
-    return datastore->getItem(datastoreItem)->getPointer(datastoreOffset, n);
+    return datastore->getItem(datastoreItem)->getPointer(columnInDatastoreItem, n);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -119,7 +128,7 @@ double *JKQTPColumn::getPointer(size_t n)
 {
     if (!datastore) return nullptr;
     if (!datastore->getItem(datastoreItem)) return nullptr;
-    return datastore->getItem(datastoreItem)->getPointer(datastoreOffset, n);
+    return datastore->getItem(datastoreItem)->getPointer(columnInDatastoreItem, n);
 }
 
 
@@ -128,8 +137,17 @@ void JKQTPColumn::copy(const double *data, size_t N, size_t offset) {
     if (!datastore) return ;
     JKQTPDatastoreItem* it=datastore->getItem(datastoreItem);
     if (!it) return;
-    for (size_t i=0; i<N; i++) {
-        it->set(datastoreOffset, i+offset, data[i]);
+    const auto rows = it->getRows();
+    const size_t Ntocopy=(N+offset<=rows) ? N: (rows-offset);
+    if (it->areColumnsConsecutive()) {
+        std::memcpy(it->getPointer(columnInDatastoreItem, offset), data, Ntocopy*sizeof(double));
+    } else {
+        double* cdata=getPointer(offset);
+        const size_t inc=it->getColumnIterationIncrement();
+        for (size_t i=0; i<Ntocopy; i++) {
+            *cdata=data[i];
+            cdata+=inc;
+        }
     }
 }
 
@@ -148,12 +166,14 @@ void JKQTPColumn::exchange(double value, double replace)
 void JKQTPColumn::subtract(double value)
 {
     if (!datastore) return ;
-    double* data=getPointer();
+    JKQTPDatastoreItem* it=datastore->getItem(datastoreItem);
+    if (!it) return;
     const size_t N=getRows();
-    if (data){
-        for (size_t i=0; i<N; i++) {
-            data[i]=data[i]-value;
-        }
+    double* data=getPointer();
+    const size_t inc=it->getColumnIterationIncrement();
+    for (size_t i=0; i<N; i++) {
+        *data=*data-value;
+        data+=inc;
     }
 }
 
@@ -161,12 +181,14 @@ void JKQTPColumn::subtract(double value)
 void JKQTPColumn::scale(double factor)
 {
     if (!datastore) return ;
+    JKQTPDatastoreItem* it=datastore->getItem(datastoreItem);
+    if (!it) return;
+    const size_t N=getRows();
     double* data=getPointer();
-    size_t N=getRows();
-    if (data){
-        for (size_t i=0; i<N; i++) {
-            data[i]=data[i]*factor;
-        }
+    const size_t inc=it->getColumnIterationIncrement();
+    for (size_t i=0; i<N; i++) {
+        *data=*data*factor;
+        data+=inc;
     }
 }
 
@@ -174,12 +196,14 @@ void JKQTPColumn::scale(double factor)
 void JKQTPColumn::setAll(double value)
 {
     if (!datastore) return ;
+    JKQTPDatastoreItem* it=datastore->getItem(datastoreItem);
+    if (!it) return;
+    const size_t N=getRows();
     double* data=getPointer();
-    size_t N=getRows();
-    if (data){
-        for (size_t i=0; i<N; i++) {
-            data[i]=value;
-        }
+    const size_t inc=it->getColumnIterationIncrement();
+    for (size_t i=0; i<N; i++) {
+        *data=value;
+        data+=inc;
     }
 }
 
@@ -1638,7 +1662,7 @@ void JKQTPDatastore::appendToColumn(size_t column, double value)
 
     // Try fast append into the existing item
     JKQTPDatastoreItem* item = columns[column].getDatastoreItem();
-    if (item && item->append(columns[column].getDatastoreOffset(), value)) {
+    if (item && item->append(columns[column].getColumnInDatastoreItem(), value)) {
         return;
     }
 
@@ -1658,7 +1682,7 @@ void JKQTPDatastore::appendToColumn(size_t column, double value)
 
         // try append again
         item = columns[column].getDatastoreItem();
-        if (item && item->append(columns[column].getDatastoreOffset(), value)) {
+        if (item && item->append(columns[column].getColumnInDatastoreItem(), value)) {
             return;
         }
     }
