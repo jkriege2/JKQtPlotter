@@ -28,7 +28,7 @@
 #include <QApplication>
 #if __cplusplus >= 202002L
 # include <version>
-# if defined(__cpp_lib_format) && (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
+# if defined(__cpp_lib_format) && (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0)) && defined(JKQtPlotter_USE_STD_FORMAT)
 #  include <format>
 # endif
 #endif
@@ -482,7 +482,7 @@ QString JKQTPCoordinateAxis::floattolabel(double data, int past_comma) const {
                 return QString::asprintf(axisStyle.tickPrintfFormat.toLatin1().data(), data, tickUnitName.toStdString().c_str());
             }; break;
 #if __cplusplus >= 202002L
-# if defined(__cpp_lib_format) && (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
+# if defined(__cpp_lib_format) && (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0)) && defined(JKQtPlotter_USE_STD_FORMAT)
     case JKQTPCALTformat: {
             const std::string tickUName=tickUnitName.toStdString();
             return QString::fromStdString(std::vformat(axisStyle.tickFormatFormat.toStdString(), std::make_format_args(data, tickUName)));
@@ -873,7 +873,7 @@ void JKQTPCoordinateAxis::setTickPrintfFormat(const QString& __value) {
     redrawPlot();
 }
 #if __cplusplus >= 202002L
-# if defined(__cpp_lib_format) && (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
+# if defined(__cpp_lib_format) && (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0)) && defined(JKQtPlotter_USE_STD_FORMAT)
 void JKQTPCoordinateAxis::setTickFormatFormat(const QString &__value)
 {
     this->axisStyle.tickFormatFormat = __value;

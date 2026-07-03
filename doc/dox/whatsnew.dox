@@ -145,6 +145,8 @@ Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
     <li>NEW: added JKQTPlotterUpdateGuard guard class that prevents redrawing of a JKQTPlotter during the lifetime of a code block, improved documentation of speed during plot setup</li>
     <li>NEW: add getters to JKQTPDatastore which return information on the datamanegement of single columns (internal/external/vector): JKQTPDatastore::isVectorColumn(), JKQTPDatastore::isColumnDataExternal(), JKQTPDatastore::isColumnDataInternal()</li>
     <li>NEW: added JKQTPDatastore::convertToVectorColumn()</li>
+    <li>NEW: reworked several functions within JKQTPDatastore, so they contain a fast path for certain column types</li>
+    <li>NEW Added CMake option JKQtPlotter_ENABLED_STD_FORMAT which allows to explicitly switch std::format on/off, even if C++20-support is enabled!</li>
   </ul></li>
   
   <li>JKQTMathText:<ul>

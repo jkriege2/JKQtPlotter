@@ -28,7 +28,7 @@
 #include "jkqtplotter/jkqtplotter_configmacros.h"
 #if __cplusplus >= 202002L
 # include <version>
-# if defined(__cpp_lib_format) && (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
+# if defined(__cpp_lib_format) && (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0)) && defined(JKQtPlotter_USE_STD_FORMAT)
 #  include <format>
 # endif
 #endif
@@ -176,7 +176,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxisStyle {
         /** \brief format string for printf tick labels, see https://en.wikipedia.org/wiki/Printf_format_string documentation for details on format strings The first data parameter is the tick value as \c double an the second is tickUnitName as string. The following image shows an example for \c "y=%+.2f": \image html axisstyle/JKQTPCALTprintf.png */
         QString tickPrintfFormat;
 #if __cplusplus >= 202002L || DOXYGEN
-# if (defined(__cpp_lib_format) && (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))) || DOXYGEN
+# if (defined(__cpp_lib_format) && (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0)) && defined(JKQtPlotter_USE_STD_FORMAT)) || DOXYGEN
         /** \brief format string for std::format tick labels, (see e.g. https://en.cppreference.com/w/cpp/utility/format/formatter#Standard_format_specification ). The first data parameter is the tick value as \c double an the second is tickUnitName as string. The following image shows an example for \c "\\texttt{{ y={:*^+8.1f}}}": \image html axisstyle/JKQTPCALTformat.png
               \note This option is only available for C++20 and above and Qt>=6.0.0, use the CMake option \c JKQtPlotter_ENABLED_CXX20=ON if your compiler supports this.*/
         QString tickFormatFormat;

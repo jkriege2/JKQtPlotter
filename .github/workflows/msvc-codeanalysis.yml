@@ -30,7 +30,7 @@ jobs:
         uses: ilammy/msvc-dev-cmd@v1
 
       - name: Configure CMake
-        run: cmake -B "${{ env.build }}" -DCMAKE_BUILD_TYPE=${{ env.config }} -DJKQtPlotter_BUILD_EXAMPLES=OFF -DJKQtPlotter_BUILD_TOOLS=OFF -DJKQtPlotter_BUILD_WITH_PRECOMPILED_HEADERS=OFF
+        run: cmake -B "${{ env.build }}" -DCMAKE_BUILD_TYPE=${{ env.config }} -DJKQtPlotter_BUILD_EXAMPLES=OFF -DJKQtPlotter_BUILD_TOOLS=OFF -DJKQtPlotter_BUILD_WITH_PRECOMPILED_HEADERS=OFF -DJKQtPlotter_ENABLED_STD_FORMAT=ON -DJKQtPlotter_ENABLED_CXX20=ON
 
       - name: Build CMake
         run: cmake --build "${{ env.build }}" --config "${{ env.config }}"

@@ -22,7 +22,10 @@ function(jkqtplotter_setDefaultLibOptions TARGETNAME libBaseName PRECOMPHEADERFI
     if(JKQtPlotter_ENABLED_CXX20)
         set_property(TARGET ${TARGETNAME} PROPERTY CXX_STANDARD ${JKQtPlotter_QT_CXX_STANDARD})
         set_property(TARGET ${TARGETNAME} PROPERTY CXX_STANDARD_REQUIRED ${JKQtPlotter_QT_CXX_STANDARD_REQUIRED})
-        target_compile_features(${TARGETNAME} PUBLIC ${JKQtPlotter_QT_CXX_COMPILE_FEATURE})
+        target_compile_features(${TARGETNAME} PUBLIC ${JKQtPlotter_QT_CXX_COMPILE_FEATURE})        
+        if(JKQtPlotter_ENABLED_STD_FORMAT)
+            target_compile_definitions(${TARGETNAME} PUBLIC JKQtPlotter_USE_STD_FORMAT)
+        endif()
     endif()
     # set options, specific to shared libraries
     if (BUILD_SHARED_LIBS)

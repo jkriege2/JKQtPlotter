@@ -187,7 +187,7 @@ jobs:
           cd build
           cmake --version
           echo "now:        QT_QPA_PLATFORM='$QT_QPA_PLATFORM'"
-          cmake -G "${{ env.GENERATOR }}" "-DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}" "-DCMAKE_PREFIX_PATH=${{ env.CMAKE_PREFIX_PATH }}" "-DCMAKE_INSTALL_PREFIX=../install" "-DJKQtPlotter_ENABLED_CXX20=${{ env.USE_CXX20 }}"  ..
+          cmake -G "${{ env.GENERATOR }}" "-DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}" "-DCMAKE_PREFIX_PATH=${{ env.CMAKE_PREFIX_PATH }}" "-DCMAKE_INSTALL_PREFIX=../install" "-DJKQtPlotter_ENABLED_STD_FORMAT=${{ env.USE_CXX20 }}" "-DJKQtPlotter_ENABLED_CXX20=${{ env.USE_CXX20 }}"  ..
         shell: bash
               
               
@@ -239,7 +239,7 @@ jobs:
           mkdir -p build
           cd build
           cmake --version
-          cmake -G "${{ env.GENERATOR }}" "-DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}" "-DCMAKE_PREFIX_PATH=${{ env.CMAKE_PREFIX_PATH }}" "-DCMAKE_INSTALL_PREFIX=../install" "-DJKQtPlotter_ENABLED_CXX20=${{ env.USE_CXX20 }}-DJKQtPlotter_ENABLED_CXX20=${{ env.USE_CXX20 }}" ..
+          cmake -G "${{ env.GENERATOR }}" "-DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}" "-DCMAKE_PREFIX_PATH=${{ env.CMAKE_PREFIX_PATH }}" "-DCMAKE_INSTALL_PREFIX=../install" "-DJKQtPlotter_ENABLED_CXX20=${{ env.USE_CXX20 }}"  "-DJKQtPlotter_ENABLED_STD_FORMAT=${{ env.USE_CXX20 }}" ..
           cmake --build . --config ${{ env.BUILD_TYPE }} -j${{ env.NUM_PROC }} -- ${{ env.CMAKE_BUILDFLAGS }}
         shell: bash
 
@@ -251,7 +251,7 @@ jobs:
           mkdir -p build
           cd build
           cmake --version
-          cmake -G "${{ env.GENERATOR }}" "-DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}" "-DCMAKE_PREFIX_PATH=${{ env.CMAKE_PREFIX_PATH }}" "-DCMAKE_INSTALL_PREFIX=../install" "-DJKQtPlotter_ENABLED_CXX20=${{ env.USE_CXX20 }}-DJKQtPlotter_ENABLED_CXX20=${{ env.USE_CXX20 }}" ..
+          cmake -G "${{ env.GENERATOR }}" "-DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}" "-DCMAKE_PREFIX_PATH=${{ env.CMAKE_PREFIX_PATH }}" "-DCMAKE_INSTALL_PREFIX=../install" "-DJKQtPlotter_ENABLED_CXX20=${{ env.USE_CXX20 }}" "-DJKQtPlotter_ENABLED_STD_FORMAT=${{ env.USE_CXX20 }}" ..
           cmake --build . --config ${{ env.BUILD_TYPE }} -j${{ env.NUM_PROC }} -- ${{ env.CMAKE_BUILDFLAGS }}
         shell: bash
 

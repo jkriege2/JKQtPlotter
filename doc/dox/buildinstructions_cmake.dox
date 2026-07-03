@@ -58,7 +58,8 @@ The CMake build system offers several configuration variables that you may set/c
   - \c JKQtPlotter_BUILD_FORCE_NO_PRINTER_SUPPORT : switches off print-support (when set to \c ON ), even if the current platform supports it (default: \c OFF )
   - \c JKQtPlotter_BUILD_DECORATE_LIBNAMES_WITH_BUILDTYPE : If set, the build-type is appended to the library name (default: \c ON )
   - \c JKQtPlotter_BUILD_WITH_PRECOMPILED_HEADERS : If set, the build uses precompiled headers to speed up (a bit) (default: \c ON )
-  - \c JKQtPlotter_ENABLED_CXX20 : Build using C++20 (requires a compiler that supports this! (default: \c OFF )
+  - \c JKQtPlotter_ENABLED_CXX20 : Build using C++20 (requires a compiler that supports this and \c JKQtPlotter_ENABLED_CXX20=ON!, default: \c ON ). This option was added as sometimes there were compatibility issues with std::format
+  - \c JKQtPlotter_ENABLED_STD_FORMAT : Build using std::format from C++20 (requires a compiler that supports this! (default: \c OFF )
   - \c JKQtPlotter_BUILD_WITH_TIMING_INFO_OUTPUT : If enabled (\c ON ), additional tiing code is activated (and built into the library), which outputs timming information for several functions of the library into \c qDebug() . This is intended for development putposes only, NOT for productive builds!  (default: \c OFF )
   - \c JKQtPlotter_BUILD_EXAMPLES : Build examples (default: \c ON )
   - \c JKQtPlotter_BUILD_TOOLS : Build tools (default: \c ON )
