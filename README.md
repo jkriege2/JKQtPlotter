@@ -132,7 +132,3 @@ These declare JKQTPlotter and make it available in your project. Afterwards you 
 target_link_libraries(${PROJECT_NAME} JKQTPlotter${QT_VERSION_MAJOR}::JKQTPlotter${QT_VERSION_MAJOR})
 ```
 
-
-## Star History
-
-[![Star History Chart](https://api.star-history.com/chart?repos=jkriege2/jkqtplotter&type=date&legend=top-left)](https://www.star-history.com/?repos=jkriege2%2Fjkqtplotter&type=date&legend=top-left)
