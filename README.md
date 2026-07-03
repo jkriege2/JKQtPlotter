@@ -133,7 +133,6 @@ target_link_libraries(${PROJECT_NAME} JKQTPlotter${QT_VERSION_MAJOR}::JKQTPlotte
 ```
 
 
-## Stargazers over time
+## Star History
 
-[![Stargazers over time](https://starchart.cc/jkriege2/JKQtPlotter.svg)](https://starchart.cc/jkriege2/JKQtPlotter)
-
+[![Star History Chart](https://api.star-history.com/chart?repos=jkriege2/jkqtplotter&type=date&legend=top-left)](https://www.star-history.com/?repos=jkriege2%2Fjkqtplotter&type=date&legend=top-left)
