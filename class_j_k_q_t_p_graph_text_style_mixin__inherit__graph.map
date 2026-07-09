@@ -1,0 +1,9 @@
+<map id="JKQTPGraphTextStyleMixin" name="JKQTPGraphTextStyleMixin">
+<area shape="rect" id="Node000001" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for text in graphs." alt="" coords="64,5,295,33"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_geo_text.html" title="This JKQTPPlotAnnotationElement is used to display text. It uses the JKQTMathText class in order to d..." alt="" coords="5,90,140,118"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="153,44,91,92,88,88,150,40"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_graph_value_label_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for value labels in gr..." alt="" coords="165,81,410,127"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="209,40,260,79,257,83,205,44"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_p_x_y_graph_labels.html" title="This graph plots a series of data labels. This can be used to add number&#45;labels to e...." alt="" coords="192,175,383,203"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="290,141,290,175,285,175,285,141"/>
+</map>

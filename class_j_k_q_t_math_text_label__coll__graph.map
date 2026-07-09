@@ -1,0 +1,15 @@
+<map id="JKQTMathTextLabel" name="JKQTMathTextLabel">
+<area shape="rect" id="Node000001" title="A QLabel&#45;derived class that draws an equation with LaTeX markup using JKQTMathText." alt="" coords="5,208,180,236"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="32,107,111,135"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="80,148,92,207,87,208,74,149"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_math_text.html" title="this class parses a mathematical markup string and can then draw the contained text/equation onto a Q..." alt="" coords="187,107,319,135"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="174,139,153,149,133,161,113,184,100,209,95,207,108,181,130,157,150,144,172,135"/>
+<area shape="rect" id="Node000005" href="$class_j_k_q_t_math_text_node.html" title="subclass representing one node in the syntax tree" alt="" coords="267,208,441,236"/>
+<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="247,148,245,166,251,183,264,196,281,206,279,210,261,200,246,185,240,167,241,147"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="149,5,236,33"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="210,44,247,105,242,108,205,46"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="377,196,388,177,389,169,385,160,376,153,360,146,318,135,320,130,362,141,378,148,389,157,394,168,393,179,381,199"/>
+<area shape="poly" id="edge6_Node000005_Node000005" title=" " alt="" coords="457,213,468,222,460,230,442,233,441,228,458,225,463,222,454,218"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="261,5,367,33"/>
+<area shape="poly" id="edge7_Node000003_Node000006" title=" " alt="" coords="301,46,263,108,259,105,297,44"/>
+</map>

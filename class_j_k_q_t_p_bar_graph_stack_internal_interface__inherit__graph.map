@@ -1,0 +1,7 @@
+<map id="JKQTPBarGraphStackInternalInterface" name="JKQTPBarGraphStackInternalInterface">
+<area shape="rect" id="Node000001" title="This is an interface&#45;class for all stackable bargraphs ... it is used internally for autoscaling only..." alt="" coords="143,5,395,51"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_bar_horizontal_stackable_graph.html" title="This implements a horizontal bar graph with bars between &#160;and &#160;Optionally several graphs of this type..." alt="" coords="5,99,263,144"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="227,61,168,101,165,96,224,56"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_bar_vertical_stackable_graph.html" title="This implements a vertical bar graph with bars between &#160;and &#160;Optionally several graphs of this type m..." alt="" coords="287,99,523,144"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="314,56,374,96,371,101,311,61"/>
+</map>

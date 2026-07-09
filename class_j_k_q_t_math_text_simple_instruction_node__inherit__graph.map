@@ -1,0 +1,5 @@
+<map id="JKQTMathTextSimpleInstructionNode" name="JKQTMathTextSimpleInstructionNode">
+<area shape="rect" id="Node000001" title="subclass representing a simple instruction node which only accepts string arguments,..." alt="" coords="5,81,319,109"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_math_text_node.html" title="subclass representing one node in the syntax tree" alt="" coords="75,5,249,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="165,47,165,81,159,81,159,47"/>
+</map>

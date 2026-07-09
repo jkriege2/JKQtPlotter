@@ -1,0 +1,41 @@
+<map id="JKQTPGraphLineAndFillStyleMixin" name="JKQTPGraphLineAndFillStyleMixin">
+<area shape="rect" id="Node000001" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph line and..." alt="" coords="285,302,528,347"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_p_evaluated_function_with_errors_graph_drawing_base.html" title="This class extends JKQTPEvaluatedFunctionWithErrorsGraphBase with functions to draw the graphs and se..." alt="" coords="576,145,827,190"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="461,293,656,188,659,193,464,298"/>
+<area shape="rect" id="Node000011" href="$class_j_k_q_t_p_filled_curve_graph_base.html" title="a Base class for filled curve graphs like e.g. JKQTPFilledCurveXGraph" alt="" coords="579,249,824,277"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="529,296,632,275,634,280,530,302"/>
+<area shape="rect" id="Node000016" href="$class_j_k_q_t_p_filled_horizontal_range_graph.html" title="This implements filled curve plots where the area is filled between two data columns for each y&#45;value..." alt="" coords="580,302,823,347"/>
+<area shape="poly" id="edge15_Node000001_Node000016" title=" " alt="" coords="541,322,580,322,580,327,541,327"/>
+<area shape="rect" id="Node000017" href="$class_j_k_q_t_p_filled_vertical_range_graph.html" title="This implements filled curve plots where the area is filled between two data columns for each x&#45;value..." alt="" coords="591,371,812,417"/>
+<area shape="poly" id="edge16_Node000001_Node000017" title=" " alt="" coords="517,348,605,369,604,374,516,353"/>
+<area shape="rect" id="Node000018" href="$class_j_k_q_t_p_special_line_graph_base.html" title="a Base class for special line graphs (steps ...) like e.g. JKQTPSpecialLineHorizontalGraph" alt="" coords="577,441,825,469"/>
+<area shape="poly" id="edge17_Node000001_Node000018" title=" " alt="" coords="450,353,509,392,577,426,616,439,615,444,575,431,506,396,447,358"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_graph_fill_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph filling ..." alt="" coords="12,284,231,312"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="244,307,285,311,285,316,244,312"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_graph_line_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph line sty..." alt="" coords="5,336,237,364"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="251,336,285,333,285,338,251,341"/>
+<area shape="rect" id="Node000005" href="$class_j_k_q_t_p_functor_line_graph_base.html" title="extends JKQTPEvaluatedFunctionWithErrorsGraphDrawingBase with the capabilities to define functions fr..." alt="" coords="905,57,1156,85"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="792,138,981,83,982,88,794,143"/>
+<area shape="rect" id="Node000008" href="$class_j_k_q_t_p_parsed_function_line_graph_base.html" title="extends JKQTPEvaluatedFunctionWithErrorsGraphDrawingBase with the capabilities to define functions fr..." alt="" coords="875,153,1187,181"/>
+<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="841,165,875,165,875,170,841,170"/>
+<area shape="rect" id="Node000006" href="$class_j_k_q_t_p_x_function_line_graph.html" title="This implements line plots where the data is taken from a user supplied function ." alt="" coords="1247,5,1478,33"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="1134,53,1272,31,1273,36,1135,58"/>
+<area shape="rect" id="Node000007" href="$class_j_k_q_t_p_y_function_line_graph.html" title="This implements line plots where the data is taken from a user supplied function ." alt="" coords="1249,57,1477,85"/>
+<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="1170,69,1248,69,1248,74,1170,74"/>
+<area shape="rect" id="Node000009" href="$class_j_k_q_t_p_x_parsed_function_line_graph.html" title="This implements line plots where the data is taken from a user supplied function &#160;The function is def..." alt="" coords="1245,110,1480,155"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="1179,149,1245,142,1246,148,1179,155"/>
+<area shape="rect" id="Node000010" href="$class_j_k_q_t_p_y_parsed_function_line_graph.html" title="This implements line plots where the data is taken from a user supplied function &#160;The function is def..." alt="" coords="1246,179,1479,225"/>
+<area shape="poly" id="edge9_Node000008_Node000010" title=" " alt="" coords="1179,180,1246,187,1246,192,1178,185"/>
+<area shape="rect" id="Node000012" href="$class_j_k_q_t_p_filled_curve_x_graph.html" title="This implements filled curve plots where the area is filled between the plot line and the x&#45;Axis." alt="" coords="922,249,1139,277"/>
+<area shape="poly" id="edge11_Node000011_Node000012" title=" " alt="" coords="838,261,922,261,922,266,838,266"/>
+<area shape="rect" id="Node000014" href="$class_j_k_q_t_p_filled_curve_y_graph.html" title="This implements filled curve plots where the area is filled between the plot line and y&#45;Axis." alt="" coords="923,301,1139,329"/>
+<area shape="poly" id="edge13_Node000011_Node000014" title=" " alt="" coords="804,277,942,299,941,304,804,282"/>
+<area shape="rect" id="Node000013" href="$class_j_k_q_t_p_filled_curve_x_error_graph.html" title="This implements filled curve plots with y errors where the area is filled between the plot line and t..." alt="" coords="1235,249,1491,277"/>
+<area shape="poly" id="edge12_Node000012_Node000013" title=" " alt="" coords="1153,261,1235,261,1235,266,1153,266"/>
+<area shape="rect" id="Node000015" href="$class_j_k_q_t_p_filled_curve_y_error_graph.html" title="This implements filled curve plots with y errors where the area is filled between the plot line and t..." alt="" coords="1235,301,1490,329"/>
+<area shape="poly" id="edge14_Node000014_Node000015" title=" " alt="" coords="1152,313,1235,313,1235,318,1152,318"/>
+<area shape="rect" id="Node000019" href="$class_j_k_q_t_p_special_line_horizontal_graph.html" title="This implements a step plot with values ." alt="" coords="910,398,1151,443"/>
+<area shape="poly" id="edge18_Node000018_Node000019" title=" " alt="" coords="839,438,909,431,910,436,840,443"/>
+<area shape="rect" id="Node000020" href="$class_j_k_q_t_p_special_line_vertical_graph.html" title="This implements a step plot with values ." alt="" coords="921,467,1141,513"/>
+<area shape="poly" id="edge19_Node000018_Node000020" title=" " alt="" coords="840,467,921,476,920,481,839,472"/>
+</map>

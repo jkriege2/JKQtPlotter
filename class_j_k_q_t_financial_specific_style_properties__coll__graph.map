@@ -1,0 +1,10 @@
+<map id="JKQTFinancialSpecificStyleProperties" name="JKQTFinancialSpecificStyleProperties">
+<area shape="rect" id="Node000001" title="Support Class for JKQTBasePlotter, which summarizes all properties that define the visual styling of ..." alt="" coords="456,321,687,367"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_graphs_specific_style_properties.html" title="Support Class for JKQTBasePlotter, which summarizes all properties that define the visual styling of ..." alt="" coords="422,197,721,225"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="574,239,574,321,569,321,569,239"/>
+<area shape="rect" id="Node000003" href="$struct_j_k_q_t_p_color_derivation_mode.html" title="Specifies how a fill&#45;color is derived from a given color." alt="" coords="5,5,244,33"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="117,47,104,85,96,132,98,181,105,203,117,224,138,242,170,259,256,288,358,311,456,326,455,332,357,316,255,293,168,264,135,247,113,227,101,205,93,181,91,131,99,84,112,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="168,36,542,195,540,200,166,41"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_fill_style_summmary.html" title="Support Class for JKQTBasePlotter, which summarizes a fill style." alt="" coords="745,197,958,225"/>
+<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="813,233,619,324,617,319,811,229"/>
+</map>

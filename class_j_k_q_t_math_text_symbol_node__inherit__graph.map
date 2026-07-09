@@ -1,0 +1,5 @@
+<map id="JKQTMathTextSymbolNode" name="JKQTMathTextSymbolNode">
+<area shape="rect" id="Node000001" title="subclass representing one symbol (e.g. \alpha , \cdot ...) node in the syntax tree" alt="" coords="5,81,239,109"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_math_text_node.html" title="subclass representing one node in the syntax tree" alt="" coords="35,5,209,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="125,47,125,81,119,81,119,47"/>
+</map>

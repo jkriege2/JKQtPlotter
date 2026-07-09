@@ -1,0 +1,5 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,5,148,33"/>
+<area shape="rect" id="Node000001" href="$class_j_k_q_t_p_auto_output_timer.html" title="RAII construct that times its lifetime, outputting properly indented qDebug()&#45;message." alt="" coords="196,5,403,33"/>
+<area shape="poly" id="edge261_Node000000_Node000001" title=" " alt="" coords="162,17,196,17,196,22,162,22"/>
+</map>

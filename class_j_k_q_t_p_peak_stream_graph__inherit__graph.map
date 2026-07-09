@@ -1,0 +1,13 @@
+<map id="JKQTPPeakStreamGraph" name="JKQTPPeakStreamGraph">
+<area shape="rect" id="Node000001" title="interprets data as a stream of x&#45; or y&#45;positions &#160;(depending in yPeaks ) ans plots a line on the heig..." alt="" coords="139,309,353,337"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_single_column_graph.html" title="This virtual JKQTPGraph descendent may be used as base for all graphs that use at least one column of..." alt="" coords="5,233,233,261"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="154,266,225,307,222,311,152,271"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_graph.html" title="this virtual base class of the (data&#45;column based) graphs, which are part of a JKQTPlotter plot and w..." alt="" coords="60,157,179,185"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="122,199,122,233,117,233,117,199"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_p_plot_element.html" title="this virtual base class of every element, which is part of a JKQTPlotter plot and may appear in its k..." alt="" coords="36,81,203,109"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="122,123,122,157,117,157,117,123"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="76,5,163,33"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="122,47,122,81,117,81,117,47"/>
+<area shape="rect" id="Node000006" href="$class_j_k_q_t_p_graph_line_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph line sty..." alt="" coords="258,233,490,261"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="341,271,270,311,267,307,339,266"/>
+</map>
