@@ -415,6 +415,35 @@ private slots:
         QCOMPARE(ds.get(col, 3), 4000.4);
     }
 
+
+    // setColumnCopiedData: shrink then append and ensure no leftover/thrashing data
+    void test_byHand_shrink_and_append() {
+        JKQTPDatastore ds;
+        size_t col = ds.addColumn(5, QString("setter2"));
+        QVector<double> qv; qv << 1.0 << 2.0 << 3.0 << 4.0 << 5.0;
+        ds.setColumnData(col, qv);
+        QCOMPARE(ds.getRows(col), static_cast<size_t>(5));
+
+        // shrink to 2 elements
+        double arr[2] = { 1000.1, 2000.2 };
+        ds.resizeColumn(col, 2);
+        QCOMPARE(ds.getRows(col), static_cast<size_t>(2));
+
+        ds.setColumnCopiedData(col, arr, 2);
+        QCOMPARE(ds.get(col, 0), 1000.1);
+        QCOMPARE(ds.get(col, 1), 2000.2);
+
+        // append one element and ensure rows update and values okay
+        ds.appendToColumn(col, 3000.3);
+        QCOMPARE(ds.getRows(col), static_cast<size_t>(3));
+        QCOMPARE(ds.get(col, 2), 3000.3);
+
+        // append another, check again
+        ds.appendToColumn(col, 4000.4);
+        QCOMPARE(ds.getRows(col), static_cast<size_t>(4));
+        QCOMPARE(ds.get(col, 3), 4000.4);
+    }
+
     // calling eraseFromColumn on an empty column must be a no-op (not crash)
     void test_eraseFromColumn_empty_noop() {
         JKQTPDatastore ds;
