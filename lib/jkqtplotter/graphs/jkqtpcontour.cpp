@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2024 Jan W. Krieger & Sebastian Isbaner (contour plot)
+    Copyright (c) 2008-2026 Jan W. Krieger & Sebastian Isbaner (contour plot)
 
     
 

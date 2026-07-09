@@ -6,7 +6,7 @@
 Library Information:
   version:                @PROJECT_VERSION@
   main author/maintainer: Jan Krieger <jan@jkrieger.de>
-  copyright:              (c) 2008-2024 Jan Krieger
+  copyright:              (c) 2008-2026 Jan Krieger
   license:                GNU LESSER GENERAL PUBLIC LICENSE >= v2.1
   repository:             https://github.com/jkriege2/JKQtPlotter
   documentation:          http://jkriege2.github.io/JKQtPlotter/index.html

@@ -6,7 +6,7 @@
 #define jkqtcommon_precomp_h
 
 /*
-    Copyright (c) 2008-2024 Jan W. Krieger (<jan@jkrieger.de>)
+    Copyright (c) 2008-2026 Jan W. Krieger (<jan@jkrieger.de>)
 
 
 
