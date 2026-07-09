@@ -1,5 +1,5 @@
 # JKQTPlotter - A Qt Plotting Library
-This is an extensive C++ library for data visualization, plotting and charting for Qt (>= 5.0, tested with Qt up to 6.3). It is feature-rich but self-contained and only depends on the [Qt framework](https://qt.io).
+This is an extensive C++ library for data visualization, plotting and charting for Qt (>= 5.0, tested with Qt up to 6.10). It is feature-rich but self-contained and only depends on the [Qt framework](https://qt.io).
 
 This software is licensed under the term of the [GNU Lesser General Public License 2.1 
 (LGPL 2.1)](./LICENSE) or above. 
