@@ -322,12 +322,12 @@ JKQTBasePlotter::~JKQTBasePlotter(){
     delete mainKey;
     delete xAxis;
     delete yAxis;
-    for (const auto& ax: qAsConst(secondaryYAxis)) {
-        delete ax;
+    for (auto it=secondaryYAxis.begin(); it!=secondaryYAxis.end(); ++it) {
+        delete it.value();
     }
     secondaryYAxis.clear();
-    for (const auto& ax: qAsConst(secondaryXAxis)) {
-        delete ax;
+    for (auto it=secondaryXAxis.begin(); it!=secondaryXAxis.end(); ++it) {
+        delete it.value();
     }
     secondaryXAxis.clear();
 
@@ -932,15 +932,16 @@ void JKQTBasePlotter::calcPlotScaling(JKQTPEnhancedPainter& painter){
         if (s.elongateMax>0) elongateTop=qMin(elongateTop,s.elongateMax);
         internalPlotMargins[PlotMarginUse::muAxesOutside].right+=s.requiredSize;
 
-
         // read size required by secondary axes
-        for (const auto& ax: qAsConst(secondaryYAxis)) {
+        for (auto it=secondaryYAxis.begin(); it!=secondaryYAxis.end(); ++it) {
+            auto ax= it.value();
             const auto s1=ax->getSize1(painter);
             const auto s2=ax->getSize2(painter);
             internalPlotMargins[PlotMarginUse::muAxesOutside].left+=s1.requiredSize+((fabs(s1.requiredSize)>0.1)?pt2px(painter, plotterStyle.secondaryAxisSeparation):0.0);
             internalPlotMargins[PlotMarginUse::muAxesOutside].right+=s2.requiredSize+((fabs(s2.requiredSize)>0.1)?pt2px(painter, plotterStyle.secondaryAxisSeparation):0.0);
         }
-        for (const auto& ax: qAsConst(secondaryXAxis)) {
+        for (auto it=secondaryXAxis.begin(); it!=secondaryXAxis.end(); ++it) {
+            auto ax= it.value();
             const auto s1=ax->getSize1(painter);
             const auto s2=ax->getSize2(painter);
             internalPlotMargins[PlotMarginUse::muAxesOutside].bottom+=s1.requiredSize+((fabs(s1.requiredSize)>0.1)?pt2px(painter, plotterStyle.secondaryAxisSeparation):0.0);
@@ -3729,7 +3730,7 @@ bool JKQTBasePlotter::saveImage(const QString& filename, bool displayPreview) {
 #else
                 QSharedPointer<QTemporaryFile> tf=QSharedPointer<QTemporaryFile>(new QTemporaryFile());
 #endif
-                tf->open();
+                const bool ok=tf->open();
                 tempFM=tf->fileName();
                 tf->close();
                 tf.reset();

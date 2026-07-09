@@ -148,7 +148,7 @@ void MandelbrotMainWindow::calculateMandelSet(double rmin, double rmax, double i
 
     std::vector<std::thread> threads;
     for (size_t offset=0; offset<width*height; offset+=blocksize) {
-        threads.push_back(std::thread([=](){
+        threads.push_back(std::thread([ds,this,offset,blocksize,rmin, rmax, imin, imax, width, height, max_iterations](){
             // start iterating at begin+offset
             auto pix=ds->begin(mandelbrot_col)+static_cast<int>(offset);
             // stop iterating at begin+offset+blocksize, or at the end

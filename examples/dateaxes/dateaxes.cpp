@@ -12,7 +12,6 @@
 #include <QTextStream>
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/graphs/jkqtpscatter.h"
-#include "jkqtplotter/graphs/jkqtpgeometric.h"
 #include "jkqtplotter/jkqtptools.h"
 #include "jkqtplotter/graphs/jkqtpfilledcurve.h"
 
@@ -29,18 +28,19 @@ void drawWithDateAxis(JKQTPlotter& plot) {
     // the second to fourth columns contain a floating-point number
     // with temperature average, min and max
     QFile file(":/weatherdata_gelsenkirchen.csv");
-    file.open(QFile::ReadOnly|QFile::Text);
-    file.readLine(); // eat comment
-    while (!file.atEnd()) {
-        QString line=file.readLine();
-        QTextStream in(&line);
-        QStringList items=line.split(";");
-        // date/time values are stored as doubles representing the corresponding number of milliseconds sind epoch
-        date<<QDateTime::fromString(items[0], Qt::ISODate).toUTC().toMSecsSinceEpoch();
-        // store Heidelbergs daily temperature
-        temperature<<items[1].toDouble();
-        temperature_min<<items[2].toDouble();
-        temperature_max<<items[3].toDouble();
+    if (file.open(QFile::ReadOnly|QFile::Text)) {
+        file.readLine(); // eat comment
+        while (!file.atEnd()) {
+            QString line=file.readLine();
+            QTextStream in(&line);
+            QStringList items=line.split(";");
+            // date/time values are stored as doubles representing the corresponding number of milliseconds sind epoch
+            date<<QDateTime::fromString(items[0], Qt::ISODate).toUTC().toMSecsSinceEpoch();
+            // store Heidelbergs daily temperature
+            temperature<<items[1].toDouble();
+            temperature_min<<items[2].toDouble();
+            temperature_max<<items[3].toDouble();
+        }
     }
 
     // 3. add a plot for the data mean line (graphTemperature) and range (graphTemperatureRange)
@@ -110,18 +110,19 @@ void drawWithTimeAxis(JKQTPlotter& plot) {
     // semicolon separated data. The first column is a time
     // the second contain a floating-point number with temperatures
     QFile file(":/weatherdata_heidelberg_2018-10-14.csv");
-    file.open(QFile::ReadOnly|QFile::Text);
-    file.readLine(); // eat comment
-    while (!file.atEnd()) {
-        QString line=file.readLine();
-        QTextStream in(&line);
-        QStringList items=line.split(";");
-        // date/time values are stored as doubles representing the corresponding
-        // number of milliseconds sind epoch. Since the data is time only, we have to use an arbitrary
-        // date as basis
-        time<<QDateTime::fromString("1970-01-01T"+items[0], Qt::ISODate).toMSecsSinceEpoch();
-        // store Heidelbergs daily temperature
-        temperature<<items[1].toDouble();
+    if (file.open(QFile::ReadOnly|QFile::Text)) {
+        file.readLine(); // eat comment
+        while (!file.atEnd()) {
+            QString line=file.readLine();
+            QTextStream in(&line);
+            QStringList items=line.split(";");
+            // date/time values are stored as doubles representing the corresponding
+            // number of milliseconds sind epoch. Since the data is time only, we have to use an arbitrary
+            // date as basis
+            time<<QDateTime::fromString("1970-01-01T"+items[0], Qt::ISODate).toMSecsSinceEpoch();
+            // store Heidelbergs daily temperature
+            temperature<<items[1].toDouble();
+        }
     }
 
     // 3. add a plot for the data mean line (graphTemperature) and range (graphTemperatureRange)
