@@ -1165,6 +1165,7 @@ void JKQTPlotter::wheelEvent ( QWheelEvent * event ) {
         }
     }else{
         event->ignore();
+        emit plotMouseWheelOperated(plotter->p2x(wheel_x / magnification), plotter->p2y((wheel_y - getPlotYOffset()) / magnification), event->modifiers(), angleDelta.x(), angleDelta.y());
         return;
     }
 
