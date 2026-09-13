@@ -112,7 +112,7 @@ or on a Qt-version agnostic way via:
 ```
 See https://jkriege2.github.io/JKQtPlotter/page_buildinstructions__c_m_a_k_e.html for details.
 
-## Usage via CMake's FetchConten-API
+## Usage via CMake's FetchContent-API
 
 In addition to the method described above (i.e. build and install the library and then use it), you can also use JKQTPlotter via CMake's [FetchContent-API](https://cmake.org/cmake/help/latest/module/FetchContent.html). 
 
