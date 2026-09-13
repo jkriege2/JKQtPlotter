@@ -1,0 +1,17 @@
+<map id="JKQTMathTextMultiChildNode" name="JKQTMathTextMultiChildNode">
+<area shape="rect" id="Node000001" title="subclass representing a node in the syntax tree, that has two children" alt="" coords="228,109,479,137"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_math_text_dual_child_node.html" title="subclass representing a node in the syntax tree, that has two children" alt="" coords="543,5,793,33"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="392,101,454,71,526,43,575,31,577,36,527,49,456,76,394,105"/>
+<area shape="rect" id="Node000005" href="$class_j_k_q_t_math_text_horizontal_list_node.html" title="subclass representing a list of nodes in the syntax tree, layed out horizontally" alt="" coords="527,57,809,85"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="452,104,582,83,583,88,452,110"/>
+<area shape="rect" id="Node000006" href="$class_j_k_q_t_math_text_matrix_node.html" title="subclass representing a \begin{matrix} , \begin{tabular} , \begin{array} , ... node" alt="" coords="556,109,780,137"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="493,121,556,121,556,126,493,126"/>
+<area shape="rect" id="Node000007" href="$class_j_k_q_t_math_text_sqrt_node.html" title="subclass representing a sqrt node" alt="" coords="565,161,771,189"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="452,137,583,159,582,164,452,142"/>
+<area shape="rect" id="Node000008" href="$class_j_k_q_t_math_text_vertical_list_node.html" title="subclass representing a list of nodes in the syntax tree, layed out vertically" alt="" coords="537,213,799,241"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="393,141,455,172,527,199,572,211,570,216,526,205,453,176,391,146"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_math_text_node.html" title="subclass representing one node in the syntax tree" alt="" coords="5,109,180,137"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="194,121,228,121,228,126,194,126"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_math_text_frac_node.html" title="subclass representing a \frac node" alt="" coords="857,5,1065,33"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="807,17,857,17,857,22,807,22"/>
+</map>

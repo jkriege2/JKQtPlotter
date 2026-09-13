@@ -1,0 +1,12 @@
+<map id="JKQTFPXRangePlot" name="JKQTFPXRangePlot">
+<area shape="rect" id="Node000001" title="plot a range of x values" alt="" coords="9,281,179,309"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_f_p_plot.html" title="base class for all plots that may be plotted by JKQTFastPlotter" alt="" coords="39,204,149,232"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="97,246,97,281,91,281,91,246"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,93,92,121"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="62,132,91,203,86,205,57,134"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_fast_plotter.html" title="a speed optimized plotter class" alt="" coords="116,93,261,121"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="170,133,107,206,103,202,166,130"/>
+<area shape="poly" id="edge5_Node000004_Node000004" title=" " alt="" coords="277,98,288,107,280,115,262,118,261,113,278,110,283,107,274,102"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="113,5,265,33"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="191,47,191,92,186,92,186,47"/>
+</map>

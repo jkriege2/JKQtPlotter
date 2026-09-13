@@ -1,0 +1,12 @@
+<map id="JKQTFPimageOverlayPlot" name="JKQTFPimageOverlayPlot">
+<area shape="rect" id="Node000001" title="plots an image overlay, i.e. a boolean image where each true pixel is drawn with a given color and th..." alt="" coords="5,281,225,309"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_f_p_plot.html" title="base class for all plots that may be plotted by JKQTFastPlotter" alt="" coords="61,204,170,232"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="118,246,118,281,113,281,113,246"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="27,93,113,121"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="83,132,112,203,108,205,78,134"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_fast_plotter.html" title="a speed optimized plotter class" alt="" coords="137,93,283,121"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="192,133,129,206,125,202,188,130"/>
+<area shape="poly" id="edge5_Node000004_Node000004" title=" " alt="" coords="298,98,309,107,301,115,283,118,282,113,299,110,304,107,295,102"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="134,5,286,33"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="213,47,213,92,207,92,207,47"/>
+</map>

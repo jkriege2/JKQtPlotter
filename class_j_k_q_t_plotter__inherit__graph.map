@@ -1,0 +1,5 @@
+<map id="JKQTPlotter" name="JKQTPlotter">
+<area shape="rect" id="Node000001" title="plotter widget for scientific plots (uses JKQTBasePlotter to do the actual drawing)" alt="" coords="5,81,119,109"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="17,5,107,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="65,47,65,81,59,81,59,47"/>
+</map>

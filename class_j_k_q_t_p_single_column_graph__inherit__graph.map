@@ -1,0 +1,13 @@
+<map id="JKQTPSingleColumnGraph" name="JKQTPSingleColumnGraph">
+<area shape="rect" id="Node000001" title="This virtual JKQTPGraph descendent may be used as base for all graphs that use at least one column of..." alt="" coords="125,233,353,261"/>
+<area shape="rect" id="Node000005" href="$class_j_k_q_t_p_peak_stream_graph.html" title="interprets data as a stream of x&#45; or y&#45;positions &#160;(depending in yPeaks ) ans plots a line on the heig..." alt="" coords="5,318,220,346"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="209,271,134,320,131,316,207,267"/>
+<area shape="rect" id="Node000006" href="$class_j_k_q_t_p_single_column_symbols_graph.html" title="plots a 1&#45;column set of data&#45;values with symbols onto a JKQtPlotter/JKQtBasePlotter...." alt="" coords="244,309,491,355"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="272,267,335,307,332,311,270,271"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_graph.html" title="this virtual base class of the (data&#45;column based) graphs, which are part of a JKQTPlotter plot and w..." alt="" coords="180,157,299,185"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="242,199,242,233,237,233,237,199"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_plot_element.html" title="this virtual base class of every element, which is part of a JKQTPlotter plot and may appear in its k..." alt="" coords="156,81,323,109"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="242,123,242,157,237,157,237,123"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="196,5,283,33"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="242,47,242,81,237,81,237,47"/>
+</map>

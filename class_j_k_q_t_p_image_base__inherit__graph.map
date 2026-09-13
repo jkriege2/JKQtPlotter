@@ -1,0 +1,31 @@
+<map id="JKQTPImageBase" name="JKQTPImageBase">
+<area shape="rect" id="Node000001" title="base class for plotting an image" alt="" coords="521,109,681,137"/>
+<area shape="rect" id="Node000005" href="$class_j_k_q_t_p_image.html" title="class to plot an image from a QImage object" alt="" coords="769,57,890,85"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="676,104,768,82,769,88,678,109"/>
+<area shape="rect" id="Node000006" href="$class_j_k_q_t_p_math_image_base.html" title="base class to hold an image from an 2&#45;dimensional array of values" alt="" coords="729,109,929,137"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="695,121,729,121,729,126,695,126"/>
+<area shape="rect" id="Node000013" href="$class_j_k_q_t_p_overlay_image.html" title="class to plot an image from an 2&#45;dimensional array of boolean values: alle true values are plotted in..." alt="" coords="738,161,921,189"/>
+<area shape="poly" id="edge12_Node000001_Node000013" title=" " alt="" coords="677,138,768,159,766,164,676,143"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_graph.html" title="this virtual base class of the (data&#45;column based) graphs, which are part of a JKQTPlotter plot and w..." alt="" coords="355,109,473,137"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="487,121,521,121,521,126,487,126"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_plot_element.html" title="this virtual base class of every element, which is part of a JKQTPlotter plot and may appear in its k..." alt="" coords="140,109,307,137"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="321,121,355,121,355,126,321,126"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="5,109,92,137"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="105,121,140,121,140,126,105,126"/>
+<area shape="rect" id="Node000007" href="$class_j_k_q_t_p_math_image.html" title="class to plot an image from an 2&#45;dimensional array of values" alt="" coords="1028,57,1189,85"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="918,104,1032,83,1033,88,919,109"/>
+<area shape="rect" id="Node000011" href="$class_j_k_q_t_p_r_g_b_math_image.html" title="class to plot an image from an 2&#45;dimensional array of RGB values" alt="" coords="1011,109,1206,137"/>
+<area shape="poly" id="edge10_Node000006_Node000011" title=" " alt="" coords="943,121,1011,121,1011,126,943,126"/>
+<area shape="rect" id="Node000008" href="$class_j_k_q_t_p_column_math_image.html" title="class to plot an image from an 2&#45;dimensional array of values stored in a column of the datastore" alt="" coords="1338,5,1561,33"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="1203,54,1357,31,1357,36,1203,60"/>
+<area shape="rect" id="Node000009" href="$class_j_k_q_t_p_contour_plot.html" title="class for a contour plot" alt="" coords="1367,57,1531,85"/>
+<area shape="poly" id="edge8_Node000007_Node000009" title=" " alt="" coords="1203,69,1367,69,1367,74,1203,74"/>
+<area shape="rect" id="Node000010" href="$class_j_k_q_t_p_column_contour_plot.html" title="class for a contour plots (same as JKQTPContourPlot) of images stored in a JKQTPDatastore column" alt="" coords="1659,57,1884,85"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="1545,69,1658,69,1658,74,1545,74"/>
+<area shape="rect" id="Node000012" href="$class_j_k_q_t_p_column_r_g_b_math_image.html" title="like JKQTPRGBMathImage but reads images from columns of the datastore" alt="" coords="1321,109,1577,137"/>
+<area shape="poly" id="edge11_Node000011_Node000012" title=" " alt="" coords="1220,121,1321,121,1321,126,1220,126"/>
+<area shape="rect" id="Node000014" href="$class_j_k_q_t_p_overlay_image_enhanced.html" title="class to plot an image from an 2&#45;dimensional array of boolean values: alle true values are plotted in..." alt="" coords="977,161,1240,189"/>
+<area shape="poly" id="edge13_Node000013_Node000014" title=" " alt="" coords="935,173,977,173,977,178,935,178"/>
+<area shape="rect" id="Node000015" href="$class_j_k_q_t_p_column_overlay_image_enhanced.html" title="class to plot an image from an 2&#45;dimensional array of boolean values: alle true values are plotted in..." alt="" coords="1288,161,1611,189"/>
+<area shape="poly" id="edge14_Node000014_Node000015" title=" " alt="" coords="1254,173,1288,173,1288,178,1254,178"/>
+</map>

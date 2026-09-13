@@ -1,0 +1,23 @@
+<map id="JKQTPFilledCurveYGraph" name="JKQTPFilledCurveYGraph">
+<area shape="rect" id="Node000001" title="This implements filled curve plots where the area is filled between the plot line and y&#45;Axis." alt="" coords="125,479,341,507"/>
+<area shape="rect" id="Node000011" href="$class_j_k_q_t_p_filled_curve_y_error_graph.html" title="This implements filled curve plots with y errors where the area is filled between the plot line and t..." alt="" coords="105,555,360,583"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="235,520,235,554,230,554,230,520"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_filled_curve_graph_base.html" title="a Base class for filled curve graphs like e.g. JKQTPFilledCurveXGraph" alt="" coords="110,403,355,431"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="235,444,235,478,230,478,230,444"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_x_y_baseline_graph.html" title="This virtual JKQTPGraph descendent extends JKQTPXYGraph adds a baseline&#45;property, which is necessary,..." alt="" coords="5,318,212,346"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="141,351,215,400,212,405,138,356"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_p_x_y_graph.html" title="This virtual JKQTPGraph descendent may be used as base for all graphs that use at least two columns t..." alt="" coords="39,233,179,261"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="111,275,111,318,106,318,106,275"/>
+<area shape="rect" id="Node000005" href="$class_j_k_q_t_p_graph.html" title="this virtual base class of the (data&#45;column based) graphs, which are part of a JKQTPlotter plot and w..." alt="" coords="49,157,168,185"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="111,199,111,233,106,233,106,199"/>
+<area shape="rect" id="Node000006" href="$class_j_k_q_t_p_plot_element.html" title="this virtual base class of every element, which is part of a JKQTPlotter plot and may appear in its k..." alt="" coords="25,81,192,109"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="111,123,111,157,106,157,106,123"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="65,5,152,33"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="111,47,111,81,106,81,106,47"/>
+<area shape="rect" id="Node000008" href="$class_j_k_q_t_p_graph_line_and_fill_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph line and..." alt="" coords="237,309,479,355"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="315,365,254,405,251,400,312,360"/>
+<area shape="rect" id="Node000009" href="$class_j_k_q_t_p_graph_fill_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph filling ..." alt="" coords="226,233,445,261"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="345,274,354,308,349,309,340,275"/>
+<area shape="rect" id="Node000010" href="$class_j_k_q_t_p_graph_line_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph line sty..." alt="" coords="469,233,701,261"/>
+<area shape="poly" id="edge9_Node000008_Node000010" title=" " alt="" coords="537,269,418,312,416,307,536,264"/>
+</map>

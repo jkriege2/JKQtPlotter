@@ -1,0 +1,5 @@
+<map id="JKQTBasePlotter::PlotMargins" name="JKQTBasePlotter::PlotMargins">
+<area shape="rect" id="Node000001" title="used for calculated value: describing all sections of freespace outside the graph area" alt="" coords="5,99,259,127"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="29,5,235,51"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="135,65,135,99,129,99,129,65"/>
+</map>

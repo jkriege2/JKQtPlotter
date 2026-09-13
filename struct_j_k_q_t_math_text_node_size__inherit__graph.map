@@ -1,0 +1,15 @@
+<map id="JKQTMathTextNodeSize" name="JKQTMathTextNodeSize">
+<area shape="rect" id="Node000001" title="beschreibt die Größe(n) eines Knotens" alt="" coords="5,187,212,215"/>
+<area shape="rect" id="Node000002" href="$struct_j_k_q_t_math_text_brace_node_1_1_node_size.html" title="defines the size of the node (JKQTMathTextNodeSize) and additional information" alt="" coords="273,5,494,51"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="128,175,183,118,219,87,259,60,285,48,287,53,261,65,222,91,187,121,132,179"/>
+<area shape="rect" id="Node000003" href="$struct_j_k_q_t_math_text_matrix_node_1_1_layout_info.html" title="describes the layout of the whole node" alt="" coords="271,75,495,120"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="148,179,259,130,295,118,296,123,261,134,150,184"/>
+<area shape="rect" id="Node000004" href="$struct_j_k_q_t_math_text_symbol_node_1_1_node_size.html" title="return type for getSymbolSize(), extends JKQTMathTextNodeSize with information about x&#45;correction for..." alt="" coords="267,144,500,189"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="225,184,266,179,267,184,226,189"/>
+<area shape="rect" id="Node000005" href="$struct_j_k_q_t_math_text_text_node_1_1_layout_info.html" title="describes the layout of the whole node" alt="" coords="280,213,487,259"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="226,213,280,220,279,226,225,219"/>
+<area shape="rect" id="Node000006" href="$struct_j_k_q_t_math_text_verbatim_node_1_1_layout_info.html" title="describes the layout of the whole node" alt="" coords="260,283,507,328"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="150,219,261,268,296,280,295,285,259,273,148,224"/>
+<area shape="rect" id="Node000007" href="$struct_j_k_q_t_math_text_vertical_list_node_1_1_layout_info.html" title="describes the layout of the whole node" alt="" coords="274,352,493,397"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="132,224,187,281,222,312,261,338,287,350,285,354,259,342,219,316,183,285,128,228"/>
+</map>

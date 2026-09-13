@@ -1,0 +1,37 @@
+<map id="JKQTPGeometricPlotElement" name="JKQTPGeometricPlotElement">
+<area shape="rect" id="Node000001" title="this is the virtual base class of all JKQTPPlotElement&#39;s in a JKQTPlotter plot that represent geometr..." alt="" coords="355,109,605,137"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_p_geo_base_decorated_head_line.html" title="This JKQTPGeometricPlotElement is used as base class for geometric drawing elements that consist of l..." alt="" coords="653,32,953,60"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="552,104,743,57,744,63,553,109"/>
+<area shape="rect" id="Node000006" href="$class_j_k_q_t_p_geo_base_decorated_line.html" title="This JKQTPGeometricPlotElement is used as base class for geometric drawing elements that consist of l..." alt="" coords="674,109,933,137"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="620,121,674,121,674,126,620,126"/>
+<area shape="rect" id="Node000011" href="$class_j_k_q_t_p_geo_base_line.html" title="This JKQTPGeometricPlotElement is used as base class for geometric drawing elements that only consist..." alt="" coords="716,213,891,241"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="538,139,759,211,758,216,537,144"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_plot_element.html" title="this virtual base class of every element, which is part of a JKQTPlotter plot and may appear in its k..." alt="" coords="140,109,307,137"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="320,121,354,121,354,126,320,126"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,109,92,137"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="105,121,140,121,140,126,105,126"/>
+<area shape="rect" id="Node000005" href="$class_j_k_q_t_p_geo_infinite_line.html" title="This JKQTPGeometricPlotElement is used to draw an infinite line." alt="" coords="1005,5,1196,33"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="967,29,1005,25,1006,30,968,34"/>
+<area shape="rect" id="Node000007" href="$class_j_k_q_t_p_geo_bezier_curve.html" title="This JKQTPGeometricPlotElement is used to draw a bezier curve." alt="" coords="1001,57,1200,85"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="897,104,1019,83,1020,88,898,110"/>
+<area shape="rect" id="Node000008" href="$class_j_k_q_t_p_geo_line.html" title="This JKQTPGeometricPlotElement is used to draw a line, optionally line&#45;end decorations (aka arrows) a..." alt="" coords="1033,109,1168,137"/>
+<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="946,121,1033,121,1033,126,946,126"/>
+<area shape="rect" id="Node000010" href="$class_j_k_q_t_p_geo_poly_lines.html" title="This JKQTPGeometricPlotElement is used to draw a poly line." alt="" coords="1013,161,1188,189"/>
+<area shape="poly" id="edge9_Node000006_Node000010" title=" " alt="" coords="898,137,1020,159,1019,164,897,142"/>
+<area shape="rect" id="Node000009" href="$class_j_k_q_t_p_geo_arrow.html" title="This convenience specialisation of JKQTPGeoLine is used to draw a line with decorations (e...." alt="" coords="1265,109,1413,137"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="1182,121,1265,121,1265,126,1182,126"/>
+<area shape="rect" id="Node000012" href="$class_j_k_q_t_p_geo_arc.html" title="This JKQTPGeometricPlotElement is used to draw an arc." alt="" coords="1037,213,1165,241"/>
+<area shape="poly" id="edge11_Node000011_Node000012" title=" " alt="" coords="904,225,1037,225,1037,230,904,230"/>
+<area shape="rect" id="Node000013" href="$class_j_k_q_t_p_geo_base_filled.html" title="This JKQTPGeometricPlotElement is used as base class for geometric drawing elements that only consist..." alt="" coords="1010,265,1191,293"/>
+<area shape="poly" id="edge12_Node000011_Node000013" title=" " alt="" coords="898,241,1020,263,1019,268,897,246"/>
+<area shape="rect" id="Node000014" href="$class_j_k_q_t_p_geo_polygon.html" title="This JKQTPGeometricPlotElement is used to draw a polygon." alt="" coords="1257,239,1421,267"/>
+<area shape="poly" id="edge13_Node000013_Node000014" title=" " alt="" coords="1205,265,1256,259,1257,264,1206,270"/>
+<area shape="rect" id="Node000015" href="$class_j_k_q_t_p_geo_rectangle.html" title="This JKQTPGeometricPlotElement is used to draw a rectangle." alt="" coords="1248,291,1429,319"/>
+<area shape="poly" id="edge14_Node000013_Node000015" title=" " alt="" coords="1205,288,1248,292,1248,298,1205,293"/>
+<area shape="rect" id="Node000016" href="$class_j_k_q_t_p_geo_ellipse.html" title="This JKQTPGeometricPlotElement is used to draw an ellipse." alt="" coords="1477,291,1629,319"/>
+<area shape="poly" id="edge15_Node000015_Node000016" title=" " alt="" coords="1443,302,1477,302,1477,307,1443,307"/>
+<area shape="rect" id="Node000017" href="$class_j_k_q_t_p_geo_pie.html" title="This JKQTPGeometricPlotElement is used to draw a pie." alt="" coords="1677,291,1803,319"/>
+<area shape="poly" id="edge16_Node000016_Node000017" title=" " alt="" coords="1643,302,1677,302,1677,307,1643,307"/>
+<area shape="rect" id="Node000018" href="$class_j_k_q_t_p_geo_chord.html" title="This JKQTPGeometricPlotElement is used to draw a chord." alt="" coords="1851,291,2000,319"/>
+<area shape="poly" id="edge17_Node000017_Node000018" title=" " alt="" coords="1816,302,1850,302,1850,307,1816,307"/>
+</map>

@@ -1,0 +1,122 @@
+<map id="JKQTPHorizontalRange" name="JKQTPHorizontalRange">
+<area shape="rect" id="Node000001" title="simply marks a range (and possibly a centerline) in a plot. This may be used to display e...." alt="" coords="4327,57,4529,85"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_range_base.html" title="simply marks a range (and possibly a centerline) in a plot. This may be used to display e...." alt="" coords="4086,57,4246,85"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="4260,69,4327,69,4327,74,4260,74"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_plot_element.html" title="this virtual base class of every element, which is part of a JKQTPlotter plot and may appear in its k..." alt="" coords="3758,57,3925,85"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="3938,69,4086,69,4086,74,3938,74"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="2256,207,2343,235"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="2326,196,2387,153,2425,133,2466,117,2556,92,2648,72,2836,44,3025,29,3208,24,3379,27,3531,35,3758,57,3758,63,3531,41,3378,32,3208,29,3025,34,2837,49,2649,78,2557,98,2468,122,2428,137,2390,158,2329,200"/>
+<area shape="rect" id="Node000005" href="$class_j_k_q_t_base_plotter.html" title="base class for 2D plotter classes (used by the plotter widget JKQTPlotter)" alt="" coords="3387,537,3539,565"/>
+<area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="2339,239,2399,266,2467,289,2553,301,2661,307,2916,311,3045,315,3165,327,3219,336,3268,347,3310,362,3346,381,3387,418,3419,461,3444,503,3459,536,3454,538,3439,506,3415,464,3383,421,3342,386,3308,367,3267,352,3218,341,3165,332,3045,321,2916,316,2661,312,2552,306,2466,294,2397,271,2337,244"/>
+<area shape="rect" id="Node000020" href="$class_j_k_q_t_math_text.html" title="this class parses a mathematical markup string and can then draw the contained text/equation onto a Q..." alt="" coords="2867,225,2999,253"/>
+<area shape="poly" id="edge29_Node000020_Node000004" title=" " alt="" coords="2357,220,2867,235,2867,240,2356,225"/>
+<area shape="rect" id="Node000027" href="$class_j_k_q_t_p_coordinate_axis.html" title="this virtual class is the base for any type of coordinate axis, to be drawn by JKQTBasePlotter." alt="" coords="3747,716,3936,744"/>
+<area shape="poly" id="edge40_Node000027_Node000004" title=" " alt="" coords="2335,240,2395,276,2468,313,2529,334,2608,355,2793,398,2887,422,2974,448,3049,476,3104,509,3113,520,3117,532,3120,542,3128,551,3157,566,3185,571,3212,570,3239,567,3266,564,3292,565,3319,574,3346,593,3357,608,3361,624,3358,654,3356,683,3360,696,3370,709,3393,728,3418,743,3474,764,3533,775,3594,777,3653,772,3709,764,3797,741,3799,747,3710,769,3654,778,3594,782,3533,780,3472,769,3416,748,3390,732,3366,713,3355,699,3350,684,3353,654,3355,624,3352,611,3342,597,3317,578,3291,570,3266,569,3239,572,3212,576,3184,576,3155,571,3125,555,3116,544,3112,533,3109,523,3101,513,3047,481,2973,453,2886,427,2792,403,2606,360,2527,339,2466,318,2393,281,2332,245"/>
+<area shape="rect" id="Node000030" href="$class_j_k_q_t_p_base_key.html" title="base class for drawing a key (or legend)" alt="" coords="3772,369,3911,397"/>
+<area shape="poly" id="edge47_Node000030_Node000004" title=" " alt="" coords="2356,202,2441,179,2557,153,2699,127,2859,106,3031,95,3120,94,3210,97,3299,105,3388,118,3475,137,3560,162,3605,181,3649,206,3728,265,3790,323,3830,367,3826,371,3786,327,3724,269,3646,211,3603,186,3558,167,3474,142,3387,123,3299,110,3209,102,3120,99,3032,100,2859,111,2700,132,2558,158,2442,184,2357,207"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="3469,523,3497,439,3519,383,3547,322,3581,259,3622,198,3669,142,3724,94,3756,78,3759,83,3727,99,3673,146,3626,202,3586,262,3552,324,3524,385,3502,440,3474,525"/>
+<area shape="poly" id="edge63_Node000005_Node000005" title=" " alt="" coords="3429,522,3439,514,3463,511,3483,513,3496,519,3499,529,3494,539,3489,536,3494,528,3492,523,3482,518,3463,516,3442,519,3432,527"/>
+<area shape="rect" id="Node000023" href="$class_j_k_q_t_p_graphs_model.html" title="data model with all plots ina JKQTBasePlotter (+ allows to switch them visible/invisible)" alt="" coords="3754,585,3929,613"/>
+<area shape="poly" id="edge36_Node000023_Node000005" title=" " alt="" coords="3498,570,3538,592,3583,609,3630,616,3678,618,3767,611,3768,616,3678,623,3630,622,3582,614,3535,597,3495,575"/>
+<area shape="poly" id="edge41_Node000027_Node000005" title=" " alt="" coords="3489,574,3561,658,3571,678,3576,686,3584,693,3622,712,3664,724,3706,730,3746,733,3746,738,3705,736,3663,729,3620,717,3581,698,3572,689,3567,681,3556,661,3485,577"/>
+<area shape="poly" id="edge48_Node000030_Node000005" title=" " alt="" coords="3498,528,3538,508,3582,489,3615,480,3642,477,3668,473,3700,464,3767,430,3819,395,3822,400,3770,434,3702,468,3669,478,3643,482,3616,485,3584,494,3540,512,3501,533"/>
+<area shape="rect" id="Node000006" href="$class_j_k_q_t_base_plotter_style.html" title="Support Class for JKQTBasePlotter, which summarizes all properties that define the visual styling of ..." alt="" coords="2838,944,3029,972"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="3042,948,3118,935,3200,910,3240,893,3277,871,3312,845,3342,815,3354,796,3360,778,3359,742,3355,703,3358,682,3366,658,3382,629,3403,603,3443,564,3447,567,3407,607,3387,632,3370,660,3363,683,3361,703,3364,742,3365,779,3359,798,3346,818,3315,849,3280,876,3242,897,3202,915,3120,940,3043,954"/>
+<area shape="rect" id="Node000007" href="$class_j_k_q_t_p_key_style.html" title="Support Class for JKQTBasePlotter, which summarizes all properties that define the visual styling of ..." alt="" coords="2230,417,2369,445"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="2383,426,2416,436,2445,456,2454,470,2460,488,2465,531,2459,637,2452,744,2456,786,2461,803,2469,816,2493,837,2530,857,2576,876,2629,893,2742,921,2846,941,2845,947,2741,926,2628,898,2574,881,2528,862,2490,842,2465,820,2456,805,2451,788,2447,744,2453,637,2459,531,2454,489,2449,472,2441,460,2414,441,2381,431"/>
+<area shape="poly" id="edge49_Node000030_Node000007" title=" " alt="" coords="2382,424,2888,400,3232,386,3583,377,3701,377,3772,378,3772,384,3701,382,3583,382,3232,392,2888,405,2382,430"/>
+<area shape="rect" id="Node000008" href="$class_j_k_q_t_p_coordinate_axis_style.html" title="Support Class for JKQTPCoordinateAxis, which summarizes all properties that define the visual styling..." alt="" coords="1599,1196,1827,1224"/>
+<area shape="poly" id="edge8_Node000006_Node000008" title=" " alt="" coords="1841,1196,2132,1169,2306,1151,2442,1133,2506,1120,2574,1102,2739,1046,2831,1007,2904,970,2906,975,2833,1011,2741,1051,2576,1108,2507,1125,2443,1139,2307,1156,2132,1174,1841,1202"/>
+<area shape="rect" id="Node000010" href="$class_j_k_q_t_p_colorbar_coordinate_axis_style.html" title="Support Class for JKQTPCoordinateAxis, which summarizes all properties that define the visual styling..." alt="" coords="2170,1030,2429,1075"/>
+<area shape="poly" id="edge11_Node000010_Node000008" title=" " alt="" coords="1799,1191,1897,1173,1964,1166,2018,1164,2069,1158,2131,1136,2143,1126,2154,1115,2195,1092,2236,1073,2238,1078,2197,1096,2158,1119,2146,1130,2133,1140,2070,1163,2018,1169,1965,1171,1898,1178,1800,1196"/>
+<area shape="poly" id="edge42_Node000027_Node000008" title=" " alt="" coords="1841,1215,2055,1224,2298,1229,3465,1229,3509,1224,3551,1211,3589,1191,3624,1165,3656,1133,3685,1097,3735,1017,3774,934,3804,854,3834,744,3839,745,3809,856,3779,936,3740,1020,3690,1101,3660,1137,3627,1169,3592,1196,3553,1216,3510,1229,3465,1234,2298,1234,2055,1229,1841,1220"/>
+<area shape="rect" id="Node000009" href="$class_j_k_q_t_p_grid_style.html" title="Support Class for JKQTPCoordinateAxis, and summarizes all properties that define the visual styling o..." alt="" coords="1081,1199,1223,1227"/>
+<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="1237,1210,1529,1209,1599,1208,1599,1214,1529,1214,1237,1215"/>
+<area shape="poly" id="edge10_Node000006_Node000010" title=" " alt="" coords="2442,1043,2586,1031,2740,1009,2819,990,2889,969,2891,975,2821,995,2740,1014,2587,1036,2443,1048"/>
+<area shape="rect" id="Node000011" href="$class_j_k_q_t_graphs_base_style.html" title="Support Class for JKQTBasePlotter, which summarizes all properties that define the visual styling of ..." alt="" coords="2202,944,2397,972"/>
+<area shape="poly" id="edge12_Node000006_Node000011" title=" " alt="" coords="2411,955,2838,955,2838,961,2411,961"/>
+<area shape="rect" id="Node000012" href="$class_j_k_q_t_graphs_specific_style_properties.html" title="Support Class for JKQTBasePlotter, which summarizes all properties that define the visual styling of ..." alt="" coords="545,1023,844,1051"/>
+<area shape="poly" id="edge13_Node000011_Node000012" title=" " alt="" coords="794,1050,868,1059,1150,1085,1264,1091,1371,1092,1477,1089,1591,1082,1873,1054,2003,1042,2060,1034,2131,1018,2204,995,2266,970,2268,975,2206,1000,2133,1023,2061,1039,2004,1047,1874,1059,1592,1087,1477,1095,1371,1098,1264,1096,1150,1090,868,1065,794,1055"/>
+<area shape="rect" id="Node000014" href="$class_j_k_q_t_barchart_specific_style_properties.html" title="Support Class for JKQTBasePlotter, which summarizes all properties that define the visual styling of ..." alt="" coords="1299,745,1529,790"/>
+<area shape="poly" id="edge16_Node000014_Node000012" title=" " alt="" coords="720,1011,784,960,825,932,867,906,920,880,976,858,1091,821,1202,795,1298,778,1299,784,1203,800,1093,826,978,863,922,885,869,911,827,936,788,964,723,1016"/>
+<area shape="rect" id="Node000015" href="$class_j_k_q_t_impulse_specific_style_properties.html" title="Support Class for JKQTBasePlotter, which summarizes all properties that define the visual styling of ..." alt="" coords="1302,811,1526,857"/>
+<area shape="poly" id="edge18_Node000015_Node000012" title=" " alt="" coords="733,1014,862,953,944,920,1029,891,1098,874,1170,860,1301,841,1302,847,1171,865,1099,879,1030,897,946,925,864,958,736,1019"/>
+<area shape="rect" id="Node000016" href="$class_j_k_q_t_geometric_specific_style_properties.html" title="Support Class for JKQTBasePlotter, which summarizes all properties that define the visual styling of ..." alt="" coords="1029,969,1275,1014"/>
+<area shape="poly" id="edge20_Node000016_Node000012" title=" " alt="" coords="790,1018,868,1007,1029,994,1029,1000,868,1013,790,1023"/>
+<area shape="rect" id="Node000019" href="$class_j_k_q_t_financial_specific_style_properties.html" title="Support Class for JKQTBasePlotter, which summarizes all properties that define the visual styling of ..." alt="" coords="1037,1125,1267,1170"/>
+<area shape="poly" id="edge25_Node000019_Node000012" title=" " alt="" coords="780,1052,845,1076,857,1085,869,1093,940,1112,1037,1129,1036,1134,939,1117,867,1098,854,1089,843,1080,778,1057"/>
+<area shape="rect" id="Node000013" href="$struct_j_k_q_t_p_color_derivation_mode.html" title="Specifies how a fill&#45;color is derived from a given color." alt="" coords="5,1191,244,1219"/>
+<area shape="poly" id="edge14_Node000012_Node000013" title=" " alt="" coords="184,1184,545,1075,641,1048,643,1053,546,1081,185,1189"/>
+<area shape="poly" id="edge26_Node000019_Node000013" title=" " alt="" coords="258,1212,411,1219,598,1221,802,1213,905,1203,1005,1190,1084,1167,1085,1173,1006,1195,905,1209,802,1218,598,1226,411,1224,258,1217"/>
+<area shape="poly" id="edge15_Node000011_Node000014" title=" " alt="" coords="1543,758,1710,751,1892,748,2047,752,2101,758,2133,768,2145,780,2149,793,2152,806,2158,821,2189,858,2222,892,2281,942,2278,946,2218,895,2185,861,2154,823,2146,808,2144,794,2140,782,2131,772,2100,763,2047,757,1892,753,1710,756,1543,763"/>
+<area shape="poly" id="edge17_Node000011_Node000015" title=" " alt="" coords="1540,834,1699,842,1874,859,1979,877,2083,900,2249,941,2247,947,2082,905,1978,883,1873,865,1699,847,1540,839"/>
+<area shape="poly" id="edge19_Node000011_Node000016" title=" " alt="" coords="1288,982,1299,982,1808,967,2202,957,2202,963,1808,972,1299,987,1289,988"/>
+<area shape="rect" id="Node000018" href="$class_j_k_q_t_annotations_specific_style_properties.html" title="Support Class for JKQTBasePlotter, which summarizes all properties that define the visual styling of ..." alt="" coords="1586,999,1841,1045"/>
+<area shape="poly" id="edge23_Node000018_Node000016" title=" " alt="" coords="1289,995,1529,1007,1586,1011,1586,1016,1529,1013,1288,1000"/>
+<area shape="rect" id="Node000017" href="$class_j_k_q_t_fill_style_summmary.html" title="Support Class for JKQTBasePlotter, which summarizes a fill style." alt="" coords="588,1089,801,1117"/>
+<area shape="poly" id="edge21_Node000016_Node000017" title=" " alt="" coords="793,1084,895,1064,1005,1038,1089,1012,1090,1017,1006,1043,896,1069,794,1090"/>
+<area shape="poly" id="edge27_Node000019_Node000017" title=" " alt="" coords="732,1122,794,1153,831,1167,869,1178,921,1184,975,1183,1026,1177,1073,1167,1074,1173,1027,1182,975,1189,921,1190,867,1183,829,1173,792,1158,730,1127"/>
+<area shape="poly" id="edge22_Node000011_Node000018" title=" " alt="" coords="1854,1016,1989,1008,2132,993,2245,969,2246,975,2132,998,1989,1013,1854,1021"/>
+<area shape="poly" id="edge24_Node000011_Node000019" title=" " alt="" coords="1281,1147,1511,1148,1776,1144,1901,1138,2007,1129,2087,1116,2114,1108,2130,1099,2138,1090,2142,1081,2143,1061,2143,1039,2154,1016,2171,1000,2191,988,2232,970,2234,975,2193,992,2174,1005,2158,1020,2148,1040,2148,1061,2147,1082,2143,1093,2134,1103,2116,1112,2088,1121,2008,1134,1901,1143,1777,1149,1511,1154,1281,1152"/>
+<area shape="poly" id="edge28_Node000005_Node000020" title=" " alt="" coords="3013,251,3217,291,3304,310,3345,322,3372,346,3394,374,3428,435,3450,494,3462,536,3456,538,3445,495,3423,438,3390,377,3368,350,3343,327,3302,315,3216,296,3012,256"/>
+<area shape="rect" id="Node000021" href="$class_j_k_q_t_math_text_node.html" title="subclass representing one node in the syntax tree" alt="" coords="3376,225,3551,253"/>
+<area shape="poly" id="edge31_Node000021_Node000020" title=" " alt="" coords="3013,239,3127,241,3344,241,3376,240,3376,245,3344,246,3127,246,3013,244"/>
+<area shape="poly" id="edge30_Node000020_Node000021" title=" " alt="" coords="3398,225,3344,215,3235,209,3127,215,3000,231,2999,225,3126,210,3235,203,3344,210,3399,220"/>
+<area shape="poly" id="edge32_Node000021_Node000021" title=" " alt="" coords="3429,210,3439,202,3463,199,3483,201,3496,207,3499,217,3494,227,3489,224,3494,216,3492,211,3482,206,3463,204,3442,207,3432,215"/>
+<area shape="rect" id="Node000022" title=" " alt="" coords="2246,316,2353,344"/>
+<area shape="poly" id="edge64_Node000005_Node000022" title=" " alt="" coords="2367,331,2923,369,3204,393,3299,403,3345,413,3384,440,3416,474,3441,508,3457,536,3452,538,3436,511,3412,477,3380,444,3343,418,3298,409,3204,398,2922,374,2366,337"/>
+<area shape="poly" id="edge33_Node000020_Node000022" title=" " alt="" coords="2366,318,2867,246,2868,251,2367,323"/>
+<area shape="poly" id="edge34_Node000005_Node000023" title=" " alt="" coords="3740,588,3701,583,3540,563,3540,558,3702,578,3741,583"/>
+<area shape="rect" id="Node000024" title=" " alt="" coords="3368,671,3559,699"/>
+<area shape="poly" id="edge35_Node000023_Node000024" title=" " alt="" coords="3539,665,3777,611,3779,616,3540,670"/>
+<area shape="rect" id="Node000025" href="$class_j_k_q_t_p_horizontal_axis.html" title="implements a horizontal axis, based on JKQTPCoordinateAxis (for most of documentation: see JKQTPCoord..." alt="" coords="4337,513,4519,541"/>
+<area shape="poly" id="edge37_Node000005_Node000025" title=" " alt="" coords="4323,526,3993,522,3788,526,3583,537,3540,541,3539,536,3582,531,3788,520,3993,517,4323,521"/>
+<area shape="rect" id="Node000026" href="$class_j_k_q_t_p_horizontal_axis_base.html" title="base class for horizontal axes, based on JKQTPCoordinateAxis (for most of documentation: see JKQTPCoo..." alt="" coords="4055,564,4277,592"/>
+<area shape="poly" id="edge38_Node000025_Node000026" title=" " alt="" coords="4252,559,4354,539,4355,544,4253,564"/>
+<area shape="poly" id="edge39_Node000026_Node000027" title=" " alt="" coords="3928,710,3979,695,4030,674,4064,654,4097,632,4148,590,4151,594,4100,636,4067,659,4032,679,3981,700,3929,715"/>
+<area shape="rect" id="Node000029" href="$class_j_k_q_t_p_vertical_axis_base.html" title="base class for vertical axes, based on JKQTPCoordinateAxis (for most of documentation: see JKQTPCoord..." alt="" coords="4065,701,4267,729"/>
+<area shape="poly" id="edge45_Node000029_Node000027" title=" " alt="" coords="3950,722,4065,717,4065,723,3950,728"/>
+<area shape="rect" id="Node000028" href="$class_j_k_q_t_p_vertical_axis.html" title="implements a vertical axis for use as primary, secondary, ... axis of a JKQTPBasePlotter,..." alt="" coords="4347,664,4509,692"/>
+<area shape="poly" id="edge43_Node000005_Node000028" title=" " alt="" coords="4333,678,3907,659,3700,645,3626,637,3582,629,3552,616,3523,600,3479,568,3482,563,3526,595,3554,611,3583,623,3627,632,3701,639,3907,654,4333,672"/>
+<area shape="poly" id="edge44_Node000028_Node000029" title=" " alt="" coords="4278,697,4346,687,4347,692,4278,702"/>
+<area shape="poly" id="edge46_Node000005_Node000030" title=" " alt="" coords="3759,400,3651,421,3584,438,3550,461,3519,488,3477,539,3473,536,3515,485,3546,456,3582,433,3650,415,3758,395"/>
+<area shape="rect" id="Node000031" href="$class_j_k_q_t_p_datastore.html" title="This class manages data columns (with entries of type double ), used by JKQTPlotter/JKQTBasePlotter t..." alt="" coords="1078,1359,1226,1387"/>
+<area shape="poly" id="edge50_Node000005_Node000031" title=" " alt="" coords="1222,1353,1298,1339,1414,1326,1505,1320,1712,1318,2935,1318,3020,1311,3057,1303,3090,1291,3121,1276,3149,1259,3198,1215,3239,1160,3275,1095,3309,1020,3341,937,3353,897,3357,862,3352,798,3347,735,3352,699,3366,658,3382,629,3402,603,3442,564,3446,567,3406,606,3386,632,3370,660,3357,700,3353,735,3357,798,3362,862,3358,898,3347,939,3314,1022,3280,1097,3243,1163,3201,1218,3152,1263,3123,1281,3092,1296,3058,1308,3021,1316,2935,1323,1712,1323,1505,1325,1415,1331,1299,1345,1223,1358"/>
+<area shape="rect" id="Node000033" href="$class_j_k_q_t_p_column.html" title="Manages one column of data. Data may either be stored internally as double* array or QVector&lt;double&gt; ..." alt="" coords="1648,1359,1779,1387"/>
+<area shape="poly" id="edge53_Node000033_Node000031" title=" " alt="" coords="1240,1370,1648,1370,1648,1375,1240,1375"/>
+<area shape="rect" id="Node000032" title=" " alt="" coords="2156,1369,2443,1397"/>
+<area shape="poly" id="edge51_Node000031_Node000032" title=" " alt="" coords="2172,1402,2029,1416,1873,1427,1713,1433,1553,1427,1376,1410,1226,1388,1226,1382,1377,1404,1554,1422,1713,1428,1873,1422,2028,1411,2171,1396"/>
+<area shape="poly" id="edge52_Node000032_Node000033" title=" " alt="" coords="1793,1371,2156,1378,2156,1383,1792,1377"/>
+<area shape="rect" id="Node000034" title=" " alt="" coords="1620,1255,1807,1283"/>
+<area shape="poly" id="edge54_Node000032_Node000034" title=" " alt="" coords="1812,1282,2133,1342,2239,1367,2238,1372,2131,1347,1811,1288"/>
+<area shape="rect" id="Node000035" title=" " alt="" coords="1133,905,1171,933"/>
+<area shape="poly" id="edge55_Node000034_Node000035" title=" " alt="" coords="1186,917,1233,927,1257,938,1277,955,1288,981,1292,1016,1287,1101,1284,1185,1289,1218,1301,1240,1322,1254,1353,1264,1435,1275,1530,1277,1619,1273,1620,1279,1530,1282,1435,1280,1352,1269,1319,1258,1297,1244,1284,1220,1279,1186,1282,1101,1286,1016,1283,982,1273,958,1254,942,1232,932,1185,922"/>
+<area shape="rect" id="Node000041" title=" " alt="" coords="1620,873,1807,901"/>
+<area shape="poly" id="edge62_Node000041_Node000035" title=" " alt="" coords="1185,915,1620,890,1620,895,1185,920"/>
+<area shape="rect" id="Node000036" href="$class_j_k_q_t_base_plotter_1_1_plot_margins.html" title="used for calculated value: describing all sections of freespace outside the graph area" alt="" coords="2807,523,3060,551"/>
+<area shape="poly" id="edge56_Node000005_Node000036" title=" " alt="" coords="3074,538,3387,547,3387,552,3074,543"/>
+<area shape="rect" id="Node000037" title=" " alt="" coords="2196,470,2403,515"/>
+<area shape="poly" id="edge57_Node000036_Node000037" title=" " alt="" coords="2417,498,2807,525,2806,531,2416,503"/>
+<area shape="rect" id="Node000038" href="$struct_j_k_q_t_p_base_key_1_1_key_size_description.html" title="struct, describing basic layout and size properties of a key/legend, mostly used as return value of g..." alt="" coords="2784,765,3083,793"/>
+<area shape="poly" id="edge58_Node000005_Node000038" title=" " alt="" coords="3096,787,3159,781,3224,769,3286,747,3342,713,3352,702,3356,689,3359,675,3366,658,3407,604,3445,564,3449,567,3411,608,3370,661,3364,676,3361,690,3357,704,3346,717,3289,752,3226,774,3160,787,3097,792"/>
+<area shape="rect" id="Node000039" title=" " alt="" coords="2174,765,2425,810"/>
+<area shape="poly" id="edge59_Node000038_Node000039" title=" " alt="" coords="2438,785,2740,783,2784,782,2784,788,2740,789,2438,791"/>
+<area shape="rect" id="Node000040" href="$struct_j_k_q_t_p_base_key_1_1_key_layout_description.html" title="struct, describing basic layout and size properties of a key/legend, mostly used as return value of g..." alt="" coords="1553,673,1873,701"/>
+<area shape="poly" id="edge60_Node000039_Node000040" title=" " alt="" coords="1857,700,2133,734,2234,762,2233,767,2131,739,1856,705"/>
+<area shape="poly" id="edge61_Node000039_Node000041" title=" " alt="" coords="1810,868,2173,806,2174,811,1810,874"/>
+<area shape="rect" id="Node000042" href="$class_j_k_q_t_p_synchronized.html" title=" " alt="" coords="2764,675,3103,721"/>
+<area shape="poly" id="edge65_Node000005_Node000042" title=" " alt="" coords="3116,685,3230,666,3288,651,3343,632,3373,617,3401,598,3445,563,3449,567,3404,603,3376,621,3345,636,3289,656,3231,671,3117,690"/>
+<area shape="rect" id="Node000043" href="$struct_j_k_q_t_p_synchronized_1_1_adopt_lock_type.html" title="type of AdoptLock tag, which is used in ReadLocker and WriteLocker to adopt a pre&#45;locked JKQTPSynchro..." alt="" coords="1619,595,1808,641"/>
+<area shape="poly" id="edge66_Node000042_Node000043" title=" " alt="" coords="1822,632,1980,655,2156,677,2320,693,2448,702,2575,704,2740,702,2764,702,2764,707,2740,707,2575,709,2447,707,2319,699,2156,682,1979,660,1821,637"/>
+<area shape="rect" id="Node000044" href="$class_j_k_q_t_p_synchronized.html" title="template class that wraps any datatype and combines it with a mutex, exposes the lock()/unlock() inte..." alt="" coords="2188,613,2411,641"/>
+<area shape="poly" id="edge68_Node000044_Node000043" title=" " alt="" coords="1822,617,2188,623,2188,628,1822,622"/>
+<area shape="rect" id="Node000045" href="$class_j_k_q_t_p_synchronized.html" title=" " alt="" coords="2772,597,3095,642"/>
+<area shape="poly" id="edge70_Node000045_Node000043" title=" " alt="" coords="1821,597,1897,587,2081,574,2319,562,2556,558,2658,561,2740,567,2803,579,2862,594,2861,599,2802,584,2740,573,2658,566,2556,563,2319,567,2082,579,1898,593,1822,602"/>
+<area shape="poly" id="edge67_Node000042_Node000044" title=" " alt="" coords="2351,644,2406,661,2467,675,2542,686,2618,693,2764,698,2763,704,2618,698,2541,691,2466,681,2405,666,2350,649"/>
+<area shape="poly" id="edge71_Node000045_Node000044" title=" " alt="" coords="2425,623,2772,619,2772,624,2425,628"/>
+<area shape="poly" id="edge69_Node000005_Node000045" title=" " alt="" coords="3108,604,3225,592,3344,575,3406,563,3407,568,3344,581,3225,597,3109,609"/>
+<area shape="rect" id="Node000046" href="$class_j_k_q_t_p_graph_line_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph line sty..." alt="" coords="3725,5,3957,33"/>
+<area shape="poly" id="edge72_Node000002_Node000046" title=" " alt="" coords="3943,33,4086,56,4085,61,3942,38"/>
+<area shape="rect" id="Node000047" href="$class_j_k_q_t_p_graph_fill_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph filling ..." alt="" coords="3732,109,3951,137"/>
+<area shape="poly" id="edge73_Node000002_Node000047" title=" " alt="" coords="3942,105,4085,81,4086,87,3943,110"/>
+</map>
