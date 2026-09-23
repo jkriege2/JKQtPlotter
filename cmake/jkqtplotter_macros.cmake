@@ -18,6 +18,7 @@ function(jkqtplotter_setDefaultLibOptions TARGETNAME libBaseName PRECOMPHEADERFI
 
     # set library version
     set_property(TARGET ${TARGETNAME} PROPERTY VERSION "${PROJECT_VERSION}")
+    set_property(TARGET ${TARGETNAME} PROPERTY SOVERSION "${PROJECT_VERSION_MAJOR}")
     # set required Cxx-Standard
     if(JKQtPlotter_ENABLED_CXX20)
         set_property(TARGET ${TARGETNAME} PROPERTY CXX_STANDARD ${JKQtPlotter_QT_CXX_STANDARD})
