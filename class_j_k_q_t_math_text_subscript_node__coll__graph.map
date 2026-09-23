@@ -1,0 +1,16 @@
+<map id="JKQTMathTextSubscriptNode" name="JKQTMathTextSubscriptNode">
+<area shape="rect" id="Node000001" title="subclass representing an subscript node with exactly one argument in the syntax tree" alt="" coords="12,184,260,212"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_math_text_single_child_node.html" title="subclass representing a node in the syntax tree, that has one child" alt="" coords="5,107,267,135"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="139,148,139,184,133,184,133,148"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_math_text_node.html" title="subclass representing one node in the syntax tree" alt="" coords="101,5,275,33"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="141,43,126,59,123,70,123,82,131,106,126,107,118,83,117,69,122,56,138,39"/>
+<area shape="poly" id="edge8_Node000002_Node000003" title=" " alt="" coords="164,44,153,59,144,83,140,107,134,106,139,82,148,56,159,41"/>
+<area shape="poly" id="edge7_Node000003_Node000003" title=" " alt="" coords="291,10,302,19,294,27,276,31,275,25,292,23,297,19,288,15"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_math_text.html" title="this class parses a mathematical markup string and can then draw the contained text/equation onto a Q..." alt="" coords="309,107,441,135"/>
+<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="199,45,208,64,223,80,258,95,309,106,308,112,256,100,220,85,204,67,194,48"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="361,96,348,76,330,59,304,45,274,35,276,30,306,40,334,55,352,73,365,93"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="471,5,558,33"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="515,47,509,67,498,85,472,103,442,114,440,109,469,98,494,81,505,65,510,46"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="583,5,689,33"/>
+<area shape="poly" id="edge6_Node000004_Node000006" title=" " alt="" coords="606,43,567,65,522,85,441,109,440,104,520,80,564,60,603,38"/>
+</map>

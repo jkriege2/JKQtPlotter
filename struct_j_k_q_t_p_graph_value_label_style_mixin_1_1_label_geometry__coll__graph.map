@@ -1,0 +1,5 @@
+<map id="JKQTPGraphValueLabelStyleMixin::LabelGeometry" name="JKQTPGraphValueLabelStyleMixin::LabelGeometry">
+<area shape="rect" id="Node000001" title="describes details about the geometry of a label, used by calcLabelGeometry()" alt="" coords="5,107,251,152"/>
+<area shape="rect" id="Node000002" href="$struct_j_k_q_t_math_text_node_size.html" title="beschreibt die Größe(n) eines Knotens" alt="" coords="25,5,231,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="131,47,131,106,125,106,125,47"/>
+</map>

@@ -1,0 +1,23 @@
+<map id="JKQTPXYScatterErrorGraph" name="JKQTPXYScatterErrorGraph">
+<area shape="rect" id="Node000001" title="This implements xy scatter plots with x and y error indicators." alt="" coords="1075,109,1312,137"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_x_y_scatter_graph.html" title="This implements xy scatter plots. This also alows to draw symbols at the data points." alt="" coords="828,57,1027,85"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1013,85,1121,107,1120,112,1012,91"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_x_y_graph.html" title="This virtual JKQTPGraph descendent may be used as base for all graphs that use at least two columns t..." alt="" coords="581,5,721,33"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="735,32,852,55,851,60,734,38"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_p_graph.html" title="this virtual base class of the (data&#45;column based) graphs, which are part of a JKQTPlotter plot and w..." alt="" coords="355,5,473,33"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="487,17,580,17,580,22,487,22"/>
+<area shape="rect" id="Node000005" href="$class_j_k_q_t_p_plot_element.html" title="this virtual base class of every element, which is part of a JKQTPlotter plot and may appear in its k..." alt="" coords="140,5,307,33"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="321,17,355,17,355,22,321,22"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="5,5,92,33"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="105,17,140,17,140,22,105,22"/>
+<area shape="rect" id="Node000007" href="$class_j_k_q_t_p_graph_symbol_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph symbols ..." alt="" coords="521,57,780,85"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="794,69,828,69,828,74,794,74"/>
+<area shape="rect" id="Node000008" href="$class_j_k_q_t_p_x_y_graph_errors.html" title="This class is the base class for graphs that only display error indicators in x&#45; and y&#45;direction." alt="" coords="834,135,1021,163"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="1034,136,1074,132,1075,137,1035,141"/>
+<area shape="rect" id="Node000009" href="$class_j_k_q_t_p_x_graph_error_data.html" title="This class adds data fields for error indicators in x direction." alt="" coords="547,109,754,137"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="768,131,834,137,834,143,767,137"/>
+<area shape="rect" id="Node000010" href="$class_j_k_q_t_p_y_graph_error_data.html" title="This class adds data fields for error indicators in y direction." alt="" coords="548,161,753,189"/>
+<area shape="poly" id="edge9_Node000008_Node000010" title=" " alt="" coords="767,161,833,155,834,160,768,167"/>
+<area shape="rect" id="Node000011" href="$class_j_k_q_t_p_graph_error_style_mixin.html" title="This mix&#45;in class assembles all styling properties applicable to error indicators." alt="" coords="531,213,770,241"/>
+<area shape="poly" id="edge10_Node000008_Node000011" title=" " alt="" coords="746,208,779,199,891,160,893,165,781,205,747,213"/>
+</map>

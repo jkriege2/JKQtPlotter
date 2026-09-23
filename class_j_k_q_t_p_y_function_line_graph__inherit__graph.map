@@ -1,0 +1,23 @@
+<map id="JKQTPYFunctionLineGraph" name="JKQTPYFunctionLineGraph">
+<area shape="rect" id="Node000001" title="This implements line plots where the data is taken from a user supplied function ." alt="" coords="193,572,421,600"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_functor_line_graph_base.html" title="extends JKQTPEvaluatedFunctionWithErrorsGraphDrawingBase with the capabilities to define functions fr..." alt="" coords="181,496,432,524"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="309,538,309,572,304,572,304,538"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_evaluated_function_with_errors_graph_drawing_base.html" title="This class extends JKQTPEvaluatedFunctionWithErrorsGraphBase with functions to draw the graphs and se..." alt="" coords="181,403,432,448"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="309,462,309,496,304,496,304,462"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_p_evaluated_function_with_errors_graph_base.html" title="extends JKQTPEvaluatedFunctionGraphBase with some basic properties (e.g. function parameters) for a s..." alt="" coords="39,309,289,355"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="211,360,274,400,271,405,208,364"/>
+<area shape="rect" id="Node000005" href="$class_j_k_q_t_p_evaluated_function_graph_base.html" title="Base class for graph classes that evaluate a mathematical function (e.g. defined as a C&#45;function),..." alt="" coords="5,233,309,261"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="162,275,165,308,160,309,157,275"/>
+<area shape="rect" id="Node000006" href="$class_j_k_q_t_p_graph.html" title="this virtual base class of the (data&#45;column based) graphs, which are part of a JKQTPlotter plot and w..." alt="" coords="98,157,217,185"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="160,199,160,233,155,233,155,199"/>
+<area shape="rect" id="Node000007" href="$class_j_k_q_t_p_plot_element.html" title="this virtual base class of every element, which is part of a JKQTPlotter plot and may appear in its k..." alt="" coords="74,81,241,109"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="160,123,160,157,155,157,155,123"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="114,5,201,33"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="160,47,160,81,155,81,155,47"/>
+<area shape="rect" id="Node000009" href="$class_j_k_q_t_p_graph_line_and_fill_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph line and..." alt="" coords="321,309,564,355"/>
+<area shape="poly" id="edge8_Node000003_Node000009" title=" " alt="" coords="400,365,341,405,338,400,397,360"/>
+<area shape="rect" id="Node000010" href="$class_j_k_q_t_p_graph_fill_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph filling ..." alt="" coords="333,233,552,261"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="445,275,445,309,440,309,440,275"/>
+<area shape="rect" id="Node000011" href="$class_j_k_q_t_p_graph_line_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph line sty..." alt="" coords="576,233,808,261"/>
+<area shape="poly" id="edge10_Node000009_Node000011" title=" " alt="" coords="641,268,509,312,507,307,639,263"/>
+</map>

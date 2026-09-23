@@ -1,0 +1,7 @@
+<map id="JKQTPMainKey" name="JKQTPMainKey">
+<area shape="rect" id="Node000001" title="concrete class for drawing the main plot key (or legend). This class reads the key entries from the g..." alt="" coords="6,157,143,185"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_base_key.html" title="base class for drawing a key (or legend)" alt="" coords="5,81,144,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="77,123,77,157,72,157,72,123"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="31,5,118,33"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="77,47,77,81,72,81,72,47"/>
+</map>

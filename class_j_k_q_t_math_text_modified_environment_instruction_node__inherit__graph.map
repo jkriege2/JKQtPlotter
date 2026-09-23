@@ -1,0 +1,9 @@
+<map id="JKQTMathTextModifiedEnvironmentInstructionNode" name="JKQTMathTextModifiedEnvironmentInstructionNode">
+<area shape="rect" id="Node000001" title="subclass representing an instruction node which modify the current JKQTMathTextEnvironment,..." alt="" coords="171,175,473,220"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_math_text_non_drawing_base_node.html" title="base class for all derived classes that do not draw anything" alt="" coords="5,90,316,118"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="197,123,285,172,283,177,194,127"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_math_text_node.html" title="subclass representing one node in the syntax tree" alt="" coords="73,5,248,33"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="163,47,163,90,158,90,158,47"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_math_text_modify_environment_node_mix_in.html" title="mixin extending a node that does not produce any output, but provides a function modifyEnvironment() ..." alt="" coords="341,81,626,127"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="435,136,362,177,359,172,432,131"/>
+</map>

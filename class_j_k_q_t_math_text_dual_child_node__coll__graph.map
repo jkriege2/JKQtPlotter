@@ -1,0 +1,16 @@
+<map id="JKQTMathTextDualChildNode" name="JKQTMathTextDualChildNode">
+<area shape="rect" id="Node000001" title="subclass representing a node in the syntax tree, that has two children" alt="" coords="5,204,255,232"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_math_text_multi_child_node.html" title="subclass representing a node in the syntax tree, that has two children" alt="" coords="151,117,402,145"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="244,154,153,206,151,202,241,149"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_math_text_node.html" title="subclass representing one node in the syntax tree" alt="" coords="183,5,357,33"/>
+<area shape="poly" id="edge8_Node000001_Node000003" title=" " alt="" coords="188,40,159,51,131,65,106,84,86,108,81,120,80,132,87,158,102,183,119,202,115,206,98,186,82,161,74,133,75,119,81,105,102,80,128,61,157,46,186,35"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="269,47,269,57,269,82,275,116,270,117,263,83,263,57,264,47"/>
+<area shape="poly" id="edge7_Node000003_Node000003" title=" " alt="" coords="373,10,384,19,376,27,358,31,357,25,374,23,379,19,370,15"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_math_text.html" title="this class parses a mathematical markup string and can then draw the contained text/equation onto a Q..." alt="" coords="485,117,617,145"/>
+<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="274,46,279,65,289,80,486,116,485,121,286,85,274,67,269,48"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="491,115,457,102,424,85,410,72,397,60,367,46,335,36,337,31,369,41,399,55,414,68,428,80,459,97,493,110"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="537,5,624,33"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="576,47,557,117,552,116,571,46"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="649,5,755,33"/>
+<area shape="poly" id="edge6_Node000004_Node000006" title=" " alt="" coords="675,44,571,119,568,114,672,39"/>
+</map>

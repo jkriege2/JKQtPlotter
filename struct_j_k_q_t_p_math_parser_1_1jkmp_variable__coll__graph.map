@@ -1,0 +1,7 @@
+<map id="JKQTPMathParser::jkmpVariable" name="JKQTPMathParser::jkmpVariable">
+<area shape="rect" id="Node000001" title="This struct is for managing variables. Unlike jkmpResult this struct only contains pointers to the da..." alt="" coords="5,201,280,229"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="92,100,193,128"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="145,142,145,201,140,201,140,142"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="61,5,224,51"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="145,64,145,100,140,100,140,64"/>
+</map>
