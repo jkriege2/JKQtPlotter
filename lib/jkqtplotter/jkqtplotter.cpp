@@ -118,7 +118,7 @@ JKQTPlotter::JKQTPlotter(bool datastore_internal, QWidget* parent, JKQTPDatastor
     actgrpMouseLeft->setExclusive(true);
     actMouseLeftAsDefault->setChecked(true);
 
-    actMouseMoveToolTip=new QAction(QIcon(":/JKQTPlotter/jkqtp_mouseact_tooltip.png"), tr("Data Tooltip Tool"));
+    actMouseMoveToolTip=new QAction(QIcon(":/JKQTPlotter/jkqtp_mouseact_tooltip.png"), tr("Data Tooltip Tool"), this);
     actMouseMoveToolTip->setToolTip(tr("switch on the data tooltip tool when moving the mouse (no modifiers)"));
     actMouseMoveToolTip->setCheckable(true);
     actMouseMoveToolTip->setChecked(false);
