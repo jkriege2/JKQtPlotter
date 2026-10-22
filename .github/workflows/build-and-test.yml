@@ -11,11 +11,13 @@ jobs:
     name: CMake | ${{ matrix.os }} | Qt ${{ matrix.qt_ver }} | ${{ matrix.compiler }} | ${{ matrix.build_type }} | FETCHCONTENT=${{ matrix.fetch_content }} | CXX20=${{ matrix.cxx20 }}
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         include:
           # Linux Ubuntu 22.04
           - os: ubuntu-22.04
-            qt_ver: 6.12
+            qt_ver: 6.8
+            qt_arch: linux_gcc_64
             compiler: gcc
             build_type: Release
             cxx20: OFF
@@ -23,7 +25,8 @@ jobs:
             generator: Ninja
             
           - os: ubuntu-22.04
-            qt_ver: 6.12
+            qt_ver: 6.8
+            qt_arch: linux_gcc_64
             compiler: gcc
             build_type: Release
             cxx20: ON
@@ -31,7 +34,8 @@ jobs:
             generator: Ninja
 
           - os: ubuntu-22.04
-            qt_ver: 6.12
+            qt_ver: 6.8
+            qt_arch: linux_gcc_64
             compiler: gcc
             build_type: Release
             cxx20: OFF
@@ -41,6 +45,7 @@ jobs:
           # Linux Ubuntu 20.04
           - os: ubuntu-22.04
             qt_ver: 5.15
+            qt_arch: gcc_64
             compiler: gcc
             build_type: Release
             cxx20: OFF
@@ -50,6 +55,7 @@ jobs:
           # Windows MSVC and GCC
           - os: windows-2022
             qt_ver: 5.15
+            qt_arch: win64_msvc2019_64
             compiler: msvc
             build_type: Release
             cxx20: OFF
@@ -57,7 +63,8 @@ jobs:
             generator: Visual Studio 17 2022
 
           - os: windows-2022
-            qt_ver: 6.12
+            qt_ver: 6.8
+            qt_arch: win64_msvc2022_64
             compiler: msvc
             build_type: Release
             cxx20: OFF
@@ -65,7 +72,8 @@ jobs:
             generator: Visual Studio 17 2022
 
           - os: windows-2022
-            qt_ver: 6.12
+            qt_ver: 6.8
+            qt_arch: win64_msvc2022_64
             compiler: msvc
             build_type: Release
             cxx20: ON
@@ -119,7 +127,7 @@ jobs:
         with:
           version: ${{ matrix.qt_ver }}
           host: ${{ startsWith(matrix.os, 'windows') && 'windows' || (startsWith(matrix.os, 'macos') && 'mac' || 'linux') }}
-          arch: ${{ startsWith(matrix.os, 'windows') && 'win64_msvc2019_64' || 'gcc_64' }}
+          arch: ${{ matrix.qt_arch }}
           setup-python: false # If not needed
           cache: true
           target: desktop
