@@ -121,6 +121,7 @@ jobs:
           host: ${{ startsWith(matrix.os, 'windows') && 'windows' || (startsWith(matrix.os, 'macos') && 'mac' || 'linux') }}
           arch: ${{ startsWith(matrix.os, 'windows') && 'win64_msvc2019_64' || 'gcc_64' }}
           setup-python: false # If not needed
+          aqtversion: "==3.1.*"
           cache: true
           target: desktop
 
