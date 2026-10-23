@@ -1,0 +1,28 @@
+var class_j_k_q_t_p_key_style =
+[
+    [ "JKQTPKeyStyle", "class_j_k_q_t_p_key_style.html#a2cc522577dd37925e28583878eca4dce", null ],
+    [ "JKQTPKeyStyle", "class_j_k_q_t_p_key_style.html#aa59fdd76c52f3c59d290e45ec7c64437", null ],
+    [ "loadSettings", "class_j_k_q_t_p_key_style.html#a088c95e758df5844b1583c1009a839d1", null ],
+    [ "saveSettings", "class_j_k_q_t_p_key_style.html#aae7087e6647c2f82bf7357d25960f1ff", null ],
+    [ "backgroundBrush", "class_j_k_q_t_p_key_style.html#a42b95def79135a7aa40fa5a9aabdec69", null ],
+    [ "columnSeparation", "class_j_k_q_t_p_key_style.html#a4c251d9b610f8cd504cab0fb3dffca60", null ],
+    [ "fontName", "class_j_k_q_t_p_key_style.html#a495b00aa3e782ebea776505fb10b05f8", null ],
+    [ "fontSize", "class_j_k_q_t_p_key_style.html#ab2ea873180e5a7da68d92d8829597401", null ],
+    [ "frameColor", "class_j_k_q_t_p_key_style.html#ade49bf00585966070cd6d433b44e5b55", null ],
+    [ "frameLineStyle", "class_j_k_q_t_p_key_style.html#ac01e4ecabb758a7e5050ffe7a9e4d991", null ],
+    [ "frameRounding", "class_j_k_q_t_p_key_style.html#a2ea6cf40fe70a9ebe6a01ddc82367853", null ],
+    [ "frameVisible", "class_j_k_q_t_p_key_style.html#a8f96314e7aa6ea8fcbb48986727d2002", null ],
+    [ "frameWidth", "class_j_k_q_t_p_key_style.html#a3247602e4d697a0f87c0c4d2610890e1", null ],
+    [ "layout", "class_j_k_q_t_p_key_style.html#a6ed2a4c251b8956ffc8405675cd8d5da", null ],
+    [ "position", "class_j_k_q_t_p_key_style.html#a5da8552fd27e730f625443f9c625a833", null ],
+    [ "sampleHeight", "class_j_k_q_t_p_key_style.html#a4843fa9bd0bce2b425b6c357e3900254", null ],
+    [ "sampleLineLength", "class_j_k_q_t_p_key_style.html#adddba3787ebac8b9afa98b6578824bf1", null ],
+    [ "textColor", "class_j_k_q_t_p_key_style.html#a7c70fa1c92da3b29d7553c7199b9b986", null ],
+    [ "visible", "class_j_k_q_t_p_key_style.html#ad9cc0d2c32e8d936e95208d4475c745b", null ],
+    [ "xMargin", "class_j_k_q_t_p_key_style.html#a55f0f1cb4a980ec4ef1716a9cef314ad", null ],
+    [ "xOffset", "class_j_k_q_t_p_key_style.html#aec0bfd0b3f6b73cd16a728b605ab47d8", null ],
+    [ "xSeparation", "class_j_k_q_t_p_key_style.html#a4f8e62e6789aff77e3c3782d9f9717a4", null ],
+    [ "yMargin", "class_j_k_q_t_p_key_style.html#ac23afd0625a2d06e9e6c24ce72147f04", null ],
+    [ "yOffset", "class_j_k_q_t_p_key_style.html#ae45ce6c3535d6b763505452bc422a31e", null ],
+    [ "ySeparation", "class_j_k_q_t_p_key_style.html#a467b85712710e9a2703e1fa38851137e", null ]
+];

@@ -1,0 +1,23 @@
+<map id="JKQTPBarHorizontalGraph" name="JKQTPBarHorizontalGraph">
+<area shape="rect" id="Node000001" title="This implements a horizontal bar graph with bars between &#160;and ." alt="" coords="239,461,467,489"/>
+<area shape="rect" id="Node000010" href="$class_j_k_q_t_p_bar_horizontal_error_graph.html" title="This implements a horizontal bar graph with bars between &#160;and &#160;and error indicator." alt="" coords="77,546,343,574"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="320,499,233,548,231,544,317,494"/>
+<area shape="rect" id="Node000011" href="$class_j_k_q_t_p_bar_horizontal_stackable_graph.html" title="This implements a horizontal bar graph with bars between &#160;and &#160;Optionally several graphs of this type..." alt="" coords="368,537,625,583"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="388,494,460,535,457,539,386,499"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_bar_graph_base.html" title="This is a base&#45;class for all bar graphs with vertical or horizontal orientation (the orientation is i..." alt="" coords="259,385,446,413"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="355,427,355,461,350,461,350,427"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_x_y_baseline_graph.html" title="This virtual JKQTPGraph descendent extends JKQTPXYGraph adds a baseline&#45;property, which is necessary,..." alt="" coords="5,309,212,337"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="165,339,311,383,309,388,164,344"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_p_x_y_graph.html" title="This virtual JKQTPGraph descendent may be used as base for all graphs that use at least two columns t..." alt="" coords="39,233,179,261"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="111,275,111,309,106,309,106,275"/>
+<area shape="rect" id="Node000005" href="$class_j_k_q_t_p_graph.html" title="this virtual base class of the (data&#45;column based) graphs, which are part of a JKQTPlotter plot and w..." alt="" coords="49,157,168,185"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="111,199,111,233,106,233,106,199"/>
+<area shape="rect" id="Node000006" href="$class_j_k_q_t_p_plot_element.html" title="this virtual base class of every element, which is part of a JKQTPlotter plot and may appear in its k..." alt="" coords="25,81,192,109"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="111,123,111,157,106,157,106,123"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="65,5,152,33"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="111,47,111,81,106,81,106,47"/>
+<area shape="rect" id="Node000008" href="$class_j_k_q_t_p_graph_line_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph line sty..." alt="" coords="237,309,469,337"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="355,351,355,385,350,385,350,351"/>
+<area shape="rect" id="Node000009" href="$class_j_k_q_t_p_graph_fill_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph filling ..." alt="" coords="493,309,711,337"/>
+<area shape="poly" id="edge8_Node000002_Node000009" title=" " alt="" coords="546,344,397,388,395,383,545,339"/>
+</map>

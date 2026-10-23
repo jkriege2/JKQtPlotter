@@ -1,0 +1,15 @@
+<map id="JKQTPBoxplotVerticalElement" name="JKQTPBoxplotVerticalElement">
+<area shape="rect" id="Node000001" title="This implements a single vertical (notched) boxplot as a &quot;geometric element&quot;, where the data is direc..." alt="" coords="80,233,335,261"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_boxplot_element_base.html" title="Tbaseclass for a single (notched) boxplot as a &quot;geometric element&quot;, where the data is directly given ..." alt="" coords="90,157,325,185"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="210,199,210,233,205,233,205,199"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_plot_element.html" title="this virtual base class of every element, which is part of a JKQTPlotter plot and may appear in its k..." alt="" coords="5,81,172,109"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="122,114,188,155,185,159,119,119"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="45,5,132,33"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="91,47,91,81,86,81,86,47"/>
+<area shape="rect" id="Node000005" href="$class_j_k_q_t_p_graph_boxplot_style_mixin.html" title="Styling Mix&#45;In for Boxplots." alt="" coords="197,81,455,109"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="295,119,230,159,227,155,292,114"/>
+<area shape="rect" id="Node000006" href="$class_j_k_q_t_p_graph_line_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph line sty..." alt="" coords="183,5,415,33"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="311,45,324,80,319,82,306,47"/>
+<area shape="rect" id="Node000007" href="$class_j_k_q_t_p_graph_fill_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph filling ..." alt="" coords="439,5,658,33"/>
+<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="498,40,366,84,364,79,496,35"/>
+</map>

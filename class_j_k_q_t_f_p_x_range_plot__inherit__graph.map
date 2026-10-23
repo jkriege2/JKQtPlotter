@@ -1,0 +1,7 @@
+<map id="JKQTFPXRangePlot" name="JKQTFPXRangePlot">
+<area shape="rect" id="Node000001" title="plot a range of x values" alt="" coords="5,157,176,185"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_f_p_plot.html" title="base class for all plots that may be plotted by JKQTFastPlotter" alt="" coords="36,81,145,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="93,123,93,157,88,157,88,123"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="47,5,134,33"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="93,47,93,81,88,81,88,47"/>
+</map>

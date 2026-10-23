@@ -1,0 +1,16 @@
+<map id="JKQTMathTextLatexParser" name="JKQTMathTextLatexParser">
+<area shape="rect" id="Node000001" title="a LaTeX parser for JKQTMathText" alt="" coords="5,285,232,313"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_math_text_parser.html" title="base class for all math markup parsers used by JKQTMathText" alt="" coords="27,208,210,236"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="121,250,121,285,116,285,116,250"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="95,5,182,33"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="139,48,123,208,117,207,133,47"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_math_text.html" title="this class parses a mathematical markup string and can then draw the contained text/equation onto a Q..." alt="" coords="215,107,347,135"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="170,39,264,104,261,109,167,44"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="203,136,176,146,152,161,134,184,124,209,119,207,130,181,149,157,174,141,201,131"/>
+<area shape="rect" id="Node000005" href="$class_j_k_q_t_math_text_node.html" title="subclass representing one node in the syntax tree" alt="" coords="237,208,411,236"/>
+<area shape="poly" id="edge6_Node000005_Node000004" title=" " alt="" coords="290,147,302,183,317,207,312,209,298,185,285,149"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="402,202,422,193,436,184,442,173,437,160,424,151,402,143,347,132,348,127,404,138,426,146,441,157,447,173,440,187,425,198,404,206"/>
+<area shape="poly" id="edge7_Node000005_Node000005" title=" " alt="" coords="427,215,438,222,430,229,412,231,411,226,428,224,433,222,424,220"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="228,5,335,33"/>
+<area shape="poly" id="edge8_Node000004_Node000006" title=" " alt="" coords="284,47,284,106,279,106,279,47"/>
+</map>

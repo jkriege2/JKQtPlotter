@@ -1,0 +1,21 @@
+<map id="JKQTPXYGraphLabels" name="JKQTPXYGraphLabels">
+<area shape="rect" id="Node000001" title="This graph plots a series of data labels. This can be used to add number&#45;labels to e...." alt="" coords="948,99,1139,127"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_x_y_graph.html" title="This virtual JKQTPGraph descendent may be used as base for all graphs that use at least two columns t..." alt="" coords="697,16,837,44"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="829,45,996,96,995,101,827,50"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_graph.html" title="this virtual base class of the (data&#45;column based) graphs, which are part of a JKQTPlotter plot and w..." alt="" coords="411,5,530,33"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="544,19,697,25,697,30,543,25"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_p_plot_element.html" title="this virtual base class of every element, which is part of a JKQTPlotter plot and may appear in its k..." alt="" coords="140,5,307,33"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="320,17,411,17,411,22,320,22"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="5,5,92,33"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="105,17,140,17,140,22,105,22"/>
+<area shape="rect" id="Node000006" href="$class_j_k_q_t_p_graph_value_label_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for value labels in gr..." alt="" coords="645,90,890,135"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="904,110,948,110,948,115,904,115"/>
+<area shape="rect" id="Node000007" href="$class_j_k_q_t_p_graph_text_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for text in graphs." alt="" coords="355,57,586,85"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="586,85,645,93,644,98,585,90"/>
+<area shape="rect" id="Node000008" href="$class_j_k_q_t_p_graph_line_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph line sty..." alt="" coords="355,109,587,137"/>
+<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="600,116,644,114,644,120,600,121"/>
+<area shape="rect" id="Node000009" href="$class_j_k_q_t_p_graph_fill_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph filling ..." alt="" coords="361,161,580,189"/>
+<area shape="poly" id="edge8_Node000006_Node000009" title=" " alt="" coords="551,156,659,133,660,138,552,161"/>
+<area shape="rect" id="Node000010" href="$class_j_k_q_t_p_x_y_labels_generator_mixin.html" title="This Mix&#45;In class provides setter/getter methods, and tools for x&#45; and y&#45;value label formatting (i...." alt="" coords="635,160,900,188"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="853,155,899,145,986,124,987,129,901,150,854,160"/>
+</map>

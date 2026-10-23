@@ -1,0 +1,27 @@
+<map id="JKQTPImpulsesVerticalErrorGraph" name="JKQTPImpulsesVerticalErrorGraph">
+<area shape="rect" id="Node000001" title="This implements an impulse plot with impulses in direction of the X axis (i.e. from x=0 to x=f(y) )" alt="" coords="354,537,594,583"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_impulses_vertical_graph.html" title="This implements an impulse plot with impulses in direction of the Y axis (i.e. from y=0 to y=f(x) )" alt="" coords="230,461,481,489"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="387,495,444,535,441,539,384,499"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_impulses_graph_base.html" title="This is a base class for all impulse graphs." alt="" coords="238,385,467,413"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="356,427,358,461,352,461,351,427"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_p_x_y_baseline_graph.html" title="This virtual JKQTPGraph descendent extends JKQTPXYGraph adds a baseline&#45;property, which is necessary,..." alt="" coords="5,309,212,337"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="165,339,311,383,309,388,164,344"/>
+<area shape="rect" id="Node000005" href="$class_j_k_q_t_p_x_y_graph.html" title="This virtual JKQTPGraph descendent may be used as base for all graphs that use at least two columns t..." alt="" coords="39,233,179,261"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="111,275,111,309,106,309,106,275"/>
+<area shape="rect" id="Node000006" href="$class_j_k_q_t_p_graph.html" title="this virtual base class of the (data&#45;column based) graphs, which are part of a JKQTPlotter plot and w..." alt="" coords="49,157,168,185"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="111,199,111,233,106,233,106,199"/>
+<area shape="rect" id="Node000007" href="$class_j_k_q_t_p_plot_element.html" title="this virtual base class of every element, which is part of a JKQTPlotter plot and may appear in its k..." alt="" coords="25,81,192,109"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="111,123,111,157,106,157,106,123"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="65,5,152,33"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="111,47,111,81,106,81,106,47"/>
+<area shape="rect" id="Node000009" href="$class_j_k_q_t_p_graph_line_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph line sty..." alt="" coords="237,309,469,337"/>
+<area shape="poly" id="edge8_Node000003_Node000009" title=" " alt="" coords="355,351,355,385,350,385,350,351"/>
+<area shape="rect" id="Node000010" href="$class_j_k_q_t_p_graph_symbol_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph symbols ..." alt="" coords="493,309,751,337"/>
+<area shape="poly" id="edge9_Node000003_Node000010" title=" " alt="" coords="563,344,400,388,399,383,561,338"/>
+<area shape="rect" id="Node000011" href="$class_j_k_q_t_p_y_graph_errors.html" title="This class is the base class for graphs that only display error indicators in y&#45;direction." alt="" coords="507,461,681,489"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="565,499,507,539,504,535,562,495"/>
+<area shape="rect" id="Node000012" href="$class_j_k_q_t_p_y_graph_error_data.html" title="This class adds data fields for error indicators in y direction." alt="" coords="491,385,697,413"/>
+<area shape="poly" id="edge11_Node000011_Node000012" title=" " alt="" coords="597,427,597,461,591,461,591,427"/>
+<area shape="rect" id="Node000013" href="$class_j_k_q_t_p_graph_error_style_mixin.html" title="This mix&#45;in class assembles all styling properties applicable to error indicators." alt="" coords="721,385,960,413"/>
+<area shape="poly" id="edge12_Node000011_Node000013" title=" " alt="" coords="785,420,638,464,636,459,784,415"/>
+</map>

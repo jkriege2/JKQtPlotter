@@ -1,0 +1,9 @@
+<map id="JKQTPPolynomialFunctor" name="JKQTPPolynomialFunctor">
+<area shape="rect" id="Node000001" title="a C++&#45;functor, which evaluates a polynomial" alt="" coords="5,309,221,337"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="15,208,212,236"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="116,250,116,309,111,309,111,250"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="37,107,190,135"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="116,149,116,207,111,207,111,149"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="94,5,133,33"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="116,47,116,106,111,106,111,47"/>
+</map>

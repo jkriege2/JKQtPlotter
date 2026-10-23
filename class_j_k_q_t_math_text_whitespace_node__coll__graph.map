@@ -1,0 +1,15 @@
+<map id="JKQTMathTextWhitespaceNode" name="JKQTMathTextWhitespaceNode">
+<area shape="rect" id="Node000001" title="subclass representing one whitepsace node in the syntax tree" alt="" coords="123,124,389,152"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_math_text_node.html" title="subclass representing one node in the syntax tree" alt="" coords="297,14,471,42"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="360,53,273,126,269,122,357,49"/>
+<area shape="poly" id="edge6_Node000002_Node000002" title=" " alt="" coords="486,18,494,21,498,28,490,37,472,41,471,36,488,32,493,28,491,26,484,23"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_math_text.html" title="this class parses a mathematical markup string and can then draw the contained text/equation onto a Q..." alt="" coords="490,124,622,152"/>
+<area shape="poly" id="edge4_Node000003_Node000002" title=" " alt="" coords="375,56,371,78,373,89,378,98,395,109,422,118,490,129,489,134,421,123,392,114,374,102,368,91,366,78,370,55"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="527,117,510,102,498,89,485,77,453,59,421,45,423,40,456,54,488,73,502,85,514,98,531,113"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="626,14,713,42"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="671,56,665,80,653,102,635,116,616,126,613,121,633,112,649,98,660,78,666,55"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="737,14,844,42"/>
+<area shape="poly" id="edge5_Node000003_Node000005" title=" " alt="" coords="763,52,722,78,676,102,608,126,606,121,674,98,720,73,760,48"/>
+<area shape="rect" id="Node000006" href="$struct_j_k_q_t_math_text_whitespace_node_1_1_whitespace_props.html" title="describes a whitespace" alt="" coords="5,5,272,51"/>
+<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="155,62,167,81,182,98,200,111,220,122,218,126,197,116,178,102,163,84,151,64"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="JKQTMathTextNoopNode" name="JKQTMathTextNoopNode">
+<area shape="rect" id="Node000001" title="subclass representing a node that outputs nothing" alt="" coords="53,157,269,185"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_math_text_non_drawing_base_node.html" title="base class for all derived classes that do not draw anything" alt="" coords="5,81,316,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="163,123,163,157,158,157,158,123"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_math_text_node.html" title="subclass representing one node in the syntax tree" alt="" coords="73,5,248,33"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="163,47,163,81,158,81,158,47"/>
+</map>

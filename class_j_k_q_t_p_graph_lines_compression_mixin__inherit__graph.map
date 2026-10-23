@@ -1,0 +1,13 @@
+<map id="JKQTPGraphLinesCompressionMixin" name="JKQTPGraphLinesCompressionMixin">
+<area shape="rect" id="Node000001" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for a line&#45;graph compr..." alt="" coords="5,105,268,151"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_special_line_graph_base.html" title="a Base class for special line graphs (steps ...) like e.g. JKQTPSpecialLineHorizontalGraph" alt="" coords="316,83,564,111"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="281,111,316,107,316,113,282,116"/>
+<area shape="rect" id="Node000005" href="$class_j_k_q_t_p_x_y_line_graph.html" title="This implements xy line plots. This also alows to draw symbols at the data points." alt="" coords="353,139,527,167"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="282,137,353,143,353,149,281,143"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_special_line_horizontal_graph.html" title="This implements a step plot with values ." alt="" coords="612,5,853,51"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="513,78,636,48,637,53,514,83"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_p_special_line_vertical_graph.html" title="This implements a step plot with values ." alt="" coords="623,75,843,120"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="578,95,622,95,622,100,578,100"/>
+<area shape="rect" id="Node000006" href="$class_j_k_q_t_p_x_y_line_error_graph.html" title="This implements xy line plots with x and y error indicators." alt="" coords="627,145,839,173"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="540,152,627,154,626,159,540,158"/>
+</map>

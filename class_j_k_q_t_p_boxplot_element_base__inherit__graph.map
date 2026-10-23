@@ -1,0 +1,17 @@
+<map id="JKQTPBoxplotElementBase" name="JKQTPBoxplotElementBase">
+<area shape="rect" id="Node000001" title="Tbaseclass for a single (notched) boxplot as a &quot;geometric element&quot;, where the data is directly given ..." alt="" coords="170,157,405,185"/>
+<area shape="rect" id="Node000007" href="$class_j_k_q_t_p_boxplot_horizontal_element.html" title="This implements a horizontal (notched) boxplot where the data is directly given to the object and not..." alt="" coords="5,233,281,261"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="251,194,170,236,167,231,249,189"/>
+<area shape="rect" id="Node000008" href="$class_j_k_q_t_p_boxplot_vertical_element.html" title="This implements a single vertical (notched) boxplot as a &quot;geometric element&quot;, where the data is direc..." alt="" coords="305,233,560,261"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="326,189,408,231,406,236,323,194"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_plot_element.html" title="this virtual base class of every element, which is part of a JKQTPlotter plot and may appear in its k..." alt="" coords="85,81,252,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="202,114,268,155,265,159,199,119"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="125,5,212,33"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="171,47,171,81,166,81,166,47"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_p_graph_boxplot_style_mixin.html" title="Styling Mix&#45;In for Boxplots." alt="" coords="277,81,535,109"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="375,119,310,159,307,155,372,114"/>
+<area shape="rect" id="Node000005" href="$class_j_k_q_t_p_graph_line_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph line sty..." alt="" coords="263,5,495,33"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="391,45,404,80,399,82,386,47"/>
+<area shape="rect" id="Node000006" href="$class_j_k_q_t_p_graph_fill_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph filling ..." alt="" coords="519,5,738,33"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="578,40,446,84,444,79,576,35"/>
+</map>

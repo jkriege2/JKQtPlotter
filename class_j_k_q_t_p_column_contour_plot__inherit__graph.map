@@ -1,0 +1,23 @@
+<map id="JKQTPColumnContourPlot" name="JKQTPColumnContourPlot">
+<area shape="rect" id="Node000001" title="class for a contour plots (same as JKQTPContourPlot) of images stored in a JKQTPDatastore column" alt="" coords="231,572,457,600"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_contour_plot.html" title="class for a contour plot" alt="" coords="262,496,426,524"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="347,538,347,572,341,572,341,538"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_math_image.html" title="class to plot an image from an 2&#45;dimensional array of values" alt="" coords="153,420,314,448"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="265,453,326,494,323,498,262,458"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_p_math_image_base.html" title="base class to hold an image from an 2&#45;dimensional array of values" alt="" coords="5,335,205,363"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="138,369,215,418,212,422,136,373"/>
+<area shape="rect" id="Node000005" href="$class_j_k_q_t_p_image_base.html" title="base class for plotting an image" alt="" coords="25,242,185,270"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="108,284,108,335,103,335,103,284"/>
+<area shape="rect" id="Node000006" href="$class_j_k_q_t_p_graph.html" title="this virtual base class of the (data&#45;column based) graphs, which are part of a JKQTPlotter plot and w..." alt="" coords="46,157,165,185"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="108,199,108,242,103,242,103,199"/>
+<area shape="rect" id="Node000007" href="$class_j_k_q_t_p_plot_element.html" title="this virtual base class of every element, which is part of a JKQTPlotter plot and may appear in its k..." alt="" coords="22,81,189,109"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="108,123,108,157,103,157,103,123"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="62,5,149,33"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="108,47,108,81,103,81,103,47"/>
+<area shape="rect" id="Node000009" href="$class_j_k_q_t_p_color_palette_with_modifier_style_and_tools_mixin.html" title="if a class is derived from this class, it may use color bars that have 2 axes (one &quot;data&quot;/color axis ..." alt="" coords="229,327,496,372"/>
+<area shape="poly" id="edge8_Node000003_Node000009" title=" " alt="" coords="318,382,255,422,252,418,316,377"/>
+<area shape="rect" id="Node000010" href="$class_j_k_q_t_p_color_palette_style_and_tools_mixin.html" title="if a class is derived from this class, it may use color bars" alt="" coords="244,233,481,279"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="365,292,365,326,360,326,360,292"/>
+<area shape="rect" id="Node000011" href="$class_j_k_q_t_p_graph_line_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph line sty..." alt="" coords="339,420,571,448"/>
+<area shape="poly" id="edge10_Node000002_Node000011" title=" " alt="" coords="426,458,365,498,362,494,423,453"/>
+</map>

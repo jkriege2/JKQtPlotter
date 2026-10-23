@@ -1,0 +1,60 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" href="$class_j_k_q_t_math_text_modify_environment_node_mix_in.html" title="mixin extending a node that does not produce any output, but provides a function modifyEnvironment() ..." alt="" coords="242,241,527,286"/>
+<area shape="rect" id="Node000001" href="$class_j_k_q_t_math_text_horizontal_list_node.html" title="subclass representing a list of nodes in the syntax tree, layed out horizontally" alt="" coords="599,213,881,241"/>
+<area shape="poly" id="edge6_Node000000_Node000001" title=" " alt="" coords="541,245,601,239,602,244,541,250"/>
+<area shape="rect" id="Node000011" href="$class_j_k_q_t_math_text_modified_environment_instruction_node.html" title="subclass representing an instruction node which modify the current JKQTMathTextEnvironment,..." alt="" coords="589,266,891,311"/>
+<area shape="poly" id="edge7_Node000000_Node000011" title=" " alt="" coords="541,272,589,275,589,281,541,277"/>
+<area shape="rect" id="Node000008" href="$class_j_k_q_t_math_text_node.html" title="subclass representing one node in the syntax tree" alt="" coords="5,467,180,495"/>
+<area shape="rect" id="Node000009" href="$class_j_k_q_t_math_text_empty_box_node.html" title="subclass representing an empty bbox with defined width/height in the syntax tree" alt="" coords="257,311,512,339"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="110,454,158,399,191,371,227,348,256,336,258,341,229,352,194,375,162,403,114,457"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_math_text_multi_child_node.html" title="subclass representing a node in the syntax tree, that has two children" alt="" coords="259,136,510,164"/>
+<area shape="poly" id="edge9_Node000008_Node000002" title=" " alt="" coords="100,452,117,405,144,346,180,283,226,227,252,205,281,187,338,162,340,167,284,192,255,210,230,231,184,286,148,348,122,407,105,454"/>
+<area shape="rect" id="Node000010" href="$class_j_k_q_t_math_text_non_drawing_base_node.html" title="base class for all derived classes that do not draw anything" alt="" coords="229,363,540,391"/>
+<area shape="poly" id="edge16_Node000008_Node000010" title=" " alt="" coords="139,459,227,425,337,388,338,393,229,430,141,464"/>
+<area shape="rect" id="Node000013" href="$class_j_k_q_t_math_text_simple_instruction_node.html" title="subclass representing a simple instruction node which only accepts string arguments,..." alt="" coords="228,440,541,468"/>
+<area shape="poly" id="edge19_Node000008_Node000013" title=" " alt="" coords="193,469,231,465,231,471,194,474"/>
+<area shape="rect" id="Node000014" href="$class_j_k_q_t_math_text_single_child_node.html" title="subclass representing a node in the syntax tree, that has one child" alt="" coords="254,492,515,520"/>
+<area shape="poly" id="edge20_Node000008_Node000014" title=" " alt="" coords="194,487,254,492,253,497,194,492"/>
+<area shape="rect" id="Node000024" href="$class_j_k_q_t_math_text_symbol_node.html" title="subclass representing one symbol (e.g. \alpha , \cdot ...) node in the syntax tree" alt="" coords="268,544,501,572"/>
+<area shape="poly" id="edge30_Node000008_Node000024" title=" " alt="" coords="139,497,229,529,285,541,284,547,227,534,137,502"/>
+<area shape="rect" id="Node000025" href="$class_j_k_q_t_math_text_text_base_node.html" title="base class for nodes representing text in the syntax tree" alt="" coords="262,648,507,676"/>
+<area shape="poly" id="edge31_Node000008_Node000025" title=" " alt="" coords="122,501,171,540,229,581,294,617,353,646,350,650,292,622,227,586,168,544,119,505"/>
+<area shape="rect" id="Node000028" href="$class_j_k_q_t_math_text_whitespace_node.html" title="subclass representing one whitepsace node in the syntax tree" alt="" coords="251,700,518,728"/>
+<area shape="poly" id="edge34_Node000008_Node000028" title=" " alt="" coords="106,507,123,548,149,597,185,645,206,667,229,685,253,697,251,702,227,690,202,671,181,649,145,600,118,550,101,509"/>
+<area shape="poly" id="edge12_Node000002_Node000001" title=" " alt="" coords="452,165,590,198,655,211,654,216,589,203,451,170"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_math_text_dual_child_node.html" title="subclass representing a node in the syntax tree, that has two children" alt="" coords="615,5,865,33"/>
+<area shape="poly" id="edge10_Node000002_Node000003" title=" " alt="" coords="418,126,494,83,540,61,589,42,631,31,632,36,590,47,543,66,496,88,421,131"/>
+<area shape="rect" id="Node000005" href="$class_j_k_q_t_math_text_matrix_node.html" title="subclass representing a \begin{matrix} , \begin{tabular} , \begin{array} , ... node" alt="" coords="628,57,852,85"/>
+<area shape="poly" id="edge13_Node000002_Node000005" title=" " alt="" coords="447,130,589,94,647,83,649,88,590,99,448,135"/>
+<area shape="rect" id="Node000006" href="$class_j_k_q_t_math_text_sqrt_node.html" title="subclass representing a sqrt node" alt="" coords="637,109,843,137"/>
+<area shape="poly" id="edge14_Node000002_Node000006" title=" " alt="" coords="524,137,636,128,637,134,524,142"/>
+<area shape="rect" id="Node000007" href="$class_j_k_q_t_math_text_vertical_list_node.html" title="subclass representing a list of nodes in the syntax tree, layed out vertically" alt="" coords="609,161,871,189"/>
+<area shape="poly" id="edge15_Node000002_Node000007" title=" " alt="" coords="524,157,609,163,609,169,524,163"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_math_text_frac_node.html" title="subclass representing a \frac node" alt="" coords="979,5,1187,33"/>
+<area shape="poly" id="edge11_Node000003_Node000004" title=" " alt="" coords="879,17,978,17,978,22,879,22"/>
+<area shape="poly" id="edge17_Node000010_Node000011" title=" " alt="" coords="508,357,540,348,564,335,588,321,625,309,626,314,590,326,567,339,542,352,510,362"/>
+<area shape="rect" id="Node000012" href="$class_j_k_q_t_math_text_noop_node.html" title="subclass representing a node that outputs nothing" alt="" coords="632,336,848,364"/>
+<area shape="poly" id="edge18_Node000010_Node000012" title=" " alt="" coords="553,361,632,355,632,361,554,367"/>
+<area shape="rect" id="Node000015" href="$class_j_k_q_t_math_text_block_node.html" title="subclass representing a {...} block" alt="" coords="631,388,849,416"/>
+<area shape="poly" id="edge21_Node000014_Node000015" title=" " alt="" coords="523,485,540,477,555,465,563,452,572,438,588,425,630,409,632,414,591,430,576,441,568,455,559,469,543,482,526,490"/>
+<area shape="rect" id="Node000016" href="$class_j_k_q_t_math_text_brace_node.html" title="subclass representing a brace node" alt="" coords="629,440,851,468"/>
+<area shape="poly" id="edge22_Node000014_Node000016" title=" " alt="" coords="494,487,643,465,644,471,495,493"/>
+<area shape="rect" id="Node000017" href="$class_j_k_q_t_math_text_decorated_node.html" title="subclass representing a decorated text m (e.g. \vec \hat ...) node" alt="" coords="611,492,869,520"/>
+<area shape="poly" id="edge23_Node000014_Node000017" title=" " alt="" coords="529,503,610,503,610,509,529,509"/>
+<area shape="rect" id="Node000018" href="$class_j_k_q_t_math_text_instruction1_node.html" title="subclass representing an instruction node with exactly one argument and possibly additional parameter..." alt="" coords="605,544,875,572"/>
+<area shape="poly" id="edge24_Node000014_Node000018" title=" " alt="" coords="495,519,644,541,643,547,494,525"/>
+<area shape="rect" id="Node000022" href="$class_j_k_q_t_math_text_subscript_node.html" title="subclass representing an subscript node with exactly one argument in the syntax tree" alt="" coords="616,596,864,624"/>
+<area shape="poly" id="edge28_Node000014_Node000022" title=" " alt="" coords="529,522,543,529,559,542,568,556,576,569,591,581,620,593,618,598,588,586,572,573,563,559,555,545,540,534,527,527"/>
+<area shape="rect" id="Node000023" href="$class_j_k_q_t_math_text_superscript_node.html" title="subclass representing an superscript node with exactly one argument in the syntax tree" alt="" coords="607,648,873,676"/>
+<area shape="poly" id="edge29_Node000014_Node000023" title=" " alt="" coords="529,520,543,529,556,542,563,555,568,583,573,609,580,622,591,633,612,646,609,650,588,637,575,625,568,611,563,584,558,557,551,545,540,533,526,525"/>
+<area shape="rect" id="Node000019" href="$class_j_k_q_t_math_text_box_instruction_node.html" title="subclass representing an instruction node which draws a (possibly colored) box around it&#39;s contents i..." alt="" coords="939,483,1227,511"/>
+<area shape="poly" id="edge25_Node000018_Node000019" title=" " alt="" coords="833,539,890,529,1004,508,1005,513,891,534,834,544"/>
+<area shape="rect" id="Node000020" href="$class_j_k_q_t_math_text_modified_text_props_instruction_node.html" title="subclass representing an instruction node which modifies the current font (as defined in JKQTMathText..." alt="" coords="967,535,1199,581"/>
+<area shape="poly" id="edge26_Node000018_Node000020" title=" " alt="" coords="888,555,966,555,966,561,888,561"/>
+<area shape="rect" id="Node000021" href="$class_j_k_q_t_math_text_phantom_node.html" title="generates whitespace with the size of the contained node" alt="" coords="959,605,1206,633"/>
+<area shape="poly" id="edge27_Node000018_Node000021" title=" " alt="" coords="840,572,891,581,939,590,1006,603,1005,608,938,595,890,586,839,577"/>
+<area shape="rect" id="Node000026" href="$class_j_k_q_t_math_text_text_node.html" title="subclass representing one text node in the syntax tree" alt="" coords="637,700,843,728"/>
+<area shape="poly" id="edge32_Node000025_Node000026" title=" " alt="" coords="495,675,644,697,643,703,494,681"/>
+<area shape="rect" id="Node000027" href="$class_j_k_q_t_math_text_verbatim_node.html" title="subclass representing a verbatim (plain&#45;text) node with support for line&#45;breaks in the syntax tree" alt="" coords="617,752,863,780"/>
+<area shape="poly" id="edge33_Node000025_Node000027" title=" " alt="" coords="522,676,543,685,559,698,568,712,576,725,591,737,620,749,618,754,588,742,572,729,563,715,555,701,540,690,519,680"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="JKQTMathTextTextNode" name="JKQTMathTextTextNode">
+<area shape="rect" id="Node000001" title="subclass representing one text node in the syntax tree" alt="" coords="25,157,231,185"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_math_text_text_base_node.html" title="base class for nodes representing text in the syntax tree" alt="" coords="5,81,251,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="131,123,131,157,125,157,125,123"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_math_text_node.html" title="subclass representing one node in the syntax tree" alt="" coords="41,5,215,33"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="131,47,131,81,125,81,125,47"/>
+</map>

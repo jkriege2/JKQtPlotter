@@ -1,0 +1,7 @@
+<map id="jkqtp_ceilTo" name="jkqtp_ceilTo">
+<area shape="rect" id="Node000001" title="round a double v using ceil() and convert it to a specified type T (static_cast!)" alt="" coords="344,32,457,60"/>
+<area shape="rect" id="Node000002" href="$group__jkqtptools__math__statistics__adaptors.html#ga5a292ba2eb5fdba1915c0dafb8af7f99" title="calculate calculate a 2&#45;dimensional histogram and add a JKQTPColumnContourPlot to the given plotter,..." alt="" coords="5,5,296,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="330,41,282,36,282,31,331,36"/>
+<area shape="rect" id="Node000003" href="$group__jkqtptools__math__statistics__adaptors.html#ga607a6a0cc0cdd316731992c9fe78132e" title="calculate calculate a 2&#45;dimensional histogram and add a JKQTPColumnMathImage to the given plotter,..." alt="" coords="11,57,290,85"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="330,56,289,60,289,55,330,50"/>
+</map>

@@ -1,0 +1,11 @@
+<map id="JKQTPImage" name="JKQTPImage">
+<area shape="rect" id="Node000001" title="class to plot an image from a QImage object" alt="" coords="28,309,149,337"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_image_base.html" title="base class for plotting an image" alt="" coords="9,233,169,261"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="91,275,91,309,86,309,86,275"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_graph.html" title="this virtual base class of the (data&#45;column based) graphs, which are part of a JKQTPlotter plot and w..." alt="" coords="29,157,148,185"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="91,199,91,233,86,233,86,199"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_p_plot_element.html" title="this virtual base class of every element, which is part of a JKQTPlotter plot and may appear in its k..." alt="" coords="5,81,172,109"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="91,123,91,157,86,157,86,123"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="45,5,132,33"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="91,47,91,81,86,81,86,47"/>
+</map>

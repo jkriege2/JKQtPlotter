@@ -1,0 +1,56 @@
+<map id="JKQTPMathParser::jkmpNodeList" name="JKQTPMathParser::jkmpNodeList">
+<area shape="rect" id="Node000001" title="This class represents a list of jkmpNode." alt="" coords="3187,375,3465,403"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_math_parser_1_1jkmp_node.html" title="This class is the abstract base class for nodes. All allowed node types must inherit from jkmpNode." alt="" coords="2463,346,2713,374"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="2727,361,3163,376,3187,377,3186,383,3163,381,2727,366"/>
+<area shape="poly" id="edge29_Node000002_Node000002" title=" " alt="" coords="2553,331,2564,323,2588,319,2608,322,2620,328,2624,337,2619,347,2614,345,2619,337,2616,331,2606,327,2588,325,2566,328,2557,335"/>
+<area shape="rect" id="Node000022" title=" " alt="" coords="2844,397,3108,443"/>
+<area shape="poly" id="edge31_Node000022_Node000002" title=" " alt="" coords="2642,376,2688,390,2738,401,2844,414,2843,419,2737,407,2687,395,2640,381"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_math_parser.html" title="A simple function parser to parse (build memory tree representation) and evaluate simple mathematical..." alt="" coords="2185,261,2347,289"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="2334,290,2535,343,2533,348,2332,295"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="267,318,369,346"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="333,305,377,248,407,218,441,192,495,164,540,149,588,144,649,143,1861,143,1918,146,1975,156,2031,170,2084,188,2176,226,2241,258,2238,263,2174,231,2082,193,2029,176,1974,161,1917,152,1861,148,649,148,588,149,541,155,497,169,444,197,411,222,381,251,337,308"/>
+<area shape="rect" id="Node000012" href="$struct_j_k_q_t_p_math_parser_1_1jkmp_temp_variable.html" title="This struct is for managing temporary variables. It is generally like jkmpVariable." alt="" coords="814,199,1066,244"/>
+<area shape="poly" id="edge12_Node000012_Node000004" title=" " alt="" coords="348,308,391,281,442,259,537,236,635,222,730,215,813,214,814,219,730,221,636,227,538,241,444,264,393,286,351,312"/>
+<area shape="rect" id="Node000015" title=" " alt="" coords="1711,579,2008,624"/>
+<area shape="poly" id="edge16_Node000015_Node000004" title=" " alt="" coords="329,358,351,422,389,502,415,542,445,580,481,611,522,635,607,667,696,692,786,710,877,722,970,729,1062,731,1241,723,1410,703,1561,676,1688,647,1784,621,1785,627,1689,652,1562,681,1411,708,1242,728,1062,736,969,734,877,728,785,715,694,697,606,672,520,640,478,615,442,583,410,545,384,505,346,424,324,360"/>
+<area shape="rect" id="Node000016" href="$struct_j_k_q_t_p_math_parser_1_1jkmp_variable.html" title="This struct is for managing variables. Unlike jkmpResult this struct only contains pointers to the da..." alt="" coords="803,603,1077,631"/>
+<area shape="poly" id="edge18_Node000016_Node000004" title=" " alt="" coords="334,357,361,407,402,470,456,532,488,558,523,580,558,597,596,609,674,625,752,630,823,629,823,634,752,636,674,630,595,614,556,602,520,585,485,563,453,535,398,473,356,410,329,360"/>
+<area shape="rect" id="Node000019" title=" " alt="" coords="1719,279,2000,342"/>
+<area shape="poly" id="edge23_Node000019_Node000004" title=" " alt="" coords="377,312,442,299,536,290,652,285,921,282,1401,285,1544,282,1687,285,1719,288,1718,293,1687,291,1544,287,1401,291,921,288,652,291,536,296,443,304,379,317"/>
+<area shape="rect" id="Node000020" href="$struct_j_k_q_t_p_math_parser_1_1jkmp_function_descriptor.html" title="description of a user registered function" alt="" coords="1101,317,1377,363"/>
+<area shape="poly" id="edge27_Node000020_Node000004" title=" " alt="" coords="375,348,444,367,522,381,599,389,678,392,836,388,983,376,1106,360,1107,365,983,381,836,394,678,397,599,394,521,387,443,372,374,353"/>
+<area shape="rect" id="Node000021" href="$struct_j_k_q_t_p_math_parser_1_1jkmp_result.html" title="result of any expression" alt="" coords="521,318,779,346"/>
+<area shape="poly" id="edge26_Node000021_Node000004" title=" " alt="" coords="382,329,521,329,521,335,382,335"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="5,309,168,355"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="182,329,267,329,267,335,182,335"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="1779,63,1940,91"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="1954,73,2003,77,2055,86,2108,101,2156,124,2194,155,2224,193,2247,230,2261,259,2256,262,2242,233,2220,196,2190,159,2153,129,2106,106,2054,91,2002,82,1954,78"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="1134,5,1345,51"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="1358,35,1779,68,1778,74,1358,40"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="567,5,733,51"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="747,25,1134,25,1134,31,747,31"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="217,14,419,42"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="433,25,567,25,567,31,433,31"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="25,14,149,42"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="162,25,217,25,217,31,162,31"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="1727,209,1991,255"/>
+<area shape="poly" id="edge10_Node000003_Node000011" title=" " alt="" coords="2006,245,2186,264,2185,269,2005,250"/>
+<area shape="poly" id="edge11_Node000011_Node000012" title=" " alt="" coords="1080,220,1727,228,1727,233,1080,226"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="1163,430,1316,458"/>
+<area shape="poly" id="edge13_Node000011_Node000013" title=" " alt="" coords="1329,427,1401,416,1466,413,1550,412,1631,405,1662,396,1685,383,1695,370,1699,357,1697,328,1694,297,1698,281,1709,266,1725,253,1729,257,1713,270,1703,284,1700,298,1702,327,1704,357,1700,373,1688,387,1665,401,1632,410,1550,418,1466,419,1402,421,1330,432"/>
+<area shape="poly" id="edge32_Node000022_Node000013" title=" " alt="" coords="1291,460,1344,477,1402,491,1529,508,1629,513,1858,509,2589,509,2680,502,2769,485,2850,463,2916,440,2918,445,2852,468,2770,490,2681,508,2589,515,1858,515,1629,518,1528,513,1401,496,1342,482,1289,465"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="631,465,669,493"/>
+<area shape="poly" id="edge14_Node000013_Node000014" title=" " alt="" coords="683,474,1162,446,1163,451,683,479"/>
+<area shape="rect" id="Node000017" title=" " alt="" coords="1160,514,1319,542"/>
+<area shape="poly" id="edge21_Node000017_Node000014" title=" " alt="" coords="683,481,803,497,996,513,1160,522,1160,527,995,518,802,503,683,486"/>
+<area shape="poly" id="edge15_Node000003_Node000015" title=" " alt="" coords="1898,568,2245,287,2249,291,1902,572"/>
+<area shape="poly" id="edge17_Node000015_Node000016" title=" " alt="" coords="1091,613,1687,603,1710,602,1710,608,1687,608,1091,618"/>
+<area shape="poly" id="edge19_Node000015_Node000017" title=" " alt="" coords="1290,544,1343,562,1402,576,1480,587,1561,595,1710,601,1710,606,1560,600,1480,593,1401,581,1342,567,1288,549"/>
+<area shape="poly" id="edge28_Node000019_Node000017" title=" " alt="" coords="1332,521,1528,503,1621,489,1686,470,1731,442,1772,408,1806,372,1833,340,1837,344,1810,376,1775,412,1734,447,1688,474,1622,494,1529,508,1333,526"/>
+<area shape="rect" id="Node000018" title=" " alt="" coords="631,542,669,570"/>
+<area shape="poly" id="edge20_Node000017_Node000018" title=" " alt="" coords="683,555,852,559,964,558,1077,552,1168,539,1169,545,1078,557,964,563,852,565,683,560"/>
+<area shape="poly" id="edge22_Node000003_Node000019" title=" " alt="" coords="2013,306,2154,295,2205,286,2205,291,2155,300,2014,311"/>
+<area shape="poly" id="edge24_Node000019_Node000020" title=" " alt="" coords="1391,330,1718,315,1718,320,1392,335"/>
+<area shape="poly" id="edge25_Node000020_Node000021" title=" " alt="" coords="792,332,803,332,1101,336,1101,341,803,337,792,337"/>
+<area shape="poly" id="edge30_Node000001_Node000022" title=" " alt="" coords="3122,405,3162,401,3186,399,3187,405,3163,407,3122,410"/>
+</map>

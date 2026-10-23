@@ -1,0 +1,7 @@
+<map id="jkqtp_truncTo" name="jkqtp_truncTo">
+<area shape="rect" id="Node000001" title="round a double v using trunc() and convert it to a specified type T (static_cast!)" alt="" coords="316,45,444,73"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_math_image.html#a0aef9cfb82a606eae54cb6139c22e46e" title="return the value (raw data!) of the contained modifier image at the given coordinate" alt="" coords="5,5,268,51"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="302,52,268,47,269,42,302,46"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_math_image.html#aa2ff3e65866c887bb2b63e1c5e13ded5" title="return the value (raw data!) of the contained image at the given coordinate" alt="" coords="7,75,266,103"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="302,71,249,78,248,73,302,66"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="JKQTPMathParser::jkmpConstantNode" name="JKQTPMathParser::jkmpConstantNode">
+<area shape="rect" id="Node000001" title="This class represents a number, a string contant or a boolean contant (true / false )" alt="" coords="5,81,328,109"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_math_parser_1_1jkmp_node.html" title="This class is the abstract base class for nodes. All allowed node types must inherit from jkmpNode." alt="" coords="41,5,292,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="169,47,169,81,164,81,164,47"/>
+</map>

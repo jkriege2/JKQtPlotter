@@ -1,0 +1,21 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" href="$class_j_k_q_t_p_math_parser_1_1jkmp_node.html" title="This class is the abstract base class for nodes. All allowed node types must inherit from jkmpNode." alt="" coords="5,249,256,277"/>
+<area shape="rect" id="Node000001" href="$class_j_k_q_t_p_math_parser_1_1jkmp_binary_arithmetic_node.html" title="This class represents a binary arithmetic operation: add (+), subtract (&#45;), multiply (*),..." alt="" coords="336,5,596,51"/>
+<area shape="poly" id="edge237_Node000000_Node000001" title=" " alt="" coords="145,235,170,195,206,148,250,100,303,60,335,45,337,50,305,65,254,104,210,151,174,198,149,238"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_math_parser_1_1jkmp_binary_bool_node.html" title="This class represents a binary boolean operation: and, or, xor, nor, nand." alt="" coords="336,75,596,120"/>
+<area shape="poly" id="edge238_Node000000_Node000002" title=" " alt="" coords="154,237,218,182,259,154,303,130,335,117,337,122,305,134,262,158,221,186,158,241"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_math_parser_1_1jkmp_compare_node.html" title="This class represents a binary compare operation: !=, ==, &gt;=, &lt;=, &gt;, &lt;." alt="" coords="304,145,628,173"/>
+<area shape="poly" id="edge239_Node000000_Node000003" title=" " alt="" coords="168,239,230,209,303,181,350,170,351,175,305,187,233,214,171,244"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_p_math_parser_1_1jkmp_constant_node.html" title="This class represents a number, a string contant or a boolean contant (true / false )" alt="" coords="305,197,627,225"/>
+<area shape="poly" id="edge240_Node000000_Node000004" title=" " alt="" coords="235,244,375,222,375,227,236,249"/>
+<area shape="rect" id="Node000005" href="$class_j_k_q_t_p_math_parser_1_1jkmp_function_node.html" title="This class represents an arbitrary function." alt="" coords="307,249,625,277"/>
+<area shape="poly" id="edge241_Node000000_Node000005" title=" " alt="" coords="270,260,306,260,306,265,270,265"/>
+<area shape="rect" id="Node000006" href="$class_j_k_q_t_p_math_parser_1_1jkmp_node_list.html" title="This class represents a list of jkmpNode." alt="" coords="327,301,605,329"/>
+<area shape="poly" id="edge242_Node000000_Node000006" title=" " alt="" coords="236,276,375,298,375,303,235,281"/>
+<area shape="rect" id="Node000007" href="$class_j_k_q_t_p_math_parser_1_1jkmp_unary_node.html" title="This class represents a unary operations: ! (bool negation), &#45; (arithmetic negation)" alt="" coords="317,353,615,381"/>
+<area shape="poly" id="edge243_Node000000_Node000007" title=" " alt="" coords="171,281,233,310,305,337,357,350,356,355,303,343,231,315,169,286"/>
+<area shape="rect" id="Node000008" href="$class_j_k_q_t_p_math_parser_1_1jkmp_variable_assign_node.html" title="This class represents a variable assignment (a = expression)" alt="" coords="329,405,603,451"/>
+<area shape="poly" id="edge244_Node000000_Node000008" title=" " alt="" coords="158,284,222,338,262,366,305,390,340,403,338,408,303,394,259,370,218,342,154,288"/>
+<area shape="rect" id="Node000009" href="$class_j_k_q_t_p_math_parser_1_1jkmp_variable_node.html" title="This class represents a variable." alt="" coords="308,475,624,503"/>
+<area shape="poly" id="edge245_Node000000_Node000009" title=" " alt="" coords="149,287,173,327,209,375,253,422,305,460,334,473,332,478,303,465,250,426,205,378,169,330,144,290"/>
+</map>

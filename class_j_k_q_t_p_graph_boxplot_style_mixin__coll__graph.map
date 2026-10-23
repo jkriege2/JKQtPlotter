@@ -1,0 +1,7 @@
+<map id="JKQTPGraphBoxplotStyleMixin" name="JKQTPGraphBoxplotStyleMixin">
+<area shape="rect" id="Node000001" title="Styling Mix&#45;In for Boxplots." alt="" coords="116,81,375,109"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_graph_line_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph line sty..." alt="" coords="5,5,237,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="156,38,225,79,222,83,154,43"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_graph_fill_style_mixin.html" title="This Mix&#45;In class provides setter/getter methods, storage and other facilities for the graph filling ..." alt="" coords="261,5,480,33"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="339,43,269,83,266,79,336,38"/>
+</map>

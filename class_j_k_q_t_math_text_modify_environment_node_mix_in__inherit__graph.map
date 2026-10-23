@@ -1,0 +1,7 @@
+<map id="JKQTMathTextModifyEnvironmentNodeMixIn" name="JKQTMathTextModifyEnvironmentNodeMixIn">
+<area shape="rect" id="Node000001" title="mixin extending a node that does not produce any output, but provides a function modifyEnvironment() ..." alt="" coords="161,5,447,51"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_math_text_horizontal_list_node.html" title="subclass representing a list of nodes in the syntax tree, layed out horizontally" alt="" coords="5,107,288,135"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="256,60,170,109,168,105,254,55"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_math_text_modified_environment_instruction_node.html" title="subclass representing an instruction node which modify the current JKQTMathTextEnvironment,..." alt="" coords="312,99,613,144"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="355,55,426,96,423,101,352,60"/>
+</map>

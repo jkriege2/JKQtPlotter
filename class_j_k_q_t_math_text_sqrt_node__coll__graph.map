@@ -1,0 +1,16 @@
+<map id="JKQTMathTextSqrtNode" name="JKQTMathTextSqrtNode">
+<area shape="rect" id="Node000001" title="subclass representing a sqrt node" alt="" coords="5,204,212,232"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_math_text_multi_child_node.html" title="subclass representing a node in the syntax tree, that has two children" alt="" coords="166,117,417,145"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="253,153,137,206,135,201,251,148"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_math_text_node.html" title="subclass representing one node in the syntax tree" alt="" coords="197,5,372,33"/>
+<area shape="poly" id="edge8_Node000001_Node000003" title=" " alt="" coords="184,34,147,44,111,59,78,80,52,108,46,120,45,130,52,154,70,181,92,202,89,206,66,184,48,156,40,130,41,118,48,105,75,76,109,54,145,39,183,29"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="284,47,283,57,283,82,290,116,285,117,278,83,278,57,279,47"/>
+<area shape="poly" id="edge7_Node000003_Node000003" title=" " alt="" coords="388,10,399,19,391,27,373,31,372,25,388,23,393,19,385,15"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_math_text.html" title="this class parses a mathematical markup string and can then draw the contained text/equation onto a Q..." alt="" coords="500,117,632,145"/>
+<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="288,46,293,65,303,80,500,116,499,121,301,85,288,67,283,48"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="505,115,472,102,439,85,425,72,411,60,381,46,350,36,352,31,383,41,414,55,429,68,442,80,474,97,507,110"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="552,5,639,33"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="591,47,572,117,567,116,586,46"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="663,5,770,33"/>
+<area shape="poly" id="edge6_Node000004_Node000006" title=" " alt="" coords="690,44,585,119,582,114,686,39"/>
+</map>

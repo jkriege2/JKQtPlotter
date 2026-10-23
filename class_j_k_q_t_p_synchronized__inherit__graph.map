@@ -1,0 +1,15 @@
+<map id="JKQTPSynchronized&lt; T &gt;" name="JKQTPSynchronized&lt; T &gt;">
+<area shape="rect" id="Node000001" title="template class that wraps any datatype and combines it with a mutex, exposes the lock()/unlock() inte..." alt="" coords="5,239,228,267"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_synchronized.html" title=" " alt="" coords="643,38,807,66"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="128,225,147,191,174,151,208,112,251,82,299,60,351,45,404,35,457,30,558,29,643,36,643,41,558,34,457,35,405,40,352,50,301,65,253,86,212,116,178,154,151,194,132,228"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_synchronized.html" title=" " alt="" coords="572,95,879,158"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="145,229,193,197,251,169,310,156,390,146,572,131,572,137,391,151,311,162,253,175,195,202,148,233"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_p_synchronized.html" title=" " alt="" coords="571,182,880,245"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="241,241,252,240,570,220,571,225,252,245,242,246"/>
+<area shape="rect" id="Node000005" href="$class_j_k_q_t_p_synchronized.html" title=" " alt="" coords="556,269,895,315"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="171,269,252,288,329,296,407,300,556,300,556,305,407,305,329,301,252,293,170,274"/>
+<area shape="rect" id="Node000006" href="$class_j_k_q_t_p_synchronized.html" title=" " alt="" coords="564,348,887,393"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="141,275,190,319,220,339,253,355,330,376,410,387,490,390,564,388,564,393,490,395,410,392,329,381,251,360,217,344,186,323,138,279"/>
+<area shape="rect" id="Node000007" href="$class_j_k_q_t_p_synchronized.html" title=" " alt="" coords="591,418,859,481"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="130,279,147,318,173,364,209,409,230,428,253,443,293,461,336,473,379,482,423,486,511,486,591,477,591,482,511,491,423,491,378,487,334,479,291,466,251,448,226,432,205,413,169,367,142,321,125,281"/>
+</map>

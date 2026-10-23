@@ -1,0 +1,19 @@
+<map id="JKQTPColorPaletteStyleAndToolsMixin" name="JKQTPColorPaletteStyleAndToolsMixin">
+<area shape="rect" id="Node000001" title="if a class is derived from this class, it may use color bars" alt="" coords="5,91,243,137"/>
+<area shape="rect" id="Node000002" href="$class_j_k_q_t_p_color_palette_with_modifier_style_and_tools_mixin.html" title="if a class is derived from this class, it may use color bars that have 2 axes (one &quot;data&quot;/color axis ..." alt="" coords="291,22,557,67"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="235,86,324,65,326,70,237,91"/>
+<area shape="rect" id="Node000007" href="$class_j_k_q_t_p_parametrized_vector_field_graph.html" title="This graph plots a vector field, i.e. a set of vectors (dx,dy) or (angle,length) at positions (x,..." alt="" coords="291,91,557,137"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="256,111,291,111,291,117,256,117"/>
+<area shape="rect" id="Node000008" href="$class_j_k_q_t_p_x_y_parametrized_scatter_graph.html" title="This implements xy scatter plots (like JKQTPXYScatterGraph), but the color and size of the symbols ma..." alt="" coords="296,161,552,206"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="237,137,326,158,324,163,235,142"/>
+<area shape="rect" id="Node000003" href="$class_j_k_q_t_p_math_image.html" title="class to plot an image from an 2&#45;dimensional array of values" alt="" coords="643,31,805,59"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="571,42,643,42,643,47,571,47"/>
+<area shape="rect" id="Node000004" href="$class_j_k_q_t_p_column_math_image.html" title="class to plot an image from an 2&#45;dimensional array of values stored in a column of the datastore" alt="" coords="891,5,1113,33"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="818,33,890,27,891,32,819,39"/>
+<area shape="rect" id="Node000005" href="$class_j_k_q_t_p_contour_plot.html" title="class for a contour plot" alt="" coords="920,57,1084,85"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="819,51,920,61,920,66,818,56"/>
+<area shape="rect" id="Node000006" href="$class_j_k_q_t_p_column_contour_plot.html" title="class for a contour plots (same as JKQTPContourPlot) of images stored in a JKQTPDatastore column" alt="" coords="1161,57,1387,85"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="1098,69,1161,69,1161,74,1098,74"/>
+<area shape="rect" id="Node000009" href="$class_j_k_q_t_p_x_y_parametrized_error_scatter_graph.html" title="This implements xy scatter plots (like JKQTPXYScatterGraph), but the color and size of the symbols ma..." alt="" coords="605,161,843,206"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="566,181,605,181,605,186,566,186"/>
+</map>
